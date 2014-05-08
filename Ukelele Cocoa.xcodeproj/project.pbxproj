@@ -19,6 +19,8 @@
 		52BBED26191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
 		52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED2C191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */; };
+		52BBED3D191B4F6900E48394 /* Ukelele.icns in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED3C191B4F6900E48394 /* Ukelele.icns */; };
+		52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED3E191B50B700E48394 /* Ukelele.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		52BBED2B191B4C3900E48394 /* Ukelele CocoaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele CocoaTests-Info.plist"; sourceTree = "<group>"; };
 		52BBED2D191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ukelele_CocoaTests.m; sourceTree = "<group>"; };
+		52BBED3C191B4F6900E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
+		52BBED3E191B50B700E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
+				52BBED3E191B50B700E48394 /* Ukelele.icns */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				52BBED29191B4C3900E48394 /* Ukelele CocoaTests */,
 				52BBED01191B4C3900E48394 /* Frameworks */,
@@ -117,11 +122,13 @@
 		52BBED08191B4C3900E48394 /* Ukelele Cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				52BBED14191B4C3900E48394 /* UKDocument.h */,
-				52BBED15191B4C3900E48394 /* UKDocument.m */,
+				52BBED3B191B4EC100E48394 /* Controllers */,
+				52BBED39191B4EA600E48394 /* Models */,
+				52BBED3A191B4EB600E48394 /* Views */,
 				52BBED17191B4C3900E48394 /* UKDocument.xib */,
 				52BBED1A191B4C3900E48394 /* MainMenu.xib */,
 				52BBED1D191B4C3900E48394 /* Images.xcassets */,
+				52BBED3C191B4F6900E48394 /* Ukelele.icns */,
 				52BBED09191B4C3900E48394 /* Supporting Files */,
 			);
 			path = "Ukelele Cocoa";
@@ -155,6 +162,29 @@
 				52BBED2C191B4C3900E48394 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52BBED39191B4EA600E48394 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		52BBED3A191B4EB600E48394 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		52BBED3B191B4EC100E48394 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED14191B4C3900E48394 /* UKDocument.h */,
+				52BBED15191B4C3900E48394 /* UKDocument.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +235,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
+					52BBECFE191B4C3900E48394 = {
+						DevelopmentTeam = 3V2DRMTWC4;
+					};
 					52BBED22191B4C3900E48394 = {
 						TestTargetID = 52BBECFE191B4C3900E48394;
 					};
@@ -234,6 +267,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */,
+				52BBED3D191B4F6900E48394 /* Ukelele.icns in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
 				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
 				52BBED19191B4C3900E48394 /* UKDocument.xib in Resources */,
@@ -356,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -389,7 +424,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -398,10 +433,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -411,10 +448,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
