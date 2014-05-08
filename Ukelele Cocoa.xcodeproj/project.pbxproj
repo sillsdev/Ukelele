@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
+		52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED0B191B4C3900E48394 /* InfoPlist.strings */; };
+		52BBED0F191B4C3900E48394 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED0E191B4C3900E48394 /* main.m */; };
+		52BBED13191B4C3900E48394 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED11191B4C3900E48394 /* Credits.rtf */; };
+		52BBED16191B4C3900E48394 /* UKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED15191B4C3900E48394 /* UKDocument.m */; };
+		52BBED19191B4C3900E48394 /* UKDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED17191B4C3900E48394 /* UKDocument.xib */; };
+		52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1A191B4C3900E48394 /* MainMenu.xib */; };
+		52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1D191B4C3900E48394 /* Images.xcassets */; };
+		52BBED25191B4C3900E48394 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED24191B4C3900E48394 /* XCTest.framework */; };
+		52BBED26191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
+		52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED2C191B4C3900E48394 /* InfoPlist.strings */; };
+		52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52BBED27191B4C3900E48394 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52BBECF7191B4C3900E48394 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52BBECFE191B4C3900E48394;
+			remoteInfo = "Ukelele Cocoa";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		52BBED06191B4C3900E48394 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		52BBED07191B4C3900E48394 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele Cocoa-Info.plist"; sourceTree = "<group>"; };
+		52BBED0C191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		52BBED0E191B4C3900E48394 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ukelele Cocoa-Prefix.pch"; sourceTree = "<group>"; };
+		52BBED12191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		52BBED14191B4C3900E48394 /* UKDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UKDocument.h; sourceTree = "<group>"; };
+		52BBED15191B4C3900E48394 /* UKDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UKDocument.m; sourceTree = "<group>"; };
+		52BBED18191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UKDocument.xib; sourceTree = "<group>"; };
+		52BBED1B191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		52BBED1D191B4C3900E48394 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ukelele CocoaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BBED24191B4C3900E48394 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		52BBED2B191B4C3900E48394 /* Ukelele CocoaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele CocoaTests-Info.plist"; sourceTree = "<group>"; };
+		52BBED2D191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ukelele_CocoaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		52BBECFC191B4C3900E48394 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52BBED20191B4C3900E48394 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED26191B4C3900E48394 /* Cocoa.framework in Frameworks */,
+				52BBED25191B4C3900E48394 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		52BBECF6191B4C3900E48394 = {
+			isa = PBXGroup;
+			children = (
+				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
+				52BBED29191B4C3900E48394 /* Ukelele CocoaTests */,
+				52BBED01191B4C3900E48394 /* Frameworks */,
+				52BBED00191B4C3900E48394 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		52BBED00191B4C3900E48394 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */,
+				52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		52BBED01191B4C3900E48394 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED02191B4C3900E48394 /* Cocoa.framework */,
+				52BBED24191B4C3900E48394 /* XCTest.framework */,
+				52BBED04191B4C3900E48394 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		52BBED04191B4C3900E48394 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED05191B4C3900E48394 /* AppKit.framework */,
+				52BBED06191B4C3900E48394 /* CoreData.framework */,
+				52BBED07191B4C3900E48394 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		52BBED08191B4C3900E48394 /* Ukelele Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED14191B4C3900E48394 /* UKDocument.h */,
+				52BBED15191B4C3900E48394 /* UKDocument.m */,
+				52BBED17191B4C3900E48394 /* UKDocument.xib */,
+				52BBED1A191B4C3900E48394 /* MainMenu.xib */,
+				52BBED1D191B4C3900E48394 /* Images.xcassets */,
+				52BBED09191B4C3900E48394 /* Supporting Files */,
+			);
+			path = "Ukelele Cocoa";
+			sourceTree = "<group>";
+		};
+		52BBED09191B4C3900E48394 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */,
+				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
+				52BBED0E191B4C3900E48394 /* main.m */,
+				52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */,
+				52BBED11191B4C3900E48394 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52BBED29191B4C3900E48394 /* Ukelele CocoaTests */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */,
+				52BBED2A191B4C3900E48394 /* Supporting Files */,
+			);
+			path = "Ukelele CocoaTests";
+			sourceTree = "<group>";
+		};
+		52BBED2A191B4C3900E48394 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				52BBED2B191B4C3900E48394 /* Ukelele CocoaTests-Info.plist */,
+				52BBED2C191B4C3900E48394 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		52BBECFE191B4C3900E48394 /* Ukelele Cocoa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele Cocoa" */;
+			buildPhases = (
+				52BBECFB191B4C3900E48394 /* Sources */,
+				52BBECFC191B4C3900E48394 /* Frameworks */,
+				52BBECFD191B4C3900E48394 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ukelele Cocoa";
+			productName = "Ukelele Cocoa";
+			productReference = 52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52BBED22191B4C3900E48394 /* Ukelele CocoaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele CocoaTests" */;
+			buildPhases = (
+				52BBED1F191B4C3900E48394 /* Sources */,
+				52BBED20191B4C3900E48394 /* Frameworks */,
+				52BBED21191B4C3900E48394 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52BBED28191B4C3900E48394 /* PBXTargetDependency */,
+			);
+			name = "Ukelele CocoaTests";
+			productName = "Ukelele CocoaTests";
+			productReference = 52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52BBECF7191B4C3900E48394 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = UK;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "John Brownie";
+				TargetAttributes = {
+					52BBED22191B4C3900E48394 = {
+						TestTargetID = 52BBECFE191B4C3900E48394;
+					};
+				};
+			};
+			buildConfigurationList = 52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 52BBECF6191B4C3900E48394;
+			productRefGroup = 52BBED00191B4C3900E48394 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52BBECFE191B4C3900E48394 /* Ukelele Cocoa */,
+				52BBED22191B4C3900E48394 /* Ukelele CocoaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52BBECFD191B4C3900E48394 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
+				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
+				52BBED19191B4C3900E48394 /* UKDocument.xib in Resources */,
+				52BBED13191B4C3900E48394 /* Credits.rtf in Resources */,
+				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52BBED21191B4C3900E48394 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52BBECFB191B4C3900E48394 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED16191B4C3900E48394 /* UKDocument.m in Sources */,
+				52BBED0F191B4C3900E48394 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52BBED1F191B4C3900E48394 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52BBED28191B4C3900E48394 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52BBECFE191B4C3900E48394 /* Ukelele Cocoa */;
+			targetProxy = 52BBED27191B4C3900E48394 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		52BBED0B191B4C3900E48394 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52BBED0C191B4C3900E48394 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		52BBED11191B4C3900E48394 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52BBED12191B4C3900E48394 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		52BBED17191B4C3900E48394 /* UKDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52BBED18191B4C3900E48394 /* Base */,
+			);
+			name = UKDocument.xib;
+			sourceTree = "<group>";
+		};
+		52BBED1A191B4C3900E48394 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52BBED1B191B4C3900E48394 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		52BBED2C191B4C3900E48394 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52BBED2D191B4C3900E48394 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		52BBED31191B4C3900E48394 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		52BBED32191B4C3900E48394 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		52BBED34191B4C3900E48394 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		52BBED35191B4C3900E48394 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		52BBED37191B4C3900E48394 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ukelele Cocoa.app/Contents/MacOS/Ukelele Cocoa";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Ukelele CocoaTests/Ukelele CocoaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		52BBED38191B4C3900E48394 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ukelele Cocoa.app/Contents/MacOS/Ukelele Cocoa";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				INFOPLIST_FILE = "Ukelele CocoaTests/Ukelele CocoaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52BBED31191B4C3900E48394 /* Debug */,
+				52BBED32191B4C3900E48394 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele Cocoa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52BBED34191B4C3900E48394 /* Debug */,
+				52BBED35191B4C3900E48394 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele CocoaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52BBED37191B4C3900E48394 /* Debug */,
+				52BBED38191B4C3900E48394 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 52BBECF7191B4C3900E48394 /* Project object */;
+}
