@@ -95,7 +95,7 @@ ErrorMessage ModifierElement::AddModifierKeyList(NString inModifierList)
 
 UInt32 ModifierElement::GetModifierStatus(const UInt32 inModifier)
 {
-	UInt32 numMaps = mModifierMap.size();
+	UInt32 numMaps = static_cast<UInt32>(mModifierMap.size());
 	if (numMaps == 0) {
 		return kModifierNotPressed;
 	}
@@ -113,7 +113,7 @@ UInt32 ModifierElement::GetModifierStatus(const UInt32 inModifier)
 
 UInt32 ModifierElement::GetModifierPairStatus(const UInt32 inLeftModifier, const UInt32 inRightModifier)
 {
-	UInt32 numMaps = mModifierMap.size();
+	UInt32 numMaps = static_cast<UInt32>(mModifierMap.size());
 	if (numMaps == 0) {
 		return kModifierNone;
 	}
@@ -304,7 +304,7 @@ void ModifierElement::AddModifier(const UInt32 key1, const UInt32 key2, const UI
 	}
 	
 	// Now run through each existing map
-	UInt32 numExistingMaps = mModifierMap.size();
+	UInt32 numExistingMaps = static_cast<UInt32>(mModifierMap.size());
 	if (numExistingMaps == 0) {
 		// No existing maps, so just add these combinations
 		for (UInt32 combination = 0; combination < numMaps; combination++) {

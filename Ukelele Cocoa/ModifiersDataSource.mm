@@ -183,7 +183,7 @@ static NSMutableDictionary *statusDictionary = nil;
 - (void)setupArray
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = [keyboardLayout keyboard]->GetKeyboard();
-	ModifierMap *modMap = keyboardElement->GetModifierMap([[KeyboardEnvironment instance] currentKeyboardID]);
+	ModifierMap *modMap = keyboardElement->GetModifierMap(static_cast<UInt32>([[KeyboardEnvironment instance] currentKeyboardID]));
 	unsigned int rowCount = 0;
 	int keyMapSelectCount = modMap->GetKeyMapSelectCount();
 	for (int selectIndex = 0; selectIndex < keyMapSelectCount; selectIndex++) {

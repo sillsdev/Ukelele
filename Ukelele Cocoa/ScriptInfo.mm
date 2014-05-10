@@ -67,7 +67,7 @@
 
 - (NSInteger)randomID {
 	RandomNumberGenerator *generator = RandomNumberGenerator::GetInstance();
-	NSInteger generatedID = generator->GetRandomSInt32(_minID, _maxID);
+	NSInteger generatedID = generator->GetRandomSInt32((SInt32)_minID, (SInt32)_maxID);
 	return generatedID;
 }
 

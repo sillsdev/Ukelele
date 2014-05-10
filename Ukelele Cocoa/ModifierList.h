@@ -24,7 +24,7 @@ public:
 	void AddModifierElement(ModifierElement *inModifier);
 	void InsertModifierElement(ModifierElement *inModifier, const SInt32 inIndex);
 	ModifierElement *GetModifierElement(const SInt32 inIndex) const;
-	SInt32 GetElementCount(void) const { return mModifierElementList.size(); }
+	SInt32 GetElementCount(void) const { return static_cast<SInt32>(mModifierElementList.size()); }
 	ModifierElement *RemoveModifierElement(const SInt32 inIndex);
     
     ModifierList *SimplifiedModifierList(void);

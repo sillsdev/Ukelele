@@ -135,8 +135,8 @@ typedef struct KeyEntryRec {
 	[keyCapMap clearMap];
 	[modifiersController clearController];
 	NSArray *subViews = [self subviews];
-	int subViewCount = [subViews count];
-	for (int i = subViewCount - 1; i >= 0; i--) {
+	NSInteger subViewCount = [subViews count];
+	for (NSInteger i = subViewCount - 1; i >= 0; i--) {
 		KeyCapView *keyCapView = subViews[i];
 		[keyCapView removeFromSuperviewWithoutNeedingDisplay];
 	}
@@ -481,8 +481,8 @@ typedef struct KeyEntryRec {
 	free(heightList);
 		// Run through the panes and set whether they are small, and move if needed
 	NSArray *subViews = [self subviews];
-	int numSubViews = [subViews count];
-	for (int subViewIndex = 0; subViewIndex < numSubViews; subViewIndex++) {
+	NSInteger numSubViews = [subViews count];
+	for (NSInteger subViewIndex = 0; subViewIndex < numSubViews; subViewIndex++) {
 		KeyCapView *keyCapView = subViews[subViewIndex];
 		NSRect subViewFrame = [keyCapView frame];
 		[keyCapView setSmall:ceil(subViewFrame.size.height) < commonHeight];
@@ -540,8 +540,8 @@ typedef struct KeyEntryRec {
 - (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text
 {
 	NSArray *keyList = [keyCapMap getKeysWithCode:keyCode];
-	int keyCount = [keyList count];
-	for (int i = 0; i < keyCount; i++) {
+	NSUInteger keyCount = [keyList count];
+	for (NSUInteger i = 0; i < keyCount; i++) {
 		KeyCapView *keyCap = (KeyCapView *)keyList[i];
 		[keyCap setOutputString:text];
 //		if (modifiers & kEventKeyModifierNumLockMask) {
@@ -585,8 +585,8 @@ typedef struct KeyEntryRec {
 		[self setUpStyles];
 			// Replace the styles for all the subviews
 		NSArray *allSubViews = [self subviews];
-		int subViewCount = [allSubViews count];
-		for (int i = 0; i < subViewCount; i++) {
+		NSUInteger subViewCount = [allSubViews count];
+		for (NSUInteger i = 0; i < subViewCount; i++) {
 			KeyCapView *keyCapView = allSubViews[i];
 			[keyCapView setLargeCTFont:largeFont];
 			[keyCapView setSmallCTFont:smallFont];
@@ -688,7 +688,7 @@ typedef struct KeyEntryRec {
 	KeyCapView *keyCap = [self findKeyWithCode:keyCode];
 	[keyCap setDown:YES];
 	if ([self isFnKey:theEvent]) {
-		int flags = [theEvent modifierFlags] | NSNumericPadKeyMask;
+		unsigned int flags = (unsigned int)[theEvent modifierFlags] | NSNumericPadKeyMask;
 		[self passOnModifiers:flags];
 	}
 	UkeleleDocument *theDocument = [[[self window] windowController] document];
@@ -701,7 +701,7 @@ typedef struct KeyEntryRec {
 	KeyCapView *keyCap = [self findKeyWithCode:keyCode];
 	[keyCap setDown:NO];
 	if ([self isFnKey:theEvent]) {
-		int flags = [theEvent modifierFlags] & ~NSNumericPadKeyMask;
+		unsigned int flags = (unsigned int)[theEvent modifierFlags] & ~NSNumericPadKeyMask;
 		[self passOnModifiers:flags];
 	}
 	UkeleleDocument *theDocument = [[[self window] windowController] document];

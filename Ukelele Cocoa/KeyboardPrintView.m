@@ -177,7 +177,7 @@ CGFloat kLabelViewHeight = 20.0;
     keyDataDict[kKeyState] = stateName;
 	UkeleleKeyboardObject *keyboardLayout = [[self parentDocument] keyboardLayout];
 	for (KeyCapView *keyCapView in subViews) {
-		int keyCode = [keyCapView keyCode];
+		NSInteger keyCode = [keyCapView keyCode];
 		if (modifiers & NSNumericPadKeyMask) {
 			keyCode = [keyCapView fnKeyCode];
 		}
@@ -189,7 +189,7 @@ CGFloat kLabelViewHeight = 20.0;
 		[keyCapView setOutputString:output];
 		[keyCapView setDeadKey:deadKey];
 	}
-	[keyboardView updateModifiers:modifiers];
+	[keyboardView updateModifiers:(unsigned int)modifiers];
 }
 
 - (BOOL)knowsPageRange:(NSRangePointer)range {
@@ -217,7 +217,7 @@ CGFloat kLabelViewHeight = 20.0;
 				// Create the keyboard view, as we need it now
 			UkeleleView *keyboardView = [[UkeleleView alloc] init];
 			[keyboardView setColourTheme:printColourTheme];
-			[keyboardView createViewWithKeyboardID:currentKeyboard withScale:1];
+			[keyboardView createViewWithKeyboardID:(int)currentKeyboard withScale:1];
 			NSRect keyboardFrame = [keyboardView frame];
 			[keyboardView scaleViewToScale:pageWidth / keyboardFrame.size.width limited:NO];
 			[keyboardView setFrameOrigin:[placeHolder origin]];

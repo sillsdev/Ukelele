@@ -56,7 +56,7 @@
 
 - (IBAction)acceptKeyCode:(id)sender {
 	NSInteger keyCode = [self.keyCodeField integerValue];
-	if ([LayoutInfo getKeyType:keyCode] == kModifierKeyType) {
+	if ([LayoutInfo getKeyType:(unsigned)keyCode] == kModifierKeyType) {
 			// Can't select a modifier
 		[self.minorTextField setStringValue:[NSString stringWithFormat:@"The key with code %d is a modifier key, which cannot be selected.", (int)keyCode]];
 		return;

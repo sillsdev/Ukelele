@@ -640,7 +640,7 @@ KeyMapSetList *KeyboardElement::GetKeyMapSetsForKeyboard(const UInt32 inKeyboard
 	layoutList = NULL;
 		// Now go through each key map set and pick out any base maps which haven't
 		// yet been added
-	SInt32 mapSetIDCount = [mapSetIDs count];
+	SInt32 mapSetIDCount = (SInt32)[mapSetIDs count];
 	NArray mapSetIDArray;
 	for (NSString *theID in mapSetIDs) {
 		mapSetIDArray.AppendValue(ToNN(theID));
@@ -663,7 +663,7 @@ KeyMapSetList *KeyboardElement::GetKeyMapSetsForKeyboard(const UInt32 inKeyboard
 	}
 		// Finally, put the key maps into the result list
 	KeyMapSetList *keyMapSetList = new KeyMapSetList;
-	mapSetIDCount = [mapSetIDs count];
+	mapSetIDCount = (SInt32)[mapSetIDs count];
 	for (SInt32 setIndex = 0; setIndex < mapSetIDCount; setIndex++) {
 		KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(mapSetIDArray.GetValueString(setIndex));
 		keyMapSetList->AddKeyMapSet(keyMapSet);
@@ -1466,7 +1466,7 @@ bool KeyboardElement::IsMissingKeyMap(NString& outModifierMapID, NString& outKey
 	for (ModifierMapConstIterator pos = mModifierMapList.begin(); pos != mModifierMapList.end(); ++pos) {
 		ModifierMap *modifierMap = *pos;
 		std::vector<UInt32> indexReferences = modifierMap->GetReferencedIndices();
-		UInt32 indexListSize = indexReferences.size();
+		UInt32 indexListSize = static_cast<UInt32>(indexReferences.size());
 		UInt32 keyMapSetCount = mKeyMapSetList->GetCount();
 		for (UInt32 i = 1; i <= keyMapSetCount; i++) {
 			KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);

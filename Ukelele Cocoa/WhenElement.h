@@ -82,7 +82,7 @@ public:
 	void DeleteWhenElement(NString inState);
 	
 		// Access attributes
-	SInt32 GetWhenElementCount(void) const { return mElementSet.size(); }
+	SInt32 GetWhenElementCount(void) const { return static_cast<SInt32>(mElementSet.size()); }
 	bool HasMultiplier(void);
 	UInt32 GetMaxout(void) const;
 	

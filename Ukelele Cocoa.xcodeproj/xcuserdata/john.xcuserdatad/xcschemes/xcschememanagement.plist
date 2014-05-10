@@ -4,14 +4,34 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>KeyboardInstallerTool.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Ukelele Cocoa.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>org.sil.Ukelele.KeyboardInstallerTool.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>523B01E6191D865100E06DF3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>523B0204191D8C3100E06DF3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>52BBECFE191B4C3900E48394</key>
 		<dict>
 			<key>primary</key>

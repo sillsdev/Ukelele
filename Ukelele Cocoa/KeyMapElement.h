@@ -90,7 +90,7 @@ public:
 	KeyMapElementList(const KeyMapElementList& inOriginal);
 	virtual ~KeyMapElementList();
 	
-	UInt32 GetKeyMapCount(void) const { return mElementList.size(); }
+	UInt32 GetKeyMapCount(void) const { return static_cast<UInt32>(mElementList.size()); }
 	UInt32 GetMaxout(void) const;
 	UInt32 GetKeyMapSize(void) const;
 	

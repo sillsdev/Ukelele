@@ -90,7 +90,7 @@ NSString *kTabNameComments = @"Comments";
 		SInt32 keyboardType;
 		OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
 		if (err != noErr  || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-			keyboardType = [theDefaults integerForKey:UKDefaultLayoutID];
+			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
 		}
 		internalState[kStateCurrentKeyboard] = @(keyboardType);
         interactionHandler = nil;
@@ -471,7 +471,7 @@ NSString *kTabNameComments = @"Comments";
     keyDataDict[kKeyModifiers] = modifiersValue;
     keyDataDict[kKeyState] = internalState[kStateCurrentState];
 	for (KeyCapView *keyCapView in subViews) {
-		int keyCode = [keyCapView keyCode];
+		NSInteger keyCode = [keyCapView keyCode];
 		if (theModifiers & NSNumericPadKeyMask) {
 			keyCode = [keyCapView fnKeyCode];
 		}
@@ -502,7 +502,7 @@ NSString *kTabNameComments = @"Comments";
 	UkeleleView *ukeleleView = [keyboardView documentView];
 	internalState[kStateCurrentKeyboard] = @(newKeyboardType);
 	NSNumber *scaleValue = internalState[kStateCurrentScale];
-	[ukeleleView createViewWithKeyboardID:newKeyboardType withScale:[scaleValue doubleValue]];
+	[ukeleleView createViewWithKeyboardID:(int)newKeyboardType withScale:[scaleValue doubleValue]];
 	[ukeleleView setMenuDelegate:self];
 	[self assignClickTargets];
     [self calculateSize];
@@ -528,13 +528,13 @@ NSString *kTabNameComments = @"Comments";
 	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-		keyboardType = [theDefaults integerForKey:UKDefaultLayoutID];
+		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
 	}
     internalState[kStateCurrentKeyboard] = @(keyboardType);
     [tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
 	UkeleleView *ukeleleView = [[UkeleleView alloc] init];
     NSNumber *scaleValue = internalState[kStateCurrentScale];
-	[ukeleleView createViewWithKeyboardID:keyboardType withScale:[scaleValue doubleValue]];
+	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:[scaleValue doubleValue]];
 	[ukeleleView setMenuDelegate:self];
 	[keyboardView setDocumentView:ukeleleView];
 	[self assignClickTargets];
@@ -582,7 +582,7 @@ NSString *kTabNameComments = @"Comments";
 - (NSRect)keyRect:(NSInteger)keyCode
 {
 	UkeleleView *ukeleleView = [keyboardView documentView];
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:keyCode];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)keyCode];
 	return [keyCap frame];
 }
 
@@ -898,7 +898,7 @@ NSString *kTabNameComments = @"Comments";
 	}
 	selectedKey = keyCode;
 	UkeleleView *ukeleleView = [keyboardView documentView];
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:selectedKey];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:YES];
 		[self updateWindow];
@@ -912,7 +912,7 @@ NSString *kTabNameComments = @"Comments";
 
 - (void)clearSelectedKey {
 	UkeleleView *ukeleleView = [keyboardView documentView];
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:selectedKey];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:NO];
 		[self updateWindow];
@@ -1385,7 +1385,7 @@ NSString *kTabNameComments = @"Comments";
 
 - (IBAction)changeOutput:(id)sender {
 	NSInteger keyCode = [(KeyCapView *)sender keyCode];
-	[self messageDoubleClick:keyCode];
+	[self messageDoubleClick:(int)keyCode];
 }
 
 - (IBAction)attachComment:(id)sender {
@@ -1412,10 +1412,10 @@ NSString *kTabNameComments = @"Comments";
 
 - (void)handleKeyCapClick:(KeyCapView *)keyCapView clickCount:(NSInteger)clickCount {
 	if (clickCount == 1) {
-		[self messageClick:[keyCapView keyCode]];
+		[self messageClick:(int)[keyCapView keyCode]];
 	}
 	else if (clickCount == 2) {
-		[self messageDoubleClick:[keyCapView keyCode]];
+		[self messageDoubleClick:(int)[keyCapView keyCode]];
 	}
 }
 
@@ -1706,7 +1706,7 @@ NSString *kTabNameComments = @"Comments";
 - (NSMenu *)contextualMenuForData:(NSDictionary *)dataDict {
 	NSMenu *theMenu = nil;
 	NSInteger keyCode = [dataDict[kKeyKeyCode] integerValue];
-	unsigned int keyType = [LayoutInfo getKeyType:keyCode];
+	unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
 	if (keyType == kModifierKeyType) {
 			// Modifier key: No menu
 	}

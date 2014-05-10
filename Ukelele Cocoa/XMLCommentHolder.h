@@ -79,7 +79,7 @@ public:
 	bool RemoveComment(NString inCommentString);
 	void RemoveDuplicateComments(void);
 	void AddCommentsToXMLTree(NXMLNode& ioTree);
-	UInt32 GetCommentCount(void) { return mCommentList.size(); }
+	UInt32 GetCommentCount(void) { return static_cast<UInt32>(mCommentList.size()); }
 	bool HasComments(void) { return !mCommentList.empty(); }
 	
 		// Find and replace

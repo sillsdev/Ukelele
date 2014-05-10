@@ -225,7 +225,7 @@ static CGAffineTransform kTextTransform = {
 		BOOL isControlCharacter = [_outputString length] == 1 && !isLowASCII && !isAboveControlRange;
 		if (isControlCharacter) {
 				// A control character - see if we have a symbol for it
-			displayText = [LayoutInfo getKeySymbolString:_keyCode withString:_outputString];
+			displayText = [LayoutInfo getKeySymbolString:(unsigned int)_keyCode withString:_outputString];
 			if ([displayText length] == 0) {
 				displayText = [[NSMutableAttributedString alloc] initWithString:_outputString];
 			}
@@ -469,13 +469,13 @@ static CGAffineTransform kTextTransform = {
 - (void)mouseEntered:(NSEvent *)theEvent
 {
 	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageMouseEntered:_keyCode];
+	[theDocument messageMouseEntered:(int)_keyCode];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
 	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageMouseExited:_keyCode];
+	[theDocument messageMouseExited:(int)_keyCode];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -509,7 +509,7 @@ static CGAffineTransform kTextTransform = {
 	if (draggedItems != nil && [draggedItems count] > 0) {
 			// Got the text
 		UkeleleDocument *theDocument = [[[self window] windowController] document];
-		[theDocument messageDragText:draggedItems[0] toKey:_keyCode];
+		[theDocument messageDragText:draggedItems[0] toKey:(int)_keyCode];
 		return YES;
 	}
 	return NO;

@@ -103,7 +103,7 @@ KeyMapSelect *ModifierMap::RemoveKeyMapSelectElement(const SInt32 inIndex)
 	NN_ASSERT(inIndex >= 0 && inIndex < static_cast<SInt32>(mKeyMapSelectList.size()));
 	KeyMapSelect *keyMapSelect = mKeyMapSelectList[inIndex];
 	mKeyMapSelectList.erase(mKeyMapSelectList.begin() + inIndex);
-	SInt32 numKeyMapSelects = mKeyMapSelectList.size();
+	SInt32 numKeyMapSelects = static_cast<SInt32>(mKeyMapSelectList.size());
 	for (SInt32 i = inIndex; i < numKeyMapSelects; i++) {
 		KeyMapSelect *item = mKeyMapSelectList[i];
 		if (item != NULL) {
@@ -118,7 +118,7 @@ KeyMapSelect *ModifierMap::RemoveKeyMapSelectElement(const SInt32 inIndex)
 
 void ModifierMap::RenumberKeyMapSelects(std::vector<SInt32>& inIndexMap) {
 	KeyMapSelectList newKeyMapSelectList;
-	UInt32 keyMapSelectCount = mKeyMapSelectList.size();
+	UInt32 keyMapSelectCount = static_cast<UInt32>(mKeyMapSelectList.size());
 	newKeyMapSelectList.insert(newKeyMapSelectList.begin(), keyMapSelectCount, NULL);
 	for (UInt32 i = 0; i < keyMapSelectCount; i++) {
 		if (mKeyMapSelectList[i] != NULL) {
@@ -435,7 +435,7 @@ UInt32 ModifierMap::ModifierToIndex(const UInt32 inModifier)
 
 UInt32 ModifierMap::ModifierToTable(const UInt32 inModifier)
 {
-	SInt32 numKeyMapSelects = mKeyMapSelectList.size();
+	SInt32 numKeyMapSelects = static_cast<SInt32>(mKeyMapSelectList.size());
 	UInt32 theTable = mDefaultIndex;
 	for (SInt32 index = numKeyMapSelects - 1; index >= 0; index--) {
 		KeyMapSelect *keyMapSelect = mKeyMapSelectList[index];

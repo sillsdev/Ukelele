@@ -400,7 +400,7 @@ WhenElementSet::ReplaceStateName(NString oldStateName, NString newStateName)
 		// Replace an element with the old state name as its state attribute
 	WhenElement *element = FindWhenElement(oldStateName);
 	if (element != NULL) {
-		SInt32 numRemoved = mElementSet.erase(element);
+		SInt32 numRemoved = static_cast<SInt32>(mElementSet.erase(element));
 		NN_ASSERT(numRemoved == 1);
 		element->ReplaceStateName(oldStateName, newStateName);
 		mElementSet.insert(element);

@@ -79,7 +79,6 @@
 		523B0194191CA18C00E06DF3 /* ChooseScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0131191CA18C00E06DF3 /* ChooseScale.m */; };
 		523B0195191CA18C00E06DF3 /* ChooseStateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0133191CA18C00E06DF3 /* ChooseStateController.m */; };
 		523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0135191CA18C00E06DF3 /* ColourThemeEditorController.m */; };
-		523B0197191CA18C00E06DF3 /* ConfirmDeleteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0136191CA18C00E06DF3 /* ConfirmDeleteSheet.m */; };
 		523B0198191CA18C00E06DF3 /* ConfirmStateNameSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0138191CA18C00E06DF3 /* ConfirmStateNameSheet.m */; };
 		523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B013A191CA18C00E06DF3 /* CreateDeadKeyHandler.m */; };
 		523B019A191CA18C00E06DF3 /* CreateDeadKeySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B013C191CA18C00E06DF3 /* CreateDeadKeySheet.m */; };
@@ -121,6 +120,15 @@
 		523B01BE191CA18C00E06DF3 /* UnlinkModifiersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0180191CA18C00E06DF3 /* UnlinkModifiersController.m */; };
 		523B01BF191CA18C00E06DF3 /* UnlinkModifierSetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0182191CA18C00E06DF3 /* UnlinkModifierSetHandler.m */; };
 		523B01C0191CA18C00E06DF3 /* WrongStateChosenSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */; };
+		523B01C5191D7F8500E06DF3 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
+		523B01C6191D7F8500E06DF3 /* Common.strings in Resources */ = {isa = PBXBuildFile; fileRef = 523B01C4191D7F8500E06DF3 /* Common.strings */; };
+		523B0206191D8C3100E06DF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B01E8191D865100E06DF3 /* Foundation.framework */; };
+		523B0236191D917400E06DF3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
+		523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0237191D917900E06DF3 /* Sparkle.framework */; };
+		523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */; };
+		523B023A191DAC8F00E06DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01EB191D865100E06DF3 /* main.m */; };
+		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
+		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
 		52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED0B191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED0F191B4C3900E48394 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED0E191B4C3900E48394 /* main.m */; };
@@ -146,6 +154,18 @@
 			remoteInfo = "Ukelele Cocoa";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		523B0203191D8C3100E06DF3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardDefinitions.h; sourceTree = "<group>"; };
@@ -304,7 +324,6 @@
 		523B0133191CA18C00E06DF3 /* ChooseStateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseStateController.m; sourceTree = "<group>"; };
 		523B0134191CA18C00E06DF3 /* ColourThemeEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourThemeEditorController.h; sourceTree = "<group>"; };
 		523B0135191CA18C00E06DF3 /* ColourThemeEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColourThemeEditorController.m; sourceTree = "<group>"; };
-		523B0136191CA18C00E06DF3 /* ConfirmDeleteSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmDeleteSheet.m; sourceTree = "<group>"; };
 		523B0137191CA18C00E06DF3 /* ConfirmStateNameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmStateNameSheet.h; sourceTree = "<group>"; };
 		523B0138191CA18C00E06DF3 /* ConfirmStateNameSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmStateNameSheet.m; sourceTree = "<group>"; };
 		523B0139191CA18C00E06DF3 /* CreateDeadKeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDeadKeyHandler.h; sourceTree = "<group>"; };
@@ -383,6 +402,25 @@
 		523B0182191CA18C00E06DF3 /* UnlinkModifierSetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnlinkModifierSetHandler.m; sourceTree = "<group>"; };
 		523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrongStateChosenSheet.h; sourceTree = "<group>"; };
 		523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrongStateChosenSheet.m; sourceTree = "<group>"; };
+		523B01C2191D7F8500E06DF3 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		523B01C3191D7F8500E06DF3 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		523B01C4191D7F8500E06DF3 /* Common.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Common.strings; sourceTree = "<group>"; };
+		523B01E8191D865100E06DF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		523B01EB191D865100E06DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../KeyboardInstallerTool/main.m; sourceTree = "<group>"; };
+		523B01FA191D878400E06DF3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		523B01FC191D87E100E06DF3 /* KeyboardInstallerTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardInstallerTool.h; path = ../KeyboardInstallerTool/KeyboardInstallerTool.h; sourceTree = "<group>"; };
+		523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardInstallerTool.m; path = ../KeyboardInstallerTool/KeyboardInstallerTool.m; sourceTree = "<group>"; };
+		523B01FF191D87F400E06DF3 /* KeyboardInstallerTool-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "KeyboardInstallerTool-Info.plist"; path = "../KeyboardInstallerTool/KeyboardInstallerTool-Info.plist"; sourceTree = "<group>"; };
+		523B0200191D87F400E06DF3 /* KeyboardInstallerTool-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "KeyboardInstallerTool-Launchd.plist"; path = "../KeyboardInstallerTool/KeyboardInstallerTool-Launchd.plist"; sourceTree = "<group>"; };
+		523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = org.sil.Ukelele.KeyboardInstallerTool; sourceTree = BUILT_PRODUCTS_DIR; };
+		523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch"; sourceTree = "<group>"; };
+		523B0235191D917400E06DF3 /* libNano.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNano.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		523B0237191D917900E06DF3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		525A4B6A191DE11E00A356F8 /* RemoveStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveStateData.h; sourceTree = "<group>"; };
+		525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RemoveStateData.mm; sourceTree = "<group>"; };
+		525A4B6D191DE60700A356F8 /* ViewScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScale.h; sourceTree = "<group>"; };
+		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
+		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
 		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -408,10 +446,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		523B0202191D8C3100E06DF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523B0206191D8C3100E06DF3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52BBECFC191B4C3900E48394 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */,
+				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,12 +568,53 @@
 			name = Keyboard;
 			sourceTree = "<group>";
 		};
+		523B01C1191D7F5C00E06DF3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				523B01C2191D7F8500E06DF3 /* Common.h */,
+				523B01C3191D7F8500E06DF3 /* Common.m */,
+				523B01C4191D7F8500E06DF3 /* Common.strings */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		523B01C7191D7F9300E06DF3 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		523B0207191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */ = {
+			isa = PBXGroup;
+			children = (
+				523B01FF191D87F400E06DF3 /* KeyboardInstallerTool-Info.plist */,
+				523B0200191D87F400E06DF3 /* KeyboardInstallerTool-Launchd.plist */,
+				523B01FC191D87E100E06DF3 /* KeyboardInstallerTool.h */,
+				523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */,
+				523B01EB191D865100E06DF3 /* main.m */,
+				523B020A191D8C3100E06DF3 /* Supporting Files */,
+			);
+			path = org.sil.Ukelele.KeyboardInstallerTool;
+			sourceTree = "<group>";
+		};
+		523B020A191D8C3100E06DF3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
 				52BBED3E191B50B700E48394 /* Ukelele.icns */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
+				523B01C1191D7F5C00E06DF3 /* Common */,
+				523B01C7191D7F9300E06DF3 /* Dependencies */,
 				52BBED29191B4C3900E48394 /* Ukelele CocoaTests */,
+				523B0207191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				52BBED01191B4C3900E48394 /* Frameworks */,
 				52BBED00191B4C3900E48394 /* Products */,
 			);
@@ -536,6 +625,7 @@
 			children = (
 				52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */,
 				52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */,
+				523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -543,8 +633,12 @@
 		52BBED01191B4C3900E48394 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				523B0237191D917900E06DF3 /* Sparkle.framework */,
+				523B0235191D917400E06DF3 /* libNano.a */,
+				523B01FA191D878400E06DF3 /* Security.framework */,
 				52BBED02191B4C3900E48394 /* Cocoa.framework */,
 				52BBED24191B4C3900E48394 /* XCTest.framework */,
+				523B01E8191D865100E06DF3 /* Foundation.framework */,
 				52BBED04191B4C3900E48394 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -642,6 +736,8 @@
 				523B00EF191CA0D100E06DF3 /* ModifierConstants.h */,
 				523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */,
 				523B00F1191CA0D100E06DF3 /* RandomNumberGenerator.h */,
+				525A4B6A191DE11E00A356F8 /* RemoveStateData.h */,
+				525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */,
 				523B00F2191CA0D100E06DF3 /* RemoveStateDataBlock.h */,
 				523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */,
 				523B00F4191CA0D100E06DF3 /* ScriptInfo.h */,
@@ -655,6 +751,8 @@
 				523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
 				523B00FE191CA0D100E06DF3 /* UnicodeTable.m */,
+				525A4B6D191DE60700A356F8 /* ViewScale.h */,
+				525A4B6E191DE60700A356F8 /* ViewScale.m */,
 				523B0095191C9D4400E06DF3 /* Keyboard */,
 			);
 			name = Models;
@@ -684,6 +782,7 @@
 		52BBED3B191B4EC100E48394 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				525A4B70191DE68400A356F8 /* AskCommentController.h */,
 				523B0114191CA18C00E06DF3 /* AskCommentController.m */,
 				523B0115191CA18C00E06DF3 /* AskFromList.h */,
 				523B0116191CA18C00E06DF3 /* AskFromList.m */,
@@ -718,7 +817,6 @@
 				523B0133191CA18C00E06DF3 /* ChooseStateController.m */,
 				523B0134191CA18C00E06DF3 /* ColourThemeEditorController.h */,
 				523B0135191CA18C00E06DF3 /* ColourThemeEditorController.m */,
-				523B0136191CA18C00E06DF3 /* ConfirmDeleteSheet.m */,
 				523B0137191CA18C00E06DF3 /* ConfirmStateNameSheet.h */,
 				523B0138191CA18C00E06DF3 /* ConfirmStateNameSheet.m */,
 				523B0139191CA18C00E06DF3 /* CreateDeadKeyHandler.h */,
@@ -806,6 +904,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 523B020E191D8C3100E06DF3 /* Build configuration list for PBXNativeTarget "org.sil.Ukelele.KeyboardInstallerTool" */;
+			buildPhases = (
+				523B0201191D8C3100E06DF3 /* Sources */,
+				523B0202191D8C3100E06DF3 /* Frameworks */,
+				523B0203191D8C3100E06DF3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = org.sil.Ukelele.KeyboardInstallerTool;
+			productName = org.sil.Ukelele.KeyboardInstallerTool;
+			productReference = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */;
+			productType = "com.apple.product-type.tool";
+		};
 		52BBECFE191B4C3900E48394 /* Ukelele Cocoa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele Cocoa" */;
@@ -874,6 +989,7 @@
 			targets = (
 				52BBECFE191B4C3900E48394 /* Ukelele Cocoa */,
 				52BBED22191B4C3900E48394 /* Ukelele CocoaTests */,
+				523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 			);
 		};
 /* End PBXProject section */
@@ -894,6 +1010,7 @@
 				523B01A1191CA18C00E06DF3 /* EditKeyPopoverControllerViewController.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				523B01A2191CA18C00E06DF3 /* EditKeyWindow.xib in Resources */,
+				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +1025,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		523B0201191D8C3100E06DF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523B023A191DAC8F00E06DF3 /* main.m in Sources */,
+				523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52BBECFB191B4C3900E48394 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -949,6 +1075,8 @@
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
 				523B01AC191CA18C00E06DF3 /* KeyboardTypeController.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,
+				525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */,
+				525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */,
 				523B0198191CA18C00E06DF3 /* ConfirmStateNameSheet.m in Sources */,
 				523B019D191CA18C00E06DF3 /* DragTextHandler.m in Sources */,
 				523B01A9191CA18C00E06DF3 /* IntendedLanguageSheet.m in Sources */,
@@ -981,7 +1109,6 @@
 				523B00FF191CA0D100E06DF3 /* ActionElementSetHolder.mm in Sources */,
 				523B01BE191CA18C00E06DF3 /* UnlinkModifiersController.m in Sources */,
 				523B01A7191CA18C00E06DF3 /* InspectorPanelController.m in Sources */,
-				523B0197191CA18C00E06DF3 /* ConfirmDeleteSheet.m in Sources */,
 				523B00CF191CA00A00E06DF3 /* UkeleleKeyboard.mm in Sources */,
 				523B018C191CA18C00E06DF3 /* AskTextSheet.m in Sources */,
 				523B007B191C9CA900E06DF3 /* KeyCapView2Rect.m in Sources */,
@@ -1020,6 +1147,7 @@
 				523B007D191C9CA900E06DF3 /* UkeleleContainerView.m in Sources */,
 				523B01B7191CA18C00E06DF3 /* UkeleleAppDelegate.m in Sources */,
 				523B00D2191CA00A00E06DF3 /* XMLCommentHolder.cpp in Sources */,
+				523B01C5191D7F8500E06DF3 /* Common.m in Sources */,
 				523B0091191C9D2200E06DF3 /* NString_hash.cpp in Sources */,
 				523B01B3191CA18C00E06DF3 /* ReplaceNameSheet.m in Sources */,
 				523B0103191CA0D100E06DF3 /* ColourTheme.m in Sources */,
@@ -1089,6 +1217,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		523B020F191D8C3100E06DF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: John Brownie (85E2V6773Y)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "org.sil.Ukelele.KeyboardInstallerTool/org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		523B0210191D8C3100E06DF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: John Brownie (85E2V6773Y)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "org.sil.Ukelele.KeyboardInstallerTool/org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		52BBED31191B4C3900E48394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1163,13 +1319,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "Developer ID Application: John Brownie";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
+					/usr/local/boost_1_42_0,
+				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1178,13 +1344,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "Developer ID Application: John Brownie";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
+					/usr/local/boost_1_42_0,
+				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1232,6 +1408,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		523B020E191D8C3100E06DF3 /* Build configuration list for PBXNativeTarget "org.sil.Ukelele.KeyboardInstallerTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				523B020F191D8C3100E06DF3 /* Debug */,
+				523B0210191D8C3100E06DF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

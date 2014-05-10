@@ -123,7 +123,7 @@ KeyMapSet *KeyMapSetList::FindKeyMapSet(NString inID) const
 {
 	KeyMapSet *keyMapSet = NULL;
 	SInt32 left = 0;
-	SInt32 right = mList.size() - 1;
+	SInt32 right = static_cast<SInt32>(mList.size() - 1);
 	while (left <= right) {
 		SInt32 current = (left + right) / 2;
 		keyMapSet = mList[current];

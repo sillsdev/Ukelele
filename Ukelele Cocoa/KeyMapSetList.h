@@ -25,7 +25,7 @@ public:
 	KeyMapSetList(const KeyMapSetList& inOriginal);
 	virtual ~KeyMapSetList(void);
 	
-	SInt32 GetCount(void) const { return mList.size(); }
+	SInt32 GetCount(void) const { return static_cast<SInt32>(mList.size()); }
 	UInt32 GetMaxout(void) const;
 	bool IsMissingSpecialKeyOutput(void) const;
 	NStringList GetKeyMapSets(void) const;

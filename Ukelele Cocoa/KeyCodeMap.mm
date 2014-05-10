@@ -29,7 +29,7 @@
 
 - (int)countKeysWithCode:(int)keyCode
 {
-	return codeMap.count(keyCode);
+	return (int)codeMap.count(keyCode);
 }
 
 - (NSArray *)getKeysWithCode:(int)keyCode

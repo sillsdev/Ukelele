@@ -44,7 +44,7 @@ public:
 	NString GetID(void) const { return mID; }
 	UInt32 GetDefaultIndex(void) const { return mDefaultIndex; }
 	void SetDefaultIndex(const UInt32 inDefaultIndex);
-	SInt32 GetKeyMapSelectCount(void) const { return mKeyMapSelectList.size(); }
+	SInt32 GetKeyMapSelectCount(void) const { return static_cast<SInt32>(mKeyMapSelectList.size()); }
 	
 	void AddKeyMapSelectElement(KeyMapSelect *inKeyMapSelect, bool inCalculateMap = true);
 	void InsertKeyMapSelectAtIndex(KeyMapSelect *inKeyMapSelect, const SInt32 inIndex, bool inCalculateMap = true);

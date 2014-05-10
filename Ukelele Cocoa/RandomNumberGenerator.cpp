@@ -39,7 +39,7 @@ RandomNumberGenerator::GetRandomSInt32(void)
 {
 	if (!mSInt32GeneratorInitialised) {
 		time_t currentTime = time(NULL);
-		sRandomSInt32Generator.seed(currentTime);
+		sRandomSInt32Generator.seed(static_cast<int>(currentTime));
 		mSInt32GeneratorInitialised = true;
 	}
 	return sRandomSInt32Generator();
@@ -50,7 +50,7 @@ RandomNumberGenerator::GetRandomSInt32(const SInt32 inMinimum, const SInt32 inMa
 {
 	if (!mSInt32GeneratorInitialised) {
 		time_t currentTime = time(NULL);
-		sRandomSInt32Generator.seed(currentTime);
+		sRandomSInt32Generator.seed(static_cast<int>(currentTime));
 		mSInt32GeneratorInitialised = true;
 	}
 	SInt32 nextRandom = sRandomSInt32Generator();

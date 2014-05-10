@@ -108,7 +108,7 @@ bool KeyElementTable::HasInlineAction(void) const
 
 void KeyElementTable::AddKeyElement(const UInt32 inIndex, KeyElement *inKeyElement)
 {
-	UInt32 elementCount = mElementTable.size();
+	UInt32 elementCount = static_cast<UInt32>(mElementTable.size());
 	if (inIndex < elementCount) {
 		// We're inserting into the table, where the original element, if any,
 		// should be deleted before the new element is assigned

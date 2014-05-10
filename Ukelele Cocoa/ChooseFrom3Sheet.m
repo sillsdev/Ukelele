@@ -52,7 +52,7 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 	[chooseSheet orderOut:self];
 	NSInteger chosenRow = [radioButtons selectedRow];
 	[NSApp endSheet:chooseSheet];
-	callBack(chosenRow);
+	callBack((int)chosenRow);
 }
 
 - (void)cancelChoice:(id)sender

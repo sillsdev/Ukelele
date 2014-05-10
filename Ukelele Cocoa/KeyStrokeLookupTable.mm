@@ -140,8 +140,8 @@ CFComparisonResult KeyStroke::CompareModifiers(const UInt32 inModifiers1, const 
 
 CFComparisonResult KeyStroke::CompareKeyStrokeLists(KeyStrokeList inFirst, KeyStrokeList inSecond)
 {
-	SInt32 firstSize = inFirst.size();
-	SInt32 secondSize = inSecond.size();
+	SInt32 firstSize = static_cast<SInt32>(inFirst.size());
+	SInt32 secondSize = static_cast<SInt32>(inSecond.size());
 	if (firstSize == 0) {
 		return secondSize == 0 ? kCFCompareEqualTo : kCFCompareLessThan;
 	}

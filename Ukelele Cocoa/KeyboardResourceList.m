@@ -69,7 +69,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		NSMutableSet *unknownSet = [NSMutableSet setWithCapacity:resCount];
 		for (NSNumber *currentRes in resourceSet) {
 			NSInteger currentResourceID = [currentRes integerValue];
-			NSInteger keyboardNameIndex = [LayoutInfo getKeyboardNameIndex:currentResourceID];
+			NSInteger keyboardNameIndex = [LayoutInfo getKeyboardNameIndex:(int)currentResourceID];
 			if (0 == keyboardNameIndex) {
 				[unknownSet addObject:@(currentResourceID)];
 			}
@@ -95,9 +95,9 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		NSMutableArray *keyboardTypes = [NSMutableArray array];
 		for (NSNumber *nameElement in knownKeyboardsList) {
 			NSUInteger knownIndex = [nameElement unsignedIntegerValue];
-			NSUInteger knownID = [LayoutInfo getKeyboardID:knownIndex];
-			NSUInteger keyboardType = [LayoutInfo getKeyboardType:knownID];
-			NSDictionary *typeDictionary = [LayoutInfo getKeyboardList:knownIndex];
+			NSUInteger knownID = [LayoutInfo getKeyboardID:(unsigned)knownIndex];
+			NSUInteger keyboardType = [LayoutInfo getKeyboardType:(int)knownID];
+			NSDictionary *typeDictionary = [LayoutInfo getKeyboardList:(unsigned)knownIndex];
 			NSMutableArray *keyboardIDList = [NSMutableArray array];
 			NSMutableArray *codingList = [NSMutableArray array];
 			if (kSingleCodeKeyboard == keyboardType) {
@@ -123,8 +123,8 @@ NSString *kKeyCodingIndex = @"codingIndex";
 					[codingList addObject:kCodeStringJIS];
 				}
 			}
-			NSString *keyboardName = [LayoutInfo getKeyboardName:knownIndex];
-			NSString *keyboardDescription = [LayoutInfo getKeyboardDescription:knownIndex];
+			NSString *keyboardName = [LayoutInfo getKeyboardName:(int)knownIndex];
+			NSString *keyboardDescription = [LayoutInfo getKeyboardDescription:(int)knownIndex];
 			KeyboardType *keyboardEntry = [KeyboardType keyboardTypeName:keyboardName
 														 withDescription:keyboardDescription
 															 withCodings:codingList
@@ -173,7 +173,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	NSInteger nameIndex = -1;
 	NSNumber *resourceIDNumber = @(resourceID);
 	if ([resourceSet containsObject:@(resourceID)]) {
-		NSInteger keyboardNameIndex = [LayoutInfo getKeyboardNameIndex:resourceID];
+		NSInteger keyboardNameIndex = [LayoutInfo getKeyboardNameIndex:(int)resourceID];
 		if (keyboardNameIndex != 0) {
 			for (nameIndex = 0; nameIndex < [knownKeyboardsList count]; nameIndex++) {
 				if ([LayoutInfo getKeyboardNameIndex:[resourceIDNumber intValue]] == [knownKeyboardsList[nameIndex] intValue]) {
@@ -197,7 +197,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		//	Get the list of keyboards of this type
 	NSDictionary *keyboardList = nil;
 	if (nameIndex >= 0 && nameIndex < [knownKeyboardsList count]) {
-		keyboardList = [LayoutInfo getKeyboardList:nameIndex];
+		keyboardList = [LayoutInfo getKeyboardList:(unsigned)nameIndex];
 	}
 	else {
 		NSNumber *resID = @(resourceID);
@@ -206,7 +206,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	}
 		//	Look up the types from LayoutInfo
 	NSInteger typeIndex = -1;
-	switch ([LayoutInfo getKeyboardLayoutType:resourceID]) {
+	switch ([LayoutInfo getKeyboardLayoutType:(int)resourceID]) {
 		case kSingleCodeKeyboard:
 				//	If it's a universal keyboard, there's no index
 			typeIndex = -1;

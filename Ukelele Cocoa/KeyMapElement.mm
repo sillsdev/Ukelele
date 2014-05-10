@@ -603,7 +603,7 @@ UInt32 KeyMapElementList::GetKeyMapSize(void) const
 
 void KeyMapElementList::InsertKeyMapElementAtIndex(UInt32 inIndex, KeyMapElement *inKeyMapElement)
 {
-	UInt32 numKeyMaps = mElementList.size();
+	UInt32 numKeyMaps = static_cast<UInt32>(mElementList.size());
 	if (inIndex >= numKeyMaps) {
 		mElementList.push_back(inKeyMapElement);
 	}

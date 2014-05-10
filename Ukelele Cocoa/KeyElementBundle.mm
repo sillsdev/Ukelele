@@ -61,7 +61,7 @@ void KeyElementBundle::AddKeyElement(const UInt32 inKeyMapSetIndex,
 									 const KeyElement *inKeyElement)
 {
 	if (inKeyMapSetIndex >= mBundle.size()) {
-		for (UInt32 i = mBundle.size(); i <= inKeyMapSetIndex; i++) {
+		for (UInt32 i = static_cast<UInt32>(mBundle.size()); i <= inKeyMapSetIndex; i++) {
 			mBundle.push_back(new KeyElementList);
 		}
 	}

@@ -7,3 +7,14 @@
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 #endif
+
+#if __cplusplus
+#define NN_SEEN_RELEASE_NOTES_FOR			0x00200000
+#include "Nano.h"
+#endif
+
+#if defined(__cplusplus)
+#define MY_EXTERN extern "C"
+#else
+#define MY_EXTERN extern
+#endif
