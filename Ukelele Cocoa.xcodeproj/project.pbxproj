@@ -456,7 +456,7 @@
 				523B0067191C9BCF00E06DF3 /* UkeleleErrorCodes.h */,
 				523B0068191C9BCF00E06DF3 /* UkeleleStrings.h */,
 			);
-			name = "Headers & Strings";
+			path = "Headers & Strings";
 			sourceTree = "<group>";
 		};
 		523B0048191C97EF00E06DF3 /* Protocols */ = {
