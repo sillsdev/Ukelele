@@ -13,7 +13,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"AskFromList" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"AskFromList" owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];
 	if (self) {
 		callBack = nil;

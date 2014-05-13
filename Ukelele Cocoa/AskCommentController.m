@@ -18,7 +18,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"AskCommentSheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"AskCommentSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

@@ -20,7 +20,7 @@ static NSString *nibWindowName = @"UnlinkModifiers";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];
     if (self) {
 		parentWindow = nil;

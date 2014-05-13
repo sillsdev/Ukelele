@@ -25,7 +25,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"EditKeyWindow" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"EditKeyWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
 		callerData = nil;

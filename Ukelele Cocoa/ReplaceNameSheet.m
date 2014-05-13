@@ -12,7 +12,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"ReplaceNameSheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"ReplaceNameSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

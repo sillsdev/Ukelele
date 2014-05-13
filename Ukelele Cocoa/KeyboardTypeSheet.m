@@ -19,7 +19,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
-	[NSBundle loadNibNamed:nibName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];
     if (self) {
         // Initialization code here.

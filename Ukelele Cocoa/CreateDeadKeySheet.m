@@ -25,7 +25,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

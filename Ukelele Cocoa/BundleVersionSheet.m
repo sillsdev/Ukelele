@@ -21,7 +21,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"BundleVersionSheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"BundleVersionSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

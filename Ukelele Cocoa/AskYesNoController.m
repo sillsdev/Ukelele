@@ -18,7 +18,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"AskYesNo" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"AskYesNo" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

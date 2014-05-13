@@ -18,7 +18,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"ChooseStateSheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"ChooseStateSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

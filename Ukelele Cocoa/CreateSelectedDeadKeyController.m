@@ -23,7 +23,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"CreateSelectedDeadKeySheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"CreateSelectedDeadKeySheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

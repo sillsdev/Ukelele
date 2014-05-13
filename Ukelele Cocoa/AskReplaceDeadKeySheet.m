@@ -18,7 +18,7 @@ static NSString *windowName = @"AskReplace";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
 	if ([super initWithWindowNibName:windowNibName]) {
 		callBack = nil;
 	}

@@ -21,7 +21,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"AskStateAndTerminatorSheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"AskStateAndTerminatorSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

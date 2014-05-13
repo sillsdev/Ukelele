@@ -19,7 +19,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"AskSwapKeyCodesWindow" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"AskSwapKeyCodesWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

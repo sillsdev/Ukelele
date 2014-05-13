@@ -318,7 +318,7 @@ enum {
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibWindowName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibWindowName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];
 	if (self) {
 			// Nothing to do?

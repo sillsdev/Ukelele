@@ -15,7 +15,7 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
 	if ([super initWithWindowNibName:windowNibName]) {
 		parentWindow = nil;
 		callBack = nil;

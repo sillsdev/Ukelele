@@ -16,7 +16,7 @@ static NSString *nibWindow = @"Preferences";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
 		keyboardResources = [KeyboardResourceList getInstance];

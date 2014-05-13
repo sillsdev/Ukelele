@@ -24,7 +24,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:nibFileName owner:self];
+	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];
 	if (self) {
 			// Set up the standard key maps popup

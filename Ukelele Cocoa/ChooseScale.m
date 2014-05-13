@@ -15,7 +15,7 @@ static const double kMaxValidValue = 500.0;
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"ChooseScale" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"ChooseScale" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.

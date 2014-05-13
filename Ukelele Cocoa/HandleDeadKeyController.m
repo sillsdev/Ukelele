@@ -20,7 +20,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[NSBundle loadNibNamed:@"HandleDeadKeySheet" owner:self];
+	[[NSBundle mainBundle] loadNibNamed:@"HandleDeadKeySheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.
