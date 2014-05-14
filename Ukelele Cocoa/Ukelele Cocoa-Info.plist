@@ -46,7 +46,7 @@
 			<key>LSTypeIsPackage</key>
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
-			<string>KeyboardLayoutBunle</string>
+			<string>KeyboardLayoutBundle</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

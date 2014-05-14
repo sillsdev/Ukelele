@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
 		523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */; };
 		523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0071191C9CA900E06DF3 /* KeyCapView.m */; };
@@ -119,12 +120,11 @@
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
+		52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A481F0192348B300D412D7 /* AddModifiersDialog.xib */; };
 		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
 		52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED0B191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED0F191B4C3900E48394 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED0E191B4C3900E48394 /* main.m */; };
 		52BBED13191B4C3900E48394 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED11191B4C3900E48394 /* Credits.rtf */; };
-		52BBED16191B4C3900E48394 /* UKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED15191B4C3900E48394 /* UKDocument.m */; };
-		52BBED19191B4C3900E48394 /* UKDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED17191B4C3900E48394 /* UKDocument.xib */; };
 		52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1A191B4C3900E48394 /* MainMenu.xib */; };
 		52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1D191B4C3900E48394 /* Images.xcassets */; };
 		52BBED25191B4C3900E48394 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED24191B4C3900E48394 /* XCTest.framework */; };
@@ -157,6 +157,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5209F18119236083001F9923 /* AskCommentSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskCommentSheet.xib; path = "Interface Files/AskCommentSheet.xib"; sourceTree = "<group>"; };
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
 		52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLayoutInformation.m; sourceTree = "<group>"; };
 		523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardDefinitions.h; sourceTree = "<group>"; };
@@ -393,6 +394,7 @@
 		525A4B6D191DE60700A356F8 /* ViewScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScale.h; sourceTree = "<group>"; };
 		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
 		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
+		52A481F0192348B300D412D7 /* AddModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddModifiersDialog.xib; path = "Interface Files/AddModifiersDialog.xib"; sourceTree = "<group>"; };
 		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -403,9 +405,6 @@
 		52BBED0E191B4C3900E48394 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ukelele Cocoa-Prefix.pch"; sourceTree = "<group>"; };
 		52BBED12191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		52BBED14191B4C3900E48394 /* UKDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UKDocument.h; sourceTree = "<group>"; };
-		52BBED15191B4C3900E48394 /* UKDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UKDocument.m; sourceTree = "<group>"; };
-		52BBED18191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UKDocument.xib; sourceTree = "<group>"; };
 		52BBED1B191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		52BBED1D191B4C3900E48394 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ukelele CocoaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -578,6 +577,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		52A481EF1923484B00D412D7 /* Interface Files */ = {
+			isa = PBXGroup;
+			children = (
+				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
+				5209F18119236083001F9923 /* AskCommentSheet.xib */,
+			);
+			name = "Interface Files";
+			sourceTree = "<group>";
+		};
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
@@ -635,7 +643,7 @@
 				52BBED39191B4EA600E48394 /* Models */,
 				52BBED3A191B4EB600E48394 /* Views */,
 				523B0062191C9B5D00E06DF3 /* Utilities */,
-				52BBED17191B4C3900E48394 /* UKDocument.xib */,
+				52A481EF1923484B00D412D7 /* Interface Files */,
 				52BBED1A191B4C3900E48394 /* MainMenu.xib */,
 				52BBED1D191B4C3900E48394 /* Images.xcassets */,
 				52BBED3C191B4F6900E48394 /* Ukelele.icns */,
@@ -850,8 +858,6 @@
 				523B0182191CA18C00E06DF3 /* UnlinkModifierSetHandler.m */,
 				523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */,
 				523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */,
-				52BBED14191B4C3900E48394 /* UKDocument.h */,
-				52BBED15191B4C3900E48394 /* UKDocument.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -957,10 +963,11 @@
 				52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
 				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
-				52BBED19191B4C3900E48394 /* UKDocument.xib in Resources */,
 				52BBED13191B4C3900E48394 /* Credits.rtf in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,
+				52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */,
+				5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,7 +1018,6 @@
 				523B0188191CA18C00E06DF3 /* AskNewKeyMap.m in Sources */,
 				523B018E191CA18C00E06DF3 /* BundleVersionSheet.m in Sources */,
 				523B00C8191CA00A00E06DF3 /* KeyStrokeLookupTable.mm in Sources */,
-				52BBED16191B4C3900E48394 /* UKDocument.m in Sources */,
 				523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */,
 				523B01AA191CA18C00E06DF3 /* KeyboardLayoutBundle.m in Sources */,
 				523B01B2191CA18C00E06DF3 /* PrintAccessoryPanel.m in Sources */,
@@ -1132,14 +1138,6 @@
 				52BBED12191B4C3900E48394 /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		52BBED17191B4C3900E48394 /* UKDocument.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				52BBED18191B4C3900E48394 /* Base */,
-			);
-			name = UKDocument.xib;
 			sourceTree = "<group>";
 		};
 		52BBED1A191B4C3900E48394 /* MainMenu.xib */ = {
