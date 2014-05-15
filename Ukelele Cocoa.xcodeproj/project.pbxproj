@@ -118,10 +118,12 @@
 		523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0237191D917900E06DF3 /* Sparkle.framework */; };
 		523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */; };
 		523B023A191DAC8F00E06DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01EB191D865100E06DF3 /* main.m */; };
+		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
 		52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A481F0192348B300D412D7 /* AddModifiersDialog.xib */; };
+		52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */; };
 		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
 		52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED0B191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED0F191B4C3900E48394 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED0E191B4C3900E48394 /* main.m */; };
@@ -133,7 +135,11 @@
 		52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED2C191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */; };
 		52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED3E191B50B700E48394 /* Ukelele.icns */; };
+		52BEADEC192484A6008A3314 /* AskText.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEB192484A6008A3314 /* AskText.xib */; };
+		52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEF1924856F008A3314 /* AskYesNo.xib */; };
+		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
+		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,12 +398,14 @@
 		523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch"; sourceTree = "<group>"; };
 		523B0235191D917400E06DF3 /* libNano.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNano.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		523B0237191D917900E06DF3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskSwapKeyCodesWindow.xib; path = "Interface Files/AskSwapKeyCodesWindow.xib"; sourceTree = "<group>"; };
 		525A4B6A191DE11E00A356F8 /* RemoveStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveStateData.h; sourceTree = "<group>"; };
 		525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RemoveStateData.mm; sourceTree = "<group>"; };
 		525A4B6D191DE60700A356F8 /* ViewScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScale.h; sourceTree = "<group>"; };
 		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
 		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
 		52A481F0192348B300D412D7 /* AddModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddModifiersDialog.xib; path = "Interface Files/AddModifiersDialog.xib"; sourceTree = "<group>"; };
+		52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskStateAndTerminatorSheet.xib; path = "Interface Files/AskStateAndTerminatorSheet.xib"; sourceTree = "<group>"; };
 		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -417,7 +425,11 @@
 		52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ukelele_CocoaTests.m; sourceTree = "<group>"; };
 		52BBED3C191B4F6900E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
 		52BBED3E191B50B700E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
+		52BEADEB192484A6008A3314 /* AskText.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskText.xib; path = "Interface Files/AskText.xib"; sourceTree = "<group>"; };
+		52BEADEF1924856F008A3314 /* AskYesNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskYesNo.xib; path = "Interface Files/AskYesNo.xib"; sourceTree = "<group>"; };
+		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
+		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +600,12 @@
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
 				52E347C9192457200046ABA7 /* AskKeyCode.xib */,
+				52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */,
+				52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */,
+				52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */,
+				5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */,
+				52BEADEB192484A6008A3314 /* AskText.xib */,
+				52BEADEF1924856F008A3314 /* AskYesNo.xib */,
 			);
 			name = "Interface Files";
 			sourceTree = "<group>";
@@ -969,13 +987,19 @@
 				52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
 				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
+				52BEADEC192484A6008A3314 /* AskText.xib in Resources */,
 				523A4C2D192454770019F062 /* AskFromList.xib in Resources */,
 				52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */,
 				52BBED13191B4C3900E48394 /* Credits.rtf in Resources */,
+				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
+				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
+				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
+				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
 				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,
 				52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */,
 				5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */,
+				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
