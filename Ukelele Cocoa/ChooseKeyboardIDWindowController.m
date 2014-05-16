@@ -20,7 +20,7 @@ NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[[NSBundle mainBundle] loadNibNamed:@"ChooseKeyboardIDWindowController" owner:self topLevelObjects:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"ChooseKeyboardIDWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         scriptList = [ScriptInfo standardScripts];
@@ -38,7 +38,7 @@ NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 
 + (ChooseKeyboardIDWindowController *)chooseKeyboardID
 {
-	return [[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindowController"];
+	return [[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"];
 }
 
 - (void)windowDidLoad
