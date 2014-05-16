@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
+		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* BundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* BundleVersionSheet.xib */; };
 		523A4C2D192454770019F062 /* AskFromList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523A4C2C192454770019F062 /* AskFromList.xib */; };
@@ -124,7 +125,9 @@
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
+		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
+		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A481F0192348B300D412D7 /* AddModifiersDialog.xib */; };
 		52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */; };
 		52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */; };
@@ -142,6 +145,7 @@
 		52BEADEC192484A6008A3314 /* AskText.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEB192484A6008A3314 /* AskText.xib */; };
 		52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEF1924856F008A3314 /* AskYesNo.xib */; };
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
+		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -177,6 +181,7 @@
 		5209F18119236083001F9923 /* AskCommentSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskCommentSheet.xib; path = "Interface Files/AskCommentSheet.xib"; sourceTree = "<group>"; };
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
 		52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLayoutInformation.m; sourceTree = "<group>"; };
+		521E5EA61926228000C45A4A /* InspectorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectorWindow.xib; path = "Interface Files/InspectorWindow.xib"; sourceTree = "<group>"; };
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
 		5227DA3219258A8700192B1B /* BundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BundleVersionSheet.xib; path = "Interface Files/BundleVersionSheet.xib"; sourceTree = "<group>"; };
 		523A4C2C192454770019F062 /* AskFromList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskFromList.xib; path = "Interface Files/AskFromList.xib"; sourceTree = "<group>"; };
@@ -415,7 +420,9 @@
 		525A4B6D191DE60700A356F8 /* ViewScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewScale.h; sourceTree = "<group>"; };
 		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
 		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
+		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseFrom3Sheet.xib; path = "Interface Files/ChooseFrom3Sheet.xib"; sourceTree = "<group>"; };
+		5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HandleDeadKeySheet.xib; path = "Interface Files/HandleDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52A481F0192348B300D412D7 /* AddModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddModifiersDialog.xib; path = "Interface Files/AddModifiersDialog.xib"; sourceTree = "<group>"; };
 		52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateSelectedDeadKeySheet.xib; path = "Interface Files/CreateSelectedDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskStateAndTerminatorSheet.xib; path = "Interface Files/AskStateAndTerminatorSheet.xib"; sourceTree = "<group>"; };
@@ -441,6 +448,7 @@
 		52BEADEB192484A6008A3314 /* AskText.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskText.xib; path = "Interface Files/AskText.xib"; sourceTree = "<group>"; };
 		52BEADEF1924856F008A3314 /* AskYesNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskYesNo.xib; path = "Interface Files/AskYesNo.xib"; sourceTree = "<group>"; };
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
+		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
@@ -633,6 +641,10 @@
 				52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */,
 				52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */,
 				52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */,
+				52835ADA19261B96005979E0 /* EditKeyPopover.xib */,
+				52DAF29419261CE300818186 /* EditKeyWindow.xib */,
+				5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */,
+				521E5EA61926228000C45A4A /* InspectorWindow.xib */,
 			);
 			name = "Interface Files";
 			sourceTree = "<group>";
@@ -1020,14 +1032,17 @@
 				52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */,
 				52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */,
 				52BBED13191B4C3900E48394 /* Credits.rtf in Resources */,
+				52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */,
 				52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */,
 				5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
 				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
+				5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
+				52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */,
 				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,
 				52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */,
 				5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */,
@@ -1035,6 +1050,7 @@
 				52F1914019258CA000164D48 /* ChooseKeyboardIDWindow.xib in Resources */,
 				5227DA3319258A8700192B1B /* BundleVersionSheet.xib in Resources */,
 				528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */,
+				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
 				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

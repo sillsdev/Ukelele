@@ -103,7 +103,7 @@ enum ProcessingStates {
 		editPopover = [[NSPopover alloc] init];
 	}
 	if (popoverController == nil) {
-		popoverController = [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopoverController" bundle:nil];
+		popoverController = [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil];
 	}
 	[editPopover setDelegate:self];
 	[editPopover setContentViewController:popoverController];
