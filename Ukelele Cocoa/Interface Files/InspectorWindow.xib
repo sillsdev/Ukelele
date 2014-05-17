@@ -79,6 +79,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="DMO-Jw-VUF" name="value" keyPath="selection.keyboardName" id="Tqn-8Z-qtn"/>
+                                                        </connections>
                                                     </textField>
                                                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23w-03-ycN">
                                                         <rect key="frame" x="61" y="43" width="219" height="26"/>
@@ -94,6 +97,15 @@
                                                                 </items>
                                                             </menu>
                                                         </popUpButtonCell>
+                                                        <connections>
+                                                            <binding destination="9Xd-w7-kG1" name="content" keyPath="arrangedObjects" id="xow-vs-wGf"/>
+                                                            <binding destination="9Xd-w7-kG1" name="contentValues" keyPath="arrangedObjects.scriptName" previousBinding="xow-vs-wGf" id="hO4-hq-44Y"/>
+                                                            <binding destination="DMO-Jw-VUF" name="selectedObject" keyPath="selection.keyboardScript" previousBinding="hO4-hq-44Y" id="6DU-ag-emf">
+                                                                <dictionary key="options">
+                                                                    <string key="NSValueTransformerName">ScriptInfoTransformer</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
                                                     </popUpButton>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-9a-RgC">
                                                         <rect key="frame" x="63" y="14" width="74" height="22"/>
@@ -110,6 +122,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="DMO-Jw-VUF" name="value" keyPath="selection.keyboardID" id="49Q-xK-vtx"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j6Y-CU-mdu">
                                                         <rect key="frame" x="16" y="16" width="18" height="17"/>
@@ -151,6 +166,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.bundleName" id="Y0Z-lM-swf"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hlq-BL-IEJ">
                                                         <rect key="frame" x="120" y="78" width="157" height="22"/>
@@ -160,6 +178,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.bundleVersion" id="QCJ-5q-iz1"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UpR-nG-19C">
                                                         <rect key="frame" x="120" y="46" width="157" height="22"/>
@@ -169,6 +190,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.buildVersion" id="1Vu-ZD-rJE"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFH-kY-vxJ">
                                                         <rect key="frame" x="120" y="14" width="157" height="22"/>
@@ -178,6 +202,9 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.sourceVersion" id="Nzb-a9-rf8"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RN9-Si-wih">
                                                         <rect key="frame" x="16" y="112" width="88" height="17"/>
@@ -374,8 +401,14 @@
                                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                            <connections>
+                                                                                <binding destination="h3d-vP-I6k" name="value" keyPath="arrangedObjects" id="HZ3-ME-Zij"/>
+                                                                            </connections>
                                                                         </tableColumn>
                                                                     </tableColumns>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="-2" id="Agj-v8-nhU"/>
+                                                                    </connections>
                                                                 </tableView>
                                                             </subviews>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -402,5 +435,22 @@
                 </subviews>
             </view>
         </window>
+        <arrayController objectClassName="NSArray" automaticallyPreparesContent="YES" id="h3d-vP-I6k" userLabel="State Stack Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="self.stateStack" id="VgC-mY-sR7"/>
+            </connections>
+        </arrayController>
+        <arrayController objectClassName="NSArray" id="9Xd-w7-kG1" userLabel="Scripts Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="self.scriptList" id="VSz-7l-Gvf"/>
+            </connections>
+        </arrayController>
+        <objectController objectClassName="UkeleleDocument" automaticallyPreparesContent="YES" id="DMO-Jw-VUF" userLabel="Keyboard Object">
+            <connections>
+                <binding destination="-2" name="contentObject" keyPath="currentKeyboard" id="5iQ-xR-SMh"/>
+            </connections>
+        </objectController>
+        <objectController objectClassName="KeyboardLayoutBundle" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Bundle Object"/>
+        <userDefaultsController representsSharedInstance="YES" id="b0N-ea-Ef6"/>
     </objects>
 </document>

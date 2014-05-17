@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UkelelePreferenceController">
             <connections>
+                <outlet property="arrayController" destination="m3L-qc-BYP" id="N50-Ah-ToB"/>
                 <outlet property="colourTheme" destination="Ybz-bz-QS6" id="7ZF-QN-dbz"/>
                 <outlet property="defaultZoom" destination="p7f-Zx-xcE" id="rTZ-y3-oZZ"/>
                 <outlet property="diacriticDisplay" destination="LNc-yy-nJt" id="qTX-cB-CyV"/>
@@ -216,8 +217,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="-2" name="font" keyPath="currentFont" id="aWb-yj-kiY"/>
                                         <binding destination="-2" name="value" keyPath="currentFont" id="JDu-Nm-9hu"/>
+                                        <binding destination="-2" name="font" keyPath="currentFont" id="aWb-yj-kiY"/>
                                     </connections>
                                 </textField>
                             </subviews>

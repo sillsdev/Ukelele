@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="KeyboardTypeSheet">
             <connections>
+                <outlet property="arrayController" destination="O9z-nf-e9V" id="Wt3-jd-C6J"/>
                 <outlet property="codingButton" destination="Sep-ay-5Hh" id="fHx-QM-5Lx"/>
                 <outlet property="keyboardTypeTable" destination="UUd-2g-81n" id="weV-eH-01p"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="fQy-zO-nbQ"/>
@@ -149,5 +150,10 @@ Gw
                 </subviews>
             </view>
         </window>
+        <arrayController objectClassName="KeyboardType" editable="NO" id="O9z-nf-e9V">
+            <declaredKeys>
+                <string>keyboardName</string>
+            </declaredKeys>
+        </arrayController>
     </objects>
 </document>

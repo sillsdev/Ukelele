@@ -90,7 +90,7 @@ Gw
                         <rect key="frame" x="20" y="49" width="153" height="72"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="153" height="26"/>
+                        <size key="cellSize" width="106" height="18"/>
                         <size key="intercellSpacing" width="4" height="20"/>
                         <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="p9P-5g-IfL">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

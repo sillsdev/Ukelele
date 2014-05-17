@@ -44,11 +44,11 @@
                         <tabViewItems>
                             <tabViewItem label="Keyboard" identifier="1" id="IZ0-8f-V7r">
                                 <view key="view" ambiguous="YES" id="M6q-7f-oxV">
-                                    <rect key="frame" x="10" y="33" width="754" height="342"/>
+                                    <rect key="frame" x="10" y="33" width="221" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
-                                            <rect key="frame" x="15" y="322" width="522" height="17"/>
+                                            <rect key="frame" x="15" y="-20" width="522" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="2z3-D3-1ig">
                                                 <font key="font" metaFont="system"/>
@@ -57,7 +57,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VD4-cu-A5u">
-                                            <rect key="frame" x="595" y="322" width="40" height="17"/>
+                                            <rect key="frame" x="595" y="-20" width="40" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Zoom" id="zbw-8S-KUE">
                                                 <font key="font" metaFont="system"/>
@@ -66,7 +66,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7DR-6A-223">
-                                            <rect key="frame" x="641" y="315" width="99" height="26"/>
+                                            <rect key="frame" x="641" y="-27" width="99" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="sei-YB-gBP">
                                                 <font key="font" metaFont="system"/>
@@ -78,7 +78,7 @@
                                             </connections>
                                         </comboBox>
                                         <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-Py-4Pd">
-                                            <rect key="frame" x="-3" y="-3" width="760" height="317"/>
+                                            <rect key="frame" x="-3" y="-345" width="760" height="317"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <clipView key="contentView" ambiguous="YES" misplaced="YES" id="UbK-L1-wwU">
                                                 <rect key="frame" x="1" y="1" width="743" height="300"/>
@@ -382,7 +382,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="B5n-Vv-mtY">
-                                                <rect key="frame" x="704" y="1" width="15" height="226"/>
+                                                <rect key="frame" x="1" y="1" width="15" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -430,6 +430,116 @@
                 </defaultToolbarItems>
             </toolbar>
         </window>
+        <menu title="Non-dead key contextual menu" id="nEq-8b-aYJ">
+            <items>
+                <menuItem title="Unlink" id="eF5-Ad-4Bi">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="unlinkKey:" target="-1" id="0Sg-26-AWb"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="8iu-go-zen"/>
+                <menuItem title="Change Output…" id="bex-4p-J0b">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="changeOutput:" target="-1" id="0uq-4L-rVA"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Make Dead Key…" id="XHH-Xy-owL">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="makeDeadKey:" target="-1" id="uJr-0H-AGq"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="FTb-kK-eEG"/>
+                <menuItem title="Cut Key" id="oeO-eE-msh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="cutKey:" target="-1" id="5A0-KF-EVa"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy Key" id="4OV-Ka-PHX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="copyKey:" target="-1" id="tQq-rW-iup"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste Key" id="exR-6X-YEG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="pasteKey:" target="-1" id="bpe-kL-Db9"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="jyy-oy-jai"/>
+                <menuItem title="Attach Comment…" id="rcn-Gi-Pjo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="attachComment:" target="-1" id="wgR-Br-xhI"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <menu title="Dead key contextual menu" id="i6v-9N-pDp">
+            <items>
+                <menuItem title="Unlink" id="nw6-Eq-dcn">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="unlinkKey:" target="-1" id="pfQ-TT-QII"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Eus-05-cnh"/>
+                <menuItem title="Change Terminator…" id="2jm-tV-moq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="changeTerminator:" target="-1" id="sp2-LD-TGg"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Make Output…" id="XRW-Db-qpx">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="makeOutput:" target="-1" id="Z9s-jk-RA2"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Enter Dead Key State" id="Lnb-7V-pme">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="enterDeadKeyState:" target="-1" id="6k8-BL-PX6"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Change Next State…" id="pfE-5g-IIe">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="changeNextState:" target="-1" id="TVr-bL-ZjK"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="bSc-GG-phD"/>
+                <menuItem title="Cut Key" id="Cpr-3C-MQY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="cutKey:" target="-1" id="4my-Ko-h6K"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy Key" id="GSm-a4-Yzn">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="copyKey:" target="-1" id="Lrn-fL-rOx"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste Key" id="ly2-5k-RfD">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="pasteKey:" target="-1" id="OPf-tH-5Pg"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="3BJ-WL-fZb"/>
+                <menuItem title="Attach Comment…" id="KRH-7e-75m">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="attachComment:" target="-1" id="C0y-1O-ZuI"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
