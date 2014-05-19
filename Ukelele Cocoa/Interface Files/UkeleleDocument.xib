@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="commentBindingPane" destination="3Oj-mq-If4" id="vfh-Zg-hxD"/>
                 <outlet property="commentPane" destination="Vnz-1Z-fWP" id="YMv-hf-QVT"/>
+                <outlet property="deadKeyContextualMenu" destination="i6v-9N-pDp" id="AbT-mB-dLL"/>
                 <outlet property="defaultIndexButton" destination="e98-hd-75Q" id="aPg-Al-z2N"/>
                 <outlet property="firstCommentButton" destination="5Tz-Hn-N2B" id="Umr-TO-aZN"/>
                 <outlet property="keyboardView" destination="pxh-Py-4Pd" id="hjb-Cu-4HW"/>
@@ -16,6 +17,7 @@
                 <outlet property="messageBar" destination="GcK-Mo-ulK" id="gDL-fL-srH"/>
                 <outlet property="modifiersTableView" destination="5x7-CS-hOp" id="hqG-Hw-Iu8"/>
                 <outlet property="nextCommentButton" destination="OSi-Ro-jY3" id="78z-wM-aH1"/>
+                <outlet property="nonDeadKeyContextualMenu" destination="nEq-8b-aYJ" id="rhL-Bk-Jgy"/>
                 <outlet property="previousCommentButton" destination="tn1-R1-aUM" id="UD3-XF-WxN"/>
                 <outlet property="removeCommentButton" destination="bXS-Uw-29f" id="slk-K6-d6H"/>
                 <outlet property="removeModifiersButton" destination="sjL-cW-z8G" id="ax7-vi-ZpD"/>
@@ -42,7 +44,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Keyboard" identifier="1" id="IZ0-8f-V7r">
+                            <tabViewItem label="Keyboard" identifier="Keyboard" id="IZ0-8f-V7r">
                                 <view key="view" ambiguous="YES" id="M6q-7f-oxV">
                                     <rect key="frame" x="10" y="33" width="221" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,7 +110,7 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Modifiers" identifier="2" id="kOF-Ae-Iry">
+                            <tabViewItem label="Modifiers" identifier="Modifiers" id="kOF-Ae-Iry">
                                 <view key="view" id="g1L-XA-Ana">
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -226,14 +228,16 @@
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e98-hd-75Q">
                                             <rect key="frame" x="665" y="14" width="75" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mH7-xT-NnB" id="UmJ-WT-HPu">
+                                            <popUpButtonCell key="cell" type="push" title="0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mH7-xT-NnB" id="UmJ-WT-HPu">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="ff3-tY-RTq">
                                                     <items>
-                                                        <menuItem title="Item 1" state="on" id="mH7-xT-NnB"/>
-                                                        <menuItem title="Item 2" id="w8g-IM-JL9"/>
-                                                        <menuItem title="Item 3" id="jzL-vV-jCP"/>
+                                                        <menuItem title="0" state="on" id="mH7-xT-NnB">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="1" id="w8g-IM-JL9"/>
+                                                        <menuItem title="2" id="jzL-vV-jCP"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -275,7 +279,7 @@
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KJs-3A-5K3">
-                                            <rect key="frame" x="572" y="20" width="89" height="17"/>
+                                            <rect key="frame" x="572" y="19" width="89" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Index" id="5f8-yk-Jlc">
                                                 <font key="font" metaFont="system"/>
@@ -286,7 +290,7 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Comments" identifier="" id="bp8-nY-09b">
+                            <tabViewItem label="Comments" identifier="Comments" id="bp8-nY-09b">
                                 <view key="view" id="CpZ-Lt-XCB">
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -416,18 +420,67 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="39BD3AC9-71CA-4010-AC94-11006DE15FC5" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="UNi-Hg-5L3">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="Jfk-fE-jWJ"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="xRD-cK-gSk"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="uVY-59-lk8"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="xRD-cK-gSk">
+                        <connections>
+                            <action selector="orderFrontFontPanel:" target="-1" id="LFe-pf-UMK"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FEBA4A66-0CFB-4087-B358-9EB960BD0793" label="Create" paletteLabel="Create" tag="-1" image="CreateDeadKey" id="0YC-AN-8bU">
+                        <connections>
+                            <action selector="createDeadKeyState:" target="-1" id="ddb-7H-MFe"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="596FB632-AAAE-4402-8991-9DFEF62C1D5E" label="Enter" paletteLabel="Enter" tag="-1" image="EnterDeadKey" id="IDe-lW-n46">
+                        <connections>
+                            <action selector="enterDeadKeyState:" target="-1" id="tRl-Nt-WZK"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2577AC24-674F-43D5-85C6-700E6ADEFF3A" label="Leave" paletteLabel="Leave" tag="-1" image="LeaveDeadKey" id="KfN-dQ-mbV">
+                        <connections>
+                            <action selector="leaveDeadKeyState:" target="-1" id="DD4-J7-bvN"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="uVY-59-lk8">
+                        <connections>
+                            <action selector="print:" target="-1" id="rrd-yI-VXH"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="199-vF-kWg"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ik9-mU-J0G"/>
+                    <toolbarItem implicitItemIdentifier="C4E37ACC-4A2B-4664-A30F-01F303713335" label="Unlink" paletteLabel="Unlink" tag="-1" image="broken_chain" id="w6j-hB-N4e"/>
+                    <toolbarItem implicitItemIdentifier="94111A50-6440-4F12-94B2-74D6BFEAE4AF" label="Info" paletteLabel="Info" tag="-1" image="PanelInfo" id="TIM-YK-eyy">
+                        <connections>
+                            <action selector="showHideInspector:" target="-1" id="M9W-tg-hXy"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="6AD5C223-FCA5-4C5B-95D2-8ED93AFC91FE" label="Toolbox" paletteLabel="Toolbox" tag="-1" image="Toolbox" id="6X2-em-VJP">
+                        <connections>
+                            <action selector="toggleToolbox:" target="-1" id="he0-kM-PP5"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="fCo-Ya-85H"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="wUF-gN-vvf">
+                        <connections>
+                            <action selector="runToolbarCustomizationPalette:" target="-1" id="THq-wV-9V2"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="Jfk-fE-jWJ"/>
+                    <toolbarItem reference="6X2-em-VJP"/>
+                    <toolbarItem reference="TIM-YK-eyy"/>
+                    <toolbarItem reference="0YC-AN-8bU"/>
+                    <toolbarItem reference="IDe-lW-n46"/>
+                    <toolbarItem reference="KfN-dQ-mbV"/>
+                    <toolbarItem reference="w6j-hB-N4e"/>
                     <toolbarItem reference="xRD-cK-gSk"/>
                     <toolbarItem reference="Ik9-mU-J0G"/>
                     <toolbarItem reference="uVY-59-lk8"/>
+                    <toolbarItem reference="fCo-Ya-85H"/>
+                    <toolbarItem reference="wUF-gN-vvf"/>
                 </defaultToolbarItems>
+                <connections>
+                    <outlet property="delegate" destination="-2" id="ubS-BS-O85"/>
+                </connections>
             </toolbar>
         </window>
         <menu title="Non-dead key contextual menu" id="nEq-8b-aYJ">
@@ -542,7 +595,13 @@
         </menu>
     </objects>
     <resources>
+        <image name="CreateDeadKey" width="32" height="32"/>
+        <image name="EnterDeadKey" width="32" height="32"/>
+        <image name="LeaveDeadKey" width="32" height="32"/>
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
+        <image name="PanelInfo" width="32" height="32"/>
+        <image name="Toolbox" width="32" height="32"/>
+        <image name="broken_chain" width="80" height="80"/>
     </resources>
 </document>

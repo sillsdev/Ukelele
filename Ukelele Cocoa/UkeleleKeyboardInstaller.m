@@ -54,7 +54,9 @@
 			localErrorDict = @{NSLocalizedFailureReasonErrorKey: @"Cannot create the Keyboard Layouts folder because a file with that name already exists in the Library folder",
 					  NSLocalizedDescriptionKey: @"Could not install the keyboard layout because there is a file called Keyboard Layouts in the Library folder"};
 			localError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorKeyboardLayoutsFileExists userInfo:localErrorDict];
-			*installError = localError;
+			if (installError != NULL) {
+				*installError = localError;
+			}
 			return NO;
 		}
 	}
@@ -65,7 +67,9 @@
 				// Couldn't create the folder
 			localErrorDict = @{NSLocalizedDescriptionKey: @"Cannot create the Keyboard Layouts folder"};
 			localError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotCreateKeyboardLayouts userInfo:localErrorDict];
-			*installError = localError;
+			if (installError != NULL) {
+				*installError = localError;
+			}
 			return NO;
 		}
 	}
@@ -88,7 +92,9 @@
 			localErrorDict = @{NSLocalizedFailureReasonErrorKey: @"Cannot create the Keyboard Layouts folder because a file with that name already exists in the Library folder",
 					  NSLocalizedDescriptionKey: @"Could not install the keyboard layout because there is a file called Keyboard Layouts in the Library folder"};
 			localError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorKeyboardLayoutsFileExists userInfo:localErrorDict];
-			*installError = localError;
+			if (installError != NULL) {
+				*installError = localError;
+			}
 			return NO;
 		}
 	}
@@ -179,7 +185,9 @@
 - (BOOL)authenticatedInstallFromURL:(NSURL *)sourceURL toURL:(NSURL *)targetURL error:(NSError **)installError {
 	if (![self setupAuthorization]) {
 		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not get permission to install"};
-		*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
+		if (installError != NULL) {
+			*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
+		}
 		return NO;
 	}
 		// Create an external form to pass to the helper tool
@@ -187,7 +195,9 @@
 	OSStatus theStatus = AuthorizationMakeExternalForm(authorizationRef, &myExternalAuthorizationRef);
 	if (theStatus != errAuthorizationSuccess) {
 		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not get permission to install"};
-		*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
+		if (installError != NULL) {
+			*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
+		}
 		return NO;
 	}
 		// Call the helper tool
@@ -210,7 +220,9 @@
 	}
 		// Helper tool failed to install
 	NSDictionary *authErrorDict = @{NSLocalizedDescriptionKey: @"Helper tool not installed"};
-	*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorAuthenticationFailed userInfo:authErrorDict];
+	if (installError != NULL) {
+		*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorAuthenticationFailed userInfo:authErrorDict];
+	}
 	return NO;
 }
 

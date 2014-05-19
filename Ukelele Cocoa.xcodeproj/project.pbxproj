@@ -123,6 +123,8 @@
 		523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0237191D917900E06DF3 /* Sparkle.framework */; };
 		523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */; };
 		523B023A191DAC8F00E06DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01EB191D865100E06DF3 /* main.m */; };
+		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
+		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
@@ -427,6 +429,8 @@
 		523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch"; sourceTree = "<group>"; };
 		523B0235191D917400E06DF3 /* libNano.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNano.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		523B0237191D917900E06DF3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
+		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
 		5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskSwapKeyCodesWindow.xib; path = "Interface Files/AskSwapKeyCodesWindow.xib"; sourceTree = "<group>"; };
 		525A4B6A191DE11E00A356F8 /* RemoveStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveStateData.h; sourceTree = "<group>"; };
@@ -751,6 +755,8 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
+				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
 				52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */,
 				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BBED0E191B4C3900E48394 /* main.m */,
@@ -1075,6 +1081,7 @@
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
+				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
 				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
@@ -1085,6 +1092,7 @@
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
+				524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */,
 				52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */,
 				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,
 				52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */,

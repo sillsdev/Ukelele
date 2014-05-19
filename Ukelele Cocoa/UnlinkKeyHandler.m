@@ -20,7 +20,7 @@
 
 - (id)initWithDocument:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow
 {
-	if ([super init]) {
+	if (self = [super init]) {
 		parentWindow = theWindow;
 		parentDocument = theDocument;
 		completionTarget = nil;

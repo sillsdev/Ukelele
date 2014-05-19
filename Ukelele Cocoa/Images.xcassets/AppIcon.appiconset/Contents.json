@@ -7,9 +7,8 @@
       "scale" : "1x"
     },
     {
-      "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "Ukelele 32.png",
+      "size" : "16x16",
       "scale" : "2x"
     },
     {
@@ -30,9 +29,8 @@
       "scale" : "1x"
     },
     {
-      "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "Ukelele 256.png",
+      "size" : "128x128",
       "scale" : "2x"
     },
     {
@@ -42,9 +40,8 @@
       "scale" : "1x"
     },
     {
-      "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "Ukelele 512.png",
+      "size" : "256x256",
       "scale" : "2x"
     },
     {

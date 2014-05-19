@@ -14,7 +14,7 @@
 @implementation UnlinkModifierSetHandler
 
 - (id)initWithDocument:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow {
-	if ([super init]) {
+	if (self = [super init]) {
 		parentDocument = theDocument;
 		parentWindow = theWindow;
 		callback = nil;

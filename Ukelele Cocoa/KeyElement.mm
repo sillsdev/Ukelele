@@ -425,7 +425,7 @@ NString KeyElement::ChangeDeadKeyToOutput(NString inState, NString inNewOutput, 
 {
 	NString oldState;
 	ActionElement *actionElement = NULL;
-	NN_ASSERT(mElementType != kKeyFormUndefined && kKeyFormOutput);
+	NN_ASSERT(mElementType != kKeyFormUndefined && mElementType != kKeyFormOutput);
 	switch (mElementType) {
 		case kKeyFormAction:
 			actionElement = inActionList->FindActionElement(mActionName);

@@ -99,9 +99,15 @@ typedef struct KeyEntryRec {
 
 - (void)dealloc
 {
-	CFRelease(_fontDescriptor);
-	CFRelease(_largeParagraphStyle);
-	CFRelease(_smallParagraphStyle);
+	if (_fontDescriptor) {
+		CFRelease(_fontDescriptor);
+	}
+	if (_largeParagraphStyle) {
+		CFRelease(_largeParagraphStyle);
+	}
+	if (_smallParagraphStyle) {
+		CFRelease(_smallParagraphStyle);
+	}
 }
 
 - (BOOL)isFlipped
