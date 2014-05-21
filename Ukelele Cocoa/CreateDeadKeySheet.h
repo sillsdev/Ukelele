@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "UkeleleKeyboardObject.h"
-#import "DeadKeyConstants.h"
+#import "UkeleleDeadKeyConstants.h"
 
 	// Dictionary keys
 MY_EXTERN NSString *kDeadKeyDataKeyCode;

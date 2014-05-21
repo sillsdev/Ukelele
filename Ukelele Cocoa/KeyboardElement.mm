@@ -697,9 +697,9 @@ ModifierElement *KeyboardElement::RemoveModifierElement(const UInt32 inKeyboardI
 														const SInt32 inSubIndex)
 {
 	ModifierMap *modifierMap = GetModifierMap(inKeyboardID);
-	NN_ASSERT(modifierMap != NULL);
+	assert(modifierMap != NULL);
 	KeyMapSelect *keyMapSelect = modifierMap->GetKeyMapSelectElement(inIndex);
-	NN_ASSERT(keyMapSelect != NULL);
+	assert(keyMapSelect != NULL);
 	ModifierElement *modifierElement = keyMapSelect->RemoveModifierElement(inSubIndex);
 	NN_ASSERT(modifierElement != NULL);
 	return modifierElement;
@@ -831,7 +831,7 @@ void KeyboardElement::ChangeModifierElement(const UInt32 inKeyboardID,
 {
 	ModifierMap *modifierMap = GetModifierMap(inKeyboardID);
 	KeyMapSelect *keyMapSelect = modifierMap->GetKeyMapSelectElement(inIndex);
-	NN_ASSERT(keyMapSelect != NULL);
+	assert(keyMapSelect != NULL);
 	ModifierElement *modifierElement = keyMapSelect->GetModifierElement(inSubIndex);
 	modifierElement->SetModifierStatus(inShift, inCapsLock, inOption, inCommand, inControl);
 }
@@ -855,9 +855,9 @@ void KeyboardElement::ChangeDeadKeyNextState(const UInt32 inKeyboardID,
 			actionElement = keyElement->GetInlineAction();
 			break;
 	}
-	NN_ASSERT(actionElement != NULL);
+	assert(actionElement != NULL);
 	WhenElement *whenElement = actionElement->FindWhenElement(inState);
-	NN_ASSERT(whenElement != NULL);
+	assert(whenElement != NULL);
 	whenElement->SetNext(inNewState);
 }
 
@@ -882,7 +882,7 @@ void KeyboardElement::MakeDeadKeyOutput(const UInt32 inKeyboardID,
 										const NString inNewOutput)
 {
 	KeyElement *keyElement = GetKeyElement(inKeyboardID, inKeyCode, inModifierCombination, true);
-	NN_ASSERT(keyElement != NULL);
+	assert(keyElement != NULL);
 	NString oldState = keyElement->ChangeDeadKeyToOutput(inState, inNewOutput, mActionList);
 	NN_ASSERT(oldState != "");
 }

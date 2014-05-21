@@ -450,6 +450,8 @@ typedef struct KeyEntryRec {
                 [keyCap setSmallAttributes:[self smallAttributes]];
             }
 			[self addSubview:keyCap];
+			CFRelease(smallFont);
+			CFRelease(largeFont);
 			[keyCapMap addKeyCode:keyCode withKeyKapView:keyCap];
 			if (fnKeyCode != keyCode && fnKeyCode != kNoKeyCode) {
 				[keyCapMap addKeyCode:fnKeyCode withKeyKapView:keyCap];
@@ -599,6 +601,8 @@ typedef struct KeyEntryRec {
 			[keyCapView setLargeCTStyle:[self largeParagraphStyle]];
 			[keyCapView setSmallCTStyle:[self smallParagraphStyle]];
 		}
+		CFRelease(smallFont);
+		CFRelease(largeFont);
 	}
 }
 

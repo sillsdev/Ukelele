@@ -31,8 +31,8 @@
 @property (nonatomic) NSColor *currentTextColour;
 @property (nonatomic, assign) CTParagraphStyleRef largeCTStyle;
 @property (nonatomic, assign) CTParagraphStyleRef smallCTStyle;
-@property (nonatomic, assign) CTFontRef largeCTFont;
-@property (nonatomic, assign) CTFontRef smallCTFont;
+@property (nonatomic) CTFontRef largeCTFont;
+@property (nonatomic) CTFontRef smallCTFont;
 @property (nonatomic, strong) NSDictionary *largeAttributes;
 @property (nonatomic, strong) NSDictionary *smallAttributes;
 @property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;

@@ -7,7 +7,7 @@
 //
 
 #import "WrongStateChosenSheet.h"
-#import "DeadKeyConstants.h"
+#import "UkeleleDeadKeyConstants.h"
 
 NSString *nibFileName = @"WrongStateChosenSheet";
 NSString *nibWindowName = @"WrongState";

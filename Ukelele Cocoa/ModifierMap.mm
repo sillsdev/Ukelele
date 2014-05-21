@@ -58,7 +58,7 @@ void ModifierMap::SetDefaultIndex(const UInt32 inDefaultIndex)
 
 void ModifierMap::AddKeyMapSelectElement(KeyMapSelect *inKeyMapSelect, bool inCalculateMap)
 {
-	NN_ASSERT(inKeyMapSelect != NULL);
+	assert(inKeyMapSelect != NULL);
 	SInt32 theIndex = inKeyMapSelect->GetKeyMapSelectIndex();
 	if (theIndex >= static_cast<SInt32>(mKeyMapSelectList.size())) {
 		mKeyMapSelectList.resize(theIndex + 1, NULL);

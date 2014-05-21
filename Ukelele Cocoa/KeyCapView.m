@@ -63,6 +63,12 @@ static CGAffineTransform kTextTransform = {
 
 - (void) dealloc
 {
+	if (_smallCTFont) {
+		CFRelease(_smallCTFont);
+	}
+	if (_largeCTFont) {
+		CFRelease(_largeCTFont);
+	}
 	[self clearFrame];
 }
 
@@ -444,16 +450,28 @@ static CGAffineTransform kTextTransform = {
 
 - (void)setLargeCTFont:(CTFontRef)newFont
 {
-    _largeCTFont = newFont;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
+	if (_largeCTFont != newFont) {
+		CFRetain(newFont);
+		if (_largeCTFont) {
+			CFRelease(_largeCTFont);
+		}
+		_largeCTFont = newFont;
+		[self clearFrame];
+		[self setNeedsDisplay:YES];
+	}
 }
 
 - (void)setSmallCTFont:(CTFontRef)newFont
 {
-    _smallCTFont = newFont;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
+	if (_smallCTFont != newFont) {
+		CFRetain(newFont);
+		if (_smallCTFont) {
+			CFRelease(_smallCTFont);
+		}
+		_smallCTFont = newFont;
+		[self clearFrame];
+		[self setNeedsDisplay:YES];
+	}
 }
 
 - (void)setCurrentTextColour:(NSColor *)newTextColour {

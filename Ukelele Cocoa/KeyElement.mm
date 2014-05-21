@@ -296,6 +296,7 @@ UInt32 KeyElement::GetOutputType(NString inState, shared_ptr<ActionElementSet> i
 			break;
 	}
 		// Inspect the action
+	assert(actionElement != NULL);
 	WhenElement *whenElement = actionElement->FindWhenElement(inState);
 	if (whenElement != NULL && !whenElement->GetOutput().IsEmpty()) {
 		return inlineAction ? kKeyInlineActionOutput : kKeyActionOutput;
@@ -356,6 +357,7 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 			break;
 	}
 		// Update the action with the new output
+	assert(actionElement != NULL);
 	whenElement = actionElement->FindWhenElement(inState);
 	if (whenElement != NULL) {
 		oldOutput = whenElement->GetOutput();
@@ -408,6 +410,7 @@ void KeyElement::ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, 
 			actionElement = mInlineAction.get();
 			break;
 	}
+	assert(actionElement != NULL);
 	whenElement = actionElement->FindWhenElement(inState);
 	if (whenElement == NULL) {
 		whenElement = new WhenElement(inState, "", inDeadKeyState, "", "");
@@ -436,8 +439,10 @@ NString KeyElement::ChangeDeadKeyToOutput(NString inState, NString inNewOutput, 
 			actionElement = mInlineAction.get();
 			break;
 	}
+	assert(actionElement != NULL);
 	WhenElement *whenElement = actionElement->FindWhenElement(inState);
 	NN_ASSERT(whenElement != NULL);
+	assert(whenElement != NULL);
 	oldState = whenElement->GetNext();
 	if (inState == kStateNone && actionElement->GetWhenElementCount() == 1) {
 		if (mElementType == kKeyFormAction) {
@@ -511,6 +516,7 @@ void KeyElement::MakeDeadKey(NString inState, NString inDeadKeyState, shared_ptr
 			actionElement = mInlineAction.get();
 			break;
 	}
+	assert(actionElement != NULL);
 	whenElement = actionElement->FindWhenElement(inState);
 	if (whenElement == NULL) {
 		whenElement = new WhenElement(inState, "", inDeadKeyState, "", "");
@@ -572,6 +578,7 @@ UInt32 KeyElement::GetTypeForState(NString inState, const shared_ptr<ActionEleme
 			actionElement = mInlineAction.get();
 			break;
 	}
+	assert(actionElement != NULL);
 	WhenElement *whenElement = actionElement->FindWhenElement(inState);
 	if (whenElement == NULL) {
 		result = kStateNull;

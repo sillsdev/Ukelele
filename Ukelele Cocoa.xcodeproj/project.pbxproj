@@ -206,7 +206,7 @@
 		523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UkeleleConstantStrings.m; sourceTree = "<group>"; };
 		523B0067191C9BCF00E06DF3 /* UkeleleErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleErrorCodes.h; sourceTree = "<group>"; };
 		523B0068191C9BCF00E06DF3 /* UkeleleStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleStrings.h; sourceTree = "<group>"; };
-		523B006A191C9BEC00E06DF3 /* DeadKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeadKeyConstants.h; sourceTree = "<group>"; };
+		523B006A191C9BEC00E06DF3 /* UkeleleDeadKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleDeadKeyConstants.h; sourceTree = "<group>"; };
 		523B006B191C9C3D00E06DF3 /* UKInteractionCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKInteractionCompletion.h; sourceTree = "<group>"; };
 		523B006C191C9C3D00E06DF3 /* UKInteractionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKInteractionHandler.h; sourceTree = "<group>"; };
 		523B006D191C9C3D00E06DF3 /* UKKeyCapClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyCapClick.h; sourceTree = "<group>"; };
@@ -518,7 +518,7 @@
 		523B003F191C973400E06DF3 /* Headers & Strings */ = {
 			isa = PBXGroup;
 			children = (
-				523B006A191C9BEC00E06DF3 /* DeadKeyConstants.h */,
+				523B006A191C9BEC00E06DF3 /* UkeleleDeadKeyConstants.h */,
 				523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */,
 				523B0064191C9BCF00E06DF3 /* UkeleleConstants.h */,
 				523B0065191C9BCF00E06DF3 /* UkeleleConstantStrings.h */,
