@@ -39,6 +39,20 @@ NSString *kKeyKeyOutput = @"KeyOutput";
 NSString *kKeyNextState = @"NextState";
 NSString *kKeyTerminator = @"Terminator";
 
+	// Keys for state variables
+
+NSString *kStateCurrentState = @"CurrentState";         // NSString, current dead key state
+NSString *kStateCurrentKeyboard = @"CurrentKeyboard";   // NSUInteger, current keyboard ID
+NSString *kStateCurrentScale = @"CurrentScale";         // double, current view scale
+NSString *kStateCurrentModifiers = @"CurrentModifiers"; // NSUInteger, current modifier combination
+NSString *kStateTargetKeyCode = @"TargetKeyCode";       // NSInteger, key code for current key
+NSString *kStateModifiersInfo = @"ModifiersInfo";       // ModifiersInfo, modifiers currently being edited/added
+
+	// Names for tabs
+NSString *kTabNameKeyboard = @"Keyboard";
+NSString *kTabNameModifiers = @"Modifiers";
+NSString *kTabNameComments = @"Comments";
+
 // Common strings
 NSString *kDomainUkelele = @"org.sil.ukelele";
 

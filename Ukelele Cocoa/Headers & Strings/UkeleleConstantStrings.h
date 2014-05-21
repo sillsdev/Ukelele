@@ -39,6 +39,15 @@ MY_EXTERN NSString *kKeyKeyType;
 MY_EXTERN NSString *kKeyKeyOutput;
 MY_EXTERN NSString *kKeyNextState;
 MY_EXTERN NSString *kKeyTerminator;
+MY_EXTERN NSString *kStateCurrentState;
+MY_EXTERN NSString *kStateCurrentKeyboard;
+MY_EXTERN NSString *kStateCurrentScale;
+MY_EXTERN NSString *kStateCurrentModifiers;
+MY_EXTERN NSString *kStateTargetKeyCode;
+MY_EXTERN NSString *kStateModifiersInfo;
+MY_EXTERN NSString *kTabNameKeyboard;
+MY_EXTERN NSString *kTabNameModifiers;
+MY_EXTERN NSString *kTabNameComments;
 
     // Common strings
 MY_EXTERN NSString *kDomainUkelele;

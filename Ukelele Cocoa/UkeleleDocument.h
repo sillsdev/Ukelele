@@ -72,6 +72,7 @@ enum ToolbarItemTags {
 	ReplaceNameSheet *replaceNameSheet;
 	ChooseKeyboardIDWindowController *keyboardIDSheet;
 	NSInteger selectedKey;
+	BOOL commentChanged;
 }
 
 @property (readonly) UkeleleKeyboardObject *keyboardLayout;
@@ -85,25 +86,13 @@ enum ToolbarItemTags {
 @property (strong) IBOutlet NSMenu *deadKeyContextualMenu;
 @property (strong) IBOutlet NSMenu *nonDeadKeyContextualMenu;
 
-- (IBAction)addModifiers:(id)sender;
-- (IBAction)removeModifiers:(id)sender;
-- (IBAction)firstComment:(id)sender;
-- (IBAction)previousComment:(id)sender;
-- (IBAction)nextComment:(id)sender;
-- (IBAction)lastComment:(id)sender;
-- (IBAction)addComment:(id)sender;
-- (IBAction)removeComment:(id)sender;
 - (IBAction)setScaleValue:(id)sender;
 - (IBAction)setScaleLevel:(id)sender;
-- (IBAction)doubleClickRow:(id)sender;
-- (IBAction)setDefaultIndex:(id)sender;
-- (IBAction)simplifyModifiers:(id)sender;
 - (IBAction)enterDeadKeyState:(id)sender;
 - (IBAction)leaveDeadKeyState:(id)sender;
 - (IBAction)createDeadKeyState:(id)sender;
 - (IBAction)unlinkKey:(id)sender;
 - (IBAction)unlinkKeyAskingKeyCode:(id)sender;
-- (IBAction)unlinkModifierSet:(id)sender;
 - (IBAction)setKeyboardType:(id)sender;
 - (IBAction)importDeadKey:(id)sender;
 - (IBAction)changeTerminator:(id)sender;
@@ -137,6 +126,7 @@ enum ToolbarItemTags {
 - (id)initWithCurrentInputSource;
 
 - (NSString *)keyboardDisplayName;
+- (void)updateWindow;
 
 - (void)showEditingPaneForKeyCode:(int)keyCode text:(NSString *)initialText target:(id)target action:(SEL)action;
 - (NSView *)keyboardView;
@@ -161,30 +151,6 @@ enum ToolbarItemTags {
 - (void)doRelinkKey:(NSDictionary *)keyDataDict originalAction:(NSString *)actionName;
 - (void)unlinkModifierCombination;
 - (void)swapKeyWithCode:(NSInteger)keyCode1 andKeyWithCode:(NSInteger)keyCode2;
-
-- (void)setDefaultModifierIndex:(NSUInteger)defaultIndex;
-- (void)changeModifiersIndex:(NSInteger)index
-					subIndex:(NSInteger)subindex
-					   shift:(NSInteger)newShift
-					  option:(NSInteger)newOption
-					capsLock:(NSInteger)newCapsLock
-					 command:(NSInteger)newCommand
-					 control:(NSInteger)newControl;
-- (void)removeModifierElement:(NSInteger)keyboardID index:(NSInteger)index subindex:(NSInteger)subindex;
-- (void)addModifierElement:(NSInteger)keyboardID
-					 index:(NSInteger)index
-				  subIndex:(NSInteger)subindex
-					 shift:(NSInteger)newShift
-				  capsLock:(NSInteger)newCapsLock
-					option:(NSInteger)newOption
-				   command:(NSInteger)newCommand
-				   control:(NSInteger)newControl;
-- (void)removeKeyMap:(NSInteger)index forKeyboard:(NSInteger)keyboardID newDefaultIndex:(NSInteger)newDefaultIndex;
-- (void)replaceKeyMap:(NSInteger)index
-		  forKeyboard:(NSInteger)keyboardID
-		 defaultIndex:(NSInteger)defaultIndex
-		 keyMapSelect:(void *)keyMapSelect
-	   keyMapElements:(void *)deletedKeyMapElements;
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 

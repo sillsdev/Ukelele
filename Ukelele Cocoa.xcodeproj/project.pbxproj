@@ -134,6 +134,8 @@
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
+		52914F17192C270A00815D1E /* UkeleleDocument+Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 52914F16192C270A00815D1E /* UkeleleDocument+Comments.m */; };
+		52914F1A192C301F00815D1E /* UkeleleDocument+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52914F19192C301F00815D1E /* UkeleleDocument+Modifiers.m */; };
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
 		529B223E1927213600D9F055 /* ReplaceNameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529B223D1927213600D9F055 /* ReplaceNameSheet.xib */; };
@@ -442,6 +444,10 @@
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseFrom3Sheet.xib; path = "Interface Files/ChooseFrom3Sheet.xib"; sourceTree = "<group>"; };
+		52914F15192C270A00815D1E /* UkeleleDocument+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UkeleleDocument+Comments.h"; sourceTree = "<group>"; };
+		52914F16192C270A00815D1E /* UkeleleDocument+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UkeleleDocument+Comments.m"; sourceTree = "<group>"; };
+		52914F18192C301F00815D1E /* UkeleleDocument+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UkeleleDocument+Modifiers.h"; sourceTree = "<group>"; };
+		52914F19192C301F00815D1E /* UkeleleDocument+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UkeleleDocument+Modifiers.m"; sourceTree = "<group>"; };
 		5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HandleDeadKeySheet.xib; path = "Interface Files/HandleDeadKeySheet.xib"; sourceTree = "<group>"; };
 		529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectKeyByCodeSheet.xib; path = "Interface Files/SelectKeyByCodeSheet.xib"; sourceTree = "<group>"; };
 		529B223D1927213600D9F055 /* ReplaceNameSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReplaceNameSheet.xib; path = "Interface Files/ReplaceNameSheet.xib"; sourceTree = "<group>"; };
@@ -946,8 +952,12 @@
 				523B0172191CA18C00E06DF3 /* UkeleleAppDelegate.m */,
 				523B0173191CA18C00E06DF3 /* UkeleleDocument.h */,
 				523B0174191CA18C00E06DF3 /* UkeleleDocument.m */,
+				52914F15192C270A00815D1E /* UkeleleDocument+Comments.h */,
+				52914F16192C270A00815D1E /* UkeleleDocument+Comments.m */,
 				523B0175191CA18C00E06DF3 /* UkeleleDocument+Housekeeping.h */,
 				523B0176191CA18C00E06DF3 /* UkeleleDocument+Housekeeping.m */,
+				52914F18192C301F00815D1E /* UkeleleDocument+Modifiers.h */,
+				52914F19192C301F00815D1E /* UkeleleDocument+Modifiers.m */,
 				523B0177191CA18C00E06DF3 /* UkeleleKeyboardInstaller.h */,
 				523B0178191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m */,
 				523B017B191CA18C00E06DF3 /* UkelelePreferenceController.h */,
@@ -1153,6 +1163,7 @@
 				523B010B191CA0D100E06DF3 /* LanguageRegistry.m in Sources */,
 				523B0188191CA18C00E06DF3 /* AskNewKeyMap.m in Sources */,
 				523B018E191CA18C00E06DF3 /* BundleVersionSheet.m in Sources */,
+				52914F17192C270A00815D1E /* UkeleleDocument+Comments.m in Sources */,
 				523B00C8191CA00A00E06DF3 /* KeyStrokeLookupTable.mm in Sources */,
 				523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */,
 				523B01AA191CA18C00E06DF3 /* KeyboardLayoutBundle.m in Sources */,
@@ -1204,6 +1215,7 @@
 				523B00C6191CA00A00E06DF3 /* KeyMapSet.mm in Sources */,
 				523B00C7191CA00A00E06DF3 /* KeyMapSetList.mm in Sources */,
 				523B00C4191CA00A00E06DF3 /* KeyMapElement.mm in Sources */,
+				52914F1A192C301F00815D1E /* UkeleleDocument+Modifiers.m in Sources */,
 				523B00CC191CA00A00E06DF3 /* ModifierList.mm in Sources */,
 				523B019A191CA18C00E06DF3 /* CreateDeadKeySheet.m in Sources */,
 				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
