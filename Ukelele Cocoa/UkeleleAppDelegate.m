@@ -9,7 +9,7 @@
 #import "UkeleleAppDelegate.h"
 #import "UkeleleConstants.h"
 #import "UkeleleConstantStrings.h"
-#import "KeyboardLayoutBundle.h"
+#import "UKKeyboardLayoutBundle.h"
 #import "UkeleleDocument.h"
 #import "ColourTheme.h"
 #import "ToolboxController.h"
@@ -89,7 +89,7 @@ static NSDictionary *defaultValues() {
 
 - (IBAction)newBundle:(id)sender {
 	NSError *theError;
-	KeyboardLayoutBundle *theDocument = [[NSDocumentController sharedDocumentController]
+	UKKeyboardLayoutBundle *theDocument = [[NSDocumentController sharedDocumentController]
 										 makeUntitledDocumentOfType:@"Keyboard Layout Bundle" error:&theError];
 	if (nil != theDocument) {
 			// Got a document

@@ -10,7 +10,7 @@
 #import "UkeleleConstantStrings.h"
 #import "ScriptInfo.h"
 #import "UkeleleDocument.h"
-#import "KeyboardLayoutBundle.h"
+#import "UKKeyboardLayoutBundle.h"
 
 @implementation InspectorWindowController
 
@@ -82,13 +82,13 @@
 		}
 		[(UkeleleDocument *)currentDocument inspectorDidActivateTab:[tabViewItem identifier]];
 	}
-	else if ([currentDocument isKindOfClass:[KeyboardLayoutBundle class]]) {
+	else if ([currentDocument isKindOfClass:[UKKeyboardLayoutBundle class]]) {
 			// It's a keyboard layout bundle
 		if ([kTabIdentifierDocument isEqualToString:[tabViewItem identifier]]) {
 				// We have a bundle, so allow the editing of the bundle parameters
 			[self setBundleSectionEnabled:YES];
 		}
-		[(KeyboardLayoutBundle *)currentDocument inspectorDidActivateTab:[tabViewItem identifier]];
+		[(UKKeyboardLayoutBundle *)currentDocument inspectorDidActivateTab:[tabViewItem identifier]];
 	}
 }
 

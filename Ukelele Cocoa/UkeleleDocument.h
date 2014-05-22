@@ -20,7 +20,7 @@
 #import "KeyboardTypeSheet.h"
 #import "ReplaceNameSheet.h"
 #import "ChooseKeyboardIDWindowController.h"
-#import "KeyboardLayoutBundle.h"
+#import "UKKeyboardLayoutBundle.h"
 #import "UKMenuDelegate.h"
 #import "UKKeyCapClick.h"
 
@@ -79,7 +79,7 @@ enum ToolbarItemTags {
 @property (readonly) NSUInteger currentModifiers;
 @property (weak, readonly) NSString *currentState;
 @property (weak, readonly) NSURL *iconFile;
-@property (weak) KeyboardLayoutBundle *parentBundle;
+@property (weak) UKKeyboardLayoutBundle *parentBundle;
 @property (nonatomic) NSInteger keyboardID;
 @property (nonatomic) NSInteger keyboardScript;
 @property (strong) NSString *keyboardName;

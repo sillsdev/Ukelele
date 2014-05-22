@@ -14,7 +14,7 @@
 //		If there is a state with that name, ask for a new name
 
 #import "ImportDeadKeyHandler.h"
-#import "KeyboardLayoutBundle.h"
+#import "UKKeyboardLayoutBundle.h"
 #import "KeyboardLayoutInformation.h"
 #import "AskFromList.h"
 #import "UkeleleConstantStrings.h"
@@ -74,7 +74,7 @@
 	}
 	else if ([documentProperties[NSURLIsPackageKey] boolValue]) {
 			// Package, so have to determine whether it's a valid keyboard layout bundle
-		KeyboardLayoutBundle *theBundle = [self getKeyboardLayoutBundle:documentURL];
+		UKKeyboardLayoutBundle *theBundle = [self getKeyboardLayoutBundle:documentURL];
 		if (theBundle != nil) {
 				// Valid bundle
 			[self handleBundle:theBundle];
@@ -88,9 +88,9 @@
 	}
 }
 
-- (KeyboardLayoutBundle *)getKeyboardLayoutBundle:(NSURL *)bundleURL {
+- (UKKeyboardLayoutBundle *)getKeyboardLayoutBundle:(NSURL *)bundleURL {
 		// See if we can create a keyboard layout bundle from the URL
-	KeyboardLayoutBundle *bundleDocument = [[KeyboardLayoutBundle alloc] init];
+	UKKeyboardLayoutBundle *bundleDocument = [[UKKeyboardLayoutBundle alloc] init];
 	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:bundleURL options:0 error:NULL];
 	if (fileWrapper != nil) {
 		NSError *readError;
@@ -102,7 +102,7 @@
 	return nil;
 }
 
-- (void)handleBundle:(KeyboardLayoutBundle *)theDocument {
+- (void)handleBundle:(UKKeyboardLayoutBundle *)theDocument {
 		// Find the keyboard layouts in the bundle
 	NSArray *keyboardLayouts = [theDocument keyboardLayouts];
 	if ([keyboardLayouts count] == 1) {

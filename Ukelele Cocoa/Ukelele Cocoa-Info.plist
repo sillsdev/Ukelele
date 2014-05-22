@@ -46,7 +46,7 @@
 			<key>LSTypeIsPackage</key>
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
-			<string>KeyboardLayoutBundle</string>
+			<string>UKKeyboardLayoutBundle</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -64,7 +64,7 @@
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3.0</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>

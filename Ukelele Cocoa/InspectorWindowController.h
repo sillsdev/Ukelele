@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class UkeleleDocument;
-@class KeyboardLayoutBundle;
+@class UKKeyboardLayoutBundle;
 
 #define kTabIdentifierDocument	@"Document"
 #define kTabIdentifierOutput	@"Output"
@@ -40,7 +40,7 @@
 @property (strong) IBOutlet NSArray *scriptList;
 
 @property (weak, nonatomic) UkeleleDocument *currentKeyboard;
-@property (weak, nonatomic) KeyboardLayoutBundle *currentBundle;
+@property (weak, nonatomic) UKKeyboardLayoutBundle *currentBundle;
 
 + (InspectorWindowController *)getInstance;
 - (IBAction)generateID:(id)sender;

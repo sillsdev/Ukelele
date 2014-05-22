@@ -39,7 +39,7 @@
 #import "ImportDeadKeyHandler.h"
 #import "UkeleleErrorCodes.h"
 #import "KeyCapView.h"
-#import "AskYesNoController.h"
+#import "UKAskYesNoController.h"
 #import "UkeleleKeyboardInstaller.h"
 #include <Carbon/Carbon.h>
 

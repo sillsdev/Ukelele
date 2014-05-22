@@ -9,7 +9,7 @@
 #import "UkeleleKeyboardInstaller.h"
 #import "UkeleleConstantStrings.h"
 #import "UkeleleErrorCodes.h"
-#import "AskYesNoController.h"
+#import "UKAskYesNoController.h"
 #import "UkeleleAppDelegate.h"
 #import "KeyboardInstallerTool.h"
 
@@ -115,7 +115,7 @@
 	NSURL *installedURL = [keyboardLayoutFolder URLByAppendingPathComponent:currentFile isDirectory:NO];
 	if ([fileManager fileExistsAtPath:[installedURL path]]) {
 			// File already exists. Overwrite?
-		__block AskYesNoController *theController = [AskYesNoController askYesNoController];
+		__block UKAskYesNoController *theController = [UKAskYesNoController askYesNoController];
 		[theController askQuestion:@"There is already a keyboard layout with this name installed. Do you wish to replace it?" forWindow:nil completion:^void(BOOL response) {
 			if (response) {
 				[self installFromURL:sourceFile toURL:installedURL error:installError];

@@ -19,15 +19,15 @@
 	void (^callBack)(LanguageCode *);
 }
 
-@property (weak, readonly) IBOutlet NSSearchField *languageSearch;
-@property (weak, readonly) IBOutlet NSSearchField *scriptSearch;
-@property (weak, readonly) IBOutlet NSSearchField *regionSearch;
-@property (weak, readonly) IBOutlet NSSearchField *variantSearch;
-@property (weak, readonly) IBOutlet NSTextField *languageRequired;
-@property (weak, readonly) IBOutlet NSTableView *languageTable;
-@property (weak, readonly) IBOutlet NSTableView *scriptTable;
-@property (weak, readonly) IBOutlet NSTableView *regionTable;
-@property (weak, readonly) IBOutlet NSTableView *variantTable;
+@property (strong) IBOutlet NSSearchField *languageSearch;
+@property (strong) IBOutlet NSSearchField *scriptSearch;
+@property (strong) IBOutlet NSSearchField *regionSearch;
+@property (strong) IBOutlet NSSearchField *variantSearch;
+@property (strong) IBOutlet NSTextField *languageRequired;
+@property (strong) IBOutlet NSTableView *languageTable;
+@property (strong) IBOutlet NSTableView *scriptTable;
+@property (strong) IBOutlet NSTableView *regionTable;
+@property (strong) IBOutlet NSTableView *variantTable;
 
 + (IntendedLanguageSheet *)intendedLanguageSheet;
 - (void)beginIntendedLanguageSheet:(LanguageCode *)initialCode
