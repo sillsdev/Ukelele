@@ -60,7 +60,7 @@ enum ToolbarItemTags {
 	NSMutableArray *stateStack;
 	NSMutableArray *scalesList;
 	NSMutableArray *modifiersList;
-	ModifiersDataSource *modifiersDataSource;
+	IBOutlet ModifiersDataSource *modifiersDataSource;
     ModifiersSheet *modifiersSheet;
     AskNewKeyMap *askNewKeyMap;
     AskFromList *askFromList;

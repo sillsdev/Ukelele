@@ -15,6 +15,7 @@
                 <outlet property="keyboardView" destination="pxh-Py-4Pd" id="hjb-Cu-4HW"/>
                 <outlet property="lastCommentButton" destination="RSW-l4-0Sw" id="fNh-kF-Kv5"/>
                 <outlet property="messageBar" destination="GcK-Mo-ulK" id="gDL-fL-srH"/>
+                <outlet property="modifiersDataSource" destination="vyz-He-UxM" id="J1d-su-BgX"/>
                 <outlet property="modifiersTableView" destination="5x7-CS-hOp" id="hqG-Hw-Iu8"/>
                 <outlet property="nextCommentButton" destination="OSi-Ro-jY3" id="78z-wM-aH1"/>
                 <outlet property="nonDeadKeyContextualMenu" destination="nEq-8b-aYJ" id="rhL-Bk-Jgy"/>
@@ -231,6 +232,12 @@
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
+                                                            <binding destination="-2" name="doubleClickTarget" keyPath="self" id="ljS-Y6-Yvc">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">doubleClickRow:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <outlet property="dataSource" destination="vyz-He-UxM" id="8Rg-OE-gbA"/>
                                                             <outlet property="delegate" destination="-2" id="9Or-yi-mSH"/>
                                                         </connections>
                                                     </tableView>
@@ -452,7 +459,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="B5n-Vv-mtY">
-                                                <rect key="frame" x="704" y="1" width="15" height="226"/>
+                                                <rect key="frame" x="704" y="1" width="15" height="238"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -591,6 +598,7 @@
                 </connections>
             </toolbar>
         </window>
+        <customObject id="vyz-He-UxM" customClass="ModifiersDataSource"/>
         <menu title="Non-dead key contextual menu" id="nEq-8b-aYJ">
             <items>
                 <menuItem title="Unlink" id="eF5-Ad-4Bi">
@@ -701,6 +709,7 @@
                 </menuItem>
             </items>
         </menu>
+        <userDefaultsController representsSharedInstance="YES" id="bHm-bL-zBT"/>
     </objects>
     <resources>
         <image name="CreateDeadKey" width="32" height="32"/>

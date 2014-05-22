@@ -228,6 +228,10 @@ static NSMutableDictionary *statusDictionary = nil;
 
 #pragma mark Initialisation
 
+- (id)init {
+	return [self initWithKeyboardObject:nil];
+}
+
 - (id)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboard
 {
 	self = [super init];

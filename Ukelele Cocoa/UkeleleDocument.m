@@ -77,6 +77,7 @@ const float kScalePercentageFactor = 100.0f;
 			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
 		}
 		internalState[kStateCurrentKeyboard] = @(keyboardType);
+//		modifiersDataSource = [[ModifiersDataSource alloc] initWithKeyboardObject:nil];
         interactionHandler = nil;
         modifiersSheet = nil;
         askFromList = nil;
@@ -102,6 +103,7 @@ const float kScalePercentageFactor = 100.0f;
 	_keyboardLayout = [[UkeleleKeyboardObject alloc] initWithName:[UkeleleDocument untitledDocumentName]];
 	[_keyboardLayout setParentDocument:self];
     [_keyboardLayout setDelegate:self];
+	[modifiersDataSource setKeyboard:_keyboardLayout];
     [self setupDataSource];
 	return self;
 }
@@ -206,11 +208,10 @@ const float kScalePercentageFactor = 100.0f;
 }
 
 - (void)awakeFromNib {
-	modifiersDataSource = [[ModifiersDataSource alloc] initWithKeyboardObject:nil];
-	[modifiersTableView setDataSource:modifiersDataSource];
-	[modifiersTableView setDoubleAction:@selector(doubleClickRow:)];
-	[modifiersTableView setTarget:self];
-	[modifiersTableView setDelegate:self];
+//	[modifiersTableView setDataSource:modifiersDataSource];
+//	[modifiersTableView setDoubleAction:@selector(doubleClickRow:)];
+//	[modifiersTableView setTarget:self];
+//	[modifiersTableView setDelegate:self];
 	[modifiersTableView registerForDraggedTypes:@[ModifiersTableDragType]];
 	[modifiersTableView setVerticalMotionCanBeginDrag:YES];
 }
@@ -553,6 +554,7 @@ const float kScalePercentageFactor = 100.0f;
     if (validLayout) {
         [self.keyboardLayout setParentDocument:self];
         [self.keyboardLayout setDelegate:self];
+		[modifiersDataSource setKeyboard:self.keyboardLayout];
         [self setupDataSource];
     }
     return validLayout;
