@@ -15,6 +15,8 @@ MY_EXTERN NSString *kLabelCommand;
 MY_EXTERN NSString *kLabelCapsLock;
 MY_EXTERN NSString *kLabelControl;
 MY_EXTERN NSString *kLabelSubindex;
+MY_EXTERN NSString *kLabelStringRepresentation;
+MY_EXTERN NSString *kLabelIntegerRepresentation;
 
 	// State name for no current state
 MY_EXTERN NSString *kStateNameNone;

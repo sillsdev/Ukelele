@@ -16,6 +16,8 @@ NSString *kLabelCommand = @"Command";
 NSString *kLabelCapsLock = @"Caps Lock";
 NSString *kLabelControl = @"Control";
 NSString *kLabelSubindex = @"Subindex";
+NSString *kLabelStringRepresentation = @"StringRepresentation";
+NSString *kLabelIntegerRepresentation = @"IntegerRepresentation";
 
 NSString *kStateNameNone = @"none";
 

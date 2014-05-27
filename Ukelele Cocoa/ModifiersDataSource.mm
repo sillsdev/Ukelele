@@ -196,18 +196,18 @@ static NSMutableDictionary *statusDictionary = nil;
 		for (SInt32 mapIndex = 1; mapIndex <= mapCount; mapIndex++) {
 			ModifierElement *modifierElement = selectElement->GetModifierElement(mapIndex);
 			NSMutableDictionary *rowEntry = [NSMutableDictionary dictionaryWithCapacity:7];
-			rowEntry[kLabelIndex] = [NSString stringWithFormat:@"%d", selectID];
-			rowEntry[kLabelSubindex] = [NSString stringWithFormat:@"%d", mapIndex];
+			rowEntry[kLabelIndex] = @{kLabelIntegerRepresentation: @(selectID), kLabelStringRepresentation: [NSString stringWithFormat:@"%d", selectID]};
+			rowEntry[kLabelSubindex] = @{kLabelIntegerRepresentation: @(mapIndex), kLabelStringRepresentation: [NSString stringWithFormat:@"%d", mapIndex]};
 			UInt32 modifierStatus = modifierElement->GetModifierPairStatus(shiftKey, rightShiftKey);
-			rowEntry[kLabelShift] = [self getStringForModifier:shiftIndex withStatus:modifierStatus];
+			rowEntry[kLabelShift] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:shiftIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierStatus(alphaLock);
-			rowEntry[kLabelCapsLock] = [self getStringForModifier:capsLockIndex withStatus:modifierStatus];
+			rowEntry[kLabelCapsLock] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:capsLockIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierPairStatus(optionKey, rightOptionKey);
-			rowEntry[kLabelOption] = [self getStringForModifier:optionIndex withStatus:modifierStatus];
+			rowEntry[kLabelOption] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:optionIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierStatus(cmdKey);
-			rowEntry[kLabelCommand] = [self getStringForModifier:commandIndex withStatus:modifierStatus];
+			rowEntry[kLabelCommand] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:commandIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierPairStatus(controlKey, rightControlKey);
-			rowEntry[kLabelControl] = [self getStringForModifier:controlIndex withStatus:modifierStatus];
+			rowEntry[kLabelControl] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:controlIndex withStatus:modifierStatus]};
 			[rowArray insertObject:rowEntry atIndex:rowCount];
 			rowCount++;
 		}
@@ -271,9 +271,11 @@ static NSMutableDictionary *statusDictionary = nil;
 - (NSInteger)modifierValueForRow:(NSInteger)rowNumber column:(NSString *)columnLabel
 {
 	NSDictionary *rowEntry = rowArray[rowNumber];
-	NSString *statusString = rowEntry[columnLabel];
-	NSArray *objectArray = [statusDictionary allKeysForObject:statusString];
-	return [objectArray[0] integerValue];
+	NSDictionary *statusDict = rowEntry[columnLabel];
+	return [statusDict[kLabelIntegerRepresentation] integerValue];
+//	NSString *statusString = rowEntry[columnLabel];
+//	NSArray *objectArray = [statusDictionary allKeysForObject:statusString];
+//	return [objectArray[0] integerValue];
 }
 
 - (NSInteger)indexForRow:(NSInteger)rowNumber
@@ -298,7 +300,8 @@ static NSMutableDictionary *statusDictionary = nil;
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSDictionary *rowData = rowArray[row];
-	return rowData[[tableColumn identifier]];
+	NSDictionary *statusData = rowData[[tableColumn identifier]];
+	return statusData[kLabelStringRepresentation];
 }
 
 #pragma mark Drag and drop

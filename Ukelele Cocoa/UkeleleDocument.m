@@ -522,6 +522,7 @@ const float kScalePercentageFactor = 100.0f;
 	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:[scaleValue doubleValue]];
 	[ukeleleView setMenuDelegate:self];
 	[keyboardView setDocumentView:ukeleleView];
+	[ukeleleWindow setTitle:[[self keyboardLayout] keyboardName]];
 	[self assignClickTargets];
     [self setupDataSource];
 	[self calculateSize];
