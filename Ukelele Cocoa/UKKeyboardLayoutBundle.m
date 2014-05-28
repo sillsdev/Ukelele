@@ -687,7 +687,7 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 			NSArray *iconImageReps = [iconImage representations];
 			NSInteger iconImageCount = [iconImageReps count];
 			iconData = [NSMutableData data];
-			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconImageCount, nil);
+			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconImageCount > 10 ? 10 : iconImageCount, nil);
 			for (NSImageRep *imageRep in iconImageReps) {
 				NSSize imageSize = [imageRep size];
 				NSRect imageRect = NSMakeRect(0, 0, imageSize.width, imageSize.height);

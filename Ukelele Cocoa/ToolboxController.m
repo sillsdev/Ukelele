@@ -20,7 +20,6 @@
 		toolboxData = [ToolboxData sharedToolboxData];
 		[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
 		[_JISOnly setState:[toolboxData JISOnly] ? NSOnState : NSOffState];
-		[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
     }
     
     return self;
@@ -31,6 +30,7 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 }
 
 + (ToolboxController *)sharedToolboxController {

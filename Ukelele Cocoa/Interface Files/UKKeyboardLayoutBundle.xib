@@ -145,14 +145,34 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
                         <rect key="frame" x="20" y="19" width="29" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="pT0-Rp-TrO" id="Q7e-TI-Ta7">
+                        <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="eL5-gG-4lb" id="Q7e-TI-Ta7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="ZXs-gW-Moh">
                                 <items>
                                     <menuItem state="on" image="NSAddTemplate" hidden="YES" id="pT0-Rp-TrO"/>
-                                    <menuItem title="Item 2" id="Jae-gt-8aR"/>
-                                    <menuItem title="Item 3" id="eL5-gG-4lb"/>
+                                    <menuItem title="Empty Keyboard Layout" id="Jae-gt-8aR">
+                                        <connections>
+                                            <action selector="addKeyboardLayout:" target="-1" id="owp-WK-pWr"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Existing File…" id="eL5-gG-4lb">
+                                        <connections>
+                                            <action selector="openKeyboardLayout:" target="-1" id="nw2-jk-tc7"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Ukelele Window…" id="Bct-hp-fql">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="addOpenDocument:" target="-1" id="cyx-ss-jaz"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Capture Current Input Source" id="6jK-Ca-et9">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="captureInputSource:" target="-1" id="Cqh-1b-LE2"/>
+                                        </connections>
+                                    </menuItem>
                                 </items>
                             </menu>
                         </popUpButtonCell>
