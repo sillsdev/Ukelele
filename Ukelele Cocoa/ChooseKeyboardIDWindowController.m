@@ -77,6 +77,10 @@ NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 - (IBAction)selectScript:(id)sender
 {
 	NSInteger selectedScript = [scriptButton indexOfSelectedItem];
+	if (selectedScript == -1) {
+			// No selection
+		return;
+	}
 	ScriptInfo *scriptInfo = scriptList[selectedScript];
 	NSInteger minID = [scriptInfo minID];
 	NSInteger maxID = [scriptInfo maxID];

@@ -24,6 +24,14 @@ NSString *kIconFileKey = @"IconFile";
 NSString *kKeyboardDocumentKey = @"KeyboardDocument";
 NSString *kKeyboardNameKey = @"KeyboardName";
 
+	// Constants for icon types
+//enum {
+//	kIconServices16BitData2x = 'ic11',
+//	kIconServices32BitData2x = 'ic12',
+//	kIconServices128BitData2x = 'ic13',
+//	kIconServices256BitData2x = 'ic14'
+//};
+
 @implementation UKKeyboardLayoutBundle {
 	NSMutableArray *keyboardLayouts;
 	UkeleleBundleVersionSheet *bundleVersionSheet;
@@ -120,6 +128,7 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 #pragma mark File wrapper methods
 
 - (NSFileWrapper *)createFileWrapper {
+	NSLog(@"Creating file wrapper");
 		// Start at the bottom, the InfoPlist.strings file, which contains all the names
 	NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
@@ -150,17 +159,25 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[resourcesDirectory setPreferredFilename:kStringResourcesName];
 	[resourcesDirectory addFileWrapper:englishLprojDirectory];
+	dispatch_queue_t mainQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 		// Add all the keyboard layout and icon files
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry fileName];
 		if (nil == keyboardName || [keyboardName isEqualToString:@""]) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
+		NSLog(@"Saving keyboard layout %@", keyboardName);
 		NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
+		NSLog(@"Write file");
 		NSError *writeError;
-		[resourcesDirectory addRegularFileWithContents:[[keyboardEntry document] dataOfType:kFileTypeKeyboardLayout error:&writeError]
-									 preferredFilename:keyboardFileName];
+		NSData *fileData = [[keyboardEntry document] dataOfType:kFileTypeKeyboardLayout error:&writeError];
+		dispatch_async(mainQueue, ^void(void) {
+			[resourcesDirectory addRegularFileWithContents:fileData
+										 preferredFilename:keyboardFileName];
+		});
+		NSLog(@"End write file");
 		if ([[keyboardEntry document] fileURL] == nil && [self fileURL] != nil) {
+			NSLog(@"New file to be noted");
 				// The keyboard has not yet been saved
 			NSURL *bundleURL = [self fileURL];
 			NSURL *keyboardURL = [[[bundleURL URLByAppendingPathComponent:kStringContentsName isDirectory:YES]
@@ -170,9 +187,11 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 			[[keyboardEntry document] setDisplayName:keyboardName];
 		}
 		if ([keyboardEntry hasIcon]) {
+			NSLog(@"Writing icon file");
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
 			[resourcesDirectory addRegularFileWithContents:[keyboardEntry iconData] preferredFilename:iconFileName];
 		}
+		NSLog(@"Finished saving keyboard layout");
 	}
 		// Create the Info.plist file
 	NSDictionary *infoPlist = [self createInfoPlist];
@@ -192,6 +211,7 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 	[topFileWrapper addFileWrapper:contentsDirectory];
 	NSString *bundleName = [NSString stringWithFormat:@"%@.bundle", _bundleName];
 	[topFileWrapper setPreferredFilename:bundleName];
+	NSLog(@"Finished creating file wrapper");
 	return topFileWrapper;
 }
 
@@ -226,6 +246,7 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 }
 
 - (BOOL)parseFileWrapper:(NSFileWrapper *)theFileWrapper withError:(NSError **)error {
+	NSLog(@"Reading file wrapper %@", theFileWrapper);
 	NSDictionary *errorDictionary = nil;
 		// Check that it is actually a directory
 	if (![theFileWrapper isDirectory]) {
@@ -352,6 +373,7 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 		[keyboardInfo setFileName:keyboardName];
 		[keyboardLayouts addObject:keyboardInfo];
 	}
+	NSLog(@"Finished reading file wrapper");
 	return YES;
 }
 
@@ -685,16 +707,124 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 		if (keyboardIcon != NULL) {
 			NSImage *iconImage = [[NSImage alloc] initWithIconRef:keyboardIcon];
 			NSArray *iconImageReps = [iconImage representations];
-			NSInteger iconImageCount = [iconImageReps count];
+//			NSInteger iconImageCount = [iconImageReps count];
+				// Create data to write with ImageIO
 			iconData = [NSMutableData data];
-			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconImageCount > 10 ? 10 : iconImageCount, nil);
-			for (NSImageRep *imageRep in iconImageReps) {
-				NSSize imageSize = [imageRep size];
-				NSRect imageRect = NSMakeRect(0, 0, imageSize.width, imageSize.height);
-				CGImageRef imageRef = [imageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
-				CGImageDestinationAddImage(imageDestination, imageRef, nil);
+			NSInteger iconCount = 0;
+			for (NSImageRep *iconImage in iconImageReps) {
+				if ([iconImage size].height < 128) {
+					iconCount++;
+				}
 			}
+//			NSMutableDictionary *iconDataDict = [NSMutableDictionary dictionaryWithCapacity:iconImageCount];
+//			NSMutableData *iconImageData = [NSMutableData data];
+			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconCount, nil);
+			for (NSImageRep *imageRep in iconImageReps) {
+				NSInteger imageHeight = [imageRep size].height;
+//				NSInteger pixelHeight = [imageRep pixelsHigh];
+//				NSLog(@"Image %ld, pixel %ld, bitmap %d", imageHeight, pixelHeight, [imageRep isKindOfClass:[NSBitmapImageRep class]]);
+//				NSUInteger iconKind = 0;
+//				switch (imageHeight) {
+//					case 16:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = kIconServices16PixelDataARGB;
+//						}
+//						else {
+//							iconKind = kIconServices16BitData2x;
+//						}
+//						break;
+//						
+//					case 32:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = kIconServices32PixelDataARGB;
+//						}
+//						else {
+//							iconKind = kIconServices32BitData2x;
+//						}
+//						break;
+//					
+//					case 64:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = 'ic06';
+//						}
+//						break;
+//						
+//					case 128:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = kIconServices128PixelDataARGB;
+//						}
+//						else {
+//							iconKind = kIconServices128BitData2x;
+//						}
+//						break;
+//						
+//					case 256:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = kIconServices256PixelDataARGB;
+//						}
+//						else {
+//							iconKind = kIconServices256BitData2x;
+//						}
+//						break;
+//						
+//					case 512:
+//						if (pixelHeight == imageHeight) {
+//							iconKind = kIconServices512PixelDataARGB;
+//						}
+//						else {
+//							iconKind = kIconServices1024PixelDataARGB;
+//						}
+//						break;
+//						
+//					default:
+//						break;
+//				}
+//				if (iconKind != 0) {
+//					NSRect imageRect = NSMakeRect(0, 0, pixelHeight, pixelHeight);
+//					CGImageRef cgImage = [imageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
+//					NSBitmapImageRep *imageBitmap = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+//					NSData *imageData = [imageBitmap representationUsingType:NSPNGFileType properties:nil];
+//					iconDataDict[@(iconKind)] = imageData;
+//				}
+					// Write only small sizes to avoid a hard limit
+				if (imageHeight < 128) {
+					NSRect imageRect = NSMakeRect(0, 0, imageHeight, imageHeight);
+					CGImageRef imageRef = [imageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
+					CGImageDestinationAddImage(imageDestination, imageRef, nil);
+				}
+			}
+//			NSArray *iconReps = [NSArray arrayWithObjects:@(kIconServices16PixelDataARGB), @(kIconServices16BitData2x), @(kIconServices32PixelDataARGB), @(kIconServices32BitData2x), @(kIconServices128PixelDataARGB), @(kIconServices128BitData2x), @(kIconServices256PixelDataARGB), @(kIconServices256BitData2x), @(kIconServices512PixelDataARGB), @(kIconServices1024PixelDataARGB), nil];
+//			NSMutableData *tocData = [NSMutableData dataWithCapacity:[iconReps count] * 2 * sizeof(UInt32)];
+//			for (NSNumber *iconSize in iconReps) {
+//				NSData *imageData = iconDataDict[iconSize];
+//				if (imageData) {
+//						// Got the icon for this size
+//					UInt32 iconReference = CFSwapInt32([iconSize unsignedIntValue]);
+//					[iconImageData appendBytes:&iconReference length:sizeof(UInt32)];
+//					UInt32 dataSize = (UInt32)[imageData length] + 2 * sizeof(UInt32);
+//					UInt32 swappedSize = CFSwapInt32(dataSize);
+//					[iconImageData appendBytes:&swappedSize length:sizeof(UInt32)];
+//					[iconImageData appendData:imageData];
+//						// Still need to add 'TOC ' data...
+//					[tocData appendBytes:&iconReference length:sizeof(UInt32)];
+//					[tocData appendBytes:&swappedSize length:sizeof(UInt32)];
+//				}
+//			}
+//			UInt32 iconDataSize = 2 * sizeof(UInt32) + (UInt32)[tocData length] + (UInt32)[iconImageData length];
+//			UInt32 iconHeader = CFSwapInt32(kIconFamilyType);
+//			[iconData appendBytes:&iconHeader length:sizeof(UInt32)];
+//			UInt32 swappedSize = CFSwapInt32(iconDataSize);
+//			[iconData appendBytes:&swappedSize length:sizeof(UInt32)];
+//			UInt32 tocHeader = CFSwapInt32('TOC ');
+//			[iconData appendBytes:&tocHeader length:sizeof(UInt32)];
+//			swappedSize = CFSwapInt32((UInt32)[tocData length] + 2 * sizeof(UInt32));
+//			[iconData appendBytes:&swappedSize length:sizeof(UInt32)];
+//			[iconData appendData:tocData];
+//			[iconData appendData:iconImageData];
 			CGImageDestinationFinalize(imageDestination);
+			if ([iconData length] == 0) {
+				iconData = NULL;
+			}
 			CFRelease(imageDestination);
 		}
 	}
