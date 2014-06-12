@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="UkeleleDocument">
+        <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardWindow">
             <connections>
                 <outlet property="commentBindingPane" destination="3Oj-mq-If4" id="vfh-Zg-hxD"/>
                 <outlet property="commentPane" destination="Vnz-1Z-fWP" id="YMv-hf-QVT"/>
@@ -25,7 +25,6 @@
                 <outlet property="scaleComboBox" destination="7DR-6A-223" id="w7a-L4-uFy"/>
                 <outlet property="simplifyModifiersButton" destination="Daf-pa-gyc" id="so4-Fg-LWC"/>
                 <outlet property="tabView" destination="WOb-pz-96A" id="7Le-Gm-XUN"/>
-                <outlet property="ukeleleWindow" destination="QvC-M9-y7g" id="EJC-fW-UWA"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="DBZ-1X-QLo"/>
             </connections>
         </customObject>

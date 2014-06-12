@@ -1,91 +1,77 @@
 //
-//  UkeleleDocument.m
-//  Ukelele 3
+//  UKKeyboardWindow.m
+//  Ukelele Cocoa
 //
-//  Created by John Brownie on 11/01/11.
-//  Copyright 2011 SIL. All rights reserved.
+//  Created by John Brownie on 11/06/2014.
+//  Copyright (c) 2014 John Brownie. All rights reserved.
 //
 
-#import "UkeleleDocument.h"
-#import "UkeleleDocument+Housekeeping.h"
-#import "UkeleleDocument+Comments.h"
-#import "UkeleleDocument+Modifiers.h"
+#import "UKKeyboardWindow.h"
+#import "UKKeyboardWindow+Comments.h"
+#import "UKKeyboardWindow+Housekeeping.h"
+#import "UKKeyboardWindow+Modifiers.h"
 #import "UkeleleConstants.h"
-#import "UkeleleView.h"
-#import "ViewScale.h"
-#import "MathsUtilities.h"
-#import "InspectorWindowController.h"
-#import "XMLCocoaUtilities.h"
-#import "DoubleClickHandler.h"
-#import "DragTextHandler.h"
-#import "KeyboardEnvironment.h"
 #import "UkeleleConstantStrings.h"
-#import "KeyboardDefinitions.h"
-#import "LayoutInfo.h"
+#import "ViewScale.h"
+#import "UkeleleView.h"
+#import "KeyboardEnvironment.h"
+#import "InspectorWindowController.h"
+#import "CreateDeadKeyHandler.h"
+#import "CreateDeadKeySheet.h"
 #import "UnlinkKeyHandler.h"
-#import "KeyboardTypeSheet.h"
-#import "KeyboardPrintView.h"
-#import "PrintAccessoryPanel.h"
-#import "ToolboxData.h"
 #import "UnlinkModifierSetHandler.h"
 #import "SwapKeysController.h"
-#import "EditKeyWindowController.h"
-#import "SelectKeyByCodeController.h"
-#import "CreateSelectedDeadKeyController.h"
-#import "CreateDeadKeySheet.h"
-#import "AskStateAndTerminatorController.h"
-#import "GetKeyCodeHandler.h"
-#import "AskCommentController.h"
 #import "ImportDeadKeyHandler.h"
-#import "UkeleleErrorCodes.h"
-#import "KeyCapView.h"
-#import "UKAskYesNoController.h"
-#import "UkeleleKeyboardInstaller.h"
+#import "AskTextSheet.h"
+#import "AskStateAndTerminatorController.h"
+#import "EditKeyWindowController.h"
+#import "ToolboxData.h"
+#import "SelectKeyByCodeController.h"
+#import "KeyboardPrintView.h"
+#import "GetKeyCodeHandler.h"
+#import "DoubleClickHandler.h"
+#import "AskCommentController.h"
+#import "LayoutInfo.h"
+#import "DragTextHandler.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
 const float kWindowMinHeight = 300.0f;
 const float kScalePercentageFactor = 100.0f;
 
-@interface UkeleleDocument()
-
-+ (NSString *)untitledDocumentName;
+@interface UKKeyboardWindow ()
 
 @end
 
-@implementation UkeleleDocument
+@implementation UKKeyboardWindow
 
-- (id)init
+- (id)initWithWindowNibName:(NSString *)windowNibName
 {
-    self = [super init];
+    self = [super initWithWindowNibName:windowNibName];
     if (self) {
-    
-        // Add your subclass-specific initialization here.
-        // If an error occurs here, send a [self release] message and return nil.
-    
+        // Initialization code here.
 		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-        internalState = [NSMutableDictionary dictionary];
-        internalState[kStateCurrentState] = kStateNameNone;
+		internalState = [NSMutableDictionary dictionaryWithCapacity:20];
+		internalState[kStateCurrentState] = kStateNameNone;
 		stateStack = [NSMutableArray array];
 		[stateStack addObject:kStateNameNone];
 		scalesList = [ViewScale standardScales];
-        internalState[kStateCurrentScale] = @([theDefaults floatForKey:UKScaleFactor]);
-        internalState[kStateCurrentModifiers] = @0U;
+		internalState[kStateCurrentScale] = @([theDefaults floatForKey:UKScaleFactor]);
+		internalState[kStateCurrentModifiers] = @0U;
 		SInt32 keyboardType;
 		OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
-		if (err != noErr  || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+		if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
 			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
 		}
 		internalState[kStateCurrentKeyboard] = @(keyboardType);
-//		modifiersDataSource = [[ModifiersDataSource alloc] initWithKeyboardObject:nil];
-        interactionHandler = nil;
-        modifiersSheet = nil;
-        askFromList = nil;
-        askNewKeyMap = nil;
-        chooseScale = nil;
+		interactionHandler = nil;
+		modifiersSheet = nil;
+		askFromList = nil;
+		askNewKeyMap = nil;
+		chooseScale = nil;
 		keyboardTypeSheet = nil;
-		deadKeyData = nil;
 		documentAlert = nil;
+		deadKeyData = nil;
 		replaceNameSheet = nil;
 		_iconFile = nil;
 		selectedKey = kNoKeyCode;
@@ -94,189 +80,28 @@ const float kScalePercentageFactor = 100.0f;
     return self;
 }
 
-- (id)initWithType:(NSString *)typeName error:(NSError **)outError
+- (void)awakeFromNib
 {
-	self = [self init];
-	[self setFileType:typeName];
-	
-		// Create an empty keyboard here
-	_keyboardLayout = [[UkeleleKeyboardObject alloc] initWithName:[UkeleleDocument untitledDocumentName]];
-	[_keyboardLayout setParentDocument:self];
-    [_keyboardLayout setDelegate:self];
-	[modifiersDataSource setKeyboard:_keyboardLayout];
-    [self setupDataSource];
-	return self;
-}
-
-- (id)initWithCurrentInputSource {
-		// Create a temporary file
-	NSString *tempFilePath = [NSString stringWithFormat:@"%@UkeleleDataXXXXX.rsrc", NSTemporaryDirectory()];
-	char tempFileTemplate[1025];
-	[tempFilePath getCString:tempFileTemplate maxLength:1024 encoding:NSUTF8StringEncoding];
-	int tempFileDescriptor = mkstemps(tempFileTemplate, 5);
-	if (tempFileDescriptor == -1) {
-			// Could not create temporary file
-		return [self init];
-	}
-	tempFilePath = @(tempFileTemplate);
-	NSFileHandle *tempFileHandle = [[NSFileHandle alloc] initWithFileDescriptor:tempFileDescriptor closeOnDealloc:YES];
-	NSURL *tempFileURL = [NSURL fileURLWithPath:tempFilePath];
-		// Capture the current keyboard layout as uchr data
-	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
-	CFDataRef uchrData = TISGetInputSourceProperty(currentInputSource, kTISPropertyUnicodeKeyLayoutData);
-	if (NULL == uchrData) {
-			// Could not get the current input source as uchr data
-		return [self init];
-	}
-		// Get the keyboard's name
-	CFStringRef keyboardName = TISGetInputSourceProperty(currentInputSource, kTISPropertyLocalizedName);
-		// We now have to muck around in old code to create a resource file
-	Str255 resourceName;
-	CFStringGetPascalString(keyboardName, resourceName, 256, kCFStringEncodingMacRoman);
-	CFURLRef parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, (CFURLRef)tempFileURL);
-	FSRef parentRef;
-	Boolean gotFSRef = CFURLGetFSRef(parentURL, &parentRef);
-	if (!gotFSRef) {
-		CFRelease(parentURL);
-		return [self init];
-	}
-	CFStringRef tempFileName = CFURLCopyLastPathComponent((CFURLRef)tempFileURL);
-	FSRef tempFileRef;
-	HFSUniStr255 forkName;
-	OSStatus theErr = FSGetResourceForkName(&forkName);
-	NSAssert(theErr == noErr, @"Could not get resource fork");
-	UniChar tempFileBuffer[1024];
-	CFStringGetCharacters(tempFileName, CFRangeMake(0, CFStringGetLength(tempFileName)), tempFileBuffer);
-	theErr = FSCreateResourceFile(&parentRef, CFStringGetLength(tempFileName), tempFileBuffer, kFSCatInfoNone, NULL, forkName.length, forkName.unicode, &tempFileRef, NULL);
-	NSAssert(theErr == noErr, @"Could not create resource file");
-	ResFileRefNum resFile;
-	theErr = FSOpenResourceFile(&tempFileRef, forkName.length, forkName.unicode, fsWrPerm, &resFile);
-	NSAssert(theErr == noErr, @"Could not open resource file");
-	Handle theHandle = NewHandle(CFDataGetLength(uchrData));
-	memcpy(*theHandle, CFDataGetBytePtr(uchrData), CFDataGetLength(uchrData));
-	AddResource(theHandle, 'uchr', UniqueID('uchr'), resourceName);
-	UpdateResFile(CurResFile());
-	FSCloseFork(resFile);
-		// Get the conversion tool
-	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:@"kluchrtoxml"];
-		// Set up and run the tool
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *currentDirectory = [fileManager currentDirectoryPath];
-	[fileManager changeCurrentDirectoryPath:[(__bridge NSURL *)parentURL path]];
-	NSTask *conversionTask = [NSTask launchedTaskWithLaunchPath:[toolURL path] arguments:@[[tempFileURL path]]];
-	[conversionTask waitUntilExit];
-	int returnStatus = [conversionTask terminationStatus];
-	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
-	CFRelease(tempFileName);
-	CFRelease(parentURL);
-	tempFileHandle = nil;
-	[fileManager changeCurrentDirectoryPath:currentDirectory];
-		// Finally, read the resulting file
-	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.keylayout", NSTemporaryDirectory(), keyboardName]];
-	NSError *theError;
-	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
-	self = [self init];
-	if ([self readFromData:myData ofType:kFileTypeKeyboardLayout error:&theError]) {
-			// Successful creating
-		[self setFileURL:nil];
-		[self.keyboardLayout addCreationComment];
-		[self.keyboardLayout assignRandomID];
-	}
-	else {
-			// The conversion failed
-		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not create a keyboard layout", NSUnderlyingErrorKey: theError};
-		NSError *presentedError = [NSError errorWithDomain:kDomainUkelele
-													  code:kUkeleleErrorCouldNotCreateFromFile
-												  userInfo:errorDictionary];
-		[self presentError:presentedError];
-		self = nil;
-	}
-	
-		// Clean up
-	return self;
-}
-
-- (NSDocument *)duplicateAndReturnError:(NSError *__autoreleasing *)outError {
-	NSDocument *duplicateDocument = [super duplicateAndReturnError:outError];
-	if (duplicateDocument && [duplicateDocument isKindOfClass:[UkeleleDocument class]]) {
-			// Duplicated, so set a creation comment
-		[(UkeleleDocument *)duplicateDocument addCreationComment];
-			// Assign a new, random ID
-		[[(UkeleleDocument *)duplicateDocument keyboardLayout] assignRandomID];
-	}
-	return duplicateDocument;
-}
-
-- (void)awakeFromNib {
-	[modifiersTableView registerForDraggedTypes:@[ModifiersTableDragType]];
-	[modifiersTableView setVerticalMotionCanBeginDrag:YES];
-}
-
-- (NSString *)windowNibName
-{
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers,
-	// you should remove this method and override -makeWindowControllers instead.
-    return @"UkeleleDocument";
-}
-
-+ (BOOL)autosavesInPlace
-{
-	return YES;
-}
-
-+ (NSString *)untitledDocumentName {
-		// Need to get an appropriate version of "untitled" or "untitled n"
-	BOOL gotUntitled = NO;
-	NSInteger maximumUntitled = 0;
-	for (NSDocument *currentDocument in [[NSDocumentController sharedDocumentController] documents]) {
-		if ([currentDocument isKindOfClass:[UkeleleDocument class]]) {
-			NSString *documentName = [(UkeleleDocument *)currentDocument keyboardDisplayName];
-			if (!gotUntitled && [documentName isEqualToString:@"untitled"]) {
-				gotUntitled = YES;
-			}
-			if ([documentName hasPrefix:@"untitled "]) {
-				NSString *potentialNumber = [documentName substringFromIndex:9];
-				NSScanner *stringScanner = [NSScanner scannerWithString:potentialNumber];
-				NSInteger actualNumber;
-				BOOL gotNumber = [stringScanner scanInteger:&actualNumber];
-				if (gotNumber && [stringScanner isAtEnd]) {
-					maximumUntitled = maximumUntitled > actualNumber ? maximumUntitled : actualNumber;
-				}
-			}
-		}
-	}
-	NSString *generatedName;
-	if (!gotUntitled && maximumUntitled == 0) {
-		generatedName = @"untitled";
-	}
-	else {
-		if (maximumUntitled == 0) {
-			maximumUntitled = 1;
-		}
-		generatedName = [NSString stringWithFormat:@"untitled %ld", maximumUntitled + 1];
-	}
-	return generatedName;
+    [self.modifiersTableView registerForDraggedTypes:@[ModifiersTableDragType]];
+	[self.modifiersTableView setVerticalMotionCanBeginDrag:YES];
 }
 
 #pragma mark Accessors
 
-- (NSUInteger)currentModifiers
-{
+- (NSUInteger)currentModifiers {
 	return [internalState[kStateCurrentModifiers] unsignedIntegerValue];
 }
 
-- (NSString *)currentState
-{
+- (void)setCurrentModifiers:(NSUInteger)currentModifiers {
+	internalState[kStateCurrentModifiers] = @(currentModifiers);
+}
+
+- (NSString *)currentState {
 	return internalState[kStateCurrentState];
 }
 
-- (NSString *)keyboardDisplayName {
-	NSString *theKeyboardName = [self.keyboardLayout keyboardName];
-	if (nil == theKeyboardName || [theKeyboardName isEqualToString:@""]) {
-		theKeyboardName = [ukeleleWindow title];
-	}
-	return theKeyboardName;
+- (void)setCurrentState:(NSString *)currentState {
+	internalState[kStateCurrentState] = currentState;
 }
 
 - (NSInteger)keyboardID {
@@ -303,13 +128,39 @@ const float kScalePercentageFactor = 100.0f;
 	[self changeKeyboardName:keyboardName];
 }
 
-#pragma mark Internal routines
+- (NSString *)keyboardDisplayName {
+	NSString *theKeyboardName = [self.keyboardLayout keyboardName];
+	if (nil == theKeyboardName || [theKeyboardName isEqualToString:@""]) {
+		theKeyboardName = [self.window title];
+	}
+	return theKeyboardName;
+}
+
+- (NSRect)keyRect:(NSInteger)keyCode
+{
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)keyCode];
+	return [keyCap frame];
+}
+
+- (CGFloat)currentScale {
+    NSNumber *currentScaleValue = internalState[kStateCurrentScale];
+	return [currentScaleValue floatValue];
+}
+
+- (NSUInteger)currentKeyboard {
+    NSNumber *keyboardID = internalState[kStateCurrentKeyboard];
+	return [keyboardID unsignedIntegerValue];
+}
+
+#pragma mark Window sizing
 
 - (NSSize)getIdealContentSize
 {
-	UkeleleView *ukeleleView = [keyboardView documentView];
-    NSSize contentSize = [[ukeleleWindow contentView] bounds].size;
-    NSSize viewSize = [keyboardView contentSize];
+	NSScrollView *scrollView = self.keyboardView;
+	UkeleleView *ukeleleView = [scrollView documentView];
+    NSSize contentSize = [[self.window contentView] bounds].size;
+    NSSize viewSize = [scrollView contentSize];
     CGFloat verticalPadding = contentSize.height - viewSize.height;
     CGFloat horizontalPadding = contentSize.width - viewSize.width;
 	NSSize keyboardSize = [ukeleleView bounds].size;
@@ -331,65 +182,65 @@ const float kScalePercentageFactor = 100.0f;
 {
 	NSSize maximumSize = [self getIdealContentSize];
 	NSSize minimumSize = NSMakeSize(kWindowMinWidth, kWindowMinHeight);
-	[ukeleleWindow setContentMaxSize:maximumSize];
-	[ukeleleWindow setContentMinSize:minimumSize];
+	[self.window setContentMaxSize:maximumSize];
+	[self.window setContentMinSize:minimumSize];
     NSDisableScreenUpdates();
-	[ukeleleWindow setContentSize:maximumSize];
-	NSRect winBounds = [ukeleleWindow frame];
+	[self.window setContentSize:maximumSize];
+	NSRect winBounds = [self.window frame];
 	NSRect availableRect = [[NSScreen mainScreen] visibleFrame];
 	if (!NSContainsRect(availableRect, winBounds)) {
 			// Doesn't fit!
 		availableRect = NSInsetRect(availableRect, 2, 2);
 		NSRect newBounds;
-        // If the width is too big to fit in the available rectangle
+			// If the width is too big to fit in the available rectangle
 		if (winBounds.size.width > availableRect.size.width) {
-            // Set the width to available and the origin to the available
+				// Set the width to available and the origin to the available
 			newBounds.size.width = availableRect.size.width;
 			newBounds.origin.x = availableRect.origin.x;
 		}
 		else {
-            // Width is OK
+				// Width is OK
 			newBounds.size.width = winBounds.size.width;
-            // If the window is too far to the right
+				// If the window is too far to the right
 			if (winBounds.origin.x + winBounds.size.width > availableRect.origin.x + availableRect.size.width) {
-                // Shift the origin to the left
+					// Shift the origin to the left
 				newBounds.origin.x = availableRect.origin.x + availableRect.size.width - winBounds.size.width;
 			}
-            // Else if the window is too far to the left
+				// Else if the window is too far to the left
             else if (winBounds.origin.x < availableRect.origin.x) {
-                // Shift the origin to the available rectangle
+					// Shift the origin to the available rectangle
                 newBounds.origin.x = availableRect.origin.x;
             }
 			else {
-                // Origin.x is OK
+					// Origin.x is OK
 				newBounds.origin.x = winBounds.origin.x;
 			}
 		}
-        // If the height is too big to fit
+			// If the height is too big to fit
 		if (winBounds.size.height > availableRect.size.height) {
-            // Set the height to the available height, and the origin to the available
+				// Set the height to the available height, and the origin to the available
 			newBounds.size.height = availableRect.size.height;
 			newBounds.origin.y = availableRect.origin.y;
 		}
 		else {
-            // Height is OK
+				// Height is OK
 			newBounds.size.height = winBounds.size.height;
-            // If the window is too high
+				// If the window is too high
 			if (winBounds.origin.y + winBounds.size.height > availableRect.origin.y + availableRect.size.height) {
-                // Shift the origin down
+					// Shift the origin down
 				newBounds.origin.y = availableRect.origin.y + availableRect.size.height - winBounds.size.height;
 			}
-            // Else if the window is too low
+				// Else if the window is too low
             else if (winBounds.origin.y < availableRect.origin.y) {
-                // Shift the origin up
+					// Shift the origin up
                 newBounds.origin.y = availableRect.origin.y + availableRect.size.height - winBounds.size.height;
             }
 			else {
-                // Origin.y is OK
+					// Origin.y is OK
 				newBounds.origin.y = winBounds.origin.y;
 			}
 		}
-		[ukeleleWindow setFrame:newBounds display:YES];
+		[self.window setFrame:newBounds display:YES];
 	}
     NSEnableScreenUpdates();
 }
@@ -419,21 +270,23 @@ const float kScalePercentageFactor = 100.0f;
 	return frameRect;
 }
 
+#pragma mark Window updating
+
 - (void)setViewScaleComboBox
 {
     NSNumber *scaleFactor = internalState[kStateCurrentScale];
 	NSString *scaleString = [NSString stringWithFormat:@"%.0f%%", [scaleFactor doubleValue] * kScalePercentageFactor];
-	[scaleComboBox setStringValue:scaleString];
+	[self.scaleComboBox setStringValue:scaleString];
 }
 
 - (CGFloat)fitWidthScale
 {
 		// First get the base width of the view
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	CGFloat baseViewWidth = [ukeleleView baseFrame].size.width;
 		// Now work out how much space would be available in a full width window
-	NSRect winBounds = [ukeleleWindow frame];
-	CGFloat horizontalPadding = winBounds.size.width - [keyboardView frame].size.width;
+	NSRect winBounds = [self.window frame];
+	CGFloat horizontalPadding = winBounds.size.width - [self.keyboardView frame].size.width;
 	NSRect availableRect = NSInsetRect([[NSScreen mainScreen] visibleFrame], 2, 2);
 		// The scale we want is then the ratio of the size for the widest view to the base view width
 	CGFloat widthFactor = (availableRect.size.width - horizontalPadding) / baseViewWidth;
@@ -442,7 +295,7 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)updateWindow
 {
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSArray *subViews = [ukeleleView keyCapViews];
     NSNumber *modifiersValue = internalState[kStateCurrentModifiers];
     unsigned int theModifiers = [modifiersValue unsignedIntValue];
@@ -465,13 +318,13 @@ const float kScalePercentageFactor = 100.0f;
 		[keyCapView setDeadKey:deadKey];
 	}
 	[ukeleleView updateModifiers:theModifiers];
-	[ukeleleWindow setTitle:[[self keyboardLayout] keyboardName]];
+	[self.window setTitle:[[self keyboardLayout] keyboardName]];
 	[ukeleleView setNeedsDisplay:YES];
 }
 
 - (void)changeViewScale:(double)newScale
 {
-    UkeleleView *ukeleleView = [keyboardView documentView];
+    UkeleleView *ukeleleView = [self.keyboardView documentView];
     internalState[kStateCurrentScale] = @(newScale);
 	[ukeleleView scaleViewToScale:newScale limited:YES];
     [self calculateSize];
@@ -481,7 +334,8 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)changeKeyboardType:(NSInteger)newKeyboardType
 {
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	NSScrollView *scrollView = self.keyboardView;
+	UkeleleView *ukeleleView = [scrollView documentView];
 	internalState[kStateCurrentKeyboard] = @(newKeyboardType);
 	NSNumber *scaleValue = internalState[kStateCurrentScale];
 	[ukeleleView createViewWithKeyboardID:(int)newKeyboardType withScale:[scaleValue doubleValue]];
@@ -498,100 +352,6 @@ const float kScalePercentageFactor = 100.0f;
 	documentAlert = nil;
 }
 
-#pragma mark Setup
-
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
-{
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
-	
-		// Create a window that has the current keyboard type
-	SInt32 keyboardType;
-	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
-	}
-    internalState[kStateCurrentKeyboard] = @(keyboardType);
-    [tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
-	UkeleleView *ukeleleView = [[UkeleleView alloc] init];
-    NSNumber *scaleValue = internalState[kStateCurrentScale];
-	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:[scaleValue doubleValue]];
-	[ukeleleView setMenuDelegate:self];
-	[keyboardView setDocumentView:ukeleleView];
-	[self assignClickTargets];
-    [self setupDataSource];
-	[self calculateSize];
-	[self updateWindow];
-	[self setViewScaleComboBox];
-	[ukeleleWindow makeFirstResponder:keyboardView];
-}
-
-- (BOOL)canAsynchronouslyWriteToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation
-{
-	return YES;
-}
-
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
-{
-	NSLog(@"Begin creating data");
-    // Insert code here to write your document to data of the specified type.
-	// If the given outError != NULL, ensure that you set *outError when returning nil.
-	if ([kTabNameComments isEqualToString:[[tabView selectedTabViewItem] identifier]]) {
-		[self updateCommentFields];
-	}
-	NSLog(@"End creating data");
-	return [self.keyboardLayout convertToData];
-}
-
-- (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
-{
-	NSLog(@"Begin read from data");
-    // Insert code here to read your document from the given data of the specified type.
-	// If the given outError != NULL, ensure that you set *outError when returning NO.
-	_keyboardLayout = [[UkeleleKeyboardObject alloc] initWithData:data withError:outError];
-    BOOL validLayout = self.keyboardLayout != nil;
-    if (validLayout) {
-        [self.keyboardLayout setParentDocument:self];
-        [self.keyboardLayout setDelegate:self];
-		[modifiersDataSource setKeyboard:self.keyboardLayout];
-        [self setupDataSource];
-    }
-	NSLog(@"End read with data with success %hhd", validLayout);
-    return validLayout;
-}
-
-- (NSView *)keyboardView
-{
-	return [keyboardView documentView];
-}
-
-- (NSRect)keyRect:(NSInteger)keyCode
-{
-	UkeleleView *ukeleleView = [keyboardView documentView];
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)keyCode];
-	return [keyCap frame];
-}
-
-- (CGFloat)currentScale {
-    NSNumber *currentScaleValue = internalState[kStateCurrentScale];
-	return [currentScaleValue floatValue];
-}
-
-- (NSUInteger)currentKeyboard {
-    NSNumber *keyboardID = internalState[kStateCurrentKeyboard];
-	return [keyboardID unsignedIntegerValue];
-}
-
-- (void)assignClickTargets {
-	UkeleleView *ukeleleView = [keyboardView documentView];
-	for (KeyCapView *subView in [ukeleleView keyCapViews]) {
-		[subView setClickDelegate:self];
-	}
-}
-
-#pragma mark Change display
-
 - (void)windowDidBecomeMain:(NSNotification *)notification
 {
     NSNumber *keyboardID = internalState[kStateCurrentKeyboard];
@@ -601,7 +361,7 @@ const float kScalePercentageFactor = 100.0f;
 							  modifiers:[modifierValue unsignedIntegerValue]
 								  state:internalState[kStateCurrentState]];
 		// Tell the font panel what font we have
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
@@ -629,6 +389,15 @@ const float kScalePercentageFactor = 100.0f;
     interactionHandler = nil;
 }
 
+#pragma mark Setup
+
+- (void)assignClickTargets {
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	for (KeyCapView *subView in [ukeleleView keyCapViews]) {
+		[subView setClickDelegate:self];
+	}
+}
+
 #pragma mark Tab handling
 
 - (void)tabView:(NSTabView *)theTabView willSelectTabViewItem:(NSTabViewItem *)tabViewItem {
@@ -644,30 +413,55 @@ const float kScalePercentageFactor = 100.0f;
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     if ([kTabNameKeyboard isEqualTo:[tabViewItem identifier]]) {
-        // Activating the keyboard tab
+			// Activating the keyboard tab
         [self setMessageBarText:@""];
 		[self setViewScaleComboBox];
-		[ukeleleWindow makeFirstResponder:keyboardView];
+		[self.window makeFirstResponder:self.keyboardView];
     }
     else if ([kTabNameModifiers isEqualTo:[tabViewItem identifier]]) {
-        // Activating the modifiers tab
-        [modifiersTableView setDoubleAction:@selector(doubleClickRow:)];
-        [modifiersTableView setTarget:self];
+			// Activating the modifiers tab
+        [self.modifiersTableView setDoubleAction:@selector(doubleClickRow:)];
+        [self.modifiersTableView setTarget:self];
         [self updateModifiers];
-        [removeModifiersButton setEnabled:([modifiersTableView selectedRow] >= 0)];
-        [simplifyModifiersButton setEnabled:![self.keyboardLayout hasSimplifiedModifiers]];
+        [self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0)];
+        [self.simplifyModifiersButton setEnabled:![self.keyboardLayout hasSimplifiedModifiers]];
     }
     else if ([kTabNameComments isEqualTo:[tabViewItem identifier]]) {
-        // Activating the comments tab
+			// Activating the comments tab
 		[self updateCommentFields];
     }
+}
+
+- (BOOL)setsStatusForSelector:(SEL)selector {
+	if (selector == @selector(setKeyboardType:) ||
+		selector == @selector(createDeadKeyState:) ||
+		selector == @selector(swapKeys:) ||
+		selector == @selector(swapKeysByCode:) ||
+		selector == @selector(addSpecialKeyOutput:) ||
+		selector == @selector(unlinkKeyAskingKeyCode:) ||
+		selector == @selector(unlinkModifierSet:) ||
+		selector == @selector(importDeadKey:) ||
+		selector == @selector(editKey:) ||
+		selector == @selector(selectKeyByCode:) ||
+		selector == @selector(cutKey:) ||
+		selector == @selector(copyKey:) ||
+		selector == @selector(attachComment:) ||
+		selector == @selector(enterDeadKeyState:) ||
+		selector == @selector(changeStateName:) ||
+		selector == @selector(changeTerminator:) ||
+		selector == @selector(leaveDeadKeyState:) ||
+		selector == @selector(unlinkKey:) ||
+		selector == @selector(pasteKey:)) {
+		return YES;
+	}
+	return NO;
 }
 
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
 	SEL action = [anItem action];
 	if (action == @selector(setKeyboardType:)) {
-		return [kTabNameKeyboard isEqualToString:[[tabView selectedTabViewItem] identifier]];
+		return [kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]];
 	}
 	else if (action == @selector(createDeadKeyState:) || action == @selector(swapKeys:) ||
 			 action == @selector(swapKeysByCode:) || action == @selector(addSpecialKeyOutput:) ||
@@ -676,27 +470,27 @@ const float kScalePercentageFactor = 100.0f;
 			 action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
 			 action == @selector(copyKey:) || action == @selector(attachComment:)) {
 			// All of these can only be selected if there is no interaction in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualTo:[[tabView selectedTabViewItem] identifier]];
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualTo:[[self.tabView selectedTabViewItem] identifier]];
 	}
 	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeStateName:) ||
 			 action == @selector(changeTerminator:)) {
 			// These can only be selected if there are any states other than "none"
 		NSUInteger stateCount = [_keyboardLayout stateCount];
 		return (interactionHandler == nil) &&
-			[kTabNameKeyboard isEqualTo:[[tabView selectedTabViewItem] identifier]] &&
-			([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+		[kTabNameKeyboard isEqualTo:[[self.tabView selectedTabViewItem] identifier]] &&
+		([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
 	}
 	else if (action == @selector(leaveDeadKeyState:)) {
 			// These can only selected if we are in a dead key state, and no interaction is in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:[[tabView selectedTabViewItem] identifier]] && [stateStack count] > 1;
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]] && [stateStack count] > 1;
 	}
 	else if (action == @selector(unlinkKey:)) {
 			// This can come up either on the keyboard or modifiers tab
-		if ([kTabNameKeyboard isEqualToString:[[tabView selectedTabViewItem] identifier]]) {
+		if ([kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
 			return interactionHandler == nil;
 		}
-		else if ([kTabNameModifiers isEqualToString:[[tabView selectedTabViewItem] identifier]]) {
-			return (interactionHandler == nil) && ([modifiersTableView selectedRow] >= 0);
+		else if ([kTabNameModifiers isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
+			return (interactionHandler == nil) && ([self.modifiersTableView selectedRow] >= 0);
 		}
 		else {
 			return NO;
@@ -706,34 +500,10 @@ const float kScalePercentageFactor = 100.0f;
 			// This can only be selected if there is a key to paste, and no interation is in progress
 		return (interactionHandler == nil) && [self.keyboardLayout hasKeyOnPasteboard];
 	}
-	else if (action == @selector(installForAllUsers:) || action == @selector(installForCurrentUser:)) {
-			// These can only be selected if the keyboard has been saved
-		return [self fileURL] != nil;
-	}
-	return [super validateUserInterfaceItem:anItem];
+	return NO;
 }
 
-#pragma mark === Installing ===
-
-- (IBAction)installForCurrentUser:(id)sender {
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForCurrentUser:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:ukeleleWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-- (IBAction)installForAllUsers:(id)sender {
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForAllUsers:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:ukeleleWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-#pragma mark === Inspector ===
+#pragma === Inspector ===
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
@@ -793,14 +563,14 @@ const float kScalePercentageFactor = 100.0f;
     NSNumber *currentScaleValue = internalState[kStateCurrentScale];
     double currentScale = [currentScaleValue doubleValue];
     if (scaleValue < 0) {
-        // This is fit width
+			// This is fit width
         [self changeViewScale:[self fitWidthScale]];
     }
     else if (scaleValue == 0) {
-        // This is "other"
+			// This is "other"
         chooseScale = [ChooseScale makeChooseScale];
         [chooseScale beginChooseScale:currentScale * kScalePercentageFactor
-                            forWindow:ukeleleWindow
+                            forWindow:self.window
                              callBack:^(NSNumber *newValue) {
 								 if (newValue != nil) {
 										 // Extract the new scale value
@@ -812,17 +582,17 @@ const float kScalePercentageFactor = 100.0f;
 							 }];
     }
 	else if (scaleValue != currentScale) {
-        // Change the scale of the window
+			// Change the scale of the window
         [self changeViewScale:scaleValue];
 	}
 }
 
 - (IBAction)setScaleLevel:(id)sender
 {
-	NSInteger selectedItem = [scaleComboBox indexOfSelectedItem];
+	NSInteger selectedItem = [self.scaleComboBox indexOfSelectedItem];
 	if (selectedItem == -1) {
 			// No selection, so we take the value from the text field
-		CGFloat percentageEntered = [scaleComboBox floatValue];
+		CGFloat percentageEntered = [self.scaleComboBox floatValue];
 		CGFloat scaleEntered = percentageEntered / kScalePercentageFactor;
 		[self changeViewScale:scaleEntered];
 	}
@@ -837,13 +607,13 @@ const float kScalePercentageFactor = 100.0f;
 		}
 	}
 	[self setViewScaleComboBox];
-	[ukeleleWindow makeFirstResponder:keyboardView];
+	[self.window makeFirstResponder:self.keyboardView];
 }
 
 - (void)enterDeadKeyStateWithName:(NSString *)stateName
 {
 	if ([stateName isEqualToString:internalState[kStateCurrentState]]) {
-        // We're already in this state
+			// We're already in this state
 		NSLog(@"Trying to enter state %@ when we are in that state", stateName);
 		return;
 	}
@@ -869,8 +639,8 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)setMessageBarText:(NSString *)message
 {
-	[messageBar setStringValue:message];
-	[messageBar setNeedsDisplay:YES];
+	[self.messageBar setStringValue:message];
+	[self.messageBar setNeedsDisplay:YES];
 }
 
 - (void)setSelectedKey:(NSInteger)keyCode {
@@ -884,7 +654,7 @@ const float kScalePercentageFactor = 100.0f;
 		[self clearSelectedKey];
 	}
 	selectedKey = keyCode;
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:YES];
@@ -898,7 +668,7 @@ const float kScalePercentageFactor = 100.0f;
 }
 
 - (void)clearSelectedKey {
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:NO];
@@ -915,7 +685,7 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)showEditingPaneForKeyCode:(int)keyCode text:(NSString *)initialText target:(id)target action:(SEL)action
 {
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:keyCode];
 	NSRect editingPaneFrame = [keyCap frame];
 	NSTextField *editingPane = [[NSTextField alloc] initWithFrame:editingPaneFrame];
@@ -932,9 +702,9 @@ const float kScalePercentageFactor = 100.0f;
 - (void)handleScaleChoice:(NSNumber *)newValue
 {
     if (newValue != nil) {
-        // Extract the new scale value
+			// Extract the new scale value
         double scaleValue = [newValue doubleValue];
-        // Change the scale of the window
+			// Change the scale of the window
         [self changeViewScale:scaleValue / kScalePercentageFactor];
     }
     chooseScale = nil;
@@ -973,7 +743,7 @@ const float kScalePercentageFactor = 100.0f;
 										modifiers:currentModifiers
 										keyboardID:[internalState[kStateCurrentKeyboard] integerValue]
 										keyboardDocument:self
-										window:ukeleleWindow
+										window:self.window
 										keyCode:selectedKey
 										nextState:nil
 										terminator:nil];
@@ -993,7 +763,7 @@ const float kScalePercentageFactor = 100.0f;
 	NSArray *menuItems = [self.keyboardLayout stateNamesExcept:internalState[kStateCurrentState]];
 	[askFromList beginAskFromListWithText:dialogText
 								 withMenu:menuItems
-								forWindow:ukeleleWindow
+								forWindow:self.window
 								 callBack:^(NSString *stateName) {
 									 if (stateName == nil) {
 											 // User cancelled
@@ -1026,13 +796,13 @@ const float kScalePercentageFactor = 100.0f;
 
 - (IBAction)unlinkKey:(id)sender
 {
-	if ([kTabNameModifiers isEqualToString:[[tabView selectedTabViewItem] identifier]]) {
+	if ([kTabNameModifiers isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
 			// We're on the modifiers tab, so invoke unlinking a set
-		[self unlinkModifierSet:sender];
+//		[self unlinkModifierSet:sender];
 		return;
 	}
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:ukeleleWindow];
+	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:self.window];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	UnlinkKeyType keyType = kUnlinkKeyTypeAskKey;
@@ -1051,7 +821,7 @@ const float kScalePercentageFactor = 100.0f;
 - (IBAction)unlinkKeyAskingKeyCode:(id)sender
 {
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:ukeleleWindow];
+	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:self.window];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	[theHandler beginInteraction:kUnlinkKeyTypeAskCode];
@@ -1059,7 +829,7 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)unlinkModifierCombination {
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkModifierSetHandler *theHandler = [UnlinkModifierSetHandler unlinkModifierSetHandler:self window:ukeleleWindow];
+	UnlinkModifierSetHandler *theHandler = [UnlinkModifierSetHandler unlinkModifierSetHandler:self window:self.window];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	[theHandler beginInteractionWithCallback:^(NSInteger modifierSet) {
@@ -1072,19 +842,19 @@ const float kScalePercentageFactor = 100.0f;
 }
 
 - (IBAction)swapKeys:(id)sender {
-	interactionHandler = [SwapKeysController swapKeysController:self window:ukeleleWindow];
+	interactionHandler = [SwapKeysController swapKeysController:self window:self.window];
 	[(SwapKeysController *)interactionHandler beginInteraction:NO];
 }
 
 - (IBAction)swapKeysByCode:(id)sender {
-	interactionHandler = [SwapKeysController swapKeysController:self window:ukeleleWindow];
+	interactionHandler = [SwapKeysController swapKeysController:self window:self.window];
 	[(SwapKeysController *)interactionHandler beginInteraction:YES];
 }
 
 - (IBAction)setKeyboardType:(id)sender
 {
 	keyboardTypeSheet = [KeyboardTypeSheet createKeyboardTypeSheet];
-	[keyboardTypeSheet beginKeyboardTypeSheetForWindow:ukeleleWindow
+	[keyboardTypeSheet beginKeyboardTypeSheetForWindow:self.window
 										  withKeyboard:[internalState[kStateCurrentKeyboard] integerValue]
 											  callBack:^(NSNumber *keyboardID) {
 												  if (keyboardID == nil) {
@@ -1103,7 +873,7 @@ const float kScalePercentageFactor = 100.0f;
 	ImportDeadKeyHandler *importHandler = [ImportDeadKeyHandler importDeadKeyHandler];
 	interactionHandler = importHandler;
 	[importHandler setCompletionTarget:self];
-	[importHandler beginInteractionForWindow:ukeleleWindow withDocument:self];
+	[importHandler beginInteractionForWindow:self.window withDocument:self];
 }
 
 - (IBAction)changeTerminator:(id)sender {
@@ -1113,9 +883,9 @@ const float kScalePercentageFactor = 100.0f;
 			// Contextual menu version
 		NSInteger keyCode = [(KeyCapView *)sender keyCode];
 		NSDictionary *keyData = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-							kKeyState: currentState,
-							kKeyKeyCode: @(keyCode),
-							kKeyModifiers: internalState[kStateCurrentModifiers]};
+								  kKeyState: currentState,
+								  kKeyKeyCode: @(keyCode),
+								  kKeyModifiers: internalState[kStateCurrentModifiers]};
 		currentState = [self.keyboardLayout getNextState:keyData];
 	}
 	if ([currentState isEqualToString:kStateNameNone]) {
@@ -1128,19 +898,19 @@ const float kScalePercentageFactor = 100.0f;
 	[askTerminatorSheet beginAskText:@"Please enter the new terminator"
 						   minorText:[NSString stringWithFormat:@"This will be the terminator for the state \"%@\"", currentState]
 						 initialText:currentTerminator
-						   forWindow:ukeleleWindow
+						   forWindow:self.window
 							callBack:^(NSString *suppliedString) {
 								if (suppliedString) {
 										// Got a new terminator
 									[self changeTerminatorForState:currentState to:suppliedString];
 								}
 								askTerminatorSheet = nil;
-	}];
+							}];
 }
 
 - (void)changeTerminatorSpecifyingState {
 	__block AskStateAndTerminatorController *theController = [AskStateAndTerminatorController askStateAndTerminatorController];
-	[theController beginInteractionWithWindow:ukeleleWindow
+	[theController beginInteractionWithWindow:self.window
 								  forDocument:self.keyboardLayout
 							  completionBlock:^(NSDictionary *dataDict) {
 								  if (dataDict) {
@@ -1148,24 +918,24 @@ const float kScalePercentageFactor = 100.0f;
 									  [self changeTerminatorForState:dataDict[kAskStateAndTerminatorState] to:dataDict[kAskStateAndTerminatorTerminator]];
 								  }
 								  theController = nil;
-	}];
+							  }];
 }
 
 - (IBAction)editKey:(id)sender {
 	__block EditKeyWindowController *editKeyWindow = [EditKeyWindowController editKeyWindowController];
 	NSDictionary *editKeyData = @{kKeyKeyboardObject: self.keyboardLayout,
-							   kKeyKeyboardID: @(self.currentKeyboard),
-							   kKeyState: self.currentState,
-							   kKeyKeyCode: @(selectedKey),
-							   kKeyModifiers: @(self.currentModifiers)};
-	[editKeyWindow beginInteractionForWindow:ukeleleWindow withData:editKeyData action:^(NSDictionary *callbackData) {
+								  kKeyKeyboardID: @(self.currentKeyboard),
+								  kKeyState: self.currentState,
+								  kKeyKeyCode: @(selectedKey),
+								  kKeyModifiers: @(self.currentModifiers)};
+	[editKeyWindow beginInteractionForWindow:self.window withData:editKeyData action:^(NSDictionary *callbackData) {
 		if ([callbackData[kKeyKeyType] isEqualToString:kKeyTypeOutput]) {
 				// Output key
 			NSDictionary *keyData = @{kKeyKeyboardObject: self.keyboardLayout,
-							 kKeyKeyboardID: @(self.currentKeyboard),
-							 kKeyState: self.currentState,
-							 kKeyModifiers: callbackData[kDeadKeyDataModifiers],
-							 kKeyKeyCode: callbackData[kDeadKeyDataKeyCode]};
+									  kKeyKeyboardID: @(self.currentKeyboard),
+									  kKeyState: self.currentState,
+									  kKeyModifiers: callbackData[kDeadKeyDataModifiers],
+									  kKeyKeyCode: callbackData[kDeadKeyDataKeyCode]};
 			BOOL deadKey = [self.keyboardLayout isDeadKey:keyData];
 			if (deadKey) {
 				[self makeDeadKeyOutput:keyData output:callbackData[kKeyKeyOutput]];
@@ -1182,7 +952,7 @@ const float kScalePercentageFactor = 100.0f;
 												modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]
 												keyboardID:[internalState[kStateCurrentKeyboard] integerValue]
 												keyboardDocument:self
-												window:ukeleleWindow
+												window:self.window
 												keyCode:[callbackData[kKeyKeyCode] integerValue]
 												nextState:callbackData[kKeyNextState]
 												terminator:callbackData[kKeyTerminator]];
@@ -1198,7 +968,7 @@ const float kScalePercentageFactor = 100.0f;
 	__block SelectKeyByCodeController *selectKeySheet = [SelectKeyByCodeController selectKeyByCodeController];
 	[selectKeySheet setMajorText:@"Enter the code of the key you want to select. Codes are in the range from 0 to 511, though the usual range is 0 to 127."];
 	[selectKeySheet setMinorText:@""];
-	[selectKeySheet beginDialogWithWindow:ukeleleWindow completionBlock:^(NSInteger keyCode) {
+	[selectKeySheet beginDialogWithWindow:self.window completionBlock:^(NSInteger keyCode) {
 		if (keyCode >= 0) {
 				// Valid selection
 			[self setSelectedKey:keyCode];
@@ -1207,40 +977,9 @@ const float kScalePercentageFactor = 100.0f;
 	}];
 }
 
-- (void)printDocumentWithSettings:(NSDictionary *)printSettings showPrintPanel:(BOOL)showPrintPanel delegate:(id)delegate didPrintSelector:(SEL)didPrintSelector contextInfo:(void *)contextInfo {
-	NSError *error;
-	NSPrintOperation *operation = [self printOperationWithSettings:@{} error:&error];
-	KeyboardPrintView *printView = (KeyboardPrintView *)[operation view];
-	[operation setShowsPrintPanel:showPrintPanel];
-	if (showPrintPanel) {
-			// Create and show the accessory view
-		PrintAccessoryPanel *accessoryPanel = [PrintAccessoryPanel printAccessoryPanel];
-		[accessoryPanel setPrintView:printView];
-		NSPrintPanel *printPanel = [operation printPanel];
-		[printPanel addAccessoryController:accessoryPanel];
-	}
-	[self runModalPrintOperation:operation delegate:delegate didRunSelector:didPrintSelector contextInfo:contextInfo];
-}
-
-- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError {
-	NSPrintInfo *pi = [self printInfo];
-	NSSize paperSize = [pi paperSize];
-	CGFloat pageWidth = paperSize.width - [pi leftMargin] - [pi rightMargin];
-	CGFloat pageHeight = paperSize.height - [pi topMargin] - [pi bottomMargin];
-	KeyboardPrintView *printView = [[KeyboardPrintView alloc] initWithFrame:NSMakeRect(0, 0, pageWidth, pageHeight)];
-	[printView setParentDocument:self];
-	NSPrintOperation *op = [NSPrintOperation printOperationWithView:printView printInfo:[self printInfo]];
-	[printView setupPageParameters];
-	return op;
-}
-
-- (void)document:(NSDocument *)document didPrint:(BOOL)didPrintSuccessfully contextInfo:(void *)contextInfo {
-	NSLog(@"Did print");
-}
-
 - (void)changeFont:(id)sender {
 		// The font has changed in the font panel, so update the window
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
 	NSDictionary *smallAttributes = [ukeleleView smallAttributes];
 	NSFont *oldLargeFont = largeAttributes[NSFontAttributeName];
@@ -1343,7 +1082,7 @@ const float kScalePercentageFactor = 100.0f;
 									 internalState[kStateCurrentState], kKeyState, nil];
 	DoubleClickHandler *handler = [[DoubleClickHandler alloc] initWithData:dataDict
 															keyboardLayout:self.keyboardLayout
-																	window:[keyboardView window]];
+																	window:self.window];
     [handler setCompletionTarget:self];
 	[handler setDeadKeyProcessingType:kDoubleClickDeadKeyChangeToOutput];
 	[handler startDoubleClick];
@@ -1364,7 +1103,7 @@ const float kScalePercentageFactor = 100.0f;
 									 internalState[kStateCurrentState], kKeyState, nil];
 	DoubleClickHandler *handler = [[DoubleClickHandler alloc] initWithData:dataDict
 															keyboardLayout:self.keyboardLayout
-																	window:[keyboardView window]];
+																	window:self.window];
     [handler setCompletionTarget:self];
 	[handler askNewState];
     interactionHandler = handler;
@@ -1379,14 +1118,14 @@ const float kScalePercentageFactor = 100.0f;
 	if ([sender isKindOfClass:[KeyCapView class]]) {
 		__block NSInteger keyCode = [(KeyCapView *)sender keyCode];
 		__block AskCommentController *commentController = [AskCommentController askCommentController];
-		[commentController askCommentForWindow:ukeleleWindow completion:^(NSString *commentText) {
+		[commentController askCommentForWindow:self.window completion:^(NSString *commentText) {
 			if (commentText != nil && [commentText length] > 0) {
 					// Got a non-empty comment
 				NSDictionary *dataDict = @{kKeyDocument: self,
-							   kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-							   kKeyKeyCode: @(keyCode),
-							   kKeyModifiers: internalState[kStateCurrentModifiers],
-							   kKeyState: internalState[kStateCurrentState]};
+										   kKeyKeyboardID: internalState[kStateCurrentKeyboard],
+										   kKeyKeyCode: @(keyCode),
+										   kKeyModifiers: internalState[kStateCurrentModifiers],
+										   kKeyState: internalState[kStateCurrentState]};
 				XMLCommentHolderObject *commentHolder = [self.keyboardLayout commentHolderForKey:dataDict];
 				[self addComment:commentText toHolder:commentHolder];
 			}
@@ -1409,7 +1148,7 @@ const float kScalePercentageFactor = 100.0f;
 - (void)messageModifiersChanged:(int)modifiers
 {
 	static NSUInteger lastModifiers = 0;
-    // Modifiers have changed, so make note of changes
+		// Modifiers have changed, so make note of changes
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	NSUInteger newCurrentModifiers = modifiers;
 	if (usingStickyModifiers) {
@@ -1461,7 +1200,7 @@ const float kScalePercentageFactor = 100.0f;
 	}
 	if (interactionHandler != nil) {
 		NSDictionary *messageDictionary = @{kMessageNameKey: kMessageKeyDown,
-										   kMessageArgumentKey: @(keyCode)};
+											kMessageArgumentKey: @(keyCode)};
 		[interactionHandler handleMessage:messageDictionary];
 	}
 	else {
@@ -1501,7 +1240,7 @@ const float kScalePercentageFactor = 100.0f;
 	else if (interactionHandler != nil) {
 			// Allow the interaction handler to deal with this
 		NSDictionary *messageDictionary = @{kMessageNameKey: kMessageClick,
-										   kMessageArgumentKey: @(keyCode)};
+											kMessageArgumentKey: @(keyCode)};
 		[interactionHandler handleMessage:messageDictionary];
 	}
 	else if (handleClickAsDoubleClick) {
@@ -1524,13 +1263,13 @@ const float kScalePercentageFactor = 100.0f;
 		return;
 	}
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:self, kKeyDocument,
-                                      internalState[kStateCurrentKeyboard], kKeyKeyboardID,
-                                      @(keyCode), kKeyKeyCode,
-                                      internalState[kStateCurrentModifiers], kKeyModifiers,
-                                      internalState[kStateCurrentState], kKeyState, nil];
+									 internalState[kStateCurrentKeyboard], kKeyKeyboardID,
+									 @(keyCode), kKeyKeyCode,
+									 internalState[kStateCurrentModifiers], kKeyModifiers,
+									 internalState[kStateCurrentState], kKeyState, nil];
 	DoubleClickHandler *handler = [[DoubleClickHandler alloc] initWithData:dataDict
 															keyboardLayout:self.keyboardLayout
-																	window:[keyboardView window]];
+																	window:self.window];
     [handler setCompletionTarget:self];
 	[handler startDoubleClick];
     interactionHandler = handler;
@@ -1538,15 +1277,15 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)messageDragText:(NSString *)draggedText toKey:(int)keyCode
 {
-    // Handle drop of text onto a key
+		// Handle drop of text onto a key
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:self, kKeyDocument,
-                                      internalState[kStateCurrentKeyboard], kKeyKeyboardID,
-                                      @(keyCode), kKeyKeyCode,
-                                      internalState[kStateCurrentModifiers], kKeyModifiers,
-                                      internalState[kStateCurrentState], kKeyState, nil];
+									 internalState[kStateCurrentKeyboard], kKeyKeyboardID,
+									 @(keyCode), kKeyKeyCode,
+									 internalState[kStateCurrentModifiers], kKeyModifiers,
+									 internalState[kStateCurrentState], kKeyState, nil];
 	DragTextHandler *handler = [[DragTextHandler alloc] initWithData:dataDict
 															dragText:draggedText
-															  window:[keyboardView window]];
+															  window:self.window];
     [handler setCompletionTarget:self];
 	[handler startDrag];
 	interactionHandler = handler;
@@ -1554,7 +1293,7 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)messageEditPaneClosed
 {
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	[[ukeleleView window] makeFirstResponder:ukeleleView];
 }
 
@@ -1567,7 +1306,7 @@ const float kScalePercentageFactor = 100.0f;
 - (void)messageScaleCompleted
 {
 		// Tell the font panel what font we have
-	UkeleleView *ukeleleView = [keyboardView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
@@ -1614,7 +1353,7 @@ const float kScalePercentageFactor = 100.0f;
 - (void)unlinkKeyWithKeyCode:(NSInteger)keyCode andModifiers:(NSUInteger)modifierCombination
 {
 	NSDictionary *keyDataDict = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-							   kKeyKeyCode: @(keyCode), kKeyModifiers: @(modifierCombination)};
+								  kKeyKeyCode: @(keyCode), kKeyModifiers: @(modifierCombination)};
 	if (![self.keyboardLayout isActionElement:keyDataDict]) {
 			// It's not an action element, so we can't unlink
 		NSString *messageText = NSLocalizedStringFromTable(@"The key you specified is not linked, so cannot be unlinked", @"dialogs", @"Tell the user why it cannot be unlinked");
@@ -1624,7 +1363,7 @@ const float kScalePercentageFactor = 100.0f;
 		[documentAlert setAlertStyle:NSInformationalAlertStyle];
 		[documentAlert setMessageText:messageText];
 		[documentAlert setInformativeText:infoText];
-		[documentAlert beginSheetModalForWindow:ukeleleWindow
+		[documentAlert beginSheetModalForWindow:self.window
 								  modalDelegate:self
 								 didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
 									contextInfo:nil];
@@ -1700,9 +1439,9 @@ const float kScalePercentageFactor = 100.0f;
 	else if (keyType == kOrdinaryKeyType || keyType == kSpecialKeyType) {
 			// Ordinary or special key
 		NSDictionary *keyData = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-							kKeyKeyCode: @(keyCode),
-							kKeyModifiers: internalState[kStateCurrentModifiers],
-							kKeyState: internalState[kStateCurrentState]};
+								  kKeyKeyCode: @(keyCode),
+								  kKeyModifiers: internalState[kStateCurrentModifiers],
+								  kKeyState: internalState[kStateCurrentState]};
 		BOOL deadKey = [self.keyboardLayout isDeadKey:keyData];
 		if (deadKey) {
 				// Contextual menu for a dead key

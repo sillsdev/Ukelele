@@ -1,12 +1,12 @@
 //
-//  UkeleleDocument+Housekeeping.m
-//  Ukelele 3
+//  UKKeyboardWindow+Housekeeping.m
+//  Ukelele Cocoa
 //
-//  Created by John Brownie on 12/06/12.
-//  Copyright (c) 2012 SIL. All rights reserved.
+//  Created by John Brownie on 12/06/2014.
+//  Copyright (c) 2014 John Brownie. All rights reserved.
 //
 
-#import "UkeleleDocument+Housekeeping.h"
+#import "UKKeyboardWindow+Housekeeping.h"
 #import "RemoveStateData.h"
 #import "ActionElementSetWrapper.h"
 #import "ScriptInfo.h"
@@ -14,7 +14,7 @@
 #import "ColourThemeEditorController.h"
 #import "UkeleleConstantStrings.h"
 
-@implementation UkeleleDocument (Housekeeping)
+@implementation UKKeyboardWindow (Housekeeping)
 
 - (IBAction)removeUnusedStates:(id)sender
 {
@@ -26,7 +26,7 @@
 		[alert setInformativeText:@"All states are currently used, so there were no unused states to remove"];
 		[alert addButtonWithTitle:@"OK"];
 		[alert setAlertStyle:NSInformationalAlertStyle];
-		[alert beginSheetModalForWindow:[keyboardView window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[alert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 		return;
 	}
 	NSUndoManager *undoManager = [self undoManager];
@@ -43,7 +43,7 @@
 		[alert setInformativeText:@"All actions are currently used, so there were no unused actions to remove"];
 		[alert addButtonWithTitle:@"OK"];
 		[alert setAlertStyle:NSInformationalAlertStyle];
-		[alert beginSheetModalForWindow:[keyboardView window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[alert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 		return;
 		return;
 	}
@@ -60,7 +60,7 @@
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
 	}
 	[replaceNameSheet beginReplaceNameSheetWithText:infoText
-										  forWindow:ukeleleWindow
+										  forWindow:self.window
 										  withNames:stateNames
 									 verifyCallBack:^BOOL(NSString *stateName) {
 										 if ([stateName isEqualToString:@"none"] || [[self keyboardLayout] hasStateWithName:stateName]) {
@@ -85,7 +85,7 @@
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
 	}
 	[replaceNameSheet beginReplaceNameSheetWithText:infoText
-										  forWindow:ukeleleWindow
+										  forWindow:self.window
 										  withNames:actionNames
 									 verifyCallBack:^BOOL(NSString *actionName) {
 										 if ([[self keyboardLayout] hasActionWithName:actionName]) {
@@ -123,7 +123,7 @@
 	infoDictionary[kKeyboardIDWindowID] = @([[self keyboardLayout] keyboardID]);
 		// Need to set the bundle parameters!
 	[keyboardIDSheet startDialogWithInfo:infoDictionary
-							   forWindow:ukeleleWindow
+							   forWindow:self.window
 								callBack:^(NSDictionary *infoDictionary) {
 									if (infoDictionary == nil) {
 											// User cancelled
@@ -155,7 +155,7 @@
 
 - (IBAction)colourThemes:(id)sender {
 	__block ColourThemeEditorController *theController = [ColourThemeEditorController colourThemeEditorController];
-	[theController showColourThemesWithWindow:ukeleleWindow completionBlock:^(NSString *theTheme) {
+	[theController showColourThemesWithWindow:self.window completionBlock:^(NSString *theTheme) {
 		if (theTheme) {
 				// Set the current theme
 			NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
@@ -233,15 +233,15 @@
 	[[undoManager prepareWithInvocationTarget:self] changeKeyboardName:oldName];
 	[undoManager setActionName:@"Set keyboard name"];
 	[[self keyboardLayout] setKeyboardName:newName];
-	[[self parentBundle] notifyNewName:newName forDocument:self];
-	[ukeleleWindow setTitle:newName];
+//	[[self parentBundle] notifyNewName:newName forDocument:self];
+	[self.window setTitle:newName];
 }
 
 #pragma mark Callbacks
 
 - (BOOL)verifyStateName:(NSString *)stateName
 {
-	if (![UkeleleDocument isValidStateName:stateName] || [[self keyboardLayout] hasStateWithName:stateName]) {
+	if (/*![UkeleleDocument isValidStateName:stateName] ||*/ [[self keyboardLayout] hasStateWithName:stateName]) {
 			// Can't have "none" or an existing state name
 		return NO;
 	}

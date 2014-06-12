@@ -15,6 +15,7 @@
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
 		52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */; };
 		523451C71927208B00CAEB41 /* PrintAccessoryPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */; };
+		5235CAD919481A6E009F8B42 /* UKKeyboardWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */; };
 		523A4C2D192454770019F062 /* AskFromList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523A4C2C192454770019F062 /* AskFromList.xib */; };
 		523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */; };
 		523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0071191C9CA900E06DF3 /* KeyCapView.m */; };
@@ -161,6 +162,9 @@
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
+		52E1E59119497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */; };
+		52E1E59419497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */; };
+		52E1E59719497DE00001B3BB /* UKKeyboardWindow+Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -213,6 +217,8 @@
 		5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleBundleVersionSheet.xib; path = "Interface Files/UkeleleBundleVersionSheet.xib"; sourceTree = "<group>"; };
 		52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnlinkModifiersDialog.xib; path = "Interface Files/UnlinkModifiersDialog.xib"; sourceTree = "<group>"; };
 		523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintAccessoryPanel.xib; path = "Interface Files/PrintAccessoryPanel.xib"; sourceTree = "<group>"; };
+		5235CAD719481A6E009F8B42 /* UKKeyboardWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardWindow.h; sourceTree = "<group>"; };
+		5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardWindow.m; sourceTree = "<group>"; };
 		523A4C2C192454770019F062 /* AskFromList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskFromList.xib; path = "Interface Files/AskFromList.xib"; sourceTree = "<group>"; };
 		523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardDefinitions.h; sourceTree = "<group>"; };
 		523B0064191C9BCF00E06DF3 /* UkeleleConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleConstants.h; sourceTree = "<group>"; };
@@ -492,6 +498,12 @@
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardTypeSheet.xib; path = "Interface Files/KeyboardTypeSheet.xib"; sourceTree = "<group>"; };
+		52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Housekeeping.h"; sourceTree = "<group>"; };
+		52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Housekeeping.m"; sourceTree = "<group>"; };
+		52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Modifiers.h"; sourceTree = "<group>"; };
+		52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Modifiers.m"; sourceTree = "<group>"; };
+		52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Comments.h"; sourceTree = "<group>"; };
+		52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Comments.m"; sourceTree = "<group>"; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
@@ -975,6 +987,14 @@
 				523B017C191CA18C00E06DF3 /* UkelelePreferenceController.m */,
 				523B0157191CA18C00E06DF3 /* UKKeyboardLayoutBundle.h */,
 				523B0158191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m */,
+				5235CAD719481A6E009F8B42 /* UKKeyboardWindow.h */,
+				5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */,
+				52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */,
+				52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */,
+				52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */,
+				52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */,
+				52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */,
+				52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
 				523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */,
 				523B017F191CA18C00E06DF3 /* UnlinkModifiersController.h */,
@@ -1188,6 +1208,7 @@
 				523B00C5191CA00A00E06DF3 /* KeyMapSelect.mm in Sources */,
 				523B01A6191CA18C00E06DF3 /* ImportDeadKeyHandler.m in Sources */,
 				523B007E191C9CA900E06DF3 /* UkeleleView.m in Sources */,
+				52E1E59719497DE00001B3BB /* UKKeyboardWindow+Comments.m in Sources */,
 				523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */,
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,
@@ -1202,6 +1223,7 @@
 				523B01B0191CA18C00E06DF3 /* ModifiersSheet.m in Sources */,
 				523B0101191CA0D100E06DF3 /* AddMissingOutputData.mm in Sources */,
 				523B00C3191CA00A00E06DF3 /* KeyElementTable.mm in Sources */,
+				52E1E59419497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m in Sources */,
 				523B00CA191CA00A00E06DF3 /* LayoutsElement.mm in Sources */,
 				523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */,
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
@@ -1221,6 +1243,7 @@
 				523B00CB191CA00A00E06DF3 /* ModifierElement.mm in Sources */,
 				523B0104191CA0D100E06DF3 /* ErrorMessage.cpp in Sources */,
 				523B00FF191CA0D100E06DF3 /* ActionElementSetHolder.mm in Sources */,
+				52E1E59119497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m in Sources */,
 				523B01BE191CA18C00E06DF3 /* UnlinkModifiersController.m in Sources */,
 				523B00CF191CA00A00E06DF3 /* UkeleleKeyboard.mm in Sources */,
 				523B018C191CA18C00E06DF3 /* AskTextSheet.m in Sources */,
@@ -1235,6 +1258,7 @@
 				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
 				523B0102191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm in Sources */,
 				52BBED0F191B4C3900E48394 /* main.m in Sources */,
+				5235CAD919481A6E009F8B42 /* UKKeyboardWindow.m in Sources */,
 				523B0187191CA18C00E06DF3 /* AskKeyCode.m in Sources */,
 				523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */,
 				523B0189191CA18C00E06DF3 /* AskReplaceDeadKeySheet.m in Sources */,
