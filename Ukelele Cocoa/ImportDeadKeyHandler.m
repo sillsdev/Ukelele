@@ -14,7 +14,7 @@
 //		If there is a state with that name, ask for a new name
 
 #import "ImportDeadKeyHandler.h"
-#import "UKKeyboardLayoutBundle.h"
+#import "UKKeyboardDocument.h"
 #import "KeyboardLayoutInformation.h"
 #import "AskFromList.h"
 #import "UkeleleConstantStrings.h"
@@ -22,7 +22,7 @@
 
 @implementation ImportDeadKeyHandler {
 	NSWindow *parentWindow;
-	UkeleleDocument *targetDocument;
+	UKKeyboardDocument *targetDocument;
 }
 
 - (id)init {
@@ -38,7 +38,7 @@
 	return [[ImportDeadKeyHandler alloc] init];
 }
 
-- (void)beginInteractionForWindow:(NSWindow *)theWindow withDocument:(UkeleleDocument *)theDocument {
+- (void)beginInteractionForWindow:(NSWindow *)theWindow withDocument:(UKKeyboardDocument *)theDocument {
 	parentWindow = theWindow;
 	targetDocument = theDocument;
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
@@ -74,7 +74,7 @@
 	}
 	else if ([documentProperties[NSURLIsPackageKey] boolValue]) {
 			// Package, so have to determine whether it's a valid keyboard layout bundle
-		UKKeyboardLayoutBundle *theBundle = [self getKeyboardLayoutBundle:documentURL];
+		UKKeyboardDocument *theBundle = [self getKeyboardLayoutBundle:documentURL];
 		if (theBundle != nil) {
 				// Valid bundle
 			[self handleBundle:theBundle];
@@ -88,9 +88,9 @@
 	}
 }
 
-- (UKKeyboardLayoutBundle *)getKeyboardLayoutBundle:(NSURL *)bundleURL {
+- (UKKeyboardDocument *)getKeyboardLayoutBundle:(NSURL *)bundleURL {
 		// See if we can create a keyboard layout bundle from the URL
-	UKKeyboardLayoutBundle *bundleDocument = [[UKKeyboardLayoutBundle alloc] init];
+	UKKeyboardDocument *bundleDocument = [[UKKeyboardDocument alloc] init];
 	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:bundleURL options:0 error:NULL];
 	if (fileWrapper != nil) {
 		NSError *readError;
@@ -102,13 +102,13 @@
 	return nil;
 }
 
-- (void)handleBundle:(UKKeyboardLayoutBundle *)theDocument {
+- (void)handleBundle:(UKKeyboardDocument *)theDocument {
 		// Find the keyboard layouts in the bundle
 	NSArray *keyboardLayouts = [theDocument keyboardLayouts];
 	if ([keyboardLayouts count] == 1) {
 			// Only one keyboard layout, so that's the one to use
 		KeyboardLayoutInformation *docInfo = keyboardLayouts[0];
-		[self handleDocument:[docInfo document]];
+		[self handleDocument:[docInfo keyboardObject]];
 	}
 	else if ([keyboardLayouts count] > 1) {
 			// Put up a dialog to ask which one to use
@@ -125,7 +125,7 @@
 			NSUInteger index = [keyboardNames indexOfObject:chosenKeyboard];
 			NSAssert(index != NSNotFound, @"Must have found the keyboard name");
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
-			[self handleDocument:[info document]];
+			[self handleDocument:[info keyboardObject]];
 		}];
 	}
 	else {
@@ -146,7 +146,7 @@
 		[self interactionCompleted];
 		return;
 	}
-	UkeleleDocument *theDocument = [[UkeleleDocument alloc] init];
+	UKKeyboardDocument *theDocument = [[UKKeyboardDocument alloc] init];
 	NSError *theError;
 	BOOL success = [theDocument readFromData:documentData
 									  ofType:@"org.sil.ukelele.keylayout"
@@ -161,7 +161,7 @@
 	[self handleDocument:theDocument];
 }
 
-- (void)handleDocument:(UkeleleDocument *)theDocument {
+- (void)handleDocument:(UKKeyboardDocument *)theDocument {
 		// Have the source document as a UkeleleDocument
 		// Check that we have equivalent modifier maps
 	UkeleleKeyboardObject *sourceObject = [theDocument keyboardLayout];

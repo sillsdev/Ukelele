@@ -7,23 +7,23 @@
 //
 
 #import "SwapKeysController.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 #import "AskSwapKeysWindowController.h"
 #import "UkeleleConstantStrings.h"
 
 @implementation SwapKeysController {
-	UkeleleDocument *parentDocument;
+	UKKeyboardWindow *parentDocumentWindow;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
 	AskSwapKeysWindowController *askKeyCodeSheet;
 	NSInteger keyCode;
 }
 
-- (id)initWithDocument:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow {
+- (id)initWithDocument:(UKKeyboardWindow *)theDocumentWindow {
 	self = [super init];
 	if (self) {
-		parentDocument = theDocument;
-		parentWindow = theWindow;
+		parentDocumentWindow = theDocumentWindow;
+		parentWindow = [theDocumentWindow window];
 		completionTarget = nil;
 		askKeyCodeSheet = nil;
 		keyCode = kNoKeyCode;
@@ -31,8 +31,8 @@
 	return self;
 }
 
-+ (SwapKeysController *)swapKeysController:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow {
-	return [[SwapKeysController alloc] initWithDocument:theDocument window:theWindow];
++ (SwapKeysController *)swapKeysController:(UKKeyboardWindow *)theDocumentWindow {
+	return [[SwapKeysController alloc] initWithDocument:theDocumentWindow];
 }
 
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget {
@@ -45,14 +45,14 @@
 		askKeyCodeSheet = [AskSwapKeysWindowController askSwapKeysWindowController];
 		[askKeyCodeSheet beginInteractionWithWindow:parentWindow callback:^(NSArray *resultArray) {
 			if (resultArray != nil) {
-				[parentDocument swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
+				[parentDocumentWindow swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
 			}
 			[self interactionCompleted];
 		}];
 	}
 	else {
 			// Ask for the first key
-		[parentDocument setMessageBarText:@"Press or click the first key"];
+		[parentDocumentWindow setMessageBarText:@"Press or click the first key"];
 	}
 }
 
@@ -70,15 +70,15 @@
 			// We've selected the first key
 		keyCode = selectedKey;
 			// Show that key as selected
-		[parentDocument setSelectedKey:keyCode];
-		[parentDocument setMessageBarText:@"Press or click the second key"];
+		[parentDocumentWindow setSelectedKey:keyCode];
+		[parentDocumentWindow setMessageBarText:@"Press or click the second key"];
 	}
 	else if (keyCode != selectedKey) {
 			// Got the second key that's not the same as the first
-		[parentDocument setMessageBarText:@""];
-		[parentDocument clearSelectedKey];
+		[parentDocumentWindow setMessageBarText:@""];
+		[parentDocumentWindow clearSelectedKey];
 			// Swap the keys with keyCode and selectedKey
-		[parentDocument swapKeyWithCode:keyCode andKeyWithCode:selectedKey];
+		[parentDocumentWindow swapKeyWithCode:keyCode andKeyWithCode:selectedKey];
 		[self interactionCompleted];
 	}
 }

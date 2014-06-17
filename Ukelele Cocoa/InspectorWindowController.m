@@ -9,8 +9,9 @@
 #import "InspectorWindowController.h"
 #import "UkeleleConstantStrings.h"
 #import "ScriptInfo.h"
-#import "UkeleleDocument.h"
-#import "UKKeyboardLayoutBundle.h"
+#import "UKKeyboardDocument.h"
+#import "UKKeyboardWindow.h"
+#import "UKKeyboardWindow+Housekeeping.h"
 
 @implementation InspectorWindowController
 
@@ -36,7 +37,7 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
-	[_stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
 
 + (InspectorWindowController *)getInstance {
@@ -50,11 +51,11 @@
 
 - (IBAction)generateID:(id)sender {
 		// Work out the script
-	NSInteger selectedScript = [_keyboardScriptButton indexOfSelectedItem];
-	ScriptInfo *scriptInfo = _scriptList[selectedScript];
+	NSInteger selectedScript = [self.keyboardScriptButton indexOfSelectedItem];
+	ScriptInfo *scriptInfo = self.scriptList[selectedScript];
 		// Generate a random number in the appropriate range
 	NSInteger newID = [scriptInfo randomID];
-	[_currentKeyboard setKeyboardID:newID];
+	[self.currentWindow changeKeyboardID:newID];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
@@ -66,60 +67,51 @@
 	for (NSString *stateName in [stateStack reverseObjectEnumerator]) {
 		[tempArray addObject:stateName];
 	}
-	_stateStack = tempArray;
-	[_stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+	self.stateStack = tempArray;
+	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
 	NSDocumentController *sharedController = [NSDocumentController sharedDocumentController];
-	NSDocument *currentDocument = [sharedController currentDocument];
-		// Tell the document that we have selected the tab
-	if ([currentDocument isKindOfClass:[UkeleleDocument class]]) {
-			// It's a keyboard layout document
-		if ([kTabIdentifierDocument isEqualToString:[tabViewItem identifier]]) {
-				// Don't have bundle parameters for a non-bundled keyboard layout
-			[self setBundleSectionEnabled:NO];
-		}
-		[(UkeleleDocument *)currentDocument inspectorDidActivateTab:[tabViewItem identifier]];
+	UKKeyboardDocument *theDocument = [sharedController currentDocument];
+	[theDocument inspectorDidActivateTab:[tabViewItem identifier]];
+	if (self.currentWindow != nil) {
+		theDocument = [self.currentWindow parentDocument];
+		[self setBundleSectionEnabled:[theDocument isBundle]];
 	}
-	else if ([currentDocument isKindOfClass:[UKKeyboardLayoutBundle class]]) {
-			// It's a keyboard layout bundle
-		if ([kTabIdentifierDocument isEqualToString:[tabViewItem identifier]]) {
-				// We have a bundle, so allow the editing of the bundle parameters
-			[self setBundleSectionEnabled:YES];
-		}
-		[(UKKeyboardLayoutBundle *)currentDocument inspectorDidActivateTab:[tabViewItem identifier]];
+	else {
+		[self setKeyboardSectionEnabled:NO];
 	}
 }
 
 - (void)setScript:(NSInteger)scriptCode {
-	for (NSInteger i = 0; i < [_scriptList count]; i++) {
-		ScriptInfo *scriptInfo = _scriptList[i];
+	for (NSInteger i = 0; i < [self.scriptList count]; i++) {
+		ScriptInfo *scriptInfo = self.scriptList[i];
 		NSInteger scriptID = [scriptInfo scriptID];
 		if (scriptID == scriptCode) {
-			[_keyboardScriptButton selectItemAtIndex:i];
+			[self.keyboardScriptButton selectItemAtIndex:i];
 			break;
 		}
 	}
 }
 
 - (IBAction)showWindow:(id)sender {
-	[self tabView:_tabView didSelectTabViewItem:[_tabView selectedTabViewItem]];
+	[self tabView:self.tabView didSelectTabViewItem:[self.tabView selectedTabViewItem]];
 	[super showWindow:sender];
 }
 
 - (void)setKeyboardSectionEnabled:(BOOL)enabled {
-	[_keyboardIDField setEnabled:enabled];
-	[_keyboardNameField setEnabled:enabled];
-	[_keyboardScriptButton setEnabled:enabled];
-	[_generateButton setEnabled:enabled];
+	[self.keyboardIDField setEnabled:enabled];
+	[self.keyboardNameField setEnabled:enabled];
+	[self.keyboardScriptButton setEnabled:enabled];
+	[self.generateButton setEnabled:enabled];
 }
 
 - (void)setBundleSectionEnabled:(BOOL)enabled {
-	[_bundleNameField setEnabled:enabled];
-	[_bundleVersionField setEnabled:enabled];
-	[_buildVersionField setEnabled:enabled];
-	[_sourceVersionField setEnabled:enabled];
+	[self.bundleNameField setEnabled:enabled];
+	[self.bundleVersionField setEnabled:enabled];
+	[self.buildVersionField setEnabled:enabled];
+	[self.sourceVersionField setEnabled:enabled];
 }
 
 @end

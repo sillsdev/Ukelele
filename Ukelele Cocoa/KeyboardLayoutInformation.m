@@ -10,15 +10,12 @@
 
 @implementation KeyboardLayoutInformation
 
-- (id)initWithDocument:(UkeleleDocument *)theDocument {
+- (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName {
 	self = [super init];
-	_document = theDocument;
-	_keyboardName = [theDocument keyboardDisplayName];
-	NSURL *theURL = [theDocument fileURL];
-	if (nil != theURL) {
-		NSString *filePath = [theURL lastPathComponent];
-		_fileName = [filePath stringByDeletingPathExtension];
-	}
+	_keyboardObject = theKeyboard;
+	_keyboardName = [theKeyboard keyboardName];
+	_fileName = fileName;
+	_hasIcon = NO;
 	return self;
 }
 

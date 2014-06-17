@@ -29,6 +29,8 @@ enum ToolbarItemTags {
 	kToolbarTagUnlink = 13
 };
 
+@class UKKeyboardDocument;
+
 @interface UKKeyboardWindow : NSWindowController<NSWindowDelegate,
 	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, UKKeyCapClick,
 	UKMenuDelegate, UKInteractionCompletion, UkeleleDocumentDelegate>
@@ -84,6 +86,7 @@ enum ToolbarItemTags {
 	// Current state
 @property (readonly) NSUInteger currentModifiers;
 @property (weak, readonly) NSString *currentState;
+@property (weak) UKKeyboardDocument *parentDocument;
 
 	// Actions
 	// View scale
@@ -108,7 +111,7 @@ enum ToolbarItemTags {
 - (IBAction)swapKeysByCode:(id)sender;
 - (IBAction)selectKeyByCode:(id)sender;
 - (IBAction)unlinkKey:(id)sender;
-- (IBAction)unlinkKeyAskingCode:(id)sender;
+- (IBAction)unlinkKeyAskingKeyCode:(id)sender;
 - (IBAction)attachComment:(id)sender;
 	// Other actions
 - (IBAction)setKeyboardType:(id)sender;
@@ -128,7 +131,7 @@ enum ToolbarItemTags {
 - (void)changeTerminatorForState:(NSString *)stateName to:(NSString *)newTerminator;
 - (void)enterDeadKeyStateWithName:(NSString *)stateName;
 - (void)leaveCurrentDeadKeyState;
-- (void)makeDeadKey:(NSDictionary *)keyDataDict state:(NSString *)nextState;
+- (void)makeKeyDeadKey:(NSDictionary *)keyDataDict state:(NSString *)nextState;
 - (void)makeDeadKeyOutput:(NSDictionary *)keyDataDict output:(NSString *)newOutput;
 - (void)changeDeadKeyNextState:(NSDictionary *)keyDataDict newState:(NSString *)nextState;
 - (void)createNewDeadKey:(NSDictionary *)keyDataDict nextState:(NSString *)nextState usingExistingState:(BOOL)usingExisting;

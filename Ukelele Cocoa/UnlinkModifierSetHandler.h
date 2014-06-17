@@ -11,17 +11,11 @@
 #import "UKInteractionCompletion.h"
 #import "UnlinkModifiersController.h"
 
-@class UkeleleDocument;
+@class UKKeyboardWindow;
 
-@interface UnlinkModifierSetHandler : NSObject<UKInteractionHandler> {
-	UkeleleDocument *parentDocument;
-	NSWindow *parentWindow;
-	void (^callback)(NSInteger);
-    id<UKInteractionCompletion> completionTarget;
-	UnlinkModifiersController *unlinkModifiersController;
-}
+@interface UnlinkModifierSetHandler : NSObject<UKInteractionHandler>
 
-+ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow;
++ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UKKeyboardWindow *)theDocumentWindow;
 - (void)beginInteractionWithCallback:(void (^)(NSInteger))theCallBack;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget;
 

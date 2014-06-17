@@ -17,7 +17,9 @@ enum UkeleleErrors {
 	kUkeleleErrorKeyboardLayoutsFileExists = -13,	// Can't create the Keyboard Layouts folder because a file of that name already exists
 	kUkeleleErrorCouldNotCreateKeyboardLayouts = -14,	// Could not create the Keyboard Layouts folder
 	kUkeleleErrorCouldNotSaveInInstallDirectory = -15,	// Could not copy the file to the Keyboard Layouts folder
-	kUkeleleErrorAuthenticationFailed = -16			// Authentication failed for install
+	kUkeleleErrorAuthenticationFailed = -16,		// Authentication failed for install
+	kUkeleleErrorNotPlainFile = -17,				// Not a plain file for a keyboard layout
+	kUkeleleErrorInvalidFileType = -18				// Invalid UTI given
 };
 
 #endif

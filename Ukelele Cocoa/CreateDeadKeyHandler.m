@@ -8,7 +8,7 @@
 
 #import "CreateDeadKeyHandler.h"
 #import "UkeleleConstantStrings.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 #import "CreateDeadKeySheet.h"
 #import "AskReplaceDeadKeySheet.h"
 #import "WrongStateChosenSheet.h"
@@ -31,7 +31,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	NSString *targetState;
 	NSString *suppliedTerminator;
 	CreateDeadKeyHandlerType typeCode;
-	UkeleleDocument *parentDocument;
+	UKKeyboardWindow *parentDocumentWindow;
 	UkeleleKeyboardObject *keyboardObject;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
@@ -46,17 +46,16 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 - (id)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID
-		  keyboardDocument:(UkeleleDocument *)theDocument
-					window:(NSWindow *)theWindow
+			keyboardWindow:(UKKeyboardWindow *)theDocumentWindow
 				   keyCode:(NSInteger)keyCode
 				 nextState:(NSString *)nextStateName
 				terminator:(NSString *)theTerminator {
 	if (self = [super init]) {
 		
 		currentState = stateName;
-		parentDocument = theDocument;
-		keyboardObject = [theDocument keyboardLayout];
-		parentWindow = theWindow;
+		parentDocumentWindow = theDocumentWindow;
+		keyboardObject = [theDocumentWindow keyboardLayout];
+		parentWindow = [theDocumentWindow window];
 		currentModifiers = theModifiers;
 		currentKeyboardID = keyboardID;
 		selectedKeyCode = keyCode;
@@ -227,7 +226,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	if (keyCode < 0) {
 			// We have to wait to get the actual key, so we put a message up
 		NSString *messageText = NSLocalizedStringFromTable(@"Please click or type the dead key", @"dialogs", @"Instruction to identify the dead key");
-		[parentDocument setMessageBarText:messageText];
+		[parentDocumentWindow setMessageBarText:messageText];
 		return;
 	}
 	
@@ -289,7 +288,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 		}
 		else {
 				// What we need to do is to change the next state for the dead key
-			[parentDocument changeDeadKeyNextState:keyDataDictionary newState:nextState];
+			[parentDocumentWindow changeDeadKeyNextState:keyDataDictionary newState:nextState];
 				// Need to update keyboard view...
 			[self interactionCompleted];
 			return;
@@ -298,9 +297,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	
 		// If all is OK, then we go to create
 	BOOL existingState = [keyboardObject hasStateWithName:targetState];
-	[parentDocument createNewDeadKey:keyDataDictionary
-						   nextState:nextState
-				  usingExistingState:existingState];
+	[parentDocumentWindow createNewDeadKey:keyDataDictionary nextState:nextState usingExistingState:existingState];
 	[self interactionCompleted];
 }
 
@@ -392,14 +389,14 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 - (void)handleMessage:(NSDictionary *)messageData
 {
 	NSString *messageName = messageData[kMessageNameKey];
-	NSUInteger deadKeyModifiers = [parentDocument currentModifiers];
+	NSUInteger deadKeyModifiers = [parentDocumentWindow currentModifiers];
 	NSInteger keyCode = kNoKeyCode;
 	if ([messageName isEqualToString:kMessageClick]) {
 			// Handle a click
 		keyCode = [messageData[kMessageArgumentKey] integerValue];
 		deadKeyData[kDeadKeyDataKeyCode] = @(keyCode);
 		deadKeyData[kDeadKeyDataModifiers] = @(deadKeyModifiers);
-		[parentDocument setMessageBarText:@""];
+		[parentDocumentWindow setMessageBarText:@""];
 		[self checkDeadKeyParameters];
 	}
 	else if ([messageName isEqualToString:kMessageKeyDown]) {
@@ -407,7 +404,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 		keyCode = [messageData[kMessageArgumentKey] integerValue];
 		deadKeyData[kDeadKeyDataKeyCode] = @(keyCode);
 		deadKeyData[kDeadKeyDataModifiers] = @(deadKeyModifiers);
-		[parentDocument setMessageBarText:@""];
+		[parentDocumentWindow setMessageBarText:@""];
 		[self checkDeadKeyParameters];
 	}
 }

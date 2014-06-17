@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class UkeleleDocument;
-@class UKKeyboardLayoutBundle;
+@class UKKeyboardDocument;
+@class UKKeyboardWindow;
 
 #define kTabIdentifierDocument	@"Document"
 #define kTabIdentifierOutput	@"Output"
@@ -39,8 +39,8 @@
 @property (nonatomic, strong) IBOutlet NSArray *stateStack;
 @property (strong) IBOutlet NSArray *scriptList;
 
-@property (weak, nonatomic) UkeleleDocument *currentKeyboard;
-@property (weak, nonatomic) UKKeyboardLayoutBundle *currentBundle;
+@property (weak, nonatomic) UKKeyboardDocument *currentDocument;
+@property (weak, nonatomic) UKKeyboardWindow *currentWindow;
 
 + (InspectorWindowController *)getInstance;
 - (IBAction)generateID:(id)sender;

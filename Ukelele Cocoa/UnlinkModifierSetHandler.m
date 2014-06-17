@@ -7,16 +7,22 @@
 //
 
 #import "UnlinkModifierSetHandler.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 #import "UnlinkModifiersController.h"
 #import "KeyboardEnvironment.h"
 
-@implementation UnlinkModifierSetHandler
+@implementation UnlinkModifierSetHandler {
+	UKKeyboardWindow *parentDocumentWindow;
+	NSWindow *parentWindow;
+	void (^callback)(NSInteger);
+    id<UKInteractionCompletion> completionTarget;
+	UnlinkModifiersController *unlinkModifiersController;
+}
 
-- (id)initWithDocument:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow {
+- (id)initWithDocument:(UKKeyboardWindow *)theDocumentWindow {
 	if (self = [super init]) {
-		parentDocument = theDocument;
-		parentWindow = theWindow;
+		parentDocumentWindow = theDocumentWindow;
+		parentWindow = [theDocumentWindow window];
 		callback = nil;
 		completionTarget = nil;
 		unlinkModifiersController = nil;
@@ -24,14 +30,14 @@
 	return self;
 }
 
-+ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow {
-	return [[UnlinkModifierSetHandler alloc] initWithDocument:theDocument window:theWindow];
++ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UKKeyboardWindow *)theDocumentWindow {
+	return [[UnlinkModifierSetHandler alloc] initWithDocument:theDocumentWindow];
 }
 
 - (void)beginInteractionWithCallback:(void (^)(NSInteger))theCallBack {
 	unlinkModifiersController = [UnlinkModifiersController unlinkModifiersController];
 	callback = theCallBack;
-	UkeleleKeyboardObject *keyboard = [parentDocument keyboardLayout];
+	UkeleleKeyboardObject *keyboard = [parentDocumentWindow keyboardLayout];
 	[unlinkModifiersController setUsesSimplifiedModifiers:[keyboard hasSimplifiedModifiers]];
 	[unlinkModifiersController beginDialogWithWindow:parentWindow callback:^(NSNumber *result) {
 		[self acceptModifiers:result];
@@ -43,7 +49,7 @@
 	NSInteger modifierSet;
 	if (modifierCombination != nil) {
 			// Got valid modifiers
-		UkeleleKeyboardObject *keyboard = [parentDocument keyboardLayout];
+		UkeleleKeyboardObject *keyboard = [parentDocumentWindow keyboardLayout];
 		modifierSet = [keyboard modifierSetIndexForModifiers:[modifierCombination unsignedIntegerValue] forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]];
 	}
 	else {

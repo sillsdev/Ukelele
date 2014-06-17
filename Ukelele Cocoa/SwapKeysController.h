@@ -10,11 +10,11 @@
 #import "UKInteractionHandler.h"
 #import "UKInteractionCompletion.h"
 
-@class UkeleleDocument;
+@class UKKeyboardWindow;
 
 @interface SwapKeysController : NSObject<UKInteractionHandler>
 
-+ (SwapKeysController *)swapKeysController:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow;
++ (SwapKeysController *)swapKeysController:(UKKeyboardWindow *)theDocumentWindow;
 - (void)beginInteraction:(BOOL)askingKeyCode;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget;
 

@@ -7,22 +7,21 @@
 //
 
 #import "UnlinkKeyHandler.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 #import "UkeleleConstantStrings.h"
 
 @implementation UnlinkKeyHandler {
-	UkeleleDocument *parentDocument;
+	UKKeyboardWindow *parentDocumentWindow;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
 	AskKeyCode *askKeyCodeSheet;
 	NSInteger selectedKeyCode;
 }
 
-- (id)initWithDocument:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow
-{
+- (id)initWithDocumentWindow:(UKKeyboardWindow *)theDocumentWindow {
 	if (self = [super init]) {
-		parentWindow = theWindow;
-		parentDocument = theDocument;
+		parentDocumentWindow = theDocumentWindow;
+		parentWindow = [theDocumentWindow window];
 		completionTarget = nil;
 		askKeyCodeSheet = nil;
 		selectedKeyCode = kNoKeyCode;
@@ -31,9 +30,8 @@
 }
 
 
-+ (UnlinkKeyHandler *)unlinkKeyHandler:(UkeleleDocument *)theDocument window:(NSWindow *)theWindow
-{
-	return [[UnlinkKeyHandler alloc] initWithDocument:theDocument window:theWindow];
++ (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardWindow *)theDocumentWindow {
+	return [[UnlinkKeyHandler alloc] initWithDocumentWindow:theDocumentWindow];
 }
 
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget
@@ -57,17 +55,17 @@
 		[askKeyCodeSheet setMajorText:majorText];
 		[askKeyCodeSheet setMinorText:minorText];
 		[askKeyCodeSheet beginDialogForWindow:parentWindow callBack:^(NSNumber *keyCode) {
-			[self performUnlink:[keyCode integerValue] withModifiers:[parentDocument currentModifiers]];
+			[self performUnlink:[keyCode integerValue] withModifiers:[parentDocumentWindow currentModifiers]];
 		}];
 	}
 	else if (keyCodeType == kUnlinkKeyTypeAskKey) {
 			// Put up a message to ask for the key
 		NSString *messageText = NSLocalizedStringFromTable(@"Press or click the key to be unlinked", @"dialogs", @"Ask user for the key");
-		[parentDocument setMessageBarText:messageText];
+		[parentDocumentWindow setMessageBarText:messageText];
 	}
 	else if (keyCodeType == kUnlinkKeyTypeSelectedKey) {
 			// Have the key code already, so just go ahead
-		[self performUnlink:selectedKeyCode withModifiers:[parentDocument currentModifiers]];
+		[self performUnlink:selectedKeyCode withModifiers:[parentDocumentWindow currentModifiers]];
 	}
 	else {
 		NSLog(@"Bad unlink type %d", (int)keyCodeType);
@@ -78,7 +76,7 @@
 - (void)performUnlink:(NSInteger)keyCode withModifiers:(NSUInteger)modifierCombination
 {
 		// Pass it off to the document to handle
-	[parentDocument unlinkKeyWithKeyCode:keyCode andModifiers:modifierCombination];
+	[parentDocumentWindow unlinkKeyWithKeyCode:keyCode andModifiers:modifierCombination];
 		// Clean up
 	[self interactionCompleted];
 }
@@ -91,17 +89,17 @@
 - (void)handleMessage:(NSDictionary *)messageData
 {
 	NSString *messageName = messageData[kMessageNameKey];
-	NSUInteger keyModifiers = [parentDocument currentModifiers];
+	NSUInteger keyModifiers = [parentDocumentWindow currentModifiers];
 	NSInteger keyCode = kNoKeyCode;
 	if ([messageName isEqualToString:kMessageClick]) {
 			// Handle a click on a key
 		keyCode = [messageData[kMessageArgumentKey] integerValue];
-		[parentDocument setMessageBarText:@""];
+		[parentDocumentWindow setMessageBarText:@""];
 	}
 	else if ([messageName isEqualToString:kMessageKeyDown]) {
 			// Handle a key press
 		keyCode = [messageData[kMessageArgumentKey] integerValue];
-		[parentDocument setMessageBarText:@""];
+		[parentDocumentWindow setMessageBarText:@""];
 	}
 	if (keyCode >= 0) {
 		[self performUnlink:keyCode withModifiers:keyModifiers];

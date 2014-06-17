@@ -10,7 +10,7 @@
 #import "UKInteractionHandler.h"
 #import "UKInteractionCompletion.h"
 
-@class UkeleleDocument;
+@class UKKeyboardWindow;
 
 #define kCreateDeadKeySelectedKeyCode	@"CreateDeadKeySelectedKeyCode"
 
@@ -25,8 +25,7 @@ typedef enum CreateDeadKeyHandlerType : NSInteger {
 - (id)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID
-		  keyboardDocument:(UkeleleDocument *)theDocument
-					window:(NSWindow *)theWindow
+			keyboardWindow:(UKKeyboardWindow *)theDocument
 				   keyCode:(NSInteger)keyCode
 				 nextState:(NSString *)nextStateName
 				terminator:(NSString *)theTerminator;

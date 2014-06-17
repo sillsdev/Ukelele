@@ -368,12 +368,12 @@ const float kScalePercentageFactor = 100.0f;
 	[fontManager setSelectedFont:largeFont isMultiple:NO];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[self inspectorDidActivateTab:[[[infoInspector tabView] selectedTabViewItem] identifier]];
-	[infoInspector setCurrentKeyboard:self];
+	[infoInspector setCurrentWindow:self];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-	[inspectorController setCurrentKeyboard:nil];
+	[inspectorController setCurrentWindow:nil];
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -742,8 +742,7 @@ const float kScalePercentageFactor = 100.0f;
 										initWithCurrentState:internalState[kStateCurrentState]
 										modifiers:currentModifiers
 										keyboardID:[internalState[kStateCurrentKeyboard] integerValue]
-										keyboardDocument:self
-										window:self.window
+										keyboardWindow:self
 										keyCode:selectedKey
 										nextState:nil
 										terminator:nil];
@@ -802,7 +801,7 @@ const float kScalePercentageFactor = 100.0f;
 		return;
 	}
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:self.window];
+	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	UnlinkKeyType keyType = kUnlinkKeyTypeAskKey;
@@ -821,7 +820,7 @@ const float kScalePercentageFactor = 100.0f;
 - (IBAction)unlinkKeyAskingKeyCode:(id)sender
 {
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self window:self.window];
+	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	[theHandler beginInteraction:kUnlinkKeyTypeAskCode];
@@ -829,25 +828,25 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)unlinkModifierCombination {
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
-	UnlinkModifierSetHandler *theHandler = [UnlinkModifierSetHandler unlinkModifierSetHandler:self window:self.window];
+	UnlinkModifierSetHandler *theHandler = [UnlinkModifierSetHandler unlinkModifierSetHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
 	[theHandler beginInteractionWithCallback:^(NSInteger modifierSet) {
 		if (modifierSet >= 0) {
 				// Unlink the set
 			NSInteger keyboardID = [internalState[kStateCurrentKeyboard] integerValue];
-			[_keyboardLayout unlinkModifierSet:modifierSet forKeyboard:keyboardID];
+			[self.keyboardLayout unlinkModifierSet:modifierSet forKeyboard:keyboardID];
 		}
 	}];
 }
 
 - (IBAction)swapKeys:(id)sender {
-	interactionHandler = [SwapKeysController swapKeysController:self window:self.window];
+	interactionHandler = [SwapKeysController swapKeysController:self];
 	[(SwapKeysController *)interactionHandler beginInteraction:NO];
 }
 
 - (IBAction)swapKeysByCode:(id)sender {
-	interactionHandler = [SwapKeysController swapKeysController:self window:self.window];
+	interactionHandler = [SwapKeysController swapKeysController:self];
 	[(SwapKeysController *)interactionHandler beginInteraction:YES];
 }
 
@@ -951,8 +950,7 @@ const float kScalePercentageFactor = 100.0f;
 												initWithCurrentState:internalState[kStateCurrentState]
 												modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]
 												keyboardID:[internalState[kStateCurrentKeyboard] integerValue]
-												keyboardDocument:self
-												window:self.window
+												keyboardWindow:self
 												keyCode:[callbackData[kKeyKeyCode] integerValue]
 												nextState:callbackData[kKeyNextState]
 												terminator:callbackData[kKeyTerminator]];

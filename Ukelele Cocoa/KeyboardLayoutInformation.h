@@ -7,17 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "UkeleleDocument.h"
+#import "UkeleleKeyboardObject.h"
+
+@class UKKeyboardWindow;
 
 @interface KeyboardLayoutInformation : NSObject
 
-@property (strong) UkeleleDocument *document;
+@property (strong) UkeleleKeyboardObject *keyboardObject;
 @property (copy) NSString *keyboardName;
 @property (copy) NSString *fileName;
 @property (nonatomic) BOOL hasIcon;
 @property (copy) NSString *intendedLanguage;
 @property (strong) NSData *iconData;
+@property (strong) UKKeyboardWindow *keyboardWindow;
 
-- (id)initWithDocument:(UkeleleDocument *)theDocument;
+- (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName;
 
 @end
