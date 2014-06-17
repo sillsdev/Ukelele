@@ -7,9 +7,8 @@
 //
 
 #import "DoubleClickHandler.h"
-#import "UkeleleKeyboardObject.h"
+#import "UKKeyboardWindow.h"
 #import "ChooseDeadKeyHandling.h"
-#import "UkeleleDocument.h"
 #import "LayoutInfo.h"
 #import "UkeleleConstantStrings.h"
 #import "XMLCocoaUtilities.h"
@@ -274,14 +273,14 @@ enum ProcessingStates {
 
 - (void)acceptTextField:(id)sender
 {
-    UkeleleDocument *theDocument = [keyDataDict valueForKey:kKeyDocument];
-	[theDocument setMessageBarText:@""];
+    UKKeyboardWindow *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
+	[theDocumentWindow setMessageBarText:@""];
 	if (sender) {
 		NSString *theText = [sender stringValue];
 		switch (processingState) {
 			case kProcessingReplaceOutput:
 				if (![theText isEqualToString:currentOutput]) {
-					[theDocument changeOutputForKey:keyDataDict
+					[theDocumentWindow changeOutputForKey:keyDataDict
 												 to:theText
 									   usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 				}
@@ -299,7 +298,7 @@ enum ProcessingStates {
 		}
 	}
 	[sender removeFromSuperview];
-	[theDocument messageEditPaneClosed];
+	[theDocumentWindow messageEditPaneClosed];
 	processingState = kProcessingCompleted;
 	[self interactionCompleted];
 }
@@ -307,10 +306,10 @@ enum ProcessingStates {
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
 	if (commandSelector == @selector(complete:) || commandSelector == @selector(cancelOperation:)) {
-        UkeleleDocument *theDocument = [keyDataDict valueForKey:kKeyDocument];
+        UKKeyboardWindow *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
 		[control removeFromSuperview];
-		[theDocument messageEditPaneClosed];
-		[theDocument setMessageBarText:@""];
+		[theDocumentWindow messageEditPaneClosed];
+		[theDocumentWindow setMessageBarText:@""];
 		[self interactionCompleted];
 		return YES;
 	}

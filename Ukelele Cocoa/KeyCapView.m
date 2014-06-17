@@ -7,10 +7,10 @@
 //
 
 #import "KeyCapView.h"
+#import "UKKeyboardWindow.h"
 #import "UkeleleConstants.h"
 #import "XMLCocoaUtilities.h"
 #import "LayoutInfo.h"
-#import "UkeleleDocument.h"
 #import "UkeleleConstantStrings.h"
 
 const CGFloat kKeyInset = 2.0f;
@@ -486,14 +486,14 @@ static CGAffineTransform kTextTransform = {
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageMouseEntered:(int)_keyCode];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageMouseEntered:(int)_keyCode];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageMouseExited:(int)_keyCode];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageMouseExited:(int)_keyCode];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -526,8 +526,8 @@ static CGAffineTransform kTextTransform = {
 	NSArray *draggedItems = [pboard readObjectsForClasses:classArray options:dictionary];
 	if (draggedItems != nil && [draggedItems count] > 0) {
 			// Got the text
-		UkeleleDocument *theDocument = [[[self window] windowController] document];
-		[theDocument messageDragText:draggedItems[0] toKey:(int)_keyCode];
+		UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+		[theDocumentWindow messageDragText:draggedItems[0] toKey:(int)_keyCode];
 		return YES;
 	}
 	return NO;

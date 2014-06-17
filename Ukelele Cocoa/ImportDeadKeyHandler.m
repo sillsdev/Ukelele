@@ -15,6 +15,7 @@
 
 #import "ImportDeadKeyHandler.h"
 #import "UKKeyboardDocument.h"
+#import "UKKeyboardWindow.h"
 #import "KeyboardLayoutInformation.h"
 #import "AskFromList.h"
 #import "UkeleleConstantStrings.h"
@@ -22,13 +23,13 @@
 
 @implementation ImportDeadKeyHandler {
 	NSWindow *parentWindow;
-	UKKeyboardDocument *targetDocument;
+	UKKeyboardWindow *targetDocumentWindow;
 }
 
 - (id)init {
 	if (self = [super init]) {
 		parentWindow = nil;
-		targetDocument = nil;
+		targetDocumentWindow = nil;
 		_completionTarget = nil;
 	}
 	return self;
@@ -38,9 +39,9 @@
 	return [[ImportDeadKeyHandler alloc] init];
 }
 
-- (void)beginInteractionForWindow:(NSWindow *)theWindow withDocument:(UKKeyboardDocument *)theDocument {
-	parentWindow = theWindow;
-	targetDocument = theDocument;
+- (void)beginInteractionForWindow:(UKKeyboardWindow *)theDocumentWindow {
+	parentWindow = [theDocumentWindow window];
+	targetDocumentWindow = theDocumentWindow;
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	[openPanel setMessage:@"Choose the keyboard layout containing the dead key you wish to import"];
 	NSBundle *theBundle = [NSBundle mainBundle];
@@ -67,6 +68,10 @@
 	NSDictionary *documentProperties = [documentURL resourceValuesForKeys:@[NSURLIsRegularFileKey, NSURLIsPackageKey] error:&theError];
 	if (documentProperties == nil) {
 			// Couldn't get properties!
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not get the properties of the chosen file" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		[alert runModal];
+		[self interactionCompleted];
+		return;
 	}
 	if ([documentProperties[NSURLIsRegularFileKey] boolValue]) {
 			// Regular file, should be a keyboard layout file
@@ -94,7 +99,7 @@
 	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:bundleURL options:0 error:NULL];
 	if (fileWrapper != nil) {
 		NSError *readError;
-		if ([bundleDocument readFromFileWrapper:fileWrapper ofType:@"com.apple.bundle" error:&readError]) {
+		if ([bundleDocument readFromFileWrapper:fileWrapper ofType:(NSString *)kUTTypeBundle error:&readError]) {
 				// It reads OK
 			return bundleDocument;
 		}
@@ -108,7 +113,13 @@
 	if ([keyboardLayouts count] == 1) {
 			// Only one keyboard layout, so that's the one to use
 		KeyboardLayoutInformation *docInfo = keyboardLayouts[0];
-		[self handleDocument:[docInfo keyboardObject]];
+		UKKeyboardWindow *keyboardWindow = [docInfo keyboardWindow];
+		if (keyboardWindow == nil) {
+			UkeleleKeyboardObject *obj = [docInfo keyboardObject];
+			keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+			[keyboardWindow setKeyboardLayout:obj];
+		}
+		[self handleDocument:keyboardWindow];
 	}
 	else if ([keyboardLayouts count] > 1) {
 			// Put up a dialog to ask which one to use
@@ -125,7 +136,13 @@
 			NSUInteger index = [keyboardNames indexOfObject:chosenKeyboard];
 			NSAssert(index != NSNotFound, @"Must have found the keyboard name");
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
-			[self handleDocument:[info keyboardObject]];
+			UKKeyboardWindow *keyboardWindow = [info keyboardWindow];
+			if (keyboardWindow == nil) {
+				UkeleleKeyboardObject *obj = [info keyboardObject];
+				keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+				[keyboardWindow setKeyboardLayout:obj];
+			}
+			[self handleDocument:keyboardWindow];
 		}];
 	}
 	else {
@@ -149,7 +166,7 @@
 	UKKeyboardDocument *theDocument = [[UKKeyboardDocument alloc] init];
 	NSError *theError;
 	BOOL success = [theDocument readFromData:documentData
-									  ofType:@"org.sil.ukelele.keylayout"
+									  ofType:kFileTypeKeyboardLayout
 									   error:&theError];
 	if (!success) {
 			// Couldn't create the document
@@ -158,14 +175,16 @@
 		[self interactionCompleted];
 		return;
 	}
-	[self handleDocument:theDocument];
+	UKKeyboardWindow *keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+	[keyboardWindow setKeyboardLayout:[theDocument keyboardLayout]];
+	[self handleDocument:keyboardWindow];
 }
 
-- (void)handleDocument:(UKKeyboardDocument *)theDocument {
-		// Have the source document as a UkeleleDocument
+- (void)handleDocument:(UKKeyboardWindow *)theDocumentWindow {
+		// Have the source document as a UKKeyboardWindow
 		// Check that we have equivalent modifier maps
-	UkeleleKeyboardObject *sourceObject = [theDocument keyboardLayout];
-	UkeleleKeyboardObject *targetObject = [targetDocument keyboardLayout];
+	UkeleleKeyboardObject *sourceObject = [theDocumentWindow keyboardLayout];
+	UkeleleKeyboardObject *targetObject = [targetDocumentWindow keyboardLayout];
 	if (![targetObject hasEquivalentModifierMap:sourceObject]) {
 			// Not compatible
 		NSAlert *alert = [NSAlert alertWithMessageText:@"The two keyboard layouts have different modifier maps, so cannot import the dead key state" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
@@ -173,7 +192,7 @@
 		[self interactionCompleted];
 		return;
 	}
-	NSArray *stateNames = [[theDocument keyboardLayout] stateNamesExcept:kStateNameNone];
+	NSArray *stateNames = [[theDocumentWindow keyboardLayout] stateNamesExcept:kStateNameNone];
 	if ([stateNames count] == 0) {
 			// No states to import
 		NSAlert *alert = [NSAlert alertWithMessageText:@"This keyboard layout has no dead key states" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
@@ -186,7 +205,7 @@
 	[askFromList beginAskFromListWithText:@"Choose the dead key state to import" withMenu:stateNames forWindow:parentWindow callBack:^(NSString *stateName) {
 		if (stateName) {
 				// Valid state name
-			[self importState:stateName fromDocument:theDocument];
+			[self importState:stateName fromDocument:theDocumentWindow];
 		}
 		else {
 				// User cancelled
@@ -196,9 +215,9 @@
 	}];
 }
 
-- (void)importState:(NSString *)stateName fromDocument:(UkeleleDocument *)sourceDocument {
+- (void)importState:(NSString *)stateName fromDocument:(UKKeyboardWindow *)sourceDocumentWindow {
 		// Ask for a name for the imported state
-	NSArray *targetStateList = [[targetDocument keyboardLayout] stateNamesExcept:@""];
+	NSArray *targetStateList = [[targetDocumentWindow keyboardLayout] stateNamesExcept:@""];
 	NSMutableSet *targetStates = [NSMutableSet setWithArray:targetStateList];
 	[targetStates addObject:@""];
 	[targetStates addObject:kStateNameNone];
@@ -207,9 +226,9 @@
 		NSString *chosenState = result;
 		if (chosenState != nil) {
 				// Valid state supplied
-			[[targetDocument keyboardLayout] importDeadKeyState:stateName
+			[[targetDocumentWindow keyboardLayout] importDeadKeyState:stateName
 														toState:chosenState
-												   fromKeyboard:[sourceDocument keyboardLayout]];
+												   fromKeyboard:[sourceDocumentWindow keyboardLayout]];
 		}
 		[self interactionCompleted];
 		askText = nil;

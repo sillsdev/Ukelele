@@ -9,6 +9,8 @@
 #import "KeyboardPrintView.h"
 #import "UkeleleView.h"
 #import "UkeleleConstantStrings.h"
+#import "UKKeyboardWindow.h"
+#import "UKKeyboardDocument.h"
 
 CGFloat kLabelViewHeight = 20.0;
 
@@ -69,7 +71,7 @@ CGFloat kLabelViewHeight = 20.0;
 }
 
 - (void)setupPageParameters {
-	NSPrintInfo *pi = [[self parentDocument] printInfo];
+	NSPrintInfo *pi = [[[self parentDocument] parentDocument] printInfo];
 	if (nil == pi) {
 		return;
 	}
@@ -209,7 +211,7 @@ CGFloat kLabelViewHeight = 20.0;
 	}
 		// See whether we have already created the keyboard views for this page
 	NSInteger firstKeyboard = (page - 1) * keyboardsPerPage;
-	NSUInteger currentKeyboard = [[self parentDocument] currentKeyboard];
+	NSUInteger currentKeyboard = [[self parentDocument] keyboardID];
 	CGFloat pageWidth = [self bounds].size.width;
 	for (NSInteger i = 0; i < keyboardsThisPage; i++) {
 		KeyboardViewPlaceHolder *placeHolder = keyboardPlaceHolders[firstKeyboard + i];

@@ -7,7 +7,7 @@
 //
 
 #import "UkeleleContainerView.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 
 @implementation UkeleleContainerView
 
@@ -22,18 +22,18 @@
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageKeyDown:[theEvent keyCode]];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageKeyDown:[theEvent keyCode]];
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageKeyUp:[theEvent keyCode]];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageKeyUp:[theEvent keyCode]];
 }
 
 @end

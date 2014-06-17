@@ -126,6 +126,19 @@ enum ToolbarItemTags {
 - (BOOL)setsStatusForSelector:(SEL)selector;
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem;
 
+	// Messages
+- (void)messageModifiersChanged:(int)modifiers;
+- (void)messageMouseEntered:(int)keyCode;
+- (void)messageMouseExited:(int)keyCode;
+- (void)messageKeyDown:(int)keyCode;
+- (void)messageKeyUp:(int)keyCode;
+- (void)messageClick:(int)keyCode;
+- (void)messageDoubleClick:(int)keyCode;
+- (void)messageDragText:(NSString *)draggedText toKey:(int)keyCode;
+- (void)messageEditPaneClosed;
+- (void)messageScaleChanged:(CGFloat)newScale;
+- (void)messageScaleCompleted;
+
 	// Dead key actions
 - (void)changeOutputForKey:(NSDictionary *)keyDataDict to:(NSString *)newOutput usingBaseMap:(BOOL)usingBaseMap;
 - (void)changeTerminatorForState:(NSString *)stateName to:(NSString *)newTerminator;

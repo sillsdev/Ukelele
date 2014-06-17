@@ -100,7 +100,6 @@
 		523B01A6191CA18C00E06DF3 /* ImportDeadKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0150191CA18C00E06DF3 /* ImportDeadKeyHandler.m */; };
 		523B01A8191CA18C00E06DF3 /* InspectorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0154191CA18C00E06DF3 /* InspectorWindowController.m */; };
 		523B01A9191CA18C00E06DF3 /* IntendedLanguageSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0156191CA18C00E06DF3 /* IntendedLanguageSheet.m */; };
-		523B01AA191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0158191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m */; };
 		523B01AD191CA18C00E06DF3 /* KeyboardTypeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B015E191CA18C00E06DF3 /* KeyboardTypeSheet.m */; };
 		523B01AE191CA18C00E06DF3 /* ModifiersController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0160191CA18C00E06DF3 /* ModifiersController.mm */; };
 		523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0162191CA18C00E06DF3 /* ModifiersDataSource.mm */; };
@@ -111,8 +110,6 @@
 		523B01B5191CA18C00E06DF3 /* SwapKeysController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B016E191CA18C00E06DF3 /* SwapKeysController.m */; };
 		523B01B6191CA18C00E06DF3 /* ToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0170191CA18C00E06DF3 /* ToolboxController.m */; };
 		523B01B7191CA18C00E06DF3 /* UkeleleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0172191CA18C00E06DF3 /* UkeleleAppDelegate.m */; };
-		523B01B8191CA18C00E06DF3 /* UkeleleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0174191CA18C00E06DF3 /* UkeleleDocument.m */; };
-		523B01B9191CA18C00E06DF3 /* UkeleleDocument+Housekeeping.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0176191CA18C00E06DF3 /* UkeleleDocument+Housekeeping.m */; };
 		523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0178191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m */; };
 		523B01BC191CA18C00E06DF3 /* UkelelePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B017C191CA18C00E06DF3 /* UkelelePreferenceController.m */; };
 		523B01BD191CA18C00E06DF3 /* UnlinkKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */; };
@@ -137,8 +134,6 @@
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
-		52914F17192C270A00815D1E /* UkeleleDocument+Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 52914F16192C270A00815D1E /* UkeleleDocument+Comments.m */; };
-		52914F1A192C301F00815D1E /* UkeleleDocument+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52914F19192C301F00815D1E /* UkeleleDocument+Modifiers.m */; };
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
 		529B223E1927213600D9F055 /* ReplaceNameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529B223D1927213600D9F055 /* ReplaceNameSheet.xib */; };
@@ -1203,10 +1198,8 @@
 				523B010B191CA0D100E06DF3 /* LanguageRegistry.m in Sources */,
 				523B0188191CA18C00E06DF3 /* AskNewKeyMap.m in Sources */,
 				523B018E191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m in Sources */,
-				52914F17192C270A00815D1E /* UkeleleDocument+Comments.m in Sources */,
 				523B00C8191CA00A00E06DF3 /* KeyStrokeLookupTable.mm in Sources */,
 				523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */,
-				523B01AA191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m in Sources */,
 				523B01B2191CA18C00E06DF3 /* PrintAccessoryPanel.m in Sources */,
 				523B00C2191CA00A00E06DF3 /* KeyElementBundle.mm in Sources */,
 				523B0110191CA0D100E06DF3 /* ScriptInfoTransformer.m in Sources */,
@@ -1241,7 +1234,6 @@
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,
 				523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */,
-				523B01B9191CA18C00E06DF3 /* UkeleleDocument+Housekeeping.m in Sources */,
 				523B01B5191CA18C00E06DF3 /* SwapKeysController.m in Sources */,
 				523B01A3191CA18C00E06DF3 /* EditKeyWindowController.m in Sources */,
 				523B008F191C9D2200E06DF3 /* FontNameTransformer.m in Sources */,
@@ -1258,7 +1250,6 @@
 				523B00C6191CA00A00E06DF3 /* KeyMapSet.mm in Sources */,
 				523B00C7191CA00A00E06DF3 /* KeyMapSetList.mm in Sources */,
 				523B00C4191CA00A00E06DF3 /* KeyMapElement.mm in Sources */,
-				52914F1A192C301F00815D1E /* UkeleleDocument+Modifiers.m in Sources */,
 				523B00CC191CA00A00E06DF3 /* ModifierList.mm in Sources */,
 				523B019A191CA18C00E06DF3 /* CreateDeadKeySheet.m in Sources */,
 				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
@@ -1279,7 +1270,6 @@
 				523B01AD191CA18C00E06DF3 /* KeyboardTypeSheet.m in Sources */,
 				523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */,
 				523B00C9191CA00A00E06DF3 /* LayoutElement.mm in Sources */,
-				523B01B8191CA18C00E06DF3 /* UkeleleDocument.m in Sources */,
 				523B00D1191CA00A00E06DF3 /* WhenElement.mm in Sources */,
 				523B018A191CA18C00E06DF3 /* AskStateAndTerminatorController.m in Sources */,
 				523B0192191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m in Sources */,

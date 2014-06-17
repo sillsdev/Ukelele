@@ -7,7 +7,7 @@
 //
 
 #import "DragTextHandler.h"
-#import "UkeleleDocument.h"
+#import "UKKeyboardWindow.h"
 #import "ChooseDeadKeyHandling.h"
 #import "UkeleleConstantStrings.h"
 #import "ToolboxData.h"
@@ -39,8 +39,8 @@
 {
 	BOOL deadKey;
 	NSString *nextDeadKeyState = nil;
-    UkeleleDocument *theDocument = [keyDataDict valueForKey:kKeyDocument];
-	currentOutput = [[theDocument keyboardLayout] getCharOutput:keyDataDict
+    UKKeyboardWindow *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
+	currentOutput = [[theDocumentWindow keyboardLayout] getCharOutput:keyDataDict
                                                           isDead:&deadKey
                                                        nextState:&nextDeadKeyState];
 	if (deadKey) {
@@ -66,7 +66,7 @@
         subsidiaryHandler = handler;
 	}
 	else {
-		[theDocument changeOutputForKey:keyDataDict to:dragText usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
+		[theDocumentWindow changeOutputForKey:keyDataDict to:dragText usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 		[self interactionCompleted];
 	}
 }

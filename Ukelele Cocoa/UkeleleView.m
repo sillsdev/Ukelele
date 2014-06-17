@@ -7,10 +7,10 @@
 //
 
 #import "UkeleleView.h"
+#import "UKKeyboardWindow.h"
 #import "LayoutInfo.h"
 #import "UkeleleConstants.h"
 #import "KeyCapView2Rect.h"
-#import "UkeleleDocument.h"
 #import "UkeleleConstantStrings.h"
 
 static int kWindowTopMargin = 50;
@@ -306,8 +306,8 @@ typedef struct KeyEntryRec {
 	[self setScaleFactor:scaleValue];
 	[self setLargeAttributes:newLargeAttributes];
 	[self setSmallAttributes:newSmallAttributes];
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageScaleChanged:[self scaleFactor]];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
 }
 
 	// Scale the view by a relative figure
@@ -646,8 +646,8 @@ typedef struct KeyEntryRec {
 - (void)endGestureWithEvent:(NSEvent *)event
 {
 	if ([self eventState] == kEventStateMagnify) {
-		UkeleleDocument *theDocument = [[[self window] windowController] document];
-		[theDocument messageScaleCompleted];
+		UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+		[theDocumentWindow messageScaleCompleted];
 		[self setEventState:kEventStateNone];
 	}
 }
@@ -688,8 +688,8 @@ typedef struct KeyEntryRec {
 
 - (void)passOnModifiers:(int)modifiers
 {
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageModifiersChanged:modifiers];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageModifiersChanged:modifiers];
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -701,8 +701,8 @@ typedef struct KeyEntryRec {
 		unsigned int flags = (unsigned int)[theEvent modifierFlags] | NSNumericPadKeyMask;
 		[self passOnModifiers:flags];
 	}
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageKeyDown:keyCode];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageKeyDown:keyCode];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
@@ -714,8 +714,8 @@ typedef struct KeyEntryRec {
 		unsigned int flags = (unsigned int)[theEvent modifierFlags] & ~NSNumericPadKeyMask;
 		[self passOnModifiers:flags];
 	}
-	UkeleleDocument *theDocument = [[[self window] windowController] document];
-	[theDocument messageKeyUp:keyCode];
+	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageKeyUp:keyCode];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent

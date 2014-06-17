@@ -872,7 +872,7 @@ const float kScalePercentageFactor = 100.0f;
 	ImportDeadKeyHandler *importHandler = [ImportDeadKeyHandler importDeadKeyHandler];
 	interactionHandler = importHandler;
 	[importHandler setCompletionTarget:self];
-	[importHandler beginInteractionForWindow:self.window withDocument:self];
+	[importHandler beginInteractionForWindow:self];
 }
 
 - (IBAction)changeTerminator:(id)sender {

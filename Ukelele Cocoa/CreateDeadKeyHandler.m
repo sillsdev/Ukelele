@@ -15,7 +15,8 @@
 #import "ConfirmStateNameSheet.h"
 #import "AskTextSheet.h"
 #import "CreateSelectedDeadKeyController.h"
-#import "UkeleleDocument+Housekeeping.h"
+#import "UKKeyboardWindow+Housekeeping.h"
+#import "UKKeyboardDocument.h"
 
 	// Dictionary keys
 NSString *kDeadKeyDataReplaceDeadKeyOK = @"ReplaceDeadKeyOK";
@@ -176,7 +177,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 						  }];
 		return;
 	}
-	if (![UkeleleDocument isValidStateName:nextState]) {
+	if (![UKKeyboardWindow isValidStateName:nextState]) {
 		NSString *mainText = NSLocalizedStringFromTable(@"Please give a valid name for the state name", @"dialogs", @"Ask for a valid string");
 		NSString *messageText = NSLocalizedStringFromTable(@"Names like none and 0 are not permitted", @"dialogs", @"Not a valid name");
 		[askTextSheet beginAskText:mainText
