@@ -30,7 +30,7 @@
 			<key>LSTypeIsPackage</key>
 			<integer>0</integer>
 			<key>NSDocumentClass</key>
-			<string>UkeleleDocument</string>
+			<string>UKKeyboardDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
@@ -46,7 +46,7 @@
 			<key>LSTypeIsPackage</key>
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
-			<string>UKKeyboardLayoutBundle</string>
+			<string>UKKeyboardDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -78,7 +78,7 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>org.sil.Ukelele.KeyboardInstallerTool</key>
-		<string>anchor apple generic and identifier &quot;org.sil.Ukelele.KeyboardInstallerTool&quot; and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = SKMME9E2Y8)</string>
+		<string>anchor apple generic and identifier "org.sil.Ukelele.KeyboardInstallerTool" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = SKMME9E2Y8)</string>
 	</dict>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>

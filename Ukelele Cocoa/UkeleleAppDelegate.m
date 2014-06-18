@@ -9,7 +9,7 @@
 #import "UkeleleAppDelegate.h"
 #import "UkeleleConstants.h"
 #import "UkeleleConstantStrings.h"
-#import "UKKeyboardLayoutBundle.h"
+#import "UKKeyboardDocument.h"
 #import "ColourTheme.h"
 #import "ToolboxController.h"
 #import "InspectorWindowController.h"
@@ -88,8 +88,8 @@ static NSDictionary *defaultValues() {
 
 - (IBAction)newBundle:(id)sender {
 	NSError *theError;
-	UKKeyboardLayoutBundle *theDocument = [[NSDocumentController sharedDocumentController]
-										 makeUntitledDocumentOfType:@"Keyboard Layout Bundle" error:&theError];
+	UKKeyboardDocument *theDocument = [[NSDocumentController sharedDocumentController]
+										 makeUntitledDocumentOfType:(NSString *)kUTTypeBundle error:&theError];
 	if (nil != theDocument) {
 			// Got a document
 		[[NSDocumentController sharedDocumentController] addDocument:theDocument];
@@ -99,8 +99,9 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)newFromCurrentInput:(id)sender {
-	UkeleleDocument *newDocument = [[UkeleleDocument alloc] initWithCurrentInputSource];
+	UKKeyboardDocument *newDocument = [[UKKeyboardDocument alloc] init];
 	if (newDocument) {
+		[newDocument captureInputSource:self];
 		NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 		[documentController addDocument:newDocument];
 		[newDocument makeWindowControllers];

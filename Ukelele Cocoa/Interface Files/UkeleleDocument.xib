@@ -12,7 +12,7 @@
                 <outlet property="deadKeyContextualMenu" destination="i6v-9N-pDp" id="AbT-mB-dLL"/>
                 <outlet property="defaultIndexButton" destination="e98-hd-75Q" id="aPg-Al-z2N"/>
                 <outlet property="firstCommentButton" destination="5Tz-Hn-N2B" id="Umr-TO-aZN"/>
-                <outlet property="keyboardView" destination="pxh-Py-4Pd" id="hjb-Cu-4HW"/>
+                <outlet property="keyboardView" destination="pxh-Py-4Pd" id="jvo-hS-ft5"/>
                 <outlet property="lastCommentButton" destination="RSW-l4-0Sw" id="fNh-kF-Kv5"/>
                 <outlet property="messageBar" destination="GcK-Mo-ulK" id="gDL-fL-srH"/>
                 <outlet property="modifiersDataSource" destination="vyz-He-UxM" id="J1d-su-BgX"/>
@@ -237,7 +237,7 @@
                                                                 </dictionary>
                                                             </binding>
                                                             <outlet property="dataSource" destination="vyz-He-UxM" id="8Rg-OE-gbA"/>
-                                                            <outlet property="delegate" destination="-2" id="9Or-yi-mSH"/>
+                                                            <outlet property="delegate" destination="vyz-He-UxM" id="Tw4-nf-hKs"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>

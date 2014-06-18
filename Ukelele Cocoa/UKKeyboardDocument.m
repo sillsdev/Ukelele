@@ -73,7 +73,7 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 		[self addWindowController:keyboardWindow];
 	}
 	else {
-		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayoutBundle" owner:self];
 		[self addWindowController:windowController];
 	}
 }
@@ -93,7 +93,7 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 		self.isBundle = NO;
 		return [self parseKeyboardFileWrapper:fileWrapper withError:outError];
 	}
-	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle]) {
+	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:@"com.apple.generic-bundle"]) {
 			// This is a bundle, hopefully a keyboard layout bundle;
 		BOOL success = [self parseBundleFileWrapper:fileWrapper withError:outError];
 		if (success) {
@@ -114,7 +114,7 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 			// This is an unbundled keyboard layout document
 		return [self saveKeyboardLayoutToURL:url error:outError];
 	}
-	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle]) {
+	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:@"com.apple.generic-bundle"]) {
 			// A bundle
 		if (absoluteOriginalContentsURL != nil) {
 				// Try to save only what has changed

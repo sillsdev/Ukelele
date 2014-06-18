@@ -65,7 +65,7 @@ NSString *kMessageClick = @"Click";
 NSString *kMessageKeyDown = @"KeyDown";
 
 	// Bundle strings
-NSString *kFileTypeKeyboardLayout = @"org.sil.ukelele.keyboardlayout";
+NSString *kFileTypeKeyboardLayout = @"org.sil.ukelele.keylayout";
 NSString *kStringBundleExtension = @".bundle";
 NSString *kStringContentsName = @"Contents";
 NSString *kStringResourcesName = @"Resources";

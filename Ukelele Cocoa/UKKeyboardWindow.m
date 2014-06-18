@@ -318,7 +318,10 @@ const float kScalePercentageFactor = 100.0f;
 		[keyCapView setDeadKey:deadKey];
 	}
 	[ukeleleView updateModifiers:theModifiers];
-	[self.window setTitle:[[self keyboardLayout] keyboardName]];
+	NSString *keyboardName = [[self keyboardLayout] keyboardName];
+	if (keyboardName) {
+		[self.window setTitle:keyboardName];
+	}
 	[ukeleleView setNeedsDisplay:YES];
 }
 
