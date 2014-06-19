@@ -361,6 +361,9 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 	if (theKeyboard != nil) {
 		self.keyboardLayout = theKeyboard;
 		[theKeyboard setParentDocument:self];
+		UKKeyboardWindow *windowController = [[UKKeyboardWindow alloc] initWithWindowNibName:UKKeyboardWindowNibName];
+		[windowController setKeyboardLayout:theKeyboard];
+		[self addWindowController:windowController];
 		return YES;
 	}
 		// No valid keyboard layout created, outError is already set
@@ -672,6 +675,55 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 
 - (NSArray *)keyboardLayouts {
 	return keyboardLayouts;
+}
+
+#pragma mark Interface validation
+
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem {
+	SEL theAction = [anItem action];
+		// See which window is main
+	for (NSWindowController *windowController in [self windowControllers]) {
+		if ([[windowController window] isMainWindow]) {
+				// Found the main window. Is it a keyboard window, and does it handle this selector?
+			if ([windowController isKindOfClass:[UKKeyboardWindow class]] && [(UKKeyboardWindow *)windowController setsStatusForSelector:theAction]) {
+				return [(UKKeyboardWindow *)windowController validateUserInterfaceItem:anItem];
+			}
+			break;
+		}
+	}
+	if (theAction == @selector(removeKeyboardLayout:)) {
+			// Only active if there's a selection in the table
+		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+		return (selectedRowNumber != -1);
+	}
+	else if (theAction == @selector(addOpenDocument:)) {
+			// Only active if there are open documents
+//		NSDocumentController *theController = [NSDocumentController sharedDocumentController];
+//		NSArray *theDocumentList = [theController documents];
+		BOOL isActive = NO;
+//		for (NSDocument *theDocument in theDocumentList) {
+//			if ([theDocument isKindOfClass:[UkeleleDocument class]] && [(UkeleleDocument *)theDocument parentBundle] != self) {
+//					// This is the kind of document we want
+//				isActive = YES;
+//				break;
+//			}
+//		}
+		return isActive;
+	}
+	else if (theAction == @selector(openKeyboardLayout:)) {
+			// Always active
+		return YES;
+	}
+	else if (theAction == @selector(captureInputSource:)) {
+			// Always active
+		return YES;
+	}
+	else if (theAction == @selector(chooseIntendedLanguage:)) {
+			// Only active if there's a selection in the table
+		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+		return (selectedRowNumber != -1);
+	}
+	return [super validateUserInterfaceItem:anItem];
 }
 
 #pragma mark User actions

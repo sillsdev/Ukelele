@@ -45,6 +45,8 @@ const float kScalePercentageFactor = 100.0f;
 
 @implementation UKKeyboardWindow
 
+@synthesize keyboardLayout = _keyboardLayout;
+
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
     self = [super initWithWindowNibName:windowNibName];
@@ -84,6 +86,28 @@ const float kScalePercentageFactor = 100.0f;
 {
     [self.modifiersTableView registerForDraggedTypes:@[ModifiersTableDragType]];
 	[self.modifiersTableView setVerticalMotionCanBeginDrag:YES];
+}
+
+- (void)windowDidLoad {
+	SInt32 keyboardType;
+	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
+	}
+    internalState[kStateCurrentKeyboard] = @(keyboardType);
+    [self.tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
+	UkeleleView *ukeleleView = [[UkeleleView alloc] init];
+    NSNumber *scaleValue = internalState[kStateCurrentScale];
+	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:[scaleValue doubleValue]];
+	[ukeleleView setMenuDelegate:self];
+	[self.keyboardView setDocumentView:ukeleleView];
+	[self assignClickTargets];
+    [self setupDataSource];
+	[self calculateSize];
+	[self updateWindow];
+	[self setViewScaleComboBox];
+	[self.window makeFirstResponder:self.keyboardView];
 }
 
 #pragma mark Accessors
@@ -151,6 +175,21 @@ const float kScalePercentageFactor = 100.0f;
 - (NSUInteger)currentKeyboard {
     NSNumber *keyboardID = internalState[kStateCurrentKeyboard];
 	return [keyboardID unsignedIntegerValue];
+}
+
+- (UkeleleKeyboardObject *)keyboardLayout {
+	return _keyboardLayout;
+}
+
+- (void)setKeyboardLayout:(UkeleleKeyboardObject *)keyboardLayout {
+	_keyboardLayout = keyboardLayout;
+	NSDocument *theDocument = (NSDocument *)[self parentDocument];
+	if (theDocument) {
+		[self.keyboardLayout setParentDocument:theDocument];
+	}
+	[self.keyboardLayout setDelegate:self];
+	[self.modifiersDataSource setKeyboard:keyboardLayout];
+	[self setupDataSource];
 }
 
 #pragma mark Window sizing
