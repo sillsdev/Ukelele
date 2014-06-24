@@ -14,6 +14,9 @@
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
+		522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AB1953C8F3004F12AA /* dialogs.strings */; };
+		522C30AF1953C8F3004F12AA /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AC1953C8F3004F12AA /* Errors.strings */; };
+		522C30B01953C8F3004F12AA /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AD1953C8F3004F12AA /* keyboards.strings */; };
 		52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */; };
 		523451C71927208B00CAEB41 /* PrintAccessoryPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */; };
 		5235CAD919481A6E009F8B42 /* UKKeyboardWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */; };
@@ -213,6 +216,9 @@
 		521E5EA61926228000C45A4A /* InspectorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectorWindow.xib; path = "Interface Files/InspectorWindow.xib"; sourceTree = "<group>"; };
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
 		5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleBundleVersionSheet.xib; path = "Interface Files/UkeleleBundleVersionSheet.xib"; sourceTree = "<group>"; };
+		522C30AB1953C8F3004F12AA /* dialogs.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = dialogs.strings; sourceTree = "<group>"; };
+		522C30AC1953C8F3004F12AA /* Errors.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Errors.strings; sourceTree = "<group>"; };
+		522C30AD1953C8F3004F12AA /* keyboards.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = keyboards.strings; sourceTree = "<group>"; };
 		52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnlinkModifiersDialog.xib; path = "Interface Files/UnlinkModifiersDialog.xib"; sourceTree = "<group>"; };
 		523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintAccessoryPanel.xib; path = "Interface Files/PrintAccessoryPanel.xib"; sourceTree = "<group>"; };
 		5235CAD719481A6E009F8B42 /* UKKeyboardWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardWindow.h; sourceTree = "<group>"; };
@@ -783,6 +789,9 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				522C30AB1953C8F3004F12AA /* dialogs.strings */,
+				522C30AC1953C8F3004F12AA /* Errors.strings */,
+				522C30AD1953C8F3004F12AA /* keyboards.strings */,
 				5209B731193563C000B195E9 /* kluchrtoxml */,
 				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
@@ -1132,10 +1141,13 @@
 				5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */,
 				525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */,
 				52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */,
+				522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */,
+				522C30B01953C8F3004F12AA /* keyboards.strings in Resources */,
 				528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
+				522C30AF1953C8F3004F12AA /* Errors.strings in Resources */,
 				524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */,
 				52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */,
 				523B01C6191D7F8500E06DF3 /* Common.strings in Resources */,

@@ -27,6 +27,7 @@ NSString *kKeyboardObjectKey = @"KeyboardObject";
 NSString *kKeyboardNameKey = @"KeyboardName";
 NSString *kKeyboardWindowKey = @"KeyboardWindow";
 NSString *kKeyboardFileNameKey = @"KeyboardFileName";
+NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 @implementation UKKeyboardDocument {
 	NSMutableArray *keyboardLayouts;
@@ -109,7 +110,7 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 	return NO;
 }
 
-- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing *)outError {
+- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing *)outError		{
 	if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
 			// This is an unbundled keyboard layout document
 		return [self saveKeyboardLayoutToURL:url error:outError];
@@ -222,7 +223,6 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 }
 
 - (NSFileWrapper *)createFileWrapper {
-	NSLog(@"Creating file wrapper");
 		// Start at the bottom, the InfoPlist.strings file, which contains all the names
 	NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
@@ -260,15 +260,20 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 		if (nil == keyboardName || [keyboardName isEqualToString:@""]) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
-		NSLog(@"Saving keyboard layout %@", keyboardName);
-		NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
-		NSLog(@"Write file");
-		NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
-		dispatch_async(mainQueue, ^void(void) {
-			[resourcesDirectory addRegularFileWithContents:fileData
-										 preferredFilename:keyboardFileName];
-		});
-		NSLog(@"End write file");
+		if ([keyboardEntry keyboardFileWrapper] != nil) {
+				// Already have a file wrapper
+			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
+		}
+		else {
+			NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
+			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
+			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
+			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
+			dispatch_async(mainQueue, ^void(void) {
+				[resourcesDirectory addRegularFileWithContents:fileData
+											 preferredFilename:keyboardFileName];
+			});
+		}
 //		if ([[keyboardEntry fileName] isEqualToString:@""] && [self fileURL] != nil) {
 //			NSLog(@"New file to be noted");
 //				// The keyboard has not yet been saved
@@ -280,11 +285,9 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 //			[[keyboardEntry document] setDisplayName:keyboardName];
 //		}
 		if ([keyboardEntry hasIcon]) {
-			NSLog(@"Writing icon file");
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
 			[resourcesDirectory addRegularFileWithContents:[keyboardEntry iconData] preferredFilename:iconFileName];
 		}
-		NSLog(@"Finished saving keyboard layout");
 	}
 		// Create the Info.plist file
 	NSDictionary *infoPlist = [self createInfoPlist];
@@ -304,7 +307,6 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 	[topFileWrapper addFileWrapper:contentsDirectory];
 	NSString *bundleName = [NSString stringWithFormat:@"%@.bundle", _bundleName];
 	[topFileWrapper setPreferredFilename:bundleName];
-	NSLog(@"Finished creating file wrapper");
 	return topFileWrapper;
 }
 
@@ -371,7 +373,6 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 }
 
 - (BOOL)parseBundleFileWrapper:(NSFileWrapper *)theFileWrapper withError:(NSError **)error {
-	NSLog(@"Reading file wrapper %@", theFileWrapper);
 	NSDictionary *errorDictionary = nil;
 		// Check that it is actually a directory
 	if (![theFileWrapper isDirectory]) {
@@ -475,6 +476,7 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 					// Save the file name
 				NSString *fileName = [directoryEntry filename];
 				baseNameDictionary[kKeyboardFileNameKey] = [fileName stringByDeletingPathExtension];
+				baseNameDictionary[kKeyboardFileWrapperKey] = directoryEntry;
 			}
 			else if (isIconFile) {
 					// It's an icon file
@@ -497,9 +499,12 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 			[keyboardInfo setIntendedLanguage:languageIdentifier];
 		}
 		[keyboardInfo setFileName:keyboardName];
+		NSFileWrapper *keyboardFileWrapper = keyboardData[kKeyboardFileWrapperKey];
+		if (nil != keyboardFileWrapper) {
+			[keyboardInfo setKeyboardFileWrapper:keyboardFileWrapper];
+		}
 		[keyboardLayouts addObject:keyboardInfo];
 	}
-	NSLog(@"Finished reading file wrapper");
 	return YES;
 }
 
@@ -527,6 +532,20 @@ NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleVersionKey]) {
 			_bundleVersion = infoPlistDictionary[plistKey];
+		}
+	}
+}
+
+- (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject {
+		// The keyboard layout has changed, so pull it from the file wrapper
+	for (KeyboardLayoutInformation *keyboardInfo in keyboardLayouts) {
+		if ([keyboardInfo keyboardObject] == keyboardObject) {
+				// Found the keyboard in the list
+			if ([keyboardInfo keyboardFileWrapper]) {
+					// Remove the keyboard file wrapper
+				[keyboardInfo setKeyboardFileWrapper:nil];
+			}
+			break;
 		}
 	}
 }

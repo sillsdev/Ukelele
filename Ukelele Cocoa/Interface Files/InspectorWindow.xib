@@ -42,7 +42,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Document" identifier="1" id="nVP-hb-dbf">
-                                <view key="view" id="is6-CO-MN6">
+                                <view key="view" ambiguous="YES" id="is6-CO-MN6">
                                     <rect key="frame" x="10" y="33" width="316" height="281"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -280,7 +280,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="State" identifier="" id="vsc-Y5-hjv">
-                                <view key="view" ambiguous="YES" id="9Or-ap-4i6">
+                                <view key="view" id="9Or-ap-4i6">
                                     <rect key="frame" x="10" y="33" width="316" height="281"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -414,11 +414,11 @@
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="GYJ-Rs-KbH">
-                                                            <rect key="frame" x="1" y="-14" width="-15" height="15"/>
+                                                            <rect key="frame" x="-7" y="-14" width="0.0" height="15"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="jDB-zA-xlC">
-                                                            <rect key="frame" x="-14" y="1" width="15" height="-15"/>
+                                                            <rect key="frame" x="-14" y="-7" width="15" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
@@ -450,9 +450,9 @@
                 <binding destination="-2" name="contentObject" keyPath="currentWindow" id="LW0-wf-xPb"/>
             </connections>
         </objectController>
-        <objectController objectClassName="UKKeyboardLayoutBundle" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Document Object">
+        <objectController objectClassName="UKKeyboardDocument" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Document Object">
             <connections>
-                <binding destination="-2" name="contentObject" keyPath="self" id="YeK-PO-dtf"/>
+                <binding destination="-2" name="contentObject" keyPath="currentDocument" id="MLp-7n-wzB"/>
             </connections>
         </objectController>
         <userDefaultsController representsSharedInstance="YES" id="b0N-ea-Ef6"/>

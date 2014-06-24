@@ -16,6 +16,7 @@
 	_keyboardName = [theKeyboard keyboardName];
 	_fileName = fileName;
 	_hasIcon = NO;
+	_keyboardFileWrapper = nil;
 	return self;
 }
 

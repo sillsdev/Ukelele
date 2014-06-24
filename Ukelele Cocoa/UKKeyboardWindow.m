@@ -33,6 +33,7 @@
 #import "AskCommentController.h"
 #import "LayoutInfo.h"
 #import "DragTextHandler.h"
+#import "UKKeyboardDocument.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
@@ -78,6 +79,7 @@ const float kScalePercentageFactor = 100.0f;
 		_iconFile = nil;
 		selectedKey = kNoKeyCode;
 		commentChanged = NO;
+		_undoManager = nil;
     }
     return self;
 }
@@ -1465,6 +1467,14 @@ const float kScalePercentageFactor = 100.0f;
 
 #pragma mark Delegate methods
 
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+	if (self.undoManager == nil) {
+		self.undoManager = [[NSUndoManager alloc] init];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteUndoAction:) name:NSUndoManagerWillRedoChangeNotification object:self.undoManager];
+	}
+	return self.undoManager;
+}
+
 - (void)documentDidChange {
 	[self updateWindow];
 }
@@ -1503,6 +1513,13 @@ const float kScalePercentageFactor = 100.0f;
 {
 		// Delegate method to indicate that the modifier map has changed
     [self modifierMapDidChangeImplementation];
+}
+
+#pragma mark Notifications
+
+- (void)noteUndoAction:(NSNotification *)theNotification {
+		// We have at least one undoable action, so notify the document
+	[[self parentDocument] keyboardLayoutDidChange:self.keyboardLayout];
 }
 
 @end

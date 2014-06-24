@@ -45,7 +45,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Keyboard" identifier="Keyboard" id="IZ0-8f-V7r">
-                                <view key="view" id="M6q-7f-oxV">
+                                <view key="view" id="M6q-7f-oxV" customClass="UkeleleContainerView">
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -133,7 +133,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Modifiers" identifier="Modifiers" id="kOF-Ae-Iry">
-                                <view key="view" id="g1L-XA-Ana">
+                                <view key="view" id="g1L-XA-Ana" customClass="UkeleleContainerView">
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -335,7 +335,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Comments" identifier="Comments" id="bp8-nY-09b">
-                                <view key="view" id="CpZ-Lt-XCB">
+                                <view key="view" id="CpZ-Lt-XCB" customClass="UkeleleContainerView">
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -596,6 +596,9 @@
                     <outlet property="delegate" destination="-2" id="ubS-BS-O85"/>
                 </connections>
             </toolbar>
+            <connections>
+                <outlet property="delegate" destination="-2" id="vIy-SS-xQa"/>
+            </connections>
         </window>
         <customObject id="vyz-He-UxM" customClass="ModifiersDataSource"/>
         <menu title="Non-dead key contextual menu" id="nEq-8b-aYJ">

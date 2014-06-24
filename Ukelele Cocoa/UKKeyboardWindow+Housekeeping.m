@@ -113,7 +113,6 @@
 {
 	NSInteger keyboardScript = [[self keyboardLayout] keyboardGroup];
 	NSUInteger scriptIndex = [ScriptInfo indexForScript:keyboardScript];
-	NSLog(@"Script %ld, index %ld", keyboardScript, scriptIndex);
 	if (nil == keyboardIDSheet) {
 		keyboardIDSheet = [ChooseKeyboardIDWindowController chooseKeyboardID];
 	}

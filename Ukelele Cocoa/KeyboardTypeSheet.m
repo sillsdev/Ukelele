@@ -48,7 +48,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 - (IBAction)acceptChoice:(id)sender
 {
 	[[self window] orderOut:self];
-	NSInteger keyboardID = [_keyboardResources resourceForType:[keyboardTypeTable selectedRow] code:[codingButton indexOfSelectedItem]];
+	NSInteger keyboardID = [self.keyboardResources resourceForType:[keyboardTypeTable selectedRow] code:[codingButton indexOfSelectedItem]];
 	[NSApp endSheet:[self window]];
 	callBack(@(keyboardID));
 }

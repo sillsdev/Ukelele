@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -56,6 +56,9 @@
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <binding destination="O9z-nf-e9V" name="contentValues" keyPath="selection.keyboardCodings" id="UM7-7H-2Re"/>
+                        </connections>
                     </popUpButton>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Eq-Zl-HxU">
                         <rect key="frame" x="20" y="195" width="240" height="135"/>
@@ -71,7 +74,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="220.79296875" minWidth="40" maxWidth="1000" id="sbL-J0-7Gm">
+                                        <tableColumn identifier="KeyboardType" width="220.79296875" minWidth="40" maxWidth="1000" id="sbL-J0-7Gm">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -113,6 +116,9 @@
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="O9z-nf-e9V" name="value" keyPath="selection.keyboardDescription" id="GzH-wk-wSe"/>
+                                    </connections>
                                 </textField>
                             </subviews>
                         </view>
@@ -149,11 +155,18 @@ Gw
                     </button>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="foS-95-doV"/>
+            </connections>
         </window>
         <arrayController objectClassName="KeyboardType" editable="NO" id="O9z-nf-e9V">
             <declaredKeys>
                 <string>keyboardName</string>
             </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="keyboardResources.keyboardTypeTable" id="8Kf-hL-VM1"/>
+            </connections>
         </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="u86-me-lh7"/>
     </objects>
 </document>

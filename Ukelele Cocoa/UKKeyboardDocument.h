@@ -34,5 +34,6 @@
 - (NSArray *)keyboardLayouts;
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
+- (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
 
 @end

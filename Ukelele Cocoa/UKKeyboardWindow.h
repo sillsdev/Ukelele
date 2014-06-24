@@ -87,6 +87,7 @@ enum ToolbarItemTags {
 @property (readonly) NSUInteger currentModifiers;
 @property (weak, readonly) NSString *currentState;
 @property (weak) UKKeyboardDocument *parentDocument;
+@property (strong) NSUndoManager *undoManager;
 
 	// Actions
 	// View scale
