@@ -30,6 +30,7 @@
 - (IBAction)openKeyboardLayout:(id)sender;
 - (IBAction)chooseIntendedLanguage:(id)sender;
 - (IBAction)captureInputSource:(id)sender;
+- (IBAction)openKeyboardFile:(id)sender;
 
 - (NSArray *)keyboardLayouts;
 

@@ -747,6 +747,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 #pragma mark User actions
 
+	// Add a current keyboard layout window
+
 - (IBAction)addOpenDocument:(id)sender {
 	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 	NSArray *theDocumentList = [theController documents];
@@ -780,6 +782,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 									  }];
 }
 
+	// Show information about the version strings of the bundle
+
 - (IBAction)showVersionInfo:(id)sender {
 	if (nil == bundleVersionSheet) {
 		bundleVersionSheet = [UkeleleBundleVersionSheet bundleVersionSheet];
@@ -806,11 +810,15 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 										}];
 }
 
+	// Add an empty keyboard layout
+
 - (IBAction)addKeyboardLayout:(id)sender {
 		// Create an empty keyboard layout
 	UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:@"Untitled"];
 	[self addNewDocument:keyboardObject];
 }
+
+	// Remove the selected keyboard layout from the bundle
 
 - (IBAction)removeKeyboardLayout:(id)sender {
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
@@ -839,6 +847,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 									 contextInfo:(__bridge void *)(@(selectedRowNumber))];
 }
 
+	// Open the selected keyboard layout's window
+
 - (IBAction)openKeyboardLayout:(id)sender {
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
@@ -854,6 +864,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	[keyboardWindow showWindow:self];
 }
+
+	// Choose the intended language of the selected keyboard layout
 
 - (IBAction)chooseIntendedLanguage:(id)sender {
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
@@ -883,6 +895,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 												 intendedLanguageSheet = nil;
 											 }];
 }
+
+	// Create a new keyboard layout from the current keyboard input source
 
 - (IBAction)captureInputSource:(id)sender {
 	NSError *createError;
@@ -945,6 +959,34 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 //	}
 		// Add the document with icon and language, if any
 	[self addNewDocument:newKeyboard withIcon:iconData withLanguage:intendedLanguage];
+}
+
+	// Open a keyboard layout from a file and add it to the bundle
+
+- (IBAction)openKeyboardFile:(id)sender {
+	__block NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setResolvesAliases:YES];
+	[openPanel setAllowedFileTypes:@[kFileTypeKeyboardLayout]];
+	NSWindow *docWindow = [keyboardLayoutsTable window];
+	[openPanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse response) {
+		if (response == NSModalResponseOK) {
+				// User selected a file
+			NSArray *selectedFiles = [openPanel URLs];
+			NSURL *selectedFile = selectedFiles[0];	// Only one file
+			NSError *readError = nil;
+			UkeleleKeyboardObject *keyboardLayout = [[UkeleleKeyboardObject alloc] initWithData:[NSData dataWithContentsOfURL:selectedFile] withError:&readError];
+			if (keyboardLayout == nil) {
+					// Read failed
+				[NSApp presentError:readError];
+			}
+			else {
+				[self addNewDocument:keyboardLayout];
+			}
+		}
+	}];
 }
 
 #pragma mark Notifications
