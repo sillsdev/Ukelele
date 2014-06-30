@@ -15,7 +15,7 @@
 
 #import "ImportDeadKeyHandler.h"
 #import "UKKeyboardDocument.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "KeyboardLayoutInformation.h"
 #import "AskFromList.h"
 #import "UkeleleConstantStrings.h"
@@ -23,7 +23,7 @@
 
 @implementation ImportDeadKeyHandler {
 	NSWindow *parentWindow;
-	UKKeyboardWindow *targetDocumentWindow;
+	UKKeyboardController *targetDocumentWindow;
 }
 
 - (id)init {
@@ -39,7 +39,7 @@
 	return [[ImportDeadKeyHandler alloc] init];
 }
 
-- (void)beginInteractionForWindow:(UKKeyboardWindow *)theDocumentWindow {
+- (void)beginInteractionForWindow:(UKKeyboardController *)theDocumentWindow {
 	parentWindow = [theDocumentWindow window];
 	targetDocumentWindow = theDocumentWindow;
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
@@ -113,10 +113,10 @@
 	if ([keyboardLayouts count] == 1) {
 			// Only one keyboard layout, so that's the one to use
 		KeyboardLayoutInformation *docInfo = keyboardLayouts[0];
-		UKKeyboardWindow *keyboardWindow = [docInfo keyboardWindow];
+		UKKeyboardController *keyboardWindow = [docInfo keyboardWindow];
 		if (keyboardWindow == nil) {
 			UkeleleKeyboardObject *obj = [docInfo keyboardObject];
-			keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+			keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 			[keyboardWindow setKeyboardLayout:obj];
 		}
 		[self handleDocument:keyboardWindow];
@@ -136,10 +136,10 @@
 			NSUInteger index = [keyboardNames indexOfObject:chosenKeyboard];
 			NSAssert(index != NSNotFound, @"Must have found the keyboard name");
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
-			UKKeyboardWindow *keyboardWindow = [info keyboardWindow];
+			UKKeyboardController *keyboardWindow = [info keyboardWindow];
 			if (keyboardWindow == nil) {
 				UkeleleKeyboardObject *obj = [info keyboardObject];
-				keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+				keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 				[keyboardWindow setKeyboardLayout:obj];
 			}
 			[self handleDocument:keyboardWindow];
@@ -175,13 +175,13 @@
 		[self interactionCompleted];
 		return;
 	}
-	UKKeyboardWindow *keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:@"UKKeyboardLayout"];
+	UKKeyboardController *keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 	[keyboardWindow setKeyboardLayout:[theDocument keyboardLayout]];
 	[self handleDocument:keyboardWindow];
 }
 
-- (void)handleDocument:(UKKeyboardWindow *)theDocumentWindow {
-		// Have the source document as a UKKeyboardWindow
+- (void)handleDocument:(UKKeyboardController *)theDocumentWindow {
+		// Have the source document as a UKKeyboardController
 		// Check that we have equivalent modifier maps
 	UkeleleKeyboardObject *sourceObject = [theDocumentWindow keyboardLayout];
 	UkeleleKeyboardObject *targetObject = [targetDocumentWindow keyboardLayout];
@@ -215,7 +215,7 @@
 	}];
 }
 
-- (void)importState:(NSString *)stateName fromDocument:(UKKeyboardWindow *)sourceDocumentWindow {
+- (void)importState:(NSString *)stateName fromDocument:(UKKeyboardController *)sourceDocumentWindow {
 		// Ask for a name for the imported state
 	NSArray *targetStateList = [[targetDocumentWindow keyboardLayout] stateNamesExcept:@""];
 	NSMutableSet *targetStates = [NSMutableSet setWithArray:targetStateList];

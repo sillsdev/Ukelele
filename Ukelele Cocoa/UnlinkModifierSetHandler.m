@@ -7,19 +7,19 @@
 //
 
 #import "UnlinkModifierSetHandler.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "UnlinkModifiersController.h"
 #import "KeyboardEnvironment.h"
 
 @implementation UnlinkModifierSetHandler {
-	UKKeyboardWindow *parentDocumentWindow;
+	UKKeyboardController *parentDocumentWindow;
 	NSWindow *parentWindow;
 	void (^callback)(NSInteger);
     id<UKInteractionCompletion> completionTarget;
 	UnlinkModifiersController *unlinkModifiersController;
 }
 
-- (id)initWithDocument:(UKKeyboardWindow *)theDocumentWindow {
+- (id)initWithDocument:(UKKeyboardController *)theDocumentWindow {
 	if (self = [super init]) {
 		parentDocumentWindow = theDocumentWindow;
 		parentWindow = [theDocumentWindow window];
@@ -30,7 +30,7 @@
 	return self;
 }
 
-+ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UKKeyboardWindow *)theDocumentWindow {
++ (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UKKeyboardController *)theDocumentWindow {
 	return [[UnlinkModifierSetHandler alloc] initWithDocument:theDocumentWindow];
 }
 

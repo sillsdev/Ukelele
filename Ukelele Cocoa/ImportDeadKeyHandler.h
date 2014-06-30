@@ -10,7 +10,7 @@
 #import "UKInteractionHandler.h"
 #import "UKInteractionCompletion.h"
 
-@class UKKeyboardWindow;
+@class UKKeyboardController;
 
 @interface ImportDeadKeyHandler : NSObject<UKInteractionHandler>
 
@@ -18,6 +18,6 @@
 
 + (ImportDeadKeyHandler *)importDeadKeyHandler;
 
-- (void)beginInteractionForWindow:(UKKeyboardWindow *)theDocumentWindow;
+- (void)beginInteractionForWindow:(UKKeyboardController *)theDocumentWindow;
 
 @end

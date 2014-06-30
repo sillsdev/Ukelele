@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "UkeleleKeyboardObject.h"
 
-@class UKKeyboardWindow;
+@class UKKeyboardController;
 
 @interface KeyboardLayoutInformation : NSObject
 
@@ -19,7 +19,7 @@
 @property (nonatomic) BOOL hasIcon;
 @property (copy) NSString *intendedLanguage;
 @property (strong) NSData *iconData;
-@property (strong) UKKeyboardWindow *keyboardWindow;
+@property (strong) UKKeyboardController *keyboardWindow;
 @property (strong) NSFileWrapper *keyboardFileWrapper;
 
 - (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName;

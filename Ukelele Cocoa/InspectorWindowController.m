@@ -10,8 +10,8 @@
 #import "UkeleleConstantStrings.h"
 #import "ScriptInfo.h"
 #import "UKKeyboardDocument.h"
-#import "UKKeyboardWindow.h"
-#import "UKKeyboardWindow+Housekeeping.h"
+#import "UKKeyboardController.h"
+#import "UKKeyboardController+Housekeeping.h"
 
 @implementation InspectorWindowController
 

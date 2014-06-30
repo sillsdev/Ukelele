@@ -9,7 +9,7 @@
 #import "KeyboardPrintView.h"
 #import "UkeleleView.h"
 #import "UkeleleConstantStrings.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "UKKeyboardDocument.h"
 
 CGFloat kLabelViewHeight = 20.0;

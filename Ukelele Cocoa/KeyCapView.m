@@ -7,7 +7,7 @@
 //
 
 #import "KeyCapView.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "UkeleleConstants.h"
 #import "XMLCocoaUtilities.h"
 #import "LayoutInfo.h"
@@ -486,13 +486,13 @@ static CGAffineTransform kTextTransform = {
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageMouseEntered:(int)_keyCode];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-	UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageMouseExited:(int)_keyCode];
 }
 
@@ -526,7 +526,7 @@ static CGAffineTransform kTextTransform = {
 	NSArray *draggedItems = [pboard readObjectsForClasses:classArray options:dictionary];
 	if (draggedItems != nil && [draggedItems count] > 0) {
 			// Got the text
-		UKKeyboardWindow *theDocumentWindow = [[self window] windowController];
+		UKKeyboardController *theDocumentWindow = [[self window] windowController];
 		[theDocumentWindow messageDragText:draggedItems[0] toKey:(int)_keyCode];
 		return YES;
 	}

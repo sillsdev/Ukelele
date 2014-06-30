@@ -7,7 +7,7 @@
 //
 
 #import "UKKeyboardDocument.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "LanguageCode.h"
 #import "UkeleleBundleVersionSheet.h"
 #import "IntendedLanguageSheet.h"
@@ -19,7 +19,7 @@
 #import "InspectorWindowController.h"
 #import <Carbon/Carbon.h>
 
-#define UKKeyboardWindowNibName @"UkeleleDocument"
+#define UKKeyboardControllerNibName @"UkeleleDocument"
 
 	// Dictionary keys
 NSString *kIconFileKey = @"IconFile";
@@ -70,7 +70,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
-		UKKeyboardWindow *keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:UKKeyboardWindowNibName];
+		UKKeyboardController *keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		[self addWindowController:keyboardWindow];
 	}
 	else {
@@ -363,7 +363,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if (theKeyboard != nil) {
 		self.keyboardLayout = theKeyboard;
 		[theKeyboard setParentDocument:self];
-		UKKeyboardWindow *windowController = [[UKKeyboardWindow alloc] initWithWindowNibName:UKKeyboardWindowNibName];
+		UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		[windowController setKeyboardLayout:theKeyboard];
 		[self addWindowController:windowController];
 		return YES;
@@ -704,8 +704,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	for (NSWindowController *windowController in [self windowControllers]) {
 		if ([[windowController window] isMainWindow]) {
 				// Found the main window. Is it a keyboard window, and does it handle this selector?
-			if ([windowController isKindOfClass:[UKKeyboardWindow class]] && [(UKKeyboardWindow *)windowController setsStatusForSelector:theAction]) {
-				return [(UKKeyboardWindow *)windowController validateUserInterfaceItem:anItem];
+			if ([windowController isKindOfClass:[UKKeyboardController class]] && [(UKKeyboardController *)windowController setsStatusForSelector:theAction]) {
+				BOOL isValid = [(UKKeyboardController *)windowController validateUserInterfaceItem:anItem];
+					// If it is valid, OK
+				if (isValid) {
+					return isValid;
+				}
+					// Otherwise, continue on
 			}
 			break;
 		}
@@ -716,18 +721,16 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		return (selectedRowNumber != -1);
 	}
 	else if (theAction == @selector(addOpenDocument:)) {
-			// Only active if there are open documents
-//		NSDocumentController *theController = [NSDocumentController sharedDocumentController];
-//		NSArray *theDocumentList = [theController documents];
-		BOOL isActive = NO;
-//		for (NSDocument *theDocument in theDocumentList) {
-//			if ([theDocument isKindOfClass:[UkeleleDocument class]] && [(UkeleleDocument *)theDocument parentBundle] != self) {
-//					// This is the kind of document we want
-//				isActive = YES;
-//				break;
-//			}
-//		}
-		return isActive;
+			// Only active if there are open keyboard layouts which aren't in bundles
+		NSDocumentController *theController = [NSDocumentController sharedDocumentController];
+		NSArray *theDocumentList = [theController documents];
+		for (NSDocument *theDocument in theDocumentList) {
+			if ([theDocument isKindOfClass:[UKKeyboardDocument class]] && ![(UKKeyboardDocument *)theDocument isBundle] && theDocument != self) {
+					// This is the kind of document we want
+				return YES;
+			}
+		}
+		return NO;
 	}
 	else if (theAction == @selector(openKeyboardLayout:)) {
 			// Always active
@@ -737,7 +740,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			// Always active
 		return YES;
 	}
-	else if (theAction == @selector(chooseIntendedLanguage:)) {
+	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:)) {
 			// Only active if there's a selection in the table
 		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 		return (selectedRowNumber != -1);
@@ -856,9 +859,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[selectedRowNumber];
 	UkeleleKeyboardObject *selectedKeyboard = [selectedRowInfo keyboardObject];
-	UKKeyboardWindow *keyboardWindow = [selectedRowInfo keyboardWindow];
+	UKKeyboardController *keyboardWindow = [selectedRowInfo keyboardWindow];
 	if (keyboardWindow == nil) {
-		keyboardWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:UKKeyboardWindowNibName];
+		keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		[keyboardWindow setKeyboardLayout:selectedKeyboard];
 		[selectedRowInfo setKeyboardWindow:keyboardWindow];
 	}
@@ -953,10 +956,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			intendedLanguage = (__bridge NSString *)languageString;
 		}
 	}
-//	NSArray *windowControllers = [newDocument windowControllers];
-//	if ([windowControllers count] == 0) {
-//		[newDocument makeWindowControllers];
-//	}
 		// Add the document with icon and language, if any
 	[self addNewDocument:newKeyboard withIcon:iconData withLanguage:intendedLanguage];
 }
@@ -965,6 +964,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 - (IBAction)openKeyboardFile:(id)sender {
 	__block NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];
 	[openPanel setCanChooseFiles:YES];
@@ -989,23 +989,27 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}];
 }
 
+- (IBAction)attachIconFile:(id)sender {
+	
+}
+
 #pragma mark Notifications
 
-//- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
-//	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardDocument class]], @"Document must be a Ukelele document");
-//		// Find the document in the list
-//	KeyboardLayoutInformation *keyboardInfo;
-//	NSInteger keyboardCount = [keyboardLayouts count];
-//	for (NSInteger i = 0; i < keyboardCount; i++) {
-//		keyboardInfo = keyboardLayouts[i];
-//		if ([keyboardInfo document] == keyboardDocument) {
-//			[keyboardInfo setKeyboardName:[keyboardDocument keyboardDisplayName]];
-//			break;
-//		}
-//	}
-//		// Notify the list that it's been updated
-//	[keyboardLayoutsTable reloadData];
-//}
+- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
+	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardController class]], @"Document must be a Ukelele document");
+		// Find the document in the list
+	KeyboardLayoutInformation *keyboardInfo;
+	NSInteger keyboardCount = [keyboardLayouts count];
+	for (NSInteger i = 0; i < keyboardCount; i++) {
+		keyboardInfo = keyboardLayouts[i];
+		if ([keyboardInfo keyboardWindow] == keyboardDocument) {
+			[keyboardInfo setKeyboardName:[(UKKeyboardController *)keyboardDocument keyboardDisplayName]];
+			break;
+		}
+	}
+		// Notify the list that it's been updated
+	[keyboardLayoutsTable reloadData];
+}
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
 	if ([tabIdentifier isEqualToString:kTabIdentifierDocument]) {
@@ -1026,9 +1030,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if ([[keyboardLayoutsTable selectedRowIndexes] count] == 1) {
 			// We have a single selected keyboard layout
 		KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[selectedRow];
-		UKKeyboardWindow *selectedWindow = [selectedRowInfo keyboardWindow];
+		UKKeyboardController *selectedWindow = [selectedRowInfo keyboardWindow];
 		if (selectedRowInfo == nil) {
-			selectedWindow = [[UKKeyboardWindow alloc] initWithWindowNibName:UKKeyboardWindowNibName];
+			selectedWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 			[selectedWindow setKeyboardLayout:[selectedRowInfo keyboardObject]];
 			[selectedRowInfo setKeyboardWindow:selectedWindow];
 		}
@@ -1167,7 +1171,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 		// Hide the document's windows, if they are shown
-	UKKeyboardWindow *keyboardWindow = [keyboardInfo keyboardWindow];
+	UKKeyboardController *keyboardWindow = [keyboardInfo keyboardWindow];
 	if (keyboardWindow != nil) {
 		[keyboardWindow close];
 	}

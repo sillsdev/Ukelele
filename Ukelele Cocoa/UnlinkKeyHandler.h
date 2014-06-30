@@ -11,7 +11,7 @@
 #import "UKInteractionCompletion.h"
 #import "AskKeyCode.h"
 
-@class UKKeyboardWindow;
+@class UKKeyboardController;
 
 typedef enum UnlinkKeyType : NSInteger {
 	kUnlinkKeyTypeAskCode,
@@ -21,7 +21,7 @@ typedef enum UnlinkKeyType : NSInteger {
 
 @interface UnlinkKeyHandler : NSObject<UKInteractionHandler>
 
-+ (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardWindow *)theDocumentWindow;
++ (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardController *)theDocumentWindow;
 - (void)beginInteraction:(UnlinkKeyType)keyCodeType;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget;
 - (void)setSelectedKeyCode:(NSInteger)keyCode;

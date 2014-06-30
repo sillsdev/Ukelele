@@ -7,19 +7,19 @@
 //
 
 #import "SwapKeysController.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "AskSwapKeysWindowController.h"
 #import "UkeleleConstantStrings.h"
 
 @implementation SwapKeysController {
-	UKKeyboardWindow *parentDocumentWindow;
+	UKKeyboardController *parentDocumentWindow;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
 	AskSwapKeysWindowController *askKeyCodeSheet;
 	NSInteger keyCode;
 }
 
-- (id)initWithDocument:(UKKeyboardWindow *)theDocumentWindow {
+- (id)initWithDocument:(UKKeyboardController *)theDocumentWindow {
 	self = [super init];
 	if (self) {
 		parentDocumentWindow = theDocumentWindow;
@@ -31,7 +31,7 @@
 	return self;
 }
 
-+ (SwapKeysController *)swapKeysController:(UKKeyboardWindow *)theDocumentWindow {
++ (SwapKeysController *)swapKeysController:(UKKeyboardController *)theDocumentWindow {
 	return [[SwapKeysController alloc] initWithDocument:theDocumentWindow];
 }
 

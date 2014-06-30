@@ -7,18 +7,18 @@
 //
 
 #import "UnlinkKeyHandler.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "UkeleleConstantStrings.h"
 
 @implementation UnlinkKeyHandler {
-	UKKeyboardWindow *parentDocumentWindow;
+	UKKeyboardController *parentDocumentWindow;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
 	AskKeyCode *askKeyCodeSheet;
 	NSInteger selectedKeyCode;
 }
 
-- (id)initWithDocumentWindow:(UKKeyboardWindow *)theDocumentWindow {
+- (id)initWithDocumentWindow:(UKKeyboardController *)theDocumentWindow {
 	if (self = [super init]) {
 		parentDocumentWindow = theDocumentWindow;
 		parentWindow = [theDocumentWindow window];
@@ -30,7 +30,7 @@
 }
 
 
-+ (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardWindow *)theDocumentWindow {
++ (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardController *)theDocumentWindow {
 	return [[UnlinkKeyHandler alloc] initWithDocumentWindow:theDocumentWindow];
 }
 

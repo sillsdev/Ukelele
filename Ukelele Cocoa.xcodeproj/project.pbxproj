@@ -19,7 +19,7 @@
 		522C30B01953C8F3004F12AA /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AD1953C8F3004F12AA /* keyboards.strings */; };
 		52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */; };
 		523451C71927208B00CAEB41 /* PrintAccessoryPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */; };
-		5235CAD919481A6E009F8B42 /* UKKeyboardWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */; };
+		5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardController.m */; };
 		523A4C2D192454770019F062 /* AskFromList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523A4C2C192454770019F062 /* AskFromList.xib */; };
 		523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */; };
 		523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0071191C9CA900E06DF3 /* KeyCapView.m */; };
@@ -142,6 +142,9 @@
 		529B223E1927213600D9F055 /* ReplaceNameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529B223D1927213600D9F055 /* ReplaceNameSheet.xib */; };
 		52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A481F0192348B300D412D7 /* AddModifiersDialog.xib */; };
 		52A84CF41926E09800DB142A /* IntendedLanguageSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */; };
+		52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */; };
+		52AD7D96196139F800B3CD3F /* UKKeyboardController+Housekeeping.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */; };
+		52AD7D97196139F800B3CD3F /* UKKeyboardController+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */; };
 		52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */; };
 		52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */; };
 		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
@@ -161,9 +164,6 @@
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
-		52E1E59119497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */; };
-		52E1E59419497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */; };
-		52E1E59719497DE00001B3BB /* UKKeyboardWindow+Comments.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -210,7 +210,7 @@
 		5209B731193563C000B195E9 /* kluchrtoxml */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kluchrtoxml; sourceTree = "<group>"; };
 		5209F18119236083001F9923 /* AskCommentSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskCommentSheet.xib; path = "Interface Files/AskCommentSheet.xib"; sourceTree = "<group>"; };
 		521270E3194AD6E3003103CA /* UKKeyboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardDocument.h; sourceTree = "<group>"; };
-		521270E4194AD6E3003103CA /* UKKeyboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardDocument.m; sourceTree = "<group>"; };
+		521270E4194AD6E3003103CA /* UKKeyboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UKKeyboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
 		52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLayoutInformation.m; sourceTree = "<group>"; };
 		521E5EA61926228000C45A4A /* InspectorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectorWindow.xib; path = "Interface Files/InspectorWindow.xib"; sourceTree = "<group>"; };
@@ -221,8 +221,8 @@
 		522C30AD1953C8F3004F12AA /* keyboards.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = keyboards.strings; sourceTree = "<group>"; };
 		52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnlinkModifiersDialog.xib; path = "Interface Files/UnlinkModifiersDialog.xib"; sourceTree = "<group>"; };
 		523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintAccessoryPanel.xib; path = "Interface Files/PrintAccessoryPanel.xib"; sourceTree = "<group>"; };
-		5235CAD719481A6E009F8B42 /* UKKeyboardWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardWindow.h; sourceTree = "<group>"; };
-		5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardWindow.m; sourceTree = "<group>"; };
+		5235CAD719481A6E009F8B42 /* UKKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UKKeyboardController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5235CAD819481A6E009F8B42 /* UKKeyboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UKKeyboardController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523A4C2C192454770019F062 /* AskFromList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskFromList.xib; path = "Interface Files/AskFromList.xib"; sourceTree = "<group>"; };
 		523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardDefinitions.h; sourceTree = "<group>"; };
 		523B0064191C9BCF00E06DF3 /* UkeleleConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleConstants.h; sourceTree = "<group>"; };
@@ -378,7 +378,7 @@
 		523B0137191CA18C00E06DF3 /* ConfirmStateNameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmStateNameSheet.h; sourceTree = "<group>"; };
 		523B0138191CA18C00E06DF3 /* ConfirmStateNameSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConfirmStateNameSheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B0139191CA18C00E06DF3 /* CreateDeadKeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDeadKeyHandler.h; sourceTree = "<group>"; };
-		523B013A191CA18C00E06DF3 /* CreateDeadKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDeadKeyHandler.m; sourceTree = "<group>"; };
+		523B013A191CA18C00E06DF3 /* CreateDeadKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreateDeadKeyHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B013B191CA18C00E06DF3 /* CreateDeadKeySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDeadKeySheet.h; sourceTree = "<group>"; };
 		523B013C191CA18C00E06DF3 /* CreateDeadKeySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreateDeadKeySheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B013D191CA18C00E06DF3 /* CreateSelectedDeadKeyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSelectedDeadKeyController.h; sourceTree = "<group>"; };
@@ -396,9 +396,9 @@
 		523B014D191CA18C00E06DF3 /* HandleDeadKeyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleDeadKeyController.h; sourceTree = "<group>"; };
 		523B014E191CA18C00E06DF3 /* HandleDeadKeyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HandleDeadKeyController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B014F191CA18C00E06DF3 /* ImportDeadKeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportDeadKeyHandler.h; sourceTree = "<group>"; };
-		523B0150191CA18C00E06DF3 /* ImportDeadKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportDeadKeyHandler.m; sourceTree = "<group>"; };
+		523B0150191CA18C00E06DF3 /* ImportDeadKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ImportDeadKeyHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B0153191CA18C00E06DF3 /* InspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorWindowController.h; sourceTree = "<group>"; };
-		523B0154191CA18C00E06DF3 /* InspectorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorWindowController.m; sourceTree = "<group>"; };
+		523B0154191CA18C00E06DF3 /* InspectorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = InspectorWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B0155191CA18C00E06DF3 /* IntendedLanguageSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntendedLanguageSheet.h; sourceTree = "<group>"; };
 		523B0156191CA18C00E06DF3 /* IntendedLanguageSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntendedLanguageSheet.m; sourceTree = "<group>"; };
 		523B0157191CA18C00E06DF3 /* UKKeyboardLayoutBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardLayoutBundle.h; sourceTree = "<group>"; };
@@ -475,6 +475,12 @@
 		529B223D1927213600D9F055 /* ReplaceNameSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReplaceNameSheet.xib; path = "Interface Files/ReplaceNameSheet.xib"; sourceTree = "<group>"; };
 		52A481F0192348B300D412D7 /* AddModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddModifiersDialog.xib; path = "Interface Files/AddModifiersDialog.xib"; sourceTree = "<group>"; };
 		52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntendedLanguageSheet.xib; path = "Interface Files/IntendedLanguageSheet.xib"; sourceTree = "<group>"; };
+		52AD7D8F196139F800B3CD3F /* UKKeyboardController+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardController+Comments.h"; sourceTree = "<group>"; };
+		52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardController+Comments.m"; sourceTree = "<group>"; };
+		52AD7D91196139F800B3CD3F /* UKKeyboardController+Housekeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardController+Housekeeping.h"; sourceTree = "<group>"; };
+		52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardController+Housekeeping.m"; sourceTree = "<group>"; };
+		52AD7D93196139F800B3CD3F /* UKKeyboardController+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardController+Modifiers.h"; sourceTree = "<group>"; };
+		52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardController+Modifiers.m"; sourceTree = "<group>"; };
 		52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateSelectedDeadKeySheet.xib; path = "Interface Files/CreateSelectedDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskStateAndTerminatorSheet.xib; path = "Interface Files/AskStateAndTerminatorSheet.xib"; sourceTree = "<group>"; };
 		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -502,12 +508,12 @@
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardTypeSheet.xib; path = "Interface Files/KeyboardTypeSheet.xib"; sourceTree = "<group>"; };
-		52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Housekeeping.h"; sourceTree = "<group>"; };
-		52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Housekeeping.m"; sourceTree = "<group>"; };
-		52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Modifiers.h"; sourceTree = "<group>"; };
-		52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Modifiers.m"; sourceTree = "<group>"; };
-		52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UKKeyboardWindow+Comments.h"; sourceTree = "<group>"; };
-		52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardWindow+Comments.m"; sourceTree = "<group>"; };
+		52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Housekeeping.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Housekeeping.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Modifiers.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Modifiers.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Comments.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Comments.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
@@ -977,6 +983,12 @@
 				523B0123191CA18C00E06DF3 /* UKAskYesNoController.h */,
 				523B0124191CA18C00E06DF3 /* UKAskYesNoController.m */,
 				523B0171191CA18C00E06DF3 /* UkeleleAppDelegate.h */,
+				52AD7D8F196139F800B3CD3F /* UKKeyboardController+Comments.h */,
+				52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */,
+				52AD7D91196139F800B3CD3F /* UKKeyboardController+Housekeeping.h */,
+				52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */,
+				52AD7D93196139F800B3CD3F /* UKKeyboardController+Modifiers.h */,
+				52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */,
 				523B0172191CA18C00E06DF3 /* UkeleleAppDelegate.m */,
 				523B0125191CA18C00E06DF3 /* UkeleleBundleVersionSheet.h */,
 				523B0126191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m */,
@@ -1002,8 +1014,8 @@
 				52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */,
 				52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */,
 				52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */,
-				5235CAD719481A6E009F8B42 /* UKKeyboardWindow.h */,
-				5235CAD819481A6E009F8B42 /* UKKeyboardWindow.m */,
+				5235CAD719481A6E009F8B42 /* UKKeyboardController.h */,
+				5235CAD819481A6E009F8B42 /* UKKeyboardController.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
 				523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */,
 				523B017F191CA18C00E06DF3 /* UnlinkModifiersController.h */,
@@ -1219,7 +1231,6 @@
 				523B00C5191CA00A00E06DF3 /* KeyMapSelect.mm in Sources */,
 				523B01A6191CA18C00E06DF3 /* ImportDeadKeyHandler.m in Sources */,
 				523B007E191C9CA900E06DF3 /* UkeleleView.m in Sources */,
-				52E1E59719497DE00001B3BB /* UKKeyboardWindow+Comments.m in Sources */,
 				523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */,
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,
@@ -1234,10 +1245,10 @@
 				523B01B0191CA18C00E06DF3 /* ModifiersSheet.m in Sources */,
 				523B0101191CA0D100E06DF3 /* AddMissingOutputData.mm in Sources */,
 				523B00C3191CA00A00E06DF3 /* KeyElementTable.mm in Sources */,
-				52E1E59419497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m in Sources */,
 				523B00CA191CA00A00E06DF3 /* LayoutsElement.mm in Sources */,
 				523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */,
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
+				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
 				523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */,
 				523B00CE191CA00A00E06DF3 /* TerminatorsElement.mm in Sources */,
@@ -1253,7 +1264,6 @@
 				523B00CB191CA00A00E06DF3 /* ModifierElement.mm in Sources */,
 				523B0104191CA0D100E06DF3 /* ErrorMessage.cpp in Sources */,
 				523B00FF191CA0D100E06DF3 /* ActionElementSetHolder.mm in Sources */,
-				52E1E59119497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m in Sources */,
 				523B01BE191CA18C00E06DF3 /* UnlinkModifiersController.m in Sources */,
 				523B00CF191CA00A00E06DF3 /* UkeleleKeyboard.mm in Sources */,
 				523B018C191CA18C00E06DF3 /* AskTextSheet.m in Sources */,
@@ -1267,9 +1277,10 @@
 				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
 				523B0102191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm in Sources */,
 				52BBED0F191B4C3900E48394 /* main.m in Sources */,
-				5235CAD919481A6E009F8B42 /* UKKeyboardWindow.m in Sources */,
+				5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */,
 				523B0187191CA18C00E06DF3 /* AskKeyCode.m in Sources */,
 				523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */,
+				52AD7D96196139F800B3CD3F /* UKKeyboardController+Housekeeping.m in Sources */,
 				523B0189191CA18C00E06DF3 /* AskReplaceDeadKeySheet.m in Sources */,
 				523B01B4191CA18C00E06DF3 /* SelectKeyByCodeController.m in Sources */,
 				523B018B191CA18C00E06DF3 /* AskSwapKeysWindowController.m in Sources */,
@@ -1283,6 +1294,7 @@
 				523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */,
 				523B00C9191CA00A00E06DF3 /* LayoutElement.mm in Sources */,
 				523B00D1191CA00A00E06DF3 /* WhenElement.mm in Sources */,
+				52AD7D97196139F800B3CD3F /* UKKeyboardController+Modifiers.m in Sources */,
 				523B018A191CA18C00E06DF3 /* AskStateAndTerminatorController.m in Sources */,
 				523B0192191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m in Sources */,
 				523B0186191CA18C00E06DF3 /* AskFromList.m in Sources */,

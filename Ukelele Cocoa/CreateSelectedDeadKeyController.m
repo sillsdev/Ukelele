@@ -9,7 +9,7 @@
 #import "CreateSelectedDeadKeyController.h"
 #import "UkeleleKeyboardObject.h"
 #import "UkeleleConstantStrings.h"
-#import "UKKeyboardWindow+Housekeeping.h"
+#import "UKKeyboardController+Housekeeping.h"
 
 @interface CreateSelectedDeadKeyController ()
 
@@ -62,7 +62,7 @@
 		[self.invalidStateNameWarning setHidden:YES];
 		return;
 	}
-	if (![UKKeyboardWindow isValidStateName:stateName]) {
+	if (![UKKeyboardController isValidStateName:stateName]) {
 		[self.missingStateWarning setHidden:YES];
 		[self.invalidStateNameWarning setHidden:NO];
 		return;

@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardWindow">
+        <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardController">
             <connections>
                 <outlet property="commentBindingPane" destination="3Oj-mq-If4" id="vfh-Zg-hxD"/>
                 <outlet property="commentPane" destination="Vnz-1Z-fWP" id="YMv-hf-QVT"/>

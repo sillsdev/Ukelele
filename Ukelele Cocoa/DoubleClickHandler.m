@@ -7,7 +7,7 @@
 //
 
 #import "DoubleClickHandler.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "ChooseDeadKeyHandling.h"
 #import "LayoutInfo.h"
 #import "UkeleleConstantStrings.h"
@@ -273,7 +273,7 @@ enum ProcessingStates {
 
 - (void)acceptTextField:(id)sender
 {
-    UKKeyboardWindow *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
+    UKKeyboardController *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
 	[theDocumentWindow setMessageBarText:@""];
 	if (sender) {
 		NSString *theText = [sender stringValue];
@@ -306,7 +306,7 @@ enum ProcessingStates {
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
 	if (commandSelector == @selector(complete:) || commandSelector == @selector(cancelOperation:)) {
-        UKKeyboardWindow *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
+        UKKeyboardController *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
 		[control removeFromSuperview];
 		[theDocumentWindow messageEditPaneClosed];
 		[theDocumentWindow setMessageBarText:@""];

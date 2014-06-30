@@ -31,6 +31,7 @@
 - (IBAction)chooseIntendedLanguage:(id)sender;
 - (IBAction)captureInputSource:(id)sender;
 - (IBAction)openKeyboardFile:(id)sender;
+- (IBAction)attachIconFile:(id)sender;
 
 - (NSArray *)keyboardLayouts;
 

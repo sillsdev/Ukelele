@@ -8,14 +8,14 @@
 
 #import "CreateDeadKeyHandler.h"
 #import "UkeleleConstantStrings.h"
-#import "UKKeyboardWindow.h"
+#import "UKKeyboardController.h"
 #import "CreateDeadKeySheet.h"
 #import "AskReplaceDeadKeySheet.h"
 #import "WrongStateChosenSheet.h"
 #import "ConfirmStateNameSheet.h"
 #import "AskTextSheet.h"
 #import "CreateSelectedDeadKeyController.h"
-#import "UKKeyboardWindow+Housekeeping.h"
+#import "UKKeyboardController+Housekeeping.h"
 #import "UKKeyboardDocument.h"
 
 	// Dictionary keys
@@ -32,7 +32,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	NSString *targetState;
 	NSString *suppliedTerminator;
 	CreateDeadKeyHandlerType typeCode;
-	UKKeyboardWindow *parentDocumentWindow;
+	UKKeyboardController *parentDocumentWindow;
 	UkeleleKeyboardObject *keyboardObject;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
@@ -47,7 +47,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 - (id)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID
-			keyboardWindow:(UKKeyboardWindow *)theDocumentWindow
+			keyboardWindow:(UKKeyboardController *)theDocumentWindow
 				   keyCode:(NSInteger)keyCode
 				 nextState:(NSString *)nextStateName
 				terminator:(NSString *)theTerminator {
@@ -177,7 +177,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 						  }];
 		return;
 	}
-	if (![UKKeyboardWindow isValidStateName:nextState]) {
+	if (![UKKeyboardController isValidStateName:nextState]) {
 		NSString *mainText = NSLocalizedStringFromTable(@"Please give a valid name for the state name", @"dialogs", @"Ask for a valid string");
 		NSString *messageText = NSLocalizedStringFromTable(@"Names like none and 0 are not permitted", @"dialogs", @"Not a valid name");
 		[askTextSheet beginAskText:mainText

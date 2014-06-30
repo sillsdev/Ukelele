@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class UKKeyboardWindow;
+@class UKKeyboardController;
 
 @interface KeyboardPrintView : NSView {
 	NSMutableArray *keyboardViews;
@@ -19,7 +19,7 @@
 	NSMutableArray *keyboardPlaceHolders;
 }
 
-@property (nonatomic, weak) UKKeyboardWindow *parentDocument;
+@property (nonatomic, weak) UKKeyboardController *parentDocument;
 @property (nonatomic) BOOL allStates;
 @property (nonatomic) BOOL allModifiers;
 
