@@ -990,7 +990,27 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (IBAction)attachIconFile:(id)sender {
-	
+	__block NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	__block NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+		// These next four lines aren't necessary, it seems, but better to be safe...
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setResolvesAliases:YES];
+	[openPanel setAllowedFileTypes:@[(NSString *)kUTTypeAppleICNS]];
+	NSWindow *docWindow = [keyboardLayoutsTable window];
+	[openPanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse response) {
+		if (response == NSModalResponseOK) {
+				// User selected a file
+			NSArray *selectedFiles = [openPanel URLs];
+			NSURL *selectedFile = selectedFiles[0];	// Only one file
+			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
+			[self addIcon:iconData atIndex:selectedRowNumber];
+		}
+	}];
 }
 
 #pragma mark Notifications
