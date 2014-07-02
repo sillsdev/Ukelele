@@ -513,8 +513,13 @@ const float kScalePercentageFactor = 100.0f;
 			 action == @selector(importDeadKey:) || action == @selector(editKey:) ||
 			 action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
 			 action == @selector(copyKey:) || action == @selector(attachComment:)) {
-			// All of these can only be selected if there is no interaction in progress
+			// All of these can only be selected if we are on the keyboard tab and
+			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualTo:[[self.tabView selectedTabViewItem] identifier]];
+	}
+	else if (action == @selector(askKeyboardIdentifiers:)) {
+			// These can only be selected if there is no interaction in progress
+		return (interactionHandler == nil);
 	}
 	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeStateName:) ||
 			 action == @selector(changeTerminator:)) {

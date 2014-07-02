@@ -21,9 +21,6 @@ extern NSString *kKeyboardIDWindowSourceVersion;
 	IBOutlet NSTextField *rangeField;
 	IBOutlet NSTextField *idField;
 	NSArray *scriptList;
-	IBOutlet NSTextField *buildVersion;
-	IBOutlet NSTextField *bundleVersion;
-	IBOutlet NSTextField *sourceVersion;
 	void (^callBack)(NSDictionary *);
 }
 

@@ -8,6 +8,7 @@
 
 #import "UKKeyboardDocument.h"
 #import "UKKeyboardController.h"
+#import "UKKeyboardController+Housekeeping.h"
 #import "LanguageCode.h"
 #import "UkeleleBundleVersionSheet.h"
 #import "IntendedLanguageSheet.h"
@@ -70,8 +71,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
-		UKKeyboardController *keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-		[self addWindowController:keyboardWindow];
+		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+		[self addWindowController:keyboardController];
 	}
 	else {
 		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayoutBundle" owner:self];
@@ -705,12 +706,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		if ([[windowController window] isMainWindow]) {
 				// Found the main window. Is it a keyboard window, and does it handle this selector?
 			if ([windowController isKindOfClass:[UKKeyboardController class]] && [(UKKeyboardController *)windowController setsStatusForSelector:theAction]) {
-				BOOL isValid = [(UKKeyboardController *)windowController validateUserInterfaceItem:anItem];
-					// If it is valid, OK
-				if (isValid) {
-					return isValid;
-				}
-					// Otherwise, continue on
+				return [(UKKeyboardController *)windowController validateUserInterfaceItem:anItem];
 			}
 			break;
 		}
@@ -740,7 +736,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			// Always active
 		return YES;
 	}
-	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:)) {
+	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
+			 theAction == @selector(askKeyboardIdentifiers:)) {
 			// Only active if there's a selection in the table
 		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 		return (selectedRowNumber != -1);
@@ -859,13 +856,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[selectedRowNumber];
 	UkeleleKeyboardObject *selectedKeyboard = [selectedRowInfo keyboardObject];
-	UKKeyboardController *keyboardWindow = [selectedRowInfo keyboardWindow];
-	if (keyboardWindow == nil) {
-		keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-		[keyboardWindow setKeyboardLayout:selectedKeyboard];
-		[selectedRowInfo setKeyboardWindow:keyboardWindow];
+	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
+	if (keyboardController == nil) {
+		keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+		[keyboardController setKeyboardLayout:selectedKeyboard];
+		[selectedRowInfo setKeyboardController:keyboardController];
 	}
-	[keyboardWindow showWindow:self];
+	[keyboardController showWindow:self];
 }
 
 	// Choose the intended language of the selected keyboard layout
@@ -989,6 +986,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}];
 }
 
+	// Attach an icon file to a keyboard layout
+
 - (IBAction)attachIconFile:(id)sender {
 	__block NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
@@ -1013,6 +1012,24 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}];
 }
 
+	// Set the keyboard's name, script and/or id
+- (IBAction)askKeyboardIdentifiers:(id)sender {
+	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	KeyboardLayoutInformation *keyboardEntry = keyboardLayouts[selectedRowNumber];
+	UKKeyboardController *keyboardController = [keyboardEntry keyboardController];
+	if (keyboardController == nil) {
+			// Create the controller
+		keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+		[keyboardController setKeyboardLayout:[keyboardEntry keyboardObject]];
+		[keyboardEntry setKeyboardController:keyboardController];
+	}
+	NSWindow *docWindow = [keyboardLayoutsTable window];
+	[keyboardController askKeyboardIdentifiers:docWindow];
+}
+
 #pragma mark Notifications
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
@@ -1022,7 +1039,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSInteger keyboardCount = [keyboardLayouts count];
 	for (NSInteger i = 0; i < keyboardCount; i++) {
 		keyboardInfo = keyboardLayouts[i];
-		if ([keyboardInfo keyboardWindow] == keyboardDocument) {
+		if ([keyboardInfo keyboardController] == keyboardDocument) {
 			[keyboardInfo setKeyboardName:[(UKKeyboardController *)keyboardDocument keyboardDisplayName]];
 			break;
 		}
@@ -1050,11 +1067,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if ([[keyboardLayoutsTable selectedRowIndexes] count] == 1) {
 			// We have a single selected keyboard layout
 		KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[selectedRow];
-		UKKeyboardController *selectedWindow = [selectedRowInfo keyboardWindow];
+		UKKeyboardController *selectedWindow = [selectedRowInfo keyboardController];
 		if (selectedRowInfo == nil) {
 			selectedWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 			[selectedWindow setKeyboardLayout:[selectedRowInfo keyboardObject]];
-			[selectedRowInfo setKeyboardWindow:selectedWindow];
+			[selectedRowInfo setKeyboardController:selectedWindow];
 		}
 		[inspectorController setCurrentWindow:selectedWindow];
 		[inspectorController setKeyboardSectionEnabled:YES];
@@ -1191,9 +1208,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 		// Hide the document's windows, if they are shown
-	UKKeyboardController *keyboardWindow = [keyboardInfo keyboardWindow];
-	if (keyboardWindow != nil) {
-		[keyboardWindow close];
+	UKKeyboardController *keyboardController = [keyboardInfo keyboardController];
+	if (keyboardController != nil) {
+		[keyboardController close];
 	}
 }
 

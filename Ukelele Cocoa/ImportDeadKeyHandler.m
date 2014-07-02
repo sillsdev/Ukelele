@@ -113,7 +113,7 @@
 	if ([keyboardLayouts count] == 1) {
 			// Only one keyboard layout, so that's the one to use
 		KeyboardLayoutInformation *docInfo = keyboardLayouts[0];
-		UKKeyboardController *keyboardWindow = [docInfo keyboardWindow];
+		UKKeyboardController *keyboardWindow = [docInfo keyboardController];
 		if (keyboardWindow == nil) {
 			UkeleleKeyboardObject *obj = [docInfo keyboardObject];
 			keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
@@ -136,7 +136,7 @@
 			NSUInteger index = [keyboardNames indexOfObject:chosenKeyboard];
 			NSAssert(index != NSNotFound, @"Must have found the keyboard name");
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
-			UKKeyboardController *keyboardWindow = [info keyboardWindow];
+			UKKeyboardController *keyboardWindow = [info keyboardController];
 			if (keyboardWindow == nil) {
 				UkeleleKeyboardObject *obj = [info keyboardObject];
 				keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];

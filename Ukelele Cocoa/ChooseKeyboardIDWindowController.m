@@ -12,9 +12,6 @@
 NSString *kKeyboardIDWindowName = @"KeyboardName";
 NSString *kKeyboardIDWindowScript = @"ScriptID";
 NSString *kKeyboardIDWindowID = @"KeyboardID";
-NSString *kKeyboardIDWindowBuildVersion = @"BuildVersion";
-NSString *kKeyboardIDWindowBundleVersion = @"BundleVersion";
-NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 
 @implementation ChooseKeyboardIDWindowController
 
@@ -58,18 +55,6 @@ NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 	[self selectScript:self];
 	NSInteger keyboardID = [infoDictionary[kKeyboardIDWindowID] intValue];
 	[idField setIntegerValue:keyboardID];
-	NSString *versionString = infoDictionary[kKeyboardIDWindowBuildVersion];
-	if (versionString) {
-		[buildVersion setStringValue:versionString];
-	}	
-	versionString = infoDictionary[kKeyboardIDWindowBundleVersion];
-	if (versionString) {
-		[bundleVersion setStringValue:versionString];
-	}	
-	versionString = infoDictionary[kKeyboardIDWindowSourceVersion];
-	if (versionString) {
-		[sourceVersion setStringValue:versionString];
-	}	
 	callBack = theCallBack;
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
@@ -106,9 +91,6 @@ NSString *kKeyboardIDWindowSourceVersion = @"SourceVersion";
 	infoDictionary[kKeyboardIDWindowName] = [nameField stringValue];
 	infoDictionary[kKeyboardIDWindowScript] = @([scriptButton indexOfSelectedItem]);
 	infoDictionary[kKeyboardIDWindowID] = @([idField intValue]);
-	infoDictionary[kKeyboardIDWindowBuildVersion] = [buildVersion stringValue];
-	infoDictionary[kKeyboardIDWindowBundleVersion] = [bundleVersion stringValue];
-	infoDictionary[kKeyboardIDWindowSourceVersion] = [sourceVersion stringValue];
 	callBack(infoDictionary);
 }
 

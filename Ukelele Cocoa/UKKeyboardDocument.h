@@ -32,6 +32,7 @@
 - (IBAction)captureInputSource:(id)sender;
 - (IBAction)openKeyboardFile:(id)sender;
 - (IBAction)attachIconFile:(id)sender;
+- (IBAction)askKeyboardIdentifiers:(id)sender;
 
 - (NSArray *)keyboardLayouts;
 

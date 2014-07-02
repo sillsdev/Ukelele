@@ -508,12 +508,6 @@
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardTypeSheet.xib; path = "Interface Files/KeyboardTypeSheet.xib"; sourceTree = "<group>"; };
-		52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Housekeeping.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Housekeeping.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Modifiers.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Modifiers.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UKKeyboardWindow+Comments.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UKKeyboardWindow+Comments.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
@@ -983,12 +977,6 @@
 				523B0123191CA18C00E06DF3 /* UKAskYesNoController.h */,
 				523B0124191CA18C00E06DF3 /* UKAskYesNoController.m */,
 				523B0171191CA18C00E06DF3 /* UkeleleAppDelegate.h */,
-				52AD7D8F196139F800B3CD3F /* UKKeyboardController+Comments.h */,
-				52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */,
-				52AD7D91196139F800B3CD3F /* UKKeyboardController+Housekeeping.h */,
-				52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */,
-				52AD7D93196139F800B3CD3F /* UKKeyboardController+Modifiers.h */,
-				52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */,
 				523B0172191CA18C00E06DF3 /* UkeleleAppDelegate.m */,
 				523B0125191CA18C00E06DF3 /* UkeleleBundleVersionSheet.h */,
 				523B0126191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m */,
@@ -1004,18 +992,18 @@
 				523B0178191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m */,
 				523B017B191CA18C00E06DF3 /* UkelelePreferenceController.h */,
 				523B017C191CA18C00E06DF3 /* UkelelePreferenceController.m */,
-				523B0157191CA18C00E06DF3 /* UKKeyboardLayoutBundle.h */,
-				523B0158191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m */,
-				52E1E59519497DE00001B3BB /* UKKeyboardWindow+Comments.h */,
-				52E1E59619497DE00001B3BB /* UKKeyboardWindow+Comments.m */,
-				521270E3194AD6E3003103CA /* UKKeyboardDocument.h */,
-				521270E4194AD6E3003103CA /* UKKeyboardDocument.m */,
-				52E1E58F19497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.h */,
-				52E1E59019497B9F0001B3BB /* UKKeyboardWindow+Housekeeping.m */,
-				52E1E59219497CBD0001B3BB /* UKKeyboardWindow+Modifiers.h */,
-				52E1E59319497CBD0001B3BB /* UKKeyboardWindow+Modifiers.m */,
+				52AD7D8F196139F800B3CD3F /* UKKeyboardController+Comments.h */,
+				52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */,
+				52AD7D91196139F800B3CD3F /* UKKeyboardController+Housekeeping.h */,
+				52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */,
+				52AD7D93196139F800B3CD3F /* UKKeyboardController+Modifiers.h */,
+				52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */,
 				5235CAD719481A6E009F8B42 /* UKKeyboardController.h */,
 				5235CAD819481A6E009F8B42 /* UKKeyboardController.m */,
+				521270E3194AD6E3003103CA /* UKKeyboardDocument.h */,
+				521270E4194AD6E3003103CA /* UKKeyboardDocument.m */,
+				523B0157191CA18C00E06DF3 /* UKKeyboardLayoutBundle.h */,
+				523B0158191CA18C00E06DF3 /* UKKeyboardLayoutBundle.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
 				523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */,
 				523B017F191CA18C00E06DF3 /* UnlinkModifiersController.h */,

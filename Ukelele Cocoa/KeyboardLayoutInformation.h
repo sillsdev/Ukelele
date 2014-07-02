@@ -19,7 +19,7 @@
 @property (nonatomic) BOOL hasIcon;
 @property (copy) NSString *intendedLanguage;
 @property (strong) NSData *iconData;
-@property (strong) UKKeyboardController *keyboardWindow;
+@property (strong) UKKeyboardController *keyboardController;
 @property (strong) NSFileWrapper *keyboardFileWrapper;
 
 - (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName;

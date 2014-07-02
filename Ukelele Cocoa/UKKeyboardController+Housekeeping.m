@@ -120,9 +120,15 @@
 	infoDictionary[kKeyboardIDWindowScript] = @(scriptIndex);
 	infoDictionary[kKeyboardIDWindowName] = [[self keyboardLayout] keyboardName];
 	infoDictionary[kKeyboardIDWindowID] = @([[self keyboardLayout] keyboardID]);
-		// Need to set the bundle parameters!
+	NSWindow *targetWindow;
+	if ([sender isKindOfClass:[NSWindow class]]) {
+		targetWindow = sender;
+	}
+	else {
+		targetWindow = self.window;
+	}
 	[keyboardIDSheet startDialogWithInfo:infoDictionary
-							   forWindow:self.window
+							   forWindow:targetWindow
 								callBack:^(NSDictionary *infoDictionary) {
 									if (infoDictionary == nil) {
 											// User cancelled
