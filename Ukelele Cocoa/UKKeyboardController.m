@@ -504,41 +504,54 @@ const float kScalePercentageFactor = 100.0f;
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
 	SEL action = [anItem action];
-	if (action == @selector(setKeyboardType:)) {
-		return [kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]];
-	}
-	else if (action == @selector(createDeadKeyState:) || action == @selector(swapKeys:) ||
-			 action == @selector(swapKeysByCode:) || action == @selector(addSpecialKeyOutput:) ||
-			 action == @selector(unlinkKeyAskingKeyCode:) || action == @selector(unlinkModifierSet:) ||
-			 action == @selector(importDeadKey:) || action == @selector(editKey:) ||
-			 action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
-			 action == @selector(copyKey:) || action == @selector(attachComment:)) {
+	NSString *currentTabName = [[self.tabView selectedTabViewItem] identifier];
+	if (action == @selector(createDeadKeyState:) || action == @selector(swapKeys:) ||
+		action == @selector(swapKeysByCode:) || action == @selector(addSpecialKeyOutput:) ||
+		action == @selector(unlinkKeyAskingKeyCode:) || action == @selector(unlinkModifierSet:) ||
+		action == @selector(importDeadKey:) || action == @selector(editKey:) ||
+		action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
+		action == @selector(copyKey:) || action == @selector(setKeyboardType:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualTo:[[self.tabView selectedTabViewItem] identifier]];
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
 	}
 	else if (action == @selector(askKeyboardIdentifiers:)) {
 			// These can only be selected if there is no interaction in progress
 		return (interactionHandler == nil);
 	}
-	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeStateName:) ||
-			 action == @selector(changeTerminator:)) {
-			// These can only be selected if there are any states other than "none"
-		NSUInteger stateCount = [_keyboardLayout stateCount];
-		return (interactionHandler == nil) &&
-		[kTabNameKeyboard isEqualTo:[[self.tabView selectedTabViewItem] identifier]] &&
-		([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+	else if (action == @selector(attachComment:)) {
+			// These can only be selected if there is no interaction in progress, we are on the
+			/// keyboard tab, and a key is selected
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && (selectedKey != kNoKeyCode);
+	}
+	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeTerminator:)) {
+			// These can only be selected if there are any states other than "none",
+			// there is no interaction in progress, and we are on the keyboard tab
+		NSUInteger stateCount = [self.keyboardLayout stateCount];
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+	}
+	else if (action == @selector(changeStateName:) || action == @selector(removeUnusedStates:)) {
+			// These can only be selected if there is no interaction in progress and
+			// there are states other than "none"
+		NSUInteger stateCount = [self.keyboardLayout stateCount];
+		return (interactionHandler == nil) && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+	}
+	else if (action == @selector(changeActionName:) || action == @selector(removeUnusedActions:)) {
+			// These can only be selected if there are any actions
+		NSArray *actionNames = [[self keyboardLayout] actionNames];
+		return [actionNames count] > 0;
 	}
 	else if (action == @selector(leaveDeadKeyState:)) {
-			// These can only selected if we are in a dead key state, and no interaction is in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]] && [stateStack count] > 1;
+			// These can only selected if we are in a dead key state,
+			// we are on the keyboard tab, and no interaction is in progress
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && [stateStack count] > 1;
 	}
 	else if (action == @selector(unlinkKey:)) {
 			// This can come up either on the keyboard or modifiers tab
-		if ([kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
+		if ([kTabNameKeyboard isEqualToString:currentTabName]) {
 			return interactionHandler == nil;
 		}
-		else if ([kTabNameModifiers isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
+		else if ([kTabNameModifiers isEqualToString:currentTabName]) {
 			return (interactionHandler == nil) && ([self.modifiersTableView selectedRow] >= 0);
 		}
 		else {
@@ -1162,23 +1175,27 @@ const float kScalePercentageFactor = 100.0f;
 }
 
 - (IBAction)attachComment:(id)sender {
-	if ([sender isKindOfClass:[KeyCapView class]]) {
-		__block NSInteger keyCode = [(KeyCapView *)sender keyCode];
-		__block AskCommentController *commentController = [AskCommentController askCommentController];
-		[commentController askCommentForWindow:self.window completion:^(NSString *commentText) {
-			if (commentText != nil && [commentText length] > 0) {
-					// Got a non-empty comment
-				NSDictionary *dataDict = @{kKeyDocument: self,
-										   kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-										   kKeyKeyCode: @(keyCode),
-										   kKeyModifiers: internalState[kStateCurrentModifiers],
-										   kKeyState: internalState[kStateCurrentState]};
-				XMLCommentHolderObject *commentHolder = [self.keyboardLayout commentHolderForKey:dataDict];
-				[self addComment:commentText toHolder:commentHolder];
-			}
-			commentController = nil;
-		}];
+	NSInteger keyCode = selectedKey;
+	if ([sender isKindOfClass:[KeyCapView class]]) {	// From contextual menu
+		keyCode = [(KeyCapView *)sender keyCode];
 	}
+	if (keyCode == kNoKeyCode) {
+		return;
+	}
+	__block AskCommentController *commentController = [AskCommentController askCommentController];
+	[commentController askCommentForWindow:self.window completion:^(NSString *commentText) {
+		if (commentText != nil && [commentText length] > 0) {
+				// Got a non-empty comment
+			NSDictionary *dataDict = @{kKeyDocument: self,
+									   kKeyKeyboardID: internalState[kStateCurrentKeyboard],
+									   kKeyKeyCode: @(keyCode),
+									   kKeyModifiers: internalState[kStateCurrentModifiers],
+									   kKeyState: internalState[kStateCurrentState]};
+			XMLCommentHolderObject *commentHolder = [self.keyboardLayout commentHolderForKey:dataDict];
+			[self addComment:commentText toHolder:commentHolder];
+		}
+		commentController = nil;
+	}];
 }
 
 #pragma mark Messages

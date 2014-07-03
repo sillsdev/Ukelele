@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -43,11 +43,11 @@
                         <tabViewItems>
                             <tabViewItem label="Document" identifier="1" id="nVP-hb-dbf">
                                 <view key="view" ambiguous="YES" id="is6-CO-MN6">
-                                    <rect key="frame" x="10" y="33" width="316" height="281"/>
+                                    <rect key="frame" x="10" y="33" width="201" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" title="Keyboard Identity" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-8D-fob">
-                                            <rect key="frame" x="6" y="167" width="297" height="114"/>
+                                            <rect key="frame" x="6" y="-114" width="297" height="114"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="295" height="98"/>
@@ -152,7 +152,7 @@
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </box>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" title="Bundle Information" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OcW-eg-C2P">
-                                            <rect key="frame" x="6" y="5" width="297" height="158"/>
+                                            <rect key="frame" x="6" y="-276" width="297" height="158"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="295" height="142"/>
@@ -445,7 +445,7 @@
                 <binding destination="-2" name="contentArray" keyPath="self.scriptList" id="VSz-7l-Gvf"/>
             </connections>
         </arrayController>
-        <objectController objectClassName="UKKeyboardWindow" automaticallyPreparesContent="YES" id="DMO-Jw-VUF" userLabel="Keyboard Window Object">
+        <objectController objectClassName="UKKeyboardController" automaticallyPreparesContent="YES" id="DMO-Jw-VUF" userLabel="Keyboard Window Object">
             <connections>
                 <binding destination="-2" name="contentObject" keyPath="currentWindow" id="LW0-wf-xPb"/>
             </connections>

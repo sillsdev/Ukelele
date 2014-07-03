@@ -67,7 +67,7 @@
 	for (NSString *stateName in [stateStack reverseObjectEnumerator]) {
 		[tempArray addObject:stateName];
 	}
-	self.stateStack = tempArray;
+	_stateStack = tempArray;
 	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
 
