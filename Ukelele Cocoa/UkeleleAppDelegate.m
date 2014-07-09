@@ -171,12 +171,13 @@ static NSDictionary *defaultValues() {
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-	if ([menuItem action] == @selector(toggleStickyModifiers:)) {
+	SEL action = [menuItem action];
+	if (action == @selector(toggleStickyModifiers:)) {
 		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 		[menuItem setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
 		return YES;
 	}
-	else if ([menuItem action] == @selector(toggleToolbox:)) {
+	else if (action == @selector(toggleToolbox:)) {
 		ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 		NSWindow *toolboxWindow = [toolboxController window];
 		if ([toolboxWindow isVisible]) {
@@ -187,7 +188,7 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if ([menuItem action] == @selector(showHideInspector:)) {
+	else if (action == @selector(showHideInspector:)) {
 		InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 		if ([[infoInspector window] isVisible]) {
 			[menuItem setTitle:@"Hide Inspector"];
@@ -197,17 +198,48 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
+	else if (action == @selector(removeHelperTool:))	{
+			// Only enabled if it is installed
+		return [self helperToolIsInstalled];
+	}
 	return YES;
+}
+
+- (IBAction)removeHelperTool:(id)sender {
+	NSAssert([self helperToolIsInstalled], @"Helper tool must be installed before removal");
+	AuthorizationRef removeAuth;
+	AuthorizationItem myItem;
+	myItem.name = kSMRightModifySystemDaemons;
+	myItem.valueLength = 0;
+	myItem.value = NULL;
+	myItem.flags = 0;
+	AuthorizationItemSet myItems;
+	myItems.count = 1;
+	myItems.items = &myItem;
+    OSStatus err = AuthorizationCreate(&myItems, NULL, kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed, &removeAuth);
+	NSAssert(err == errAuthorizationSuccess, @"Could not create authorization");
+	CFErrorRef error;
+	Boolean success = SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName, removeAuth, true, &error);
+	if (!success) {
+		[NSApp presentError:(__bridge NSError *)error];
+	}
+	err = AuthorizationFree(removeAuth, kAuthorizationFlagDestroyRights);
+	NSAssert(err == errAuthorizationSuccess, @"Could not destroy authorisation");
 }
 
 - (BOOL)installHelperTool {
 	CFErrorRef error;
-	Boolean success = SMJobBless(kSMDomainSystemLaunchd, CFSTR("org.sil.Ukelele.KeyboardInstallerTool"), self->_authRef, &error);
+	Boolean success = SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName, self->_authRef, &error);
 	if (!success) {
 			// Log the error
 		[NSApp presentError:(__bridge NSError *)(error)];
 	}
 	return success;
+}
+
+- (BOOL)helperToolIsInstalled {
+	CFDictionaryRef toolDict = SMJobCopyDictionary(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName);
+	return toolDict != NULL;
 }
 
 - (void)connectToHelperTool

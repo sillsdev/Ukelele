@@ -116,6 +116,8 @@ enum ToolbarItemTags {
 - (IBAction)attachComment:(id)sender;
 	// Other actions
 - (IBAction)setKeyboardType:(id)sender;
+- (IBAction)installForCurrentUser:(id)sender;
+- (IBAction)installForAllUsers:(id)sender;
 
 	// Accessors
 - (NSString *)keyboardDisplayName;

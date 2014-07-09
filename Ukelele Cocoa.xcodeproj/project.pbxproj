@@ -164,6 +164,7 @@
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
+		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -182,6 +183,13 @@
 			remoteGlobalIDString = 52BBECFE191B4C3900E48394;
 			remoteInfo = "Ukelele Cocoa";
 		};
+		52E1EEFF19662813007B6738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52BBECF7191B4C3900E48394 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 523B0204191D8C3100E06DF3;
+			remoteInfo = org.sil.Ukelele.KeyboardInstallerTool;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -195,14 +203,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		523B0203191D8C3100E06DF3 /* CopyFiles */ = {
+		5227A40E196520E6004F35EA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
 			files = (
+				52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -217,8 +226,8 @@
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
 		5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleBundleVersionSheet.xib; path = "Interface Files/UkeleleBundleVersionSheet.xib"; sourceTree = "<group>"; };
 		522C30AB1953C8F3004F12AA /* dialogs.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = dialogs.strings; sourceTree = "<group>"; };
-		522C30AC1953C8F3004F12AA /* Errors.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Errors.strings; sourceTree = "<group>"; };
-		522C30AD1953C8F3004F12AA /* keyboards.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = keyboards.strings; sourceTree = "<group>"; };
+		522C30AC1953C8F3004F12AA /* Errors.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Errors.strings; sourceTree = "<group>"; };
+		522C30AD1953C8F3004F12AA /* keyboards.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = keyboards.strings; sourceTree = "<group>"; };
 		52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnlinkModifiersDialog.xib; path = "Interface Files/UnlinkModifiersDialog.xib"; sourceTree = "<group>"; };
 		523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PrintAccessoryPanel.xib; path = "Interface Files/PrintAccessoryPanel.xib"; sourceTree = "<group>"; };
 		5235CAD719481A6E009F8B42 /* UKKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UKKeyboardController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1025,7 +1034,6 @@
 			buildPhases = (
 				523B0201191D8C3100E06DF3 /* Sources */,
 				523B0202191D8C3100E06DF3 /* Frameworks */,
-				523B0203191D8C3100E06DF3 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1044,10 +1052,12 @@
 				52BBECFC191B4C3900E48394 /* Frameworks */,
 				52BBECFD191B4C3900E48394 /* Resources */,
 				5209B7301935632100B195E9 /* CopyFiles */,
+				5227A40E196520E6004F35EA /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				52E1EF0019662813007B6738 /* PBXTargetDependency */,
 			);
 			name = "Ukelele Cocoa";
 			productName = "Ukelele Cocoa";
@@ -1315,6 +1325,11 @@
 			target = 52BBECFE191B4C3900E48394 /* Ukelele Cocoa */;
 			targetProxy = 52BBED27191B4C3900E48394 /* PBXContainerItemProxy */;
 		};
+		52E1EF0019662813007B6738 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */;
+			targetProxy = 52E1EEFF19662813007B6738 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1363,8 +1378,18 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"KeyboardInstallerTool/KeyboardInstallerTool-Info.plist",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"KeyboardInstallerTool/KeyboardInstallerTool-Launchd.plist",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1375,8 +1400,18 @@
 				CODE_SIGN_IDENTITY = "Mac Developer: John Brownie (85E2V6773Y)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "org.sil.Ukelele.KeyboardInstallerTool/org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"KeyboardInstallerTool/KeyboardInstallerTool-Info.plist",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"KeyboardInstallerTool/KeyboardInstallerTool-Launchd.plist",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

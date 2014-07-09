@@ -43,7 +43,6 @@
 // Check that the client denoted by authData is allowed to run the specified command.
 // authData is expected to be an NSData with an AuthorizationExternalForm embedded inside.
 {
-#pragma unused(authData)
     NSError *                   error;
     OSStatus                    err;
     OSStatus                    junk;
@@ -105,19 +104,13 @@
 	return YES;
 }
 
-- (void)createFolder:(NSURL *)folderURL authorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
-	NSError *error = [self checkAuthorization:authData command:_cmd];
-	if (error == nil) {
-		NSFileManager *fileManager = [NSFileManager defaultManager];
-		[fileManager createDirectoryAtURL:folderURL withIntermediateDirectories:YES attributes:nil error:&error];
-	}
-	reply(error);
-}
-
 - (void)copyFile:(NSURL *)sourceURL toFile:(NSURL *)targetURL authorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
 	NSError *error = [self checkAuthorization:authData command:_cmd];
 	if (error == nil) {
 		NSFileManager *fileManager = [NSFileManager defaultManager];
+		NSURL *parentDirectory = [targetURL URLByDeletingLastPathComponent];
+		BOOL successs = [fileManager createDirectoryAtURL:parentDirectory withIntermediateDirectories:YES attributes:nil error:&error];
+		NSAssert(successs, @"Should be able to create the directory");
 		[fileManager copyItemAtURL:sourceURL toURL:targetURL error:&error];
 	}
 	reply(error);

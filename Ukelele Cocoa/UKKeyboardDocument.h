@@ -33,6 +33,8 @@
 - (IBAction)openKeyboardFile:(id)sender;
 - (IBAction)attachIconFile:(id)sender;
 - (IBAction)askKeyboardIdentifiers:(id)sender;
+- (IBAction)installForCurrentUser:(id)sender;
+- (IBAction)installForAllUsers:(id)sender;
 
 - (NSArray *)keyboardLayouts;
 

@@ -18,6 +18,7 @@
 #import "UkeleleErrorCodes.h"
 #import "ScriptInfo.h"
 #import "InspectorWindowController.h"
+#import "UkeleleKeyboardInstaller.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -363,9 +364,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:outError];
 	if (theKeyboard != nil) {
 		self.keyboardLayout = theKeyboard;
-		[theKeyboard setParentDocument:self];
 		UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		[windowController setKeyboardLayout:theKeyboard];
+		[windowController setParentDocument:self];
 		[self addWindowController:windowController];
 		return YES;
 	}
@@ -728,11 +729,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		}
 		return NO;
 	}
-	else if (theAction == @selector(openKeyboardLayout:)) {
-			// Always active
-		return YES;
-	}
-	else if (theAction == @selector(captureInputSource:)) {
+	else if (theAction == @selector(openKeyboardLayout:) || theAction == @selector(captureInputSource:) ||
+			 theAction == @selector(installForCurrentUser:) || theAction == @selector(installForAllUsers:)) {
 			// Always active
 		return YES;
 	}
@@ -1028,6 +1026,40 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	NSWindow *docWindow = [keyboardLayoutsTable window];
 	[keyboardController askKeyboardIdentifiers:docWindow];
+}
+
+	// Install the keyboard layout
+
+- (IBAction)installForAllUsers:(id)sender {
+	NSWindow *targetWindow;
+	if ([sender isKindOfClass:[UKKeyboardController class]]) {
+		targetWindow = [(UKKeyboardController *)sender window];
+	}
+	else {
+		targetWindow = [keyboardLayoutsTable window];
+	}
+	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
+	NSError *theError;
+	BOOL installOK = [theInstaller installForAllUsers:[self fileURL] error:&theError];
+	if (!installOK) {
+		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
+	}
+}
+
+- (IBAction)installForCurrentUser:(id)sender {
+	NSWindow *targetWindow;
+	if ([sender isKindOfClass:[UKKeyboardController class]]) {
+		targetWindow = [(UKKeyboardController *)sender window];
+	}
+	else {
+		targetWindow = [keyboardLayoutsTable window];
+	}
+	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
+	NSError *theError;
+	BOOL installOK = [theInstaller installForCurrentUser:[self fileURL] error:&theError];
+	if (!installOK) {
+		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
+	}
 }
 
 #pragma mark Notifications

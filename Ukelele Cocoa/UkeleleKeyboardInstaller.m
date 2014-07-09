@@ -13,23 +13,11 @@
 #import "UkeleleAppDelegate.h"
 #import "KeyboardInstallerTool.h"
 
-@implementation UkeleleKeyboardInstaller {
-	AuthorizationRef authorizationRef;
-}
+@implementation UkeleleKeyboardInstaller
 
 - (id)init {
 	self = [super init];
-	if (self) {
-		authorizationRef = nil;
-	}
 	return self;
-}
-
-- (void)dealloc {
-	if (authorizationRef) {
-			// Clean up
-		AuthorizationFree(authorizationRef, kAuthorizationFlagDestroyRights);
-	}
 }
 
 + (UkeleleKeyboardInstaller *)defaultInstaller {
@@ -45,6 +33,9 @@
 		// Does the Keyboard Layouts folder exist?
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *keyboardLayoutPath = @"/Library/Keyboard Layouts";
+	NSURL *keyboardLayoutFolder = [NSURL fileURLWithPath:keyboardLayoutPath isDirectory:YES];
+	NSString *currentFile = [sourceFile lastPathComponent];
+	NSURL *installedURL = [keyboardLayoutFolder URLByAppendingPathComponent:currentFile isDirectory:NO];
 	NSError *localError;
 	NSDictionary *localErrorDict;
 	BOOL isDirectory;
@@ -60,22 +51,6 @@
 			return NO;
 		}
 	}
-	else {
-			// Create the folder
-		[self authenticatedCreateDirectory:keyboardLayoutPath];
-		if (![fileManager fileExistsAtPath:keyboardLayoutPath isDirectory:&isDirectory]) {
-				// Couldn't create the folder
-			localErrorDict = @{NSLocalizedDescriptionKey: @"Cannot create the Keyboard Layouts folder"};
-			localError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotCreateKeyboardLayouts userInfo:localErrorDict];
-			if (installError != NULL) {
-				*installError = localError;
-			}
-			return NO;
-		}
-	}
-	NSURL *keyboardLayoutFolder = [NSURL fileURLWithPath:keyboardLayoutPath isDirectory:YES];
-	NSString *currentFile = [sourceFile lastPathComponent];
-	NSURL *installedURL = [keyboardLayoutFolder URLByAppendingPathComponent:currentFile isDirectory:NO];
 	return [self authenticatedInstallFromURL:sourceFile toURL:installedURL error:installError];
 }
 
@@ -147,72 +122,30 @@
 	return createdOK;
 }
 
-- (void)authenticatedCreateDirectory:(NSString *)directoryPath {
-	if (![self setupAuthorization]) {
-		return;
-	}
-		// Create an external form to pass to the helper tool
-	AuthorizationExternalForm myExternalAuthorizationRef;
-	OSStatus theStatus = AuthorizationMakeExternalForm(authorizationRef, &myExternalAuthorizationRef);
-	if (theStatus != errAuthorizationSuccess) {
-		return;
-	}
-		// Call the helper tool
-	UkeleleAppDelegate *appDelegate = [NSApp delegate];
-	if ([appDelegate installHelperTool]) {
-		[appDelegate connectAndExecuteCommandBlock:^(NSError *error) {
-			[[[appDelegate helperToolConnection] remoteObjectProxyWithErrorHandler:^(NSError *error) {
-				return;
-			}] createFolder:[NSURL URLWithString:directoryPath] authorization:[appDelegate authorization] withReply:^(NSError *error) {
-				if (error) {
-						// Failed to create the directory
-					NSDictionary *errDict = @{NSLocalizedDescriptionKey: @"Could not create the Keyboard Layouts folder",
-							   NSUnderlyingErrorKey: error};
-					NSError *reportedError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotCreateKeyboardLayouts userInfo:errDict];
-					[NSApp presentError:reportedError];
-				}
-			}];
-		}];
-
-	}
-	else {
-		NSDictionary *authErrorDict = @{NSLocalizedDescriptionKey: @"Helper tool not installed"};
-		NSError *authenticationError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorAuthenticationFailed userInfo:authErrorDict];
-		[NSApp presentError:authenticationError];
-	}
-}
-
 - (BOOL)authenticatedInstallFromURL:(NSURL *)sourceURL toURL:(NSURL *)targetURL error:(NSError **)installError {
-	if (![self setupAuthorization]) {
-		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not get permission to install"};
-		if (installError != NULL) {
-			*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
-		}
-		return NO;
-	}
-		// Create an external form to pass to the helper tool
-	AuthorizationExternalForm myExternalAuthorizationRef;
-	OSStatus theStatus = AuthorizationMakeExternalForm(authorizationRef, &myExternalAuthorizationRef);
-	if (theStatus != errAuthorizationSuccess) {
-		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not get permission to install"};
-		if (installError != NULL) {
-			*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
-		}
-		return NO;
-	}
 		// Call the helper tool
 	UkeleleAppDelegate *appDelegate = [NSApp delegate];
-	if ([appDelegate installHelperTool]) {
+	BOOL helperInstalled = [appDelegate helperToolIsInstalled];
+	if (!helperInstalled) {
+		helperInstalled = [appDelegate installHelperTool];
+	}
+	if (helperInstalled) {
 		[appDelegate connectAndExecuteCommandBlock:^(NSError *error) {
-			[[[appDelegate helperToolConnection] remoteObjectProxyWithErrorHandler:^(NSError *error) {
+			NSXPCConnection *connection = [appDelegate helperToolConnection];
+			id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
+				[NSApp performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:YES];
 				return;
-			}] copyFile:sourceURL toFile:targetURL authorization:[appDelegate authorization] withReply:^(NSError *error) {
+			}];
+			NSData *authorization = [appDelegate authorization];
+			[proxy copyFile:sourceURL toFile:targetURL authorization:authorization withReply:^(NSError *error) {
 				if (error) {
 						// Failed to do the copy
 					NSDictionary *errDict = @{NSLocalizedDescriptionKey: @"Could not install the keyboard layout into the Keyboard Layouts folder",
 							   NSUnderlyingErrorKey: error};
 					NSError *reportedError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errDict];
-					[NSApp presentError:reportedError];
+					[[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+						[NSApp presentError:reportedError];
+					}];
 				}
 			}];
 		}];
@@ -224,36 +157,6 @@
 		*installError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorAuthenticationFailed userInfo:authErrorDict];
 	}
 	return NO;
-}
-
-	// Returns YES if successful
-- (BOOL)setupAuthorization {
-	OSStatus theStatus;
-		// Create the authorization reference
-	if (authorizationRef == nil) {
-		theStatus = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, kAuthorizationFlagDefaults, &authorizationRef);
-		if (theStatus != errAuthorizationSuccess) {
-			return NO;
-		}
-	}
-		// Build the authorization rights set
-	AuthorizationItem myItems[1];
-	myItems[0].name = "org.sil.ukelele.InstallKeyboardLayout";
-	myItems[0].valueLength = 0;
-	myItems[0].value = NULL;
-	myItems[0].flags = 0;
-	AuthorizationRights myRights;
-	myRights.count = sizeof(myItems) / sizeof(myItems[0]);
-	myRights.items = myItems;
-		// Set the flags for preauthorization
-	AuthorizationFlags myFlags;
-	myFlags = kAuthorizationFlagDefaults | kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagPreAuthorize;
-		// Do the authorization
-	theStatus = AuthorizationCopyRights(authorizationRef, &myRights, kAuthorizationEmptyEnvironment, myFlags, nil);
-	if (theStatus != errAuthorizationSuccess) {
-		return NO;
-	}
-	return YES;
 }
 
 @end

@@ -515,7 +515,9 @@ const float kScalePercentageFactor = 100.0f;
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
 	}
-	else if (action == @selector(askKeyboardIdentifiers:)) {
+	else if (action == @selector(askKeyboardIdentifiers:) ||
+			 action == @selector(installForAllUsers:) ||
+			 action == @selector(installForCurrentUser:)) {
 			// These can only be selected if there is no interaction in progress
 		return (interactionHandler == nil);
 	}
@@ -1196,6 +1198,16 @@ const float kScalePercentageFactor = 100.0f;
 		}
 		commentController = nil;
 	}];
+}
+
+	// Install the keyboard layout
+
+- (IBAction)installForCurrentUser:(id)sender {
+	[[self parentDocument] installForCurrentUser:self];
+}
+
+- (IBAction)installForAllUsers:(id)sender {
+	[[self parentDocument] installForAllUsers:self];
 }
 
 #pragma mark Messages

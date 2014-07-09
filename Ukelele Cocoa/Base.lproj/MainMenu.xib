@@ -129,6 +129,12 @@
                                                 <action selector="installForAllUsers:" target="-1" id="oMS-aI-7ed"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Remove Installer Tool" id="4DP-vX-cTY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="removeHelperTool:" target="-1" id="b1R-bQ-QVz"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

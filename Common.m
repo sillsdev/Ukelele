@@ -8,6 +8,7 @@
 
 #import "Common.h"
 #import "KeyboardInstallerTool.h"
+#import <ServiceManagement/ServiceManagement.h>
 
 @implementation Common
 // +commandInfo returns a dictionary that represents everything we need to know about the
@@ -38,22 +39,14 @@ static NSString *kCommandKeyAuthRightDesc    = @"authRightDescription";
     
     dispatch_once(&sOnceToken, ^{
 		sCommandInfo = @{
-		    NSStringFromSelector(@selector(createFolder:authorization:withReply:)) : @{
-			  kCommandKeyAuthRightName    : @"org.sil.ukelele.createKeyboardLayoutsFolder",
-			  kCommandKeyAuthRightDefault : @kAuthorizationRuleAuthenticateAsAdmin,
-			  kCommandKeyAuthRightDesc    : NSLocalizedString(
-				  @"Ukelele is trying to create the Keyboard Layouts folder.",
-				  @"prompt shown when user is required to authorize to create the Keyboard Layouts folder"
-				  )
-	    },
-			NSStringFromSelector(@selector(copyFile:toFile:authorization:withReply:)) : @{
+		    NSStringFromSelector(@selector(copyFile:toFile:authorization:withReply:)) : @{
 			   kCommandKeyAuthRightName    : @"org.sil.ukelele.installKeyboardLayout",
 			   kCommandKeyAuthRightDefault : @kAuthorizationRuleAuthenticateAsAdmin,
 			   kCommandKeyAuthRightDesc    : NSLocalizedString(
 				  @"Ukelele is trying to install the keyboard layout.",
 				  @"prompt shown when user is required to authorize to install the keyboard layout"
 				  )
-	  }
+	    }
 	   };
     });
     return sCommandInfo;
