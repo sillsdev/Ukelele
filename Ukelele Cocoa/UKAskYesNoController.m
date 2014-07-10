@@ -39,6 +39,7 @@
 }
 
 - (void)askQuestion:(NSString *)theQuestion forWindow:(NSWindow *)theWindow completion:(void (^)(BOOL))theBlock {
+	[self.questionField setStringValue:theQuestion];
 	completionBlock = theBlock;
 	[NSApp beginSheet:[self window]
 	   modalForWindow:theWindow

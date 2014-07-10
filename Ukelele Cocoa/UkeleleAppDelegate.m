@@ -217,6 +217,10 @@ static NSDictionary *defaultValues() {
 	myItems.count = 1;
 	myItems.items = &myItem;
     OSStatus err = AuthorizationCreate(&myItems, NULL, kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed, &removeAuth);
+	if (err == errAuthorizationCanceled) {
+			// The user cancelled
+		return;
+	}
 	NSAssert(err == errAuthorizationSuccess, @"Could not create authorization");
 	CFErrorRef error;
 	Boolean success = SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName, removeAuth, true, &error);

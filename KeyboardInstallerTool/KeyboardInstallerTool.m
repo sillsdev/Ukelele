@@ -111,6 +111,11 @@
 		NSURL *parentDirectory = [targetURL URLByDeletingLastPathComponent];
 		BOOL successs = [fileManager createDirectoryAtURL:parentDirectory withIntermediateDirectories:YES attributes:nil error:&error];
 		NSAssert(successs, @"Should be able to create the directory");
+		if ([fileManager fileExistsAtPath:[targetURL path]]) {
+				// We remove the file, because we've already asked the user for permission
+			successs = [fileManager removeItemAtURL:targetURL error:&error];
+			NSAssert(successs, @"Should be able to remove the existing file");
+		}
 		[fileManager copyItemAtURL:sourceURL toURL:targetURL error:&error];
 	}
 	reply(error);
