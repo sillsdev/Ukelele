@@ -34,12 +34,19 @@ enum eKeyNameSymbols {
 	kKeyPadPlus = 69,
 	kKeyPadDot = 65,
 	kKeyPadEnter = 76,
+	kKeyBackTick = 50,
+	kKey1 = 18,
+	kKey2 = 19,
+	kKey3 = 20,
+	kKey4 = 21,
+	kKey5 = 23,
 	kKey6 = 22,				// Main keyboard keys forming embedded keypad
 	kKey7 = 26,
 	kKey8 = 28,
 	kKey9 = 25,
 	kKey0 = 29,
 	kKeyMinus = 27,
+	kKeyEquals = 24,
 	kKeyA = 0,
 	kKeyB = 11,
 	kKeyC = 8,
@@ -66,7 +73,11 @@ enum eKeyNameSymbols {
 	kKeyX = 7,
 	kKeyY = 16,
 	kKeyZ = 6,
+	kKeyOpenBracket = 33,
+	kKeyCloseBracket = 30,
+	kKeyBackslash = 42,
 	kKeySemicolon = 41,
+	kKeyQuote = 39,
 	kKeyComma = 43,
 	kKeyDot = 47,
 	kKeySlash = 44,
@@ -237,16 +248,39 @@ enum {
 	kUnknownDesc
 };
 
-enum eStandardKeyboardTypes {
-	kStandardKeyboardEmpty = 1,
-	kStandardKeyboardQWERTYLowerCase = 2,
-	kStandardKeyboardQWERTYUpperCase = 3,
-	kStandardKeyboardDvorakLowerCase = 4,
-	kStandardKeyboardDvorakUpperCase = 5,
-	kStandardKeyboardAZERTYLowerCase = 6,
-	kStandardKeyboardAZERTYUpperCase = 7,
-	kStandardKeyboardQWERTZLowerCase = 8,
-	kStandardKeyboardQWERTZUpperCase = 9,
-	kStandardKeyboardMaximum = 9
+enum eStandardKeyMapTypes {
+	kStandardKeyMapEmpty = 1,
+	kStandardKeyMapQWERTYLowerCase = 2,
+	kStandardKeyMapQWERTYUpperCase = 3,
+	kStandardKeyMapQWERTYCapsLock = 4,
+	kStandardKeyMapDvorakLowerCase = 5,
+	kStandardKeyMapDvorakUpperCase = 6,
+	kStandardKeyMapDvorakCapsLock = 7,
+	kStandardKeyMapAZERTYLowerCase = 8,
+	kStandardKeyMapAZERTYUpperCase = 9,
+	kStandardKeyMapAZERTYCapsLock = 10,
+	kStandardKeyMapQWERTZLowerCase = 11,
+	kStandardKeyMapQWERTZUpperCase = 12,
+	kStandardKeyMapQWERTZCapsLock = 13,
+	kStandardKeyMapColemakLowerCase = 14,
+	kStandardKeyMapColemakUpperCase = 15,
+	kStandardKeyMapColemakCapsLock = 16,
+	kStandardKeyMapColemakOptionLowerCase = 17,
+	kStandardKeyMapColemakOptionUpperCase = 18,
+	kStandardKeyMapMaximum = 18
 };
 
+typedef enum : NSUInteger {
+    kStandardKeyboardEmpty,
+    kStandardKeyboardQWERTY,
+    kStandardKeyboardQWERTZ,
+	kStandardKeyboardAZERTY,
+	kStandardKeyboardDvorak,
+	kStandardKeyboardColemak
+} eStandardKeyboardTypes;
+
+typedef enum : NSUInteger {
+    kStandardKeyMapLowerCase,
+    kStandardKeyMapUpperCase,
+    kStandardKeyMapCapsLock
+} eStandardKeyMapIndex;

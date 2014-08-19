@@ -66,11 +66,27 @@ bool KeyMapSet::operator<(const KeyMapSet& inCompareTo) const
 KeyMapSet *KeyMapSet::CreateBasicKeyMapSet(NString inID, NString inBaseMapID)
 {
 	KeyMapSet *keyMapSet = new KeyMapSet(inID);
-	for (UInt32 i = 0; i < kNumStandardModifiers; i++) {
+	for (UInt32 i = 0; i < kNumBasicModifiers; i++) {
 		KeyMapElement *keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(
-			kStandardKeyboardEmpty, i, inBaseMapID, i);
+			kStandardKeyMapEmpty, i, inBaseMapID, i);
 		keyMapSet->InsertKeyMapAtIndex(i, keyMapElement);
 	}
+	return keyMapSet;
+}
+
+	// Create a standard key map set
+
+KeyMapSet *KeyMapSet::CreateStandardKeyMapSet(NString inID, NString inBaseMapID, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard) {
+	KeyMapSet *keyMapSet = new KeyMapSet(inID);
+	KeyMapElement *keyMapElement = NULL;
+		// No modifiers
+	UInt32 index = 0;
+	UInt32 sourceType = inStandardKeyboard;
+	keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(sourceType, index, inBaseMapID, index);
+	keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
+		// Shift
+	index = 1;
+	sourceType = inStandardKeyboard;
 	return keyMapSet;
 }
 

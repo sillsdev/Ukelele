@@ -39,14 +39,20 @@ static NSString *kCommandKeyAuthRightDesc    = @"authRightDescription";
     
     dispatch_once(&sOnceToken, ^{
 		sCommandInfo = @{
-		    NSStringFromSelector(@selector(copyFile:toFile:authorization:withReply:)) : @{
-			   kCommandKeyAuthRightName    : @"org.sil.ukelele.installKeyboardLayout",
-			   kCommandKeyAuthRightDefault : @kAuthorizationRuleAuthenticateAsAdmin,
-			   kCommandKeyAuthRightDesc    : NSLocalizedString(
-				  @"Ukelele is trying to install the keyboard layout.",
-				  @"prompt shown when user is required to authorize to install the keyboard layout"
-				  )
-	    }
+			 NSStringFromSelector(@selector(installFile:authorization:withReply:)) : @{
+				kCommandKeyAuthRightName    : @"org.sil.ukelele.installKeyboardLayout",
+				kCommandKeyAuthRightDefault : @kAuthorizationRuleAuthenticateAsAdmin,
+				kCommandKeyAuthRightDesc    : NSLocalizedString(
+					 @"Ukelele is trying to install the keyboard layout.",
+					 @"prompt shown when user is required to authorize to install the keyboard layout")
+				},
+			NSStringFromSelector(@selector(uninstallToolWithAuthorization:withReply:)) : @{
+				kCommandKeyAuthRightName    : @"org.sil.ukelele.uninstallHelperTool",
+				kCommandKeyAuthRightDefault : @kAuthorizationRuleAuthenticateAsAdmin,
+				kCommandKeyAuthRightDesc    : NSLocalizedString(
+					 @"Ukelele would like to remove its helper tool",
+					 @"prompt shown when user is required to authorize to uninstall the helper tool")
+				}
 	   };
     });
     return sCommandInfo;

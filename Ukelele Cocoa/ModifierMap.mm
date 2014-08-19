@@ -253,8 +253,23 @@ bool ModifierMap::IsSimplified(void)
 ModifierMap *ModifierMap::CreateBasicModifierMap(void)
 {
 	ModifierMap *modifierMap = new ModifierMap(kDefaultModifiersName, kStandardDefaultIndex);
-	static NString modifiersList[kNumStandardModifiers] = {
+	static NString modifiersList[kNumBasicModifiers] = {
 		kNoModifiers, kShiftOnly, kOptionOnly, kCapsLockOnly, kShiftOption
+	};
+	for (UInt32 i = 0; i < kNumBasicModifiers; i++) {
+		KeyMapSelect *keyMapSelect = KeyMapSelect::CreateBasicKeyMapSelect(i, modifiersList[i]);
+		modifierMap->AddKeyMapSelectElement(keyMapSelect, false);
+	}
+	modifierMap->CalculateModifierMap();
+	return modifierMap;
+}
+
+	// Create a standard modifier map (more than basic)
+
+ModifierMap *ModifierMap::CreateStandardModifierMap(void) {
+	ModifierMap *modifierMap = new ModifierMap(kDefaultModifiersName, kStandardDefaultIndex);
+	static NString modifiersList[kNumStandardModifiers] = {
+		kNoModifiers, kShift, kCapsLockOnly, kOptionOnly, kShiftOption, kCommandOnly, kCommandShift, kControlOnly
 	};
 	for (UInt32 i = 0; i < kNumStandardModifiers; i++) {
 		KeyMapSelect *keyMapSelect = KeyMapSelect::CreateBasicKeyMapSelect(i, modifiersList[i]);

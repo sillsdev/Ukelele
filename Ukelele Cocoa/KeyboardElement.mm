@@ -10,10 +10,8 @@
 #include "KeyboardElement.h"
 #include "XMLErrors.h"
 #include "UkeleleStrings.h"
-//#include "UkelelePreferences.h"
 #include "RandomNumberGenerator.h"
 #include "NBundle.h"
-//#include "NApplication.h"
 
 const UInt32 kStateMaximum = 1 << 30;
 
@@ -312,6 +310,18 @@ KeyboardElement *KeyboardElement::CreateBasicKeyboard(NString inName)
 	KeyMapSet *jisKeyMapSet = KeyMapSet::CreateBasicKeyMapSet(kJISKeyMapName, kANSIKeyMapName);
 	newKeyboard->AddKeyMapSet(jisKeyMapSet);
 	newKeyboard->mKeyMapSetList->CompleteSet();
+	return newKeyboard;
+}
+
+	// Create a keyboard with standard modifiers and some things filled in
+
+KeyboardElement *KeyboardElement::CreateKeyboad(NString inName, UInt32 inScript, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard) {
+	SInt32 keyboardID = GetRandomKeyboardID(inScript);
+	KeyboardElement *newKeyboard = new KeyboardElement(inScript, keyboardID, inName, 1);
+	LayoutsElement *layoutsElement = LayoutsElement::CreateBasicLayoutsElement();
+	newKeyboard->AddLayoutsElement(layoutsElement);
+	ModifierMap *modifierMap = ModifierMap::CreateStandardModifierMap();
+	newKeyboard->AddModifierMap(modifierMap);
 	return newKeyboard;
 }
 

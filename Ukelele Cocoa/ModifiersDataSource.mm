@@ -256,7 +256,9 @@ static NSMutableDictionary *statusDictionary = nil;
 - (void)setKeyboard:(UkeleleKeyboardObject *)keyboard
 {
 	keyboardLayout = keyboard;
-	[self updateKeyboard];
+	if (keyboard) {
+		[self updateKeyboard];
+	}
 }
 
 - (void)updateKeyboard
@@ -273,9 +275,6 @@ static NSMutableDictionary *statusDictionary = nil;
 	NSDictionary *rowEntry = rowArray[rowNumber];
 	NSDictionary *statusDict = rowEntry[columnLabel];
 	return [statusDict[kLabelIntegerRepresentation] integerValue];
-//	NSString *statusString = rowEntry[columnLabel];
-//	NSArray *objectArray = [statusDictionary allKeysForObject:statusString];
-//	return [objectArray[0] integerValue];
 }
 
 - (NSInteger)indexForRow:(NSInteger)rowNumber

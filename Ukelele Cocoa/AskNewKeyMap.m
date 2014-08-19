@@ -7,6 +7,7 @@
 //
 
 #import "AskNewKeyMap.h"
+#import "UkeleleConstants.h"
 
 @implementation NewKeyMapInfo
 
@@ -32,7 +33,8 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 		[standardKeyMaps addItemsWithTitles:@[@"QWERTY lower case", @"QWERTY upper case",
 											 @"Dvorak lower case", @"Dvorak upper case",
 											 @"AZERTY lower case", @"AZERTY upper case",
-											 @"QWERTZ lower case", @"QWERTZ upper case"]];
+											 @"QWERTZ lower case", @"QWERTZ upper case",
+											 @"Colemak lower case", @"Colemak upper case"]];
 	}
 	return self;
 }

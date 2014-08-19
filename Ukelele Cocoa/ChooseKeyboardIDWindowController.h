@@ -11,9 +11,6 @@
 extern NSString *kKeyboardIDWindowName;
 extern NSString *kKeyboardIDWindowScript;
 extern NSString *kKeyboardIDWindowID;
-extern NSString *kKeyboardIDWindowBuildVersion;
-extern NSString *kKeyboardIDWindowBundleVersion;
-extern NSString *kKeyboardIDWindowSourceVersion;
 
 @interface ChooseKeyboardIDWindowController : NSWindowController {
 	IBOutlet NSTextField *nameField;

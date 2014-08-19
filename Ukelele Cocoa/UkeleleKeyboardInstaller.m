@@ -148,7 +148,7 @@
 				return;
 			}];
 			NSData *authorization = [appDelegate authorization];
-			[proxy copyFile:sourceURL toFile:targetURL authorization:authorization withReply:^(NSError *error) {
+			[proxy installFile:sourceURL authorization:authorization withReply:^(NSError *error) {
 				if (error) {
 						// Failed to do the copy
 					NSDictionary *errDict = @{NSLocalizedDescriptionKey: @"Could not install the keyboard layout into the Keyboard Layouts folder",

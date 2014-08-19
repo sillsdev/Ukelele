@@ -55,7 +55,7 @@
 	ScriptInfo *scriptInfo = self.scriptList[selectedScript];
 		// Generate a random number in the appropriate range
 	NSInteger newID = [scriptInfo randomID];
-	[self.currentWindow changeKeyboardID:newID];
+	[self.currentWindow setKeyboardID:newID];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {

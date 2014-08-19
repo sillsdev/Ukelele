@@ -252,7 +252,7 @@ boost::unordered_map<UInt32, UInt16> sKeyboardTypeTable(kDefaultMapSize);
 std::vector<UInt32> sKeyboardNameToIDTable;
 boost::unordered_map<UInt16, UniChar> sSpecialKeyList(kDefaultMapSize);
 boost::unordered_map<UniChar, UInt16> sSymbolList(kDefaultMapSize);
-std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStandardKeyList;
+NSDictionary *sStandardKeyMapList;
 
 @implementation LayoutInfo
 
@@ -294,11 +294,6 @@ std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStanda
 				flags |= kHasFnKey;
 				flags &= ~kHasEmbeddedKeypad;
 				break;
-//				
-//			default:
-//				flags &= ~kHasFnKey;
-//				flags &= ~kHasEmbeddedKeypad;
-//				break;
 		}
 		switch (layoutID) {
 			case gestaltMacKbd:
@@ -697,7 +692,6 @@ std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStanda
 		sSpecialKeyList.insert(std::make_pair(kKeyReturn,		 0x000d));
 		sSpecialKeyList.insert(std::make_pair(kKeyTab,			 0x0009));
 		sSpecialKeyList.insert(std::make_pair(kKeyEnter,		 0x0003));
-			//		sSpecialKeyList.insert(std::make_pair(kKeyPadEnter,		 0x0003));
 		sSpecialKeyList.insert(std::make_pair(kKeyEscape,		 0x001b));
 		sSpecialKeyList.insert(std::make_pair(kKeyPadClear,		 0x001b));
 		sSpecialKeyList.insert(std::make_pair(kKeyDelete,		 0x0008));
@@ -739,7 +733,6 @@ std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStanda
 		
 		sSymbolList.insert(std::make_pair(0x0001, kKeyHome));
 		sSymbolList.insert(std::make_pair(0x0003, kKeyEnter));
-			//		sSymbolList.insert(std::make_pair(0x0003, kKeyPadEnter));
 		sSymbolList.insert(std::make_pair(0x0004, kKeyEnd));
 		sSymbolList.insert(std::make_pair(0x0005, kKeyHelp));
 		sSymbolList.insert(std::make_pair(0x0008, kKeyDelete));
@@ -777,234 +770,6 @@ std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStanda
 		sSymbolList.insert(std::make_pair(0x001f, kKeyDownArrow));
 		sSymbolList.insert(std::make_pair(0x001f, 72));
 		sSymbolList.insert(std::make_pair(0x007f, kKeyForwardDelete));
-		
-		std::map<UInt32, NString> emptyList;
-		std::map<UInt32, NString> QWERTYLowerCaseList;
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyA, "a"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyB, "b"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyC, "c"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyD, "d"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyE, "e"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyF, "f"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyG, "g"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyH, "h"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyI, "i"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyJ, "j"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyK, "k"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyL, "l"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyM, "m"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyN, "n"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyO, "o"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyP, "p"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyQ, "q"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyR, "r"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyS, "s"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyT, "t"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyU, "u"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyV, "v"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyW, "w"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyX, "x"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyY, "y"));
-		QWERTYLowerCaseList.insert(std::make_pair(kKeyZ, "z"));
-		std::map<UInt32, NString> QWERTYUpperCaseList;
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyA, "A"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyB, "B"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyC, "C"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyD, "D"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyE, "E"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyF, "F"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyG, "G"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyH, "H"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyI, "I"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyJ, "J"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyK, "K"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyL, "L"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyM, "M"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyN, "N"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyO, "O"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyP, "P"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyQ, "Q"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyR, "R"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyS, "S"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyT, "T"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyU, "U"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyV, "V"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyW, "W"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyX, "X"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyY, "Y"));
-		QWERTYUpperCaseList.insert(std::make_pair(kKeyZ, "Z"));
-		std::map<UInt32, NString> DvorakLowerCaseList;
-		DvorakLowerCaseList.insert(std::make_pair(kKeyA, "a"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyB, "x"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyC, "j"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyD, "e"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeySemicolon, "s"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyF, "u"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyG, "i"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyH, "d"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyI, "c"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyJ, "h"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyK, "t"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyL, "n"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyM, "m"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyN, "b"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyO, "r"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyP, "l"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyComma, "w"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyR, "p"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyS, "o"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyT, "y"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyU, "g"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyV, "k"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyDot, "v"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyX, "q"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeyY, "f"));
-		DvorakLowerCaseList.insert(std::make_pair(kKeySlash, "z"));
-		std::map<UInt32, NString> DvorakUpperCaseList;
-		DvorakUpperCaseList.insert(std::make_pair(kKeyA, "A"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyB, "X"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyC, "J"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyD, "E"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeySemicolon, "S"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyF, "U"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyG, "I"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyH, "D"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyI, "C"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyJ, "H"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyK, "T"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyL, "N"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyM, "M"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyN, "B"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyO, "R"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyP, "L"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyComma, "W"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyR, "P"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyS, "O"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyT, "Y"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyU, "G"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyV, "K"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyDot, "V"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyX, "Q"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeyY, "F"));
-		DvorakUpperCaseList.insert(std::make_pair(kKeySlash, "Z"));
-		std::map<UInt32, NString> AZERTYLowerCaseList;
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyA, "q"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyB, "b"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyC, "c"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyD, "d"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyE, "e"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyF, "f"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyG, "g"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyH, "h"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyI, "i"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyJ, "j"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyK, "k"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyL, "l"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeySemicolon, "m"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyN, "n"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyO, "o"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyP, "p"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyQ, "a"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyR, "r"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyS, "s"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyT, "t"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyU, "u"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyV, "v"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyW, "z"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyX, "x"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyY, "y"));
-		AZERTYLowerCaseList.insert(std::make_pair(kKeyZ, "w"));
-		std::map<UInt32, NString> AZERTYUpperCaseList;
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyA, "Q"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyB, "B"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyC, "C"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyD, "D"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyE, "E"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyF, "F"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyG, "G"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyH, "H"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyI, "I"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyJ, "J"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyK, "K"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyL, "L"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeySemicolon, "M"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyN, "N"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyO, "O"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyP, "P"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyQ, "A"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyR, "R"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyS, "S"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyT, "T"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyU, "U"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyV, "V"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyW, "Z"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyX, "X"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyY, "Y"));
-		AZERTYUpperCaseList.insert(std::make_pair(kKeyZ, "W"));
-		std::map<UInt32, NString> QWERTZLowerCaseList;
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyA, "a"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyB, "b"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyC, "c"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyD, "d"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyE, "e"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyF, "f"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyG, "g"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyH, "h"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyI, "i"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyJ, "j"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyK, "k"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyL, "l"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyM, "m"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyN, "n"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyO, "o"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyP, "p"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyQ, "q"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyR, "r"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyS, "s"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyT, "t"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyU, "u"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyV, "v"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyW, "w"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyX, "x"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyY, "z"));
-		QWERTZLowerCaseList.insert(std::make_pair(kKeyZ, "y"));
-		std::map<UInt32, NString> QWERTZUpperCaseList;
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyA, "A"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyB, "B"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyC, "C"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyD, "D"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyE, "E"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyF, "F"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyG, "G"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyH, "H"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyI, "I"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyJ, "J"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyK, "K"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyL, "L"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyM, "M"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyN, "N"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyO, "O"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyP, "P"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyQ, "Q"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyR, "R"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyS, "S"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyT, "T"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyU, "U"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyV, "V"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyW, "W"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyX, "X"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyY, "Z"));
-		QWERTZUpperCaseList.insert(std::make_pair(kKeyZ, "Y"));
-		sStandardKeyList[0] = emptyList;
-		sStandardKeyList[kStandardKeyboardEmpty] = emptyList;
-		sStandardKeyList[kStandardKeyboardQWERTYLowerCase] = QWERTYLowerCaseList;
-		sStandardKeyList[kStandardKeyboardQWERTYUpperCase] = QWERTYUpperCaseList;
-		sStandardKeyList[kStandardKeyboardDvorakLowerCase] = DvorakLowerCaseList;
-		sStandardKeyList[kStandardKeyboardDvorakUpperCase] = DvorakUpperCaseList;
-		sStandardKeyList[kStandardKeyboardAZERTYLowerCase] = AZERTYLowerCaseList;
-		sStandardKeyList[kStandardKeyboardAZERTYUpperCase] = AZERTYUpperCaseList;
-		sStandardKeyList[kStandardKeyboardQWERTZLowerCase] = QWERTZLowerCaseList;
-		sStandardKeyList[kStandardKeyboardQWERTZUpperCase] = QWERTZUpperCaseList;
 		
 		layoutInfoInitialised = YES;
 	}
@@ -1876,19 +1641,399 @@ std::tr1::array<std::map<UInt32, NString>, kStandardKeyboardMaximum + 1> sStanda
 	return sKeyboardNameToIDTable[keyboardName];
 }
 
++ (void)initStandardKeyboards {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSDictionary *emptyKeyMap = [NSDictionary dictionary];	// No entries
+		NSDictionary *QWERTYLowerCaseKeyMap = @{
+			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
+			@(kKeyF) : @"f", @(kKeyG) : @"g", @(kKeyH) : @"h", @(kKeyI) : @"i", @(kKeyJ) : @"j",
+			@(kKeyK) : @"k", @(kKeyL) : @"l", @(kKeyM) : @"m", @(kKeyN) : @"n", @(kKeyO) : @"o",
+			@(kKeyP) : @"p", @(kKeyQ) : @"q", @(kKeyR) : @"r", @(kKeyS) : @"s", @(kKeyT) : @"t",
+			@(kKeyU) : @"u", @(kKeyV) : @"v", @(kKeyW) : @"w", @(kKeyX) : @"x", @(kKeyY) : @"y",
+			@(kKeyZ) : @"z", @(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4",
+			@(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9",
+			@(kKey0) : @"0", @(kKeyBackTick) : @"`", @(kKeyMinus) : @"-", @(kKeyEquals) : @"=",
+			@(kKeyOpenBracket) : @"[", @(kKeyCloseBracket) : @"]", @(kKeyBackslash) : @"\\",
+			@(kKeySemicolon) : @";", @(kKeyQuote) : @"'", @(kKeyComma) : @",", @(kKeyDot) : @".",
+			@(kKeySlash) : @"/", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *QWERTYUpperCaseKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeyM) : @"M", @(kKeyN) : @"N", @(kKeyO) : @"O",
+			@(kKeyP) : @"P", @(kKeyQ) : @"Q", @(kKeyR) : @"R", @(kKeyS) : @"S", @(kKeyT) : @"T",
+			@(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"Y",
+			@(kKeyZ) : @"Z", @(kKey1) : @"!", @(kKey2) : @"@", @(kKey3) : @"#", @(kKey4) : @"$",
+			@(kKey5) : @"%", @(kKey6) : @"^", @(kKey7) : @"&", @(kKey8) : @"*", @(kKey9) : @"(",
+			@(kKey0) : @")", @(kKeyBackTick) : @"~", @(kKeyMinus) : @"_", @(kKeyEquals) : @"+",
+			@(kKeyOpenBracket) : @"{", @(kKeyCloseBracket) : @"}", @(kKeyBackslash) : @"|",
+			@(kKeySemicolon) : @":", @(kKeyQuote) : @"\"", @(kKeyComma) : @"<", @(kKeyDot) : @">",
+			@(kKeySlash) : @"?", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *QWERTYCapsLockKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeyM) : @"M", @(kKeyN) : @"N", @(kKeyO) : @"O",
+			@(kKeyP) : @"P", @(kKeyQ) : @"Q", @(kKeyR) : @"R", @(kKeyS) : @"S", @(kKeyT) : @"T",
+			@(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"Y",
+			@(kKeyZ) : @"Z", @(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4",
+			@(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9",
+			@(kKey0) : @"0", @(kKeyBackTick) : @"`", @(kKeyMinus) : @"-", @(kKeyEquals) : @"=",
+			@(kKeyOpenBracket) : @"[", @(kKeyCloseBracket) : @"]", @(kKeyBackslash) : @"\\",
+			@(kKeySemicolon) : @";", @(kKeyQuote) : @"'", @(kKeyComma) : @",", @(kKeyDot) : @".",
+			@(kKeySlash) : @"/", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *DvorakLowerCaseKeyMap = @{
+			@(kKeyA) : @"a", @(kKeyB) : @"x", @(kKeyC) : @"j", @(kKeyD) : @"e",
+			@(kKeySemicolon) : @"s", @(kKeyF) : @"u", @(kKeyG) : @"i", @(kKeyH) : @"d",
+			@(kKeyI) : @"c", @(kKeyJ) : @"h", @(kKeyK) : @"t", @(kKeyL) : @"n", @(kKeyM) : @"m",
+			@(kKeyN) : @"b", @(kKeyO) : @"r", @(kKeyP) : @"l", @(kKeyComma) : @"w",
+			@(kKeyR) : @"p", @(kKeyS) : @"o", @(kKeyT) : @"y", @(kKeyU) : @"g", @(kKeyV) : @"k",
+			@(kKeyDot) : @"v", @(kKeyX) : @"q", @(kKeyY) : @"f", @(kKeySlash) : @"z",
+			@(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4", @(kKey5) : @"5",
+			@(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9", @(kKey0) : @"0",
+			@(kKeyBackTick) : @"`", @(kKeyMinus) : @"[", @(kKeyEquals) : @"]",
+			@(kKeyOpenBracket) : @"/", @(kKeyCloseBracket) : @"=", @(kKeyBackslash) : @"\\",
+			@(kKeyQ) : @"'", @(kKeyQuote) : @"-", @(kKeyW) : @",", @(kKeyE) : @".",
+			@(kKeyZ) : @";", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *DvorakUpperCaseKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"X", @(kKeyC) : @"J", @(kKeyD) : @"E",
+			@(kKeySemicolon) : @"S", @(kKeyF) : @"U", @(kKeyG) : @"I", @(kKeyH) : @"D",
+			@(kKeyI) : @"C", @(kKeyJ) : @"H", @(kKeyK) : @"T", @(kKeyL) : @"N", @(kKeyM) : @"M",
+			@(kKeyN) : @"B", @(kKeyO) : @"R", @(kKeyP) : @"L", @(kKeyComma) : @"W",
+			@(kKeyR) : @"P", @(kKeyS) : @"O", @(kKeyT) : @"Y", @(kKeyU) : @"G", @(kKeyV) : @"K",
+			@(kKeyDot) : @"V", @(kKeyX) : @"Q", @(kKeyY) : @"F", @(kKeySlash) : @"Z",
+			@(kKey1) : @"!", @(kKey2) : @"@", @(kKey3) : @"#", @(kKey4) : @"$", @(kKey5) : @"%",
+			@(kKey6) : @"^", @(kKey7) : @"&", @(kKey8) : @"*", @(kKey9) : @"(", @(kKey0) : @")",
+			@(kKeyBackTick) : @"~", @(kKeyMinus) : @"{", @(kKeyEquals) : @"}",
+			@(kKeyOpenBracket) : @"?", @(kKeyCloseBracket) : @"+", @(kKeyBackslash) : @"|",
+			@(kKeyQ) : @"\"", @(kKeyQuote) : @"_", @(kKeyW) : @"<", @(kKeyE) : @">",
+			@(kKeyZ) : @":", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *DvorakCapsLockKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"X", @(kKeyC) : @"J", @(kKeyD) : @"E",
+			@(kKeySemicolon) : @"S", @(kKeyF) : @"U", @(kKeyG) : @"I", @(kKeyH) : @"D",
+			@(kKeyI) : @"C", @(kKeyJ) : @"H", @(kKeyK) : @"T", @(kKeyL) : @"N", @(kKeyM) : @"M",
+			@(kKeyN) : @"B", @(kKeyO) : @"R", @(kKeyP) : @"L", @(kKeyComma) : @"W",
+			@(kKeyR) : @"P", @(kKeyS) : @"O", @(kKeyT) : @"Y", @(kKeyU) : @"G", @(kKeyV) : @"K",
+			@(kKeyDot) : @"V", @(kKeyX) : @"Q", @(kKeyY) : @"F", @(kKeySlash) : @"Z",
+			@(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4", @(kKey5) : @"5",
+			@(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9", @(kKey0) : @"0",
+			@(kKeyBackTick) : @"`", @(kKeyMinus) : @"[", @(kKeyEquals) : @"]",
+			@(kKeyOpenBracket) : @"/", @(kKeyCloseBracket) : @"=", @(kKeyBackslash) : @"\\",
+			@(kKeyQ) : @"'", @(kKeyQuote) : @"-", @(kKeyW) : @",", @(kKeyE) : @".",
+			@(kKeyZ) : @";", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *AZERTYLowerCaseKeyMap = @{
+			@(kKeyA) : @"q", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
+			@(kKeyF) : @"f", @(kKeyG) : @"g", @(kKeyH) : @"h", @(kKeyI) : @"i", @(kKeyJ) : @"j",
+			@(kKeyK) : @"k", @(kKeyL) : @"l", @(kKeySemicolon) : @"m", @(kKeyN) : @"n",
+			@(kKeyO) : @"o", @(kKeyP) : @"p", @(kKeyQ) : @"a", @(kKeyR) : @"r", @(kKeyS) : @"s",
+			@(kKeyT) : @"t", @(kKeyU) : @"u", @(kKeyV) : @"v", @(kKeyW) : @"z", @(kKeyX) : @"x",
+			@(kKeyY) : @"y", @(kKeyZ) : @"w", @(kKey1) : @"&", @(kKey2) : @"&#x00E9;",
+			@(kKey3) : @"\"", @(kKey4) : @"'", @(kKey5) : @"(", @(kKey6) : @"&#x00A7;",
+			@(kKey7) : @"&#x00E8;", @(kKey8) : @"!", @(kKey9) : @"&#x00E7;",
+			@(kKey0) : @"&#x00E0;", @(kKeyBackTick) : @"<", @(kKeyMinus) : @")",
+			@(kKeyEquals) : @"-", @(kKeyCloseBracket) : @"$", @(kKeyM) : @",",
+			@(kKeyQuote) : @"&#x00F9;", @(kKeyComma) : @";", @(kKeyDot) : @":",
+			@(kKeySlash) : @"=", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2", @(kKeyPad3) : @"3",
+			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
+			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
+			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
+			@(kKeyPadEquals) : @"="
+		};
+		NSDictionary *AZERTYUpperCaseKeyMap = @{
+			@(kKeyA) : @"Q", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeySemicolon) : @"M", @(kKeyN) : @"N",
+			@(kKeyO) : @"O", @(kKeyP) : @"P", @(kKeyQ) : @"A", @(kKeyR) : @"R", @(kKeyS) : @"S",
+			@(kKeyT) : @"T", @(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"Z", @(kKeyX) : @"X",
+			@(kKeyY) : @"Y", @(kKeyZ) : @"W", @(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3",
+			@(kKey4) : @"4", @(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8",
+			@(kKey9) : @"9", @(kKey0) : @"0", @(kKeyBackTick) : @">", @(kKeyMinus) : @"&#x00B0;",
+			@(kKeyEquals) : @"_", @(kKeyCloseBracket) : @"*", @(kKeyM) : @"?", @(kKeyQuote) : @"%",
+			@(kKeyComma) : @".", @(kKeyDot) : @"/", @(kKeySlash) : @"+", @(kKeyPad1) : @"1",
+			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
+			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
+			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *AZERTYCapsLockKeyMap = @{
+			@(kKeyA) : @"Q", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeySemicolon) : @"M", @(kKeyN) : @"N",
+			@(kKeyO) : @"O", @(kKeyP) : @"P", @(kKeyQ) : @"A", @(kKeyR) : @"R", @(kKeyS) : @"S",
+			@(kKeyT) : @"T", @(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"Z", @(kKeyX) : @"X",
+			@(kKeyY) : @"Y", @(kKeyZ) : @"W", @(kKey1) : @"&", @(kKey2) : @"&#x00C9;",
+			@(kKey3) : @"\"", @(kKey4) : @"'", @(kKey5) : @"(", @(kKey6) : @"&#x00A7;",
+			@(kKey7) : @"&#x00C8;", @(kKey8) : @"!", @(kKey9) : @"&#x00C7;", @(kKey0) : @"&#x00C0;",
+			@(kKeyBackTick) : @"<", @(kKeyMinus) : @")", @(kKeyEquals) : @"-",
+			@(kKeyCloseBracket) : @"$", @(kKeyM) : @",", @(kKeyQuote) : @"&#x00D9;",
+			@(kKeyComma) : @";", @(kKeyDot) : @":", @(kKeySlash) : @"=", @(kKeyPad1) : @"1",
+			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
+			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
+			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *QWERTZLowerCaseKeyMap = @{
+			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
+			@(kKeyF) : @"f", @(kKeyG) : @"g", @(kKeyH) : @"h", @(kKeyI) : @"i", @(kKeyJ) : @"j",
+			@(kKeyK) : @"k", @(kKeyL) : @"l", @(kKeyM) : @"m", @(kKeyN) : @"n", @(kKeyO) : @"o",
+			@(kKeyP) : @"p", @(kKeyQ) : @"q", @(kKeyR) : @"r", @(kKeyS) : @"s", @(kKeyT) : @"t",
+			@(kKeyU) : @"u", @(kKeyV) : @"v", @(kKeyW) : @"w", @(kKeyX) : @"x", @(kKeyY) : @"z",
+			@(kKeyZ) : @"y", @(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4",
+			@(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9",
+			@(kKey0) : @"0", @(kKeyBackTick) : @"<", @(kKeyMinus) : @"&#x00DF;",
+			@(kKeyOpenBracket) : @"&#x00FC;", @(kKeyCloseBracket) : @"+", @(kKeyBackslash) : @"#",
+			@(kKeySemicolon) : @"&#x00F6;", @(kKeyQuote) : @"&#x00E4;", @(kKeyComma) : @",",
+			@(kKeyDot) : @".", @(kKeySlash) : @"-", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2",
+			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
+			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
+			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *QWERTZUpperCaseKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeyM) : @"M", @(kKeyN) : @"N", @(kKeyO) : @"O",
+			@(kKeyP) : @"P", @(kKeyQ) : @"Q", @(kKeyR) : @"R", @(kKeyS) : @"S", @(kKeyT) : @"T",
+			@(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"Z",
+			@(kKeyZ) : @"Y", @(kKey1) : @"!", @(kKey2) : @"\"", @(kKey3) : @"&#x00A7;",
+			@(kKey4) : @"$", @(kKey5) : @"%", @(kKey6) : @"&", @(kKey7) : @"/", @(kKey8) : @"(",
+			@(kKey9) : @")", @(kKey0) : @"=", @(kKeyBackTick) : @">", @(kKeyMinus) : @"?",
+			@(kKeyOpenBracket) : @"&#x00DC;", @(kKeyCloseBracket) : @"*", @(kKeyBackslash) : @"'",
+			@(kKeySemicolon) : @"&#x00D6;", @(kKeyQuote) : @"&#x00C4;", @(kKeyComma) : @";",
+			@(kKeyDot) : @":", @(kKeySlash) : @"_", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2",
+			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
+			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
+			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *QWERTZCapsLockKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
+			@(kKeyF) : @"F", @(kKeyG) : @"G", @(kKeyH) : @"H", @(kKeyI) : @"I", @(kKeyJ) : @"J",
+			@(kKeyK) : @"K", @(kKeyL) : @"L", @(kKeyM) : @"M", @(kKeyN) : @"N", @(kKeyO) : @"O",
+			@(kKeyP) : @"P", @(kKeyQ) : @"Q", @(kKeyR) : @"R", @(kKeyS) : @"S", @(kKeyT) : @"T",
+			@(kKeyU) : @"U", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"Z",
+			@(kKeyZ) : @"Y", @(kKey1) : @"1", @(kKey2) : @"2", @(kKey3) : @"3", @(kKey4) : @"4",
+			@(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7", @(kKey8) : @"8", @(kKey9) : @"9",
+			@(kKey0) : @"0", @(kKeyBackTick) : @"<", @(kKeyMinus) : @"&#x00DF;",
+			@(kKeyOpenBracket) : @"&#x00FC;", @(kKeyCloseBracket) : @"+", @(kKeyBackslash) : @"#",
+			@(kKeySemicolon) : @"&#x00F6;", @(kKeyQuote) : @"&#x00E4;", @(kKeyComma) : @",",
+			@(kKeyDot) : @".", @(kKeySlash) : @"-", @(kKeyPad1) : @"1", @(kKeyPad2) : @"2",
+			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
+			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
+			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *ColemakLowerCaseKeyMap = @{
+			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"s", @(kKeyE) : @"f",
+			@(kKeyF) : @"t", @(kKeyG) : @"d", @(kKeyH) : @"h", @(kKeyI) : @"u", @(kKeyJ) : @"n",
+			@(kKeyK) : @"e", @(kKeyL) : @"i", @(kKeyM) : @"m", @(kKeyN) : @"k", @(kKeyO) : @"y",
+			@(kKeyP) : @";", @(kKeyQ) : @"q", @(kKeyR) : @"p", @(kKeyS) : @"r", @(kKeyT) : @"g",
+			@(kKeyU) : @"l", @(kKeyV) : @"v", @(kKeyW) : @"w", @(kKeyX) : @"x", @(kKeyY) : @"j",
+			@(kKeyZ) : @"z", @(kKeySemicolon) : @"o", @(kKey1) : @"1", @(kKey2) : @"2",
+			@(kKey3) : @"3", @(kKey4) : @"4", @(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7",
+			@(kKey8) : @"8", @(kKey9) : @"9", @(kKey0) : @"0", @(kKeyBackTick) : @"`",
+			@(kKeyMinus) : @"-", @(kKeyEquals) : @"=", @(kKeyOpenBracket) : @"[",
+			@(kKeyCloseBracket) : @"]", @(kKeyBackslash) : @"\\", @(kKeyQuote) : @"'",
+			@(kKeyComma) : @",", @(kKeyDot) : @".", @(kKeySlash) : @"/", @(kKeyPad1) : @"1",
+			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
+			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
+			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *ColemakUpperCaseKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"S", @(kKeyE) : @"F",
+			@(kKeyF) : @"T", @(kKeyG) : @"D", @(kKeyH) : @"H", @(kKeyI) : @"U", @(kKeyJ) : @"N",
+			@(kKeyK) : @"E", @(kKeyL) : @"I", @(kKeyM) : @"M", @(kKeyN) : @"K", @(kKeyO) : @"Y",
+			@(kKeyP) : @":", @(kKeyQ) : @"Q", @(kKeyR) : @"P", @(kKeyS) : @"R", @(kKeyT) : @"G",
+			@(kKeyU) : @"L", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"J",
+			@(kKeyZ) : @"Z", @(kKeySemicolon) : @"O", @(kKey1) : @"!", @(kKey2) : @"@",
+			@(kKey3) : @"#", @(kKey4) : @"$", @(kKey5) : @"%", @(kKey6) : @"^", @(kKey7) : @"&",
+			@(kKey8) : @"*", @(kKey9) : @"(", @(kKey0) : @")", @(kKeyBackTick) : @"~",
+			@(kKeyMinus) : @"_", @(kKeyEquals) : @"+", @(kKeyOpenBracket) : @"{",
+			@(kKeyCloseBracket) : @"}", @(kKeyBackslash) : @"|", @(kKeyQuote) : @"\"",
+			@(kKeyComma) : @"<", @(kKeyDot) : @">", @(kKeySlash) : @"?", @(kKeyPad1) : @"1",
+			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
+			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
+			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *ColemakCapsLockKeyMap = @{
+			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"S", @(kKeyE) : @"F",
+			@(kKeyF) : @"T", @(kKeyG) : @"D", @(kKeyH) : @"H", @(kKeyI) : @"U", @(kKeyJ) : @"N",
+			@(kKeyK) : @"E", @(kKeyL) : @"I", @(kKeyM) : @"M", @(kKeyN) : @"K", @(kKeyO) : @"Y",
+			@(kKeyP) : @":", @(kKeyQ) : @"Q", @(kKeyR) : @"P", @(kKeyS) : @"R", @(kKeyT) : @"G",
+			@(kKeyU) : @"L", @(kKeyV) : @"V", @(kKeyW) : @"W", @(kKeyX) : @"X", @(kKeyY) : @"J",
+			@(kKeyZ) : @"Z", @(kKeySemicolon) : @"O", @(kKey1) : @"1", @(kKey2) : @"2",
+			@(kKey3) : @"3", @(kKey4) : @"4", @(kKey5) : @"5", @(kKey6) : @"6", @(kKey7) : @"7",
+			@(kKey8) : @"8", @(kKey9) : @"9", @(kKey0) : @"0", @(kKeyBackTick) : @"`",
+			@(kKeyMinus) : @"-", @(kKeyEquals) : @"=", @(kKeyOpenBracket) : @"[",
+			@(kKeyCloseBracket) : @"]", @(kKeyBackslash) : @"\\", @(kKeyQuote) : @"'",
+			@(kKeyComma) : @",", @(kKeyDot) : @".", @(kKeySlash) : @"/", @(kKeyPad1) : @"1",
+			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
+			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
+			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+		};
+		NSDictionary *ColemakOptionKeyMap = @{
+			@(kKeyA) : @"&#x00E1;", @(kKeyC) : @"&#x00E7;", @(kKeyD) : @"&#x00DF;",
+			@(kKeyE) : @"&#x00E3;", @(kKeyI) : @"&#x00FA;", @(kKeyJ) : @"&#x00F1;",
+			@(kKeyK) : @"&#x00E9;", @(kKeyL) : @"&#x00ED;", @(kKeyO) : @"&#x00FC;",
+			@(kKeyP) : @"&#x00F6;", @(kKeyQ) : @"&#x00E4;", @(kKeyR) : @"&#x00F8;",
+			@(kKeyU) : @"&#x0142;", @(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00E5;",
+			@(kKeyY) : @"&#x0111;", @(kKeyZ) : @"&#x00E6;", @(kKeySemicolon) : @"&#x00F3;",
+			@(kKey6) : @"&#x0127;", @(kKey7) : @"&#x00F0;", @(kKey8) : @"&#x00FE;"
+		};
+		NSDictionary *ColemakOptionShiftKeyMap = @{
+			@(kKeyA) : @"&#x00C1;", @(kKeyC) : @"&#x00C7;", @(kKeyE) : @"&#x00C3;",
+			@(kKeyI) : @"&#x00DA;", @(kKeyJ) : @"&#x00D1;", @(kKeyK) : @"&#x00C9;",
+			@(kKeyL) : @"&#x00CD;", @(kKeyO) : @"&#x00DC;", @(kKeyP) : @"&#x00D6;",
+			@(kKeyQ) : @"&#x00C4;", @(kKeyR) : @"&#x00D8;", @(kKeyU) : @"&#x0141;",
+			@(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00C5;", @(kKeyY) : @"&#x0110;",
+			@(kKeyZ) : @"&#x00C6;", @(kKeySemicolon) : @"&#x00D3;",
+			@(kKey6) : @"&#x0126;", @(kKey7) : @"&#x0110;", @(kKey8) : @"&#x00DE;"
+		};
+		NSDictionary *emptyKeyMaps = @{@(kStandardKeyMapLowerCase) : emptyKeyMap,
+									   @(kStandardKeyMapUpperCase) : emptyKeyMap,
+									   @(kStandardKeyMapCapsLock)  : emptyKeyMap};
+		NSDictionary *QWERTYKeyMaps = @{@(kStandardKeyMapLowerCase) : QWERTYLowerCaseKeyMap,
+										@(kStandardKeyMapUpperCase) : QWERTYUpperCaseKeyMap,
+										@(kStandardKeyMapCapsLock)  : QWERTYCapsLockKeyMap};
+		NSDictionary *AZERTYKeyMaps = @{@(kStandardKeyMapLowerCase) : AZERTYLowerCaseKeyMap,
+										@(kStandardKeyMapUpperCase) : AZERTYUpperCaseKeyMap,
+										@(kStandardKeyMapCapsLock)  : AZERTYCapsLockKeyMap};
+		NSDictionary *QWERTZKeyMaps = @{@(kStandardKeyMapLowerCase) : QWERTZLowerCaseKeyMap,
+										@(kStandardKeyMapUpperCase) : QWERTZUpperCaseKeyMap,
+										@(kStandardKeyMapCapsLock)  : QWERTZCapsLockKeyMap};
+		NSDictionary *DvorakKeyMaps = @{@(kStandardKeyMapLowerCase) : DvorakLowerCaseKeyMap,
+										@(kStandardKeyMapUpperCase) : DvorakUpperCaseKeyMap,
+										@(kStandardKeyMapCapsLock)  : DvorakCapsLockKeyMap};
+		NSDictionary *ColemakKeyMaps = @{@(kStandardKeyMapLowerCase) : ColemakLowerCaseKeyMap,
+										 @(kStandardKeyMapUpperCase) : ColemakUpperCaseKeyMap,
+										 @(kStandardKeyMapCapsLock)  : ColemakCapsLockKeyMap};
+		sStandardKeyMapList = @{@(kStandardKeyboardEmpty)   : emptyKeyMaps,
+								@(kStandardKeyboardQWERTY)  : QWERTYKeyMaps,
+								@(kStandardKeyboardQWERTZ)  : QWERTZKeyMaps,
+								@(kStandardKeyboardAZERTY)  : AZERTYKeyMaps,
+								@(kStandardKeyboardDvorak)  : DvorakKeyMaps,
+								@(kStandardKeyboardColemak) : ColemakKeyMaps};
+	});
+}
+
 + (NSString *)getStandardKeyOutputForKeyboard:(int)keyboardID forKeyCode:(unsigned int)keyCode
 {
-	[LayoutInfo checkForInit];
-	NN_ASSERT(keyboardID < sStandardKeyList.size());
-	NString result;
-	if (keyboardID != kStandardKeyboardEmpty) {
-		std::map<UInt32, NString> keyMap = sStandardKeyList[keyboardID];
-		std::map<UInt32, NString>::iterator keyMapPos = keyMap.find(keyCode);
-		if (keyMapPos != keyMap.end()) {
-			result = keyMapPos->second;
-		}
+	[LayoutInfo initStandardKeyboards];
+	NSUInteger keyboardTypeIndex = kStandardKeyboardEmpty;
+	switch (keyboardID) {
+		case kStandardKeyMapEmpty:
+			keyboardTypeIndex = kStandardKeyMapEmpty;
+			break;
+			
+		case kStandardKeyMapQWERTYLowerCase:
+		case kStandardKeyMapQWERTYUpperCase:
+		case kStandardKeyMapQWERTYCapsLock:
+			keyboardTypeIndex = kStandardKeyboardQWERTY;
+			break;
+			
+		case kStandardKeyMapQWERTZLowerCase:
+		case kStandardKeyMapQWERTZUpperCase:
+		case kStandardKeyMapQWERTZCapsLock:
+			keyboardTypeIndex = kStandardKeyboardQWERTZ;
+			break;
+			
+		case kStandardKeyMapAZERTYLowerCase:
+		case kStandardKeyMapAZERTYUpperCase:
+		case kStandardKeyMapAZERTYCapsLock:
+			keyboardTypeIndex = kStandardKeyboardAZERTY;
+			break;
+			
+		case kStandardKeyMapDvorakLowerCase:
+		case kStandardKeyMapDvorakUpperCase:
+		case kStandardKeyMapDvorakCapsLock:
+			keyboardTypeIndex = kStandardKeyboardDvorak;
+			break;
+			
+		case kStandardKeyMapColemakLowerCase:
+		case kStandardKeyMapColemakUpperCase:
+		case kStandardKeyMapColemakCapsLock:
+			keyboardTypeIndex = kStandardKeyboardColemak;
+			break;
 	}
-	return ToNS(result);
+	NSUInteger keyboardCaseIndex = kStandardKeyMapLowerCase;
+	switch (keyboardID) {
+		case kStandardKeyMapEmpty:
+		case kStandardKeyMapQWERTYLowerCase:
+		case kStandardKeyMapQWERTZLowerCase:
+		case kStandardKeyMapAZERTYLowerCase:
+		case kStandardKeyMapDvorakLowerCase:
+		case kStandardKeyMapColemakLowerCase:
+			keyboardCaseIndex = kStandardKeyMapLowerCase;
+			break;
+			
+		case kStandardKeyMapQWERTYUpperCase:
+		case kStandardKeyMapQWERTZUpperCase:
+		case kStandardKeyMapAZERTYUpperCase:
+		case kStandardKeyMapDvorakUpperCase:
+		case kStandardKeyMapColemakUpperCase:
+			keyboardCaseIndex = kStandardKeyMapUpperCase;
+			break;
+			
+		case kStandardKeyMapQWERTYCapsLock:
+		case kStandardKeyMapQWERTZCapsLock:
+		case kStandardKeyMapAZERTYCapsLock:
+		case kStandardKeyMapDvorakCapsLock:
+		case kStandardKeyMapColemakCapsLock:
+			keyboardCaseIndex = kStandardKeyMapCapsLock;
+			break;
+	}
+	NSString *standardOutput = sStandardKeyMapList[@(keyboardTypeIndex)][@(keyboardCaseIndex)];
+	if (standardOutput == nil) {
+		standardOutput = @"";
+	}
+	return standardOutput;
+//	NN_ASSERT(keyboardID < sStandardKeyList.size());
+//	NString result;
+//	if (keyboardID != kStandardKeyMapEmpty) {
+//		std::map<UInt32, NString> keyMap = sStandardKeyList[keyboardID];
+//		std::map<UInt32, NString>::iterator keyMapPos = keyMap.find(keyCode);
+//		if (keyMapPos != keyMap.end()) {
+//			result = keyMapPos->second;
+//		}
+//	}
+//	return ToNS(result);
+}
+
++ (NSUInteger)getStandardKeyMapForKeyboard:(NSUInteger)keyboardType withModifiers:(NSUInteger)modifiers {
+	NSUInteger keyMap = kStandardKeyMapEmpty;
+	return keyMap;
 }
 
 + (NSString *)getKeyboardName:(int)keyboardID

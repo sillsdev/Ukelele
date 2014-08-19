@@ -17,7 +17,11 @@
 
 @required
 
-- (void)copyFile:(NSURL *)sourceURL toFile:(NSURL *)targetURL authorization:(NSData *)authData withReply:(void (^)(NSError *error))reply;
+- (void)getVersionWithReply:(void(^)(NSString * version))reply;
+
+- (void)installFile:(NSURL *)sourceFile authorization:(NSData *)authData withReply:(void (^)(NSError *error))reply;
+
+- (void)uninstallToolWithAuthorization:(NSData *)authData withReply:(void (^)(NSError *error))reply;
 
 @end
 

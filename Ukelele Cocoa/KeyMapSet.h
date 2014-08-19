@@ -30,6 +30,7 @@ public:
 	virtual NString GetDescription(void);
 	
 	static KeyMapSet *CreateBasicKeyMapSet(NString inID, NString inBaseMapID);
+	static KeyMapSet *CreateStandardKeyMapSet(NString inID, NString inBaseMapID, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyMapSet*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
 	

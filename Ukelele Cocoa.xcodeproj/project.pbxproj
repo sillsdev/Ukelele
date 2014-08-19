@@ -126,6 +126,8 @@
 		523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0237191D917900E06DF3 /* Sparkle.framework */; };
 		523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */; };
 		523B023A191DAC8F00E06DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01EB191D865100E06DF3 /* main.m */; };
+		523F9FC4196FB39900A896CA /* NewKeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */; };
+		523F9FC7196FBA5300A896CA /* NewKeyboardDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523F9FC6196FBA5300A896CA /* NewKeyboardDialogController.m */; };
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
@@ -462,6 +464,9 @@
 		523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch"; sourceTree = "<group>"; };
 		523B0235191D917400E06DF3 /* libNano.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNano.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		523B0237191D917900E06DF3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewKeyboardDialog.xib; sourceTree = "<group>"; };
+		523F9FC5196FBA5300A896CA /* NewKeyboardDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewKeyboardDialogController.h; sourceTree = "<group>"; };
+		523F9FC6196FBA5300A896CA /* NewKeyboardDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewKeyboardDialogController.m; sourceTree = "<group>"; };
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
@@ -725,6 +730,7 @@
 				52C2B5CF192743C20052D418 /* UkelelePreferences.xib */,
 				52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */,
 				528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */,
+				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
 			);
 			name = "Interface Files";
 			sourceTree = "<group>";
@@ -973,6 +979,8 @@
 				523B0162191CA18C00E06DF3 /* ModifiersDataSource.mm */,
 				523B0163191CA18C00E06DF3 /* ModifiersSheet.h */,
 				523B0164191CA18C00E06DF3 /* ModifiersSheet.m */,
+				523F9FC5196FBA5300A896CA /* NewKeyboardDialogController.h */,
+				523F9FC6196FBA5300A896CA /* NewKeyboardDialogController.m */,
 				523B0167191CA18C00E06DF3 /* PrintAccessoryPanel.h */,
 				523B0168191CA18C00E06DF3 /* PrintAccessoryPanel.m */,
 				523B0169191CA18C00E06DF3 /* ReplaceNameSheet.h */,
@@ -1152,6 +1160,7 @@
 				525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */,
 				52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */,
 				522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */,
+				523F9FC4196FB39900A896CA /* NewKeyboardDialog.xib in Resources */,
 				522C30B01953C8F3004F12AA /* keyboards.strings in Resources */,
 				528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
@@ -1229,6 +1238,7 @@
 				523B00C5191CA00A00E06DF3 /* KeyMapSelect.mm in Sources */,
 				523B01A6191CA18C00E06DF3 /* ImportDeadKeyHandler.m in Sources */,
 				523B007E191C9CA900E06DF3 /* UkeleleView.m in Sources */,
+				523F9FC7196FBA5300A896CA /* NewKeyboardDialogController.m in Sources */,
 				523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */,
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,

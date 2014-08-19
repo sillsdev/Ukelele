@@ -9,6 +9,7 @@
 #import "UkeleleAppDelegate.h"
 #import "UkeleleConstants.h"
 #import "UkeleleConstantStrings.h"
+#import "UkeleleErrorCodes.h"
 #import "UKKeyboardDocument.h"
 #import "ColourTheme.h"
 #import "ToolboxController.h"
@@ -207,28 +208,27 @@ static NSDictionary *defaultValues() {
 
 - (IBAction)removeHelperTool:(id)sender {
 	NSAssert([self helperToolIsInstalled], @"Helper tool must be installed before removal");
-	AuthorizationRef removeAuth;
-	AuthorizationItem myItem;
-	myItem.name = kSMRightModifySystemDaemons;
-	myItem.valueLength = 0;
-	myItem.value = NULL;
-	myItem.flags = 0;
-	AuthorizationItemSet myItems;
-	myItems.count = 1;
-	myItems.items = &myItem;
-    OSStatus err = AuthorizationCreate(&myItems, NULL, kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed, &removeAuth);
-	if (err == errAuthorizationCanceled) {
-			// The user cancelled
-		return;
-	}
-	NSAssert(err == errAuthorizationSuccess, @"Could not create authorization");
-	CFErrorRef error;
-	Boolean success = SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName, removeAuth, true, &error);
-	if (!success) {
-		[NSApp presentError:(__bridge NSError *)error];
-	}
-	err = AuthorizationFree(removeAuth, kAuthorizationFlagDestroyRights);
-	NSAssert(err == errAuthorizationSuccess, @"Could not destroy authorisation");
+	[self connectAndExecuteCommandBlock:^(NSError *error) {
+			// Tell the tool to uninstall itself
+		NSXPCConnection *connection = [self helperToolConnection];
+		id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+				[NSApp presentError:error];
+			}];
+		}];
+		NSData *authorization = [self authorization];
+		[proxy uninstallToolWithAuthorization:authorization withReply:^(NSError *error) {
+			if (error) {
+					// Failed to do the copy
+				NSDictionary *errDict = @{NSLocalizedDescriptionKey: @"Could not uninstall the helper tool",
+										  NSUnderlyingErrorKey: error};
+				NSError *reportedError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotUninstallHelper userInfo:errDict];
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+					[NSApp presentError:reportedError];
+				}];
+			}
+		}];
+	}];
 }
 
 - (BOOL)installHelperTool {

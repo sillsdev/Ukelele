@@ -8,17 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-enum {
-	kStandardKeyMapqwerty = 0,
-	kStandardKeyMapQWERTY = 1,
-	kStandardKeyMapDvorackLower = 2,
-	kStandardKeyMapDvorackUpper = 3,
-	kStandardKeyMapazerty = 4,
-	kStandardKeyMapAZERTY = 5,
-	kStandardKeyMapqwertz = 6,
-	kStandardKeyMapQWERTZ = 7
-};
-
 @interface NewKeyMapInfo : NSObject
 
 @property (nonatomic) NSInteger keyMapTypeSelection;

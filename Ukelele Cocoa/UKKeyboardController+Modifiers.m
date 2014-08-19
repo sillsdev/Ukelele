@@ -315,36 +315,44 @@
         NSInteger standardType = [mapTypeInfo standardKeyMapSelection];
         switch (standardType) {
             case kStandardKeyMapqwerty:
-                standardType = kStandardKeyboardQWERTYLowerCase;
+                standardType = kStandardKeyMapQWERTYLowerCase;
                 break;
                 
             case kStandardKeyMapQWERTY:
-                standardType = kStandardKeyboardQWERTYUpperCase;
+                standardType = kStandardKeyMapQWERTYUpperCase;
                 break;
                 
             case kStandardKeyMapDvorackLower:
-                standardType = kStandardKeyboardDvorakLowerCase;
+                standardType = kStandardKeyMapDvorakLowerCase;
                 break;
                 
             case kStandardKeyMapDvorackUpper:
-                standardType = kStandardKeyboardDvorakUpperCase;
+                standardType = kStandardKeyMapDvorakUpperCase;
                 break;
                 
             case kStandardKeyMapazerty:
-                standardType = kStandardKeyboardAZERTYLowerCase;
+                standardType = kStandardKeyMapAZERTYLowerCase;
                 break;
                 
             case kStandardKeyMapAZERTY:
-                standardType = kStandardKeyboardAZERTYUpperCase;
+                standardType = kStandardKeyMapAZERTYUpperCase;
                 break;
                 
             case kStandardKeyMapqwertz:
-                standardType = kStandardKeyboardQWERTZLowerCase;
+                standardType = kStandardKeyMapQWERTZLowerCase;
                 break;
                 
             case kStandardKeyMapQWERTZ:
-                standardType = kStandardKeyboardQWERTZUpperCase;
+                standardType = kStandardKeyMapQWERTZUpperCase;
                 break;
+				
+			case kStandardKeyMapColemakLower:
+				standardType = kStandardKeyMapColemakLower;
+				break;
+				
+			case kStandardKeyMapColemakUpper:
+				standardType = kStandardKeyMapColemakUpper;
+				break;
         }
         [self.keyboardLayout addStandardKeyMap:standardType
 								   forKeyboard:[keyboardID integerValue]

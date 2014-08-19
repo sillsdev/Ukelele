@@ -33,7 +33,41 @@ enum {
 	// Default modifiers
 enum {
 	kStandardDefaultIndex = 0,
-	kNumStandardModifiers = 5
+	kNumBasicModifiers = 5,
+	kNumStandardModifiers = 9,
+	kLowerCaseModifiers = 0,
+	kUpperCaseModifiers = 1,
+	kOptionModifiers = 2,
+	kCapsLockModifiers = 3,
+	kOptionShiftModifiers = 4,
+	kCommandModifiers = 5,
+	kCommandShiftModifiers = 6,
+	kCapsLockShiftModifiers = 7,
+	kControlModifiers = 8
+};
+
+	// Standard keyboard types
+
+enum {
+	kStandardKeyMapqwerty = 0,
+	kStandardKeyMapQWERTY = 1,
+	kStandardKeyMapDvorackLower = 2,
+	kStandardKeyMapDvorackUpper = 3,
+	kStandardKeyMapazerty = 4,
+	kStandardKeyMapAZERTY = 5,
+	kStandardKeyMapqwertz = 6,
+	kStandardKeyMapQWERTZ = 7,
+	kStandardKeyMapColemakLower = 8,
+	kStandardKeyMapColemakUpper = 9
+};
+
+enum {
+	kStandardLayoutEmpty = 0,
+	kStandardLayoutQWERTY = 1,
+	kStandardLayoutDvorak = 2,
+	kStandardLayoutAZERTY = 3,
+	kStandardLayoutQWERTZ = 4,
+	kStandardLayoutColemak = 5
 };
 
 	// Special key codes

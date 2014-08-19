@@ -65,6 +65,7 @@ public:
     bool IsSimplified(void);
 	
 	static ModifierMap *CreateBasicModifierMap(void);
+	static ModifierMap *CreateStandardModifierMap(void);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, ModifierMap*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
 	

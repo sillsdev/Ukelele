@@ -108,10 +108,16 @@ const NString kCapsLockKeyOpt("caps?");
 
 	// Basic set of modifier maps
 const NString kNoModifiers("");
-const NString kShiftOnly("anyShift caps?");
+const NString kShiftOnly("anyShift");
+const NString kShift("anyShift caps?");
 const NString kOptionOnly("anyOption");
 const NString kCapsLockOnly("caps");
 const NString kShiftOption("anyShift anyOption caps?");
+const NString kCommandOnly("command");
+const NString kCommand("command caps? anyShift?");
+const NString kCommandShift("anyShift command caps?");
+const NString kCapsLockShift("anyShift caps");
+const NString kControlOnly("anyControl");
 
 	// XML strings
 const NString kDefaultXMLHeader("version=\"1.1\" encoding=\"UTF-8\"");

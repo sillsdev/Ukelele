@@ -104,19 +104,60 @@
 	return YES;
 }
 
-- (void)copyFile:(NSURL *)sourceURL toFile:(NSURL *)targetURL authorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
+- (void)getVersionWithReply:(void(^)(NSString * version))reply
+    // Part of the HelperToolProtocol.  Returns the version number of the tool.  Note that never
+    // requires authorization.
+{
+		// We specifically don't check for authorization here.  Everyone is always allowed to get
+		// the version of the helper tool.
+    reply([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]);
+}
+
+- (void)installFile:(NSURL *)sourceFile authorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
 	NSError *error = [self checkAuthorization:authData command:_cmd];
 	if (error == nil) {
 		NSFileManager *fileManager = [NSFileManager defaultManager];
-		NSURL *parentDirectory = [targetURL URLByDeletingLastPathComponent];
-		BOOL successs = [fileManager createDirectoryAtURL:parentDirectory withIntermediateDirectories:YES attributes:nil error:&error];
-		NSAssert(successs, @"Should be able to create the directory");
+		NSURL *parentDirectory = [NSURL fileURLWithPath:@"/Library/Keyboard Layouts/" isDirectory:YES];
+		BOOL success = [fileManager createDirectoryAtURL:parentDirectory withIntermediateDirectories:YES attributes:nil error:&error];
+		NSAssert(success, @"Should be able to create the directory");
+		NSURL *targetURL = [parentDirectory URLByAppendingPathComponent:[sourceFile lastPathComponent]];
 		if ([fileManager fileExistsAtPath:[targetURL path]]) {
 				// We remove the file, because we've already asked the user for permission
-			successs = [fileManager removeItemAtURL:targetURL error:&error];
-			NSAssert(successs, @"Should be able to remove the existing file");
+			success = [fileManager removeItemAtURL:targetURL error:&error];
+			NSAssert(success, @"Should be able to remove the existing file");
 		}
-		[fileManager copyItemAtURL:sourceURL toURL:targetURL error:&error];
+		[fileManager copyItemAtURL:sourceFile toURL:targetURL error:&error];
+	}
+	reply(error);
+}
+
+- (void)uninstallToolWithAuthorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
+	NSError *error = [self checkAuthorization:authData command:_cmd];
+	if (error == nil) {
+			// Unload the plist
+		NSString *plistLocation = [NSString stringWithFormat:@"/Library/LaunchDaemons/%@.plist", kHelperToolMachServiceName];
+		NSString *uninstallCommand = @"/bin/launchctl";
+		NSArray *uninstallArguments = @[@"unload", @"-wF", plistLocation];
+		NSTask *uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
+//		[uninstallTask waitUntilExit];
+//			// Remove the plist
+//		uninstallCommand = @"/bin/rm";
+//		uninstallArguments = @[plistLocation];
+//		uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
+//		[uninstallTask waitUntilExit];
+//			// Remove the tool
+//		NSString *toolLocation = [NSString stringWithFormat:@"/Library/PrivilegedHelperTools/%@", kHelperToolMachServiceName];
+//		uninstallArguments = @[toolLocation];
+//		uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
+//		[uninstallTask waitUntilExit];
+//			// Remove the keys from the authorization database
+//		NSArray *authorizationKeys = @[@"org.sil.ukelele.installKeyboardLayout", @"org.sil.ukelele.uninstallHelperTool"];
+//		uninstallCommand = @"security";
+//		uninstallArguments = @[@"-q", @"authorizationdb", @"remove"];
+//		for (NSString *key in authorizationKeys) {
+//			uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:[uninstallArguments arrayByAddingObject:key]];
+//			[uninstallTask waitUntilExit];
+//		}
 	}
 	reply(error);
 }

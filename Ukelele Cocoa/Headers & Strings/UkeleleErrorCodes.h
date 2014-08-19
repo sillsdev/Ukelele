@@ -19,7 +19,8 @@ enum UkeleleErrors {
 	kUkeleleErrorCouldNotSaveInInstallDirectory = -15,	// Could not copy the file to the Keyboard Layouts folder
 	kUkeleleErrorAuthenticationFailed = -16,		// Authentication failed for install
 	kUkeleleErrorNotPlainFile = -17,				// Not a plain file for a keyboard layout
-	kUkeleleErrorInvalidFileType = -18				// Invalid UTI given
+	kUkeleleErrorInvalidFileType = -18,				// Invalid UTI given
+	kUkeleleErrorCouldNotUninstallHelper = -19		// Could not uninstall the helper tool
 };
 
 #endif

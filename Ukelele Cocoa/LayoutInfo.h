@@ -27,6 +27,7 @@
 + (unsigned int)getKeyboardID:(unsigned int)keyboardName;
 + (NSDictionary *)getKeyboardList:(unsigned int)keyboardID;
 + (NSString *)getStandardKeyOutputForKeyboard:(int)keyboardID forKeyCode:(unsigned int)keyCode;
++ (NSUInteger)getStandardKeyMapForKeyboard:(NSUInteger)keyboardType withModifiers:(NSUInteger)modifiers;
 + (NSString *)getKeyboardName:(int)keyboardID;
 + (NSString *)getKeyboardDescription:(int)keyboardID;
 + (NSUInteger)getModifierFromKeyCode:(NSUInteger)keyCode;

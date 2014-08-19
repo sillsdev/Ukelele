@@ -35,6 +35,7 @@ public:
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, KeyboardElement *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
 	static KeyboardElement *CreateBasicKeyboard(NString inName);
+	static KeyboardElement *CreateKeyboad(NString inName, UInt32 inScript, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard);
 	
 	NString GetKeyboardName(void) const { return mName; }
 	void SetKeyboardName(const NString inName) { mName = inName; }
