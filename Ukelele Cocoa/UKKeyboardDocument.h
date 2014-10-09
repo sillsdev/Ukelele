@@ -9,7 +9,11 @@
 #import <Cocoa/Cocoa.h>
 @class UkeleleKeyboardObject;
 
-@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate> {
+@interface IconImageTransformer : NSValueTransformer
+
+@end
+
+@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDelegate> {
 	IBOutlet NSTableView *keyboardLayoutsTable;
 	IBOutlet NSButton *languageButton;
 	IBOutlet NSButton *removeKeyboardButton;
@@ -22,6 +26,8 @@
 @property (nonatomic, strong) NSString *bundleName;
 @property (nonatomic) BOOL isBundle;
 @property (strong, nonatomic) UkeleleKeyboardObject *keyboardLayout;
+@property (nonatomic, strong) NSMutableArray *keyboardLayouts;
+@property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 
 - (IBAction)addOpenDocument:(id)sender;
 - (IBAction)showVersionInfo:(id)sender;
@@ -35,8 +41,6 @@
 - (IBAction)askKeyboardIdentifiers:(id)sender;
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
-
-- (NSArray *)keyboardLayouts;
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;

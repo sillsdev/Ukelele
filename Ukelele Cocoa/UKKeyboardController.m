@@ -413,11 +413,13 @@ const float kScalePercentageFactor = 100.0f;
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[self inspectorDidActivateTab:[[[infoInspector tabView] selectedTabViewItem] identifier]];
 	[infoInspector setCurrentWindow:self];
+	[infoInspector setCurrentKeyboard:self.keyboardLayout];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
 	[inspectorController setCurrentWindow:nil];
+	[inspectorController setCurrentKeyboard:nil];
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -571,10 +573,10 @@ const float kScalePercentageFactor = 100.0f;
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
+	[inspectorController setCurrentKeyboard:self.keyboardLayout];
 	if ([tabIdentifier isEqualToString:kTabIdentifierDocument]) {
 			// Activating the document tab
 		[inspectorController setKeyboardSectionEnabled:YES];
-		[inspectorController setBundleSectionEnabled:NO];
 	}
 	else if ([tabIdentifier isEqualToString:kTabIdentifierOutput]) {
 			// Activating the output tab

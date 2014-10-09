@@ -280,36 +280,48 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSInteger)keyboardGroup
 {
+	if (self.keyboard == nil) {
+		return 0;
+	}
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->GetKeyboardGroup();
 }
 
 - (void)setKeyboardGroup:(NSInteger)newGroup
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardGroup((SInt32)newGroup);
 }
 
 - (NSInteger)keyboardID
 {
+	if (self.keyboard == nil) {
+		return 0;
+	}
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->GetKeyboardID();
 }
 
 - (void)setKeyboardID:(NSInteger)newID
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardID((SInt32)newID);
 }
 
 - (NSString *)keyboardName
 {
+	if (self.keyboard == nil) {
+		return @"";
+	}
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetKeyboardName());
 }
 
 - (void)setKeyboardName:(NSString *)newName
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardName(ToNN(newName));
 }
@@ -334,6 +346,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSUInteger)stateCount
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray stateNames = keyboardElement->GetStateNames(kStateNone, kAllStates);
 	return stateNames.GetSize();
@@ -341,12 +354,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (BOOL)hasStateWithName:(NSString *)stateName
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->StateExists(ToNN(stateName));
 }
 
 - (NSString *)uniqueStateName
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NString baseName = ToNN([[NSUserDefaults standardUserDefaults] stringForKey:UKStateNameBase]);
 	return ToNS(keyboardElement->CreateStateName(baseName));
@@ -354,17 +369,20 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSArray *)actionNames
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetActionNames());
 }
 
 - (BOOL)hasActionWithName:(NSString *)actionName
 {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->ActionExists(ToNN(actionName));
 }
 
 - (NSString *)terminatorForState:(NSString *)stateName {
+	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetTerminator(ToNN(stateName)));
 }

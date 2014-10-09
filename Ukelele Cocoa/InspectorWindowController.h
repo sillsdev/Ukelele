@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class UKKeyboardDocument;
+@class UkeleleKeyboardObject;
 @class UKKeyboardController;
 
 #define kTabIdentifierDocument	@"Document"
@@ -39,13 +39,12 @@
 @property (nonatomic, strong) IBOutlet NSArray *stateStack;
 @property (strong) IBOutlet NSArray *scriptList;
 
-@property (weak, nonatomic) UKKeyboardDocument *currentDocument;
+@property (weak, nonatomic) UkeleleKeyboardObject *currentKeyboard;
 @property (weak, nonatomic) UKKeyboardController *currentWindow;
 
 + (InspectorWindowController *)getInstance;
 - (IBAction)generateID:(id)sender;
 - (void)setScript:(NSInteger)scriptCode;
 - (void)setKeyboardSectionEnabled:(BOOL)enabled;
-- (void)setBundleSectionEnabled:(BOOL)enabled;
 
 @end

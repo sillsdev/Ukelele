@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardDocument">
             <connections>
+                <outlet property="keyboardLayoutsController" destination="Wvh-L2-Xlb" id="zmH-dA-zRP"/>
                 <outlet property="keyboardLayoutsTable" destination="RWF-Rg-ghd" id="Csd-Fa-NQi"/>
                 <outlet property="languageButton" destination="lsp-Sh-MR9" id="SLK-ZF-Nq7"/>
                 <outlet property="removeKeyboardButton" destination="2k1-ap-Wrj" id="T0s-hv-4I1"/>
@@ -81,6 +82,13 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.keyboardName" id="Vlr-Cu-ZKS">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn identifier="Icon" editable="NO" width="49.7578125" minWidth="40" maxWidth="1000" id="WmS-vL-MoY">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Icon">
@@ -90,6 +98,13 @@
                                             </tableHeaderCell>
                                             <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Nw7-38-a1y"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.iconData" id="VB4-Yb-s1H">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">IconImageTransformer</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn identifier="Language" editable="NO" width="87" minWidth="10" maxWidth="3.4028234663852886e+38" id="5N6-yv-1Ij">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Language">
@@ -103,15 +118,23 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.intendedLanguage" id="gh6-Wr-0pa">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="cn3-Dq-hFV"/>
+                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="cn3-Dq-hFV" id="dvA-NV-gsX"/>
                                         <binding destination="-2" name="doubleClickTarget" keyPath="self" id="Vfc-GN-p5v">
                                             <dictionary key="options">
                                                 <string key="NSSelectorName">openKeyboardLayout:</string>
                                             </dictionary>
                                         </binding>
-                                        <outlet property="dataSource" destination="-2" id="HpW-dt-l0U"/>
                                         <outlet property="delegate" destination="-2" id="fhk-hp-Fya"/>
                                     </connections>
                                 </tableView>
@@ -179,8 +202,16 @@
                     </popUpButton>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="tl5-AU-7nP"/>
+            </connections>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="rQ7-vP-CUZ"/>
+        <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="keyboardLayouts" id="RMZ-Hz-Dpz"/>
+            </connections>
+        </arrayController>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>

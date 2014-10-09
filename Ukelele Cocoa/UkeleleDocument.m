@@ -740,7 +740,6 @@ const float kScalePercentageFactor = 100.0f;
 	if ([tabIdentifier isEqualToString:kTabIdentifierDocument]) {
 			// Activating the document tab
 		[inspectorController setKeyboardSectionEnabled:YES];
-		[inspectorController setBundleSectionEnabled:NO];
 	}
 	else if ([tabIdentifier isEqualToString:kTabIdentifierOutput]) {
 			// Activating the output tab

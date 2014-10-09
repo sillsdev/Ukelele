@@ -77,7 +77,6 @@
 	[theDocument inspectorDidActivateTab:[tabViewItem identifier]];
 	if (self.currentWindow != nil) {
 		theDocument = [self.currentWindow parentDocument];
-		[self setBundleSectionEnabled:[theDocument isBundle]];
 	}
 	else {
 		[self setKeyboardSectionEnabled:NO];
@@ -105,13 +104,6 @@
 	[self.keyboardNameField setEnabled:enabled];
 	[self.keyboardScriptButton setEnabled:enabled];
 	[self.generateButton setEnabled:enabled];
-}
-
-- (void)setBundleSectionEnabled:(BOOL)enabled {
-	[self.bundleNameField setEnabled:enabled];
-	[self.bundleVersionField setEnabled:enabled];
-	[self.buildVersionField setEnabled:enabled];
-	[self.sourceVersionField setEnabled:enabled];
 }
 
 @end

@@ -137,7 +137,7 @@
 			// Unload the plist
 		NSString *plistLocation = [NSString stringWithFormat:@"/Library/LaunchDaemons/%@.plist", kHelperToolMachServiceName];
 		NSString *uninstallCommand = @"/bin/launchctl";
-		NSArray *uninstallArguments = @[@"unload", @"-wF", plistLocation];
+		NSArray *uninstallArguments = @[@"unload", plistLocation];
 		NSTask *uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
 //		[uninstallTask waitUntilExit];
 //			// Remove the plist
