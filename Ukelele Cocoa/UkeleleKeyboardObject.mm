@@ -75,6 +75,15 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return self;
 }
 
+- (id)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout {
+	self = [super init];
+	if (self) {
+		_keyboard = new UkeleleKeyboard;
+		_keyboard->CreateStandardKeyboard(ToNN(keyboardName), (UInt32)baseLayout, (UInt32)commandLayout, (UInt32)capsLockLayout);
+	}
+	return self;
+}
+
 - (id)initWithData:(NSData *)xmlData withError:(NSError **)outError
 {
 	self = [super init];

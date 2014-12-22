@@ -279,6 +279,45 @@ ModifierMap *ModifierMap::CreateStandardModifierMap(void) {
 	return modifierMap;
 }
 
+ModifierMap *ModifierMap::CreateStandardModifierMap(bool inCapsLockLayout) {
+	ModifierMap *modifierMap = new ModifierMap(kDefaultModifiersName, kStandardDefaultIndex);
+	NStringList modifiersList;
+		// Add the common modifiers
+	modifiersList.push_back(kNoModifiers);
+	modifiersList.push_back(kOptionOnly);
+	modifiersList.push_back(kShiftOption);
+	modifiersList.push_back(kControlOnly);
+	modifiersList.push_back(kCommandOnly);
+	modifiersList.push_back(kCommandShift);
+	NString theModifiers;
+	if (inCapsLockLayout) {
+			// No Command, Caps Lock
+		theModifiers = kAnyShiftKey;
+		modifiersList.push_back(theModifiers);
+		theModifiers = kCapsLockKey;
+		modifiersList.push_back(theModifiers);
+		theModifiers = kCapsLockKey + " " + kAnyShiftKey;
+		modifiersList.push_back(theModifiers);
+		theModifiers = kCapsLockKey + " " + kAnyOptionKey;
+		modifiersList.push_back(theModifiers);
+		theModifiers = kCapsLockKey + " " + kAnyShiftKey + " " + kAnyOptionKey;
+		modifiersList.push_back(theModifiers);
+	}
+	else {
+			// No Command or Caps Lock
+		modifiersList.push_back(kShift);
+		modifiersList.push_back(kCapsLockOnly);
+	}
+	int i = 0;
+	for (NStringListIterator mod = modifiersList.begin(); mod != modifiersList.end(); ++mod) {
+		KeyMapSelect *keyMapSelect = KeyMapSelect::CreateBasicKeyMapSelect(i, *mod);
+		modifierMap->AddKeyMapSelectElement(keyMapSelect, false);
+		i++;
+	}
+	modifierMap->CalculateModifierMap();
+	return modifierMap;
+}
+
 // Create a modifier map from an XML tree
 
 ErrorMessage ModifierMap::CreateFromXMLTree(const NXMLNode& inXMLTree,

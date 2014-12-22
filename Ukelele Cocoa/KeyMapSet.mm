@@ -12,6 +12,7 @@
 #include "XMLErrors.h"
 #include "UkeleleStrings.h"
 #include "NBundle.h"
+#include "LayoutInfo.h"
 
 // Key strings
 const NString kKeyMapSetMissingIDAttribute = "KeyMapSetMissingIDAttribute";
@@ -76,17 +77,55 @@ KeyMapSet *KeyMapSet::CreateBasicKeyMapSet(NString inID, NString inBaseMapID)
 
 	// Create a standard key map set
 
-KeyMapSet *KeyMapSet::CreateStandardKeyMapSet(NString inID, NString inBaseMapID, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard) {
+KeyMapSet *KeyMapSet::CreateStandardKeyMapSet(NString inID, NString inBaseMapID, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard, UInt32 inCapsLockKeyboard, ModifierMap *inModifierMap) {
+	bool hasCommandKeyboard = inCommandKeyboard != inStandardKeyboard;
+	bool hasCapsLockKeyboard = inCapsLockKeyboard != inStandardKeyboard;
+	UInt32 numModifiers = inModifierMap->GetKeyMapSelectCount();
 	KeyMapSet *keyMapSet = new KeyMapSet(inID);
 	KeyMapElement *keyMapElement = NULL;
-		// No modifiers
-	UInt32 index = 0;
-	UInt32 sourceType = inStandardKeyboard;
-	keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(sourceType, index, inBaseMapID, index);
-	keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
-		// Shift
-	index = 1;
-	sourceType = inStandardKeyboard;
+	for (UInt32 index = 0; index < numModifiers; index++) {
+		KeyMapSelect *keyMapSelect = inModifierMap->GetKeyMapSelectElement(index);
+		UInt32 keyMapType;
+		if (keyMapSelect->RequiresModifier(optionKey) || keyMapSelect->RequiresModifier(controlKey)) {
+				// This requires option or control, so we put in an empty key map
+			keyMapType = kStandardKeyMapEmpty;
+		}
+		else if (hasCapsLockKeyboard && keyMapSelect->RequiresModifier(alphaLock)) {
+				// Need the caps lock keyboard
+			keyMapType = inCapsLockKeyboard;
+		}
+		else if (hasCommandKeyboard && keyMapSelect->RequiresModifier(cmdKey)) {
+				// Need the command keyboard
+			keyMapType = inCommandKeyboard;
+		}
+		else {
+				// Use the standard keyboard
+			keyMapType = inStandardKeyboard;
+		}
+			// This needs to be more fine-grained, working out the uppercase/lowercase/caps lock
+			// version and getting the right kind of keyMap
+		UInt32 modifiers = 0;
+		if (keyMapSelect->RequiresModifier(alphaLock) && !hasCapsLockKeyboard) {
+			modifiers |= alphaLock;
+		}
+		if (keyMapSelect->RequiresModifier(shiftKey)) {
+			modifiers |= shiftKey;
+		}
+		keyMapType = (UInt32)[LayoutInfo getStandardKeyMapForKeyboard:keyMapType withModifiers:modifiers];
+		keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(keyMapType, index, inBaseMapID, index);
+		keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
+	}
+	return keyMapSet;
+}
+
+KeyMapSet *KeyMapSet::CreateStandardJISKeyMapSet(NString inID, NString inBaseMapID, ModifierMap *inModifierMap) {
+	KeyMapSet *keyMapSet = new KeyMapSet(inID);
+	UInt32 numModifiers = inModifierMap->GetKeyMapSelectCount();
+	KeyMapElement *keyMapElement = NULL;
+	for (UInt32 index = 0; index < numModifiers; index++) {
+		keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(kStandardKeyMapEmpty, index, inBaseMapID, index);
+		keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
+	}
 	return keyMapSet;
 }
 

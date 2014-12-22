@@ -33,6 +33,7 @@ public:
 	ModifierElement *GetModifierElement(const SInt32 inIndex) const;
 	ModifierElement *RemoveModifierElement(const SInt32 inIndex);
 	bool ModifierMatches(const UInt32 inModifierCombination) const;
+	bool RequiresModifier(const UInt32 inModifier) const;
     
     KeyMapSelect *SimplifiedKeyMapSelect(void);
     bool IsSimplified(void);

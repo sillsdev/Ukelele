@@ -131,6 +131,13 @@ void UkeleleKeyboard::CreateBasicKeyboard(NString inName)
 	AddCreationComment();
 }
 
+void UkeleleKeyboard::CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout) {
+	mDTDHeader = kDefaultDTD;
+	mKeyboard.reset(KeyboardElement::CreateStandardKeyboard(inName, inBaseLayout, inCommandLayout, inCapsLockLayout));
+	mCommentContainer->AddCommentHolder(mKeyboard.get());
+	AddCreationComment();
+}
+
 // Clear any current keyboard information
 
 void UkeleleKeyboard::ClearKeyboard(void)

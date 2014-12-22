@@ -19,6 +19,7 @@
 #import "ScriptInfo.h"
 #import "InspectorWindowController.h"
 #import "UkeleleKeyboardInstaller.h"
+#import "UKNewKeyboardLayoutController.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -846,9 +847,124 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Add an empty keyboard layout
 
 - (IBAction)addKeyboardLayout:(id)sender {
-		// Create an empty keyboard layout
-	UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:@"Untitled"];
-	[self addNewDocument:keyboardObject];
+		// Run a dialog to define a keyboard layout
+	__block UKNewKeyboardLayoutController *theController = [UKNewKeyboardLayoutController createController];
+	NSArray *windowControllers = [self windowControllers];
+	NSWindowController *windowController = windowControllers[0];
+	NSWindow *myWindow = [windowController window];
+	[theController runDialog:myWindow withCompletion:^(BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout) {
+		[self addNewKeyboardLayoutWithBase:baseLayout command:commandLayout capsLock:capsLockLayout];
+		theController = nil;
+	}];
+}
+
+- (void)addNewKeyboardLayoutWithBase:(BaseLayoutTypes)baseLayout command:(CommandLayoutTypes)commandLayout capsLock:(CapsLockLayoutTypes)capsLockLayout {
+		// Check whether we have a valid layout
+	if (baseLayout != baseLayoutNone) {
+			// Create a keyboard with the given layout types
+		NSAssert(commandLayout != commandLayoutNone, @"Must have a command layout specified");
+		NSAssert(capsLockLayout != capsLockLayoutNone, @"Must have a caps lock layout specified");
+		NSUInteger base = kStandardLayoutEmpty;
+		switch (baseLayout) {
+			case baseLayoutEmpty:
+				base = kStandardLayoutEmpty;
+				break;
+				
+			case baseLayoutQWERTY:
+				base = kStandardLayoutQWERTY;
+				break;
+				
+			case baseLayoutQWERTZ:
+				base = kStandardLayoutQWERTZ;
+				break;
+				
+			case baseLayoutAZERTY:
+				base = kStandardLayoutAZERTY;
+				break;
+				
+			case baseLayoutDvorak:
+				base = kStandardLayoutDvorak;
+				break;
+				
+			case baseLayoutColemak:
+				base = kStandardLayoutColemak;
+				break;
+				
+			case baseLayoutNone:
+					// Should never come here!
+				break;
+		}
+		NSUInteger command = kStandardLayoutEmpty;
+		switch (commandLayout) {
+			case commandLayoutSame:
+				command = base;
+				break;
+				
+			case commandLayoutEmpty:
+				command = kStandardLayoutEmpty;
+				break;
+				
+			case commandLayoutQWERTY:
+				command = kStandardLayoutQWERTY;
+				break;
+				
+			case commandLayoutQWERTZ:
+				command = kStandardLayoutQWERTZ;
+				break;
+				
+			case commandLayoutAZERTY:
+				command = kStandardLayoutAZERTY;
+				break;
+				
+			case commandLayoutDvorak:
+				command = kStandardLayoutDvorak;
+				break;
+				
+			case commandLayoutColemak:
+				command = kStandardLayoutColemak;
+				break;
+				
+			case commandLayoutNone:
+					// Should never come here!
+				break;
+		}
+		NSUInteger capsLock = kStandardLayoutEmpty;
+		switch (capsLockLayout) {
+			case capsLockLayoutSame:
+				capsLock = base;
+				break;
+				
+			case capsLockLayoutEmpty:
+				capsLock = kStandardLayoutEmpty;
+				break;
+				
+			case capsLockLayoutQWERTY:
+				capsLock = kStandardLayoutQWERTY;
+				break;
+				
+			case capsLockLayoutQWERTZ:
+				capsLock = kStandardLayoutQWERTZ;
+				break;
+				
+			case capsLockLayoutAZERTY:
+				capsLock = kStandardLayoutAZERTY;
+				break;
+				
+			case capsLockLayoutDvorak:
+				capsLock = kStandardLayoutDvorak;
+				break;
+				
+			case capsLockLayoutColemak:
+				capsLock = kStandardLayoutColemak;
+				break;
+				
+			case capsLockLayoutNone:
+					// Should never get here!
+				break;
+		}
+		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:@"Untitled" base:base command:command capsLock:capsLock];
+		[self addNewDocument:keyboardObject];
+	}
 }
 
 	// Remove the selected keyboard layout from the bundle
@@ -917,15 +1033,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[intendedLanguageSheet beginIntendedLanguageSheet:keyboardLanguageCode
 											forWindow:myWindow
 											 callBack:^(LanguageCode *newLanguage) {
-												 if (newLanguage == nil) {
-														 // User cancelled
-													 intendedLanguageSheet = nil;
-													 return;
+												 if (newLanguage != nil) {
+													 NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+													 NSAssert(selectedRowNumber >= 0, @"There must be a selected row");
+													 [self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:newLanguage];
 												 }
-												 NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
-												 NSAssert(selectedRowNumber >= 0, @"There must be a selected row");
-												 [self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:newLanguage];
-												 intendedLanguageSheet = nil;
 											 }];
 }
 

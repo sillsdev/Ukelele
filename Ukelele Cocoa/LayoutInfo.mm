@@ -1954,7 +1954,7 @@ NSDictionary *sStandardKeyMapList;
 	NSUInteger keyboardTypeIndex = kStandardKeyboardEmpty;
 	switch (keyboardID) {
 		case kStandardKeyMapEmpty:
-			keyboardTypeIndex = kStandardKeyMapEmpty;
+			keyboardTypeIndex = kStandardKeyboardEmpty;
 			break;
 			
 		case kStandardKeyMapQWERTYLowerCase:
@@ -2014,7 +2014,7 @@ NSDictionary *sStandardKeyMapList;
 			keyboardCaseIndex = kStandardKeyMapCapsLock;
 			break;
 	}
-	NSString *standardOutput = sStandardKeyMapList[@(keyboardTypeIndex)][@(keyboardCaseIndex)];
+	NSString *standardOutput = sStandardKeyMapList[@(keyboardTypeIndex)][@(keyboardCaseIndex)][@(keyCode)];
 	if (standardOutput == nil) {
 		standardOutput = @"";
 	}
@@ -2033,6 +2033,90 @@ NSDictionary *sStandardKeyMapList;
 
 + (NSUInteger)getStandardKeyMapForKeyboard:(NSUInteger)keyboardType withModifiers:(NSUInteger)modifiers {
 	NSUInteger keyMap = kStandardKeyMapEmpty;
+	if (!(modifiers & optionKey) && !(modifiers & controlKey)) {
+			// No option or control key
+		if (modifiers & alphaLock) {
+				// Caps lock is down
+			switch (keyboardType) {
+				case kStandardLayoutQWERTY:
+					keyMap = kStandardKeyMapQWERTYCapsLock;
+					break;
+					
+				case kStandardLayoutQWERTZ:
+					keyMap = kStandardKeyMapQWERTZCapsLock;
+					break;
+					
+				case kStandardLayoutAZERTY:
+					keyMap = kStandardKeyMapAZERTYCapsLock;
+					break;
+					
+				case kStandardLayoutDvorak:
+					keyMap = kStandardKeyMapDvorakCapsLock;
+					break;
+					
+				case kStandardLayoutColemak:
+					keyMap = kStandardKeyMapColemakCapsLock;
+					break;
+					
+				default:
+					break;
+			}
+		}
+		else if (modifiers & shiftKey) {
+				// Shift is down
+			switch (keyboardType) {
+				case kStandardLayoutQWERTY:
+					keyMap = kStandardKeyMapQWERTYUpperCase;
+					break;
+					
+				case kStandardLayoutQWERTZ:
+					keyMap = kStandardKeyMapQWERTZUpperCase;
+					break;
+					
+				case kStandardLayoutAZERTY:
+					keyMap = kStandardKeyMapAZERTYUpperCase;
+					break;
+					
+				case kStandardLayoutDvorak:
+					keyMap = kStandardKeyMapDvorakUpperCase;
+					break;
+					
+				case kStandardLayoutColemak:
+					keyMap = kStandardKeyMapColemakUpperCase;
+					break;
+					
+				default:
+					break;
+			}
+		}
+		else {
+				// No relevant modifiers
+			switch (keyboardType) {
+				case kStandardLayoutQWERTY:
+					keyMap = kStandardKeyMapQWERTYLowerCase;
+					break;
+					
+				case kStandardLayoutQWERTZ:
+					keyMap = kStandardKeyMapQWERTZLowerCase;
+					break;
+					
+				case kStandardLayoutAZERTY:
+					keyMap = kStandardKeyMapAZERTYLowerCase;
+					break;
+					
+				case kStandardLayoutDvorak:
+					keyMap = kStandardKeyMapDvorakLowerCase;
+					break;
+					
+				case kStandardLayoutColemak:
+					keyMap = kStandardKeyMapColemakLowerCase;
+					break;
+					
+				default:
+					break;
+			}
+		}
+	}
 	return keyMap;
 }
 

@@ -29,6 +29,7 @@ typedef void * UkeleleKeyboard;
 @property (nonatomic, strong) NSString *keyboardName;
 
 - (id)initWithName:(NSString *)keyboardName;
+- (id)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout;
 - (id)initWithData:(NSData *)xmlData withError:(NSError **)outError;
 - (NSData *)convertToData;
 - (void)setParentDocument:(NSDocument *)parent;

@@ -27,6 +27,7 @@ public:
 	ErrorMessage CreateKeyboardFromXMLTree(const NXMLNode& inXMLTree);
 	NXMLNode *CreateXMLTree(void);	
 	void CreateBasicKeyboard(NString inName);
+	void CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout);
 	void ClearKeyboard(void);
 	
 	shared_ptr<KeyboardElement> GetKeyboard(void) { return mKeyboard; }

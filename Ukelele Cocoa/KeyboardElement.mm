@@ -313,6 +313,21 @@ KeyboardElement *KeyboardElement::CreateBasicKeyboard(NString inName)
 	return newKeyboard;
 }
 
+KeyboardElement *KeyboardElement::CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout) {
+	KeyboardElement *newKeyboard = new KeyboardElement(kTextEncodingMacUnicode, GetRandomKeyboardID(kTextEncodingMacUnicode), inName, 1);
+	LayoutsElement *layoutsElement = LayoutsElement::CreateBasicLayoutsElement();
+	newKeyboard->AddLayoutsElement(layoutsElement);
+	bool hasCapsLockLayout = inBaseLayout != inCapsLockLayout;
+	ModifierMap *modifierMap = ModifierMap::CreateStandardModifierMap(hasCapsLockLayout);
+	newKeyboard->AddModifierMap(modifierMap);
+	KeyMapSet *ansiKeyMapSet = KeyMapSet::CreateStandardKeyMapSet(kANSIKeyMapName, "", inBaseLayout, inCommandLayout, inCapsLockLayout, modifierMap);
+	newKeyboard->AddKeyMapSet(ansiKeyMapSet);
+	KeyMapSet *jisKeyMapSet = KeyMapSet::CreateStandardJISKeyMapSet(kJISKeyMapName, kANSIKeyMapName, modifierMap);
+	newKeyboard->AddKeyMapSet(jisKeyMapSet);
+	newKeyboard->mKeyMapSetList->CompleteSet();
+	return newKeyboard;
+}
+
 	// Create a keyboard with standard modifiers and some things filled in
 
 KeyboardElement *KeyboardElement::CreateKeyboad(NString inName, UInt32 inScript, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard) {

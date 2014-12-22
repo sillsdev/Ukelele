@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -20,14 +20,17 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="512" height="310"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="512" height="310"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mJd-Dd-4U2">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mJd-Dd-4U2">
                         <rect key="frame" x="373" y="13" width="125" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="113" id="Gbk-SX-uvC"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="Bundle Info…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwM-xI-xff">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -36,18 +39,26 @@
                             <action selector="showVersionInfo:" target="-2" id="rXb-oH-p34"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
                         <rect key="frame" x="259" y="13" width="114" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="102" id="CP3-j7-3kQ"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="Language…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfm-In-UYV">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="chooseIntendedLanguage:" target="-2" id="SXY-3f-eYc"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="ZVu-vi-rnL">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R44-1f-ZB9">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R44-1f-ZB9">
                         <rect key="frame" x="20" y="273" width="474" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Keyboard Layouts in this bundle" id="Hey-uk-03e">
@@ -56,11 +67,11 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZ0-ZP-oRP">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZ0-ZP-oRP">
                         <rect key="frame" x="20" y="57" width="472" height="208"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" ambiguous="YES" misplaced="YES" id="8IO-07-0Ig">
-                            <rect key="frame" x="1" y="17" width="470" height="190"/>
+                        <clipView key="contentView" misplaced="YES" id="8IO-07-0Ig">
+                            <rect key="frame" x="1" y="0.0" width="470" height="207"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" headerView="82y-ig-h7e" id="RWF-Rg-ghd">
@@ -145,7 +156,7 @@
                             <rect key="frame" x="-7" y="2" width="0.0" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="7jg-l2-c9H">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="7jg-l2-c9H">
                             <rect key="frame" x="-14" y="9" width="15" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -154,9 +165,12 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2k1-ap-Wrj">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2k1-ap-Wrj">
                         <rect key="frame" x="57" y="19" width="23" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="aQZ-ex-ulT"/>
+                        </constraints>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TTY-xH-dPK">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -165,16 +179,19 @@
                             <action selector="removeKeyboardLayout:" target="-2" id="kNW-cC-nqX"/>
                         </connections>
                     </button>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
                         <rect key="frame" x="20" y="19" width="29" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="29" id="fge-eN-MtD"/>
+                        </constraints>
                         <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="eL5-gG-4lb" id="Q7e-TI-Ta7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="ZXs-gW-Moh">
                                 <items>
                                     <menuItem state="on" image="NSAddTemplate" hidden="YES" id="pT0-Rp-TrO"/>
-                                    <menuItem title="Empty Keyboard Layout" id="Jae-gt-8aR">
+                                    <menuItem title="Standard Keyboard Layout" id="Jae-gt-8aR">
                                         <connections>
                                             <action selector="addKeyboardLayout:" target="-1" id="owp-WK-pWr"/>
                                         </connections>
@@ -201,6 +218,25 @@
                         </popUpButtonCell>
                     </popUpButton>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="R44-1f-ZB9" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="22" id="6Is-eK-NAy"/>
+                    <constraint firstItem="90p-nh-emO" firstAttribute="leading" secondItem="eZ0-ZP-oRP" secondAttribute="leading" id="75u-0x-xns"/>
+                    <constraint firstItem="mJd-Dd-4U2" firstAttribute="leading" secondItem="lsp-Sh-MR9" secondAttribute="trailing" constant="12" symbolic="YES" id="7Cg-Ll-0kZ"/>
+                    <constraint firstItem="2k1-ap-Wrj" firstAttribute="leading" secondItem="90p-nh-emO" secondAttribute="trailing" constant="8" symbolic="YES" id="AjI-i2-rI7"/>
+                    <constraint firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" constant="20" symbolic="YES" id="CIc-OZ-krk"/>
+                    <constraint firstItem="R44-1f-ZB9" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Gz7-fT-JwM"/>
+                    <constraint firstItem="eZ0-ZP-oRP" firstAttribute="top" secondItem="R44-1f-ZB9" secondAttribute="bottom" constant="8" symbolic="YES" id="Hrz-d0-0he"/>
+                    <constraint firstItem="eZ0-ZP-oRP" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="JUT-YY-pQ4"/>
+                    <constraint firstItem="90p-nh-emO" firstAttribute="top" secondItem="eZ0-ZP-oRP" secondAttribute="bottom" constant="16" id="KnS-R1-1uM"/>
+                    <constraint firstItem="90p-nh-emO" firstAttribute="top" secondItem="2k1-ap-Wrj" secondAttribute="top" id="Si2-7O-HrR"/>
+                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="baseline" secondItem="mJd-Dd-4U2" secondAttribute="baseline" id="URS-GF-3Nl"/>
+                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="top" secondItem="2k1-ap-Wrj" secondAttribute="top" id="VoN-b0-iSL"/>
+                    <constraint firstItem="mJd-Dd-4U2" firstAttribute="top" secondItem="lsp-Sh-MR9" secondAttribute="top" id="bff-Ut-Yzc"/>
+                    <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="mJd-Dd-4U2" secondAttribute="trailing" id="dZo-jF-SX1"/>
+                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="bottom" secondItem="2k1-ap-Wrj" secondAttribute="bottom" id="khx-sU-m6w"/>
+                    <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" id="wfB-DR-d3l"/>
+                    <constraint firstAttribute="bottom" secondItem="90p-nh-emO" secondAttribute="bottom" constant="20" symbolic="YES" id="zDG-ss-caw"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="tl5-AU-7nP"/>
@@ -214,7 +250,7 @@
         </arrayController>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="8" height="8"/>
-        <image name="NSRemoveTemplate" width="8" height="8"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>

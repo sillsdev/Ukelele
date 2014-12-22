@@ -89,6 +89,17 @@ bool KeyMapSelect::ModifierMatches(const UInt32 inModifierCombination) const
 	return false;
 }
 
+bool KeyMapSelect::RequiresModifier(const UInt32 inModifier) const {
+	SInt32 numModifiers = mModifierList->GetElementCount();
+	for (SInt32 i = 1; i <= numModifiers; i++) {
+		ModifierElement *modifierElement = mModifierList->GetModifierElement(i);
+		if (modifierElement->GetModifierStatus(inModifier) == kModifierPressed) {
+			return true;
+		}
+	}
+	return false;
+}
+
 #pragma mark -
 
 // Create a basic keyMapSelect element
