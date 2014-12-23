@@ -241,9 +241,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (NSFileWrapper *)createFileWrapper {
+		// Make a copy of the keyboard layouts array so that we don't have it change under us
+	NSArray *keyboardLayouts = [self.keyboardLayouts copy];
 		// Start at the bottom, the InfoPlist.strings file, which contains all the names
 	NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
-	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
+	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry keyboardName];
 		if (keyboardName != nil && ![keyboardName isEqualToString:@""]) {
 			[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, keyboardName]];
@@ -273,35 +275,31 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[resourcesDirectory addFileWrapper:englishLprojDirectory];
 	dispatch_queue_t mainQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 		// Add all the keyboard layout and icon files
-	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
+	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry fileName];
-		if (nil == keyboardName || [keyboardName isEqualToString:@""]) {
+			// Test whether we have a null or untitled file name
+		if (nil == keyboardName || [keyboardName isEqualToString:@""] ||
+			[keyboardName compare:@"untitled" options:(NSAnchoredSearch | NSCaseInsensitiveSearch)] == NSOrderedSame) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
+		NSLog(@"Saving %@", keyboardName);
 		if ([keyboardEntry keyboardFileWrapper] != nil) {
 				// Already have a file wrapper
+			NSLog(@"Have file wrapper, preferred name %@", [[keyboardEntry keyboardFileWrapper] preferredFilename]);
 			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
 		}
 		else {
 			NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
+			NSLog(@"Creating new file %@", keyboardFileName);
 			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
+//			[resourcesDirectory addRegularFileWithContents:fileData preferredFilename:keyboardFileName];
 			dispatch_async(mainQueue, ^void(void) {
 				[resourcesDirectory addRegularFileWithContents:fileData
 											 preferredFilename:keyboardFileName];
 			});
 		}
-//		if ([[keyboardEntry fileName] isEqualToString:@""] && [self fileURL] != nil) {
-//			NSLog(@"New file to be noted");
-//				// The keyboard has not yet been saved
-//			NSURL *bundleURL = [self fileURL];
-//			NSURL *keyboardURL = [[[bundleURL URLByAppendingPathComponent:kStringContentsName isDirectory:YES]
-//								   URLByAppendingPathComponent:kStringResourcesName isDirectory:YES]
-//								  URLByAppendingPathComponent:keyboardFileName isDirectory:NO];
-//			[[keyboardEntry document] setFileURL:keyboardURL];
-//			[[keyboardEntry document] setDisplayName:keyboardName];
-//		}
 		if ([keyboardEntry hasIcon]) {
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
 			[resourcesDirectory addRegularFileWithContents:[keyboardEntry iconData] preferredFilename:iconFileName];
@@ -566,6 +564,14 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			break;
 		}
 	}
+}
+
+- (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry {
+	UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+	[keyboardController setKeyboardLayout:[keyboardEntry keyboardObject]];
+	[keyboardEntry setKeyboardController:keyboardController];
+	[keyboardController setParentDocument:self];
+	return keyboardController;
 }
 
 #pragma mark Table delegate methods
@@ -961,12 +967,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		return;
 	}
 	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
-	UkeleleKeyboardObject *selectedKeyboard = [selectedRowInfo keyboardObject];
 	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
 	if (keyboardController == nil) {
-		keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-		[keyboardController setKeyboardLayout:selectedKeyboard];
-		[selectedRowInfo setKeyboardController:keyboardController];
+		keyboardController = [self createControllerForEntry:selectedRowInfo];
 	}
 	[keyboardController showWindow:self];
 }
@@ -1127,12 +1130,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	UKKeyboardController *keyboardController = [keyboardEntry keyboardController];
 	if (keyboardController == nil) {
 			// Create the controller
-		keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-		[keyboardController setKeyboardLayout:[keyboardEntry keyboardObject]];
-		[keyboardEntry setKeyboardController:keyboardController];
+		keyboardController = [self createControllerForEntry:keyboardEntry];
 	}
 	NSWindow *docWindow = [keyboardLayoutsTable window];
 	[keyboardController askKeyboardIdentifiers:docWindow];
+//	[self keyboardLayoutDidChange:[keyboardEntry keyboardObject]];
+//	[keyboardLayoutsTable reloadData];
 }
 
 	// Install the keyboard layout
@@ -1180,6 +1183,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			break;
 		}
 	}
+	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 }
@@ -1230,30 +1234,10 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 						 };
 	});
 	[inspectorController bind:@"currentKeyboard" toObject:self.keyboardLayoutsController withKeyPath:@"selection.keyboardObject" options:bindingsDict];
-//	switch ([[keyboardLayoutsTable selectedRowIndexes] count]) {
-//		case 0:
-//				// No selected row
-//			[inspectorController setCurrentKeyboard:nil];
-//			break;
-//			
-//		case 1: {
-//				// One selected row
-//			KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[[keyboardLayoutsTable selectedRow]];
-//			UkeleleKeyboardObject *selectedKeyboard = [selectedRowInfo keyboardObject];
-//			[inspectorController setCurrentKeyboard:selectedKeyboard];
-//			break;
-//		}
-//			
-//		default:
-//				// Multiple selected row
-//			[inspectorController setCurrentKeyboard:nil];
-//			break;
-//	}
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-//	[inspectorController setCurrentKeyboard:nil];
 	[inspectorController unbind:@"currentDocument"];
 }
 
@@ -1346,11 +1330,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	_bundleVersion = newBundleVersion;
 	_buildVersion = newBuildVersion;
 	_sourceVersion = newSourceVersion;
-		//	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-		//	[[inspectorController bundleName] setStringValue:_bundleName];
-		//	[[inspectorController bundleVersion] setStringValue:_bundleVersion];
-		//	[[inspectorController buildVersion] setStringValue:_buildVersion];
-		//	[[inspectorController sourceVersion] setStringValue:_sourceVersion];
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument {
@@ -1358,8 +1337,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[self insertDocument:newDocument atIndex:newIndex];
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager setActionName:@"Add keyboard layout"];
-		// Show the document
-//	[newDocument showWindows];
+		// Notify the list that it's been updated
+	[keyboardLayoutsTable reloadData];
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
@@ -1368,6 +1347,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
 	[undoManager setActionName:@"Remove keyboard layout"];
 	[self.keyboardLayouts removeObjectAtIndex:indexToRemove];
+	[keyboardLayoutsTable deselectAll:self];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 		// Hide the document's windows, if they are shown

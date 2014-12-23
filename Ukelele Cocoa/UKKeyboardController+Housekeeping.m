@@ -13,6 +13,7 @@
 #import "InspectorWindowController.h"
 #import "ColourThemeEditorController.h"
 #import "UkeleleConstantStrings.h"
+#import "UKKeyboardDocument.h"
 
 @implementation UKKeyboardController (Housekeeping)
 
@@ -238,7 +239,7 @@
 	[[undoManager prepareWithInvocationTarget:self] changeKeyboardName:oldName];
 	[undoManager setActionName:@"Set keyboard name"];
 	[[self keyboardLayout] setKeyboardName:newName];
-//	[[self parentBundle] notifyNewName:newName forDocument:self];
+	[[self parentDocument] notifyNewName:newName forDocument:self];
 	[self.window setTitle:newName];
 }
 
@@ -246,7 +247,7 @@
 
 - (BOOL)verifyStateName:(NSString *)stateName
 {
-	if (/*![UkeleleDocument isValidStateName:stateName] ||*/ [[self keyboardLayout] hasStateWithName:stateName]) {
+	if ([[self keyboardLayout] hasStateWithName:stateName]) {
 			// Can't have "none" or an existing state name
 		return NO;
 	}
