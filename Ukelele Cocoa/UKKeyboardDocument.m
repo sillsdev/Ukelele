@@ -570,62 +570,21 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 #pragma mark Table delegate methods
 
-//- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-//	return [self.keyboardLayouts count];
-//}
-//
-//- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-//	KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
-//	NSString *columnID = [tableColumn identifier];
-//	if ([columnID isEqualToString:@"Keyboard"]) {
-//			// Keyboard column
-//		NSString *keyboardName = [keyboardEntry keyboardName];
-//		if (nil == keyboardName || [keyboardName isEqualToString:@""]) {
-//			keyboardName = [keyboardEntry fileName];
-//		}
-//		return keyboardName;
-//	}
-//	else if ([columnID isEqualToString:@"Icon"]) {
-//			// Icon column
-//		NSImage *iconImage = [[NSImage alloc] initWithData:[keyboardEntry iconData]];
-//		return iconImage;
-//	}
-//	else if ([columnID isEqualToString:@"Language"]) {
-//			// Language column
-//		NSString *languageIdentifier = [keyboardEntry intendedLanguage];
-//		return languageIdentifier;
-//	}
-//	else {
-//		return nil;
-//	}
-//}
-
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
 		// Both the remove and Language buttons should only be available when there is a selection
-	BOOL hasSelection = [keyboardLayoutsTable selectedRow] != -1;
-	[removeKeyboardButton setEnabled:hasSelection];
-	[languageButton setEnabled:hasSelection];
+//	BOOL hasSelection = [keyboardLayoutsTable selectedRow] != -1;
+//	[removeKeyboardButton setEnabled:hasSelection];
+//	[languageButton setEnabled:hasSelection];
 	[self inspectorSetKeyboardSection];
-//	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-//	switch ([[keyboardLayoutsTable selectedRowIndexes] count]) {
-//		case 0:
-//				// No selected row
-//			[inspectorController setCurrentKeyboard:nil];
-//			break;
-//			
-//		case 1: {
-//				// One selected row
-//			KeyboardLayoutInformation *selectedRowInfo = keyboardLayouts[[keyboardLayoutsTable selectedRow]];
-//			UkeleleKeyboardObject *selectedKeyboard = [selectedRowInfo keyboardObject];
-//			[inspectorController setCurrentKeyboard:selectedKeyboard];
-//			break;
-//		}
-//			
-//		default:
-//				// Multiple selected row
-//			[inspectorController setCurrentKeyboard:nil];
-//			break;
-//	}
+}
+
+- (void)setTableSelectionForMenu {
+	NSUInteger clickedRow = [keyboardLayoutsTable clickedRow];
+	if (clickedRow != -1) {
+		if ([keyboardLayoutsTable selectedRow] != clickedRow) {
+			[keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
+		}
+	}
 }
 
 #pragma mark Drag and Drop
@@ -730,10 +689,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 }
 
-//- (NSArray *)keyboardLayouts {
-//	return keyboardLayouts;
-//}
-//
 #pragma mark Interface validation
 
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem {
@@ -748,12 +703,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			break;
 		}
 	}
-	if (theAction == @selector(removeKeyboardLayout:)) {
-			// Only active if there's a selection in the table
-		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
-		return (selectedRowNumber != -1);
-	}
-	else if (theAction == @selector(addOpenDocument:)) {
+	if (theAction == @selector(addOpenDocument:)) {
 			// Only active if there are open keyboard layouts which aren't in bundles
 		NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 		NSArray *theDocumentList = [theController documents];
@@ -771,9 +721,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		return YES;
 	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
-			 theAction == @selector(askKeyboardIdentifiers:)) {
+			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
+			 theAction == @selector(removeKeyboardLayout:)) {
 			// Only active if there's a selection in the table
 		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+		if (selectedRowNumber == -1) {
+			selectedRowNumber = [keyboardLayoutsTable clickedRow];
+		}
 		return (selectedRowNumber != -1);
 	}
 	return [super validateUserInterfaceItem:anItem];
@@ -848,6 +802,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 - (IBAction)addKeyboardLayout:(id)sender {
 		// Run a dialog to define a keyboard layout
+	[self setTableSelectionForMenu];
 	__block UKNewKeyboardLayoutController *theController = [UKNewKeyboardLayoutController createController];
 	NSArray *windowControllers = [self windowControllers];
 	NSWindowController *windowController = windowControllers[0];
@@ -970,6 +925,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Remove the selected keyboard layout from the bundle
 
 - (IBAction)removeKeyboardLayout:(id)sender {
+	[self setTableSelectionForMenu];
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
@@ -999,6 +955,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Open the selected keyboard layout's window
 
 - (IBAction)openKeyboardLayout:(id)sender {
+	[self setTableSelectionForMenu];
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
@@ -1017,6 +974,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Choose the intended language of the selected keyboard layout
 
 - (IBAction)chooseIntendedLanguage:(id)sender {
+	[self setTableSelectionForMenu];
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
@@ -1134,6 +1092,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Attach an icon file to a keyboard layout
 
 - (IBAction)attachIconFile:(id)sender {
+	[self setTableSelectionForMenu];
 	__block NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
@@ -1159,6 +1118,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 	// Set the keyboard's name, script and/or id
 - (IBAction)askKeyboardIdentifiers:(id)sender {
+	[self setTableSelectionForMenu];
 	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;

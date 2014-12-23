@@ -45,7 +45,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="102" id="CP3-j7-3kQ"/>
                         </constraints>
-                        <buttonCell key="cell" type="push" title="Language…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfm-In-UYV">
+                        <buttonCell key="cell" type="push" title="Language…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfm-In-UYV">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -147,6 +147,7 @@
                                             </dictionary>
                                         </binding>
                                         <outlet property="delegate" destination="-2" id="fhk-hp-Fya"/>
+                                        <outlet property="menu" destination="wxf-v3-tUG" id="r3c-HP-gnY"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -171,12 +172,17 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="23" id="aQZ-ex-ulT"/>
                         </constraints>
-                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TTY-xH-dPK">
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TTY-xH-dPK">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="removeKeyboardLayout:" target="-2" id="kNW-cC-nqX"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="0Ws-f5-mJI">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
@@ -248,6 +254,48 @@
                 <binding destination="-2" name="contentArray" keyPath="keyboardLayouts" id="RMZ-Hz-Dpz"/>
             </connections>
         </arrayController>
+        <menu id="wxf-v3-tUG">
+            <items>
+                <menuItem title="Open Keyboard Layout" id="TXP-Zm-uMP">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openKeyboardLayout:" target="-2" id="tUU-ep-req"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove Keyboard Layout" id="fUN-ez-iRk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="removeKeyboardLayout:" target="-2" id="qnv-U3-VNv"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Set Keyboard Name and ID…" id="2Y2-hz-MX0">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="askKeyboardIdentifiers:" target="-2" id="gfr-aG-u2x"/>
+                        <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="hMI-Ma-ir9">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Set Keyboard Language…" id="hEE-13-tmp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="chooseIntendedLanguage:" target="-2" id="zQY-qH-aqt"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Attach Icon…" id="fXi-y5-Scg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="attachIconFile:" target="-2" id="8Lh-xA-Fch"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="LZ6-Bn-g9C"/>
+            </connections>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
