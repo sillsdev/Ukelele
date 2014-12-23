@@ -273,7 +273,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[resourcesDirectory setPreferredFilename:kStringResourcesName];
 	[resourcesDirectory addFileWrapper:englishLprojDirectory];
-	dispatch_queue_t mainQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 		// Add all the keyboard layout and icon files
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry fileName];
@@ -282,23 +281,19 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			[keyboardName compare:@"untitled" options:(NSAnchoredSearch | NSCaseInsensitiveSearch)] == NSOrderedSame) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
-		NSLog(@"Saving %@", keyboardName);
+//		NSLog(@"Saving %@", keyboardName);
 		if ([keyboardEntry keyboardFileWrapper] != nil) {
 				// Already have a file wrapper
-			NSLog(@"Have file wrapper, preferred name %@", [[keyboardEntry keyboardFileWrapper] preferredFilename]);
+//			NSLog(@"Have file wrapper, preferred name %@", [[keyboardEntry keyboardFileWrapper] preferredFilename]);
 			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
 		}
 		else {
 			NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
-			NSLog(@"Creating new file %@", keyboardFileName);
+//			NSLog(@"Creating new file %@", keyboardFileName);
 			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
-//			[resourcesDirectory addRegularFileWithContents:fileData preferredFilename:keyboardFileName];
-			dispatch_async(mainQueue, ^void(void) {
-				[resourcesDirectory addRegularFileWithContents:fileData
-											 preferredFilename:keyboardFileName];
-			});
+			[resourcesDirectory addRegularFileWithContents:fileData preferredFilename:keyboardFileName];
 		}
 		if ([keyboardEntry hasIcon]) {
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
@@ -548,20 +543,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleVersionKey]) {
 			_bundleVersion = infoPlistDictionary[plistKey];
-		}
-	}
-}
-
-- (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject {
-		// The keyboard layout has changed, so pull it from the file wrapper
-	for (KeyboardLayoutInformation *keyboardInfo in self.keyboardLayouts) {
-		if ([keyboardInfo keyboardObject] == keyboardObject) {
-				// Found the keyboard in the list
-			if ([keyboardInfo keyboardFileWrapper]) {
-					// Remove the keyboard file wrapper
-				[keyboardInfo setKeyboardFileWrapper:nil];
-			}
-			break;
 		}
 	}
 }
@@ -1174,6 +1155,20 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 #pragma mark Notifications
 
+- (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject {
+		// The keyboard layout has changed, so pull it from the file wrapper
+	for (KeyboardLayoutInformation *keyboardInfo in self.keyboardLayouts) {
+		if ([keyboardInfo keyboardObject] == keyboardObject) {
+				// Found the keyboard in the list
+			if ([keyboardInfo keyboardFileWrapper]) {
+					// Remove the keyboard file wrapper
+				[keyboardInfo setKeyboardFileWrapper:nil];
+			}
+			break;
+		}
+	}
+}
+
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
 	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardController class]], @"Document must be a Ukelele document");
 		// Find the document in the list
@@ -1338,7 +1333,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager setActionName:@"Add keyboard layout"];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+//	[keyboardLayoutsTable reloadData];
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
