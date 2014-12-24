@@ -1512,6 +1512,7 @@ const float kScalePercentageFactor = 100.0f;
 }
 
 - (void)documentDidChange {
+	[self.parentDocument keyboardLayoutDidChange:self.keyboardLayout];
 	[self updateWindow];
 }
 

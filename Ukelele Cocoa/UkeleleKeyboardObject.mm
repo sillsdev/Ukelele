@@ -426,6 +426,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 																							   to:ToNS(oldOutput)
 																					 usingBaseMap:usingBaseMap];
 	[[parentDocument undoManager] setActionName:@"Change output"];
+    [self.delegate documentDidChange];
 }
 
 - (NSString *)getTerminatorForState:(NSString *)stateName
@@ -446,6 +447,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	[[[parentDocument undoManager] prepareWithInvocationTarget:parentDocument] changeTerminatorForState:stateName
 																									 to:oldTerminator];
 	[[parentDocument undoManager] setActionName:@"Change terminator"];
+    [self.delegate documentDidChange];
 }
 
 - (void)makeKeyDeadKey:(NSDictionary *)keyDataDict state:(NSString *)nextState
@@ -459,6 +461,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUndoManager *undoManager = [parentDocument undoManager];
 	[[undoManager prepareWithInvocationTarget:parentDocument] makeDeadKeyOutput:keyDataDict output:currentOutput];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Changed dead key to output" : @"Change to dead key"];
+    [self.delegate documentDidChange];
 }
 
 - (void)makeDeadKeyOutput:(NSDictionary *)keyDataDict output:(NSString *)newOutput
@@ -474,6 +477,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUndoManager *undoManager = [parentDocument undoManager];
 	[[undoManager prepareWithInvocationTarget:parentDocument] makeKeyDeadKey:keyDataDict state:nextState];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Change to dead key" : @"Change dead key to output"];
+    [self.delegate documentDidChange];
 }
 
 - (void)changeDeadKeyNextState:(NSDictionary *)keyDataDict toState:(NSString *)newState
@@ -488,6 +492,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUndoManager *undoManager = [parentDocument undoManager];
 	[[undoManager prepareWithInvocationTarget:self] changeDeadKeyNextState:keyDataDict toState:nextState];
 	[undoManager setActionName:@"Change next state"];
+    [self.delegate documentDidChange];
 }
 
 - (void)createState:(NSString *)stateName withTerminator:(NSString *)terminator
@@ -532,6 +537,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 															true);
 	keyElement->ChangeActionName(keyElement->GetActionName(), ToNN(originalAction));
+    [self.delegate documentDidChange];
 }
 
 - (void)unlinkKey:(NSDictionary *)keyDataDict
@@ -544,6 +550,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString actionName = keyElement->GetActionName();
 	NString newActionName = keyboardElement->CreateDuplicateAction(actionName);
 	keyElement->ChangeActionName(actionName, newActionName);
+    [self.delegate documentDidChange];
 }
 
 - (void)swapModifierSet:(NSDictionary *)parameters inReverse:(BOOL)reverse
@@ -568,6 +575,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		keyElement->ChangeActionName(oldString, newString);
 	}
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)unlinkModifierSet:(NSUInteger)modifierCombination forKeyboard:(NSInteger)keyboardID
@@ -596,6 +604,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	[[undoManager prepareWithInvocationTarget:self] swapModifierSet:parameterDictionary inReverse:YES];
 	[undoManager setActionName:@"Unlink Modifiers"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (NSUInteger)modifiersForIndex:(NSUInteger)theIndex forKeyboard:(NSInteger)keyboardID
@@ -610,6 +619,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (void)swapKeyCode:(NSInteger)keyCode1 withKeyCode:(NSInteger)keyCode2 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SwapKeys((UInt32)keyCode1, (UInt32)keyCode2);
+    [self.delegate documentDidChange];
 }
 
 #pragma mark Cut, copy & paste keys
@@ -619,6 +629,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	boost::shared_ptr<KeyElementBundle> keyBundle(new KeyElementBundle);
 	keyboardElement->CutKeyBundle((UInt32)keyCode, keyBundle);
 	pasteKeyBundleStack.push_back(keyBundle);
+    [self.delegate documentDidChange];
 }
 
 - (void)undoCutKeyCode:(NSInteger)keyCode {
@@ -626,6 +637,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	boost::shared_ptr<KeyElementBundle> keyBundle = pasteKeyBundleStack.back();
 	keyboardElement->SetKeyBundle((UInt32)keyCode, keyBundle);
 	pasteKeyBundleStack.pop_back();
+    [self.delegate documentDidChange];
 }
 
 - (void)copyKeyCode:(NSInteger)keyCode {
@@ -670,6 +682,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	[[[parentDocument undoManager] prepareWithInvocationTarget:self] setDefaultModifierIndex:oldIndex];
 	[[parentDocument undoManager] setActionName:@"Change default index"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (BOOL)keyMapSelectHasOneModifierCombination:(NSInteger)modifierIndex
@@ -705,6 +718,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
                                                                  control:oldControl];
 	[undoManager setActionName:@"Change modifiers"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)addModifierElement:(NSInteger)keyboardID
@@ -735,6 +749,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
                                                                  subindex:subindex];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Remove modifier combination" : @"Add modifier combination"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)removeModifierElement:(NSInteger)keyboardID index:(NSInteger)index subindex:(NSInteger)subindex
@@ -760,6 +775,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	shared_ptr<XMLCommentContainer> theCommentContainer = self.keyboard->GetCommentContainer();
 	theCommentContainer->RemoveCommentHolders(oldModifierElementList);
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)removeKeyMap:(NSInteger)index forKeyboard:(NSInteger)keyboardID newDefaultIndex:(NSInteger)newDefaultIndex
@@ -789,6 +805,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	shared_ptr<XMLCommentContainer> theCommentContainer = self.keyboard->GetCommentContainer();
 	theCommentContainer->RemoveCommentHolders(oldKeyMapSelectList);
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)replaceKeyMap:(NSInteger)index
@@ -814,6 +831,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	[undoManager setActionName:@"Replace key map"];
 	modifierMap->SetDefaultIndex((UInt32)defaultIndex);
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)addKeyMap:(KeyMapElement *)keyMap atIndex:(NSInteger)newIndex forKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
@@ -856,6 +874,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
                                                            newDefaultIndex:oldDefaultIndex];
     [undoManager setActionName:@"Add key map"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)addEmptyKeyMapForKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
@@ -906,6 +925,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
     [[undoManager prepareWithInvocationTarget:self] replaceModifierMaps:oldModifiers];
     [undoManager setActionName:@"Replace Modifiers"];
     [self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (void)simplifyModifiers
@@ -940,6 +960,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	[[undoManager prepareWithInvocationTarget:self] moveModifierSetIndex:destinationSet toIndex:sourceSet forKeyboard:keyboardID];
 	[undoManager setActionName:@"Move modifier set"];
 	[self.delegate modifierMapDidChange];
+    [self.delegate documentDidChange];
 }
 
 - (BOOL)hasModifierSetWithIndex:(NSInteger)setIndex {
@@ -1115,13 +1136,16 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (RemoveStateData *)removeUnusedStates
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	return keyboardElement->RemoveUnusedStates();
+	RemoveStateData *result = keyboardElement->RemoveUnusedStates();
+    [self.delegate documentDidChange];
+	return result;
 }
 
 - (void)undoRemoveUnusedStates:(RemoveStateData *)removeStateData
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceRemovedStates(removeStateData);
+    [self.delegate documentDidChange];
 }
 
 - (ActionElementSetWrapper *)removeUnusedActions
@@ -1135,6 +1159,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		result = [[ActionElementSetWrapper alloc] init];
 		[result setActionElements:holder];
 	}
+    [self.delegate documentDidChange];
 	return result;
 }
 
@@ -1142,24 +1167,28 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceActions([removedActions actionElements]->GetActionElementSet());
+    [self.delegate documentDidChange];
 }
 
 - (void)changeStateName:(NSString *)oldStateName toName:(NSString *)newStateName
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceStateName(ToNN(oldStateName), ToNN(newStateName));
+    [self.delegate documentDidChange];
 }
 
 - (void)changeActionName:(NSString *)oldActionName toName:(NSString *)newActionName
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ChangeActionName(ToNN(oldActionName), ToNN(newActionName));
+    [self.delegate documentDidChange];
 }
 
 - (AddMissingOutputData *)addSpecialKeyOutput
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	AddMissingOutputData *data = keyboardElement->AddSpecialKeyOutput();
+    [self.delegate documentDidChange];
 	return data;
 }
 
@@ -1167,6 +1196,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceOldOutput(addMissingOutputData);
+    [self.delegate documentDidChange];
 }
 
 @end
