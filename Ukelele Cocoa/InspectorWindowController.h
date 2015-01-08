@@ -37,7 +37,9 @@
 @property (strong) IBOutlet NSTextField *sourceVersionField;
 
 @property (nonatomic, strong) IBOutlet NSArray *stateStack;
-@property (strong) IBOutlet NSArray *scriptList;
+@property (strong) NSArray *scriptList;
+@property (strong) IBOutlet NSTextField *scriptRange;
+@property (strong) NSArray *scriptRangeList;
 
 @property (weak, nonatomic) UkeleleKeyboardObject *currentKeyboard;
 @property (weak, nonatomic) UKKeyboardController *currentWindow;

@@ -37,7 +37,6 @@
 @property (nonatomic, strong) NSDictionary *smallAttributes;
 @property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;
 @property (nonatomic, weak) IBOutlet id<UKKeyCapClick> clickDelegate;
-@property (nonatomic) NSInteger tag;
 
 - (NSRect)boundingRect;
 - (NSRect)insideRect;

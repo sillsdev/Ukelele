@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5209B731193563C000B195E9 /* kluchrtoxml */; };
+		5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5209B731193563C000B195E9 /* kluchrtoxml */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
 		521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 521270E4194AD6E3003103CA /* UKKeyboardDocument.m */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
@@ -69,7 +69,6 @@
 		523B010D191CA0D100E06DF3 /* RandomNumberGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */; };
 		523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */; };
 		523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */; };
-		523B0110191CA0D100E06DF3 /* ScriptInfoTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F7191CA0D100E06DF3 /* ScriptInfoTransformer.m */; };
 		523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FA191CA0D100E06DF3 /* ToolboxData.m */; };
 		523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */; };
 		523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FE191CA0D100E06DF3 /* UnicodeTable.m */; };
@@ -142,6 +141,8 @@
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
+		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
+		5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
 		529B223E1927213600D9F055 /* ReplaceNameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529B223D1927213600D9F055 /* ReplaceNameSheet.xib */; };
 		52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A481F0192348B300D412D7 /* AddModifiersDialog.xib */; };
@@ -168,7 +169,7 @@
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
-		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; };
+		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -346,8 +347,6 @@
 		523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RemoveStateDataBlock.mm; sourceTree = "<group>"; };
 		523B00F4191CA0D100E06DF3 /* ScriptInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptInfo.h; sourceTree = "<group>"; };
 		523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ScriptInfo.mm; sourceTree = "<group>"; };
-		523B00F6191CA0D100E06DF3 /* ScriptInfoTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptInfoTransformer.h; sourceTree = "<group>"; };
-		523B00F7191CA0D100E06DF3 /* ScriptInfoTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptInfoTransformer.m; sourceTree = "<group>"; };
 		523B00F8191CA0D100E06DF3 /* ScriptRanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptRanges.h; sourceTree = "<group>"; };
 		523B00F9191CA0D100E06DF3 /* ToolboxData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolboxData.h; sourceTree = "<group>"; };
 		523B00FA191CA0D100E06DF3 /* ToolboxData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolboxData.m; sourceTree = "<group>"; };
@@ -486,6 +485,10 @@
 		52914F18192C301F00815D1E /* UkeleleDocument+Modifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UkeleleDocument+Modifiers.h"; sourceTree = "<group>"; };
 		52914F19192C301F00815D1E /* UkeleleDocument+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UkeleleDocument+Modifiers.m"; sourceTree = "<group>"; };
 		5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HandleDeadKeySheet.xib; path = "Interface Files/HandleDeadKeySheet.xib"; sourceTree = "<group>"; };
+		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
+		5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptIndexTransformer.m; sourceTree = "<group>"; };
+		5294EB951A5E58F800765E94 /* StringArrayFirstTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringArrayFirstTransformer.h; sourceTree = "<group>"; };
+		5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringArrayFirstTransformer.m; sourceTree = "<group>"; };
 		529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectKeyByCodeSheet.xib; path = "Interface Files/SelectKeyByCodeSheet.xib"; sourceTree = "<group>"; };
 		529B223D1927213600D9F055 /* ReplaceNameSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReplaceNameSheet.xib; path = "Interface Files/ReplaceNameSheet.xib"; sourceTree = "<group>"; };
 		52A481F0192348B300D412D7 /* AddModifiersDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddModifiersDialog.xib; path = "Interface Files/AddModifiersDialog.xib"; sourceTree = "<group>"; };
@@ -850,6 +853,8 @@
 				523B00D8191CA0D100E06DF3 /* AddMissingOutputData.mm */,
 				523B00D9191CA0D100E06DF3 /* AddMissingOutputDataBlock.h */,
 				523B00DA191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm */,
+				5294EB951A5E58F800765E94 /* StringArrayFirstTransformer.h */,
+				5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */,
 				523B00DB191CA0D100E06DF3 /* ColourTheme.h */,
 				523B00DC191CA0D100E06DF3 /* ColourTheme.m */,
 				523B00DD191CA0D100E06DF3 /* ErrorMessage.cpp */,
@@ -876,10 +881,10 @@
 				525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */,
 				523B00F2191CA0D100E06DF3 /* RemoveStateDataBlock.h */,
 				523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */,
+				5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */,
+				5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */,
 				523B00F4191CA0D100E06DF3 /* ScriptInfo.h */,
 				523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */,
-				523B00F6191CA0D100E06DF3 /* ScriptInfoTransformer.h */,
-				523B00F7191CA0D100E06DF3 /* ScriptInfoTransformer.m */,
 				523B00F8191CA0D100E06DF3 /* ScriptRanges.h */,
 				523B00F9191CA0D100E06DF3 /* ToolboxData.h */,
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
@@ -1097,7 +1102,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UK;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					52BBECFE191B4C3900E48394 = {
@@ -1234,7 +1239,6 @@
 				523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */,
 				523B01B2191CA18C00E06DF3 /* PrintAccessoryPanel.m in Sources */,
 				523B00C2191CA00A00E06DF3 /* KeyElementBundle.mm in Sources */,
-				523B0110191CA0D100E06DF3 /* ScriptInfoTransformer.m in Sources */,
 				523B00CD191CA00A00E06DF3 /* ModifierMap.mm in Sources */,
 				523B00C5191CA00A00E06DF3 /* KeyMapSelect.mm in Sources */,
 				523B01A6191CA18C00E06DF3 /* ImportDeadKeyHandler.m in Sources */,
@@ -1289,6 +1293,7 @@
 				52BBED0F191B4C3900E48394 /* main.m in Sources */,
 				5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */,
 				523B0187191CA18C00E06DF3 /* AskKeyCode.m in Sources */,
+				5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */,
 				523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */,
 				52AD7D96196139F800B3CD3F /* UKKeyboardController+Housekeeping.m in Sources */,
 				523B0189191CA18C00E06DF3 /* AskReplaceDeadKeySheet.m in Sources */,
@@ -1299,6 +1304,7 @@
 				523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */,
 				523B01A4191CA18C00E06DF3 /* GetKeyCodeHandler.m in Sources */,
 				523B019C191CA18C00E06DF3 /* DoubleClickHandler.m in Sources */,
+				5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */,
 				523B007C191C9CA900E06DF3 /* MyTableView.m in Sources */,
 				523B01AD191CA18C00E06DF3 /* KeyboardTypeSheet.m in Sources */,
 				523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */,

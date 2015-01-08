@@ -26,6 +26,12 @@
 		[_modifierMatchField setStringValue:@""];
 		[_modifiersField setStringValue:@""];
 		_scriptList = [ScriptInfo standardScripts];
+		NSMutableArray *scriptRanges = [NSMutableArray arrayWithCapacity:[_scriptList count]];
+		for (NSUInteger i = 0; i < [_scriptList count]; i++) {
+			NSString *rangeString = [NSString stringWithFormat:@"Keyboard ID should be between %ld and %ld", [_scriptList[i] minID], [_scriptList[i] maxID]];
+			scriptRanges[i] = rangeString;
+		}
+		_scriptRangeList = scriptRanges;
     }
     
     return self;

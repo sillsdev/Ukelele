@@ -135,7 +135,7 @@
 
 - (BOOL)authenticatedInstallFromURL:(NSURL *)sourceURL toURL:(NSURL *)targetURL error:(NSError **)installError {
 		// Call the helper tool
-	UkeleleAppDelegate *appDelegate = [NSApp delegate];
+	UkeleleAppDelegate *appDelegate = (UkeleleAppDelegate *)[NSApp delegate];
 	BOOL helperInstalled = [appDelegate helperToolIsInstalled];
 	if (!helperInstalled) {
 		helperInstalled = [appDelegate installHelperTool];
