@@ -44,6 +44,12 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSData *frameData =[theDefaults objectForKey:UKInspectorWindowLocation];
+	if (frameData != nil) {
+		NSRect newFrame = *(NSRect *)[frameData bytes];
+		[self.window setFrame:newFrame display:NO];
+	}
 }
 
 + (InspectorWindowController *)getInstance {
@@ -110,6 +116,15 @@
 	[self.keyboardNameField setEnabled:enabled];
 	[self.keyboardScriptButton setEnabled:enabled];
 	[self.generateButton setEnabled:enabled];
+}
+
+#pragma mark Delegate methods
+
+- (void)windowDidMove:(NSNotification *)notification {
+	NSRect newFrame = [self.window frame];
+	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	[theDefaults setObject:frameData forKey:UKInspectorWindowLocation];
 }
 
 @end

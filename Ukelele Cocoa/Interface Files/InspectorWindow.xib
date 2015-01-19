@@ -39,11 +39,10 @@
                         <tabViewItems>
                             <tabViewItem label="Document" identifier="1" id="nVP-hb-dbf">
                                 <view key="view" id="is6-CO-MN6">
-                                    <rect key="frame" x="10" y="33" width="316" height="281"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" title="Keyboard Identity" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-8D-fob">
-                                            <rect key="frame" x="6" y="2" width="297" height="279"/>
+                                            <rect key="frame" x="6" y="-279" width="297" height="279"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="295" height="263"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -324,6 +323,9 @@
                     </tabView>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="yAG-4U-Yah"/>
+            </connections>
         </window>
         <arrayController objectClassName="NSString" automaticallyPreparesContent="YES" id="h3d-vP-I6k" userLabel="State Stack Array Controller">
             <connections>
@@ -342,8 +344,8 @@
         </arrayController>
         <arrayController objectClassName="NSString" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="rL6-W8-MIu" userLabel="Script Ranges Controller">
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.scriptRangeList" id="UNS-7d-b95"/>
                 <binding destination="9Xd-w7-kG1" name="selectionIndexes" keyPath="selectionIndexes" id="XEJ-eY-M4T"/>
+                <binding destination="-2" name="contentArray" keyPath="self.scriptRangeList" id="UNS-7d-b95"/>
             </connections>
         </arrayController>
         <objectController objectClassName="UKKeyboardController" automaticallyPreparesContent="YES" id="DMO-Jw-VUF" userLabel="Keyboard Window Object">

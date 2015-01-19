@@ -15,7 +15,9 @@
 #define kTabIdentifierOutput	@"Output"
 #define kTabIdentifierState		@"State"
 
-@interface InspectorWindowController : NSWindowController<NSTableViewDelegate, NSTabViewDelegate>
+#define UKInspectorWindowLocation	@"UKInspectorWindowLocation"
+
+@interface InspectorWindowController : NSWindowController<NSTableViewDelegate, NSTabViewDelegate, NSWindowDelegate>
 
 @property (strong) IBOutlet NSTabView *tabView;
 
