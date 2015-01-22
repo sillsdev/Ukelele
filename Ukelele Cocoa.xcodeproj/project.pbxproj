@@ -477,6 +477,7 @@
 		525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKKeyboardLayoutBundle.xib; path = "Interface Files/UKKeyboardLayoutBundle.xib"; sourceTree = "<group>"; };
 		526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKNewKeyboardLayoutController.h; sourceTree = "<group>"; };
 		526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKNewKeyboardLayoutController.m; sourceTree = "<group>"; };
+		527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UninstallHelperTool.sh; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseFrom3Sheet.xib; path = "Interface Files/ChooseFrom3Sheet.xib"; sourceTree = "<group>"; };
@@ -894,6 +895,7 @@
 				523B00FE191CA0D100E06DF3 /* UnicodeTable.m */,
 				525A4B6D191DE60700A356F8 /* ViewScale.h */,
 				525A4B6E191DE60700A356F8 /* ViewScale.m */,
+				527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -922,8 +924,6 @@
 		52BBED3B191B4EC100E48394 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
-				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
 				525A4B70191DE68400A356F8 /* AskCommentController.h */,
 				523B0114191CA18C00E06DF3 /* AskCommentController.m */,
 				523B0115191CA18C00E06DF3 /* AskFromList.h */,
@@ -1016,16 +1016,18 @@
 				523B0178191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m */,
 				523B017B191CA18C00E06DF3 /* UkelelePreferenceController.h */,
 				523B017C191CA18C00E06DF3 /* UkelelePreferenceController.m */,
+				5235CAD719481A6E009F8B42 /* UKKeyboardController.h */,
+				5235CAD819481A6E009F8B42 /* UKKeyboardController.m */,
 				52AD7D8F196139F800B3CD3F /* UKKeyboardController+Comments.h */,
 				52AD7D90196139F800B3CD3F /* UKKeyboardController+Comments.m */,
 				52AD7D91196139F800B3CD3F /* UKKeyboardController+Housekeeping.h */,
 				52AD7D92196139F800B3CD3F /* UKKeyboardController+Housekeeping.m */,
 				52AD7D93196139F800B3CD3F /* UKKeyboardController+Modifiers.h */,
 				52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */,
-				5235CAD719481A6E009F8B42 /* UKKeyboardController.h */,
-				5235CAD819481A6E009F8B42 /* UKKeyboardController.m */,
 				521270E3194AD6E3003103CA /* UKKeyboardDocument.h */,
 				521270E4194AD6E3003103CA /* UKKeyboardDocument.m */,
+				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
+				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
 				523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */,
 				523B017F191CA18C00E06DF3 /* UnlinkModifiersController.h */,

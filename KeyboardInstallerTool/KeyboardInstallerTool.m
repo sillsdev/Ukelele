@@ -139,26 +139,6 @@
 		NSString *uninstallCommand = @"/bin/launchctl";
 		NSArray *uninstallArguments = @[@"unload", plistLocation];
 		(void)[NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
-//		NSTask *uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
-//		[uninstallTask waitUntilExit];
-//			// Remove the plist
-//		uninstallCommand = @"/bin/rm";
-//		uninstallArguments = @[plistLocation];
-//		uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
-//		[uninstallTask waitUntilExit];
-//			// Remove the tool
-//		NSString *toolLocation = [NSString stringWithFormat:@"/Library/PrivilegedHelperTools/%@", kHelperToolMachServiceName];
-//		uninstallArguments = @[toolLocation];
-//		uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
-//		[uninstallTask waitUntilExit];
-//			// Remove the keys from the authorization database
-//		NSArray *authorizationKeys = @[@"org.sil.ukelele.installKeyboardLayout", @"org.sil.ukelele.uninstallHelperTool"];
-//		uninstallCommand = @"security";
-//		uninstallArguments = @[@"-q", @"authorizationdb", @"remove"];
-//		for (NSString *key in authorizationKeys) {
-//			uninstallTask = [NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:[uninstallArguments arrayByAddingObject:key]];
-//			[uninstallTask waitUntilExit];
-//		}
 	}
 	reply(error);
 }

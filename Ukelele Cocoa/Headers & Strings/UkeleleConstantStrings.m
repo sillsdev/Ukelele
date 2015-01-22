@@ -99,3 +99,5 @@ NSString *UKDiacriticDisplayCharacter = @"DiacriticDisplayCharacter";
 NSString *UKUsesPopover = @"UsesPopover";
 NSString *UKTigerCompatibleBundles = @"TigerCompatibleBundles";
 NSString *UKCodeNonAscii = @"CodeNonAscii";
+NSString *UKUpdateEditingComment = @"UpdateEditingComment";
+NSString *UKInspectorWindowLocation = @"InspectorWindowLocation";

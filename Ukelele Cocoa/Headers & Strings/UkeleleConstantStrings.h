@@ -95,3 +95,5 @@ MY_EXTERN NSString *UKDiacriticDisplayCharacter;
 MY_EXTERN NSString *UKUsesPopover;
 MY_EXTERN NSString *UKTigerCompatibleBundles;
 MY_EXTERN NSString *UKCodeNonAscii;
+MY_EXTERN NSString *UKUpdateEditingComment;
+MY_EXTERN NSString *UKInspectorWindowLocation;

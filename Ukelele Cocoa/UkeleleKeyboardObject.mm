@@ -133,7 +133,11 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSData *)convertToData
 {
-	[self updateEditingComment];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	BOOL updateComment = [[theDefaults objectForKey:UKUpdateEditingComment] boolValue];
+	if (updateComment) {
+		[self updateEditingComment];
+	}
 	NXMLEncoder xmlEncoder;
 	NXMLNode *treeRepresentation = self.keyboard->CreateXMLTree();
 	[parentDocument unblockUserInteraction];

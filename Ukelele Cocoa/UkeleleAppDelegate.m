@@ -55,19 +55,20 @@ static NSDictionary *defaultValues() {
 		NSData *printThemeData = [NSKeyedArchiver archivedDataWithRootObject:printTheme];
 		NSDictionary *colourThemes = @{kDefaultThemeName: defaultThemeData,
 								 kPrintThemeName: printThemeData};
-		dict = @{UKScaleFactor: @1.25f,
-		   UKTextSize: @(kDefaultLargeFontSize),
-		   UKTextFont: @"Lucida Grande",
-		   UKUsesSingleClickToEdit: @NO,
-		   UKDefaultLayoutID: @(gestaltUSBAndyANSIKbd),
-		   UKAlwaysUsesDefaultLayout: @NO,
-		   UKStateNameBase: @"Dead Key State",
-		   UKDiacriticDisplayCharacter: @(UKDiacriticSpace),
-		   UKUsesPopover: @YES,
-		   UKTigerCompatibleBundles: @NO,
-		   UKCodeNonAscii: @NO,
-		   UKColourThemes: colourThemes,
-		   UKColourTheme: kDefaultThemeName};
+		dict = @{UKScaleFactor:					@1.25f,
+				 UKTextSize:					@(kDefaultLargeFontSize),
+				 UKTextFont:					@"Lucida Grande",
+				 UKUsesSingleClickToEdit:		@NO,
+				 UKDefaultLayoutID:				@(gestaltUSBAndyANSIKbd),
+				 UKAlwaysUsesDefaultLayout:		@NO,
+				 UKStateNameBase:				@"Dead Key State",
+				 UKDiacriticDisplayCharacter:	@(UKDiacriticSpace),
+				 UKUsesPopover:					@YES,
+				 UKTigerCompatibleBundles:		@NO,
+				 UKCodeNonAscii:				@NO,
+				 UKColourThemes:				colourThemes,
+				 UKColourTheme:					kDefaultThemeName,
+				 UKUpdateEditingComment:		@YES};
 	});
 	return dict;
 }
