@@ -93,7 +93,8 @@ bool KeyMapSelect::RequiresModifier(const UInt32 inModifier) const {
 	SInt32 numModifiers = mModifierList->GetElementCount();
 	for (SInt32 i = 1; i <= numModifiers; i++) {
 		ModifierElement *modifierElement = mModifierList->GetModifierElement(i);
-		if (modifierElement->GetModifierStatus(inModifier) == kModifierPressed) {
+		UInt32 status = modifierElement->GetModifierStatus(inModifier);
+		if (status == kModifierPressed || status == kModifierEither) {
 			return true;
 		}
 	}

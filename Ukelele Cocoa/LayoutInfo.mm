@@ -2373,6 +2373,26 @@ NSDictionary *sStandardKeyMapList;
 	return result;
 }
 
++ (NSString *)stringForModifiers:(NSUInteger)modifiers {
+	NSMutableString *resultString = [NSMutableString string];
+	if (modifiers & shiftKey) {
+		[resultString appendString:@"+shift"];
+	}
+	if (modifiers & optionKey) {
+		[resultString appendString:@"+option"];
+	}
+	if (modifiers & cmdKey) {
+		[resultString appendString:@"+command"];
+	}
+	if (modifiers & alphaLock) {
+		[resultString appendString:@"+caps lock"];
+	}
+	if (modifiers & controlKey) {
+		[resultString appendString:@"+control"];
+	}
+	return resultString;
+}
+
 #pragma mark Instance methods
 
 - (BOOL)hasFnKey

@@ -31,6 +31,7 @@
 + (NSString *)getKeyboardName:(int)keyboardID;
 + (NSString *)getKeyboardDescription:(int)keyboardID;
 + (NSUInteger)getModifierFromKeyCode:(NSUInteger)keyCode;
++ (NSString *)stringForModifiers:(NSUInteger)modifiers;
 
 - (id)initWithLayoutID:(int)layout;
 - (BOOL)hasFnKey;
