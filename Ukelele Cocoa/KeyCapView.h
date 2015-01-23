@@ -16,6 +16,7 @@
 	NSMutableAttributedString *displayText;
 	CTFrameRef textFrame;
     NSTextStorage *textStorage;
+	BOOL mouseIsInside;
 }
 
 @property (nonatomic) NSInteger keyCode;

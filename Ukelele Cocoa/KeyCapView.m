@@ -36,16 +36,17 @@ static CGAffineTransform kTextTransform = {
 		_smallCTFont = nil;
 		textFrame = nil;
 		displayText = [[NSMutableAttributedString alloc] initWithString:@""];
-		NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self bounds]
-																	options:NSTrackingMouseEnteredAndExited |
-										NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
-																	  owner:self
-																   userInfo:nil];
+		NSTrackingArea *trackingArea =
+			[[NSTrackingArea alloc] initWithRect:[self bounds]
+										 options:NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
+										   owner:self
+										userInfo:nil];
 		[self addTrackingArea:trackingArea];
         _largeAttributes = nil;
         _smallAttributes = nil;
         textStorage = nil;
 		_currentTextColour = [NSColor whiteColor];
+		mouseIsInside = NO;
     }
     return self;
 }
@@ -144,10 +145,12 @@ static CGAffineTransform kTextTransform = {
 	[self clearFrame];
     if (!_largeAttributes) {
         // Do it with Core Text
-        CFMutableDictionaryRef textAttributes = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-                                                                          &kCFTypeDictionaryKeyCallBacks,
-                                                                          &kCFTypeDictionaryValueCallBacks);
-        CFDictionaryAddValue(textAttributes, kCTForegroundColorAttributeName, (__bridge const void *)(_currentTextColour));
+        CFMutableDictionaryRef textAttributes =
+			CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+									  &kCFTypeDictionaryKeyCallBacks,
+									  &kCFTypeDictionaryValueCallBacks);
+        CFDictionaryAddValue(textAttributes, kCTForegroundColorAttributeName,
+							 (__bridge const void *)(_currentTextColour));
         CFDictionaryAddValue(textAttributes, kCTFontAttributeName, _small ? _smallCTFont : _largeCTFont);
         if (_largeCTStyle && _smallCTStyle) {
             CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, _small ? _smallCTStyle : _largeCTStyle);
@@ -213,7 +216,8 @@ static CGAffineTransform kTextTransform = {
                 // Do nothing?
             }
             if (neededBox.size.width > textRect.size.width) {
-                [textStorage setAttributes:_smallAttributes range:NSMakeRange(0, [textStorage length])];
+                [textStorage setAttributes:_smallAttributes
+									 range:NSMakeRange(0, [textStorage length])];
             }
         }
    }
@@ -225,15 +229,18 @@ static CGAffineTransform kTextTransform = {
 		displayText = [[NSMutableAttributedString alloc] initWithString:@""];
 	}
 	else {
-		unichar firstChar = [_outputString characterAtIndex:0];
-		BOOL isLowASCII = firstChar >= kFirstASCIIPrintingChar && firstChar <= kLastASCIIPrintingChar;
+		unichar firstChar = [self.outputString characterAtIndex:0];
+		BOOL isLowASCII = firstChar >= kFirstASCIIPrintingChar &&
+						  firstChar <= kLastASCIIPrintingChar;
 		BOOL isAboveControlRange = firstChar > kLastControlChar;
-		BOOL isControlCharacter = [_outputString length] == 1 && !isLowASCII && !isAboveControlRange;
+		BOOL isControlCharacter = [self.outputString length] == 1 &&
+								  !isLowASCII && !isAboveControlRange;
 		if (isControlCharacter) {
 				// A control character - see if we have a symbol for it
-			displayText = [LayoutInfo getKeySymbolString:(unsigned int)_keyCode withString:_outputString];
+			displayText = [LayoutInfo getKeySymbolString:(unsigned int)self.keyCode
+											  withString:self.outputString];
 			if ([displayText length] == 0) {
-				displayText = [[NSMutableAttributedString alloc] initWithString:_outputString];
+				displayText = [[NSMutableAttributedString alloc] initWithString:self.outputString];
 			}
 		}
 		else if ([_outputString length] == 1 && [XMLCocoaUtilities isCombiningDiacritic:firstChar]) {
@@ -263,7 +270,7 @@ static CGAffineTransform kTextTransform = {
 							initWithString:[NSString stringWithCharacters:combinedString length:2]];
 		}
 		else {
-			displayText = [[NSMutableAttributedString alloc] initWithString:_outputString];
+			displayText = [[NSMutableAttributedString alloc] initWithString:self.outputString];
 		}
 	}
 	[self clearFrame];
@@ -410,6 +417,10 @@ static CGAffineTransform kTextTransform = {
 	_outputString = convertedString;
 	[self createDisplayText];
 	[self setNeedsDisplay:YES];
+	if (mouseIsInside) {
+			// Let the system know that the string has changed
+		[self signalMouseEntered];
+	}
 }
 
 - (void)setColourTheme:(ColourTheme *)newColourTheme {
@@ -484,16 +495,24 @@ static CGAffineTransform kTextTransform = {
 
 #pragma mark Events
 
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageMouseEntered:(int)_keyCode];
+- (void)mouseEntered:(NSEvent *)theEvent {
+	mouseIsInside = YES;
+	[self signalMouseEntered];
 }
 
-- (void)mouseExited:(NSEvent *)theEvent
-{
+- (void)signalMouseEntered {
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageMouseExited:(int)_keyCode];
+	[theDocumentWindow messageMouseEntered:(int)self.keyCode];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+	mouseIsInside = NO;
+	[self signalMouseExited];
+}
+
+- (void)signalMouseExited {
+	UKKeyboardController *theDocumentWindow = [[self window] windowController];
+	[theDocumentWindow messageMouseExited:(int)self.keyCode];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -527,7 +546,7 @@ static CGAffineTransform kTextTransform = {
 	if (draggedItems != nil && [draggedItems count] > 0) {
 			// Got the text
 		UKKeyboardController *theDocumentWindow = [[self window] windowController];
-		[theDocumentWindow messageDragText:draggedItems[0] toKey:(int)_keyCode];
+		[theDocumentWindow messageDragText:draggedItems[0] toKey:(int)self.keyCode];
 		return YES;
 	}
 	return NO;
