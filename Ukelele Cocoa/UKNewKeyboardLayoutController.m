@@ -13,7 +13,7 @@
 @end
 
 @implementation UKNewKeyboardLayoutController {
-	void (^completionBlock)(BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout);
+	void (^completionBlock)(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout);
 }
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
@@ -30,7 +30,7 @@
 	return [[UKNewKeyboardLayoutController alloc] initWithWindowNibName:@"NewKeyboardLayout"];
 }
 
-- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(BaseLayoutTypes, CommandLayoutTypes, CapsLockLayoutTypes))completion {
+- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *, BaseLayoutTypes, CommandLayoutTypes, CapsLockLayoutTypes))completion {
 	completionBlock = completion;
 	[self.baseLayoutPopup selectItemAtIndex:baseLayoutEmpty];
 	[self.commandLayoutPopup selectItemAtIndex:commandLayoutSame];
@@ -39,18 +39,19 @@
 }
 
 - (IBAction)acceptSelection:(id)sender {
+	NSString *keyboardName = [self.keyboardName stringValue];
 	BaseLayoutTypes baseLayout = [self.baseLayoutPopup indexOfSelectedItem];
 	CommandLayoutTypes commandLayout = [self.commandLayoutPopup indexOfSelectedItem];
 	CapsLockLayoutTypes capsLockLayout = [self.capsLockLayoutPopup indexOfSelectedItem];
 	[self.window orderOut:self];
 	[NSApp endSheet:[self window]];
-	completionBlock(baseLayout, commandLayout, capsLockLayout);
+	completionBlock(keyboardName, baseLayout, commandLayout, capsLockLayout);
 }
 
 - (IBAction)cancelSelection:(id)sender {
 	[self.window orderOut:self];
 	[NSApp endSheet:self.window];
-	completionBlock(baseLayoutNone, commandLayoutNone, capsLockLayoutNone);
+	completionBlock(nil, baseLayoutNone, commandLayoutNone, capsLockLayoutNone);
 }
 
 @end

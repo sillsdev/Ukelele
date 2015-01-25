@@ -522,10 +522,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 - (void)parseInfoPlist:(NSFileWrapper *)infoPlistFile {
 	NSData *infoPlistData = [infoPlistFile regularFileContents];
 	NSError *theError;
-	NSDictionary *infoPlistDictionary = [NSPropertyListSerialization propertyListWithData:infoPlistData
-																				  options:NSPropertyListImmutable
-																				   format:nil
-																					error:&theError];
+	NSDictionary *infoPlistDictionary =
+		[NSPropertyListSerialization propertyListWithData:infoPlistData
+												  options:NSPropertyListImmutable
+												   format:nil
+													error:&theError];
 	if (nil == infoPlistDictionary) {
 			// Failed to read
 		return;
@@ -794,13 +795,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSArray *windowControllers = [self windowControllers];
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
-	[theController runDialog:myWindow withCompletion:^(BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout) {
-		[self addNewKeyboardLayoutWithBase:baseLayout command:commandLayout capsLock:capsLockLayout];
+	[theController runDialog:myWindow withCompletion:^(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout) {
+		[self addNewKeyboardLayoutWithName:keyboardName base:baseLayout command:commandLayout capsLock:capsLockLayout];
 		theController = nil;
 	}];
 }
 
-- (void)addNewKeyboardLayoutWithBase:(BaseLayoutTypes)baseLayout command:(CommandLayoutTypes)commandLayout capsLock:(CapsLockLayoutTypes)capsLockLayout {
+- (void)addNewKeyboardLayoutWithName:(NSString *)keyboardName base:(BaseLayoutTypes)baseLayout command:(CommandLayoutTypes)commandLayout capsLock:(CapsLockLayoutTypes)capsLockLayout {
 		// Check whether we have a valid layout
 	if (baseLayout != baseLayoutNone) {
 			// Create a keyboard with the given layout types
@@ -904,7 +905,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 					// Should never get here!
 				break;
 		}
-		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:@"Untitled" base:base command:command capsLock:capsLock];
+			// Get a valid name
+		NSString *theName = keyboardName;
+		if ([theName length] == 0) {
+			theName = @"Untitled";
+		}
+		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:theName base:base command:command capsLock:capsLock];
 		[self addNewDocument:keyboardObject];
 	}
 }

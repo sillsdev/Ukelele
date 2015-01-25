@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKNewKeyboardLayoutController">
@@ -10,50 +10,75 @@
                 <outlet property="baseLayoutPopup" destination="33p-Wz-q8K" id="Kib-Fc-3d1"/>
                 <outlet property="capsLockLayoutPopup" destination="qEU-7Y-vEu" id="uhl-2q-8VD"/>
                 <outlet property="commandLayoutPopup" destination="jPX-Hk-P4f" id="xeP-o8-eh3"/>
+                <outlet property="keyboardName" destination="vvE-Rc-GzH" id="UXd-1L-ofC"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="eeE-KK-9Ie"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="NewKeyboardLayout" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="400" height="276"/>
+            <rect key="contentRect" x="196" y="240" width="400" height="301"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="276"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="301"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cI2-XD-tnZ">
+                        <rect key="frame" x="18" y="161" width="364" height="90"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="90" id="wti-9s-vF3"/>
+                        </constraints>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Qjz-HM-RS7">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">To create a new keyboard layout, you need to choose what the base keyboard layout will be, that is, the output when no modifier keys are pressed. You can optionally have a different keyboard layout when the command key or the caps lock key is pressed.</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFB-hL-DO3">
+                        <rect key="frame" x="18" y="261" width="114" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="lmc-Zb-6dq">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vvE-Rc-GzH">
+                        <rect key="frame" x="140" y="259" width="240" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Keyboard Layout Name" drawsBackground="YES" id="k46-r4-QVk">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lFk-jW-eoh">
-                        <rect key="frame" x="18" y="142" width="142" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="18" y="135" width="142" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Base keyboard layout:" id="P6j-zA-NdF">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dJe-q8-zaI">
-                        <rect key="frame" x="18" y="102" width="173" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dJe-q8-zaI">
+                        <rect key="frame" x="18" y="97" width="173" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Layout with command key:" id="oby-UV-YIE">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WdB-wU-go4">
-                        <rect key="frame" x="18" y="64" width="169" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WdB-wU-go4">
+                        <rect key="frame" x="18" y="59" width="169" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Layout with caps lock key:" id="Qi3-ke-Uix">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jPX-Hk-P4f">
-                        <rect key="frame" x="197" y="96" width="186" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jPX-Hk-P4f">
+                        <rect key="frame" x="197" y="91" width="186" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Same as base" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="IJm-YT-NJQ" id="7Ac-Bb-Gb9">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -79,8 +104,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="33p-Wz-q8K">
-                        <rect key="frame" x="197" y="136" width="186" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="197" y="129" width="186" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Empty" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="naQ-P1-OcC" id="pYM-yd-fPc">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -102,9 +126,8 @@
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qEU-7Y-vEu">
-                        <rect key="frame" x="197" y="58" width="186" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qEU-7Y-vEu">
+                        <rect key="frame" x="197" y="53" width="186" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Same as base" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="a33-Mm-C24" id="wll-sD-xHo">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -129,9 +152,8 @@
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MqA-p8-OGh">
-                        <rect key="frame" x="304" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MqA-p8-OGh">
+                        <rect key="frame" x="304" y="8" width="82" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="7JK-Zq-iAQ"/>
                         </constraints>
@@ -146,9 +168,8 @@ DQ
                             <action selector="acceptSelection:" target="-2" id="Svj-T8-kNW"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tAw-An-ZcP">
-                        <rect key="frame" x="222" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tAw-An-ZcP">
+                        <rect key="frame" x="222" y="8" width="82" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="JhQ-93-96d"/>
                         </constraints>
@@ -163,40 +184,31 @@ Gw
                             <action selector="cancelSelection:" target="-2" id="2fY-W3-REr"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cI2-XD-tnZ">
-                        <rect key="frame" x="18" y="166" width="364" height="90"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="90" id="Db6-Ia-fNZ"/>
-                        </constraints>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Qjz-HM-RS7">
-                            <font key="font" metaFont="system"/>
-                            <string key="title">To create a new keyboard layout, you need to choose what the base keyboard layout will be, that is, the output when no modifier keys are pressed. You can optionally have a different keyboard layout when the command key or the caps lock key is pressed.</string>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qEU-7Y-vEu" firstAttribute="trailing" secondItem="jPX-Hk-P4f" secondAttribute="trailing" id="1B6-0D-OgA"/>
                     <constraint firstItem="33p-Wz-q8K" firstAttribute="leading" secondItem="lFk-jW-eoh" secondAttribute="trailing" constant="41" id="39N-3g-uzr"/>
                     <constraint firstItem="jPX-Hk-P4f" firstAttribute="leading" secondItem="33p-Wz-q8K" secondAttribute="leading" id="3cT-eR-W7u"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="leading" secondItem="lFk-jW-eoh" secondAttribute="leading" id="7au-Jc-XNf"/>
                     <constraint firstItem="qEU-7Y-vEu" firstAttribute="leading" secondItem="WdB-wU-go4" secondAttribute="trailing" constant="14" id="9TI-ld-aIf"/>
-                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="leading" secondItem="lFk-jW-eoh" secondAttribute="leading" id="AmY-aH-tKm"/>
                     <constraint firstItem="jPX-Hk-P4f" firstAttribute="trailing" secondItem="33p-Wz-q8K" secondAttribute="trailing" id="BDS-b1-F0P"/>
                     <constraint firstAttribute="bottom" secondItem="tAw-An-ZcP" secondAttribute="bottom" constant="20" symbolic="YES" id="BKT-r9-mMi"/>
                     <constraint firstItem="qEU-7Y-vEu" firstAttribute="top" secondItem="jPX-Hk-P4f" secondAttribute="bottom" constant="17" id="Csa-LJ-ndG"/>
                     <constraint firstItem="qEU-7Y-vEu" firstAttribute="baseline" secondItem="WdB-wU-go4" secondAttribute="baseline" id="E4K-5d-5pc"/>
                     <constraint firstItem="qEU-7Y-vEu" firstAttribute="trailing" secondItem="MqA-p8-OGh" secondAttribute="trailing" id="EfW-wU-xxn"/>
-                    <constraint firstAttribute="trailing" secondItem="cI2-XD-tnZ" secondAttribute="trailing" constant="20" symbolic="YES" id="F1t-yI-PZI"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="trailing" secondItem="33p-Wz-q8K" secondAttribute="trailing" id="FSk-jQ-34d"/>
+                    <constraint firstAttribute="trailing" secondItem="cI2-XD-tnZ" secondAttribute="trailing" constant="20" symbolic="YES" id="GLM-cU-Own"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="top" secondItem="vvE-Rc-GzH" secondAttribute="bottom" constant="8" symbolic="YES" id="IF5-Mg-yjf"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="trailing" secondItem="vvE-Rc-GzH" secondAttribute="trailing" id="IVA-Gf-mXJ"/>
                     <constraint firstItem="dJe-q8-zaI" firstAttribute="leading" secondItem="WdB-wU-go4" secondAttribute="leading" id="LwX-6I-Tjv"/>
-                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="OL2-sE-Od2"/>
                     <constraint firstItem="jPX-Hk-P4f" firstAttribute="leading" secondItem="dJe-q8-zaI" secondAttribute="trailing" constant="10" id="Qka-WV-Iid"/>
                     <constraint firstItem="33p-Wz-q8K" firstAttribute="baseline" secondItem="lFk-jW-eoh" secondAttribute="baseline" id="SM4-Nz-FEA"/>
-                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="btf-hR-vPo"/>
-                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="trailing" secondItem="33p-Wz-q8K" secondAttribute="trailing" id="dvv-s8-xYa"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="awH-M2-wYg"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="50" id="cF0-aA-xm9"/>
+                    <constraint firstItem="33p-Wz-q8K" firstAttribute="top" secondItem="cI2-XD-tnZ" secondAttribute="bottom" constant="8" symbolic="YES" id="dA3-D1-Rc5"/>
                     <constraint firstItem="jPX-Hk-P4f" firstAttribute="baseline" secondItem="dJe-q8-zaI" secondAttribute="baseline" id="gP3-Lk-Tze"/>
-                    <constraint firstItem="33p-Wz-q8K" firstAttribute="top" secondItem="cI2-XD-tnZ" secondAttribute="bottom" constant="6" id="lzI-jl-jro"/>
+                    <constraint firstItem="vFB-hL-DO3" firstAttribute="baseline" secondItem="vvE-Rc-GzH" secondAttribute="baseline" id="jLy-uc-DlS"/>
+                    <constraint firstItem="cI2-XD-tnZ" firstAttribute="leading" secondItem="vFB-hL-DO3" secondAttribute="leading" id="n7F-UL-UqD"/>
                     <constraint firstItem="dJe-q8-zaI" firstAttribute="leading" secondItem="lFk-jW-eoh" secondAttribute="leading" id="qr1-WX-4TH"/>
                     <constraint firstItem="tAw-An-ZcP" firstAttribute="top" secondItem="qEU-7Y-vEu" secondAttribute="bottom" constant="20" symbolic="YES" id="tiy-V8-wQO"/>
                     <constraint firstItem="MqA-p8-OGh" firstAttribute="leading" secondItem="tAw-An-ZcP" secondAttribute="trailing" constant="12" symbolic="YES" id="vAm-O4-FvP"/>
@@ -204,6 +216,7 @@ Gw
                     <constraint firstItem="tAw-An-ZcP" firstAttribute="baseline" secondItem="MqA-p8-OGh" secondAttribute="baseline" id="zju-1p-WKO"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="433" y="400.5"/>
         </window>
     </objects>
 </document>

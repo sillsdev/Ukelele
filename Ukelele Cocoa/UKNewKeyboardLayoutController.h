@@ -42,13 +42,14 @@ typedef enum : NSUInteger {
 
 @interface UKNewKeyboardLayoutController : NSWindowController
 
+@property (strong) IBOutlet NSTextField *keyboardName;
 @property (strong) IBOutlet NSPopUpButton *baseLayoutPopup;
 @property (strong) IBOutlet NSPopUpButton *commandLayoutPopup;
 @property (strong) IBOutlet NSPopUpButton *capsLockLayoutPopup;
 
 + (UKNewKeyboardLayoutController *)createController;
 
-- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout))completion;
+- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout))completion;
 
 - (IBAction)acceptSelection:(id)sender;
 - (IBAction)cancelSelection:(id)sender;
