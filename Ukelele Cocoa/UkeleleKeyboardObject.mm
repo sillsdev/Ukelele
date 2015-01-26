@@ -16,6 +16,8 @@
 #import "ModifiersSheet.h"
 #import "ModifierMap.h"
 #import "XMLCocoaUtilities.h"
+#include "KeyStrokeLookupTable.h"
+#include "XMLUtilities.h"
 
 NSString *kUnlinkParameterModifiers = @"Modifiers";
 NSString *kUnlinkParameterData = @"Data";
@@ -398,6 +400,40 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NN_ASSERT(self.keyboard != nil);
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetTerminator(ToNN(stateName)));
+}
+
+- (NSString *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID {
+	static boost::shared_ptr<KeyStrokeLookUpTable> lookupTable;
+	if (lookupTable.get() == NULL) {
+		lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
+	}
+	std::pair<KeyStrokeList, NString> result = lookupTable->GetKeyStrokes(ToNN(outputString));
+	KeyStrokeList theList = result.first;
+	KeyStrokeIterator theIterator;
+	NString resultString = "";
+	for (theIterator = theList.begin(); theIterator != theList.end(); ++theIterator) {
+		NString modifierString = theIterator->GetModifierString();
+		SInt16 keyCode = theIterator->GetKeyCode();
+		if (resultString != "") {
+			resultString += " ";
+		}
+		resultString += modifierString;
+		if (keyCode == kNoKeyCode) {
+				// No key code
+			resultString += "(Terminator for state ";
+			resultString += result.second;
+			resultString += ")";
+		}
+		else {
+			bool isDeadKey;
+			NString oldState;
+			NString baseString = (self.keyboard)->GetKeyboard()->GetCharOutput((UInt32)keyboardID, keyCode, 0, kStateNone, isDeadKey, oldState);
+			resultString += XMLUtilities::ConvertEncodedString(baseString);
+		}
+	}
+	NSString *keyStrokeString = ToNS(resultString);
+		// We still have the state and keystroke to handle...
+	return keyStrokeString;
 }
 
 #pragma mark Importing a dead key state

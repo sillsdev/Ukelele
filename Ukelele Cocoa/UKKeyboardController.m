@@ -512,7 +512,8 @@ const float kScalePercentageFactor = 100.0f;
 		action == @selector(unlinkKeyAskingKeyCode:) || action == @selector(unlinkModifierSet:) ||
 		action == @selector(importDeadKey:) || action == @selector(editKey:) ||
 		action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
-		action == @selector(copyKey:) || action == @selector(setKeyboardType:)) {
+		action == @selector(copyKey:) || action == @selector(setKeyboardType:) ||
+		action == @selector(findKeyStroke:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
@@ -1210,6 +1211,19 @@ const float kScalePercentageFactor = 100.0f;
 
 - (IBAction)installForAllUsers:(id)sender {
 	[[self parentDocument] installForAllUsers:self];
+}
+
+	// Look up a key stroke
+
+- (IBAction)findKeyStroke:(id)sender {
+	__block AskTextSheet *askTextSheet = [AskTextSheet askTextSheet];
+	[askTextSheet beginAskText:@"Enter the output string" minorText:@"Ukelele will determine the key stroke sequence to produce this string" initialText:@"" forWindow:self.window callBack:^(id result) {
+		if (result != nil) {
+			NSString *keyStroke = [self.keyboardLayout getKeyStrokeForOutput:result forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
+			[self.messageBar setStringValue:keyStroke];
+		}
+		askTextSheet = nil;
+	}];
 }
 
 #pragma mark Messages

@@ -118,6 +118,7 @@ enum ToolbarItemTags {
 - (IBAction)setKeyboardType:(id)sender;
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
+- (IBAction)findKeyStroke:(id)sender;
 
 	// Accessors
 - (NSString *)keyboardDisplayName;

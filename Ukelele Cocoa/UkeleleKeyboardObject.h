@@ -46,6 +46,7 @@ typedef void * UkeleleKeyboard;
 - (BOOL)isDeadKey:(NSDictionary *)keyDataDict;
 - (NSString *)getNextState:(NSDictionary *)keyDataDict;
 - (NSString *)getOutputInfoForKey:(NSDictionary *)keyDataDict;
+- (NSString *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID;
 
 	// Transform a key output
 - (void)changeOutputForKey:(NSDictionary *)keyDataDict to:(NSString *)newOutput usingBaseMap:(BOOL)usingBaseMap;
