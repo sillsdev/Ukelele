@@ -34,6 +34,7 @@
 #import "LayoutInfo.h"
 #import "DragTextHandler.h"
 #import "UKKeyboardDocument.h"
+#import "UKKeyStrokeLookupInteractionHandler.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
@@ -1216,14 +1217,10 @@ const float kScalePercentageFactor = 100.0f;
 	// Look up a key stroke
 
 - (IBAction)findKeyStroke:(id)sender {
-	__block AskTextSheet *askTextSheet = [AskTextSheet askTextSheet];
-	[askTextSheet beginAskText:@"Enter the output string" minorText:@"Ukelele will determine the key stroke sequence to produce this string" initialText:@"" forWindow:self.window callBack:^(id result) {
-		if (result != nil) {
-			NSString *keyStroke = [self.keyboardLayout getKeyStrokeForOutput:result forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
-			[self.messageBar setStringValue:keyStroke];
-		}
-		askTextSheet = nil;
-	}];
+	UKKeyStrokeLookupInteractionHandler *theHandler = [[UKKeyStrokeLookupInteractionHandler alloc] init];
+	[theHandler setCompletionTarget:self];
+	interactionHandler = theHandler;
+	[theHandler beginInteractionWithKeyboard:self];
 }
 
 #pragma mark Messages

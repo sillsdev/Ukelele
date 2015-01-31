@@ -18,6 +18,11 @@ typedef void * UkeleleKeyboard;
 #import "ActionElementSetWrapper.h"
 #import "AddMissingOutputData.h"
 
+#define UKKeyStrokeLookupKeyStrokes	@"UKKeyStrokeLookupKeyStrokes"
+#define UKKeyStrokeLookupModifiers @"UKKeyStrokeLookupModifiers"
+#define UKKeyStrokeLookupState @"UKKeyStrokeLookupState"
+#define UKKeyStrokeLookupKeyCode @"UKKeyStrokeLookupKeyCode"
+
 @class XMLCommentHolderObject;
 
 @interface UkeleleKeyboardObject : NSObject
@@ -46,7 +51,7 @@ typedef void * UkeleleKeyboard;
 - (BOOL)isDeadKey:(NSDictionary *)keyDataDict;
 - (NSString *)getNextState:(NSDictionary *)keyDataDict;
 - (NSString *)getOutputInfoForKey:(NSDictionary *)keyDataDict;
-- (NSString *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID;
+- (NSDictionary *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID;
 
 	// Transform a key output
 - (void)changeOutputForKey:(NSDictionary *)keyDataDict to:(NSString *)newOutput usingBaseMap:(BOOL)usingBaseMap;

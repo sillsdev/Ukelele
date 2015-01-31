@@ -402,18 +402,18 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return ToNS(keyboardElement->GetTerminator(ToNN(stateName)));
 }
 
-- (NSString *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID {
-	static boost::shared_ptr<KeyStrokeLookUpTable> lookupTable;
-	if (lookupTable.get() == NULL) {
-		lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
-	}
+- (NSDictionary *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID {
+	boost::shared_ptr<KeyStrokeLookUpTable> lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
 	std::pair<KeyStrokeList, NString> result = lookupTable->GetKeyStrokes(ToNN(outputString));
 	KeyStrokeList theList = result.first;
 	KeyStrokeIterator theIterator;
 	NString resultString = "";
+	NString state = result.second;
+	NSUInteger modifiers = 0;
+	NSInteger keyCode = kNoKeyCode;
 	for (theIterator = theList.begin(); theIterator != theList.end(); ++theIterator) {
 		NString modifierString = theIterator->GetModifierString();
-		SInt16 keyCode = theIterator->GetKeyCode();
+		keyCode = theIterator->GetKeyCode();
 		if (resultString != "") {
 			resultString += " ";
 		}
@@ -427,13 +427,18 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		else {
 			bool isDeadKey;
 			NString oldState;
-			NString baseString = (self.keyboard)->GetKeyboard()->GetCharOutput((UInt32)keyboardID, keyCode, 0, kStateNone, isDeadKey, oldState);
+			NString baseString = (self.keyboard)->GetKeyboard()->GetCharOutput((UInt32)keyboardID, (SInt16)keyCode, 0, kStateNone, isDeadKey, oldState);
 			resultString += XMLUtilities::ConvertEncodedString(baseString);
 		}
+		modifiers = theIterator->GetModifiers();
 	}
 	NSString *keyStrokeString = ToNS(resultString);
-		// We still have the state and keystroke to handle...
-	return keyStrokeString;
+	modifiers = [self getCocoaModifiers:(unsigned int)modifiers];
+	NSDictionary *resultDict = @{UKKeyStrokeLookupKeyStrokes: keyStrokeString,
+								 UKKeyStrokeLookupState: ToNS(state),
+								 UKKeyStrokeLookupModifiers: @(modifiers),
+								 UKKeyStrokeLookupKeyCode: @(keyCode)};
+	return resultDict;
 }
 
 #pragma mark Importing a dead key state

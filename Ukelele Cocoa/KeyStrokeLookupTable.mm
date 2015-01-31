@@ -74,23 +74,23 @@ NString KeyStroke::GetModifierString(void) const
 	stringBuffer[1] = '\0';
 	if (mModifiers & (controlKey | rightControlKey)) {
 		stringBuffer[0] = kControlUnicode;
-		result += NString(stringBuffer, 2, kNStringEncodingUTF16);
+		result += NString(stringBuffer, sizeof(UniChar), kNStringEncodingUTF16);
 	}
 	if (mModifiers & cmdKey) {
 		stringBuffer[0] = kCommandUnicode;
-		result += NString(stringBuffer, 2, kNStringEncodingUTF16);
+		result += NString(stringBuffer, sizeof(UniChar), kNStringEncodingUTF16);
 	}
 	if (mModifiers & alphaLock) {
 		stringBuffer[0] = kCapsLockUnicode;
-		result += NString(stringBuffer, 2, kNStringEncodingUTF16);
+		result += NString(stringBuffer, sizeof(UniChar), kNStringEncodingUTF16);
 	}
 	if (mModifiers & (optionKey | rightOptionKey)) {
 		stringBuffer[0] = kOptionUnicode;
-		result += NString(stringBuffer, 2, kNStringEncodingUTF16);
+		result += NString(stringBuffer, sizeof(UniChar), kNStringEncodingUTF16);
 	}
 	if (mModifiers & (shiftKey | rightShiftKey)) {
 		stringBuffer[0] = kShiftUnicode;
-		result += NString(stringBuffer, 2, kNStringEncodingUTF16);
+		result += NString(stringBuffer, sizeof(UniChar), kNStringEncodingUTF16);
 	}
 	return result;
 }

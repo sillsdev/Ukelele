@@ -84,7 +84,7 @@ enum ToolbarItemTags {
 @property (strong) NSString *keyboardName;
 @property (weak, readonly) NSURL *iconFile;
 	// Current state
-@property (readonly) NSUInteger currentModifiers;
+@property (nonatomic) NSUInteger currentModifiers;
 @property (weak, readonly) NSString *currentState;
 @property (weak) UKKeyboardDocument *parentDocument;
 @property (strong) NSUndoManager *undoManager;

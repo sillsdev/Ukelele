@@ -223,7 +223,7 @@ shared_ptr<KeyStrokeLookUpTable> UkeleleKeyboard::CreateKeyStrokeLookUpTable(con
 	TerminatorsElement *terminatorsElement = mKeyboard->GetTerminatorsElement();
 	if (terminatorsElement != NULL) {
 		NSMutableSet *stateSet = [NSMutableSet setWithCapacity:terminatorsElement->GetWhenElementCount()];
-		terminatorsElement->GetStateNames(stateSet, kReachableStates);
+		terminatorsElement->GetStateNames(stateSet, kAllStates);
 		KeyStroke terminatorKeyStroke(kNoKeyCode, 0);
 		for (NSString *stateID in stateSet) {
 			NString stateName = ToNN(stateID);

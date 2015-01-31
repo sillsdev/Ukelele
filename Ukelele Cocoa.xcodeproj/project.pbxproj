@@ -131,6 +131,7 @@
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
+		52579AD21A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */; };
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
@@ -468,6 +469,8 @@
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
+		52579AD01A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyStrokeLookupInteractionHandler.h; sourceTree = "<group>"; };
+		52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyStrokeLookupInteractionHandler.m; sourceTree = "<group>"; };
 		5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskSwapKeyCodesWindow.xib; path = "Interface Files/AskSwapKeyCodesWindow.xib"; sourceTree = "<group>"; };
 		525A4B6A191DE11E00A356F8 /* RemoveStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveStateData.h; sourceTree = "<group>"; };
 		525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RemoveStateData.mm; sourceTree = "<group>"; };
@@ -1026,6 +1029,8 @@
 				52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */,
 				521270E3194AD6E3003103CA /* UKKeyboardDocument.h */,
 				521270E4194AD6E3003103CA /* UKKeyboardDocument.m */,
+				52579AD01A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.h */,
+				52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */,
 				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
 				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
@@ -1304,6 +1309,7 @@
 				523B01BD191CA18C00E06DF3 /* UnlinkKeyHandler.m in Sources */,
 				523B0195191CA18C00E06DF3 /* ChooseStateController.m in Sources */,
 				523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */,
+				52579AD21A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m in Sources */,
 				523B01A4191CA18C00E06DF3 /* GetKeyCodeHandler.m in Sources */,
 				523B019C191CA18C00E06DF3 /* DoubleClickHandler.m in Sources */,
 				5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */,
