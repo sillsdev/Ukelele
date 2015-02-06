@@ -33,15 +33,32 @@
 	return [[HandleDeadKeyController alloc] initWithWindowNibName:@"HandleDeadKeySheet"];
 }
 
+- (HandleDeadKeyType)typeForTab:(NSString *)tabIdentifier {
+	if ([UKHandleDeadKeyTerminator isEqualToString:tabIdentifier]) {
+		return kHandleDeadKeyChangeTerminator;
+	}
+	if ([UKHandleDeadKeyChangeState isEqualToString:tabIdentifier]) {
+		return kHandleDeadKeyChangeState;
+	}
+	if ([UKHandleDeadKeyMakeOutput isEqualToString:tabIdentifier]) {
+		return kHandleDeadKeyChangeToOutput;
+	}
+	if ([UKHandledeadKeyEnterState isEqualToString:tabIdentifier]) {
+		return kHandleDeadKeyEnterState;
+	}
+	NSLog(@"Unknown tab identifier %@", tabIdentifier);
+	return kHandleDeadKeyEnterState;
+}
+
 - (void)beginInteractionWithWindow:(NSWindow *)parentWindow
 						  document:(UkeleleKeyboardObject *)theDocument
 						  forState:(NSString *)theState
 						 nextState:(NSString *)nextState
 				   completionBlock:(void (^)(NSDictionary *))callback {
 	completionBlock = callback;
-	NSString *terminator = [theDocument terminatorForState:theState];
+	NSString *terminator = [theDocument terminatorForState:nextState];
 	NSString *formatString = @"Currently it goes to state \"%@\", which has terminator \"%@\"";
-	[self.infoField setStringValue:[NSString stringWithFormat:formatString, theState, terminator]];
+	[self.infoField setStringValue:[NSString stringWithFormat:formatString, nextState, terminator]];
 	NSMutableArray *stateNames = [[theDocument stateNamesExcept:kStateNameNone] mutableCopy];
 	[stateNames removeObjectIdenticalTo:theState];
 	[stateNames removeObjectIdenticalTo:nextState];
@@ -51,7 +68,7 @@
 }
 
 - (IBAction)acceptChoice:(id)sender {
-	HandleDeadKeyType choice = [self.choiceGroup selectedRow];
+	HandleDeadKeyType choice = [self typeForTab:[[self.choiceTabView selectedTabViewItem] identifier]];
 	NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithCapacity:2];
 	dataDict[kHandleDeadKeyType] = @(choice);
 	switch (choice) {
@@ -80,25 +97,6 @@
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);
-}
-
-- (IBAction)chooseAction:(id)sender {
-	[self.outputField setEnabled:NO];
-	[self.terminatorField setEnabled:NO];
-	[self.statePopup setEnabled:NO];
-	switch ([self.choiceGroup selectedRow]) {
-		case kHandleDeadKeyChangeTerminator:
-			[self.terminatorField setEnabled:YES];
-			break;
-			
-		case kHandleDeadKeyChangeState:
-			[self.statePopup setEnabled:YES];
-			break;
-			
-		case kHandleDeadKeyChangeToOutput:
-			[self.outputField setEnabled:YES];
-			break;
-	}
 }
 
 @end

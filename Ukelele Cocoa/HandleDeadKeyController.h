@@ -20,16 +20,21 @@ typedef enum HandleDeadKeyType: NSInteger {
 	kHandleDeadKeyEnterState = 3
 } HandleDeadKeyType;
 
+#define UKHandleDeadKeyTerminator	@"Terminator"
+#define UKHandleDeadKeyChangeState	@"Change State"
+#define UKHandleDeadKeyMakeOutput	@"Make Output"
+#define UKHandledeadKeyEnterState	@"Enter State"
+
 @interface HandleDeadKeyController : NSWindowController
 
 @property (strong) IBOutlet NSTextField *infoField;
-@property (strong) IBOutlet NSMatrix *choiceGroup;
 @property (strong) IBOutlet NSTextField *terminatorField;
 @property (strong) IBOutlet NSComboBox *statePopup;
 @property (strong) IBOutlet NSTextField *outputField;
 @property (strong) IBOutlet NSTextField *terminatorLabel;
 @property (strong) IBOutlet NSTextField *stateLabel;
 @property (strong) IBOutlet NSTextField *outputLabel;
+@property (strong) IBOutlet NSTabView *choiceTabView;
 
 + (HandleDeadKeyController *)handleDeadKeyController;
 
@@ -41,6 +46,5 @@ typedef enum HandleDeadKeyType: NSInteger {
 
 - (IBAction)acceptChoice:(id)sender;
 - (IBAction)cancelChoice:(id)sender;
-- (IBAction)chooseAction:(id)sender;
 
 @end

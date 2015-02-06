@@ -73,11 +73,11 @@ enum ProcessingStates {
 
 - (void)openPane:(NSString *)promptString initialValue:(NSString *)valueString action:(SEL)actionSelector
 {
-	[[keyDataDict valueForKey:kKeyDocument] setMessageBarText:promptString];
-	[[keyDataDict valueForKey:kKeyDocument] showEditingPaneForKeyCode:[[keyDataDict valueForKey:kKeyKeyCode] intValue]
-																 text:valueString
-															   target:self
-															   action:actionSelector];
+	[keyDataDict[kKeyDocument] setMessageBarText:promptString];
+	[keyDataDict[kKeyDocument] showEditingPaneForKeyCode:[keyDataDict[kKeyKeyCode] intValue]
+													text:valueString
+												  target:self
+												  action:actionSelector];
 }
 
 - (void)openSheet:(NSString *)promptString initialValue:(NSString *)valueString action:(UKSheetCompletionBlock)callBack
@@ -107,8 +107,8 @@ enum ProcessingStates {
 	[editPopover setDelegate:self];
 	[editPopover setContentViewController:popoverController];
 	[editPopover setBehavior:NSPopoverBehaviorTransient];
-	NSRect keyRect = [[keyDataDict valueForKey:kKeyDocument] keyRect:[[keyDataDict valueForKey:kKeyKeyCode] intValue]];
-	NSView *keyView = [[keyDataDict valueForKey:kKeyDocument] keyboardView];
+	NSRect keyRect = [keyDataDict[kKeyDocument] keyRect:[keyDataDict[kKeyKeyCode] intValue]];
+	NSView *keyView = [keyDataDict[kKeyDocument] keyboardView];
 	[editPopover showRelativeToRect:keyRect ofView:keyView preferredEdge:NSMinXEdge];
 	[[popoverController promptField] setStringValue:promptString];
 	[[popoverController standardOutputField] setStringValue:standardPrompt];
@@ -120,7 +120,7 @@ enum ProcessingStates {
 - (void)askNewOutput {
 	BOOL usingPopover = [[NSUserDefaults standardUserDefaults] boolForKey:UKUsesPopover];
 	BOOL usingPane = !usingPopover;
-	BOOL specialKey = [LayoutInfo getKeyType:[[keyDataDict valueForKey:kKeyKeyCode] intValue]] == kSpecialKeyType;
+	BOOL specialKey = [LayoutInfo getKeyType:[keyDataDict[kKeyKeyCode] intValue]] == kSpecialKeyType;
     NSString *promptString;
     if (usingPane) {
 		if (specialKey) {
@@ -145,7 +145,7 @@ enum ProcessingStates {
 		if (specialKey) {
 			NSString *specialFormat = NSLocalizedStringFromTable(@"Standard output is %@", @"dialogs", @"Inform user what the standard output is");
 			standardPrompt = [NSString stringWithFormat:specialFormat,
-							  [LayoutInfo getSpecialKeyOutput:[[keyDataDict valueForKey:kKeyKeyCode] intValue]]];
+							  [LayoutInfo getSpecialKeyOutput:[keyDataDict[kKeyKeyCode] intValue]]];
 		}
 		[self openPopover:promptString
 			 initialValue:currentOutput
@@ -173,13 +173,13 @@ enum ProcessingStates {
 			}
 			else if (deadKeyProcessingType == kDoubleClickDeadKeyChangeToOutput) {
 					// User provided text, but it was a dead key
-				[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
+				[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
 			}
 			else {
 					// User provided text
-				[[keyDataDict valueForKey:kKeyDocument] changeOutputForKey:keyDataDict
-																		to:theText
-															  usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
+				[keyDataDict[kKeyDocument] changeOutputForKey:keyDataDict
+														   to:theText
+												 usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 			}
 			processingState = kProcessingCompleted;
 			[self interactionCompleted];
@@ -191,7 +191,9 @@ enum ProcessingStates {
 {
 	BOOL deadKey;
 	NSString *nextDeadKeyState = nil;
-	NSString *outputString = [keyboardObject getCharOutput:keyDataDict isDead:&deadKey nextState:&nextDeadKeyState];
+	NSString *outputString = [keyboardObject getCharOutput:keyDataDict
+													isDead:&deadKey
+												 nextState:&nextDeadKeyState];
 	currentOutput = [XMLCocoaUtilities makeXMLString:outputString codingNonAscii:NO];
 	if (deadKey && deadKeyProcessingType != kDoubleClickDeadKeyChangeToOutput) {
 			// Handle a dead key click
@@ -208,32 +210,30 @@ enum ProcessingStates {
 			switch (theType) {
 				case kHandleDeadKeyChangeState:
 						// Change the state the dead key triggers
+					[keyDataDict[kKeyDocument] changeDeadKeyNextState:keyDataDict
+															 newState:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyChangeTerminator:
 						// Change the terminator
+					[keyDataDict[kKeyDocument] changeTerminatorForState:nextState
+																	 to:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyChangeToOutput:
 						// Change the dead key to output
-					[self askNewOutput];
+					[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict
+														  output:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyEnterState:
 						// Enter the dead key state
-					[[keyDataDict valueForKey:kKeyDocument] enterDeadKeyStateWithName:nextState];
-					[self interactionCompleted];
+					[keyDataDict[kKeyDocument] enterDeadKeyStateWithName:nextState];
 					break;
 			}
+			[self interactionCompleted];
 			deadKeyHandler = nil;
 		}];
-//		ChooseDeadKeyHandling *chooseHandler = [[ChooseDeadKeyHandling alloc] init];
-//        [chooseHandler setCompletionTarget:self];
-//		[chooseHandler startWithWindow:parentWindow callBack:^(NSInteger choice) {
-//			[self acceptChoiceFrom3:choice];
-//		}
-//							   choices:3];
-//        subsidiaryHandler = chooseHandler;
 	}
 	else {
         [self askNewOutput];
@@ -259,13 +259,13 @@ enum ProcessingStates {
 	}
 	else if (deadKeyProcessingType == kDoubleClickDeadKeyChangeToOutput) {
 			// User provided text, but it was a dead key
-		[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
+		[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
 	}
 	else {
 			// User provided text
-		[[keyDataDict valueForKey:kKeyDocument] changeOutputForKey:keyDataDict
-																to:theText
-													  usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
+		[keyDataDict[kKeyDocument] changeOutputForKey:keyDataDict
+												   to:theText
+										 usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 	}
 	processingState = kProcessingCompleted;
 	[self interactionCompleted];
@@ -288,12 +288,12 @@ enum ProcessingStates {
 				
 			case kProcessingReplaceTerminator:
 				if (![theText isEqualToString:[keyboardObject getTerminatorForState:nextState]]) {
-					[[keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:nextState to:theText];
+					[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:theText];
 				}
 				break;
 				
 			case kProcessingChangeToOutput:
-				[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
+				[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
 				break;
 		}
 	}
@@ -306,7 +306,7 @@ enum ProcessingStates {
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
 	if (commandSelector == @selector(complete:) || commandSelector == @selector(cancelOperation:)) {
-        UKKeyboardController *theDocumentWindow = [keyDataDict valueForKey:kKeyDocument];
+        UKKeyboardController *theDocumentWindow = keyDataDict[kKeyDocument];
 		[control removeFromSuperview];
 		[theDocumentWindow messageEditPaneClosed];
 		[theDocumentWindow setMessageBarText:@""];
@@ -338,7 +338,7 @@ enum ProcessingStates {
 						// User cancelled
 				}
 				else {
-					[[keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
+					[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
 				}
 				processingState = kProcessingCompleted;
 				[self interactionCompleted];
@@ -355,7 +355,7 @@ enum ProcessingStates {
 						// User cancelled
 				}
 				else {
-					[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
+					[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
 				}
 				processingState = kProcessingCompleted;
 				[self interactionCompleted];
@@ -366,7 +366,7 @@ enum ProcessingStates {
 			
 		case 2:
 				// Enter dead key state
-			[[keyDataDict valueForKey:kKeyDocument] enterDeadKeyStateWithName:nextState];
+			[keyDataDict[kKeyDocument] enterDeadKeyStateWithName:nextState];
 			[self interactionCompleted];
 			return;
 	}
@@ -427,7 +427,7 @@ enum ProcessingStates {
 			// User cancelled
 	}
 	else {
-		[[keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
+		[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
 	}
 	processingState = kProcessingCompleted;
 	[self interactionCompleted];
@@ -439,7 +439,7 @@ enum ProcessingStates {
 			// User cancelled
 	}
 	else {
-		[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
+		[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
 	}
 	processingState = kProcessingCompleted;
 	[self interactionCompleted];
