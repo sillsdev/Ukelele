@@ -47,11 +47,6 @@ void UnicodeInfo::InitializeStaticData(void)
 
 NString UnicodeInfo::GetCodePointName(const UInt32 inCodePoint)
 {
-//	if (!mStaticDataInitialized) {
-//		NSemaphore *unicodeSemaphore = CApplication::GetUnicodeInfoSemaphore();
-//		unicodeSemaphore->Wait();
-//		NN_ASSERT(mStaticDataInitialized);
-//	}
 	NString theName = "";
 	std::map<UInt32, NString>::iterator pos = mInfoTable.find(inCodePoint);
 	if (pos != mInfoTable.end()) {
