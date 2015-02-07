@@ -191,6 +191,7 @@ const float kScalePercentageFactor = 100.0f;
 		[self.keyboardLayout setParentDocument:theDocument];
 	}
 	[self.keyboardLayout setDelegate:self];
+	[self.keyboardLayout setParentController:self];
 	[self.modifiersDataSource setKeyboard:keyboardLayout];
 	[self setupDataSource];
 }

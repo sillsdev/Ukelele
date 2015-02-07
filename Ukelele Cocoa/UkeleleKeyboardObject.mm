@@ -67,6 +67,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	std::vector<boost::shared_ptr<KeyElementBundle> > pasteKeyBundleStack;
 }
 
+@synthesize parentController = parentController;
+
 - (id)initWithName:(NSString *)keyboardName
 {
 	self = [super init];
@@ -467,10 +469,10 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 															usingBaseMap);
 	NString oldOutput = keyElement->ChangeOutput(currentState, ToNN(newOutput), keyboardElement->GetActionList());
-	[[[parentDocument undoManager] prepareWithInvocationTarget:parentDocument] changeOutputForKey:keyDataDict
+	[[[parentController undoManager] prepareWithInvocationTarget:parentController] changeOutputForKey:keyDataDict
 																							   to:ToNS(oldOutput)
 																					 usingBaseMap:usingBaseMap];
-	[[parentDocument undoManager] setActionName:@"Change output"];
+	[[parentController undoManager] setActionName:@"Change output"];
     [self.delegate documentDidChange];
 }
 
@@ -489,9 +491,9 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSString *oldTerminator = [self getTerminatorForState:stateName];
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceTerminator(targetState, newString);
-	[[[parentDocument undoManager] prepareWithInvocationTarget:parentDocument] changeTerminatorForState:stateName
+	[[[parentController undoManager] prepareWithInvocationTarget:parentController] changeTerminatorForState:stateName
 																									 to:oldTerminator];
-	[[parentDocument undoManager] setActionName:@"Change terminator"];
+	[[parentController undoManager] setActionName:@"Change terminator"];
     [self.delegate documentDidChange];
 }
 
@@ -503,8 +505,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MakeKeyDeadKey([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
                                     [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]], currentState, targetState);
-	NSUndoManager *undoManager = [parentDocument undoManager];
-	[[undoManager prepareWithInvocationTarget:parentDocument] makeDeadKeyOutput:keyDataDict output:currentOutput];
+	NSUndoManager *undoManager = [parentController undoManager];
+	[[undoManager prepareWithInvocationTarget:parentController] makeDeadKeyOutput:keyDataDict output:currentOutput];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Changed dead key to output" : @"Change to dead key"];
     [self.delegate documentDidChange];
 }
@@ -519,8 +521,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	keyboardElement->MakeDeadKeyOutput([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
                                        [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 									   currentState, outputString);
-	NSUndoManager *undoManager = [parentDocument undoManager];
-	[[undoManager prepareWithInvocationTarget:parentDocument] makeKeyDeadKey:keyDataDict state:nextState];
+	NSUndoManager *undoManager = [parentController undoManager];
+	[[undoManager prepareWithInvocationTarget:parentController] makeKeyDeadKey:keyDataDict state:nextState];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Change to dead key" : @"Change dead key to output"];
     [self.delegate documentDidChange];
 }
@@ -534,7 +536,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	keyboardElement->ChangeDeadKeyNextState([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
 											[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 											currentState, newNextState);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] changeDeadKeyNextState:keyDataDict toState:nextState];
 	[undoManager setActionName:@"Change next state"];
     [self.delegate documentDidChange];
@@ -601,7 +603,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (void)swapModifierSet:(NSDictionary *)parameters inReverse:(BOOL)reverse
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] swapModifierSet:parameters inReverse:!reverse];
 	[undoManager setActionName:@"Unlink Modifiers"];
 	NSUInteger modifierCombination = [parameters[kUnlinkParameterModifiers] unsignedIntegerValue];
@@ -645,7 +647,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		}
 	}
 	parameterDictionary[kUnlinkParameterData] = dataDictionary;
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] swapModifierSet:parameterDictionary inReverse:YES];
 	[undoManager setActionName:@"Unlink Modifiers"];
     [self.delegate modifierMapDidChange];
@@ -701,7 +703,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	keyboardElement->SetKeyBundle((UInt32)keyCode, pasteKeyBundleStack.back());
 	KeyElementBundleObject *keyElementBundle = [[KeyElementBundleObject alloc] init];
 	[keyElementBundle setKeyElementBundle:keyBundle];
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] undoPasteKeyCode:keyCode bundle:keyElementBundle];
 	[undoManager setActionName:@"Paste Key"];
     [self.delegate documentDidChange];
@@ -710,7 +712,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (void)undoPasteKeyCode:(NSInteger)keyCode bundle:(KeyElementBundleObject *)keyBundle {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyBundle((UInt32)keyCode, [keyBundle keyElementBundle]);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] pasteKeyCode:keyCode];
 	[undoManager setActionName:@"Paste Key"];
     [self.delegate documentDidChange];
@@ -724,8 +726,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	NSUInteger oldIndex = modMap->GetDefaultIndex();
 	modMap->SetDefaultIndex((UInt32)defaultIndex);
-	[[[parentDocument undoManager] prepareWithInvocationTarget:self] setDefaultModifierIndex:oldIndex];
-	[[parentDocument undoManager] setActionName:@"Change default index"];
+	[[[parentController undoManager] prepareWithInvocationTarget:self] setDefaultModifierIndex:oldIndex];
+	[[parentController undoManager] setActionName:@"Change default index"];
     [self.delegate modifierMapDidChange];
     [self.delegate documentDidChange];
 }
@@ -753,7 +755,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	UInt32 oldShift, oldOption, oldCapsLock, oldCommand, oldControl;
 	modElement->GetModifierStatus(oldShift, oldCapsLock, oldOption, oldCommand, oldControl);
 	modElement->SetModifierStatus((UInt32)newShift, (UInt32)newCapsLock, (UInt32)newOption, (UInt32)newCommand, (UInt32)newControl);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] changeModifiersIndex:index
                                                                 subIndex:subindex
                                                                    shift:oldShift
@@ -788,7 +790,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	else {
 		selectElement->AddModifierElement(modifierElement);
 	}
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeModifierElement:keyboardID
                                                                     index:index
                                                                  subindex:subindex];
@@ -807,7 +809,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	modifierElement->AppendToList(oldModifierElementList);
 	UInt32 oldShift, oldCapsLock, oldOption, oldCommand, oldControl;
 	modifierElement->GetModifierStatus(oldShift, oldCapsLock, oldOption, oldCommand, oldControl);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addModifierElement:keyboardID
                                                                  index:index
                                                               subIndex:subindex
@@ -839,7 +841,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSAssert(keyMapSelect->GetModifierElementCount() == 1, @"KeyMapSelect should have only one element");
 	XMLCommentHolderList oldKeyMapSelectList;
 	keyMapSelect->AppendToList(oldKeyMapSelectList);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceKeyMap:index
                                                       forKeyboard:keyboardID
                                                      defaultIndex:modMap->GetDefaultIndex()
@@ -869,7 +871,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	}
 	ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	modifierMap->InsertKeyMapSelectAtIndex((KeyMapSelect *)keyMapSelect, (UInt32)index);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeKeyMap:index
                                                      forKeyboard:keyboardID
                                                  newDefaultIndex:defaultIndex];
@@ -913,8 +915,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	}
 	shared_ptr<XMLCommentContainer> theCommentContainer = self.keyboard->GetCommentContainer();
 	theCommentContainer->AddCommentHolders(newKeyMapSelectList);
-	NSUndoManager *undoManager = [parentDocument undoManager];
-    [[undoManager prepareWithInvocationTarget:parentDocument] removeKeyMap:newIndex
+	NSUndoManager *undoManager = [parentController undoManager];
+    [[undoManager prepareWithInvocationTarget:parentController] removeKeyMap:newIndex
                                                                forKeyboard:keyboardID
                                                            newDefaultIndex:oldDefaultIndex];
     [undoManager setActionName:@"Add key map"];
@@ -966,7 +968,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMapList *oldModifiers = keyboardElement->ReplaceModifierMaps(newModifierMaps);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
     [[undoManager prepareWithInvocationTarget:self] replaceModifierMaps:oldModifiers];
     [undoManager setActionName:@"Replace Modifiers"];
     [self.delegate modifierMapDidChange];
@@ -1001,7 +1003,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (void)moveModifierSetIndex:(NSInteger)sourceSet toIndex:(NSInteger)destinationSet forKeyboard:(NSUInteger)keyboardID {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MoveModifierMap((UInt32)sourceSet, (UInt32)destinationSet, (UInt32)keyboardID);
-	NSUndoManager *undoManager = [parentDocument undoManager];
+	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] moveModifierSetIndex:destinationSet toIndex:sourceSet forKeyboard:keyboardID];
 	[undoManager setActionName:@"Move modifier set"];
 	[self.delegate modifierMapDidChange];
