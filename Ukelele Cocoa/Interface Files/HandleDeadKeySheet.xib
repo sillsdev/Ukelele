@@ -75,12 +75,30 @@ Gw
                         <rect key="frame" x="13" y="41" width="454" height="153"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
+                            <tabViewItem label="Enter State" identifier="Enter State" id="Tkc-ae-BCM">
+                                <view key="view" id="8Wq-i0-RGb">
+                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
+                                            <rect key="frame" x="15" y="17" width="404" height="34"/>
+                                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="iJU-5x-5iR">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <string key="title">This will make the keyboard layout enter the dead key state for which this key is a trigger. This enables you to add output for the dead key state.</string>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
                             <tabViewItem label="Terminator" identifier="Terminator" id="hlq-Tq-jfL">
                                 <view key="view" id="3cg-Te-Y8U">
+                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wof-FS-7vT">
-                                            <rect key="frame" x="15" y="-23" width="160" height="17"/>
+                                            <rect key="frame" x="15" y="84" width="160" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the new terminator:" id="jp8-5G-ya2">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -88,7 +106,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AER-6c-F9x">
-                                            <rect key="frame" x="181" y="-25" width="96" height="22"/>
+                                            <rect key="frame" x="181" y="82" width="96" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7lB-4g-5iH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -96,7 +114,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hzj-Fl-9ZG">
-                                            <rect key="frame" x="15" y="-90" width="404" height="42"/>
+                                            <rect key="frame" x="15" y="17" width="404" height="42"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="lbQ-k1-QM1">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <string key="title">The terminator is the character (or characters) produced by the dead key when no output is specified for the next key pressed. It can be the empty string.</string>
@@ -169,23 +187,6 @@ Gw
                                             <rect key="frame" x="15" y="17" width="404" height="34"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Converting the dead key to an output key does not delete the dead key state, but stops this key entering the dead key state." id="cbu-XZ-jH1">
                                                 <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                    </subviews>
-                                </view>
-                            </tabViewItem>
-                            <tabViewItem label="Enter State" identifier="Enter State" id="Tkc-ae-BCM">
-                                <view key="view" id="8Wq-i0-RGb">
-                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
-                                            <rect key="frame" x="15" y="17" width="404" height="34"/>
-                                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="iJU-5x-5iR">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <string key="title">This will make the keyboard layout enter the dead key state for which this key is a trigger. This enables you to add output for the dead key state.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>

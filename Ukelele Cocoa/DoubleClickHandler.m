@@ -32,7 +32,6 @@ enum ProcessingStates {
 	UkeleleKeyboardObject *keyboardObject;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
-    id<UKInteractionHandler> subsidiaryHandler;
     AskTextSheet *askTextSheet;
 	NSPopover *editPopover;
 	EditKeyPopoverController *popoverController;
@@ -240,6 +239,20 @@ enum ProcessingStates {
 	}
 }
 
+- (void)askNewState {
+	__block ChooseStateController *theController = [ChooseStateController chooseStateController];
+	NSArray *stateNames = [keyboardObject stateNamesExcept:kStateNameNone];
+	[theController setStateNames:stateNames];
+	[theController askStateForWindow:parentWindow completionBlock:^(NSString *newState) {
+		if (newState != nil) {
+			[keyDataDict[kKeyDocument] changeDeadKeyNextState:keyDataDict newState:newState];
+		}
+		processingState = kProcessingCompleted;
+		[self interactionCompleted];
+		theController = nil;
+	}];
+}
+
 #pragma mark Popover delegate
 
 - (void)popoverWillClose:(NSNotification *)notification
@@ -316,144 +329,11 @@ enum ProcessingStates {
 	return NO;
 }
 
-#pragma mark Handle dead keys
-
-- (void)acceptChoiceFrom3:(NSInteger)choice
-{
-	NSString *majorText = nil;
-	NSString *terminatorString = nil;
-	UKSheetCompletionBlock theCallBack = nil;
-	switch (choice) {
-		case -1:
-				// User pressed cancel, so nothing to do
-			[self interactionCompleted];
-			return;
-
-		case 0: {
-				// Change terminator
-			majorText = @"Enter the new terminator";
-			terminatorString = [keyboardObject getTerminatorForState:nextState];
-			theCallBack = ^(NSString *newTerminator) {
-				if (newTerminator == nil) {
-						// User cancelled
-				}
-				else {
-					[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
-				}
-				processingState = kProcessingCompleted;
-				[self interactionCompleted];
-			};
-			processingState = kProcessingReplaceTerminator;
-			break;
-		}
-		case 1: {
-				// Convert to output
-			majorText = @"Enter the new output";
-			terminatorString = @"";
-			theCallBack = ^(NSString *newOutput) {
-				if (newOutput == nil) {
-						// User cancelled
-				}
-				else {
-					[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
-				}
-				processingState = kProcessingCompleted;
-				[self interactionCompleted];
-			};
-			processingState = kProcessingChangeToOutput;
-			break;
-		}
-			
-		case 2:
-				// Enter dead key state
-			[keyDataDict[kKeyDocument] enterDeadKeyStateWithName:nextState];
-			[self interactionCompleted];
-			return;
-	}
-	BOOL usingPopover = [[NSUserDefaults standardUserDefaults] boolForKey:UKUsesPopover];
-	BOOL usingPane = !usingPopover;
-	if (usingPane) {
-		[self openPane:majorText initialValue:terminatorString action:@selector(acceptTextField:)];
-	}
-	else if (usingPopover) {
-		[self openPopover:majorText initialValue:terminatorString standardPrompt:@"" standardEnabled:NO callBack:theCallBack];
-	}
-	else {
-		[self openSheet:majorText initialValue:terminatorString action:theCallBack];
-	}
-}
-
-- (void)askNewTerminator {
-	BOOL usingPopover = [[NSUserDefaults standardUserDefaults] boolForKey:UKUsesPopover];
-	BOOL usingPane = !usingPopover;
-	UKSheetCompletionBlock theCallback = ^(NSString *newTerminator) {
-		if (newTerminator != nil) {
-			[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
-		}
-		processingState = kProcessingCompleted;
-		[self interactionCompleted];
-	};
-	NSString *promptString = @"Enter the new terminator";
-	NSString *terminatorString = [keyboardObject getTerminatorForState:nextState];
-	if (usingPane) {
-		[self openPane:promptString initialValue:terminatorString action:@selector(acceptTextField:)];
-	}
-	else if (usingPopover) {
-		[self openPopover:promptString initialValue:terminatorString standardPrompt:@"" standardEnabled:NO callBack:theCallback];
-		processingState = kProcessingReplaceTerminator;
-	}
-	else {
-		[self openSheet:promptString initialValue:terminatorString action:theCallback];
-	}
-}
-
-- (void)askNewState {
-	__block ChooseStateController *theController = [ChooseStateController chooseStateController];
-	NSArray *stateNames = [keyboardObject stateNamesExcept:kStateNameNone];
-	[theController setStateNames:stateNames];
-	[theController askStateForWindow:parentWindow completionBlock:^(NSString *newState) {
-		if (newState != nil) {
-			[keyDataDict[kKeyDocument] changeDeadKeyNextState:keyDataDict newState:newState];
-		}
-		processingState = kProcessingCompleted;
-		[self interactionCompleted];
-		theController = nil;
-	}];
-}
-
-- (void)acceptNewTerminator:(NSString *)newTerminator
-{
-	if (newTerminator == nil) {
-			// User cancelled
-	}
-	else {
-		[keyDataDict[kKeyDocument] changeTerminatorForState:nextState to:newTerminator];
-	}
-	processingState = kProcessingCompleted;
-	[self interactionCompleted];
-}
-
-- (void)acceptNewOutput:(NSString *)newOutput
-{
-	if (newOutput == nil) {
-			// User cancelled
-	}
-	else {
-		[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:newOutput];
-	}
-	processingState = kProcessingCompleted;
-	[self interactionCompleted];
-}
+#pragma mark Interaction completion
 
 - (void)interactionCompleted
 {
     [completionTarget interactionDidComplete:self];
-}
-
-- (void)interactionDidComplete:(id<UKInteractionHandler>)handler
-{
-    NSAssert(handler == subsidiaryHandler, @"Wrong handler passed");
-    subsidiaryHandler = nil;
 }
 
 - (void)handleMessage:(NSDictionary *)messageData

@@ -121,9 +121,10 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 										   [self interactionCompleted];
 										   return;
 									   }
-									   deadKeyData = [keyData mutableCopy];
+									   deadKeyData = [NSMutableDictionary dictionaryWithObject:keyData[kCreateSelectedDeadKeyState] forKey:kDeadKeyDataStateName];
 									   deadKeyData[kCreateDeadKeySelectedKeyCode] = @(selectedKeyCode);
 									   deadKeyData[kDeadKeyDataKeyCode] = @(selectedKeyCode);
+									   deadKeyData[kDeadKeyDataModifiers] = @(currentModifiers);
 									   [self checkDeadKeyParameters];
 								   }];
 	}

@@ -59,11 +59,13 @@
 	NSString *terminator = [theDocument terminatorForState:nextState];
 	NSString *formatString = @"Currently it goes to state \"%@\", which has terminator \"%@\"";
 	[self.infoField setStringValue:[NSString stringWithFormat:formatString, nextState, terminator]];
+	[self.terminatorField setStringValue:terminator];
 	NSMutableArray *stateNames = [[theDocument stateNamesExcept:kStateNameNone] mutableCopy];
 	[stateNames removeObjectIdenticalTo:theState];
 	[stateNames removeObjectIdenticalTo:nextState];
 	[self.statePopup removeAllItems];
 	[self.statePopup addItemsWithObjectValues:stateNames];
+	[self.statePopup selectItemWithObjectValue:nextState];
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
