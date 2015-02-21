@@ -256,7 +256,7 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultPrintTheme setNormalGradientType:gradientTypeNone];
 		[sDefaultPrintTheme setDeadKeyUpInnerColour:[NSColor colorWithCalibratedWhite:0.2 alpha:1.0]];
 		[sDefaultPrintTheme setDeadKeyUpOuterColour:[NSColor whiteColor]];
-		[sDefaultPrintTheme setDeadKeyUpTextColour:[NSColor blackColor]];
+		[sDefaultPrintTheme setDeadKeyUpTextColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setDeadKeyDownInnerColour:[NSColor colorWithCalibratedWhite:0.1 alpha:1.0]];
 		[sDefaultPrintTheme setDeadKeyDownOuterColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setDeadKeyDownTextColour:[NSColor blackColor]];

@@ -30,6 +30,7 @@ enum ToolbarItemTags {
 };
 
 @class UKKeyboardDocument;
+@class UKKeyboardPrintInfo;
 
 @interface UKKeyboardController : NSWindowController<NSWindowDelegate,
 	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, UKKeyCapClick,
@@ -52,6 +53,8 @@ enum ToolbarItemTags {
 	KeyboardTypeSheet *keyboardTypeSheet;
 	ReplaceNameSheet *replaceNameSheet;
 	ModifiersSheet *modifiersSheet;
+	NSPrintInfo *printInfo;
+	UKKeyboardPrintInfo *printingInfo;
 }
 
 	// Outlets
@@ -119,6 +122,9 @@ enum ToolbarItemTags {
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)findKeyStroke:(id)sender;
+
+	// Printing
+- (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo;
 
 	// Accessors
 - (NSString *)keyboardDisplayName;

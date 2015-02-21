@@ -285,16 +285,18 @@ static CGAffineTransform kTextTransform = {
 
 - (void)setScale:(CGFloat)scaleValue
 {
-	NSRect newFrame = NSRectFromCGRect(CGRectMake(keyRect.origin.x * scaleValue, keyRect.origin.y * scaleValue,
-												  keyRect.size.width * scaleValue, keyRect.size.height * scaleValue));
+	NSRect newFrame = NSMakeRect(keyRect.origin.x * scaleValue, keyRect.origin.y * scaleValue,
+								 keyRect.size.width * scaleValue, keyRect.size.height * scaleValue);
 	[self setFrame:newFrame];
 }
 
 - (void)changeScaleBy:(CGFloat)scaleMultiplier
 {
 	NSRect oldFrame = [self frame];
-	NSRect newFrame = NSRectFromCGRect(CGRectMake(oldFrame.origin.x * scaleMultiplier, oldFrame.origin.y * scaleMultiplier,
-												  oldFrame.size.width * scaleMultiplier, oldFrame.size.height * scaleMultiplier));
+	NSRect newFrame = NSMakeRect(oldFrame.origin.x * scaleMultiplier,
+								 oldFrame.origin.y * scaleMultiplier,
+								 oldFrame.size.width * scaleMultiplier,
+								 oldFrame.size.height * scaleMultiplier);
 	[self setFrame:newFrame];
 }
 
@@ -339,7 +341,7 @@ static CGAffineTransform kTextTransform = {
         [layoutManager glyphRangeForTextContainer:textContainer];
         NSRect neededBox = [layoutManager usedRectForTextContainer:textContainer];
         drawPoint.x += textRect.size.width / 2.0 - neededBox.size.width / 2.0;
-		drawPoint.y -= 7;	// Just a value that seems to work!
+		drawPoint.y -= neededBox.size.height * 0.3;	// Just a value that seems to work!
 		NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
 		[layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawPoint];
     }

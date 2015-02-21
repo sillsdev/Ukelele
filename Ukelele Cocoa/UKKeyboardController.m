@@ -35,11 +35,13 @@
 #import "DragTextHandler.h"
 #import "UKKeyboardDocument.h"
 #import "UKKeyStrokeLookupInteractionHandler.h"
+#import "UKKeyboardPrintView.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
 const float kWindowMinHeight = 300.0f;
 const float kScalePercentageFactor = 100.0f;
+const CGFloat kTextPaneHeight = 17.0f;
 
 @interface UKKeyboardController ()
 
@@ -81,6 +83,7 @@ const float kScalePercentageFactor = 100.0f;
 		selectedKey = kNoKeyCode;
 		commentChanged = NO;
 		_undoManager = nil;
+		printingInfo = [[UKKeyboardPrintInfo alloc] init];
     }
     return self;
 }
@@ -336,20 +339,37 @@ const float kScalePercentageFactor = 100.0f;
 	return widthFactor;
 }
 
+- (CGFloat)scaleForWidth:(CGFloat)availableWidth {
+		// First get the base width of the view
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	CGFloat baseViewWidth = [ukeleleView baseFrame].size.width;
+	CGFloat widthFactor = availableWidth / baseViewWidth;
+	return widthFactor;
+}
+
 - (void)updateWindow
 {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	[self updateUkeleleView:ukeleleView
+					  state:internalState[kStateCurrentState]
+				  modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]];
+	NSString *keyboardName = [self.keyboardLayout keyboardName];
+	if (keyboardName) {
+		[self.window setTitle:keyboardName];
+	}
+	[ukeleleView setNeedsDisplay:YES];
+}
+
+- (void)updateUkeleleView:(UkeleleView *)ukeleleView state:(NSString *)stateName modifiers:(NSUInteger)modifiers {
 	NSArray *subViews = [ukeleleView keyCapViews];
-    NSNumber *modifiersValue = internalState[kStateCurrentModifiers];
-    unsigned int theModifiers = [modifiersValue unsignedIntValue];
     NSMutableDictionary *keyDataDict = [NSMutableDictionary dictionary];
     keyDataDict[kKeyKeyboardID] = internalState[kStateCurrentKeyboard];
     keyDataDict[kKeyKeyCode] = @0;
-    keyDataDict[kKeyModifiers] = modifiersValue;
-    keyDataDict[kKeyState] = internalState[kStateCurrentState];
+    keyDataDict[kKeyModifiers] = @(modifiers);
+    keyDataDict[kKeyState] = stateName;
 	for (KeyCapView *keyCapView in subViews) {
 		NSInteger keyCode = [keyCapView keyCode];
-		if (theModifiers & NSNumericPadKeyMask) {
+		if (modifiers & NSNumericPadKeyMask) {
 			keyCode = [keyCapView fnKeyCode];
 		}
 		NSString *output;
@@ -360,12 +380,7 @@ const float kScalePercentageFactor = 100.0f;
 		[keyCapView setOutputString:output];
 		[keyCapView setDeadKey:deadKey];
 	}
-	[ukeleleView updateModifiers:theModifiers];
-	NSString *keyboardName = [[self keyboardLayout] keyboardName];
-	if (keyboardName) {
-		[self.window setTitle:keyboardName];
-	}
-	[ukeleleView setNeedsDisplay:YES];
+	[ukeleleView updateModifiers:(unsigned)modifiers];
 }
 
 - (void)changeViewScale:(double)newScale
@@ -499,7 +514,16 @@ const float kScalePercentageFactor = 100.0f;
 		selector == @selector(changeTerminator:) ||
 		selector == @selector(leaveDeadKeyState:) ||
 		selector == @selector(unlinkKey:) ||
-		selector == @selector(pasteKey:)) {
+		selector == @selector(pasteKey:) ||
+		selector == @selector(printDocument:) ||
+		selector == @selector(findKeyStroke:) ||
+		selector == @selector(askKeyboardIdentifiers:) ||
+		selector == @selector(installForAllUsers:) ||
+		selector == @selector(installForCurrentUser:) ||
+		selector == @selector(removeUnusedStates:) ||
+		selector == @selector(changeStateName:) ||
+		selector == @selector(changeActionName:) ||
+		selector == @selector(removeUnusedActions:)) {
 		return YES;
 	}
 	return NO;
@@ -515,7 +539,7 @@ const float kScalePercentageFactor = 100.0f;
 		action == @selector(importDeadKey:) || action == @selector(editKey:) ||
 		action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
 		action == @selector(copyKey:) || action == @selector(setKeyboardType:) ||
-		action == @selector(findKeyStroke:)) {
+		action == @selector(findKeyStroke:) || action == @selector(printDocument:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
@@ -1222,6 +1246,82 @@ const float kScalePercentageFactor = 100.0f;
 	[theHandler setCompletionTarget:self];
 	interactionHandler = theHandler;
 	[theHandler beginInteractionWithKeyboard:self];
+}
+
+#pragma mark Printing
+
+- (IBAction)printDocument:(id)sender {
+		// Work out the permutations of state and modifiers
+	NSUInteger currentKeyboard = [internalState[kStateCurrentKeyboard] unsignedIntegerValue];
+	NSUInteger modifierCombinations = [self.keyboardLayout modifierSetCountForKeyboard:currentKeyboard];
+	[printingInfo setModifierCount:modifierCombinations];
+	NSUInteger stateCount = [self.keyboardLayout stateCount];
+	[printingInfo setStateCount:stateCount];
+	NSMutableArray *modifierSets = [NSMutableArray arrayWithCapacity:modifierCombinations];
+	for (NSUInteger i = 0; i < modifierCombinations; i++) {
+		modifierSets[i] = @([self.keyboardLayout modifiersForIndex:i forKeyboard:currentKeyboard]);
+	}
+	[printingInfo setModifierList:modifierSets];
+	NSMutableArray *stateNames = [NSMutableArray arrayWithObject:kStateNameNone];
+	[stateNames addObjectsFromArray:[self.keyboardLayout stateNamesExcept:@""]];
+	[printingInfo setStateList:stateNames];
+	NSMutableDictionary *viewDict = [NSMutableDictionary dictionaryWithCapacity:stateCount];
+	[printingInfo setViewDict:viewDict];
+		// Create the print view and get print information
+	UKKeyboardPrintView *printView = [[UKKeyboardPrintView alloc] init];
+	NSPrintOperation *op = [NSPrintOperation printOperationWithView:printView];
+	if (printInfo == nil) {
+		printInfo = [[self.parentDocument printInfo] copy];
+	}
+	[printInfo setVerticalPagination:NSFitPagination];
+	NSSize pageSize = [printInfo paperSize];
+	CGFloat availableWidth = pageSize.width	- [printInfo leftMargin] - [printInfo rightMargin];
+	CGFloat availableHeight = pageSize.height - [printInfo topMargin] - [printInfo bottomMargin];
+	[printView setFrame:NSMakeRect(0, 0, availableWidth, availableHeight)];
+	[printingInfo setAvailablePageHeight:availableHeight];
+		// Create the views and work out pagination
+	UkeleleView *keyboardView = [[UkeleleView alloc] init];
+	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
+	[keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
+	CGFloat keyboardWidth = [keyboardView bounds].size.width;
+	CGFloat desiredScale = availableWidth / keyboardWidth;
+	[keyboardView scaleViewToScale:desiredScale limited:NO];
+	CGFloat iterationSize = [keyboardView bounds].size.height + kTextPaneHeight;
+	[printingInfo setViewHeight:iterationSize];
+	[printView setFrameSize:NSMakeSize(availableWidth, iterationSize)];
+	[printingInfo setViewsPerPage:floor(availableHeight / iterationSize)];
+	for (NSString *stateName in stateNames) {
+		NSMutableArray *stateViews = [NSMutableArray arrayWithCapacity:modifierCombinations];
+		for (NSUInteger i = 0; i < modifierCombinations; i++) {
+			NSUInteger modifiers = [modifierSets[i] unsignedIntegerValue];
+			UkeleleView *theKeyboard = [[UkeleleView alloc] init];
+			[theKeyboard createViewWithKeyboardID:keyboardID withScale:1.0];
+			[theKeyboard scaleViewToScale:desiredScale limited:NO];
+			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers];
+			[theKeyboard setFrameOrigin:NSMakePoint(0, kTextPaneHeight)];
+			[theKeyboard setColourTheme:[ColourTheme defaultPrintTheme]];
+			NSTextView *stateNameView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, kTextPaneHeight)];
+			[stateNameView setAlignment:NSCenterTextAlignment];
+			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
+			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
+			[hostView addSubview:theKeyboard];
+			[hostView addSubview:stateNameView];
+			stateViews[i] = hostView;
+		}
+		printingInfo.viewDict[stateName] = stateViews;
+	}
+	[printView setPrintingInfo:printingInfo];
+	[printView setAllStates:NO];
+	[printView setCurrentState:internalState[kStateCurrentState]];
+	[printView setAllModifiers:YES];
+	[printView setCurrentModifierIndex:[self.keyboardLayout modifierSetIndexForModifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue] forKeyboard:keyboardID]];
+	
+	[op setCanSpawnSeparateThread:YES];
+	[op runOperationModalForWindow:self.window delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
+}
+
+- (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo {
+	printingInfo = nil;
 }
 
 #pragma mark Messages

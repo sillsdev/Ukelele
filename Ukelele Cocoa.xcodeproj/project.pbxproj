@@ -175,6 +175,10 @@
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
 		52EB2B271927397000712272 /* ToolboxController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EB2B261927397000712272 /* ToolboxController.xib */; };
+		52ED0B711A91EF2A00322FFE /* UKDocumentPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */; };
+		52ED0B741A91F10500322FFE /* UKDocumentPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED0B731A91F10500322FFE /* UKDocumentPrintViewController.m */; };
+		52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */; };
+		52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */; };
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardIDWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
@@ -528,6 +532,12 @@
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
 		52EB2B261927397000712272 /* ToolboxController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ToolboxController.xib; path = "Interface Files/ToolboxController.xib"; sourceTree = "<group>"; };
+		52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKDocumentPrintView.xib; path = "Interface Files/UKDocumentPrintView.xib"; sourceTree = "<group>"; };
+		52ED0B721A91F10500322FFE /* UKDocumentPrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDocumentPrintViewController.h; sourceTree = "<group>"; };
+		52ED0B731A91F10500322FFE /* UKDocumentPrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDocumentPrintViewController.m; sourceTree = "<group>"; };
+		52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKKeyboardLayoutPrintView.xib; path = "Interface Files/UKKeyboardLayoutPrintView.xib"; sourceTree = "<group>"; };
+		52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPrintView.h; sourceTree = "<group>"; };
+		52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPrintView.m; sourceTree = "<group>"; };
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardIDWindow.xib; path = "Interface Files/ChooseKeyboardIDWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
@@ -698,7 +708,6 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
-				5240120419EBC66E00563096 /* NewKeyboardLayout.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -709,7 +718,6 @@
 				5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */,
 				52BEADEB192484A6008A3314 /* AskText.xib */,
 				52BEADEF1924856F008A3314 /* AskYesNo.xib */,
-				5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */,
 				528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */,
 				52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */,
 				52E2F1A619258F9E007F4280 /* ChooseScale.xib */,
@@ -723,17 +731,21 @@
 				5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */,
 				521E5EA61926228000C45A4A /* InspectorWindow.xib */,
 				52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */,
-				525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */,
 				52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */,
+				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
+				5240120419EBC66E00563096 /* NewKeyboardLayout.xib */,
 				523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */,
 				529B223D1927213600D9F055 /* ReplaceNameSheet.xib */,
 				529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */,
 				52EB2B261927397000712272 /* ToolboxController.xib */,
+				52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */,
+				52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */,
+				5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */,
 				5252055C19273D7500CDE5BD /* UkeleleDocument.xib */,
 				52C2B5CF192743C20052D418 /* UkelelePreferences.xib */,
+				525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */,
 				52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */,
 				528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */,
-				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
 			);
 			name = "Interface Files";
 			sourceTree = "<group>";
@@ -902,18 +914,20 @@
 			children = (
 				523B007F191C9CD200E06DF3 /* KeyboardPrintView.h */,
 				523B0080191C9CD200E06DF3 /* KeyboardPrintView.m */,
-				523B0081191C9CD200E06DF3 /* SelectionRing.h */,
-				523B0082191C9CD200E06DF3 /* SelectionRing.m */,
 				523B0070191C9CA900E06DF3 /* KeyCapView.h */,
 				523B0071191C9CA900E06DF3 /* KeyCapView.m */,
 				523B0072191C9CA900E06DF3 /* KeyCapView2Rect.h */,
 				523B0073191C9CA900E06DF3 /* KeyCapView2Rect.m */,
 				523B0074191C9CA900E06DF3 /* MyTableView.h */,
 				523B0075191C9CA900E06DF3 /* MyTableView.m */,
+				523B0081191C9CD200E06DF3 /* SelectionRing.h */,
+				523B0082191C9CD200E06DF3 /* SelectionRing.m */,
 				523B0076191C9CA900E06DF3 /* UkeleleContainerView.h */,
 				523B0077191C9CA900E06DF3 /* UkeleleContainerView.m */,
 				523B0078191C9CA900E06DF3 /* UkeleleView.h */,
 				523B0079191C9CA900E06DF3 /* UkeleleView.m */,
+				52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */,
+				52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -999,6 +1013,8 @@
 				523B0170191CA18C00E06DF3 /* ToolboxController.m */,
 				523B0123191CA18C00E06DF3 /* UKAskYesNoController.h */,
 				523B0124191CA18C00E06DF3 /* UKAskYesNoController.m */,
+				52ED0B721A91F10500322FFE /* UKDocumentPrintViewController.h */,
+				52ED0B731A91F10500322FFE /* UKDocumentPrintViewController.m */,
 				523B0171191CA18C00E06DF3 /* UkeleleAppDelegate.h */,
 				523B0172191CA18C00E06DF3 /* UkeleleAppDelegate.m */,
 				523B0125191CA18C00E06DF3 /* UkeleleBundleVersionSheet.h */,
@@ -1148,6 +1164,7 @@
 				52BBED13191B4C3900E48394 /* Credits.rtf in Resources */,
 				52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */,
 				52A84CF41926E09800DB142A /* IntendedLanguageSheet.xib in Resources */,
+				52ED0B711A91EF2A00322FFE /* UKDocumentPrintView.xib in Resources */,
 				52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */,
 				5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
@@ -1158,6 +1175,7 @@
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
 				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
 				5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */,
+				52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */,
 				525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */,
 				52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */,
 				522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */,
@@ -1226,6 +1244,7 @@
 				523B0107191CA0D100E06DF3 /* KeyboardResourceList.m in Sources */,
 				523B0083191C9CD200E06DF3 /* KeyboardPrintView.m in Sources */,
 				523B01BF191CA18C00E06DF3 /* UnlinkModifierSetHandler.m in Sources */,
+				52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */,
 				523B0106191CA0D100E06DF3 /* KeyboardEnvironment.m in Sources */,
 				523B010B191CA0D100E06DF3 /* LanguageRegistry.m in Sources */,
 				523B0188191CA18C00E06DF3 /* AskNewKeyMap.m in Sources */,
@@ -1242,6 +1261,7 @@
 				523F9FC7196FBA5300A896CA /* NewKeyboardDialogController.m in Sources */,
 				523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */,
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
+				52ED0B741A91F10500322FFE /* UKDocumentPrintViewController.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,
 				525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */,
 				525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */,

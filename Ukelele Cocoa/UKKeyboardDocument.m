@@ -20,6 +20,7 @@
 #import "InspectorWindowController.h"
 #import "UkeleleKeyboardInstaller.h"
 #import "UKNewKeyboardLayoutController.h"
+#import "UKDocumentPrintViewController.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -1157,6 +1158,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if (!installOK) {
 		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
 	}
+}
+
+- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError {
+	UKDocumentPrintViewController *printViewController = [UKDocumentPrintViewController documentPrintViewController];
+	[printViewController setCurrentDocument:self];
+	return [NSPrintOperation printOperationWithView:[printViewController view]];
 }
 
 #pragma mark Notifications
