@@ -27,7 +27,6 @@
 #import "EditKeyWindowController.h"
 #import "ToolboxData.h"
 #import "SelectKeyByCodeController.h"
-#import "KeyboardPrintView.h"
 #import "GetKeyCodeHandler.h"
 #import "DoubleClickHandler.h"
 #import "AskCommentController.h"
@@ -36,6 +35,7 @@
 #import "UKKeyboardDocument.h"
 #import "UKKeyStrokeLookupInteractionHandler.h"
 #import "UKKeyboardPrintView.h"
+#import "PrintAccessoryPanel.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
@@ -1317,6 +1317,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printView setCurrentModifierIndex:[self.keyboardLayout modifierSetIndexForModifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue] forKeyboard:keyboardID]];
 	
 	[op setCanSpawnSeparateThread:YES];
+	PrintAccessoryPanel *accessoryPanel =[PrintAccessoryPanel printAccessoryPanel];
+	[accessoryPanel setPrintView:printView];
+	[[op printPanel] addAccessoryController:accessoryPanel];
 	[op runOperationModalForWindow:self.window delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
 }
 

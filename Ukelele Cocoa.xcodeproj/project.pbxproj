@@ -27,7 +27,6 @@
 		523B007C191C9CA900E06DF3 /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0075191C9CA900E06DF3 /* MyTableView.m */; };
 		523B007D191C9CA900E06DF3 /* UkeleleContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0077191C9CA900E06DF3 /* UkeleleContainerView.m */; };
 		523B007E191C9CA900E06DF3 /* UkeleleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0079191C9CA900E06DF3 /* UkeleleView.m */; };
-		523B0083191C9CD200E06DF3 /* KeyboardPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0080191C9CD200E06DF3 /* KeyboardPrintView.m */; };
 		523B0084191C9CD200E06DF3 /* SelectionRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0082191C9CD200E06DF3 /* SelectionRing.m */; };
 		523B008F191C9D2200E06DF3 /* FontNameTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0086191C9D2200E06DF3 /* FontNameTransformer.m */; };
 		523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0088191C9D2200E06DF3 /* MathsUtilities.mm */; };
@@ -265,8 +264,6 @@
 		523B0077191C9CA900E06DF3 /* UkeleleContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UkeleleContainerView.m; sourceTree = "<group>"; };
 		523B0078191C9CA900E06DF3 /* UkeleleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UkeleleView.h; sourceTree = "<group>"; };
 		523B0079191C9CA900E06DF3 /* UkeleleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UkeleleView.m; sourceTree = "<group>"; };
-		523B007F191C9CD200E06DF3 /* KeyboardPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardPrintView.h; sourceTree = "<group>"; };
-		523B0080191C9CD200E06DF3 /* KeyboardPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardPrintView.m; sourceTree = "<group>"; };
 		523B0081191C9CD200E06DF3 /* SelectionRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionRing.h; sourceTree = "<group>"; };
 		523B0082191C9CD200E06DF3 /* SelectionRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionRing.m; sourceTree = "<group>"; };
 		523B0085191C9D2200E06DF3 /* FontNameTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontNameTransformer.h; sourceTree = "<group>"; };
@@ -912,8 +909,6 @@
 		52BBED3A191B4EB600E48394 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				523B007F191C9CD200E06DF3 /* KeyboardPrintView.h */,
-				523B0080191C9CD200E06DF3 /* KeyboardPrintView.m */,
 				523B0070191C9CA900E06DF3 /* KeyCapView.h */,
 				523B0071191C9CA900E06DF3 /* KeyCapView.m */,
 				523B0072191C9CA900E06DF3 /* KeyCapView2Rect.h */,
@@ -1242,7 +1237,6 @@
 				523B00D0191CA00A00E06DF3 /* UkeleleKeyboardObject.mm in Sources */,
 				523B010C191CA0D100E06DF3 /* LayoutInfo.mm in Sources */,
 				523B0107191CA0D100E06DF3 /* KeyboardResourceList.m in Sources */,
-				523B0083191C9CD200E06DF3 /* KeyboardPrintView.m in Sources */,
 				523B01BF191CA18C00E06DF3 /* UnlinkModifierSetHandler.m in Sources */,
 				52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */,
 				523B0106191CA0D100E06DF3 /* KeyboardEnvironment.m in Sources */,

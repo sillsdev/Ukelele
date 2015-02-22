@@ -55,8 +55,11 @@
 	}
 	CGFloat totalHeight = keyboardCount * self.printingInfo.viewHeight;
 	[self setFrameSize:NSMakeSize(self.bounds.size.width, totalHeight)];
-	for (NSView *subView in [self subviews]) {
+	NSArray *subViews = [self subviews];
+	while ([subViews count] > 0) {
+		NSView *subView = subViews[0];
 		[subView removeFromSuperview];
+		subViews = [self subviews];
 	}
 	NSMutableArray *viewsToAdd = [NSMutableArray arrayWithCapacity:keyboardCount];
 	if (self.allStates) {

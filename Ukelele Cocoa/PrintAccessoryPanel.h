@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KeyboardPrintView.h"
+#import "UKKeyboardPrintView.h"
 
 @interface PrintAccessoryPanel : NSViewController<NSPrintPanelAccessorizing> {
 	IBOutlet NSButton *allStates;
 	IBOutlet NSButton *allModifiers;
 }
 
-@property (weak) KeyboardPrintView *printView;
+@property (weak) UKKeyboardPrintView *printView;
 
 + (PrintAccessoryPanel *)printAccessoryPanel;
 
