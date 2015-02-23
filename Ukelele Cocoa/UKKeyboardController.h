@@ -124,6 +124,7 @@ enum ToolbarItemTags {
 - (IBAction)findKeyStroke:(id)sender;
 
 	// Printing
+- (IBAction)runPageLayout:(id)sender;
 - (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo;
 
 	// Accessors

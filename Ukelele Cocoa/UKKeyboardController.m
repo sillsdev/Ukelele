@@ -83,7 +83,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selectedKey = kNoKeyCode;
 		commentChanged = NO;
 		_undoManager = nil;
-		printingInfo = [[UKKeyboardPrintInfo alloc] init];
+		printingInfo = nil;
     }
     return self;
 }
@@ -515,6 +515,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(leaveDeadKeyState:) ||
 		selector == @selector(unlinkKey:) ||
 		selector == @selector(pasteKey:) ||
+		selector == @selector(runPageLayout:) ||
 		selector == @selector(printDocument:) ||
 		selector == @selector(findKeyStroke:) ||
 		selector == @selector(askKeyboardIdentifiers:) ||
@@ -539,7 +540,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		action == @selector(importDeadKey:) || action == @selector(editKey:) ||
 		action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
 		action == @selector(copyKey:) || action == @selector(setKeyboardType:) ||
-		action == @selector(findKeyStroke:) || action == @selector(printDocument:)) {
+		action == @selector(findKeyStroke:) || action == @selector(runPageLayout:) ||
+		action == @selector(printDocument:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
@@ -1250,10 +1252,19 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 #pragma mark Printing
 
+- (IBAction)runPageLayout:(id)sender {
+	NSPageLayout *pageLayout = [NSPageLayout pageLayout];
+	if (printInfo == nil) {
+		printInfo = [[self.parentDocument printInfo] copy];
+	}
+	[pageLayout beginSheetWithPrintInfo:printInfo modalForWindow:self.window delegate:nil didEndSelector:nil contextInfo:nil];
+}
+
 - (IBAction)printDocument:(id)sender {
 		// Work out the permutations of state and modifiers
 	NSUInteger currentKeyboard = [internalState[kStateCurrentKeyboard] unsignedIntegerValue];
 	NSUInteger modifierCombinations = [self.keyboardLayout modifierSetCountForKeyboard:currentKeyboard];
+	printingInfo = [[UKKeyboardPrintInfo alloc] init];
 	[printingInfo setModifierCount:modifierCombinations];
 	NSUInteger stateCount = [self.keyboardLayout stateCount];
 	[printingInfo setStateCount:stateCount];
@@ -1269,11 +1280,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printingInfo setViewDict:viewDict];
 		// Create the print view and get print information
 	UKKeyboardPrintView *printView = [[UKKeyboardPrintView alloc] init];
-	NSPrintOperation *op = [NSPrintOperation printOperationWithView:printView];
 	if (printInfo == nil) {
 		printInfo = [[self.parentDocument printInfo] copy];
 	}
 	[printInfo setVerticalPagination:NSFitPagination];
+	NSPrintOperation *op = [NSPrintOperation printOperationWithView:printView printInfo:printInfo];
 	NSSize pageSize = [printInfo paperSize];
 	CGFloat availableWidth = pageSize.width	- [printInfo leftMargin] - [printInfo rightMargin];
 	CGFloat availableHeight = pageSize.height - [printInfo topMargin] - [printInfo bottomMargin];
