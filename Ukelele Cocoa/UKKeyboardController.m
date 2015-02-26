@@ -1266,7 +1266,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSUInteger modifierCombinations = [self.keyboardLayout modifierSetCountForKeyboard:currentKeyboard];
 	printingInfo = [[UKKeyboardPrintInfo alloc] init];
 	[printingInfo setModifierCount:modifierCombinations];
-	NSUInteger stateCount = [self.keyboardLayout stateCount];
+	NSUInteger stateCount = [self.keyboardLayout stateCount] + 1;
 	[printingInfo setStateCount:stateCount];
 	NSMutableArray *modifierSets = [NSMutableArray arrayWithCapacity:modifierCombinations];
 	for (NSUInteger i = 0; i < modifierCombinations; i++) {

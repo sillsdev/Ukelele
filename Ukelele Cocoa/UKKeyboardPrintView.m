@@ -97,7 +97,7 @@
 }
 
 - (BOOL)knowsPageRange:(NSRangePointer)range {
-	range->length = ceil([[self subviews] count] / self.printingInfo.viewsPerPage);
+	range->length = ceil([[self subviews] count] / (CGFloat)self.printingInfo.viewsPerPage);
 	return YES;
 }
 
