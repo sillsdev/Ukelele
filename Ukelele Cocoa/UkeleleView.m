@@ -334,6 +334,8 @@ typedef struct KeyEntryRec {
 			// No such keyboard
 		return;
 	}
+		// The data is what used to be a resource, and we'll get a pointer to it and use
+		// that as a stream of characters
 	char *resourcePtr = (char *)[resourceData bytes];
 	[self clearView];
 	
