@@ -160,8 +160,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 - (UkeleleKeyboardObject *)keyboardFromCurrentInputSourceWithError:(NSError **)outError {
 		// Create a temporary file
 	NSString *tempFilePath = [NSString stringWithFormat:@"%@UkeleleDataXXXXX.rsrc", NSTemporaryDirectory()];
-	char tempFileTemplate[1025];
-	[tempFilePath getCString:tempFileTemplate maxLength:1024 encoding:NSUTF8StringEncoding];
+	char tempFileTemplate[2049];
+	[tempFilePath getCString:tempFileTemplate maxLength:2048 encoding:NSUTF8StringEncoding];
 	int tempFileDescriptor = mkstemps(tempFileTemplate, 5);
 	if (tempFileDescriptor == -1) {
 			// Could not create temporary file
@@ -1004,7 +1004,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	CFURLRef keyboardIconURL = TISGetInputSourceProperty(currentInputSource, kTISPropertyIconImageURL);
 	NSMutableData *iconData = nil;
 	if (keyboardIconURL != NULL) {
-		iconData = [NSData dataWithContentsOfURL:(__bridge NSURL *)keyboardIconURL];
+		iconData = [NSMutableData dataWithContentsOfURL:(__bridge NSURL *)keyboardIconURL];
 	}
 	if (nil == iconData) {
 			// Try for an IconRef
@@ -1345,8 +1345,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[self insertDocument:newDocument atIndex:newIndex];
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager setActionName:@"Add keyboard layout"];
-		// Notify the list that it's been updated
-//	[keyboardLayoutsTable reloadData];
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
@@ -1354,7 +1352,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
 	[undoManager setActionName:@"Remove keyboard layout"];
-//	[self.keyboardLayouts removeObjectAtIndex:indexToRemove];
 	[self.keyboardLayoutsController removeObjectAtArrangedObjectIndex:indexToRemove];
 	[keyboardLayoutsTable deselectAll:self];
 		// Notify the list that it's been updated
@@ -1372,7 +1369,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[undoManager setActionName:@"Insert keyboard layout"];
 		// Create dictionary with appropriate information
 	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
-//	[self.keyboardLayouts insertObject:keyboardInfo atIndex:newIndex];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
@@ -1382,7 +1378,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:index];
 	[undoManager setActionName:@"Insert keyboard layout"];
-//	[self.keyboardLayouts insertObject:keyboardInfo atIndex:index];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:index];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];

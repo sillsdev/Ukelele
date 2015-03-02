@@ -64,10 +64,20 @@ const CGFloat kTextPaneHeight = 17.0f;
 		scalesList = [ViewScale standardScales];
 		internalState[kStateCurrentScale] = @([theDefaults floatForKey:UKScaleFactor]);
 		internalState[kStateCurrentModifiers] = @0U;
-		SInt32 keyboardType;
-		OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
-		if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
+			// Removed the reliance on Gestalt, which didn't work reliably, anyway
+//		SInt32 keyboardType;
+//		OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
+//		if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+//			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
+//		}
+			// Use Quartz events. This will probably log a console message about
+			// an invalid event source
+		CGEventSourceKeyboardType keyboardType;
+		if ([theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+			keyboardType = (CGEventSourceKeyboardType)[theDefaults integerForKey:UKDefaultLayoutID];
+		}
+		else {
+			keyboardType = CGEventSourceGetKeyboardType(kCGEventSourceStateCombinedSessionState);
 		}
 		internalState[kStateCurrentKeyboard] = @(keyboardType);
 		interactionHandler = nil;
@@ -95,11 +105,21 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (void)windowDidLoad {
-	SInt32 keyboardType;
-	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
+			// Removed the reliance on Gestalt, which didn't work reliably, anyway
+//	SInt32 keyboardType;
+//	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
+//	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+//		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
+//	}
+			// Use Quartz events. This will probably log a console message about
+			// an invalid event source
+	CGEventSourceKeyboardType keyboardType;
+	if ([theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
+		keyboardType = (CGEventSourceKeyboardType)[theDefaults integerForKey:UKDefaultLayoutID];
+	}
+	else {
+		keyboardType = CGEventSourceGetKeyboardType(kCGEventSourceStateCombinedSessionState);
 	}
     internalState[kStateCurrentKeyboard] = @(keyboardType);
     [self.tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
@@ -450,6 +470,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 {
     NSAssert(handler == interactionHandler, @"Wrong interaction handler");
     interactionHandler = nil;
+	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
+	if (!usingStickyModifiers) {
+		internalState[kStateCurrentModifiers] = @([NSEvent modifierFlags]);
+		[self updateWindow];
+	}
 }
 
 #pragma mark Setup
@@ -1336,6 +1361,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo {
 	printingInfo = nil;
+	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
+	if (!usingStickyModifiers) {
+		internalState[kStateCurrentModifiers] = @([NSEvent modifierFlags]);
+		[self updateWindow];
+	}
 }
 
 #pragma mark Messages

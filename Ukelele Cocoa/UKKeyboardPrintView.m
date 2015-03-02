@@ -29,6 +29,10 @@
 
 @implementation UKKeyboardPrintView
 
+- (BOOL)isOpaque {
+	return YES;
+}
+
 - (void)setAllStates:(BOOL)allStates {
 	BOOL oldState = _allStates;
 	_allStates = allStates;

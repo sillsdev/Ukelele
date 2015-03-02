@@ -78,6 +78,10 @@ static CGAffineTransform kTextTransform = {
 	return NO;
 }
 
+- (BOOL)isOpaque {
+	return YES;
+}
+
 - (void)getInnerColour:(NSColor **)innerColour
 		   outerColour:(NSColor **)outerColour
 			textColour:(NSColor **)textColour

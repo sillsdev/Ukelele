@@ -152,6 +152,7 @@
 		52AD7D97196139F800B3CD3F /* UKKeyboardController+Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */; };
 		52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */; };
 		52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */; };
+		52BAE0BA1AA3FA2400D761C2 /* KCAPResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */; };
 		52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
 		52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED0B191B4C3900E48394 /* InfoPlist.strings */; };
 		52BBED0F191B4C3900E48394 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED0E191B4C3900E48394 /* main.m */; };
@@ -500,6 +501,7 @@
 		52AD7D94196139F800B3CD3F /* UKKeyboardController+Modifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UKKeyboardController+Modifiers.m"; sourceTree = "<group>"; };
 		52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateSelectedDeadKeySheet.xib; path = "Interface Files/CreateSelectedDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskStateAndTerminatorSheet.xib; path = "Interface Files/AskStateAndTerminatorSheet.xib"; sourceTree = "<group>"; };
+		52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KCAPResources.plist; sourceTree = "<group>"; };
 		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -816,17 +818,18 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				522C30AB1953C8F3004F12AA /* dialogs.strings */,
 				522C30AC1953C8F3004F12AA /* Errors.strings */,
+				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
+				52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */,
 				522C30AD1953C8F3004F12AA /* keyboards.strings */,
 				5209B731193563C000B195E9 /* kluchrtoxml */,
-				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
-				52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */,
-				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BBED0E191B4C3900E48394 /* main.m */,
+				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
+				52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */,
 				52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */,
-				52BBED11191B4C3900E48394 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1167,6 +1170,7 @@
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
+				52BAE0BA1AA3FA2400D761C2 /* KCAPResources.plist in Resources */,
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
 				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
 				5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */,

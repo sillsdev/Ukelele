@@ -125,6 +125,10 @@ typedef struct KeyEntryRec {
 	return YES;
 }
 
+- (BOOL)isOpaque {
+	return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 	[NSGraphicsContext saveGraphicsState];
@@ -322,11 +326,15 @@ typedef struct KeyEntryRec {
 {
 	CGFloat kFontSizeFactor = kDefaultSmallFontSize / kDefaultLargeFontSize;
 		// Read the resource into memory and treat as a stream
-	Handle dataHandle = GetResource(kResType_KCAP, keyboardID);
-	if (dataHandle == NULL || HandToHand(&dataHandle) != noErr) {
+	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
+	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
+	NSString *idString = [NSString stringWithFormat:@"%d", keyboardID];
+	NSData *resourceData = resourceDict[idString];
+	if (resourceData == nil) {
+			// No such keyboard
 		return;
 	}
-	char *resourcePtr = *dataHandle;
+	char *resourcePtr = (char *)[resourceData bytes];
 	[self clearView];
 	
 		// First item: Boundary rectangle
@@ -348,11 +356,7 @@ typedef struct KeyEntryRec {
 		// Third item: Count of shape items in main array
 	UInt16 shapeCount = *(UInt16 *)resourcePtr;
 	resourcePtr += sizeof(UInt16);
-	if (shapeCount == 0) {
-			// There are no keys defined in this layout, so abort
-		DisposeHandle(dataHandle);
-		return;
-	}
+	NSAssert(shapeCount > 0, @"Must be data");
 	
 		// Get the layout information for this layout
 	LayoutInfo *layoutInfo = [[LayoutInfo alloc] initWithLayoutID:keyboardID];
@@ -471,7 +475,6 @@ typedef struct KeyEntryRec {
 		}
 		free(pointList);
 	}
-	DisposeHandle(dataHandle);
 	
 		// Work out whether we need to move the views
 	contentRect = NSRectFromCGRect(CGRectOffset(NSRectToCGRect(contentRect), -kKeyCapInset, -kKeyCapInset));

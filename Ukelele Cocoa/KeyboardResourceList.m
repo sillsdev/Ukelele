@@ -9,6 +9,7 @@
 #import "KeyboardResourceList.h"
 #import "LayoutInfo.h"
 #import "UkeleleConstantStrings.h"
+#import "UkeleleConstants.h"
 #import <Carbon/Carbon.h>
 
 	// Dictionary keys
@@ -39,7 +40,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 @implementation KeyboardResourceList {
 	NSArray *knownKeyboardsList;
 	NSArray *unknownKeyboardsList;
-	NSSet *resourceSet;
+	NSArray *resourceSet;
 }
 
 - (id)init
@@ -48,23 +49,17 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	if (self) {
 			// Initialise
 			// Build a list of all the KCAP resources available
-			// Code from Think Reference
-		SInt16 resCount = CountResources('KCAP');
-		NSMutableSet *resourceIDs = [NSMutableSet setWithCapacity:resCount];
-		SetResLoad(false);			// do not need resource, just info
-		for (SInt16 j = 1; j <= resCount; j++) {
-			Handle resHandle = GetIndResource('KCAP', j);
-			ResType resType;
-			SInt16 resID;
-			unsigned char resName[256];
-			GetResInfo(resHandle, &resID, &resType, resName);
-			[resourceIDs addObject:@((NSInteger)resID)];
+		NSURL *resourceListURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
+		NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceListURL];
+		NSInteger resCount = [resourceDict count];
+		NSMutableArray *resourceIDs = [NSMutableArray arrayWithCapacity:resCount];
+		NSNumberFormatter *theFormatter = [[NSNumberFormatter alloc] init];
+		for (NSString *theKey in [resourceDict allKeys]) {
+			[resourceIDs addObject:[theFormatter numberFromString:theKey]];
 		}
-		SetResLoad(true);				// better do this!
-		resourceSet = resourceIDs;
 		
 			// Go through the list and pick out the basic types
-		resCount = [resourceSet count];
+		resourceSet = resourceIDs;
 		NSMutableSet *nameSet = [NSMutableSet setWithCapacity:resCount];
 		NSMutableSet *unknownSet = [NSMutableSet setWithCapacity:resCount];
 		for (NSNumber *currentRes in resourceSet) {

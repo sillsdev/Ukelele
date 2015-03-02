@@ -101,3 +101,6 @@ NSString *UKTigerCompatibleBundles = @"TigerCompatibleBundles";
 NSString *UKCodeNonAscii = @"CodeNonAscii";
 NSString *UKUpdateEditingComment = @"UpdateEditingComment";
 NSString *UKInspectorWindowLocation = @"InspectorWindowLocation";
+
+	// File names
+NSString *UKKCAPListFile = @"KCAPResources";
