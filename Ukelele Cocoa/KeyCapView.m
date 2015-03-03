@@ -73,8 +73,7 @@ static CGAffineTransform kTextTransform = {
 	[self clearFrame];
 }
 
-- (BOOL)isFlipped
-{
+- (BOOL)isFlipped {
 	return NO;
 }
 

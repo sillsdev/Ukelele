@@ -469,6 +469,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)interactionDidComplete:(id<UKInteractionHandler>)handler
 {
     NSAssert(handler == interactionHandler, @"Wrong interaction handler");
+		// Deselect any selected key
+	[self setSelectedKey:kNoKeyCode];
     interactionHandler = nil;
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	if (!usingStickyModifiers) {

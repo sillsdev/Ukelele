@@ -107,7 +107,7 @@ enum ProcessingStates {
 	[editPopover setContentViewController:popoverController];
 	[editPopover setBehavior:NSPopoverBehaviorTransient];
 	NSRect keyRect = [keyDataDict[kKeyDocument] keyRect:[keyDataDict[kKeyKeyCode] intValue]];
-	NSView *keyView = [keyDataDict[kKeyDocument] keyboardView];
+	NSView *keyView = [[keyDataDict[kKeyDocument] keyboardView] documentView];
 	[editPopover showRelativeToRect:keyRect ofView:keyView preferredEdge:NSMinXEdge];
 	[[popoverController promptField] setStringValue:promptString];
 	[[popoverController standardOutputField] setStringValue:standardPrompt];

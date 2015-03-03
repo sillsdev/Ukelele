@@ -110,18 +110,15 @@ typedef struct KeyEntryRec {
 	}
 }
 
-- (BOOL)isFlipped
-{
+- (BOOL)isFlipped {
 	return NO;
 }
 
-- (BOOL)canBecomeKeyView
-{
+- (BOOL)canBecomeKeyView {
 	return YES;
 }
 
-- (BOOL)acceptsFirstResponder
-{
+- (BOOL)acceptsFirstResponder {
 	return YES;
 }
 
