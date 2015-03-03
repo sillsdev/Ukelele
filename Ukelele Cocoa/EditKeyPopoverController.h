@@ -10,12 +10,15 @@
 
 @interface EditKeyPopoverController : NSViewController
 
-@property (weak, readonly) IBOutlet NSTextField *promptField;
-@property (weak, readonly) IBOutlet NSTextField *standardOutputField;
-@property (weak, readonly) IBOutlet NSTextField *outputField;
-@property (weak, readonly) IBOutlet NSButton *standardButton;
+@property (strong) IBOutlet NSTextField *promptField;
+@property (strong) IBOutlet NSTextField *standardOutputField;
+@property (strong) IBOutlet NSTextField *outputField;
+@property (strong) IBOutlet NSButton *standardButton;
 @property (strong) void (^callBack)(NSString *);
 @property (copy) NSString *standardOutput;
+@property (weak) NSPopover *myPopover;
+
++ (EditKeyPopoverController *)popoverController;
 
 - (IBAction)makeStandard:(id)sender;
 - (IBAction)acceptOutput:(id)sender;

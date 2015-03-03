@@ -8,16 +8,7 @@
 
 #import "EditKeyPopoverController.h"
 
-@interface EditKeyPopoverController ()
-
-@end
-
 @implementation EditKeyPopoverController
-
-@synthesize promptField;
-@synthesize standardOutputField;
-@synthesize outputField;
-@synthesize standardButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,22 +20,26 @@
     return self;
 }
 
++ (EditKeyPopoverController *)popoverController {
+	return [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil];
+}
+
 - (IBAction)makeStandard:(id)sender
 {
-	_callBack(_standardOutput);
-	[[[self view] window] close];
+	self.callBack(self.standardOutput);
+	[self.myPopover performClose:self];
 }
 
 - (IBAction)cancelOperation:(id)sender
 {
-	_callBack(nil);
-	[[[self view] window] close];
+	self.callBack(nil);
+	[self.myPopover performClose:self];
 }
 
 - (IBAction)acceptOutput:(id)sender
 {
-	_callBack([outputField stringValue]);
-	[[[self view] window] close];
+	self.callBack([self.outputField stringValue]);
+	[self.myPopover performClose:self];
 }
 
 @end

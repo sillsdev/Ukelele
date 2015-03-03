@@ -101,11 +101,12 @@ enum ProcessingStates {
 		editPopover = [[NSPopover alloc] init];
 	}
 	if (popoverController == nil) {
-		popoverController = [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil];
+		popoverController = [EditKeyPopoverController popoverController];
 	}
 	[editPopover setDelegate:self];
 	[editPopover setContentViewController:popoverController];
 	[editPopover setBehavior:NSPopoverBehaviorTransient];
+	[popoverController setMyPopover:editPopover];
 	NSRect keyRect = [keyDataDict[kKeyDocument] keyRect:[keyDataDict[kKeyKeyCode] intValue]];
 	NSView *keyView = [[keyDataDict[kKeyDocument] keyboardView] documentView];
 	[editPopover showRelativeToRect:keyRect ofView:keyView preferredEdge:NSMinXEdge];
