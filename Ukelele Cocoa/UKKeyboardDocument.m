@@ -105,6 +105,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if ([aController isKindOfClass:[UKKeyboardDocument class]]) {
 		[keyboardLayoutsTable registerForDraggedTypes:@[NSURLPboardType]];
 	}
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"keyboardName" ascending:YES selector:@selector(localizedCompare:)];
+	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
@@ -560,10 +562,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 #pragma mark Table delegate methods
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-		// Both the remove and Language buttons should only be available when there is a selection
-//	BOOL hasSelection = [keyboardLayoutsTable selectedRow] != -1;
-//	[removeKeyboardButton setEnabled:hasSelection];
-//	[languageButton setEnabled:hasSelection];
 	[self inspectorSetKeyboardSection];
 }
 
@@ -574,6 +572,10 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			[keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
 		}
 	}
+}
+
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 }
 
 #pragma mark Drag and Drop

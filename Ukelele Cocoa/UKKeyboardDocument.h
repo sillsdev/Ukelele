@@ -13,7 +13,7 @@
 
 @end
 
-@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDelegate> {
+@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate> {
 	IBOutlet NSTableView *keyboardLayoutsTable;
 	IBOutlet NSButton *languageButton;
 	IBOutlet NSButton *removeKeyboardButton;
@@ -27,6 +27,7 @@
 @property (nonatomic) BOOL isBundle;
 @property (strong, nonatomic) UkeleleKeyboardObject *keyboardLayout;
 @property (nonatomic, strong) NSMutableArray *keyboardLayouts;
+@property (strong) IBOutlet NSTableView *keyboardLayoutsTable;
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 
 - (IBAction)addOpenDocument:(id)sender;

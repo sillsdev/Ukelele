@@ -8,7 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardDocument">
             <connections>
                 <outlet property="keyboardLayoutsController" destination="Wvh-L2-Xlb" id="zmH-dA-zRP"/>
-                <outlet property="keyboardLayoutsTable" destination="RWF-Rg-ghd" id="Csd-Fa-NQi"/>
+                <outlet property="keyboardLayoutsTable" destination="RWF-Rg-ghd" id="nW2-pV-Dwc"/>
                 <outlet property="languageButton" destination="lsp-Sh-MR9" id="SLK-ZF-Nq7"/>
                 <outlet property="removeKeyboardButton" destination="2k1-ap-Wrj" id="T0s-hv-4I1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="BjG-UG-KfJ"/>
@@ -21,6 +21,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="512" height="310"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="400" height="250"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="512" height="310"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -143,6 +144,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedCompare:" sortKey="keyboardName"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.keyboardName" id="Vlr-Cu-ZKS">
@@ -179,6 +181,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="localizedCompare:" sortKey="intendedLanguage"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.intendedLanguage" id="gh6-Wr-0pa">
@@ -197,6 +200,7 @@
                                                 <string key="NSSelectorName">openKeyboardLayout:</string>
                                             </dictionary>
                                         </binding>
+                                        <outlet property="dataSource" destination="-2" id="xXa-M7-v64"/>
                                         <outlet property="delegate" destination="-2" id="fhk-hp-Fya"/>
                                         <outlet property="menu" destination="wxf-v3-tUG" id="r3c-HP-gnY"/>
                                     </connections>
@@ -239,9 +243,10 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="tl5-AU-7nP"/>
             </connections>
+            <point key="canvasLocation" x="326" y="241"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="rQ7-vP-CUZ"/>
-        <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
+        <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="keyboardLayouts" id="RMZ-Hz-Dpz"/>
             </connections>
