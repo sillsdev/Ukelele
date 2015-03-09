@@ -87,6 +87,7 @@
 - (void)updateCommentFields {
 	if (commentChanged) {
 			// Save the changed comment
+		[self saveUnsavedComment];
 		commentChanged = NO;
 	}
 		// Set the comment text pane

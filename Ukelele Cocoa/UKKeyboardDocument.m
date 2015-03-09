@@ -575,7 +575,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayoutsController setSortDescriptors:[keyboardLayoutsTable sortDescriptors]];
 }
 
 #pragma mark Drag and Drop

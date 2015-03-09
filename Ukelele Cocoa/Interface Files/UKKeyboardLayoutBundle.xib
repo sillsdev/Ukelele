@@ -246,7 +246,7 @@
             <point key="canvasLocation" x="326" y="241"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="rQ7-vP-CUZ"/>
-        <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
+        <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="keyboardLayouts" id="RMZ-Hz-Dpz"/>
             </connections>

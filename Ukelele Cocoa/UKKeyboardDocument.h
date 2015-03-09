@@ -27,7 +27,6 @@
 @property (nonatomic) BOOL isBundle;
 @property (strong, nonatomic) UkeleleKeyboardObject *keyboardLayout;
 @property (nonatomic, strong) NSMutableArray *keyboardLayouts;
-@property (strong) IBOutlet NSTableView *keyboardLayoutsTable;
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 
 - (IBAction)addOpenDocument:(id)sender;
