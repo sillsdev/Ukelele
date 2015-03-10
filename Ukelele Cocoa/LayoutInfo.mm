@@ -1903,24 +1903,24 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
 			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
 		};
-		NSDictionary *ColemakOptionKeyMap = @{
-			@(kKeyA) : @"&#x00E1;", @(kKeyC) : @"&#x00E7;", @(kKeyD) : @"&#x00DF;",
-			@(kKeyE) : @"&#x00E3;", @(kKeyI) : @"&#x00FA;", @(kKeyJ) : @"&#x00F1;",
-			@(kKeyK) : @"&#x00E9;", @(kKeyL) : @"&#x00ED;", @(kKeyO) : @"&#x00FC;",
-			@(kKeyP) : @"&#x00F6;", @(kKeyQ) : @"&#x00E4;", @(kKeyR) : @"&#x00F8;",
-			@(kKeyU) : @"&#x0142;", @(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00E5;",
-			@(kKeyY) : @"&#x0111;", @(kKeyZ) : @"&#x00E6;", @(kKeySemicolon) : @"&#x00F3;",
-			@(kKey6) : @"&#x0127;", @(kKey7) : @"&#x00F0;", @(kKey8) : @"&#x00FE;"
-		};
-		NSDictionary *ColemakOptionShiftKeyMap = @{
-			@(kKeyA) : @"&#x00C1;", @(kKeyC) : @"&#x00C7;", @(kKeyE) : @"&#x00C3;",
-			@(kKeyI) : @"&#x00DA;", @(kKeyJ) : @"&#x00D1;", @(kKeyK) : @"&#x00C9;",
-			@(kKeyL) : @"&#x00CD;", @(kKeyO) : @"&#x00DC;", @(kKeyP) : @"&#x00D6;",
-			@(kKeyQ) : @"&#x00C4;", @(kKeyR) : @"&#x00D8;", @(kKeyU) : @"&#x0141;",
-			@(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00C5;", @(kKeyY) : @"&#x0110;",
-			@(kKeyZ) : @"&#x00C6;", @(kKeySemicolon) : @"&#x00D3;",
-			@(kKey6) : @"&#x0126;", @(kKey7) : @"&#x0110;", @(kKey8) : @"&#x00DE;"
-		};
+//		NSDictionary *ColemakOptionKeyMap = @{
+//			@(kKeyA) : @"&#x00E1;", @(kKeyC) : @"&#x00E7;", @(kKeyD) : @"&#x00DF;",
+//			@(kKeyE) : @"&#x00E3;", @(kKeyI) : @"&#x00FA;", @(kKeyJ) : @"&#x00F1;",
+//			@(kKeyK) : @"&#x00E9;", @(kKeyL) : @"&#x00ED;", @(kKeyO) : @"&#x00FC;",
+//			@(kKeyP) : @"&#x00F6;", @(kKeyQ) : @"&#x00E4;", @(kKeyR) : @"&#x00F8;",
+//			@(kKeyU) : @"&#x0142;", @(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00E5;",
+//			@(kKeyY) : @"&#x0111;", @(kKeyZ) : @"&#x00E6;", @(kKeySemicolon) : @"&#x00F3;",
+//			@(kKey6) : @"&#x0127;", @(kKey7) : @"&#x00F0;", @(kKey8) : @"&#x00FE;"
+//		};
+//		NSDictionary *ColemakOptionShiftKeyMap = @{
+//			@(kKeyA) : @"&#x00C1;", @(kKeyC) : @"&#x00C7;", @(kKeyE) : @"&#x00C3;",
+//			@(kKeyI) : @"&#x00DA;", @(kKeyJ) : @"&#x00D1;", @(kKeyK) : @"&#x00C9;",
+//			@(kKeyL) : @"&#x00CD;", @(kKeyO) : @"&#x00DC;", @(kKeyP) : @"&#x00D6;",
+//			@(kKeyQ) : @"&#x00C4;", @(kKeyR) : @"&#x00D8;", @(kKeyU) : @"&#x0141;",
+//			@(kKeyV) : @"&#x0153;", @(kKeyW) : @"&#x00C5;", @(kKeyY) : @"&#x0110;",
+//			@(kKeyZ) : @"&#x00C6;", @(kKeySemicolon) : @"&#x00D3;",
+//			@(kKey6) : @"&#x0126;", @(kKey7) : @"&#x0110;", @(kKey8) : @"&#x00DE;"
+//		};
 		NSDictionary *emptyKeyMaps = @{@(kStandardKeyMapLowerCase) : emptyKeyMap,
 									   @(kStandardKeyMapUpperCase) : emptyKeyMap,
 									   @(kStandardKeyMapCapsLock)  : emptyKeyMap};

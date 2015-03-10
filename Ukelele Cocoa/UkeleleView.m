@@ -319,21 +319,9 @@ typedef struct KeyEntryRec {
 	[self scaleViewToScale:newScale limited:limited];
 }
 
-- (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue
-{
+- (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue {
 	CGFloat kFontSizeFactor = kDefaultSmallFontSize / kDefaultLargeFontSize;
-		// Read the resource into memory and treat as a stream
-	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
-	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
-	NSString *idString = [NSString stringWithFormat:@"%d", keyboardID];
-	NSData *resourceData = resourceDict[idString];
-	if (resourceData == nil) {
-			// No such keyboard
-		return;
-	}
-		// The data is what used to be a resource, and we'll get a pointer to it and use
-		// that as a stream of characters
-	char *resourcePtr = (char *)[resourceData bytes];
+	char *resourcePtr = theStream;
 	[self clearView];
 	
 		// First item: Boundary rectangle
@@ -519,6 +507,23 @@ typedef struct KeyEntryRec {
 	[self setScaleFactor:0.5];
 	[self scaleViewToScale:scaleValue limited:YES];
 	[self setNeedsDisplay:YES];
+}
+
+- (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue
+{
+		// Read the resource into memory and treat as a stream
+	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
+	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
+	NSString *idString = [NSString stringWithFormat:@"%d", keyboardID];
+	NSData *resourceData = resourceDict[idString];
+	if (resourceData == nil) {
+			// No such keyboard
+		return;
+	}
+		// The data is what used to be a resource, and we'll get a pointer to it and use
+		// that as a stream of characters
+	char *resourcePtr = (char *)[resourceData bytes];
+	[self createViewWithStream:resourcePtr forID:keyboardID withScale:scaleValue];
 }
 
 #pragma mark Access routines
