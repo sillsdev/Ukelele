@@ -418,20 +418,25 @@ typedef struct KeyEntryRec {
 			if (pointCount == 1) {
 					// Simple rectangular key
 				keyCap = [self read1RectKey:currentPt
-								   withPoint:pointList[0]
-							 withScaleFactor:2.0];
+								  withPoint:pointList[0]
+							withScaleFactor:2.0];
 			}
 			else {
                 NSAssert1(pointCount == 2, @"Key with more than 2 (%d) rectangles", pointCount);
 					// Three or more rectangle key!
                 // Create two rectangle key
 				keyCap = [self read2RectKey:currentPt
-								  withPoint1:pointList[0]
-								  withPoint2:pointList[1]
-							 withScaleFactor:2.0];
+								 withPoint1:pointList[0]
+								 withPoint2:pointList[1]
+							withScaleFactor:2.0];
 			}
 			keyCapBounds = [keyCap boundingRect];
-			contentRect = NSRectFromCGRect(CGRectUnion(NSRectToCGRect(contentRect), NSRectToCGRect(keyCapBounds)));
+			if (contentRect.size.width == 0 && contentRect.size.height == 0) {
+				contentRect = keyCapBounds;
+			}
+			else {
+				contentRect = NSRectFromCGRect(CGRectUnion(NSRectToCGRect(contentRect), NSRectToCGRect(keyCapBounds)));
+			}
 				// Note the height
 			SInt16 keyHeight = ceil(keyCapBounds.size.height);
 			heightList[keyHeight]++;

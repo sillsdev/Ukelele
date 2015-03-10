@@ -70,7 +70,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2014 John Brownie, SIL. All rights reserved.</string>
+	<string>Copyright © 2015 John Brownie, SIL. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -78,7 +78,7 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>org.sil.Ukelele.KeyboardInstallerTool</key>
-		<string>identifier "org.sil.Ukelele.KeyboardInstallerTool" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: John Brownie (85E2V6773Y)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		<string>identifier &quot;org.sil.Ukelele.KeyboardInstallerTool&quot; and anchor apple generic and certificate leaf[subject.CN] = &quot;Mac Developer: John Brownie (85E2V6773Y)&quot; and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 	</dict>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>

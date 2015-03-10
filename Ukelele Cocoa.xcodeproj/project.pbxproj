@@ -1564,7 +1564,7 @@
 				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;

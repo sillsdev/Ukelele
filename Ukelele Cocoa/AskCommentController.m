@@ -49,8 +49,8 @@
 
 - (IBAction)acceptComment:(id)sender {
 	[[self window] orderOut:self];
-	completionBlock([self.commentField string]);
 	[NSApp endSheet:[self window]];
+	completionBlock([self.commentField string]);
 }
 
 - (IBAction)cancelComment:(id)sender {
