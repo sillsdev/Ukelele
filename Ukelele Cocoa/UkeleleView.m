@@ -65,6 +65,10 @@ typedef struct KeyEntryRec {
 		// Set up Cocoa styles
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSString *fontName = [theDefaults stringForKey:UKTextFont];
+	if (fontName == nil || fontName.length == 0) {
+			// Nothing came from the defaults
+		fontName = @"Lucida Grande";
+	}
     NSFont *defaultLargeFont = [NSFont fontWithName:fontName size:kDefaultLargeFontSize];
     _largeAttributes = [NSMutableDictionary dictionary];
     [_largeAttributes setValue:defaultLargeFont forKey:NSFontAttributeName];
@@ -77,7 +81,12 @@ typedef struct KeyEntryRec {
     [_smallAttributes setValue:defaultSmallFont forKey:NSFontAttributeName];
     [_smallAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
     [_smallAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
-	baseFontSize = [theDefaults floatForKey:UKTextSize] / [self scaleFactor];
+	CGFloat textSize = [theDefaults floatForKey:UKTextSize];
+	if (textSize <= 0) {
+			// Nothing came from the defaults
+		textSize = 18.0;
+	}
+	baseFontSize = textSize / [self scaleFactor];
 }
 
 - (id)initWithFrame:(NSRect)frame {
@@ -89,7 +98,16 @@ typedef struct KeyEntryRec {
 		keyCapList = [NSMutableArray arrayWithCapacity:128];
 		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
-		_fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, [theDefaults floatForKey:UKTextSize]);
+		if (defaultFontName == nil || defaultFontName.length == 0) {
+				// Nothing came from the defaults
+			defaultFontName = @"Lucida Grande";
+		}
+		CGFloat textSize = [theDefaults floatForKey:UKTextSize];
+		if (textSize <= 0) {
+				// Nothing came from the defaults
+			textSize = 18.0;
+		}
+		_fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
 		[self setUpStyles];
 		modifiersController = [[ModifiersController alloc] init];
 		_eventState = kEventStateNone;

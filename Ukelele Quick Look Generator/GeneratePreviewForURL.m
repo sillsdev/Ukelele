@@ -40,12 +40,13 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		// Create a view
 	UkeleleView *ukeleleView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, 800, 600)];
 		// Get the resource we need
-	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:@"UkeleleQLResource" withExtension:@"plist"];
+	NSBundle *theBundle = [NSBundle bundleWithIdentifier:@"org.sil.Ukelele.Ukelele-Quick-Look-Generator"];
+	NSURL *resourceURL = [theBundle URLForResource:@"UkeleleQLResources" withExtension:@"plist"];
 	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
 	NSString *idString = [NSString stringWithFormat:@"%d", kStandardKeyboard];
 	NSData *resourceData = resourceDict[idString];
 	char *resourcePtr = (char *)[resourceData bytes];
-	[ukeleleView createViewWithStream:resourcePtr forID:kStandardKeyboard withScale:2.5];
+	[ukeleleView createViewWithStream:resourcePtr forID:kStandardKeyboard withScale:1.25];
 	if (QLPreviewRequestIsCancelled(preview)) {
 		return noErr;
 	}
