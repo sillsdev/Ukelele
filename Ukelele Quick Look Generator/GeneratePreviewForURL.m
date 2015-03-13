@@ -47,6 +47,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSData *resourceData = resourceDict[idString];
 	char *resourcePtr = (char *)[resourceData bytes];
 	[ukeleleView createViewWithStream:resourcePtr forID:kStandardKeyboard withScale:1.25];
+	[ukeleleView setFrameOrigin:NSZeroPoint];
 	if (QLPreviewRequestIsCancelled(preview)) {
 		return noErr;
 	}

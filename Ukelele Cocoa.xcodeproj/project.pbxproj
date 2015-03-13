@@ -184,6 +184,7 @@
 		5277EB9B1AAEFF1600C471C3 /* AddMissingOutputDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00DA191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm */; };
 		5277EB9C1AAEFFF000C471C3 /* NString_hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B0089191C9D2200E06DF3 /* NString_hash.cpp */; };
 		5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5277EB9F1AAF01A500C471C3 /* Carbon.framework */; };
+		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
@@ -267,6 +268,16 @@
 			dstSubfolderSpec = 1;
 			files = (
 				52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5277EBBB1AB2744100C471C3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/QuickLook;
+			dstSubfolderSpec = 1;
+			files = (
+				5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1189,6 +1200,7 @@
 				52BBECFD191B4C3900E48394 /* Resources */,
 				5209B7301935632100B195E9 /* CopyFiles */,
 				5227A40E196520E6004F35EA /* CopyFiles */,
+				5277EBBB1AB2744100C471C3 /* CopyFiles */,
 			);
 			buildRules = (
 			);
