@@ -86,13 +86,13 @@
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
 	NSDocumentController *sharedController = [NSDocumentController sharedDocumentController];
 	UKKeyboardDocument *theDocument = [sharedController currentDocument];
-	[theDocument inspectorDidActivateTab:[tabViewItem identifier]];
 	if (self.currentWindow != nil) {
 		theDocument = [self.currentWindow parentDocument];
 	}
 	else {
 		[self setKeyboardSectionEnabled:NO];
 	}
+	[theDocument inspectorDidActivateTab:[tabViewItem identifier]]; // Moved because of dead store?
 }
 
 - (void)setScript:(NSInteger)scriptCode {

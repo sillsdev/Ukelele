@@ -306,7 +306,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)setKeyboardGroup:(NSInteger)newGroup
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardGroup((SInt32)newGroup);
 }
@@ -322,7 +322,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)setKeyboardID:(NSInteger)newID
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardID((SInt32)newID);
 }
@@ -338,7 +338,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)setKeyboardName:(NSString *)newName
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardName(ToNN(newName));
 }
@@ -363,7 +363,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSUInteger)stateCount
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray stateNames = keyboardElement->GetStateNames(kStateNone, kAllStates);
 	return stateNames.GetSize();
@@ -371,14 +371,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (BOOL)hasStateWithName:(NSString *)stateName
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->StateExists(ToNN(stateName));
 }
 
 - (NSString *)uniqueStateName
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NString baseName = ToNN([[NSUserDefaults standardUserDefaults] stringForKey:UKStateNameBase]);
 	return ToNS(keyboardElement->CreateStateName(baseName));
@@ -386,25 +386,26 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSArray *)actionNames
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetActionNames());
 }
 
 - (BOOL)hasActionWithName:(NSString *)actionName
 {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->ActionExists(ToNN(actionName));
 }
 
 - (NSString *)terminatorForState:(NSString *)stateName {
-	NN_ASSERT(self.keyboard != nil);
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetTerminator(ToNN(stateName)));
 }
 
 - (NSDictionary *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID {
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyStrokeLookUpTable> lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
 	std::pair<KeyStrokeList, NString> result = lookupTable->GetKeyStrokes(ToNN(outputString));
 	KeyStrokeList theList = result.first;
@@ -1131,19 +1132,6 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 															YES);
 	keyElement->RemoveComment(ToNN(commentText));
-}
-
-- (void)addNewComment {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	XMLComment *currentComment = self.keyboard->GetCurrentComment();
-	XMLCommentHolder *theHolder;
-	if (!currentComment) {
-			// No current comment
-		theHolder = keyboardElement.get();
-	}
-	else {
-		theHolder = currentComment->GetHolder();
-	}
 }
 
 - (NSString *)currentComment {

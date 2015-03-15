@@ -52,6 +52,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		NSURL *resourceListURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
 		NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceListURL];
 		NSInteger resCount = [resourceDict count];
+		NSAssert(resCount > 0, @"There must be at least one resource");
 		NSMutableArray *resourceIDs = [NSMutableArray arrayWithCapacity:resCount];
 		NSNumberFormatter *theFormatter = [[NSNumberFormatter alloc] init];
 		for (NSString *theKey in [resourceDict allKeys]) {
@@ -148,15 +149,16 @@ NSString *kKeyCodingIndex = @"codingIndex";
 + (KeyboardResourceList *)getInstance
 {
 	static KeyboardResourceList *theInstance = nil;
-	if (theInstance == nil) {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
 		theInstance = [[KeyboardResourceList alloc] init];
-	}
+	});
 	return theInstance;
 }
 
 - (NSInteger)resourceForType:(NSInteger)typeIndex code:(NSInteger)codeIndex
 {
-	KeyboardType *keyboardList = _keyboardTypeTable[typeIndex];
+	KeyboardType *keyboardList = self.keyboardTypeTable[typeIndex];
 	NSArray *idList = [keyboardList keyboardResourceIDs];
 	NSNumber *keyboardID = idList[codeIndex];
 	return [keyboardID integerValue];
@@ -295,6 +297,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 			}
 		break;
 	}
+	NSAssert(typeIndex == -1 || (typeIndex >= 1 && typeIndex <= 3), @"Must have a valid index");
 	NSDictionary *theIndices = @{kKeyNameIndex: @(nameIndex),
 								kKeyCodingIndex: @(typeIndex)};
 	return theIndices;
@@ -302,8 +305,8 @@ NSString *kKeyCodingIndex = @"codingIndex";
 
 - (NSArray *)namesList
 {
-	NSMutableArray *theNames = [NSMutableArray arrayWithCapacity:[_keyboardTypeTable count]];
-	for (KeyboardType *element in _keyboardTypeTable) {
+	NSMutableArray *theNames = [NSMutableArray arrayWithCapacity:[self.keyboardTypeTable count]];
+	for (KeyboardType *element in self.keyboardTypeTable) {
 		[theNames addObject:[element keyboardName]];
 	}
 	return theNames;
@@ -311,8 +314,8 @@ NSString *kKeyCodingIndex = @"codingIndex";
 
 - (NSArray *)descriptionsList
 {
-	NSMutableArray *theDescriptions = [NSMutableArray arrayWithCapacity:[_keyboardTypeTable count]];
-	for (KeyboardType *element in _keyboardTypeTable) {
+	NSMutableArray *theDescriptions = [NSMutableArray arrayWithCapacity:[self.keyboardTypeTable count]];
+	for (KeyboardType *element in self.keyboardTypeTable) {
 		[theDescriptions addObject:[element keyboardDescription]];
 	}
 	return theDescriptions;
@@ -320,7 +323,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 
 - (NSArray *)codingsForType:(NSInteger)typeIndex
 {
-	return [_keyboardTypeTable[typeIndex] keyboardCodings];
+	return [self.keyboardTypeTable[typeIndex] keyboardCodings];
 }
 
 @end

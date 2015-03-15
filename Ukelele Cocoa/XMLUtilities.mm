@@ -31,6 +31,8 @@ static UInt32 kForwardDelete = 0x7f;
 static UInt32 kASCIILast = 0x7f;
 static UInt32 kC1LowerLimit = 0x80;
 static UInt32 kC1UpperLimit = 0x9f;
+static UInt32 kArabicPresentationNonCharFirst = 0xfdd0;
+static UInt32 kArabicPresentationNonCharLast = 0xfdef;
 static UInt32 kCombiningDiacriticFirst = 0x300;
 static UInt32 kCombiningDiacriticLast = 0x36f;
 static UInt32 kCombiningDiacriticSupplementFirst = 0x1dc0;
@@ -110,7 +112,8 @@ XMLUtilities::IsValidUnicode(const UInt32 inCodePoint, NString& outErrorString)
 		formatString = NBundleString(kCodePointNotUnicodeCharacter, "", kErrorTableName);
 		errorString.Format(formatString, inCodePoint);
 	}
-	else if (inCodePoint >= 0xfdd0 && inCodePoint <= 0xfdef) {
+	else if (inCodePoint >= kArabicPresentationNonCharFirst	&&
+			 inCodePoint <= kArabicPresentationNonCharLast) {
 			// Non-characters in the Arabic presentation range
 		isValid = false;
 		formatString = NBundleString(kCodePointNotUnicodeCharacter, "", kErrorTableName);
@@ -154,7 +157,8 @@ bool XMLUtilities::IsCombiningDiacritic(const UInt32 inCodePoint)
 	else if (inCodePoint == kCombiningTaiTham) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningBalineseMusicalSymbolFirst && inCodePoint <= kCombiningBalineseMusicalSymbolLast) {
+	else if (inCodePoint >= kCombiningBalineseMusicalSymbolFirst &&
+			 inCodePoint <= kCombiningBalineseMusicalSymbolLast) {
 		result = true;
 	}
 	else if (inCodePoint >= kCombiningCopticFirst && inCodePoint <= kCombiningCopticLast) {
@@ -163,13 +167,15 @@ bool XMLUtilities::IsCombiningDiacritic(const UInt32 inCodePoint)
 	else if (inCodePoint >= kCombiningSalvonicFirst && inCodePoint <= kCombiningSalvonicLast) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningKatakanaHiraganaFirst && inCodePoint <= kCombiningKatakanaHiraganaLast) {
+	else if (inCodePoint >= kCombiningKatakanaHiraganaFirst &&
+			 inCodePoint <= kCombiningKatakanaHiraganaLast) {
 		result = true;
 	}
 	else if (inCodePoint >= kCombiningBamumFirst && inCodePoint <= kCombiningBamumLast) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningDevanagariSamavedaFirst && inCodePoint <= kCombiningDevanagariSamavedaLast) {
+	else if (inCodePoint >= kCombiningDevanagariSamavedaFirst &&
+			 inCodePoint <= kCombiningDevanagariSamavedaLast) {
 		result = true;
 	}
 	else if (inCodePoint >= kCombiningHalfMarksFirst && inCodePoint <= kCombiningHalfMarksLast) {
@@ -178,19 +184,24 @@ bool XMLUtilities::IsCombiningDiacritic(const UInt32 inCodePoint)
 	else if (inCodePoint == kCombiningPhaistos) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningMusicalSymbolGroup1First && inCodePoint <= kCombiningMusicalSymbolGroup1Last) {
+	else if (inCodePoint >= kCombiningMusicalSymbolGroup1First &&
+			 inCodePoint <= kCombiningMusicalSymbolGroup1Last) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningMusicalSymbolGroup2First && inCodePoint <= kCombiningMusicalSymbolGroup2Last) {
+	else if (inCodePoint >= kCombiningMusicalSymbolGroup2First &&
+			 inCodePoint <= kCombiningMusicalSymbolGroup2Last) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningMusicalSymbolGroup3First && inCodePoint <= kCombiningMusicalSymbolGroup3Last) {
+	else if (inCodePoint >= kCombiningMusicalSymbolGroup3First &&
+			 inCodePoint <= kCombiningMusicalSymbolGroup3Last) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningMusicalSymbolGroup4First && inCodePoint <= kCombiningMusicalSymbolGroup4Last) {
+	else if (inCodePoint >= kCombiningMusicalSymbolGroup4First &&
+			 inCodePoint <= kCombiningMusicalSymbolGroup4Last) {
 		result = true;
 	}
-	else if (inCodePoint >= kCombiningGreekMusicalFirst && inCodePoint <= kCombiningGreekMusicalLast) {
+	else if (inCodePoint >= kCombiningGreekMusicalFirst &&
+			 inCodePoint <= kCombiningGreekMusicalLast) {
 		result = true;
 	}
 	return result;

@@ -154,7 +154,6 @@ typedef void * UkeleleKeyboard;
 
 - (void)addComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
 - (void)removeComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
-- (void)addNewComment;
 - (NSString *)currentComment;
 - (NSString *)currentHolderText;
 

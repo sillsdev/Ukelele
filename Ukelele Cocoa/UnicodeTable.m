@@ -10,6 +10,8 @@
 
 #define kUnicodeTableFile	@"UCDNamesList"
 
+//#define USE_REGEX 1
+
 @interface UnicodeTable () {
 	NSMutableDictionary *unicodeTable;
 }
@@ -21,7 +23,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		unicodeTable = [NSMutableDictionary dictionaryWithCapacity:25000];
+		unicodeTable = [NSMutableDictionary dictionaryWithCapacity:30000];
 	}
 	return self;
 }
@@ -58,7 +60,7 @@
 		unsigned int codePoint;
 		NSString *codePointDescription;
 		if ([theScanner scanHexInt:&codePoint] && [theScanner scanUpToString:@"\n" intoString:&codePointDescription]) {
-			[unicodeTable setObject:codePointDescription forKey:@(codePoint)];
+			unicodeTable[@(codePoint)] = codePointDescription;
 		}
 	}
 #endif
@@ -71,7 +73,7 @@
 		NSScanner *scanner = [NSScanner scannerWithString:[sourceString substringWithRange:[result rangeAtIndex:1]]];
 		unsigned int codePoint;
 		if ([scanner scanHexInt:&codePoint]) {
-			[unicodeTable setObject:[sourceString substringWithRange:[result rangeAtIndex:2]] forKey:@(codePoint)];
+			unicodeTable[@(codePoint)] = [sourceString substringWithRange:[result rangeAtIndex:2]];
 		}
 	}];
 }

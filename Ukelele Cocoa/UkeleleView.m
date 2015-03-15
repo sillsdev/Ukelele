@@ -17,12 +17,14 @@ static int kWindowTopMargin = 50;
 static int kWindowLeftMargin = 10;
 static int kWindowBottomMargin = 9;
 static int kWindowRightMargin = 8;
-//static int kWindowMargin = 2;
 static int kKeyCapInset = 2;
 static CGFloat kLineHeightFactor = 1.5f;
 static CGFloat kSmallLineHeightFactor = 1.3f;
 static CGFloat kMininumScaleFactor = 1.0f;
 static CGFloat kMaximumScaleFactor = 5.0f;
+
+#define kDefaultFontName	@"Lucida Grande"
+#define kDefaultFontSize	18.0
 
 typedef enum UkeleleViewEventState : NSUInteger {
 	kEventStateNone = 0,
@@ -67,7 +69,7 @@ typedef struct KeyEntryRec {
 	NSString *fontName = [theDefaults stringForKey:UKTextFont];
 	if (fontName == nil || fontName.length == 0) {
 			// Nothing came from the defaults
-		fontName = @"Lucida Grande";
+		fontName = kDefaultFontName;
 	}
     NSFont *defaultLargeFont = [NSFont fontWithName:fontName size:kDefaultLargeFontSize];
     _largeAttributes = [NSMutableDictionary dictionary];
@@ -84,7 +86,7 @@ typedef struct KeyEntryRec {
 	CGFloat textSize = [theDefaults floatForKey:UKTextSize];
 	if (textSize <= 0) {
 			// Nothing came from the defaults
-		textSize = 18.0;
+		textSize = kDefaultFontSize;
 	}
 	baseFontSize = textSize / [self scaleFactor];
 }
@@ -100,12 +102,12 @@ typedef struct KeyEntryRec {
 		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
 		if (defaultFontName == nil || defaultFontName.length == 0) {
 				// Nothing came from the defaults
-			defaultFontName = @"Lucida Grande";
+			defaultFontName = kDefaultFontName;
 		}
 		CGFloat textSize = [theDefaults floatForKey:UKTextSize];
 		if (textSize <= 0) {
 				// Nothing came from the defaults
-			textSize = 18.0;
+			textSize = kDefaultFontSize;
 		}
 		_fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
 		[self setUpStyles];
@@ -145,7 +147,6 @@ typedef struct KeyEntryRec {
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
 	[NSGraphicsContext saveGraphicsState];
 	NSColor *backgroundColour = [[self colourTheme] windowBackgroundColour];
 	[backgroundColour setFill];
@@ -178,8 +179,9 @@ typedef struct KeyEntryRec {
 
 - (KeyCapView *)read1RectKey:(NSPoint)originPoint withPoint:(Point)newPoint withScaleFactor:(float)scaleValue
 {
-	NSRect boundingRect = [self get1RectBounds:originPoint withPoint:newPoint
-												withScaleFactor:scaleValue];
+	NSRect boundingRect = [self get1RectBounds:originPoint
+									 withPoint:newPoint
+							   withScaleFactor:scaleValue];
 	KeyCapView *keyCap = [[KeyCapView alloc] initWithFrame:boundingRect];
 	return keyCap;
 }
@@ -284,6 +286,7 @@ typedef struct KeyEntryRec {
 
 - (void)scaleViewToScale:(CGFloat)scaleValue limited:(BOOL)limited
 {
+	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
 		// Clamp scaleValue to a valid scale
 	if (limited && scaleValue < kMininumScaleFactor) {
 		scaleValue = kMininumScaleFactor;
@@ -333,11 +336,14 @@ typedef struct KeyEntryRec {
 
 - (void)scaleViewBy:(CGFloat)scaleValue limited:(BOOL)limited
 {
+	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
 	CGFloat newScale = [self scaleFactor] * scaleValue;
 	[self scaleViewToScale:newScale limited:limited];
 }
 
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue {
+	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
+	NSAssert(keyboardID >= 0, @"Must have a valid keyboard ID");
 	CGFloat kFontSizeFactor = kDefaultSmallFontSize / kDefaultLargeFontSize;
 	char *resourcePtr = theStream;
 	[self clearView];
@@ -529,6 +535,7 @@ typedef struct KeyEntryRec {
 
 - (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue
 {
+	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
 		// Read the resource into memory and treat as a stream
 	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
 	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
@@ -582,19 +589,6 @@ typedef struct KeyEntryRec {
 	for (NSUInteger i = 0; i < keyCount; i++) {
 		KeyCapView *keyCap = (KeyCapView *)keyList[i];
 		[keyCap setOutputString:text];
-//		if (modifiers & kEventKeyModifierNumLockMask) {
-//			if ([keyCap numLockKeyCode] == keyCode) {
-//				[keyCap setOutputString:text];
-//			}
-//		}
-//		else if (modifiers & kEventKeyModifierFnMask) {
-//			if ([keyCap fnKeyCode] == keyCode) {
-//				[keyCap setOutputString:text];
-//			}
-//		}
-//		else {
-//			[keyCap setOutputString:text];
-//		}
 	}
 }
 

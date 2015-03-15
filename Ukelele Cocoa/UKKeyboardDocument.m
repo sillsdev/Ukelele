@@ -450,23 +450,23 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	directoryContents = [resourcesDirectory fileWrappers];
 	directoryEnumerator = [directoryContents objectEnumerator];
 	NSMutableDictionary *fileNameDictionary = [NSMutableDictionary dictionary];
-	NSFileWrapper *infoPlistStringsFile = nil;
+//	NSFileWrapper *infoPlistStringsFile = nil;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
 		NSString *fileName = [directoryEntry preferredFilename];
 		BOOL isKeyboardLayout = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringKeyboardLayoutExtension]];
 		BOOL isIconFile = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringIcnsExtension]];
-		if ([fileName isEqualToString:kStringEnglishLocalisationName]) {
-				// It's the English.lproj folder, so we check into it for infoPlist.strings and version.plist
-			NSDictionary *englishContents = [directoryEntry fileWrappers];
-			NSEnumerator *englishEnumerator = [englishContents objectEnumerator];
-			NSFileWrapper *englishEntry;
-			while ((englishEntry = [englishEnumerator nextObject])) {
-				if ([[englishEntry preferredFilename] isEqualToString:kStringInfoPlistStringsName]) {
-					infoPlistStringsFile = englishEntry;
-				}
-			}
-		}
-		else if (isKeyboardLayout || isIconFile) {
+//		if ([fileName isEqualToString:kStringEnglishLocalisationName]) {
+//				// It's the English.lproj folder, so we check into it for infoPlist.strings and version.plist
+//			NSDictionary *englishContents = [directoryEntry fileWrappers];
+//			NSEnumerator *englishEnumerator = [englishContents objectEnumerator];
+//			NSFileWrapper *englishEntry;
+//			while ((englishEntry = [englishEnumerator nextObject])) {
+//				if ([[englishEntry preferredFilename] isEqualToString:kStringInfoPlistStringsName]) {
+//					infoPlistStringsFile = englishEntry;
+//				}
+//			}
+//		}
+		/* else */ if (isKeyboardLayout || isIconFile) {
 			NSString *fileBaseName = [fileName stringByDeletingPathExtension];
 			NSMutableDictionary *baseNameDictionary = fileNameDictionary[fileBaseName];
 			if (nil == baseNameDictionary) {

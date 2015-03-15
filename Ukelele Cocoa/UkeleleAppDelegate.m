@@ -244,7 +244,11 @@ static NSDictionary *defaultValues() {
 
 - (BOOL)helperToolIsInstalled {
 	CFDictionaryRef toolDict = SMJobCopyDictionary(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName);
-	return toolDict != NULL;
+	BOOL result = toolDict != NULL;
+	if (toolDict != NULL) {
+		CFRelease(toolDict);
+	}
+	return result;
 }
 
 - (void)connectToHelperTool

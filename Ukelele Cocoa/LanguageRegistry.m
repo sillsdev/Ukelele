@@ -80,13 +80,14 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 
 + (LanguageRegistry *)getInstance {
 	static LanguageRegistry *theInstance = nil;
-	if (nil == theInstance) {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
 			// Create the instance
 		theInstance = [[LanguageRegistry alloc] init];
 		NSURL *registryURL = [[NSBundle mainBundle] URLForResource:kLTRRegistryFileName withExtension:@"xml"];
 		NSData *registryData = [NSData dataWithContentsOfURL:registryURL];
 		[theInstance parseXMLFile:registryData];
-	}
+	});
 	return theInstance;
 }
 

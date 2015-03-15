@@ -11,8 +11,6 @@
 
 @implementation KeyboardEnvironment
 
-static KeyboardEnvironment *theKeyboardEnvironment = nil;
-
 - (id)init
 {
 	self = [super init];
@@ -27,9 +25,11 @@ static KeyboardEnvironment *theKeyboardEnvironment = nil;
 
 + (KeyboardEnvironment *)instance
 {
-	if (theKeyboardEnvironment == nil) {
+	static KeyboardEnvironment *theKeyboardEnvironment = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
 		theKeyboardEnvironment = [[KeyboardEnvironment alloc] init];
-	}
+	});
 	return theKeyboardEnvironment;
 }
 

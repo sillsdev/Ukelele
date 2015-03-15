@@ -13,17 +13,17 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	[_windowController keyDown:theEvent];
+	[self.windowController keyDown:theEvent];
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-	[_windowController keyUp:theEvent];
+	[self.windowController keyUp:theEvent];
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	[_windowController flagsChanged:theEvent];
+	[self.windowController flagsChanged:theEvent];
 }
 
 @end
