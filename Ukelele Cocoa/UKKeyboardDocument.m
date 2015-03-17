@@ -77,15 +77,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
     return self;
 }
 
-/*
-- (NSString *)windowNibName
-{
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return <#nibName#>;
-}
-*/
-
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
@@ -152,8 +143,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	return NO;
 }
 
-+ (BOOL)autosavesInPlace
-{
++ (BOOL)autosavesInPlace {
     return YES;
 }
 
@@ -263,9 +253,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[englishLprojDirectory addFileWrapper:infoPlistStringsFile];
 		// Create the version.plist file
 	NSMutableDictionary *versionPlistDictionary = [NSMutableDictionary dictionary];
-	versionPlistDictionary[kStringBuildVersionKey] = _buildVersion;
-	versionPlistDictionary[kStringSourceVersionKey] = _sourceVersion;
-	versionPlistDictionary[kStringProjectNameKey] = _bundleName;
+	versionPlistDictionary[kStringBuildVersionKey] = self.buildVersion;
+	versionPlistDictionary[kStringSourceVersionKey] = self.sourceVersion;
+	versionPlistDictionary[kStringProjectNameKey] = self.bundleName;
 	NSString *error;
 	NSFileWrapper *versionPlistFile = [[NSFileWrapper alloc] initRegularFileWithContents:
 									   [NSPropertyListSerialization dataFromPropertyList:versionPlistDictionary
@@ -281,18 +271,15 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		NSString *keyboardName = [keyboardEntry fileName];
 			// Test whether we have a null or untitled file name
 		if (nil == keyboardName || [keyboardName isEqualToString:@""] ||
-			[keyboardName compare:@"untitled" options:(NSAnchoredSearch | NSCaseInsensitiveSearch)] == NSOrderedSame) {
+			[keyboardName compare:UKUntitledName options:(NSAnchoredSearch | NSCaseInsensitiveSearch)] == NSOrderedSame) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
-//		NSLog(@"Saving %@", keyboardName);
 		if ([keyboardEntry keyboardFileWrapper] != nil) {
 				// Already have a file wrapper
-//			NSLog(@"Have file wrapper, preferred name %@", [[keyboardEntry keyboardFileWrapper] preferredFilename]);
 			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
 		}
 		else {
 			NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
-//			NSLog(@"Creating new file %@", keyboardFileName);
 			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
@@ -330,14 +317,14 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			// Create the bundle identifier
 		BOOL tigerCompatibleBundleIdentifier = [[NSUserDefaults standardUserDefaults] boolForKey:UKTigerCompatibleBundles];
 		NSString *baseString = tigerCompatibleBundleIdentifier ? kStringAppleKeyboardLayoutBundleID : kStringUkeleleKeyboardLayoutBundleID;
-		NSString *extensionString = [[_bundleName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
-		_bundleIdentifier = [baseString stringByAppendingString:extensionString];
+		NSString *extensionString = [[self.bundleName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
+		self.bundleIdentifier = [baseString stringByAppendingString:extensionString];
 	}
-	infoPlist[@"CFBundleIdentifier"] = _bundleIdentifier;
+	infoPlist[@"CFBundleIdentifier"] = self.bundleIdentifier;
 		// Set the bundle name
-	infoPlist[@"CFBundleName"] = _bundleName;
+	infoPlist[@"CFBundleName"] = self.bundleName;
 		// Set the version number
-	infoPlist[(NSString *)kCFBundleVersionKey] = _bundleVersion;
+	infoPlist[(NSString *)kCFBundleVersionKey] = self.bundleVersion;
 		// Get the intended languages for each keyboard layout in the bundle
 	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
 		NSString *languageIdentifier = [keyboardEntry intendedLanguage];
@@ -345,7 +332,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 				// Add this language identifier
 			NSString *keyboardName = [keyboardEntry keyboardName];
 			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, [keyboardEntry fileName]];
-			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", _bundleIdentifier, [[keyboardName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[keyboardName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
 			NSDictionary *languageDictionary = @{kStringInfoPlistInputSourceID: keyboardIdentifier,
 												 kStringInfoPlistIntendedLanguageKey: languageIdentifier};
 			infoPlist[KLInfoIdentifier] = languageDictionary;
@@ -397,6 +384,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	self.bundleName = [[theFileWrapper filename] stringByDeletingPathExtension];
 	[self setDisplayName:self.bundleName];
 	NSDictionary *directoryContents = [theFileWrapper fileWrappers];
+		// Search for the Contents directory
 	NSEnumerator *directoryEnumerator = [directoryContents objectEnumerator];
 	NSFileWrapper *directoryEntry;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
@@ -450,23 +438,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	directoryContents = [resourcesDirectory fileWrappers];
 	directoryEnumerator = [directoryContents objectEnumerator];
 	NSMutableDictionary *fileNameDictionary = [NSMutableDictionary dictionary];
-//	NSFileWrapper *infoPlistStringsFile = nil;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
 		NSString *fileName = [directoryEntry preferredFilename];
 		BOOL isKeyboardLayout = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringKeyboardLayoutExtension]];
 		BOOL isIconFile = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringIcnsExtension]];
-//		if ([fileName isEqualToString:kStringEnglishLocalisationName]) {
-//				// It's the English.lproj folder, so we check into it for infoPlist.strings and version.plist
-//			NSDictionary *englishContents = [directoryEntry fileWrappers];
-//			NSEnumerator *englishEnumerator = [englishContents objectEnumerator];
-//			NSFileWrapper *englishEntry;
-//			while ((englishEntry = [englishEnumerator nextObject])) {
-//				if ([[englishEntry preferredFilename] isEqualToString:kStringInfoPlistStringsName]) {
-//					infoPlistStringsFile = englishEntry;
-//				}
-//			}
-//		}
-		/* else */ if (isKeyboardLayout || isIconFile) {
+		if (isKeyboardLayout || isIconFile) {
 			NSString *fileBaseName = [fileName stringByDeletingPathExtension];
 			NSMutableDictionary *baseNameDictionary = fileNameDictionary[fileBaseName];
 			if (nil == baseNameDictionary) {
@@ -535,7 +511,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		return;
 	}
 	for (NSString *plistKey in infoPlistDictionary) {
-		if ([plistKey hasPrefix:@"KLInfo_"]) {
+		if ([plistKey hasPrefix:kStringInfoPlistKLInfoPrefix]) {
 				// It's a keyboard language
 			NSString *keyboardName = [plistKey substringFromIndex:[kStringInfoPlistKLInfoPrefix length]];
 			NSDictionary *languageDictionary = infoPlistDictionary[plistKey];
@@ -543,10 +519,10 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			languageList[keyboardName] = languageIdentifier;
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleIdentifierKey]) {
-			_bundleIdentifier = infoPlistDictionary[plistKey];
+			self.bundleIdentifier = infoPlistDictionary[plistKey];
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleVersionKey]) {
-			_bundleVersion = infoPlistDictionary[plistKey];
+			self.bundleVersion = infoPlistDictionary[plistKey];
 		}
 	}
 }
@@ -625,8 +601,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 				[NSApp presentError:theError];
 				return NO;
 			}
-				// We don't want it in the same file, so we make it unspecified
-//			[keyboardDocument setFileURL:nil];
 			[self insertDocument:keyboardObject atIndex:row];
 			NSString *fileName = [[dragURL lastPathComponent] stringByDeletingPathExtension];
 			KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[row];
@@ -729,9 +703,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Add a current keyboard layout window
 
 - (IBAction)addOpenDocument:(id)sender {
+		// Search for unbundled keyboard layouts
 	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 	NSArray *theDocumentList = [theController documents];
 	NSMutableArray *candidateKeyboardLayouts = [NSMutableArray array];
+	NSAssert([theDocumentList count] > 0, @"Must have some open documents");
 	for (NSDocument *theDocument in theDocumentList) {
 		if ([theDocument isKindOfClass:[UKKeyboardDocument class]] && ![(UKKeyboardDocument *)theDocument isBundle] && theDocument != self) {
 				// This is the kind of document we want
@@ -768,12 +744,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		bundleVersionSheet = [UkeleleBundleVersionSheet bundleVersionSheet];
 	}
 	NSArray *windowControllers = [self windowControllers];
+	NSAssert([windowControllers count] > 0, @"Must be at least one window controller");
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
-	[bundleVersionSheet beginSheetWithBundleName:_bundleName
-								   bundleVersion:_bundleVersion
-									buildVersion:_buildVersion
-								   sourceVersion:_sourceVersion
+	[bundleVersionSheet beginSheetWithBundleName:self.bundleName
+								   bundleVersion:self.bundleVersion
+									buildVersion:self.buildVersion
+								   sourceVersion:self.sourceVersion
 									   forWindow:myWindow
 										callBack:^(UkeleleBundleVersionSheet *sheet) {
 											if (nil == sheet) {
@@ -796,6 +773,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	[self setTableSelectionForMenu];
 	__block UKNewKeyboardLayoutController *theController = [UKNewKeyboardLayoutController createController];
 	NSArray *windowControllers = [self windowControllers];
+	NSAssert([windowControllers count] > 0, @"Must be at least one window controller");
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
 	[theController runDialog:myWindow withCompletion:^(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout) {
@@ -979,6 +957,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSString *keyboardLanguage = [keyboardEntry intendedLanguage];
 	LanguageCode *keyboardLanguageCode = [LanguageCode languageCodeFromString:keyboardLanguage];
 	NSArray *windowControllers = [self windowControllers];
+	NSAssert([windowControllers count] > 0, @"Must be at least one window controller");
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
 	[intendedLanguageSheet beginIntendedLanguageSheet:keyboardLanguageCode
@@ -1018,6 +997,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			iconData = [NSMutableData data];
 			NSInteger iconCount = 0;
 			for (NSImageRep *iconImage in iconImageReps) {
+					// Work around a bug
 				if ([iconImage size].height < 128) {
 					iconCount++;
 				}
@@ -1124,8 +1104,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	NSWindow *docWindow = [keyboardLayoutsTable window];
 	[keyboardController askKeyboardIdentifiers:docWindow];
-//	[self keyboardLayoutDidChange:[keyboardEntry keyboardObject]];
-//	[keyboardLayoutsTable reloadData];
 }
 
 	// Install the keyboard layout
@@ -1253,19 +1231,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 #pragma mark Callbacks
 
-- (void)acceptVersionInfo:(id)sender {
-	if (nil == sender) {
-			// User cancelled
-		bundleVersionSheet = nil;
-		return;
-	}
-	[self changeBundleName:[[bundleVersionSheet bundleNameField] stringValue]
-			 bundleVersion:[[bundleVersionSheet bundleVersionField] stringValue]
-			  buildVersion:[[bundleVersionSheet buildVersionField] stringValue]
-			 sourceVersion:[[bundleVersionSheet sourceVersionField] stringValue]];
-	bundleVersionSheet = nil;
-}
-
 - (void)confirmDelete:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == NSAlertAlternateReturn) {
 			// User cancelled
@@ -1273,18 +1238,6 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	NSInteger indexToDelete = [(__bridge NSNumber *)contextInfo integerValue];
 	[self removeDocumentAtIndex:indexToDelete];
-}
-
-- (void)acceptIntendedLanguage:(LanguageCode *)newLanguage {
-	if (newLanguage == nil) {
-			// User cancelled
-		intendedLanguageSheet = nil;
-		return;
-	}
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
-	NSAssert(selectedRowNumber >= 0, @"There must be a selected row");
-	[self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:newLanguage];
-	intendedLanguageSheet = nil;
 }
 
 - (void)acceptChooseOpenDocument:(NSString *)chosenItem {

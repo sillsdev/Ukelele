@@ -9,6 +9,9 @@
 #import "UkelelePreferenceController.h"
 #import "UkeleleConstantStrings.h"
 
+#define kMinZoom 0.5
+#define kMaxZoom 5.0
+
 @implementation UkelelePreferenceController
 
 static NSString *nibFileName = @"UkelelePreferences";
@@ -109,13 +112,13 @@ static NSString *nibWindow = @"Preferences";
 			// Fit width
 		zoomLevel = -1.0f;
 	}
-	else if (zoomLevel < 0.5) {
+	else if (zoomLevel < kMinZoom) {
 			// Too small
-		zoomLevel = 0.5;
+		zoomLevel = kMinZoom;
 	}
-	else if (zoomLevel > 5.0) {
+	else if (zoomLevel > kMaxZoom) {
 			// Too big
-		zoomLevel = 5.0;
+		zoomLevel = kMaxZoom;
 	}
 	[[NSUserDefaults standardUserDefaults] setFloat:zoomLevel forKey:UKScaleFactor];
 }

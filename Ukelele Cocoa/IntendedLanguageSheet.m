@@ -8,21 +8,7 @@
 
 #import "IntendedLanguageSheet.h"
 
-@interface IntendedLanguageSheet ()
-
-@end
-
 @implementation IntendedLanguageSheet
-
-@synthesize languageTable;
-@synthesize languageSearch;
-@synthesize languageRequired;
-@synthesize scriptTable;
-@synthesize scriptSearch;
-@synthesize regionTable;
-@synthesize regionSearch;
-@synthesize variantTable;
-@synthesize variantSearch;
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
@@ -50,10 +36,10 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	[languageTable reloadData];
-	[scriptTable reloadData];
-	[regionTable reloadData];
-	[variantTable reloadData];
+	[self.languageTable reloadData];
+	[self.scriptTable reloadData];
+	[self.regionTable reloadData];
+	[self.variantTable reloadData];
 }
 
 - (void)beginIntendedLanguageSheet:(LanguageCode *)initialCode
@@ -68,9 +54,9 @@
 #pragma mark Action methods
 
 - (IBAction)acceptLanguage:(id)sender {
-	if ([languageTable selectedRow] == -1) {
+	if ([self.languageTable selectedRow] == -1) {
 			// No selection!
-		[languageRequired setHidden:NO];
+		[self.languageRequired setHidden:NO];
 		return;
 	}
 	LanguageCode *selectedCode = [self getSelectedLanguage];
@@ -88,16 +74,16 @@
 #pragma mark Table methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-	if (tableView == languageTable) {
+	if (tableView == self.languageTable) {
 		return [languageList count];
 	}
-	else if (tableView == scriptTable) {
+	else if (tableView == self.scriptTable) {
 		return [scriptList count];
 	}
-	else if (tableView == regionTable) {
+	else if (tableView == self.regionTable) {
 		return [regionList count];
 	}
-	else if (tableView == variantTable) {
+	else if (tableView == self.variantTable) {
 		return [variantList count];
 	}
 	return 0;
@@ -105,19 +91,19 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 	LanguageRegistryEntry *languageEntry;
-	if (tableView == languageTable) {
+	if (tableView == self.languageTable) {
 		languageEntry = languageList[row];
 		return [languageEntry valueForKey:[tableColumn identifier]];
 	}
-	else if (tableView == scriptTable) {
+	else if (tableView == self.scriptTable) {
 		languageEntry = scriptList[row];
 		return [languageEntry valueForKey:[tableColumn identifier]];
 	}
-	else if (tableView == regionTable) {
+	else if (tableView == self.regionTable) {
 		languageEntry = regionList[row];
 		return [languageEntry valueForKey:[tableColumn identifier]];
 	}
-	else if (tableView == variantTable) {
+	else if (tableView == self.variantTable) {
 		languageEntry = variantList[row];
 		return [languageEntry valueForKey:[tableColumn identifier]];
 	}
@@ -127,15 +113,15 @@
 #pragma mark Filter methods
 
 - (IBAction)searchLanguage:(id)sender {
-	NSInteger selectedRow = [languageTable selectedRow];
+	NSInteger selectedRow = [self.languageTable selectedRow];
 	LanguageRegistryEntry *selectedLanguage = nil;
 	if (selectedRow >= 0) {
 		selectedLanguage = languageList[selectedRow];
 	}
-	NSString *searchString = [languageSearch stringValue];
+	NSString *searchString = [self.languageSearch stringValue];
 	NSArray *filteredLanguages = [languageRegistry searchLanguage:searchString];
 	languageList = filteredLanguages;
-	[languageTable reloadData];
+	[self.languageTable reloadData];
 	if (selectedRow >= 0) {
 			// Restore selection
 		NSUInteger languageCount = [languageList count];
@@ -147,25 +133,25 @@
 			}
 		}
 		if (selectedRow >= 0) {
-			[languageTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
-			[languageTable scrollRowToVisible:selectedRow];
+			[self.languageTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+			[self.languageTable scrollRowToVisible:selectedRow];
 		}
 		else {
-			[languageTable deselectAll:self];
+			[self.languageTable deselectAll:self];
 		}
 	}
 }
 
 - (IBAction)searchScript:(id)sender {
-	NSInteger selectedRow = [scriptTable selectedRow];
+	NSInteger selectedRow = [self.scriptTable selectedRow];
 	LanguageRegistryEntry *selectedScript = nil;
 	if (selectedRow >= 0) {
 		selectedScript = scriptList[selectedRow];
 	}
-	NSString *searchString = [scriptSearch stringValue];
+	NSString *searchString = [self.scriptSearch stringValue];
 	NSArray *filteredScripts = [languageRegistry searchScript:searchString];
 	scriptList = filteredScripts;
-	[scriptTable reloadData];
+	[self.scriptTable reloadData];
 	if (selectedRow >= 0) {
 			// Restore selection
 		NSUInteger scriptCount = [scriptList count];
@@ -177,25 +163,25 @@
 			}
 		}
 		if (selectedRow >= 0) {
-			[scriptTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
-			[scriptTable scrollRowToVisible:selectedRow];
+			[self.scriptTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+			[self.scriptTable scrollRowToVisible:selectedRow];
 		}
 		else {
-			[scriptTable deselectAll:self];
+			[self.scriptTable deselectAll:self];
 		}
 	}
 }
 
 - (IBAction)searchRegion:(id)sender {
-	NSInteger selectedRow = [regionTable selectedRow];
+	NSInteger selectedRow = [self.regionTable selectedRow];
 	LanguageRegistryEntry *selectedRegion = nil;
 	if (selectedRow >= 0) {
 		selectedRegion = regionList[selectedRow];
 	}
-	NSString *searchString = [regionSearch stringValue];
+	NSString *searchString = [self.regionSearch stringValue];
 	NSArray *filteredRegions = [languageRegistry searchRegion:searchString];
 	regionList = filteredRegions;
-	[regionTable reloadData];
+	[self.regionTable reloadData];
 	if (selectedRow >= 0) {
 			// Restore selection
 		NSUInteger regionCount = [regionList count];
@@ -207,25 +193,25 @@
 			}
 		}
 		if (selectedRow >= 0) {
-			[regionTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
-			[regionTable scrollRowToVisible:selectedRow];
+			[self.regionTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+			[self.regionTable scrollRowToVisible:selectedRow];
 		}
 		else {
-			[regionTable deselectAll:self];
+			[self.regionTable deselectAll:self];
 		}
 	}
 }
 
 - (IBAction)searchVariant:(id)sender {
-	NSInteger selectedRow = [variantTable selectedRow];
+	NSInteger selectedRow = [self.variantTable selectedRow];
 	LanguageRegistryEntry *selectedVariant = nil;
 	if (selectedRow >= 0) {
 		selectedVariant = variantList[selectedRow];
 	}
-	NSString *searchString = [variantSearch stringValue];
+	NSString *searchString = [self.variantSearch stringValue];
 	NSArray *filteredVariants = [languageRegistry searchVariant:searchString];
 	variantList = filteredVariants;
-	[variantTable reloadData];
+	[self.variantTable reloadData];
 	if (selectedRow >= 0) {
 			// Restore selection
 		NSUInteger variantCount = [variantList count];
@@ -237,11 +223,11 @@
 			}
 		}
 		if (selectedRow >= 0) {
-			[variantTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
-			[variantTable scrollRowToVisible:selectedRow];
+			[self.variantTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+			[self.variantTable scrollRowToVisible:selectedRow];
 		}
 		else {
-			[variantTable deselectAll:self];
+			[self.variantTable deselectAll:self];
 		}
 	}
 }
@@ -250,7 +236,7 @@
 
 - (void)setSelection:(LanguageCode *)languageCode {
 	NSString *language = [languageCode languageCode];
-	[languageTable deselectAll:self];
+	[self.languageTable deselectAll:self];
 	if (language && ![language isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger languageCount = [languageList count];
@@ -264,12 +250,12 @@
 		}
 		if (languageIndex >= 0) {
 			NSIndexSet *selectionSet = [NSIndexSet indexSetWithIndex:languageIndex];
-			[languageTable selectRowIndexes:selectionSet byExtendingSelection:NO];
-			[languageTable scrollRowToVisible:languageIndex];
+			[self.languageTable selectRowIndexes:selectionSet byExtendingSelection:NO];
+			[self.languageTable scrollRowToVisible:languageIndex];
 		}
 	}
 	NSString *script = [languageCode scriptCode];
-	[scriptTable deselectAll:self];
+	[self.scriptTable deselectAll:self];
 	if (script && ![script isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger scriptCount = [scriptList count];
@@ -283,12 +269,12 @@
 		}
 		if (scriptIndex >= 0) {
 			NSIndexSet *selectionSet = [NSIndexSet indexSetWithIndex:scriptIndex];
-			[scriptTable selectRowIndexes:selectionSet byExtendingSelection:NO];
-			[scriptTable scrollRowToVisible:scriptIndex];
+			[self.scriptTable selectRowIndexes:selectionSet byExtendingSelection:NO];
+			[self.scriptTable scrollRowToVisible:scriptIndex];
 		}
 	}
 	NSString *region = [languageCode regionCode];
-	[regionTable deselectAll:self];
+	[self.regionTable deselectAll:self];
 	if (region && ![region isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger regionCount = [regionList count];
@@ -302,12 +288,12 @@
 		}
 		if (regionIndex >= 0) {
 			NSIndexSet *selectionSet = [NSIndexSet indexSetWithIndex:regionIndex];
-			[regionTable selectRowIndexes:selectionSet byExtendingSelection:NO];
-			[regionTable scrollRowToVisible:regionIndex];
+			[self.regionTable selectRowIndexes:selectionSet byExtendingSelection:NO];
+			[self.regionTable scrollRowToVisible:regionIndex];
 		}
 	}
 	NSString *variant = [languageCode variantCode];
-	[variantTable deselectAll:self];
+	[self.variantTable deselectAll:self];
 	if (variant && ![variant isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger variantCount = [variantList count];
@@ -321,30 +307,30 @@
 		}
 		if (variantIndex >= 0) {
 			NSIndexSet *selectionSet = [NSIndexSet indexSetWithIndex:variantIndex];
-			[variantTable selectRowIndexes:selectionSet byExtendingSelection:NO];
-			[variantTable scrollRowToVisible:variantIndex];
+			[self.variantTable selectRowIndexes:selectionSet byExtendingSelection:NO];
+			[self.variantTable scrollRowToVisible:variantIndex];
 		}
 	}
 }
 
 - (LanguageCode *)getSelectedLanguage {
 	LanguageCode *languageCode = [[LanguageCode alloc] init];
-	NSInteger selectionIndex = [languageTable selectedRow];
+	NSInteger selectionIndex = [self.languageTable selectedRow];
 	if (selectionIndex >= 0) {
 		LanguageRegistryEntry *languageEntry = languageList[selectionIndex];
 		[languageCode setLanguageCode:[languageEntry code]];
 	}
-	selectionIndex = [scriptTable selectedRow];
+	selectionIndex = [self.scriptTable selectedRow];
 	if (selectionIndex >= 0) {
 		LanguageRegistryEntry *scriptEntry = scriptList[selectionIndex];
 		[languageCode setScriptCode:[scriptEntry code]];
 	}
-	selectionIndex = [regionTable selectedRow];
+	selectionIndex = [self.regionTable selectedRow];
 	if (selectionIndex >= 0) {
 		LanguageRegistryEntry *regionEntry = regionList[selectionIndex];
 		[languageCode setRegionCode:[regionEntry code]];
 	}
-	selectionIndex = [variantTable selectedRow];
+	selectionIndex = [self.variantTable selectedRow];
 	if (selectionIndex >= 0) {
 		LanguageRegistryEntry *variantEntry = variantList[selectionIndex];
 		[languageCode setVariantCode:[variantEntry code]];

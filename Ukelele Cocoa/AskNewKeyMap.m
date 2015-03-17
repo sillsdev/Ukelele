@@ -18,19 +18,14 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 @implementation AskNewKeyMap
 
-@synthesize infoText;
-@synthesize keyMapType;
-@synthesize standardKeyMaps;
-@synthesize makeCopyKeyMaps;
-
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];
 	if (self) {
 			// Set up the standard key maps popup
-		[standardKeyMaps removeAllItems];
-		[standardKeyMaps addItemsWithTitles:@[@"QWERTY lower case", @"QWERTY upper case",
+		[self.standardKeyMaps removeAllItems];
+		[self.standardKeyMaps addItemsWithTitles:@[@"QWERTY lower case", @"QWERTY upper case",
 											 @"Dvorak lower case", @"Dvorak upper case",
 											 @"AZERTY lower case", @"AZERTY upper case",
 											 @"QWERTZ lower case", @"QWERTZ upper case",
@@ -49,12 +44,12 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 					 forWindow:(NSWindow *)parentWindow
 					  callBack:(void (^)(NewKeyMapInfo *))theCallBack
 {
-	[infoText setStringValue:informationText];
-	[makeCopyKeyMaps removeAllItems];
-	[makeCopyKeyMaps addItemsWithTitles:keyMaps];
+	[self.infoText setStringValue:informationText];
+	[self.makeCopyKeyMaps removeAllItems];
+	[self.makeCopyKeyMaps addItemsWithTitles:keyMaps];
 	callBack = theCallBack;
-    [standardKeyMaps setEnabled:NO];
-    [makeCopyKeyMaps setEnabled:NO];
+    [self.standardKeyMaps setEnabled:NO];
+    [self.makeCopyKeyMaps setEnabled:NO];
     [unlinkedCheckBox setEnabled:NO];
 	[NSApp beginSheet:[self window]
 	   modalForWindow:parentWindow
@@ -65,22 +60,22 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 - (IBAction)selectKeyMapType:(id)sender
 {
-	switch ([keyMapType selectedRow]) {
+	switch ([self.keyMapType selectedRow]) {
 		case kNewKeyMapEmpty:
-			[standardKeyMaps setEnabled:NO];
-			[makeCopyKeyMaps setEnabled:NO];
+			[self.standardKeyMaps setEnabled:NO];
+			[self.makeCopyKeyMaps setEnabled:NO];
 			[unlinkedCheckBox setEnabled:NO];
 			break;
 
 		case kNewKeyMapStandard:
-			[standardKeyMaps setEnabled:YES];
-			[makeCopyKeyMaps setEnabled:NO];
+			[self.standardKeyMaps setEnabled:YES];
+			[self.makeCopyKeyMaps setEnabled:NO];
 			[unlinkedCheckBox setEnabled:NO];
 			break;
 
 		case kNewKeyMapCopy:
-			[standardKeyMaps setEnabled:NO];
-			[makeCopyKeyMaps setEnabled:YES];
+			[self.standardKeyMaps setEnabled:NO];
+			[self.makeCopyKeyMaps setEnabled:YES];
 			[unlinkedCheckBox setEnabled:YES];
 			break;
 	}
@@ -89,27 +84,27 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 - (IBAction)acceptNewKeyMap:(id)sender
 {
 	NewKeyMapInfo *infoBlock = [[NewKeyMapInfo alloc] init];
-	[infoBlock setKeyMapTypeSelection:[keyMapType selectedRow]];
-	switch ([keyMapType selectedRow]) {
+	[infoBlock setKeyMapTypeSelection:[self.keyMapType selectedRow]];
+	switch ([self.keyMapType selectedRow]) {
 		case kNewKeyMapStandard:
-			[infoBlock setStandardKeyMapSelection:[standardKeyMaps indexOfSelectedItem]];
+			[infoBlock setStandardKeyMapSelection:[self.standardKeyMaps indexOfSelectedItem]];
 			break;
 			
 		case kNewKeyMapCopy:
-			[infoBlock setCopyKeyMapSelection:[[makeCopyKeyMaps titleOfSelectedItem] integerValue]];
+			[infoBlock setCopyKeyMapSelection:[[self.makeCopyKeyMaps titleOfSelectedItem] integerValue]];
 			[infoBlock setIsUnlinked:[unlinkedCheckBox state] == NSOnState];
 			break;
 	}
-	callBack(infoBlock);
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
+	callBack(infoBlock);
 }
 
 - (IBAction)cancelNewKeyMap:(id)sender
 {
 	[[self window] orderOut:self];
-	callBack(nil);
 	[NSApp endSheet:[self window]];
+	callBack(nil);
 }
 
 @end

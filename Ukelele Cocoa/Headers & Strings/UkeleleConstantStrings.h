@@ -100,3 +100,4 @@ MY_EXTERN NSString *UKInspectorWindowLocation;
 
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;
+MY_EXTERN NSString *UKUntitledName;

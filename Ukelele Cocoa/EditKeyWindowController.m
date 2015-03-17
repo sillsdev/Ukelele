@@ -39,13 +39,6 @@
 	return [[EditKeyWindowController alloc] initWithWindowNibName:@"EditKeyWindow"];
 }
 
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
 - (void)beginInteractionForWindow:(NSWindow *)parentWindow withData:(NSDictionary *)dataDict action:(void (^)(NSDictionary *))theCallback {
 	callerData = [dataDict mutableCopy];
 	actionCallback = theCallback;

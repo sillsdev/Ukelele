@@ -13,10 +13,10 @@
 	void (^callBack)(UkeleleBundleVersionSheet *);
 }
 
-@property (weak, readonly) IBOutlet NSTextField *bundleNameField;
-@property (weak, readonly) IBOutlet NSTextField *bundleVersionField;
-@property (weak, readonly) IBOutlet NSTextField *buildVersionField;
-@property (weak, readonly) IBOutlet NSTextField *sourceVersionField;
+@property (strong) IBOutlet NSTextField *bundleNameField;
+@property (strong) IBOutlet NSTextField *bundleVersionField;
+@property (strong) IBOutlet NSTextField *buildVersionField;
+@property (strong) IBOutlet NSTextField *sourceVersionField;
 
 - (IBAction)acceptEdit:(id)sender;
 

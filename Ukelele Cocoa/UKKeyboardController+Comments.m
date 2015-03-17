@@ -25,6 +25,7 @@
 	if (!commentHolder) {
 		commentHolder = [self.keyboardLayout documentCommentHolder];
 	}
+	NSAssert(commentHolder, @"Must have a comment holder");
 	[self addComment:@"" toHolder:commentHolder];
 	[self updateCommentFields];
 }
@@ -32,7 +33,9 @@
 - (IBAction)removeComment:(id)sender
 {
     XMLCommentHolderObject *commentHolder = [self.keyboardLayout currentCommentHolder];
+	NSAssert(commentHolder, @"Must have a comment holder");
 	NSString *commentText = [self.keyboardLayout currentComment];
+	NSAssert(commentText, @"Must have comment text");
 	[self removeComment:commentText fromHolder:commentHolder];
 	if ([self.keyboardLayout currentComment]) {
 			// There is a new current comment
@@ -50,6 +53,7 @@
 		[self saveUnsavedComment];
 	}
 	NSString *commentText = [self.keyboardLayout firstComment];
+	NSAssert(commentText, @"Must have comment text");
 	[self.commentPane setString:commentText];
 	[self updateCommentFields];
 }
@@ -60,6 +64,7 @@
 		[self saveUnsavedComment];
 	}
 	NSString *commentText = [self.keyboardLayout previousComment];
+	NSAssert(commentText, @"Must have comment text");
 	[self.commentPane setString:commentText];
 	[self updateCommentFields];
 }
@@ -70,6 +75,7 @@
 		[self saveUnsavedComment];
 	}
 	NSString *commentText = [self.keyboardLayout nextComment];
+	NSAssert(commentText, @"Must have comment text");
 	[self.commentPane setString:commentText];
 	[self updateCommentFields];
 }
@@ -80,6 +86,7 @@
 		[self saveUnsavedComment];
 	}
 	NSString *commentText = [self.keyboardLayout lastComment];
+	NSAssert(commentText, @"Must have comment text");
 	[self.commentPane setString:commentText];
 	[self updateCommentFields];
 }
@@ -88,8 +95,8 @@
 	if (commentChanged) {
 			// Save the changed comment
 		[self saveUnsavedComment];
-		commentChanged = NO;
 	}
+	NSAssert(commentChanged == NO, @"Comment still changed after saving");
 		// Set the comment text pane
 	NSString *commentText = [self.keyboardLayout currentComment];
 	if (commentText) {
@@ -139,8 +146,10 @@
 
 - (void)saveUnsavedComment {
 	NSString *existingComment = [self.keyboardLayout currentComment];
+	NSAssert(existingComment, @"Must have an existing comment");
 	NSString *commentPaneContents = [[self.commentPane string] copy];
 	XMLCommentHolderObject *currentHolder = [self.keyboardLayout currentCommentHolder];
+	NSAssert(currentHolder, @"Must have a current comment holder");
 	if (![commentPaneContents isEqualToString:existingComment]) {
 		[self changeCommentTextFrom:existingComment to:commentPaneContents forHolder:currentHolder];
 	}
@@ -152,6 +161,7 @@
 - (void)changeCommentTextFrom:(NSString *)oldText
 						   to:(NSString *)newText
 					forHolder:(XMLCommentHolderObject *)commentHolder {
+	NSAssert(commentHolder, @"Comment holder must not be nil");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] changeCommentTextFrom:newText to:oldText forHolder:commentHolder];
 	[undoManager setActionName:@"Change comment"];
@@ -160,6 +170,7 @@
 }
 
 - (void)addComment:(NSString *)commentText toHolder:(XMLCommentHolderObject *)commentHolder {
+	NSAssert(commentHolder, @"Comment holder must not be nil");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeComment:commentText fromHolder:commentHolder];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Remove comment" : @"Add comment"];
@@ -168,6 +179,7 @@
 }
 
 - (void)removeComment:(NSString *)commentText fromHolder:(XMLCommentHolderObject *)commentHolder {
+	NSAssert(commentHolder, @"Comment holder must not be nil");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addComment:commentText toHolder:commentHolder];
 	[undoManager setActionName:[undoManager isUndoing] ? @"Add comment" : @"Remove comment"];

@@ -64,12 +64,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 		scalesList = [ViewScale standardScales];
 		internalState[kStateCurrentScale] = @([theDefaults floatForKey:UKScaleFactor]);
 		internalState[kStateCurrentModifiers] = @0U;
-			// Removed the reliance on Gestalt, which didn't work reliably, anyway
-//		SInt32 keyboardType;
-//		OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
-//		if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-//			keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
-//		}
 			// Use Quartz events. This will probably log a console message about
 			// an invalid event source
 		CGEventSourceKeyboardType keyboardType;
@@ -106,12 +100,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)windowDidLoad {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-			// Removed the reliance on Gestalt, which didn't work reliably, anyway
-//	SInt32 keyboardType;
-//	OSStatus err = Gestalt(gestaltKeyboardType, &keyboardType);
-//	if (err != noErr || [theDefaults boolForKey:UKAlwaysUsesDefaultLayout]) {
-//		keyboardType = (SInt32)[theDefaults integerForKey:UKDefaultLayoutID];
-//	}
 			// Use Quartz events. This will probably log a console message about
 			// an invalid event source
 	CGEventSourceKeyboardType keyboardType;
@@ -370,6 +358,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)updateWindow
 {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	[self updateUkeleleView:ukeleleView
 					  state:internalState[kStateCurrentState]
 				  modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]];
@@ -382,6 +371,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)updateUkeleleView:(UkeleleView *)ukeleleView state:(NSString *)stateName modifiers:(NSUInteger)modifiers {
 	NSArray *subViews = [ukeleleView keyCapViews];
+	NSAssert(subViews && [subViews count] > 0, @"Must have some key caps");
     NSMutableDictionary *keyDataDict = [NSMutableDictionary dictionary];
     keyDataDict[kKeyKeyboardID] = internalState[kStateCurrentKeyboard];
     keyDataDict[kKeyKeyCode] = @0;
@@ -406,6 +396,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)changeViewScale:(double)newScale
 {
     UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
     internalState[kStateCurrentScale] = @(newScale);
 	[ukeleleView scaleViewToScale:newScale limited:YES];
     [self calculateSize];
@@ -415,8 +406,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)changeKeyboardType:(NSInteger)newKeyboardType
 {
-	NSScrollView *scrollView = self.keyboardView;
-	UkeleleView *ukeleleView = [scrollView documentView];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	internalState[kStateCurrentKeyboard] = @(newKeyboardType);
 	NSNumber *scaleValue = internalState[kStateCurrentScale];
 	[ukeleleView createViewWithKeyboardID:(int)newKeyboardType withScale:[scaleValue doubleValue]];
@@ -443,6 +434,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 								  state:internalState[kStateCurrentState]];
 		// Tell the font panel what font we have
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
@@ -483,6 +475,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)assignClickTargets {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	for (KeyCapView *subView in [ukeleleView keyCapViews]) {
 		[subView setClickDelegate:self];
 	}
@@ -619,7 +612,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		}
 	}
 	else if (action == @selector(pasteKey:)) {
-			// This can only be selected if there is a key to paste, and no interation is in progress
+			// This can only be selected if there is a key to paste, and no interaction is in progress
 		return (interactionHandler == nil) && [self.keyboardLayout hasKeyOnPasteboard];
 	}
 	return NO;
@@ -635,7 +628,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[inspectorController setKeyboardSectionEnabled:YES];
 	}
 	else if ([tabIdentifier isEqualToString:kTabIdentifierOutput]) {
-			// Activating the output tab
+			// Activating the output tab (nothing to do)
 	}
 	else if ([tabIdentifier isEqualToString:kTabIdentifierState]) {
 			// Activating the state tab
@@ -670,7 +663,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)inspectorSetModifierMatch {
 	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
-	NSUInteger matchingSet = [_keyboardLayout modifierSetIndexForModifiers:currentModifiers forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
+	NSUInteger matchingSet = [self.keyboardLayout modifierSetIndexForModifiers:currentModifiers forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
 	[[infoInspector modifierMatchField] setStringValue:[NSString stringWithFormat:@"%lu", matchingSet]];
 }
 
@@ -690,6 +683,7 @@ const CGFloat kTextPaneHeight = 17.0f;
     }
     else if (scaleValue == 0) {
 			// This is "other"
+		NSAssert(chooseScale == nil, @"Already have a choose scale controller");
         chooseScale = [ChooseScale makeChooseScale];
         [chooseScale beginChooseScale:currentScale * kScalePercentageFactor
                             forWindow:self.window
@@ -739,6 +733,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSLog(@"Trying to enter state %@ when we are in that state", stateName);
 		return;
 	}
+	NSAssert([self.keyboardLayout hasStateWithName:stateName], @"Can only go to an existing state");
 	[stateStack addObject:stateName];
     internalState[kStateCurrentState] = stateName;
 	[self updateWindow];
@@ -777,6 +772,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	selectedKey = keyCode;
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:YES];
@@ -791,6 +787,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)clearSelectedKey {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
 	if (keyCap) {
 		[keyCap setSelected:NO];
@@ -808,7 +805,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)showEditingPaneForKeyCode:(int)keyCode text:(NSString *)initialText target:(id)target action:(SEL)action
 {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	KeyCapView *keyCap = [ukeleleView findKeyWithCode:keyCode];
+	NSAssert(keyCap, @"Must have a key cap");
 	NSRect editingPaneFrame = [keyCap frame];
 	NSTextField *editingPane = [[NSTextField alloc] initWithFrame:editingPaneFrame];
 	[ukeleleView addSubview:editingPane];
@@ -882,6 +881,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSString *dialogText = NSLocalizedStringFromTable(@"Choose the dead key state to enter.",
 													  @"dialogs", @"Choose dead key state to enter");
 	NSArray *menuItems = [self.keyboardLayout stateNamesExcept:internalState[kStateCurrentState]];
+	NSAssert(menuItems && [menuItems count] > 0, @"Must have some states to enter");
 	[askFromList beginAskFromListWithText:dialogText
 								 withMenu:menuItems
 								forWindow:self.window
@@ -918,8 +918,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (IBAction)unlinkKey:(id)sender
 {
 	if ([kTabNameModifiers isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
-			// We're on the modifiers tab, so invoke unlinking a set
-//		[self unlinkModifierSet:sender];
+			// We're on the modifiers tab, so do nothing at this point
 		return;
 	}
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
@@ -1009,7 +1008,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 								  kKeyModifiers: internalState[kStateCurrentModifiers]};
 		currentState = [self.keyboardLayout getNextState:keyData];
 	}
-	if ([currentState isEqualToString:kStateNameNone]) {
+	else if ([currentState isEqualToString:kStateNameNone]) {
 			// Not in a dead key state, and not a contextual menu
 		[self changeTerminatorSpecifyingState];
 		return;
@@ -1100,8 +1099,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)changeFont:(id)sender {
 		// The font has changed in the font panel, so update the window
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
 	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
+	NSAssert(largeAttributes, @"Must have large size attributes");
 	NSDictionary *smallAttributes = [ukeleleView smallAttributes];
+	NSAssert(smallAttributes, @"Must have small size attributes");
 	NSFont *oldLargeFont = largeAttributes[NSFontAttributeName];
 	NSFont *newLargeFont = [sender convertFont:oldLargeFont];
 	NSMutableDictionary *newLargeAttributes = [largeAttributes mutableCopy];
@@ -1194,6 +1196,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)makeOutput:(id)sender {
+	NSAssert([sender isKindOfClass:[KeyCapView class]], @"Must be coming from a key cap view");
 	NSInteger keyCode = [(KeyCapView *)sender keyCode];
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:self, kKeyDocument,
 									 internalState[kStateCurrentKeyboard], kKeyKeyboardID,
@@ -1210,11 +1213,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)makeDeadKey:(id)sender {
+	NSAssert([sender isKindOfClass:[KeyCapView class]], @"Must be coming from a key cap view");
 	selectedKey = [(KeyCapView *)sender keyCode];
 	[self createDeadKeyState:self];
 }
 
 - (IBAction)changeNextState:(id)sender {
+	NSAssert([sender isKindOfClass:[KeyCapView class]], @"Must be coming from a key cap view");
 	NSInteger keyCode = [(KeyCapView *)sender keyCode];
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:self, kKeyDocument,
 									 internalState[kStateCurrentKeyboard], kKeyKeyboardID,
@@ -1230,6 +1235,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)changeOutput:(id)sender {
+	NSAssert([sender isKindOfClass:[KeyCapView class]], @"Must be coming from a key cap view");
 	NSInteger keyCode = [(KeyCapView *)sender keyCode];
 	[self messageDoubleClick:(int)keyCode];
 }
@@ -1261,11 +1267,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 	// Install the keyboard layout
 
 - (IBAction)installForCurrentUser:(id)sender {
-	[[self parentDocument] installForCurrentUser:self];
+	[self.parentDocument installForCurrentUser:self];
 }
 
 - (IBAction)installForAllUsers:(id)sender {
-	[[self parentDocument] installForAllUsers:self];
+	[self.parentDocument installForAllUsers:self];
 }
 
 	// Look up a key stroke
@@ -1291,9 +1297,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// Work out the permutations of state and modifiers
 	NSUInteger currentKeyboard = [internalState[kStateCurrentKeyboard] unsignedIntegerValue];
 	NSUInteger modifierCombinations = [self.keyboardLayout modifierSetCountForKeyboard:currentKeyboard];
+	NSAssert(modifierCombinations >= 1, @"Must have at least one modifier combination");
 	printingInfo = [[UKKeyboardPrintInfo alloc] init];
 	[printingInfo setModifierCount:modifierCombinations];
-	NSUInteger stateCount = [self.keyboardLayout stateCount] + 1;
+	NSUInteger stateCount = [self.keyboardLayout stateCount] + 1;	// Include state "none" as well
 	[printingInfo setStateCount:stateCount];
 	NSMutableArray *modifierSets = [NSMutableArray arrayWithCapacity:modifierCombinations];
 	for (NSUInteger i = 0; i < modifierCombinations; i++) {
@@ -1301,7 +1308,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	[printingInfo setModifierList:modifierSets];
 	NSMutableArray *stateNames = [NSMutableArray arrayWithObject:kStateNameNone];
-	[stateNames addObjectsFromArray:[self.keyboardLayout stateNamesExcept:@""]];
+	[stateNames addObjectsFromArray:[self.keyboardLayout stateNamesExcept:kStateNameNone]];
 	[printingInfo setStateList:stateNames];
 	NSMutableDictionary *viewDict = [NSMutableDictionary dictionaryWithCapacity:stateCount];
 	[printingInfo setViewDict:viewDict];
@@ -1610,9 +1617,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)doUnlinkKey:(NSDictionary *)keyDataDict
 {
-	NSString *actionName = [_keyboardLayout actionNameForKey:keyDataDict];
+	NSString *actionName = [self.keyboardLayout actionNameForKey:keyDataDict];
 	[self.keyboardLayout unlinkKey:keyDataDict];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] doRelinkKey:keyDataDict originalAction:actionName];
 	[undoManager setActionName:@"Unlink key"];
 	[self updateWindow];
@@ -1622,14 +1630,17 @@ const CGFloat kTextPaneHeight = 17.0f;
 {
 	[self.keyboardLayout relinkKey:keyDataDict actionName:actionName];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] doUnlinkKey:keyDataDict];
 	[undoManager setActionName:@"Unlink key"];
 	[self updateWindow];
 }
 
 - (void)swapKeyWithCode:(NSInteger)keyCode1 andKeyWithCode:(NSInteger)keyCode2 {
+	NSAssert(keyCode1 != keyCode2, @"Must have distinct key codes");
 	[self.keyboardLayout swapKeyCode:keyCode1 withKeyCode:keyCode2];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] swapKeyWithCode:keyCode1 andKeyWithCode:keyCode2];
 	[undoManager setActionName:@"Swap keys"];
 	[self updateWindow];
@@ -1638,6 +1649,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)doCutKey:(NSInteger)keyCode {
 	[self.keyboardLayout cutKeyCode:keyCode];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] undoCutKey:keyCode];
 	[undoManager setActionName:@"Cut key"];
 	[self updateWindow];
@@ -1646,6 +1658,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)undoCutKey:(NSInteger)keyCode {
 	[self.keyboardLayout undoCutKeyCode:keyCode];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] doCutKey:keyCode];
 	[undoManager setActionName:@"Cut key"];
 	[self updateWindow];
@@ -1714,7 +1727,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)noteUndoAction:(NSNotification *)theNotification {
 		// We have at least one undoable action, so notify the document
-	[[self parentDocument] keyboardLayoutDidChange:self.keyboardLayout];
+	[self.parentDocument keyboardLayoutDidChange:self.keyboardLayout];
 }
 
 @end

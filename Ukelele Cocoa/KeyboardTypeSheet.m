@@ -11,10 +11,6 @@
 static NSString *nibName = @"KeyboardTypeSheet";
 static NSString *nibWindowName = @"Keyboard Type";
 
-@interface KeyboardTypeSheet ()
-
-@end
-
 @implementation KeyboardTypeSheet
 
 - (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner

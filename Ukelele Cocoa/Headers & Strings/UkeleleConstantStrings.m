@@ -104,3 +104,4 @@ NSString *UKInspectorWindowLocation = @"InspectorWindowLocation";
 
 	// File names
 NSString *UKKCAPListFile = @"KCAPResources";
+NSString *UKUntitledName = @"untitled";

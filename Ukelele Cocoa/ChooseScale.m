@@ -60,7 +60,7 @@ static const double kMaxValidValue = 500.0;
     // User clicked OK
     [[self window] orderOut:self];
     [NSApp endSheet:[self window]];
-	callBack(@(_value));
+	callBack(@(self.value));
 }
 
 - (IBAction)cancelScale:(id)sender
@@ -91,7 +91,7 @@ static const double kMaxValidValue = 500.0;
         [self setValue:newValue];
     }
     else {
-        [textField setStringValue:[NSString stringWithFormat:@"%.1f", _value]];
+        [textField setStringValue:[NSString stringWithFormat:@"%.1f", self.value]];
     }
 }
 

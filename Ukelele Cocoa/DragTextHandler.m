@@ -79,7 +79,7 @@
 
 - (void)interactionDidComplete:(id<UKInteractionHandler>)handler
 {
-    assert(handler == subsidiaryHandler);
+    NSAssert(handler == subsidiaryHandler, @"Wrong handler");
     subsidiaryHandler = nil;
 }
 

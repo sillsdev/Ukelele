@@ -8,10 +8,6 @@
 
 #import "ChooseStateController.h"
 
-@interface ChooseStateController ()
-
-@end
-
 @implementation ChooseStateController {
 	void (^completionBlock)(NSString *);
 }
@@ -46,8 +42,8 @@
 
 - (IBAction)acceptState:(id)sender {
 	[[self window] orderOut:self];
-	completionBlock([self.stateList stringValue]);
 	[NSApp endSheet:[self window]];
+	completionBlock([self.stateList stringValue]);
 }
 
 - (IBAction)cancelState:(id)sender {

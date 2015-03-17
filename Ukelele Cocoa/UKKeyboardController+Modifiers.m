@@ -20,8 +20,10 @@
 - (void)setupDefaultIndex:(UkeleleKeyboardObject *)keyboardObject
 {
 	NSMenu *indexMenu = [self.defaultIndexButton menu];
+	NSAssert(indexMenu, @"Index menu must exist");
 	[indexMenu removeAllItems];
 	NSArray *modifierIndices = [keyboardObject getModifierIndices];
+	NSAssert(modifierIndices && [modifierIndices count] > 0, @"Must have modifier indices");
 	for (NSNumber *theIndex in modifierIndices) {
 		[indexMenu addItemWithTitle:[NSString stringWithFormat:@"%@", theIndex] action:nil keyEquivalent:@""];
 	}
@@ -31,22 +33,22 @@
 
 - (void)setupDataSource
 {
-	[self.modifiersDataSource setKeyboard:[self keyboardLayout]];
+	[self.modifiersDataSource setKeyboard:self.keyboardLayout];
 	if ([self.modifiersTableView dataSource] != self.modifiersDataSource) {
 		[self.modifiersTableView setDataSource:self.modifiersDataSource];
 	}
 	else {
 		[self.modifiersTableView reloadData];
 	}
-	[self setupDefaultIndex:[self keyboardLayout]];
+	[self setupDefaultIndex:self.keyboardLayout];
 }
 
 - (void)updateModifiers
 {
 	[self.modifiersDataSource updateKeyboard];
 	[self.modifiersTableView reloadData];
-	[self setupDefaultIndex:[self keyboardLayout]];
-    [self.simplifyModifiersButton setEnabled:![[self keyboardLayout] hasSimplifiedModifiers]];
+	[self setupDefaultIndex:self.keyboardLayout];
+    [self.simplifyModifiersButton setEnabled:![self.keyboardLayout hasSimplifiedModifiers]];
 }
 
 #pragma mark User actions
@@ -67,7 +69,7 @@
 	[modifiersInfo setOptionValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelOption]];
 	[modifiersInfo setCommandValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelCommand]];
 	[modifiersInfo setControlValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelControl]];
-    if ([[self keyboardLayout] hasSimplifiedModifiers]) {
+    if ([self.keyboardLayout hasSimplifiedModifiers]) {
         modifiersSheet = [ModifiersSheet simplifiedModifiersSheet:modifiersInfo];
         [modifiersSheet beginSimplifiedModifiersSheetWithCallback:^(ModifiersInfo *newModifiersInfo) {
 			[self acceptEditModifiers:newModifiersInfo];
@@ -90,9 +92,9 @@
 - (IBAction)setDefaultIndex:(id)sender
 {
 	NSUInteger newIndex = [[[self.defaultIndexButton selectedItem] title] integerValue];
-	if (newIndex != [[self keyboardLayout] getDefaultModifierIndex]) {
+	if (newIndex != [self.keyboardLayout getDefaultModifierIndex]) {
 		[self.keyboardLayout setDefaultModifierIndex:newIndex];
-		[self.modifiersDataSource setKeyboard:[self keyboardLayout]];
+		[self.modifiersDataSource setKeyboard:self.keyboardLayout];
 		[self.modifiersTableView reloadData];
 	}
 }
@@ -142,11 +144,11 @@
 	NSAssert(selectedRow != -1, @"No selected row to delete");
 	NSInteger selectedIndex = [self.modifiersDataSource indexForRow:selectedRow];
 	NSInteger selectedSubindex = [self.modifiersDataSource subindexForRow:selectedRow];
-	if ([[self keyboardLayout] keyMapSelectHasOneModifierCombination:selectedIndex]) {
+	if ([self.keyboardLayout keyMapSelectHasOneModifierCombination:selectedIndex]) {
 			// Deleting a whole map
-		if (selectedIndex == [[self keyboardLayout] getDefaultModifierIndex]) {
+		if (selectedIndex == [self.keyboardLayout getDefaultModifierIndex]) {
 				// Deleting the map with default index
-			NSArray *modifierIndices = [[self keyboardLayout] getModifierIndices];
+			NSArray *modifierIndices = [self.keyboardLayout getModifierIndices];
 			NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:[modifierIndices count]];
 			for (NSNumber *modIndex in modifierIndices) {
 				if ([modIndex integerValue] != selectedIndex) {
@@ -174,9 +176,9 @@
 											 if (deleteIndex < defaultIndex) {
 												 defaultIndex--;
 											 }
-											 [[self keyboardLayout] setDefaultModifierIndex:defaultIndex];
+											 [self.keyboardLayout setDefaultModifierIndex:defaultIndex];
 												 // Delete the row
-											 [[self keyboardLayout] removeKeyMap:deleteIndex
+											 [self.keyboardLayout removeKeyMap:deleteIndex
 															   forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]
 														   newDefaultIndex:defaultIndex];
 											 [undoManager endUndoGrouping];
@@ -185,28 +187,28 @@
 		}
 		else {
 				// Delete the row
-			NSInteger newDefaultIndex = [[self keyboardLayout] getDefaultModifierIndex];
+			NSInteger newDefaultIndex = [self.keyboardLayout getDefaultModifierIndex];
 			if (newDefaultIndex > selectedIndex) {
 				newDefaultIndex--;
 			}
-			[[self keyboardLayout] removeKeyMap:selectedIndex
-							  forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]
-						  newDefaultIndex:newDefaultIndex];
+			[self.keyboardLayout removeKeyMap:selectedIndex
+								  forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]
+							  newDefaultIndex:newDefaultIndex];
 			[self updateModifiers];
 		}
 	}
 	else {
 			// Do the deletion
-		[[self keyboardLayout] removeModifierElement:[[KeyboardEnvironment instance] currentKeyboardID]
-										 index:selectedIndex
-									  subindex:selectedSubindex];
+		[self.keyboardLayout removeModifierElement:[[KeyboardEnvironment instance] currentKeyboardID]
+											 index:selectedIndex
+										  subindex:selectedSubindex];
         [self updateModifiers];
 	}
 }
 
 - (IBAction)simplifyModifiers:(id)sender
 {
-    [[self keyboardLayout] simplifyModifiers];
+    [self.keyboardLayout simplifyModifiers];
 }
 
 - (IBAction)unlinkModifierSet:(id)sender
@@ -220,8 +222,8 @@
 	NSAssert(selectedRow != -1, @"No selected row for unlinking");
 	NSInteger selectedIndex = [self.modifiersDataSource indexForRow:selectedRow];
 	NSInteger keyboardID = [internalState[kStateCurrentKeyboard] integerValue];
-	NSUInteger modifiers = [[self keyboardLayout] modifiersForIndex:selectedIndex forKeyboard:keyboardID];
-	[[self keyboardLayout] unlinkModifierSet:modifiers forKeyboard:keyboardID];
+	NSUInteger modifiers = [self.keyboardLayout modifiersForIndex:selectedIndex forKeyboard:keyboardID];
+	[self.keyboardLayout unlinkModifierSet:modifiers forKeyboard:keyboardID];
 }
 
 #pragma mark Callbacks
@@ -240,13 +242,13 @@
         [newModifiersInfo setKeyMapIndex:index];
 		NSInteger subindex = [self.modifiersDataSource subindexForRow:selectedRow];
         [newModifiersInfo setKeyMapSubindex:subindex];
-		[[self keyboardLayout] changeModifiersIndex:index
-									 subIndex:subindex
-										shift:[newModifiersInfo shiftValue]
-									   option:[newModifiersInfo optionValue]
-									 capsLock:[newModifiersInfo capsLockValue]
-									  command:[newModifiersInfo commandValue]
-									  control:[newModifiersInfo controlValue]];
+		[self.keyboardLayout changeModifiersIndex:index
+										 subIndex:subindex
+											shift:[newModifiersInfo shiftValue]
+										   option:[newModifiersInfo optionValue]
+										 capsLock:[newModifiersInfo capsLockValue]
+										  command:[newModifiersInfo commandValue]
+										  control:[newModifiersInfo controlValue]];
 	}
 	[self updateModifiers];
 }
@@ -387,9 +389,9 @@
 	if (deleteIndex < defaultIndex) {
 		defaultIndex--;
 	}
-	[[self keyboardLayout] setDefaultModifierIndex:defaultIndex];
+	[self.keyboardLayout setDefaultModifierIndex:defaultIndex];
 		// Delete the row
-	[[self keyboardLayout] removeKeyMap:deleteIndex
+	[self.keyboardLayout removeKeyMap:deleteIndex
 					  forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]
 				  newDefaultIndex:defaultIndex];
 	[undoManager endUndoGrouping];
@@ -401,8 +403,8 @@
 		// Delegate method to indicate that the modifier map has changed
     [self.modifiersDataSource updateKeyboard];
     [self.modifiersTableView reloadData];
-    [self setupDefaultIndex:[self keyboardLayout]];
-    [self.simplifyModifiersButton setEnabled:![[self keyboardLayout] hasSimplifiedModifiers]];
+    [self setupDefaultIndex:self.keyboardLayout];
+    [self.simplifyModifiersButton setEnabled:![self.keyboardLayout hasSimplifiedModifiers]];
     [self updateWindow];
 }
 
@@ -410,7 +412,7 @@
 
 - (void)setDefaultModifierIndex:(NSUInteger)defaultIndex
 {
-	[[self keyboardLayout] setDefaultModifierIndex:defaultIndex];
+	[self.keyboardLayout setDefaultModifierIndex:defaultIndex];
 	[self updateWindow];
     [self setupDataSource];
 }
@@ -423,13 +425,13 @@
 					 command:(NSInteger)newCommand
 					 control:(NSInteger)newControl
 {
-	[[self keyboardLayout] changeModifiersIndex:index
-								 subIndex:subindex
-									shift:newShift
-								   option:newOption
-								 capsLock:newCapsLock
-								  command:newCommand
-								  control:newControl];
+	[self.keyboardLayout changeModifiersIndex:index
+									 subIndex:subindex
+										shift:newShift
+									   option:newOption
+									 capsLock:newCapsLock
+									  command:newCommand
+									  control:newControl];
 	[self updateWindow];
 }
 
@@ -437,7 +439,7 @@
 						index:(NSInteger)index
 					 subindex:(NSInteger)subindex
 {
-	[[self keyboardLayout] removeModifierElement:keyboardID index:index subindex:subindex];
+	[self.keyboardLayout removeModifierElement:keyboardID index:index subindex:subindex];
 	[self updateWindow];
 }
 
@@ -450,20 +452,20 @@
 				   command:(NSInteger)newCommand
 				   control:(NSInteger)newControl
 {
-	[[self keyboardLayout] addModifierElement:keyboardID
-								  index:index
-							   subIndex:subindex
-								  shift:newShift
-							   capsLock:newCapsLock
-								 option:newOption
-								command:newCommand
-								control:newControl];
+	[self.keyboardLayout addModifierElement:keyboardID
+									  index:index
+								   subIndex:subindex
+									  shift:newShift
+								   capsLock:newCapsLock
+									 option:newOption
+									command:newCommand
+									control:newControl];
 	[self updateWindow];
 }
 
 - (void)removeKeyMap:(NSInteger)index forKeyboard:(NSInteger)keyboardID newDefaultIndex:(NSInteger)newDefaultIndex
 {
-	[[self keyboardLayout] removeKeyMap:index forKeyboard:keyboardID newDefaultIndex:newDefaultIndex];
+	[self.keyboardLayout removeKeyMap:index forKeyboard:keyboardID newDefaultIndex:newDefaultIndex];
 	[self updateWindow];
 }
 
@@ -473,11 +475,11 @@
 		 keyMapSelect:(void *)keyMapSelect
 	   keyMapElements:(void *)deletedKeyMapElements
 {
-	[[self keyboardLayout] replaceKeyMap:index
-					   forKeyboard:keyboardID
-					  defaultIndex:defaultIndex
-					  keyMapSelect:keyMapSelect
-					keyMapElements:deletedKeyMapElements];
+	[self.keyboardLayout replaceKeyMap:index
+						   forKeyboard:keyboardID
+						  defaultIndex:defaultIndex
+						  keyMapSelect:keyMapSelect
+						keyMapElements:deletedKeyMapElements];
 	[self updateWindow];
 }
 

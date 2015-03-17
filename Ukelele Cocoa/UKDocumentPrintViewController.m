@@ -23,9 +23,4 @@
 	return [[UKDocumentPrintViewController alloc] initWithNibName:@"UKDocumentPrintView" bundle:nil];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
-}
-
 @end

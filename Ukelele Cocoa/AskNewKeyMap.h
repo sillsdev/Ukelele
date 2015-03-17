@@ -28,10 +28,10 @@ enum {
 	void (^callBack)(NewKeyMapInfo *);
 }
 
-@property (weak, readonly) IBOutlet NSTextField *infoText;
-@property (weak, readonly) IBOutlet NSMatrix *keyMapType;
-@property (weak, readonly) IBOutlet NSPopUpButton *standardKeyMaps;
-@property (weak, readonly) IBOutlet NSPopUpButton *makeCopyKeyMaps;
+@property (strong) IBOutlet NSTextField *infoText;
+@property (strong) IBOutlet NSMatrix *keyMapType;
+@property (strong) IBOutlet NSPopUpButton *standardKeyMaps;
+@property (strong) IBOutlet NSPopUpButton *makeCopyKeyMaps;
 
 - (IBAction)selectKeyMapType:(id)sender;
 - (IBAction)acceptNewKeyMap:(id)sender;

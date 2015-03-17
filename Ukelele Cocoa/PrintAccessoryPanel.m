@@ -26,11 +26,11 @@
 }
 
 - (IBAction)toggleAllStates:(id)sender {
-	[_printView setAllStates:[allStates intValue]];
+	[self.printView setAllStates:[allStates intValue]];
 }
 
 - (IBAction)toggleAllModifiers:(id)sender {
-	[_printView setAllModifiers:[allModifiers intValue]];
+	[self.printView setAllModifiers:[allModifiers intValue]];
 }
 
 - (NSArray *)localizedSummaryItems {

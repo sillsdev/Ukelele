@@ -39,11 +39,10 @@
                         <tabViewItems>
                             <tabViewItem label="Document" identifier="1" id="nVP-hb-dbf">
                                 <view key="view" id="is6-CO-MN6">
-                                    <rect key="frame" x="10" y="33" width="316" height="281"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" title="Keyboard Identity" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-8D-fob">
-                                            <rect key="frame" x="6" y="2" width="297" height="276"/>
+                                            <rect key="frame" x="6" y="-279" width="297" height="276"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="295" height="260"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,6 +320,9 @@
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="9jK-MT-svl"/>
+                        </connections>
                     </tabView>
                 </subviews>
             </view>

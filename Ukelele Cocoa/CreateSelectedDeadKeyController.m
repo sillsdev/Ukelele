@@ -37,13 +37,6 @@
 	return [[CreateSelectedDeadKeyController alloc] initWithWindowNibName:@"CreateSelectedDeadKeySheet"];
 }
 
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
 - (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode completionBlock:(void (^)(NSDictionary *))callback {
 	self.stateNames = [keyboardObject stateNamesExcept:kStateNameNone];
 	completionBlock = callback;

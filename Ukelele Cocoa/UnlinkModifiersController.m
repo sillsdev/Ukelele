@@ -53,47 +53,47 @@ static NSString *nibWindowName = @"UnlinkModifiers";
 
 - (void)setUsesSimplifiedModifiers:(BOOL)useSimplified {
 	if (useSimplified) {
-		[_leftShift setTitle:@"Shift"];
-		[_rightShift setHidden:YES];
-		[_leftOption setTitle:@"Option"];
-		[_rightOption setHidden:YES];
-		[_leftControl setTitle:@"Control"];
-		[_rightControl setHidden:YES];
+		[self.leftShift setTitle:@"Shift"];
+		[self.rightShift setHidden:YES];
+		[self.leftOption setTitle:@"Option"];
+		[self.rightOption setHidden:YES];
+		[self.leftControl setTitle:@"Control"];
+		[self.rightControl setHidden:YES];
 	}
 	else {
-		[_leftShift setTitle:@"Left Shift"];
-		[_rightShift setHidden:NO];
-		[_leftOption setTitle:@"Left Option"];
-		[_rightOption setHidden:NO];
-		[_leftControl setTitle:@"Left Control"];
-		[_rightControl setHidden:NO];
+		[self.leftShift setTitle:@"Left Shift"];
+		[self.rightShift setHidden:NO];
+		[self.leftOption setTitle:@"Left Option"];
+		[self.rightOption setHidden:NO];
+		[self.leftControl setTitle:@"Left Control"];
+		[self.rightControl setHidden:NO];
 	}
 }
 
 - (IBAction)acceptModifiers:(id)sender {
 	NSInteger result = 0;
-	if ([_leftShift integerValue] == NSOnState) {
+	if ([self.leftShift integerValue] == NSOnState) {
 		result |= UKShiftKey;
 	}
-	if ([_rightShift integerValue] == NSOnState) {
+	if ([self.rightShift integerValue] == NSOnState) {
 		result |= UKRightShiftKey;
 	}
-	if ([_leftOption integerValue] == NSOnState) {
+	if ([self.leftOption integerValue] == NSOnState) {
 		result |= UKOptionKey;
 	}
-	if ([_rightOption integerValue] == NSOnState) {
+	if ([self.rightOption integerValue] == NSOnState) {
 		result |= UKRightOptionKey;
 	}
-	if ([_leftControl integerValue] == NSOnState) {
+	if ([self.leftControl integerValue] == NSOnState) {
 		result |= UKControlKey;
 	}
-	if ([_rightControl integerValue] == NSOnState) {
+	if ([self.rightControl integerValue] == NSOnState) {
 		result |= UKRightControlKey;
 	}
-	if ([_capsLock integerValue] == NSOnState) {
+	if ([self.capsLock integerValue] == NSOnState) {
 		result |= UKAlphaLock;
 	}
-	if ([_command integerValue] == NSOnState) {
+	if ([self.command integerValue] == NSOnState) {
 		result |= UKCmdKey;
 	}
 	[[self window] orderOut:self];

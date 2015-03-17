@@ -19,7 +19,7 @@
 
 - (IBAction)removeUnusedStates:(id)sender
 {
-	RemoveStateData *removeStateData = [[self keyboardLayout] removeUnusedStates];
+	RemoveStateData *removeStateData = [self.keyboardLayout removeUnusedStates];
 	if (nil == removeStateData) {
 			// No states removed
 		NSAlert *alert = [[NSAlert alloc] init];
@@ -37,7 +37,7 @@
 
 - (IBAction)removeUnusedActions:(id)sender
 {
-	ActionElementSetWrapper *removedActions = [[self keyboardLayout] removeUnusedActions];
+	ActionElementSetWrapper *removedActions = [self.keyboardLayout removeUnusedActions];
 	if (nil == removedActions) {
 		NSAlert *alert = [[NSAlert alloc] init];
 		[alert setMessageText:@"No actions removed"];
@@ -45,7 +45,6 @@
 		[alert addButtonWithTitle:@"OK"];
 		[alert setAlertStyle:NSInformationalAlertStyle];
 		[alert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
-		return;
 		return;
 	}
 	NSUndoManager *undoManager = [self undoManager];
@@ -55,7 +54,8 @@
 
 - (IBAction)changeStateName:(id)sender
 {
-	NSArray *stateNames = [[self keyboardLayout] stateNamesExcept:@"none"];
+	NSArray *stateNames = [self.keyboardLayout stateNamesExcept:kStateNameNone];
+	NSAssert(stateNames && [stateNames count] > 0, @"Must have some states");
 	NSString *infoText = @"Choose the state name to replace";
 	if (nil == replaceNameSheet) {
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
@@ -64,14 +64,15 @@
 										  forWindow:self.window
 										  withNames:stateNames
 									 verifyCallBack:^BOOL(NSString *stateName) {
-										 if ([stateName isEqualToString:@"none"] || [[self keyboardLayout] hasStateWithName:stateName]) {
+										 if ([stateName isEqualToString:kStateNameNone] ||
+											 [self.keyboardLayout hasStateWithName:stateName]) {
 												 // Can't have "none" or an existing state name
 											 return NO;
 										 }
 										 return YES;
 									 }
 									 acceptCallBack:^(NSString *oldName, NSString *newName) {
-										 [[self keyboardLayout] changeStateName:oldName toName:newName];
+										 [self.keyboardLayout changeStateName:oldName toName:newName];
 										 NSUndoManager *undoManager = [self undoManager];
 										 [[undoManager prepareWithInvocationTarget:self] replaceStateName:newName withName:oldName];
 										 [undoManager setActionName:@"Replace state name"];
@@ -80,7 +81,8 @@
 
 - (IBAction)changeActionName:(id)sender
 {
-	NSArray *actionNames = [[self keyboardLayout] actionNames];
+	NSArray *actionNames = [self.keyboardLayout actionNames];
+	NSAssert(actionNames && [actionNames count] > 0, @"Must have some actions");
 	NSString *infoText = @"Choose the action name to replace";
 	if (nil == replaceNameSheet) {
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
@@ -89,7 +91,7 @@
 										  forWindow:self.window
 										  withNames:actionNames
 									 verifyCallBack:^BOOL(NSString *actionName) {
-										 if ([[self keyboardLayout] hasActionWithName:actionName]) {
+										 if ([self.keyboardLayout hasActionWithName:actionName]) {
 											 return NO;
 										 }
 										 return YES;
@@ -104,23 +106,24 @@
 
 - (IBAction)addSpecialKeyOutput:(id)sender
 {
-	AddMissingOutputData *addMissingOutputData = [[self keyboardLayout] addSpecialKeyOutput];
+	AddMissingOutputData *addMissingOutputData = [self.keyboardLayout addSpecialKeyOutput];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] undoAddSpecialKeyOutput:addMissingOutputData];
 	[undoManager setActionName:@"Add special key output"];
 }
 
 - (IBAction)askKeyboardIdentifiers:(id)sender
 {
-	NSInteger keyboardScript = [[self keyboardLayout] keyboardGroup];
+	NSInteger keyboardScript = [self.keyboardLayout keyboardGroup];
 	NSUInteger scriptIndex = [ScriptInfo indexForScript:keyboardScript];
 	if (nil == keyboardIDSheet) {
 		keyboardIDSheet = [ChooseKeyboardIDWindowController chooseKeyboardID];
 	}
 	NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
 	infoDictionary[kKeyboardIDWindowScript] = @(scriptIndex);
-	infoDictionary[kKeyboardIDWindowName] = [[self keyboardLayout] keyboardName];
-	infoDictionary[kKeyboardIDWindowID] = @([[self keyboardLayout] keyboardID]);
+	infoDictionary[kKeyboardIDWindowName] = [self.keyboardLayout keyboardName];
+	infoDictionary[kKeyboardIDWindowID] = @([self.keyboardLayout keyboardID]);
 	NSWindow *targetWindow;
 	if ([sender isKindOfClass:[NSWindow class]]) {
 		targetWindow = sender;
@@ -135,7 +138,7 @@
 											// User cancelled
 										return;
 									}
-									NSString *existingName = [[self keyboardLayout] keyboardName];
+									NSString *existingName = [self.keyboardLayout keyboardName];
 									NSString *newName = infoDictionary[kKeyboardIDWindowName];
 									if (![existingName isEqualToString:newName]) {
 											// New keyboard layout name
@@ -145,13 +148,13 @@
 									NSArray *scriptArray = [ScriptInfo standardScripts];
 									ScriptInfo *selectedInfo = scriptArray[scriptIndex];
 									NSInteger scriptID = [selectedInfo scriptID];
-									NSInteger existingScript = [[self keyboardLayout] keyboardGroup];
+									NSInteger existingScript = [self.keyboardLayout keyboardGroup];
 									if (scriptID != existingScript) {
 											// New script code
 										[self changeKeyboardScript:scriptID];
 									}
 									NSInteger keyboardID = [infoDictionary[kKeyboardIDWindowID] integerValue];
-									NSInteger oldID = [[self keyboardLayout] keyboardID];
+									NSInteger oldID = [self.keyboardLayout keyboardID];
 									if (keyboardID != oldID) {
 											// New keyboard ID
 										[self changeKeyboardID:keyboardID];
@@ -175,32 +178,36 @@
 
 - (void)undoRemoveUnusedStates:(RemoveStateData *)removeStateData
 {
-	[[self keyboardLayout] undoRemoveUnusedStates:removeStateData];
+	[self.keyboardLayout undoRemoveUnusedStates:removeStateData];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] removeUnusedStates:self];
 	[undoManager setActionName:@"Remove unused states"];
 }
 
 - (void)undoRemoveUnusedActions:(ActionElementSetWrapper *)removedActions
 {
-	[[self keyboardLayout] undoRemoveUnusedActions:removedActions];
+	[self.keyboardLayout undoRemoveUnusedActions:removedActions];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] removeUnusedActions:self];
 	[undoManager setActionName:@"Remove unused actions"];
 }
 
 - (void)replaceStateName:(NSString *)oldName withName:(NSString *)newName
 {
-	[[self keyboardLayout] changeStateName:oldName toName:newName];
+	[self.keyboardLayout changeStateName:oldName toName:newName];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] replaceStateName:newName withName:oldName];
 	[undoManager setActionName:@"Replace state name"];
 }
 
 - (void)replaceActionName:(NSString *)oldName withName:(NSString *)newName
 {
-	[[self keyboardLayout] changeActionName:oldName toName:newName];
+	[self.keyboardLayout changeActionName:oldName toName:newName];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] replaceActionName:newName withName:oldName];
 	[undoManager setActionName:@"Replace action name"];
 }
@@ -208,104 +215,43 @@
 - (void)undoAddSpecialKeyOutput:(AddMissingOutputData *)addOutputData
 {
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] addSpecialKeyOutput:self];
 	[undoManager setActionName:@"Add special key output"];
 }
 
 - (void)changeKeyboardID:(NSInteger)newID
 {
-	NSInteger oldID = [[self keyboardLayout] keyboardID];
+	NSInteger oldID = [self.keyboardLayout keyboardID];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] setKeyboardID:oldID];
 	[undoManager setActionName:@"Set keyboard ID"];
-	[[self keyboardLayout] setKeyboardID:newID];
+	[self.keyboardLayout setKeyboardID:newID];
 }
 
 - (void)changeKeyboardScript:(NSInteger)newScriptCode
 {
 	NSInteger newID = [ScriptInfo randomIDforScript:newScriptCode];
 	[self setKeyboardID:newID];
-	NSInteger oldScriptCode = [[self keyboardLayout] keyboardGroup];
+	NSInteger oldScriptCode = [self.keyboardLayout keyboardGroup];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] setKeyboardScript:oldScriptCode];
 	[undoManager setActionName:@"Set keyboard script"];
-	[[self keyboardLayout] setKeyboardGroup:newScriptCode];
+	[self.keyboardLayout setKeyboardGroup:newScriptCode];
 }
 
 - (void)changeKeyboardName:(NSString *)newName
 {
-	NSString *oldName = [[self keyboardLayout] keyboardName];
+	NSString *oldName = [self.keyboardLayout keyboardName];
 	NSUndoManager *undoManager = [self undoManager];
+	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] changeKeyboardName:oldName];
 	[undoManager setActionName:@"Set keyboard name"];
-	[[self keyboardLayout] setKeyboardName:newName];
-	[[self parentDocument] notifyNewName:newName forDocument:self];
+	[self.keyboardLayout setKeyboardName:newName];
+	[self.parentDocument notifyNewName:newName forDocument:self];
 	[self.window setTitle:newName];
-}
-
-#pragma mark Callbacks
-
-- (BOOL)verifyStateName:(NSString *)stateName
-{
-	if ([[self keyboardLayout] hasStateWithName:stateName]) {
-			// Can't have "none" or an existing state name
-		return NO;
-	}
-	return YES;
-}
-
-- (void)acceptReplaceState:(NSString *)oldStateName withName:(NSString *)newStateName
-{
-	if (nil == oldStateName) {
-		return;
-	}
-	[self replaceStateName:oldStateName withName:newStateName];
-}
-
-- (BOOL)verifyActionName:(NSString *)actionName
-{
-	if ([[self keyboardLayout] hasActionWithName:actionName]) {
-		return NO;
-	}
-	return YES;
-}
-
-- (void)acceptReplaceAction:(NSString *)oldActionName withName:(NSString *)newActionName
-{
-	if (nil == oldActionName) {
-		return;
-	}
-	[self replaceActionName:oldActionName withName:newActionName];
-}
-
-- (void)handleSetKeyboardID:(NSDictionary *)infoDictionary
-{
-	if (infoDictionary == nil) {
-			// User cancelled
-		return;
-	}
-	NSString *existingName = [[self keyboardLayout] keyboardName];
-	NSString *newName = infoDictionary[kKeyboardIDWindowName];
-	if (![existingName isEqualToString:newName]) {
-			// New keyboard layout name
-		[self changeKeyboardName:newName];
-	}
-	NSInteger scriptIndex = [infoDictionary[kKeyboardIDWindowScript] integerValue];
-	NSArray *scriptArray = [ScriptInfo standardScripts];
-	ScriptInfo *selectedInfo = scriptArray[scriptIndex];
-	NSInteger scriptID = [selectedInfo scriptID];
-	NSInteger existingScript = [[self keyboardLayout] keyboardGroup];
-	if (scriptID != existingScript) {
-			// New script code
-		[self changeKeyboardScript:scriptID];
-	}
-	NSInteger keyboardID = [infoDictionary[kKeyboardIDWindowID] integerValue];
-	NSInteger oldID = [[self keyboardLayout] keyboardID];
-	if (keyboardID != oldID) {
-			// New keyboard ID
-		[self changeKeyboardID:keyboardID];
-	}
-		// Check the bundle parameters
 }
 
 #pragma mark Parameter checking
@@ -314,7 +260,7 @@
 	static NSSet *reservedNames = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		reservedNames = [NSSet setWithObjects:@"none", @"0", nil];
+		reservedNames = [NSSet setWithObjects:kStateNameNone, @"0", nil];
 	});
 	return ![reservedNames containsObject:stateName];
 }

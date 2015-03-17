@@ -305,35 +305,6 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 
 #pragma mark Callbacks
 
-- (void)acceptCreateDeadKey:(NSDictionary *)createDeadKeyData
-{
-	if (!createDeadKeyData) {
-			// User cancelled
-		[self interactionCompleted];
-		return;
-	}
-	deadKeyData = [createDeadKeyData mutableCopy];
-	[self checkDeadKeyParameters];
-}
-
-- (void)acceptAskReplaceDeadKey:(NSString *)replaceData
-{
-	if (replaceData == nil) {
-			// User cancelled
-		[self interactionCompleted];
-		return;
-	}
-	if ([kAskReplaceDeadKeyAccept isEqualToString:replaceData]) {
-			// We accept the replacement of the dead key
-		deadKeyData[kDeadKeyDataReplaceDeadKeyOK] = @YES;
-		[self checkDeadKeyParameters];
-	}
-	else if ([kAskReplaceDeadKeyReject isEqualToString:replaceData]) {
-			// We reject the replacement, so we need to ask for a new state
-		deadKeyData[kDeadKeyDataKeyCode] = @(kNoKeyCode);
-	}
-}
-
 - (void)acceptReplacementState:(NSDictionary *)replaceData
 {
 	if (replaceData == nil) {
@@ -353,36 +324,6 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	[self checkDeadKeyParameters];
 }
 
-- (void)acceptConfirmStateName:(NSDictionary *)confirmData
-{
-	if (confirmData == nil) {
-			// User cancelled
-		[self interactionCompleted];
-		return;
-	}
-	NSString *confirmType = confirmData[kConfirmStateType];
-	if ([confirmType isEqualToString:kConfirmStateExisting]) {
-			// User confirms we are to use the state name given
-		deadKeyData[kDeadKeyDataStateType] = @(kDeadKeyTypeExisting);
-	}
-	else {
-			// User has given a new state name
-		deadKeyData[kDeadKeyDataStateName] = confirmData[kConfirmStateName];
-	}
-	[self checkDeadKeyParameters];
-}
-
-//- (void)acceptStateName:(NSString *)stateName
-//{
-//	if (stateName == nil) {
-//			// User cancelled
-//		[self interactionCompleted];
-//		return;
-//	}
-//	[deadKeyData setObject:stateName forKey:kDeadKeyDataStateName];
-//	[self checkDeadKeyParameters];
-//}
-//
 - (void)interactionCompleted
 {
     [completionTarget interactionDidComplete:self];

@@ -8,16 +8,7 @@
 
 #import "UkeleleBundleVersionSheet.h"
 
-@interface UkeleleBundleVersionSheet ()
-
-@end
-
 @implementation UkeleleBundleVersionSheet
-
-@synthesize bundleNameField;
-@synthesize bundleVersionField;
-@synthesize buildVersionField;
-@synthesize sourceVersionField;
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
@@ -48,10 +39,10 @@
 				   sourceVersion:(NSString *)theSourceVersion
 					   forWindow:(NSWindow *)theWindow
 						callBack:(void (^)(UkeleleBundleVersionSheet *))theCallBack {
-	[bundleNameField setStringValue:theBundleName];
-	[bundleVersionField setStringValue:theBundleVersion];
-	[buildVersionField setStringValue:theBuildVersion];
-	[sourceVersionField setStringValue:theSourceVersion];
+	[self.bundleNameField setStringValue:theBundleName];
+	[self.bundleVersionField setStringValue:theBundleVersion];
+	[self.buildVersionField setStringValue:theBuildVersion];
+	[self.sourceVersionField setStringValue:theSourceVersion];
 	callBack = theCallBack;
 	[NSApp beginSheet:[self window] modalForWindow:theWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
