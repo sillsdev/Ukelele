@@ -19,6 +19,10 @@
 
 - (void)setupDefaultIndex:(UkeleleKeyboardObject *)keyboardObject
 {
+	if (self.defaultIndexButton == nil) {
+			// The window hasn't been set up yet
+		return;
+	}
 	NSMenu *indexMenu = [self.defaultIndexButton menu];
 	NSAssert(indexMenu, @"Index menu must exist");
 	[indexMenu removeAllItems];
@@ -33,6 +37,10 @@
 
 - (void)setupDataSource
 {
+	if (self.modifiersDataSource == nil) {
+			// Window hasn't been set up yet
+		return;
+	}
 	[self.modifiersDataSource setKeyboard:self.keyboardLayout];
 	if ([self.modifiersTableView dataSource] != self.modifiersDataSource) {
 		[self.modifiersTableView setDataSource:self.modifiersDataSource];
