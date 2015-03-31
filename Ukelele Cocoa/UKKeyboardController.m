@@ -207,6 +207,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[self setupDataSource];
 }
 
+- (NSUndoManager *)undoManager {
+	if (_undoManager == nil) {
+		_undoManager = [[NSUndoManager alloc] init];
+	}
+	return _undoManager;
+}
+
 #pragma mark Window sizing
 
 - (NSSize)getIdealContentSize
