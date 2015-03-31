@@ -293,12 +293,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
 		}
 		else {
+				// Create a file wrapper
 			NSString *keyboardFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringKeyboardLayoutExtension];
 			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
+			[newFileWrapper setPreferredFilename:keyboardFileName];
 			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
-			[resourcesDirectory addRegularFileWithContents:fileData preferredFilename:keyboardFileName];
-			[keyboardEntry setFileName:keyboardName];
+				// The actual name shouldn't change, but we should cover all bases
+			NSString *actualFileName = [resourcesDirectory addFileWrapper:newFileWrapper];
+			NSString *baseName = [actualFileName stringByDeletingPathExtension];
+			[keyboardEntry setFileName:baseName];
 		}
 		if ([keyboardEntry hasIcon]) {
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
@@ -307,10 +311,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 		// Create the Info.plist file
 	NSDictionary *infoPlist = [self createInfoPlist];
-	NSFileWrapper *infoPlistFile = [[NSFileWrapper alloc] initRegularFileWithContents:
-									[NSPropertyListSerialization dataFromPropertyList:infoPlist
-																			   format:NSPropertyListXMLFormat_v1_0
-																	 errorDescription:&error]];
+	NSFileWrapper *infoPlistFile =
+		[[NSFileWrapper alloc] initRegularFileWithContents:
+		 [NSPropertyListSerialization dataFromPropertyList:infoPlist
+													format:NSPropertyListXMLFormat_v1_0
+										  errorDescription:&error]];
 	[infoPlistFile setPreferredFilename:kStringInfoPlistFileName];
 		// Create the Contents directory
 	NSFileWrapper *contentsDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
