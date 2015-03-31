@@ -114,6 +114,7 @@ static NSDictionary *defaultValues() {
 - (IBAction)toggleToolbox:(id)sender {
 	ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 	NSWindow *toolboxWindow = [toolboxController window];
+	NSAssert(toolboxWindow, @"Window should not be nil");
 	if ([toolboxWindow isVisible]) {
 		[toolboxWindow close];
 	}
@@ -124,12 +125,14 @@ static NSDictionary *defaultValues() {
 
 - (IBAction)toggleStickyModifiers:(id)sender {
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	NSAssert(toolboxData, @"Toolbox data cannot be nil");
 	[toolboxData setStickyModifiers:![toolboxData stickyModifiers]];
 }
 
 - (IBAction)showHideInspector:(id)sender
 {
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+	NSAssert(infoInspector, @"Info Inspector must not be nil");
 	if ([[infoInspector window] isVisible]) {
 		[[infoInspector window] orderOut:sender];
 	}
@@ -176,12 +179,14 @@ static NSDictionary *defaultValues() {
 	SEL action = [menuItem action];
 	if (action == @selector(toggleStickyModifiers:)) {
 		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+		NSAssert(toolboxData, @"Toolbox data must not be nil");
 		[menuItem setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
 		return YES;
 	}
 	else if (action == @selector(toggleToolbox:)) {
 		ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 		NSWindow *toolboxWindow = [toolboxController window];
+		NSAssert(toolboxWindow, @"Toolbox window must not be nil");
 		if ([toolboxWindow isVisible]) {
 			[menuItem setTitle:@"Hide Toolbox"];
 		}
@@ -192,6 +197,7 @@ static NSDictionary *defaultValues() {
 	}
 	else if (action == @selector(showHideInspector:)) {
 		InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+		NSAssert(infoInspector && [infoInspector window], @"Info inspector must not be nil");
 		if ([[infoInspector window] isVisible]) {
 			[menuItem setTitle:@"Hide Inspector"];
 		}

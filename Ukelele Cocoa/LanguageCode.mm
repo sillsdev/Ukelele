@@ -25,6 +25,10 @@
 
 + (LanguageCode *)languageCodeFromString:(NSString *)languageString {
 	static NString stringRegex = "([a-zA-Z]{2,3})[-_]?([a-zA-Z]{4})?[-_]?([a-zA-Z]{2}|[0-9]{3})?[-_]?([a-zA-Z]{5-8}|[0-9a-zA-Z]{4})?";
+	if (languageString == nil) {
+			// Null string
+		return nil;
+	}
 	NString searchString = ToNN(languageString);
 	NRangeList rangeList = searchString.FindAll(stringRegex, kNStringPattern);
 	NString languageCode = "";

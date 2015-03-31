@@ -41,7 +41,8 @@
 }
 
 + (void)setup {
-	[UnicodeTable getInstance];
+	UnicodeTable *theTable = [UnicodeTable getInstance];
+	NSAssert(theTable, @"Must get the Unicode table");
 }
 
 - (NSString *)descriptionForCodePoint:(NSInteger)codePoint {

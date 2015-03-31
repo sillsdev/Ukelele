@@ -24,6 +24,7 @@
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
+#define UKKeyboardConverterTool	@"kluchrtoxml"
 
 	// Dictionary keys
 NSString *kIconFileKey = @"IconFile";
@@ -81,10 +82,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
 		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
 	}
 	else {
 		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayoutBundle" owner:self];
+		NSAssert(windowController, @"Must be able to create a window controller");
 		[self addWindowController:windowController];
 	}
 }
@@ -122,7 +125,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	return NO;
 }
 
-- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing *)outError		{
+- (BOOL)writeToURL:(NSURL *)url
+			ofType:(NSString *)typeName
+  forSaveOperation:(NSSaveOperationType)saveOperation
+originalContentsURL:(NSURL *)absoluteOriginalContentsURL
+			 error:(NSError *__autoreleasing *)outError {
 	if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
 			// This is an unbundled keyboard layout document
 		return [self saveKeyboardLayoutToURL:url error:outError];
@@ -131,6 +138,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			// A bundle
 		if (absoluteOriginalContentsURL != nil) {
 				// Try to save only what has changed
+				// NOT IMPLEMENTED!
 		}
 		NSFileWrapper *keyboardWrapper = [self createFileWrapper];
 		return [keyboardWrapper writeToURL:url options:0 originalContentsURL:nil error:outError];
@@ -151,17 +159,22 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 - (UkeleleKeyboardObject *)keyboardFromCurrentInputSourceWithError:(NSError **)outError {
 		// Create a temporary file
-	NSString *tempFilePath = [NSString stringWithFormat:@"%@UkeleleDataXXXXX.rsrc", NSTemporaryDirectory()];
-	char tempFileTemplate[2049];
-	[tempFilePath getCString:tempFileTemplate maxLength:2048 encoding:NSUTF8StringEncoding];
+	NSString *tempDirectory = NSTemporaryDirectory();
+	NSString *tempFilePath = [NSString stringWithFormat:@"%@UkeleleDataXXXXX.rsrc", tempDirectory];
+	NSUInteger pathLength = [tempFilePath length];
+	char *tempFileTemplate = malloc(pathLength * 3 + 1);
+	[tempFilePath getCString:tempFileTemplate maxLength:pathLength * 3 encoding:NSUTF8StringEncoding];
 	int tempFileDescriptor = mkstemps(tempFileTemplate, 5);
 	if (tempFileDescriptor == -1) {
 			// Could not create temporary file
 		return nil;
 	}
 	tempFilePath = @(tempFileTemplate);
-	NSFileHandle *tempFileHandle = [[NSFileHandle alloc] initWithFileDescriptor:tempFileDescriptor closeOnDealloc:YES];
+	free(tempFileTemplate);
 	NSURL *tempFileURL = [NSURL fileURLWithPath:tempFilePath];
+		// We don't need the temporary file any more, since we're going to create a resource fork
+	int result = close(tempFileDescriptor);
+	NSAssert(result == 0, @"Should be able to close the file");
 		// Capture the current keyboard layout as uchr data
 	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
 	CFDataRef uchrData = TISGetInputSourceProperty(currentInputSource, kTISPropertyUnicodeKeyLayoutData);
@@ -173,7 +186,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	CFStringRef keyboardName = TISGetInputSourceProperty(currentInputSource, kTISPropertyLocalizedName);
 		// We now have to muck around in old code to create a resource file
 	Str255 resourceName;
-	CFStringGetPascalString(keyboardName, resourceName, 256, kCFStringEncodingMacRoman);
+	CFStringGetPascalString(keyboardName, resourceName, 256, kCFStringEncodingUTF8);
 	CFURLRef parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, (CFURLRef)tempFileURL);
 	FSRef parentRef;
 	Boolean gotFSRef = CFURLGetFSRef(parentURL, &parentRef);
@@ -186,7 +199,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	HFSUniStr255 forkName;
 	OSStatus theErr = FSGetResourceForkName(&forkName);
 	NSAssert(theErr == noErr, @"Could not get resource fork");
-	UniChar tempFileBuffer[1024];
+	NSAssert(CFStringGetLength(tempFileName) < 2048, @"File name is more than 2048 characters");
+	UniChar tempFileBuffer[2048];
 	CFStringGetCharacters(tempFileName, CFRangeMake(0, CFStringGetLength(tempFileName)), tempFileBuffer);
 	theErr = FSCreateResourceFile(&parentRef, CFStringGetLength(tempFileName), tempFileBuffer, kFSCatInfoNone, NULL, forkName.length, forkName.unicode, &tempFileRef, NULL);
 	NSAssert(theErr == noErr, @"Could not create resource file");
@@ -195,11 +209,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSAssert(theErr == noErr, @"Could not open resource file");
 	Handle theHandle = NewHandle(CFDataGetLength(uchrData));
 	memcpy(*theHandle, CFDataGetBytePtr(uchrData), CFDataGetLength(uchrData));
-	AddResource(theHandle, 'uchr', UniqueID('uchr'), resourceName);
+	AddResource(theHandle, kResType_uchr, UniqueID(kResType_uchr), resourceName);
 	UpdateResFile(CurResFile());
 	FSCloseFork(resFile);
 		// Get the conversion tool
-	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:@"kluchrtoxml"];
+	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKKeyboardConverterTool];
 		// Set up and run the tool
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *currentDirectory = [fileManager currentDirectoryPath];
@@ -210,14 +224,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 	CFRelease(tempFileName);
 	CFRelease(parentURL);
-	tempFileHandle = nil;
 	[fileManager changeCurrentDirectoryPath:currentDirectory];
 		// Finally, read the resulting file
-	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.keylayout", NSTemporaryDirectory(), keyboardName]];
-	NSError *theError;
+	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.keylayout", tempDirectory, keyboardName]];
+	NSError *theError = nil;
 	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
 	if (myData == nil || [myData length] == 0) {
-		if (*outError != nil) {
+		if (outError != nil) {
 			*outError = theError;
 		}
 		return nil;
@@ -257,10 +270,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	versionPlistDictionary[kStringSourceVersionKey] = self.sourceVersion;
 	versionPlistDictionary[kStringProjectNameKey] = self.bundleName;
 	NSString *error;
-	NSFileWrapper *versionPlistFile = [[NSFileWrapper alloc] initRegularFileWithContents:
-									   [NSPropertyListSerialization dataFromPropertyList:versionPlistDictionary
-																				  format:NSPropertyListXMLFormat_v1_0
-																		errorDescription:&error]];
+	NSFileWrapper *versionPlistFile =
+		[[NSFileWrapper alloc] initRegularFileWithContents:
+		 [NSPropertyListSerialization dataFromPropertyList:versionPlistDictionary
+													format:NSPropertyListXMLFormat_v1_0
+										  errorDescription:&error]];
 	[versionPlistFile setPreferredFilename:kStringVersionPlistFileName];
 		// Create the Resources directory
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
@@ -284,6 +298,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
 			[resourcesDirectory addRegularFileWithContents:fileData preferredFilename:keyboardFileName];
+			[keyboardEntry setFileName:keyboardName];
 		}
 		if ([keyboardEntry hasIcon]) {
 			NSString *iconFileName = [NSString stringWithFormat:@"%@.%@", keyboardName, kStringIcnsExtension];
@@ -331,7 +346,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		if (nil != languageIdentifier) {
 				// Add this language identifier
 			NSString *keyboardName = [keyboardEntry keyboardName];
-			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, [keyboardEntry fileName]];
+			NSString *fileName = [keyboardEntry fileName];
+			if (fileName == nil) {
+				fileName = keyboardName;
+			}
+			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, fileName];
 			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[keyboardName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
 			NSDictionary *languageDictionary = @{kStringInfoPlistInputSourceID: keyboardIdentifier,
 												 kStringInfoPlistIntendedLanguageKey: languageIdentifier};
@@ -364,6 +383,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if (theKeyboard != nil) {
 		self.keyboardLayout = theKeyboard;
 		UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+		NSAssert(windowController, @"Must get a valid window controller");
 		[windowController setKeyboardLayout:theKeyboard];
 		[windowController setParentDocument:self];
 		[self addWindowController:windowController];
@@ -386,7 +406,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	NSDictionary *directoryContents = [theFileWrapper fileWrappers];
 		// Search for the Contents directory
 	NSEnumerator *directoryEnumerator = [directoryContents objectEnumerator];
-	NSFileWrapper *directoryEntry;
+	NSFileWrapper *directoryEntry = nil;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
 			// Check that it's the Contents directory
 		if ([[directoryEntry preferredFilename] isEqualToString:kStringContentsName]) {
@@ -425,10 +445,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	if (versionPlist != nil) {
 			// Handle the version.plist file
-		NSDictionary *versionPlistDictionary = [NSPropertyListSerialization propertyListWithData:[versionPlist regularFileContents]
-																						 options:NSPropertyListImmutable
-																						  format:nil
-																						   error:error];
+		NSDictionary *versionPlistDictionary =
+			[NSPropertyListSerialization propertyListWithData:[versionPlist regularFileContents]
+													  options:NSPropertyListImmutable
+													   format:nil
+														error:error];
 		if (versionPlistDictionary != nil) {
 			self.buildVersion = versionPlistDictionary[kStringBuildVersionKey];
 			self.sourceVersion = versionPlistDictionary[kStringSourceVersionKey];
@@ -714,6 +735,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			[candidateKeyboardLayouts addObject:theDocument];
 		}
 	}
+	NSAssert([candidateKeyboardLayouts count] > 0, @"Must have some candidate documents");
 	if ([candidateKeyboardLayouts count] == 0) {
 			// There are no potential keyboard layouts (shouldn't get here!)
 		return;
@@ -939,6 +961,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	if (keyboardController == nil) {
 		keyboardController = [self createControllerForEntry:selectedRowInfo];
 	}
+	NSAssert(keyboardController, @"Keyboard controller must exist");
 	[keyboardController showWindow:self];
 }
 
@@ -1102,7 +1125,9 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 			// Create the controller
 		keyboardController = [self createControllerForEntry:keyboardEntry];
 	}
+	NSAssert(keyboardController, @"Keyboard controller must exist");
 	NSWindow *docWindow = [keyboardLayoutsTable window];
+	NSAssert(docWindow, @"Must have a document window");
 	[keyboardController askKeyboardIdentifiers:docWindow];
 }
 
@@ -1116,6 +1141,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	else {
 		targetWindow = [keyboardLayoutsTable window];
 	}
+	NSAssert(targetWindow, @"Must have a valid window");
 	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
 	NSError *theError;
 	BOOL installOK = [theInstaller installForAllUsers:[self fileURL] error:&theError];
@@ -1132,6 +1158,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	else {
 		targetWindow = [keyboardLayoutsTable window];
 	}
+	NSAssert(targetWindow, @"Must have a valid window");
 	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
 	NSError *theError;
 	BOOL installOK = [theInstaller installForCurrentUser:[self fileURL] error:&theError];
@@ -1142,6 +1169,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError {
 	UKDocumentPrintViewController *printViewController = [UKDocumentPrintViewController documentPrintViewController];
+	NSAssert(printViewController, @"Must have a print view controller");
 	[printViewController setCurrentDocument:self];
 	return [NSPrintOperation printOperationWithView:[printViewController view]];
 }
@@ -1248,6 +1276,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 	NSArray *theDocumentList = [theController documents];
+	NSAssert([theDocumentList count] > 0, @"Must have some documents");
 	UKKeyboardDocument *chosenDocument = nil;
 	for (NSDocument *theDocument in theDocumentList) {
 		if ([theDocument isKindOfClass:[UKKeyboardDocument class]] && ![(UKKeyboardDocument *)theDocument isBundle] && theDocument != self) {
@@ -1303,6 +1332,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
+	NSAssert(indexToRemove < [self.keyboardLayouts count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[indexToRemove];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
@@ -1319,6 +1349,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)insertDocument:(UkeleleKeyboardObject *)newDocument atIndex:(NSInteger)newIndex {
+	NSAssert(newIndex <= [self.keyboardLayouts count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
 	[undoManager setActionName:@"Insert keyboard layout"];
@@ -1330,6 +1361,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {
+	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:index];
 	[undoManager setActionName:@"Insert keyboard layout"];
@@ -1339,6 +1371,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)addIcon:(NSData *)iconData atIndex:(NSUInteger)index {
+	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeIconAtIndex:index];
 	[undoManager setActionName:@"Add icon"];
@@ -1350,6 +1383,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)removeIconAtIndex:(NSUInteger)index {
+	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
 	NSData *iconData = [keyboardInfo iconData];
 	NSUndoManager *undoManager = [self undoManager];
@@ -1362,6 +1396,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)replaceIconAtIndex:(NSUInteger)index withIcon:(NSData *)iconData {
+	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
 	NSData *oldIconData = [keyboardInfo iconData];
 	NSUndoManager *undoManager = [self undoManager];
@@ -1373,6 +1408,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 }
 
 - (void)replaceIntendedLanguageAtIndex:(NSUInteger)index withLanguage:(LanguageCode *)newLanguage {
+	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
 	LanguageCode *oldLanguage = [LanguageCode languageCodeFromString:[keyboardInfo intendedLanguage]];
 	NSUndoManager *undoManager = [self undoManager];
