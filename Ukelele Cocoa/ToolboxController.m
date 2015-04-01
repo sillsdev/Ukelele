@@ -7,6 +7,7 @@
 //
 
 #import "ToolboxController.h"
+#import "UkeleleConstantStrings.h"
 
 @implementation ToolboxController
 
@@ -18,8 +19,6 @@
     if (self) {
         // Initialization code here.
 		toolboxData = [ToolboxData sharedToolboxData];
-		[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
-		[_JISOnly setState:[toolboxData JISOnly] ? NSOnState : NSOffState];
     }
     
     return self;
@@ -31,6 +30,14 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
+	[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
+	[_JISOnly setState:[toolboxData JISOnly] ? NSOnState : NSOffState];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSData *frameData =[theDefaults objectForKey:UKToolboxWindowLocation];
+	if (frameData != nil) {
+		NSRect newFrame = *(NSRect *)[frameData bytes];
+		[self.window setFrame:newFrame display:NO];
+	}
 }
 
 + (ToolboxController *)sharedToolboxController {
@@ -39,6 +46,15 @@
 		theInstance = [[ToolboxController alloc] initWithWindowNibName:@"ToolboxController"];
 	}
 	return  theInstance;
+}
+
+#pragma mark Delegate methods
+
+- (void)windowDidMove:(NSNotification *)notification {
+	NSRect newFrame = [self.window frame];
+	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	[theDefaults setObject:frameData forKey:UKToolboxWindowLocation];
 }
 
 @end

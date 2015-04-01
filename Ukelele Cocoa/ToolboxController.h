@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ToolboxData.h"
 
-@interface ToolboxController : NSWindowController
+@interface ToolboxController : NSWindowController<NSWindowDelegate>
 
 @property (strong) IBOutlet NSButton *stickyModifiers;
 @property (strong) IBOutlet NSButton *JISOnly;

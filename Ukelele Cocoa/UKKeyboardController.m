@@ -47,7 +47,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 @end
 
-@implementation UKKeyboardController
+@implementation UKKeyboardController {
+	NSUInteger lastModifiers;
+}
 
 @synthesize keyboardLayout = _keyboardLayout;
 
@@ -88,6 +90,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		commentChanged = NO;
 		_undoManager = nil;
 		printingInfo = nil;
+		lastModifiers = 0;
     }
     return self;
 }
@@ -446,16 +449,22 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
 	[fontManager setSelectedFont:largeFont isMultiple:NO];
+		// Set the info inspector information
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[self inspectorDidActivateTab:[[[infoInspector tabView] selectedTabViewItem] identifier]];
 	[infoInspector setCurrentWindow:self];
 	[infoInspector setCurrentKeyboard:self.keyboardLayout];
+		// Start observing the sticky modifiers flag
+	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	[toolboxData addObserver:self forKeyPath:@"stickyModifiers" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
 	[inspectorController setCurrentWindow:nil];
 	[inspectorController setCurrentKeyboard:nil];
+	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	[toolboxData removeObserver:self forKeyPath:@"stickyModifiers"];
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -1397,24 +1406,29 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)messageModifiersChanged:(int)modifiers
 {
-	static NSUInteger lastModifiers = 0;
 		// Modifiers have changed, so make note of changes
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
-	NSUInteger newCurrentModifiers = modifiers;
+	NSUInteger newCurrentModifiers;
 	if (usingStickyModifiers) {
+		newCurrentModifiers = [internalState[kStateCurrentModifiers] unsignedIntegerValue];
 		NSUInteger changedModifiers = lastModifiers ^ modifiers;
 		static NSUInteger modifierKeys[] = { NSShiftKeyMask, NSCommandKeyMask, NSControlKeyMask, NSAlternateKeyMask };
 		static NSInteger numModifierKeys = sizeof(modifierKeys) / sizeof(NSUInteger);
 		for (NSUInteger i = 0; i < numModifierKeys; i++) {
 				// If it is a key down event, then update the modifiers
-			if ((changedModifiers & modifierKeys[i]) && (modifiers & modifierKeys[i])) {
-				newCurrentModifiers ^= modifierKeys[i];
+			NSUInteger modKey = modifierKeys[i];
+			if ((changedModifiers & modKey) && (modifiers & modKey)) {
+				newCurrentModifiers ^= modKey;
 			}
 		}
 		newCurrentModifiers &= ~NSAlphaShiftKeyMask;
 		newCurrentModifiers |= NSAlphaShiftKeyMask & modifiers;
 	}
+	else {
+		newCurrentModifiers = modifiers;
+	}
     internalState[kStateCurrentModifiers] = @(newCurrentModifiers);
+	lastModifiers = modifiers;
 	[self inspectorSetModifiers];
 	[self inspectorSetModifierMatch];
 	[self updateWindow];
@@ -1735,6 +1749,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)noteUndoAction:(NSNotification *)theNotification {
 		// We have at least one undoable action, so notify the document
 	[self.parentDocument keyboardLayoutDidChange:self.keyboardLayout];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	if (object == toolboxData && [keyPath isEqualToString:@"stickyModifiers"]) {
+		[self messageModifiersChanged:[NSEvent modifierFlags]];
+	}
 }
 
 @end
