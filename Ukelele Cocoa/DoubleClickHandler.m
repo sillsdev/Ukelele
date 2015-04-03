@@ -95,6 +95,7 @@ enum ProcessingStates {
 	   initialValue:(NSString *)valueString
 	 standardPrompt:(NSString *)standardPrompt
 	standardEnabled:(BOOL)standardEnabled
+	 standardOutput:(NSString *)standardOutput
 		   callBack:(void (^)(NSString *))theCallBack
 {
 	if (editPopover == nil) {
@@ -115,6 +116,7 @@ enum ProcessingStates {
 	[popoverController setCallBack:theCallBack];
 	[[popoverController standardButton] setEnabled:standardEnabled];
 	[[popoverController outputField] setStringValue:valueString];
+	[popoverController setStandardOutput:standardOutput];
 }
 
 - (void)askNewOutput {
@@ -142,15 +144,17 @@ enum ProcessingStates {
 		promptString = NSLocalizedStringFromTable(@"Enter the new output string", @"dialogs",
 												  @"Ask user to enter new output");
 		NSString *standardPrompt = @"";
+		NSString *standardOutput = @"";
 		if (specialKey) {
+			standardOutput = [LayoutInfo getSpecialKeyOutput:[keyDataDict[kKeyKeyCode] intValue]];
 			NSString *specialFormat = NSLocalizedStringFromTable(@"Standard output is %@", @"dialogs", @"Inform user what the standard output is");
-			standardPrompt = [NSString stringWithFormat:specialFormat,
-							  [LayoutInfo getSpecialKeyOutput:[keyDataDict[kKeyKeyCode] intValue]]];
+			standardPrompt = [NSString stringWithFormat:specialFormat, standardOutput];
 		}
 		[self openPopover:promptString
 			 initialValue:currentOutput
 		   standardPrompt:standardPrompt
 		  standardEnabled:specialKey
+		   standardOutput:standardOutput
 				 callBack:^(NSString *newOutput) {
 					 [self acceptAskText:newOutput];
 				 }];

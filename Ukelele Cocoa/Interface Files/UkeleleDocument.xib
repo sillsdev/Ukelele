@@ -134,12 +134,12 @@
                                     <subviews>
                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e98-hd-75Q">
                                             <rect key="frame" x="665" y="14" width="75" height="26"/>
-                                            <popUpButtonCell key="cell" type="push" title="0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mH7-xT-NnB" id="UmJ-WT-HPu">
+                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="UmJ-WT-HPu">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" title="OtherViews" id="ff3-tY-RTq">
                                                     <items>
-                                                        <menuItem title="0" state="on" id="mH7-xT-NnB">
+                                                        <menuItem title="0" id="mH7-xT-NnB">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="1" id="w8g-IM-JL9"/>
@@ -336,6 +336,9 @@
                                         <constraint firstItem="v0P-Wj-ijT" firstAttribute="baseline" secondItem="sjL-cW-z8G" secondAttribute="baseline" id="ubA-iN-koY"/>
                                         <constraint firstItem="v0P-Wj-ijT" firstAttribute="leading" secondItem="g1L-XA-Ana" secondAttribute="leading" constant="17" id="y0I-WZ-SMr"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="passEvents" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Comments" identifier="Comments" id="bp8-nY-09b">
@@ -521,6 +524,9 @@
                                         <constraint firstItem="XfP-AF-PoW" firstAttribute="top" secondItem="Fbt-2Q-F97" secondAttribute="bottom" constant="8" id="yQX-jl-gWa"/>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="JMR-Ue-DJ3" secondAttribute="trailing" constant="39" id="ytO-0M-r6R"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="passEvents" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>

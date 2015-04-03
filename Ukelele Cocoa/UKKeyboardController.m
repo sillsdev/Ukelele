@@ -636,6 +636,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 			// This can only be selected if there is a key to paste, and no interaction is in progress
 		return (interactionHandler == nil) && [self.keyboardLayout hasKeyOnPasteboard];
 	}
+	else if (action == @selector(setDefaultIndex:)) {
+			// This can only be selected if we are on the modifiers tab
+		return [kTabNameModifiers isEqualToString:currentTabName];
+	}
 	return NO;
 }
 

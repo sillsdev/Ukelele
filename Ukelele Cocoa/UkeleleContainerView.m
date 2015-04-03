@@ -16,24 +16,31 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+		_passEvents = NO;
     }
     
     return self;
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent {
-//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-//	[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
+	if (self.passEvents) {
+		UKKeyboardController *theDocumentWindow = [[self window] windowController];
+		[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
+	}
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-//	[theDocumentWindow messageKeyDown:[theEvent keyCode]];
+	if (self.passEvents) {
+		UKKeyboardController *theDocumentWindow = [[self window] windowController];
+		[theDocumentWindow messageKeyDown:[theEvent keyCode]];
+	}
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-//	[theDocumentWindow messageKeyUp:[theEvent keyCode]];
+	if (self.passEvents) {
+		UKKeyboardController *theDocumentWindow = [[self window] windowController];
+		[theDocumentWindow messageKeyUp:[theEvent keyCode]];
+	}
 }
 
 @end

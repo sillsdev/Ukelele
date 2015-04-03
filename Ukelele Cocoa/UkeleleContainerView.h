@@ -10,4 +10,6 @@
 
 @interface UkeleleContainerView : NSView
 
+@property BOOL passEvents;
+
 @end
