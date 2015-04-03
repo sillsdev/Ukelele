@@ -22,18 +22,18 @@
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent {
-	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
+//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
+//	[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageKeyDown:[theEvent keyCode]];
+//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
+//	[theDocumentWindow messageKeyDown:[theEvent keyCode]];
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageKeyUp:[theEvent keyCode]];
+//	UKKeyboardController *theDocumentWindow = [[self window] windowController];
+//	[theDocumentWindow messageKeyUp:[theEvent keyCode]];
 }
 
 @end

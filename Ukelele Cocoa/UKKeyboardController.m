@@ -123,6 +123,11 @@ const CGFloat kTextPaneHeight = 17.0f;
     [self setupDataSource];
 	[self calculateSize];
 	[self updateWindow];
+	NSArray *scaleArray = [ViewScale standardScales];
+	[self.scaleComboBox removeAllItems];
+	for (ViewScale *scale in scaleArray) {
+		[self.scaleComboBox addItemWithObjectValue:[scale scaleLabel]];
+	}
 	[self setViewScaleComboBox];
 	[self.window makeFirstResponder:self.keyboardView];
 }
@@ -1754,6 +1759,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	if (object == toolboxData && [keyPath isEqualToString:@"stickyModifiers"]) {
+			// Sticky modifiers has changed
 		[self messageModifiersChanged:[NSEvent modifierFlags]];
 	}
 }
