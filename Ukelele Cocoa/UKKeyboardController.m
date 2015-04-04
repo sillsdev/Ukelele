@@ -565,7 +565,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(removeUnusedStates:) ||
 		selector == @selector(changeStateName:) ||
 		selector == @selector(changeActionName:) ||
-		selector == @selector(removeUnusedActions:)) {
+		selector == @selector(removeUnusedActions:) ||
+		selector == @selector(setDefaultIndex:)) {
 		return YES;
 	}
 	return NO;
@@ -943,7 +944,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (IBAction)unlinkKey:(id)sender
 {
 	if ([kTabNameModifiers isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
-			// We're on the modifiers tab, so do nothing at this point
+			// We're on the modifiers tab, so unlink a modifier combination
+		[self unlinkModifierSet:sender];
 		return;
 	}
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
@@ -1483,10 +1485,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)messageKeyUp:(int)keyCode
 {
-	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
-	if ([[infoInspector window] isVisible]) {
-		[[infoInspector keyCodeField] setStringValue:@""];
-	}
+//	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+//	if ([[infoInspector window] isVisible]) {
+//		[[infoInspector keyCodeField] setStringValue:@""];
+//	}
 }
 
 - (void)messageClick:(int)keyCode

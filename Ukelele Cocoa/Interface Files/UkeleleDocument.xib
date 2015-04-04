@@ -571,7 +571,11 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="199-vF-kWg"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Ik9-mU-J0G"/>
-                    <toolbarItem implicitItemIdentifier="C4E37ACC-4A2B-4664-A30F-01F303713335" label="Unlink" paletteLabel="Unlink" tag="-1" image="broken_chain" id="w6j-hB-N4e"/>
+                    <toolbarItem implicitItemIdentifier="C4E37ACC-4A2B-4664-A30F-01F303713335" label="Unlink" paletteLabel="Unlink" tag="-1" image="broken_chain" id="w6j-hB-N4e">
+                        <connections>
+                            <action selector="unlinkKey:" target="-2" id="xem-7G-LEY"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="94111A50-6440-4F12-94B2-74D6BFEAE4AF" label="Info" paletteLabel="Info" tag="-1" image="PanelInfo" id="TIM-YK-eyy">
                         <connections>
                             <action selector="showHideInspector:" target="-1" id="M9W-tg-hXy"/>
