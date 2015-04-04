@@ -101,6 +101,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	}
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"keyboardName" ascending:YES selector:@selector(localizedCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
+	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
@@ -578,6 +579,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
 	[self.keyboardLayoutsController setSortDescriptors:[keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayouts sortUsingDescriptors:[keyboardLayoutsTable sortDescriptors]];
 }
 
 #pragma mark Drag and Drop
@@ -961,6 +963,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
+//	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
 	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
 	if (keyboardController == nil) {
