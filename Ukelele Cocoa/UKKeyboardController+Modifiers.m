@@ -19,8 +19,8 @@
 
 - (void)setupDefaultIndex:(UkeleleKeyboardObject *)keyboardObject
 {
-	if (self.defaultIndexButton == nil) {
-			// The window hasn't been set up yet
+	if (self.defaultIndexButton == nil || keyboardObject == nil) {
+			// The window hasn't been set up yet or no data
 		return;
 	}
 	NSMenu *indexMenu = [self.defaultIndexButton menu];

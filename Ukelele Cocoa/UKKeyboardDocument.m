@@ -1257,10 +1257,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 }
 
-- (void)windowDidBecomeMain:(NSNotification *)notification {
+- (void)inspectorDidAppear {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
 	[self inspectorDidActivateTab:[[[inspectorController tabView] selectedTabViewItem] identifier]];
 	[inspectorController setCurrentBundle:self];
+	[inspectorController setCurrentWindow:nil];
 	static NSDictionary *bindingsDict;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -1269,6 +1270,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 						 };
 	});
 	[inspectorController bind:@"currentKeyboard" toObject:self.keyboardLayoutsController withKeyPath:@"selection.keyboardObject" options:bindingsDict];
+	if ([keyboardLayoutsTable selectedRow] == -1) {
+		[inspectorController setCurrentKeyboard:NSNoSelectionMarker];
+	}
+	[self inspectorSetKeyboardSection];
+}
+
+- (void)windowDidBecomeMain:(NSNotification *)notification {
+	[self inspectorDidAppear];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {

@@ -167,6 +167,7 @@ enum ToolbarItemTags {
 - (void)setSelectedKey:(NSInteger)keyCode;
 - (void)clearSelectedKey;
 
+- (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 
 - (void)unlinkKeyWithKeyCode:(NSInteger)keyCode andModifiers:(NSUInteger)modifierCombination;

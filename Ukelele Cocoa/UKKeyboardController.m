@@ -456,10 +456,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
 	[fontManager setSelectedFont:largeFont isMultiple:NO];
 		// Set the info inspector information
-	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
-	[self inspectorDidActivateTab:[[[infoInspector tabView] selectedTabViewItem] identifier]];
-	[infoInspector setCurrentWindow:self];
-	[infoInspector setCurrentKeyboard:self.keyboardLayout];
+	[self inspectorDidAppear];
 		// Start observing the sticky modifiers flag
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	[toolboxData addObserver:self forKeyPath:@"stickyModifiers" options:NSKeyValueObservingOptionNew context:nil];
@@ -645,7 +642,15 @@ const CGFloat kTextPaneHeight = 17.0f;
 	return NO;
 }
 
-#pragma === Inspector ===
+#pragma mark === Inspector ===
+
+- (void)inspectorDidAppear {
+		// Set the info inspector information
+	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+	[self inspectorDidActivateTab:[[[infoInspector tabView] selectedTabViewItem] identifier]];
+	[infoInspector setCurrentWindow:self];
+	[infoInspector setCurrentKeyboard:self.keyboardLayout];
+}
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];

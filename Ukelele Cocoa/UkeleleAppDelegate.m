@@ -18,6 +18,8 @@
 #import "UkelelePreferenceController.h"
 #import "KeyboardInstallerTool.h"
 #import "Common.h"
+#import "UKKeyboardController.h"
+#import "UKKeyboardDocument.h"
 #include <ServiceManagement/ServiceManagement.h>
 
 @interface UkeleleAppDelegate () {
@@ -138,6 +140,15 @@ static NSDictionary *defaultValues() {
 	}
 	else {
 		[infoInspector showWindow:sender];
+		NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
+		NSWindowController *mainController = [mainWindow windowController];
+		if ([mainController isKindOfClass:[UKKeyboardController class]]) {
+			[(UKKeyboardController *)mainController inspectorDidAppear];
+		}
+		else if ([[mainController windowNibName] isEqualToString:@"UKKeyboardLayoutBundle"]) {
+			UKKeyboardDocument *theDocument = [mainController document];
+			[theDocument inspectorDidAppear];
+		}
 	}
 }
 

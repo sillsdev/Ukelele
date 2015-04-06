@@ -72,7 +72,7 @@
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
-                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.keyboardName" id="sTx-wm-Rle"/>
+                                                            <binding destination="fOO-TO-fKw" name="value" keyPath="selection.keyboardName" id="Zom-bX-9om"/>
                                                         </connections>
                                                     </textField>
                                                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23w-03-ycN" userLabel="Script popup">

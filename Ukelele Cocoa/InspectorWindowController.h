@@ -32,10 +32,6 @@
 @property (strong) IBOutlet NSPopUpButton *keyboardScriptButton;
 @property (strong) IBOutlet NSTextField *keyboardIDField;
 @property (strong) IBOutlet NSButton *generateButton;
-@property (strong) IBOutlet NSTextField *bundleNameField;
-@property (strong) IBOutlet NSTextField *bundleVersionField;
-@property (strong) IBOutlet NSTextField *buildVersionField;
-@property (strong) IBOutlet NSTextField *sourceVersionField;
 
 @property (nonatomic, strong) IBOutlet NSArray *stateStack;
 @property (strong) NSArray *scriptList;

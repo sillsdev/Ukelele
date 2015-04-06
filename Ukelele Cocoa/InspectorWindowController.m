@@ -88,18 +88,6 @@
 	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
 
-- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
-	NSDocumentController *sharedController = [NSDocumentController sharedDocumentController];
-	UKKeyboardDocument *theDocument = [sharedController currentDocument];
-	if (self.currentWindow != nil) {
-		theDocument = [self.currentWindow parentDocument];
-	}
-	else {
-		[self setKeyboardSectionEnabled:NO];
-	}
-	[theDocument inspectorDidActivateTab:[tabViewItem identifier]]; // Moved because of dead store?
-}
-
 - (void)setScript:(NSInteger)scriptCode {
 	for (NSInteger i = 0; i < [self.scriptList count]; i++) {
 		ScriptInfo *scriptInfo = self.scriptList[i];
@@ -109,11 +97,6 @@
 			break;
 		}
 	}
-}
-
-- (IBAction)showWindow:(id)sender {
-	[self tabView:self.tabView didSelectTabViewItem:[self.tabView selectedTabViewItem]];
-	[super showWindow:sender];
 }
 
 - (void)setKeyboardSectionEnabled:(BOOL)enabled {

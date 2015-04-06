@@ -44,6 +44,7 @@
 - (IBAction)installForAllUsers:(id)sender;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;
+- (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
 
