@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -39,10 +39,11 @@
                         <tabViewItems>
                             <tabViewItem label="Document" identifier="1" id="nVP-hb-dbf">
                                 <view key="view" id="is6-CO-MN6">
+                                    <rect key="frame" x="10" y="33" width="316" height="281"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <box autoresizesSubviews="NO" fixedFrame="YES" title="Keyboard Identity" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-8D-fob">
-                                            <rect key="frame" x="6" y="-279" width="297" height="276"/>
+                                            <rect key="frame" x="6" y="2" width="297" height="276"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="295" height="260"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -88,9 +89,8 @@
                                                             </menu>
                                                         </popUpButtonCell>
                                                         <connections>
-                                                            <binding destination="9Xd-w7-kG1" name="content" keyPath="arrangedObjects" id="xow-vs-wGf"/>
-                                                            <binding destination="9Xd-w7-kG1" name="contentValues" keyPath="arrangedObjects.scriptName" previousBinding="xow-vs-wGf" id="hO4-hq-44Y"/>
-                                                            <binding destination="9Xd-w7-kG1" name="selectedIndex" keyPath="selectionIndex" previousBinding="hO4-hq-44Y" id="6pi-Zc-TZK"/>
+                                                            <binding destination="9Xd-w7-kG1" name="contentValues" keyPath="arrangedObjects.scriptName" id="FQn-T3-JMZ"/>
+                                                            <binding destination="9Xd-w7-kG1" name="selectedIndex" keyPath="selectionIndex" id="rmx-5f-SU2"/>
                                                         </connections>
                                                     </popUpButton>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-9a-RgC" userLabel="ID field">
@@ -351,12 +351,7 @@
                 <binding destination="-2" name="contentArray" keyPath="self.scriptRangeList" id="UNS-7d-b95"/>
             </connections>
         </arrayController>
-        <objectController objectClassName="UKKeyboardController" automaticallyPreparesContent="YES" id="DMO-Jw-VUF" userLabel="Keyboard Window Object">
-            <connections>
-                <binding destination="-2" name="contentObject" keyPath="currentKeyboard" id="nOg-tA-IMQ"/>
-            </connections>
-        </objectController>
-        <objectController objectClassName="UkeleleKeyboardObject" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Document Object">
+        <objectController objectClassName="UkeleleKeyboardObject" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Keyboard Object">
             <connections>
                 <binding destination="-2" name="contentObject" keyPath="currentKeyboard" id="4QU-Oa-NXt"/>
             </connections>

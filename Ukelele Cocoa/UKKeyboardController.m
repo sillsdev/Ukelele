@@ -218,6 +218,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (NSUndoManager *)undoManager {
 	if (_undoManager == nil) {
 		_undoManager = [[NSUndoManager alloc] init];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteUndoAction:) name:NSUndoManagerCheckpointNotification object:_undoManager];
 	}
 	return _undoManager;
 }
@@ -1707,10 +1708,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma mark Delegate methods
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-	if (self.undoManager == nil) {
-		self.undoManager = [[NSUndoManager alloc] init];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteUndoAction:) name:NSUndoManagerWillRedoChangeNotification object:self.undoManager];
-	}
 	return self.undoManager;
 }
 

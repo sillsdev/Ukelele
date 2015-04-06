@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 @class UkeleleKeyboardObject;
+@class UKKeyboardController;
 
 @interface IconImageTransformer : NSValueTransformer
 
@@ -45,5 +46,7 @@
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
+
+- (UKKeyboardController *)controllerForCurrentEntry;
 
 @end

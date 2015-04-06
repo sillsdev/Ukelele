@@ -562,6 +562,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return keyboardController;
 }
 
+- (UKKeyboardController *)controllerForCurrentEntry {
+	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSAssert(selectedRowNumber >= 0, @"Must have a selected row");
+	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	UKKeyboardController *theController = [selectedRowInfo keyboardController];
+	if (theController == nil) {
+		theController = [self createControllerForEntry:selectedRowInfo];
+	}
+	return theController;
+}
+
 #pragma mark Table delegate methods
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
@@ -963,7 +974,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-//	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
 	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
 	if (keyboardController == nil) {
@@ -1250,6 +1260,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)windowDidBecomeMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
 	[self inspectorDidActivateTab:[[[inspectorController tabView] selectedTabViewItem] identifier]];
+	[inspectorController setCurrentBundle:self];
 	static NSDictionary *bindingsDict;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -1262,6 +1273,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)windowDidResignMain:(NSNotification *)notification {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
+	[inspectorController setCurrentBundle:nil];
 	[inspectorController unbind:@"currentDocument"];
 }
 

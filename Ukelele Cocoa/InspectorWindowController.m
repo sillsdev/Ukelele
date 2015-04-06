@@ -67,6 +67,11 @@
 	ScriptInfo *scriptInfo = self.scriptList[selectedScript];
 		// Generate a random number in the appropriate range
 	NSInteger newID = [scriptInfo randomID];
+	if (self.currentWindow == nil) {
+			// We have a bundle window
+		NSAssert(self.currentBundle, @"Must have a bundle");
+		self.currentWindow = [self.currentBundle controllerForCurrentEntry];
+	}
 	[self.currentWindow setKeyboardID:newID];
 }
 

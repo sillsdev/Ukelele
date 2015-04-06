@@ -194,6 +194,7 @@
                                     </tableColumns>
                                     <connections>
                                         <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="cn3-Dq-hFV"/>
+                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="cn3-Dq-hFV" id="XhV-IP-pFF"/>
                                         <binding destination="-2" name="doubleClickTarget" keyPath="self" id="Vfc-GN-p5v">
                                             <dictionary key="options">
                                                 <string key="NSSelectorName">openKeyboardLayout:</string>

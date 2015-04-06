@@ -10,6 +10,7 @@
 
 @class UkeleleKeyboardObject;
 @class UKKeyboardController;
+@class UKKeyboardDocument;
 
 #define kTabIdentifierDocument	@"Document"
 #define kTabIdentifierOutput	@"Output"
@@ -43,6 +44,7 @@
 
 @property (weak, nonatomic) UkeleleKeyboardObject *currentKeyboard;
 @property (weak, nonatomic) UKKeyboardController *currentWindow;
+@property (weak, nonatomic) UKKeyboardDocument *currentBundle;
 
 + (InspectorWindowController *)getInstance;
 - (IBAction)generateID:(id)sender;
