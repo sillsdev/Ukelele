@@ -44,7 +44,7 @@ const float kScalePercentageFactor = 100.0f;
 const CGFloat kTextPaneHeight = 17.0f;
 
 @interface UKKeyboardController ()
-
+@property NSMutableIndexSet *keyStates;
 @end
 
 @implementation UKKeyboardController {
@@ -91,6 +91,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		_undoManager = nil;
 		printingInfo = nil;
 		lastModifiers = 0;
+		_keyStates = [NSMutableIndexSet indexSet];
     }
     return self;
 }
@@ -1484,13 +1485,15 @@ const CGFloat kTextPaneHeight = 17.0f;
 											kMessageArgumentKey: @(keyCode)};
 		[interactionHandler handleMessage:messageDictionary];
 	}
-	else {
+	else if (![self.keyStates containsIndex:keyCode]) {
 		[self setSelectedKey:keyCode];
+		[self.keyStates addIndex:keyCode];
 	}
 }
 
 - (void)messageKeyUp:(int)keyCode
 {
+	[self.keyStates removeIndex:keyCode];
 //	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 //	if ([[infoInspector window] isVisible]) {
 //		[[infoInspector keyCodeField] setStringValue:@""];
