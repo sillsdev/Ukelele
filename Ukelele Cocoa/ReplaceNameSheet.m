@@ -44,6 +44,7 @@
 	[chooseField setStringValue:infoText];
 	[nameButton removeAllItems];
 	[nameButton addItemsWithTitles:nameList];
+	[replacementNameField setStringValue:@""];
 	verifyCallBack = theVerifyCallBack;
 	acceptCallBack = theAcceptCallBack;
 	[errorField setHidden:YES];
