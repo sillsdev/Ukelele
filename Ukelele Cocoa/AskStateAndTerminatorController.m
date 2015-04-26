@@ -57,7 +57,7 @@
 	NSDictionary *resultDictionary = nil;
 	if (![[self.statePopup stringValue] isEqualToString:@""]) {
 			// Valid state selected
-		resultDictionary = @{kAskStateAndTerminatorState: [self.statePopup stringValue],
+		resultDictionary = @{kAskStateAndTerminatorState: [self.statePopup titleOfSelectedItem],
 					   kAskStateAndTerminatorTerminator: [self.terminatorField stringValue]};
 	}
 	[NSApp endSheet:[self window]];

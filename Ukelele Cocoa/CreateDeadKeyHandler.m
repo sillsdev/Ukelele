@@ -225,7 +225,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	
 		// Now check that we have the key specified
 	NSInteger keyCode = [deadKeyData[kDeadKeyDataKeyCode] integerValue];
-	if (keyCode < 0) {
+	if (keyCode < 0 || keyCode == kNoKeyCode) {
 			// We have to wait to get the actual key, so we put a message up
 		NSString *messageText = NSLocalizedStringFromTable(@"Please click or type the dead key", @"dialogs", @"Instruction to identify the dead key");
 		[parentDocumentWindow setMessageBarText:messageText];

@@ -812,7 +812,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[self updateWindow];
 	}
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
-	if ([[infoInspector window] isVisible]) {
+	if ([[infoInspector window] isVisible] && keyCode != kNoKeyCode) {
 		NSString *keyCodeString = [NSString stringWithFormat:@"%ld", (long)keyCode];
 		[[infoInspector selectedKeyField] setStringValue:keyCodeString];
 	}
@@ -1494,10 +1494,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)messageKeyUp:(int)keyCode
 {
 	[self.keyStates removeIndex:keyCode];
-//	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
-//	if ([[infoInspector window] isVisible]) {
-//		[[infoInspector keyCodeField] setStringValue:@""];
-//	}
+	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+	if ([[infoInspector window] isVisible]) {
+		[[infoInspector keyCodeField] setStringValue:@""];
+	}
 }
 
 - (void)messageClick:(int)keyCode
