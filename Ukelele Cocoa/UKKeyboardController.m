@@ -143,6 +143,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 	internalState[kStateCurrentModifiers] = @(currentModifiers);
 }
 
+- (NSInteger)currentSelectedKey {
+	return selectedKey;
+}
+
 - (NSString *)currentState {
 	return internalState[kStateCurrentState];
 }
@@ -996,11 +1000,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)swapKeys:(id)sender {
+	NSAssert(interactionHandler == nil, @"Interaction is in progress");
 	interactionHandler = [SwapKeysController swapKeysController:self];
 	[(SwapKeysController *)interactionHandler beginInteraction:NO];
 }
 
 - (IBAction)swapKeysByCode:(id)sender {
+	NSAssert(interactionHandler == nil, @"Interaction is in progress");
 	interactionHandler = [SwapKeysController swapKeysController:self];
 	[(SwapKeysController *)interactionHandler beginInteraction:YES];
 }

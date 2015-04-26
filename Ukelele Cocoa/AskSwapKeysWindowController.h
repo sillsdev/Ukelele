@@ -17,6 +17,6 @@
 
 + (AskSwapKeysWindowController *)askSwapKeysWindowController;
 
-- (void)beginInteractionWithWindow:(NSWindow *)theWindow callback:(void (^)(NSArray *))theCallback;
+- (void)beginInteractionWithWindow:(NSWindow *)theWindow initialSelection:(NSUInteger)selectedKey callback:(void (^)(NSArray *))theCallback;
 
 @end

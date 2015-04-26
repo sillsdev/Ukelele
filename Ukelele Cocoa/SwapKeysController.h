@@ -14,7 +14,7 @@
 
 @interface SwapKeysController : NSObject<UKInteractionHandler>
 
-+ (SwapKeysController *)swapKeysController:(UKKeyboardController *)theDocumentWindow;
++ (SwapKeysController *)swapKeysController:(UKKeyboardController *)theWindowController;
 - (void)beginInteraction:(BOOL)askingKeyCode;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget;
 

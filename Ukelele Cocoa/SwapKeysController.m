@@ -11,28 +11,31 @@
 #import "AskSwapKeysWindowController.h"
 #import "UkeleleConstantStrings.h"
 
+#define kFirstKeyPrompt		@"Press or click the first key"
+#define kSecondKeyPrompt	@"Press or click the second key"
+
 @implementation SwapKeysController {
-	UKKeyboardController *parentDocumentWindow;
+	UKKeyboardController *parentDocumentController;
 	NSWindow *parentWindow;
     id<UKInteractionCompletion> completionTarget;
 	AskSwapKeysWindowController *askKeyCodeSheet;
 	NSInteger keyCode;
 }
 
-- (id)initWithDocument:(UKKeyboardController *)theDocumentWindow {
+- (id)initWithDocument:(UKKeyboardController *)theWindowController {
 	self = [super init];
 	if (self) {
-		parentDocumentWindow = theDocumentWindow;
-		parentWindow = [theDocumentWindow window];
-		completionTarget = nil;
+		parentDocumentController = theWindowController;
+		parentWindow = [theWindowController window];
+		completionTarget = theWindowController;
 		askKeyCodeSheet = nil;
 		keyCode = kNoKeyCode;
 	}
 	return self;
 }
 
-+ (SwapKeysController *)swapKeysController:(UKKeyboardController *)theDocumentWindow {
-	return [[SwapKeysController alloc] initWithDocument:theDocumentWindow];
++ (SwapKeysController *)swapKeysController:(UKKeyboardController *)theWindowController {
+	return [[SwapKeysController alloc] initWithDocument:theWindowController];
 }
 
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget {
@@ -40,19 +43,25 @@
 }
 
 - (void)beginInteraction:(BOOL)askingKeyCode {
+	NSUInteger selectedKey = [parentDocumentController currentSelectedKey];
 	if (askingKeyCode) {
 			// Bring up a sheet to ask for the key codes
 		askKeyCodeSheet = [AskSwapKeysWindowController askSwapKeysWindowController];
-		[askKeyCodeSheet beginInteractionWithWindow:parentWindow callback:^(NSArray *resultArray) {
+		[askKeyCodeSheet beginInteractionWithWindow:parentWindow initialSelection:selectedKey callback:^(NSArray *resultArray) {
 			if (resultArray != nil) {
-				[parentDocumentWindow swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
+				[parentDocumentController swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
 			}
 			[self interactionCompleted];
 		}];
 	}
+	else if (selectedKey != kNoKeyCode) {
+			// Have one key already
+		keyCode = selectedKey;
+		[parentDocumentController setMessageBarText:kSecondKeyPrompt];
+	}
 	else {
 			// Ask for the first key
-		[parentDocumentWindow setMessageBarText:@"Press or click the first key"];
+		[parentDocumentController setMessageBarText:kFirstKeyPrompt];
 	}
 }
 
@@ -70,15 +79,15 @@
 			// We've selected the first key
 		keyCode = selectedKey;
 			// Show that key as selected
-		[parentDocumentWindow setSelectedKey:keyCode];
-		[parentDocumentWindow setMessageBarText:@"Press or click the second key"];
+		[parentDocumentController setSelectedKey:keyCode];
+		[parentDocumentController setMessageBarText:kSecondKeyPrompt];
 	}
 	else if (keyCode != selectedKey) {
 			// Got the second key that's not the same as the first
-		[parentDocumentWindow setMessageBarText:@""];
-		[parentDocumentWindow clearSelectedKey];
+		[parentDocumentController setMessageBarText:@""];
+		[parentDocumentController clearSelectedKey];
 			// Swap the keys with keyCode and selectedKey
-		[parentDocumentWindow swapKeyWithCode:keyCode andKeyWithCode:selectedKey];
+		[parentDocumentController swapKeyWithCode:keyCode andKeyWithCode:selectedKey];
 		[self interactionCompleted];
 	}
 }
