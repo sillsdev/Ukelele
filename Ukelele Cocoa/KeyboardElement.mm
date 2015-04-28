@@ -318,7 +318,8 @@ KeyboardElement *KeyboardElement::CreateStandardKeyboard(NString inName, UInt32 
 	LayoutsElement *layoutsElement = LayoutsElement::CreateBasicLayoutsElement();
 	newKeyboard->AddLayoutsElement(layoutsElement);
 	bool hasCapsLockLayout = inBaseLayout != inCapsLockLayout;
-	ModifierMap *modifierMap = ModifierMap::CreateStandardModifierMap(hasCapsLockLayout);
+	bool hasCommandLayout = inBaseLayout != inCommandLayout;
+	ModifierMap *modifierMap = ModifierMap::CreateStandardModifierMap(hasCapsLockLayout, hasCommandLayout);
 	newKeyboard->AddModifierMap(modifierMap);
 	KeyMapSet *ansiKeyMapSet = KeyMapSet::CreateStandardKeyMapSet(kANSIKeyMapName, "", inBaseLayout, inCommandLayout, inCapsLockLayout, modifierMap);
 	newKeyboard->AddKeyMapSet(ansiKeyMapSet);

@@ -88,7 +88,7 @@ KeyMapSet *KeyMapSet::CreateStandardKeyMapSet(NString inID, NString inBaseMapID,
 		UInt32 keyMapType;
 		if (keyMapSelect->RequiresModifier(optionKey) || keyMapSelect->RequiresModifier(controlKey)) {
 				// This requires option or control, so we put in an empty key map
-			keyMapType = kStandardKeyMapEmpty;
+			keyMapType = kStandardLayoutEmpty;
 		}
 		else if (hasCapsLockKeyboard && keyMapSelect->RequiresModifier(alphaLock)) {
 				// Need the caps lock keyboard
