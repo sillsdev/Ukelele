@@ -163,8 +163,9 @@
                                             <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Nw7-38-a1y"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
-                                                <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.iconData" id="VB4-Yb-s1H">
+                                                <binding destination="Wvh-L2-Xlb" name="value" keyPath="arrangedObjects.iconData" id="OGu-sc-gLF">
                                                     <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEnabled" value="NO"/>
                                                         <string key="NSValueTransformerName">IconImageTransformer</string>
                                                     </dictionary>
                                                 </binding>
