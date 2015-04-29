@@ -463,6 +463,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			self.sourceVersion = versionPlistDictionary[kStringSourceVersionKey];
 		}
 	}
+	if (resourcesDirectory == nil) {
+			// No resources directory!
+		errorDictionary = @{NSLocalizedDescriptionKey: @"The selected bundle is not a valid bundle"};
+		if (error != NULL) {
+			*error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorNotKeyboardLayoutBundle userInfo:errorDictionary];
+		}
+		return NO;
+	}
 		// Now scan the Resources directory for keyboard layouts and icons
 	directoryContents = [resourcesDirectory fileWrappers];
 	directoryEnumerator = [directoryContents objectEnumerator];
@@ -502,6 +510,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				baseNameDictionary[kIconFileKey] = directoryEntry;
 			}
 		}
+	}
+	if ([fileNameDictionary count] == 0) {
+			// No keyboards
+		errorDictionary = @{NSLocalizedDescriptionKey: @"The selected bundle has no keyboard layouts in it"};
+		if (error != NULL) {
+			*error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorNoKeyboardLayoutsInBundle userInfo:errorDictionary];
+		}
+		return NO;
 	}
 		// We have the keyboard layouts and icons, plus the preferred names, so populate the keyboard layouts array
 	for (NSString *keyboardName in fileNameDictionary) {
