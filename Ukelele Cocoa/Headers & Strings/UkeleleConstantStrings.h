@@ -62,6 +62,7 @@ MY_EXTERN NSString *kMessageKeyDown;
 
 	// Bundle strings
 MY_EXTERN NSString *kFileTypeKeyboardLayout;
+MY_EXTERN NSString *kFileTypeGenericBundle;
 MY_EXTERN NSString *kStringBundleExtension;
 MY_EXTERN NSString *kStringContentsName;
 MY_EXTERN NSString *kStringResourcesName;

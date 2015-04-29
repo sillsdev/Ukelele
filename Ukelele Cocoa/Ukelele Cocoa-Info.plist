@@ -41,6 +41,7 @@
 			<string>None</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>com.apple.bundle</string>
 				<string>com.apple.generic-bundle</string>
 			</array>
 			<key>LSTypeIsPackage</key>

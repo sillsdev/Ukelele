@@ -96,6 +96,7 @@ static NSDictionary *defaultValues() {
 										 makeUntitledDocumentOfType:(NSString *)kUTTypeBundle error:&theError];
 	if (nil != theDocument) {
 			// Got a document
+		[theDocument setIsBundle:YES];
 		[[NSDocumentController sharedDocumentController] addDocument:theDocument];
 		[theDocument makeWindowControllers];
 		[theDocument showWindows];
@@ -105,11 +106,12 @@ static NSDictionary *defaultValues() {
 - (IBAction)newFromCurrentInput:(id)sender {
 	UKKeyboardDocument *newDocument = [[UKKeyboardDocument alloc] init];
 	if (newDocument) {
-		[newDocument captureInputSource:self];
+		[newDocument setIsBundle:YES];
 		NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 		[documentController addDocument:newDocument];
 		[newDocument makeWindowControllers];
 		[newDocument showWindows];
+		[newDocument captureInputSource:self];
 	}
 }
 

@@ -84,11 +84,13 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
+		[self setFileType:kFileTypeKeyboardLayout];
 	}
 	else {
 		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayoutBundle" owner:self];
 		NSAssert(windowController, @"Must be able to create a window controller");
 		[self addWindowController:windowController];
+		[self setFileType:kFileTypeGenericBundle];
 	}
 }
 
@@ -110,7 +112,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		self.isBundle = NO;
 		return [self parseKeyboardFileWrapper:fileWrapper withError:outError];
 	}
-	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:@"com.apple.generic-bundle"]) {
+	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle]) {
 			// This is a bundle, hopefully a keyboard layout bundle;
 		BOOL success = [self parseBundleFileWrapper:fileWrapper withError:outError];
 		if (success) {
@@ -131,11 +133,11 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
   forSaveOperation:(NSSaveOperationType)saveOperation
 originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 error:(NSError *__autoreleasing *)outError {
-	if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
+	if ([typeName isEqualToString:kFileTypeKeyboardLayout] && !self.isBundle) {
 			// This is an unbundled keyboard layout document
 		return [self saveKeyboardLayoutToURL:url error:outError];
 	}
-	else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:@"com.apple.generic-bundle"]) {
+	else if (self.isBundle && ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle])) {
 			// A bundle
 		if (absoluteOriginalContentsURL != nil) {
 				// Try to save only what has changed
@@ -1354,14 +1356,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument {
-	NSUInteger newIndex = [self.keyboardLayouts count];
+	NSUInteger newIndex = [self.keyboardLayoutsController.arrangedObjects count];
 	[self insertDocument:newDocument atIndex:newIndex];
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager setActionName:@"Add keyboard layout"];
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
-	NSAssert(indexToRemove < [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(indexToRemove < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[indexToRemove];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
@@ -1378,7 +1380,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)insertDocument:(UkeleleKeyboardObject *)newDocument atIndex:(NSInteger)newIndex {
-	NSAssert(newIndex <= [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(newIndex <= [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
 	[undoManager setActionName:@"Insert keyboard layout"];
@@ -1390,7 +1392,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:index];
 	[undoManager setActionName:@"Insert keyboard layout"];
@@ -1400,11 +1402,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)addIcon:(NSData *)iconData atIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeIconAtIndex:index];
 	[undoManager setActionName:@"Add icon"];
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
+	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
 	[keyboardInfo setIconData:iconData];
 	[keyboardInfo setHasIcon:YES];
 		// Notify the list that it's been updated
@@ -1412,7 +1414,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)removeIconAtIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
 	NSData *iconData = [keyboardInfo iconData];
 	NSUndoManager *undoManager = [self undoManager];
@@ -1425,8 +1427,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceIconAtIndex:(NSUInteger)index withIcon:(NSData *)iconData {
-	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
+	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
 	NSData *oldIconData = [keyboardInfo iconData];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceIconAtIndex:index withIcon:oldIconData];
@@ -1437,7 +1439,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceIntendedLanguageAtIndex:(NSUInteger)index withLanguage:(LanguageCode *)newLanguage {
-	NSAssert(index < [self.keyboardLayouts count], @"Index is invalid");
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
 	LanguageCode *oldLanguage = [LanguageCode languageCodeFromString:[keyboardInfo intendedLanguage]];
 	NSUndoManager *undoManager = [self undoManager];
@@ -1453,10 +1455,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager beginUndoGrouping];
 	[self addNewDocument:newDocument];
 	if (iconData != nil) {
-		[self addIcon:iconData atIndex:[self.keyboardLayouts count] - 1];
+		[self addIcon:iconData atIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1];
 	}
 	if (intendedLanguage != nil) {
-		[self replaceIntendedLanguageAtIndex:[self.keyboardLayouts count] - 1 withLanguage:[LanguageCode languageCodeFromString:intendedLanguage]];
+		[self replaceIntendedLanguageAtIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1 withLanguage:[LanguageCode languageCodeFromString:intendedLanguage]];
 	}
 	[undoManager setActionName:@"Capture current input source"];
 	[undoManager endUndoGrouping];
