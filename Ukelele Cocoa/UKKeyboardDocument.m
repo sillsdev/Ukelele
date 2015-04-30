@@ -78,6 +78,30 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
     return self;
 }
 
+- (instancetype)initWithType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
+	self = [self init];
+	if (self) {
+		self.fileType = typeName;
+		if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
+				// Unbundled keyboard layout
+			_isBundle = NO;
+		}
+		else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle]) {
+				// Bundle
+			_isBundle = YES;
+		}
+		else {
+				// Unsupported type
+			self = nil;
+			if (outError != nil) {
+				NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Invalid type for document"};
+				*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidFileType userInfo:errorDict];
+			}
+		}
+	}
+	return self;
+}
+
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
