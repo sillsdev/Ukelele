@@ -157,20 +157,47 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
   forSaveOperation:(NSSaveOperationType)saveOperation
 originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 error:(NSError *__autoreleasing *)outError {
-	if ([typeName isEqualToString:kFileTypeKeyboardLayout] && !self.isBundle) {
-			// This is an unbundled keyboard layout document
-		return [self saveKeyboardLayoutToURL:url error:outError];
-	}
-	else if (self.isBundle && ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle])) {
-			// A bundle
-		if (absoluteOriginalContentsURL != nil) {
-				// Try to save only what has changed
-				// NOT IMPLEMENTED!
+	if (self.isBundle) {
+			// The document is a bundle
+		if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
+				// The user is trying to save a bundle as unbundled
+			if ([[self.keyboardLayoutsController arrangedObjects] count] == 1) {
+					// We only have one keyboard layout, so we can do it
+				[self convertToUnbundled];
+				return [self saveKeyboardLayoutToURL:url error:outError];
+			}
+			else {
+					// Not a single keyboard layout, so throw an error
+				if (outError != nil) {
+					NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Can only convert a bundle with a single keyboard layout to an unbundled file"};
+					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotConvertToUnbundled userInfo:errorDict];
+				}
+			}
 		}
-		NSFileWrapper *keyboardWrapper = [self createFileWrapper];
-		return [keyboardWrapper writeToURL:url options:0 originalContentsURL:nil error:outError];
+		else if (self.isBundle && ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle])) {
+				// A bundle
+			if (absoluteOriginalContentsURL != nil) {
+					// Try to save only what has changed
+					// NOT IMPLEMENTED!
+			}
+			NSFileWrapper *keyboardWrapper = [self createFileWrapper];
+			return [keyboardWrapper writeToURL:url options:0 originalContentsURL:nil error:outError];
+		}
 	}
-		// Not a valid type
+	else {
+			// The document is an unbundled keyboard layout
+		if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
+				// Save as unbundled
+			return [self saveKeyboardLayoutToURL:url error:outError];
+		}
+		else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle]) {
+				// Convert to bundled
+			[self convertToBundle];
+			NSFileWrapper *fileWrapper = [self createFileWrapper];
+			return [fileWrapper writeToURL:url options:0 originalContentsURL:nil error:outError];
+		}
+	}
+		// If we get here, we were given an invalid type
 	if (outError != nil) {
 		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Invalid type for save operation"};
 		*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidFileType userInfo:errorDict];
@@ -180,6 +207,41 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 + (BOOL)autosavesInPlace {
     return YES;
+}
+
+#pragma mark Convert file type
+
+- (void)convertToBundle {
+	NSAssert(!self.isBundle, @"Trying to convert a bundle to a bundle");
+	[self setIsBundle:YES];
+	UkeleleKeyboardObject *keyboardObject = self.keyboardLayout;
+	[self setKeyboardLayout:nil];
+	NSArray *controllers = [self windowControllers];
+	if ([controllers count] > 0) {
+		NSAssert([controllers count] == 1, @"More than one window controller");
+		NSWindowController *theController = controllers[0];
+		[theController close];
+		[self removeWindowController:theController];
+	}
+	[self makeWindowControllers];
+	[self addNewDocument:keyboardObject];
+	[self showWindows];
+}
+
+- (void)convertToUnbundled {
+	NSAssert(self.isBundle, @"Trying to convert a non-bundle to a non-bundle");
+	NSAssert([[self.keyboardLayoutsController arrangedObjects] count] == 1, @"Cannot convert a bundle with more than one keyboard layout");
+	[self setIsBundle:NO];
+	KeyboardLayoutInformation *layoutInfo = [[self.keyboardLayoutsController arrangedObjects] objectAtIndex:0];
+	NSArray *controllers = [self windowControllers];
+	if ([controllers count] > 0) {
+		NSAssert([controllers count] == 1, @"More than one window controller");
+		NSWindowController *theController = controllers[0];
+		[theController close];
+		[self removeWindowController:theController];
+	}
+	[self setupKeyboard:[layoutInfo keyboardObject]];
+	[self showWindows];
 }
 
 #pragma mark Capturing input source
@@ -413,16 +475,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:outError];
 	if (theKeyboard != nil) {
-		self.keyboardLayout = theKeyboard;
-		UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-		NSAssert(windowController, @"Must get a valid window controller");
-		[windowController setKeyboardLayout:theKeyboard];
-		[windowController setParentDocument:self];
-		[self addWindowController:windowController];
+		[self setupKeyboard:theKeyboard];
 		return YES;
 	}
 		// No valid keyboard layout created, outError is already set
 	return NO;
+}
+
+- (void)setupKeyboard:(UkeleleKeyboardObject *)theKeyboard {
+	self.keyboardLayout = theKeyboard;
+	UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+	NSAssert(windowController, @"Must get a valid window controller");
+	[windowController setKeyboardLayout:theKeyboard];
+	[windowController setParentDocument:self];
+	[self addWindowController:windowController];
 }
 
 - (BOOL)parseBundleFileWrapper:(NSFileWrapper *)theFileWrapper withError:(NSError **)error {

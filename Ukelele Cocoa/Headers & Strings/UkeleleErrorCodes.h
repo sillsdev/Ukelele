@@ -21,7 +21,8 @@ enum UkeleleErrors {
 	kUkeleleErrorNotPlainFile = -17,				// Not a plain file for a keyboard layout
 	kUkeleleErrorInvalidFileType = -18,				// Invalid UTI given
 	kUkeleleErrorCouldNotUninstallHelper = -19,		// Could not uninstall the helper tool
-	kUkeleleErrorNoKeyboardLayoutsInBundle = -20	// No keyboard layouts in bundle
+	kUkeleleErrorNoKeyboardLayoutsInBundle = -20,	// No keyboard layouts in bundle
+	kUkeleleErrorCannotConvertToUnbundled = -21		// Could not convert a bundle to an unbundled keyboard layout
 };
 
 #endif
