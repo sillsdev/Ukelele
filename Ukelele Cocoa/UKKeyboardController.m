@@ -500,7 +500,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)assignClickTargets {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	for (KeyCapView *subView in [ukeleleView keyCapViews]) {
+	for (KeyCapView *subView in [ukeleleView subviews]) {
 		[subView setClickDelegate:self];
 	}
 }
@@ -1577,8 +1577,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 															dragText:draggedText
 															  window:self.window];
     [handler setCompletionTarget:self];
-	[handler startDrag];
 	interactionHandler = handler;
+	[handler startDrag];
 }
 
 - (void)messageEditPaneClosed

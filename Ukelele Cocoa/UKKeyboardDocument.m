@@ -171,6 +171,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				if (outError != nil) {
 					NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Can only convert a bundle with a single keyboard layout to an unbundled file"};
 					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotConvertToUnbundled userInfo:errorDict];
+					return NO;
 				}
 			}
 		}
