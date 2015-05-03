@@ -25,7 +25,7 @@ typedef void * UkeleleKeyboard;
 
 @class XMLCommentHolderObject;
 
-@interface UkeleleKeyboardObject : NSObject
+@interface UkeleleKeyboardObject : NSObject<NSCopying>
 
 @property (readonly) UkeleleKeyboard *keyboard;
 @property (weak) id<UkeleleDocumentDelegate> delegate;

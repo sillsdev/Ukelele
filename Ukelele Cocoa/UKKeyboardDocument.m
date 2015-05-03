@@ -484,6 +484,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)setupKeyboard:(UkeleleKeyboardObject *)theKeyboard {
+		 // Set the new keyboard and create a window for it
 	self.keyboardLayout = theKeyboard;
 	UKKeyboardController *windowController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 	NSAssert(windowController, @"Must get a valid window controller");
@@ -828,14 +829,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	else if (theAction == @selector(openKeyboardLayout:) || theAction == @selector(captureInputSource:) ||
+	else if (theAction == @selector(captureInputSource:) ||
 			 theAction == @selector(installForCurrentUser:) || theAction == @selector(installForAllUsers:)) {
 			// Always active
 		return YES;
 	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
-			 theAction == @selector(removeKeyboardLayout:)) {
+			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(removeKeyboardLayout:) ||
+			 theAction == @selector(duplicateKeyboardLayout:)) {
 			// Only active if there's a selection in the table
 		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
@@ -1294,6 +1296,25 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 }
 
+- (IBAction)duplicateKeyboardLayout:(id)sender {
+	[self setTableSelectionForMenu];
+	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	UkeleleKeyboardObject *keyboardObject = [selectedRowInfo keyboardObject];
+	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
+	NSError *theError;
+	UKKeyboardDocument *newDocument = [theController makeUntitledDocumentOfType:kFileTypeKeyboardLayout error:&theError];
+	if (newDocument != nil) {
+			// Got the document
+		[theController addDocument:newDocument];
+		[newDocument setupKeyboard:[keyboardObject copy]];
+		[newDocument showWindows];
+	}
+}
+
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError {
 	UKDocumentPrintViewController *printViewController = [UKDocumentPrintViewController documentPrintViewController];
 	NSAssert(printViewController, @"Must have a print view controller");
@@ -1496,6 +1517,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
+	[keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 
 - (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {

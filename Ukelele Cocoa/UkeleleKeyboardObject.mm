@@ -135,6 +135,12 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+	NSData *currentData = [self convertToData];
+	UkeleleKeyboardObject *theCopy = [[UkeleleKeyboardObject allocWithZone:zone] initWithData:currentData withError:nil];
+	return theCopy;
+}
+
 - (NSData *)convertToData
 {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];

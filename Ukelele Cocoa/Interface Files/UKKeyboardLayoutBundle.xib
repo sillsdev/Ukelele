@@ -266,6 +266,12 @@
                         <action selector="removeKeyboardLayout:" target="-2" id="qnv-U3-VNv"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Duplicate Keyboard Layout" id="2GA-gi-xAz">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="duplicateKeyboardLayout:" target="-2" id="dkB-hS-Koy"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Set Keyboard Name and ID…" id="2Y2-hz-MX0">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
