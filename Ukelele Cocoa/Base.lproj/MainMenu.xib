@@ -77,7 +77,7 @@
                                     <action selector="newDocument:" target="-1" id="4Si-XN-c54"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New From Current Input" id="dFz-eE-MKz">
+                            <menuItem title="New From Current Input Source" id="dFz-eE-MKz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="newFromCurrentInput:" target="-1" id="Vzy-kM-8NZ"/>

@@ -220,6 +220,21 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-c8-4cj">
+                        <rect key="frame" x="177" y="13" width="80" height="32"/>
+                        <buttonCell key="cell" type="push" title="Icon…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ngg-fR-XL2">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="attachIconFile:" target="-2" id="cDa-vv-KvK"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="qxU-Mi-0Pw">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="R44-1f-ZB9" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="22" id="6Is-eK-NAy"/>
@@ -299,6 +314,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="LZ6-Bn-g9C"/>
             </connections>
+            <point key="canvasLocation" x="173" y="514.5"/>
         </menu>
     </objects>
     <resources>
