@@ -13,8 +13,13 @@
 - (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName {
 	self = [super init];
 	_keyboardObject = theKeyboard;
-	_keyboardName = [theKeyboard keyboardName];
 	_fileName = fileName;
+	if (_keyboardObject) {
+		_keyboardName = [theKeyboard keyboardName];
+	}
+	else {
+		_keyboardName = fileName;
+	}
 	_hasIcon = NO;
 	_keyboardFileWrapper = nil;
 	return self;

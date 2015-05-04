@@ -580,22 +580,12 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			}
 			if (isKeyboardLayout) {
 					// It's a keyboard layout file
-				NSData *keyboardData = [directoryEntry regularFileContents];
-				NSError *readError;
-				UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:keyboardData withError:&readError];
-				if (keyboardObject == nil) {
-					// We've failed to read the document
-					[self presentError:readError];
-					return NO;
-				}
-				baseNameDictionary[kKeyboardObjectKey] = keyboardObject;
-					// Get the name
-				NSString *keyboardName = [keyboardObject keyboardName];
-				baseNameDictionary[kKeyboardNameKey] = keyboardName;
 					// Save the file name
 				NSString *fileName = [directoryEntry filename];
 				baseNameDictionary[kKeyboardFileNameKey] = [fileName stringByDeletingPathExtension];
 				baseNameDictionary[kKeyboardFileWrapperKey] = directoryEntry;
+					// We don't have the keyboard name yet, so use the file name
+				baseNameDictionary[kKeyboardNameKey] = baseNameDictionary[kKeyboardFileNameKey];
 			}
 			else if (isIconFile) {
 					// It's an icon file
@@ -666,6 +656,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry {
 	UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+	if ([keyboardEntry keyboardObject] == nil) {
+			// Not loaded, so load it now
+		NSError *readError;
+		NSFileWrapper *fileWrapper = [keyboardEntry keyboardFileWrapper];
+		NSData *fileData = [fileWrapper regularFileContents];
+		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:&readError];
+		if (keyboardObject == nil) {
+				// Couldn't read the file
+			[self presentError:readError];
+			return nil;
+		}
+		[keyboardEntry setKeyboardObject:keyboardObject];
+		[keyboardEntry setKeyboardName:[keyboardObject keyboardName]];
+	}
 	[keyboardController setKeyboardLayout:[keyboardEntry keyboardObject]];
 	[keyboardEntry setKeyboardController:keyboardController];
 	[keyboardController setParentDocument:self];
@@ -1209,6 +1213,12 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			}
 			else {
 				[self addNewDocument:keyboardLayout];
+					// Autosave the document after adding the new keyboard layout
+				[self autosaveWithImplicitCancellability:YES completionHandler:^(NSError *errorOrNil) {
+					if (errorOrNil) {
+						[self presentError:errorOrNil];
+					}
+				}];
 			}
 		}
 	}];
@@ -1304,6 +1314,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
 	UkeleleKeyboardObject *keyboardObject = [selectedRowInfo keyboardObject];
+	if (keyboardObject == nil) {
+			// Not loaded, so do so
+		NSError *readError;
+		NSFileWrapper *fileWrapper = [selectedRowInfo keyboardFileWrapper];
+		NSData *fileData = [fileWrapper regularFileContents];
+		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:&readError];
+		if (keyboardObject == nil) {
+				// Couldn't read the file
+			[self presentError:readError];
+			return;
+		}
+		[selectedRowInfo setKeyboardObject:keyboardObject];
+		[selectedRowInfo setKeyboardName:[keyboardObject keyboardName]];
+	}
 	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 	NSError *theError;
 	UKKeyboardDocument *newDocument = [theController makeUntitledDocumentOfType:kFileTypeKeyboardLayout error:&theError];
@@ -1372,8 +1396,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			// We have a single selected keyboard layout
 		KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRow];
 		UKKeyboardController *selectedWindow = [selectedRowInfo keyboardController];
-		if (selectedRowInfo == nil) {
+		if (selectedWindow == nil) {
 			selectedWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
+			if ([selectedRowInfo keyboardObject] == nil) {
+					// Not loaded
+				NSError *readError;
+				NSFileWrapper *fileWrapper = [selectedRowInfo keyboardFileWrapper];
+				NSData *fileData = [fileWrapper regularFileContents];
+				UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:&readError];
+				if (keyboardObject == nil) {
+						// Couldn't read the file
+					[self presentError:readError];
+					return;
+				}
+				[selectedRowInfo setKeyboardObject:keyboardObject];
+				[selectedRowInfo setKeyboardName:[keyboardObject keyboardName]];
+			}
 			[selectedWindow setKeyboardLayout:[selectedRowInfo keyboardObject]];
 			[selectedRowInfo setKeyboardController:selectedWindow];
 		}
