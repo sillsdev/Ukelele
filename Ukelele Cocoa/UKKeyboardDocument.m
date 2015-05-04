@@ -339,6 +339,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (NSFileWrapper *)createFileWrapper {
 		// Make a copy of the keyboard layouts array so that we don't have it change under us
 	NSArray *keyboardLayouts = [self.keyboardLayouts copy];
+		// Allow the user to interact while we save asynchronously
+	[self unblockUserInteraction];
 		// Start at the bottom, the InfoPlist.strings file, which contains all the names
 	NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
