@@ -74,7 +74,6 @@
 	NSAssert([value isKindOfClass:[NSNumber class]], @"Must be a number");
 	UKDiacriticDisplay *diacriticDisplay = [UKDiacriticDisplay getInstance];
 	NSUInteger theIndex = [diacriticDisplay indexForDiacritic:[value unsignedIntValue]];
-	NSLog(@"Transform %x to %@", [value unsignedIntValue], [diacriticDisplay textForIndex:theIndex]);
 	return [diacriticDisplay textForIndex:theIndex];
 }
 
@@ -98,7 +97,6 @@
 	else if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticSpace]]) {
 		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticSpace];
 	}
-	NSLog(@"Reverse transform %@ to %x", value, [diacriticString characterAtIndex:0]);
 	result = @([diacriticString characterAtIndex:0]);
 	return result;
 }
