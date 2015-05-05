@@ -83,6 +83,8 @@
 	</dict>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
+	<key>SUFeedURL</key>
+	<string>http://scripts.sil.org/ukelelefeed</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

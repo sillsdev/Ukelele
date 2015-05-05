@@ -27,6 +27,7 @@
 
 - (IBAction)returnToDefaults:(id)sender;
 - (IBAction)changeDefaultFont:(id)sender;
+
 - (void)runPreferences;
 - (void)changeFont:(id)fontManager;		// Sent by font panel
 

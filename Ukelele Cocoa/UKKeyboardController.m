@@ -117,6 +117,10 @@ const CGFloat kTextPaneHeight = 17.0f;
     [self.tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
 	UkeleleView *ukeleleView = [[UkeleleView alloc] init];
     NSNumber *scaleValue = internalState[kStateCurrentScale];
+	if ([scaleValue doubleValue] <= 0.0) {
+			// Fit width
+		scaleValue = @(1.25);
+	}
 	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:[scaleValue doubleValue]];
 	[ukeleleView setMenuDelegate:self];
 	[self.keyboardView setDocumentView:ukeleleView];
@@ -124,6 +128,10 @@ const CGFloat kTextPaneHeight = 17.0f;
     [self setupDataSource];
 	[self calculateSize];
 	[self updateWindow];
+	if ([internalState[kStateCurrentScale] doubleValue] <= 0) {
+			// This is fit width
+		[self changeViewScale:[self fitWidthScale]];
+	}
 	NSArray *scaleArray = [ViewScale standardScales];
 	[self.scaleComboBox removeAllItems];
 	for (ViewScale *scale in scaleArray) {

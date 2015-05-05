@@ -249,24 +249,7 @@ static CGAffineTransform kTextTransform = {
 		else if ([self.outputString length] == 1 && [XMLCocoaUtilities isCombiningDiacritic:firstChar]) {
 				// Combining diacritic by itself
 			unichar combinedString[2];
-			NSInteger diacriticIndex = [[NSUserDefaults standardUserDefaults] integerForKey:UKDiacriticDisplayCharacter];
-			unichar diacriticChar = kSpaceUnicode;
-			switch (diacriticIndex) {
-				case UKDiacriticSquare:
-					diacriticChar = kWhiteSquareUnicode;
-					break;
-					
-				case UKDiacriticDottedSquare:
-					diacriticChar = kDottedSquareUnicode;
-					break;
-					
-				case UKDiacriticCircle:
-					diacriticChar = kWhiteCircleUnicode;
-					break;
-					
-				case UKDiacriticDottedCircle:
-					diacriticChar = kDottedCircleUnicode;
-			}
+			unichar diacriticChar = [[NSUserDefaults standardUserDefaults] integerForKey:UKDiacriticDisplayCharacter];
 			combinedString[0] = diacriticChar;
 			combinedString[1] = firstChar;
 			displayText = [[NSMutableAttributedString alloc]

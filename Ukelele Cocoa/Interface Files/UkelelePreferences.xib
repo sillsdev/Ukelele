@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -133,22 +133,39 @@
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </comboBoxCell>
+                                    <connections>
+                                        <binding destination="hMj-Q9-PR8" name="value" keyPath="values.ScaleFactor" id="7YE-kn-58Z">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">ScaleTransformer</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </comboBox>
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNc-yy-nJt">
                                     <rect key="frame" x="142" y="75" width="223" height="26"/>
-                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ld3-mG-f6Y" id="GNp-tV-rT5">
+                                    <popUpButtonCell key="cell" type="push" title="Square" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ld3-mG-f6Y" id="GNp-tV-rT5">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" title="OtherViews" id="Pqd-qr-f8R">
                                             <items>
-                                                <menuItem title="Item 1" state="on" id="ld3-mG-f6Y"/>
-                                                <menuItem title="Item 2" id="fwy-gV-L4W"/>
-                                                <menuItem title="Item 3" id="eZ4-SB-RXA"/>
+                                                <menuItem title="Square" id="ld3-mG-f6Y"/>
+                                                <menuItem title="Dotted square" id="fwy-gV-L4W"/>
+                                                <menuItem title="Circle" id="eZ4-SB-RXA"/>
+                                                <menuItem title="Dotted circle" id="vMb-Dp-tTU">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                </menuItem>
+                                                <menuItem title="Space" id="fJs-SH-xoY">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                </menuItem>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
                                     <connections>
-                                        <binding destination="hMj-Q9-PR8" name="selectedIndex" keyPath="values.DiacriticDisplayCharacter" id="MQa-ZN-eYi"/>
+                                        <binding destination="hMj-Q9-PR8" name="selectedValue" keyPath="values.DiacriticDisplayCharacter" id="sUH-3K-qd3">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">DiacriticTransformer</string>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </popUpButton>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Ou-eI-Gny">
@@ -194,7 +211,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hr-pk-vPi">
-                                    <rect key="frame" x="241" y="14" width="174" height="44"/>
+                                    <rect key="frame" x="241" y="14" width="205" height="44"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ofG-Hf-4gj">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

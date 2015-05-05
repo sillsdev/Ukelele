@@ -8,9 +8,106 @@
 
 #import "UkelelePreferenceController.h"
 #import "UkeleleConstantStrings.h"
+#import "UkeleleConstants.h"
+#import "ViewScale.h"
+#import "UKDiacriticDisplay.h"
 
 #define kMinZoom 0.5
 #define kMaxZoom 5.0
+
+@interface ScaleTransformer : NSValueTransformer
+
+@end
+
+@implementation ScaleTransformer
+
++ (BOOL)allowsReverseTransformation {
+	return YES;
+}
+
++ (Class)transformedValueClass {
+	return [NSString class];
+}
+
+- (id)transformedValue:(id)value {
+	NSAssert([value isKindOfClass:[NSNumber class]], @"Must be a number");
+	NSString *theValue;
+	if ([value floatValue] < 0) {
+		theValue = @"Fit Width";
+	}
+	else {
+		theValue = [NSString stringWithFormat:@"%.0f%%", [value floatValue] * 100.0];
+	}
+	return theValue;
+}
+
+- (id)reverseTransformedValue:(id)value {
+	NSAssert([value isKindOfClass:[NSString class]], @"Must be a string");
+	NSNumber *returnValue;
+	if ([value isEqualToString:@"Fit Width"]) {
+		returnValue = @(-1);
+	}
+	else {
+		CGFloat floatValue = [value floatValue];
+		returnValue = @(floatValue / 100.0);
+	}
+	return returnValue;
+}
+
+@end
+
+@interface DiacriticTransformer : NSValueTransformer
+
+@end
+
+@implementation DiacriticTransformer
+
++ (Class)transformedValueClass {
+	return [NSNumber class];
+}
+
++ (BOOL)allowsReverseTransformation {
+	return YES;
+}
+
+- (id)transformedValue:(id)value {
+	NSAssert([value isKindOfClass:[NSNumber class]], @"Must be a number");
+	UKDiacriticDisplay *diacriticDisplay = [UKDiacriticDisplay getInstance];
+	NSUInteger theIndex = [diacriticDisplay indexForDiacritic:[value unsignedIntValue]];
+	NSLog(@"Transform %x to %@", [value unsignedIntValue], [diacriticDisplay textForIndex:theIndex]);
+	return [diacriticDisplay textForIndex:theIndex];
+}
+
+- (id)reverseTransformedValue:(id)value {
+	NSAssert([value isKindOfClass:[NSString class]], @"Must be a string");
+	NSNumber *result;
+	NSString *diacriticString = @" ";
+	UKDiacriticDisplay *diacriticDisplay = [UKDiacriticDisplay getInstance];
+	if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticSquare]]) {
+		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticSquare];
+	}
+	else if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticDottedSquare]]) {
+		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticDottedSquare];
+	}
+	else if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticCircle]]) {
+		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticCircle];
+	}
+	else if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticDottedCircle]]) {
+		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticDottedCircle];
+	}
+	else if ([value isEqualToString:[diacriticDisplay textForIndex:UKDiacriticSpace]]) {
+		diacriticString = [diacriticDisplay diacriticForIndex:UKDiacriticSpace];
+	}
+	NSLog(@"Reverse transform %@ to %x", value, [diacriticString characterAtIndex:0]);
+	result = @([diacriticString characterAtIndex:0]);
+	return result;
+}
+
+@end
+
+@interface UkelelePreferenceController ()
+@property (strong) NSMutableArray *scalesList;
+@end
 
 @implementation UkelelePreferenceController
 
@@ -28,6 +125,11 @@ static NSString *nibWindow = @"Preferences";
 		NSString *fontName = [defaults stringForKey:UKTextFont];
 		float fontSize = [defaults floatForKey:UKTextSize];
 		_currentFont = [NSFont fontWithName:fontName size:fontSize];
+		_scalesList = [ViewScale standardScales];
+		[_defaultZoom removeAllItems];
+		for (ViewScale *scale in _scalesList) {
+			[_defaultZoom addItemWithObjectValue:[scale scaleLabel]];
+		}
     }
     
     return self;
@@ -75,7 +177,6 @@ static NSString *nibWindow = @"Preferences";
 	self.currentFont = [NSFont fontWithName:fontName size:fontSize];
 	[self showWindow:[self window]];
 }
-
 
 	// Ensure that the interface shows the correct preferences
 - (void)syncPreferences {
