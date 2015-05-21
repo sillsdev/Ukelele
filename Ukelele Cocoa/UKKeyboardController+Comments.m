@@ -7,6 +7,7 @@
 //
 
 #import "UKKeyboardController+Comments.h"
+#import "XMLCocoaUtilities.h"
 
 @implementation UKKeyboardController (Comments)
 
@@ -54,7 +55,7 @@
 	}
 	NSString *commentText = [self.keyboardLayout firstComment];
 	NSAssert(commentText, @"Must have comment text");
-	[self.commentPane setString:commentText];
+	[self.commentPane setString:[XMLCocoaUtilities convertEncodedString:commentText]];
 	[self updateCommentFields];
 }
 
@@ -65,7 +66,7 @@
 	}
 	NSString *commentText = [self.keyboardLayout previousComment];
 	NSAssert(commentText, @"Must have comment text");
-	[self.commentPane setString:commentText];
+	[self.commentPane setString:[XMLCocoaUtilities convertEncodedString:commentText]];
 	[self updateCommentFields];
 }
 
@@ -76,7 +77,7 @@
 	}
 	NSString *commentText = [self.keyboardLayout nextComment];
 	NSAssert(commentText, @"Must have comment text");
-	[self.commentPane setString:commentText];
+	[self.commentPane setString:[XMLCocoaUtilities convertEncodedString:commentText]];
 	[self updateCommentFields];
 }
 
@@ -87,7 +88,7 @@
 	}
 	NSString *commentText = [self.keyboardLayout lastComment];
 	NSAssert(commentText, @"Must have comment text");
-	[self.commentPane setString:commentText];
+	[self.commentPane setString:[XMLCocoaUtilities convertEncodedString:commentText]];
 	[self updateCommentFields];
 }
 
@@ -100,7 +101,7 @@
 		// Set the comment text pane
 	NSString *commentText = [self.keyboardLayout currentComment];
 	if (commentText) {
-		[self.commentPane setString:commentText];
+		[self.commentPane setString:[XMLCocoaUtilities convertEncodedString:commentText]];
 	}
 		// Set the XML statement pane
 	NSString *holderText = [self.keyboardLayout currentHolderText];
@@ -147,7 +148,7 @@
 - (void)saveUnsavedComment {
 	NSString *existingComment = [self.keyboardLayout currentComment];
 	NSAssert(existingComment, @"Must have an existing comment");
-	NSString *commentPaneContents = [[self.commentPane string] copy];
+	NSString *commentPaneContents = [XMLCocoaUtilities makeXMLString:[self.commentPane string] codingNonAscii:NO];
 	XMLCommentHolderObject *currentHolder = [self.keyboardLayout currentCommentHolder];
 	NSAssert(currentHolder, @"Must have a current comment holder");
 	if (![commentPaneContents isEqualToString:existingComment]) {

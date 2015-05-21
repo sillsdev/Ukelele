@@ -1475,7 +1475,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 									  kKeyModifiers: internalState[kStateCurrentModifiers],
 									  kKeyState: internalState[kStateCurrentState]};
         NSString *displayText = [self.keyboardLayout getOutputInfoForKey:keyDataDict];
-		[[infoInspector outputField] setStringValue:displayText];
+		if (displayText) {
+			[[infoInspector outputField] setStringValue:displayText];
+		}
 	}
 }
 
