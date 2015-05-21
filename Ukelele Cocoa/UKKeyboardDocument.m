@@ -1362,6 +1362,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			break;
 		}
 	}
+		// Make sure that we know that we have a dirty subdocument
+	[self updateChangeCount:NSChangeDone];
 }
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
@@ -1393,30 +1395,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)inspectorSetKeyboardSection {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-	NSInteger selectedRow = [keyboardLayoutsTable selectedRow];
 	if ([[keyboardLayoutsTable selectedRowIndexes] count] == 1) {
 			// We have a single selected keyboard layout
-		KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRow];
-		UKKeyboardController *selectedWindow = [selectedRowInfo keyboardController];
-		if (selectedWindow == nil) {
-			selectedWindow = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
-			if ([selectedRowInfo keyboardObject] == nil) {
-					// Not loaded
-				NSError *readError;
-				NSFileWrapper *fileWrapper = [selectedRowInfo keyboardFileWrapper];
-				NSData *fileData = [fileWrapper regularFileContents];
-				UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:&readError];
-				if (keyboardObject == nil) {
-						// Couldn't read the file
-					[self presentError:readError];
-					return;
-				}
-				[selectedRowInfo setKeyboardObject:keyboardObject];
-				[selectedRowInfo setKeyboardName:[keyboardObject keyboardName]];
-			}
-			[selectedWindow setKeyboardLayout:[selectedRowInfo keyboardObject]];
-			[selectedRowInfo setKeyboardController:selectedWindow];
-		}
+		UKKeyboardController *selectedWindow = [self controllerForCurrentEntry];
 		[inspectorController setCurrentWindow:selectedWindow];
 		[inspectorController setKeyboardSectionEnabled:YES];
 	}
