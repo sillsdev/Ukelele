@@ -184,6 +184,7 @@
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
+		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
@@ -540,6 +541,8 @@
 		527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UninstallHelperTool.sh; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
+		528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDiacriticDisplay.h; sourceTree = "<group>"; };
+		528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDiacriticDisplay.m; sourceTree = "<group>"; };
 		528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseFrom3Sheet.xib; path = "Interface Files/ChooseFrom3Sheet.xib"; sourceTree = "<group>"; };
 		5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HandleDeadKeySheet.xib; path = "Interface Files/HandleDeadKeySheet.xib"; sourceTree = "<group>"; };
 		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
@@ -986,6 +989,8 @@
 				5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */,
 				523B00F9191CA0D100E06DF3 /* ToolboxData.h */,
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
+				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
+				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
 				523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */,
 				523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
@@ -1401,6 +1406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				523B010A191CA0D100E06DF3 /* LanguageCode.mm in Sources */,
+				528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */,
 				523B0194191CA18C00E06DF3 /* ChooseScale.m in Sources */,
 				523B00C1191CA00A00E06DF3 /* KeyElement.mm in Sources */,
 				523B0190191CA18C00E06DF3 /* ChooseDeadKeyHandling.m in Sources */,
@@ -1855,6 +1861,7 @@
 				5277EB6F1AAE844600C471C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */ = {
 			isa = XCConfigurationList;

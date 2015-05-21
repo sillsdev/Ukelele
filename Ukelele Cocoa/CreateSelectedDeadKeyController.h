@@ -25,6 +25,6 @@
 
 + (CreateSelectedDeadKeyController *)createSelectedDeadKeyController;
 
-- (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode completionBlock:(void (^)(NSDictionary *))callback;
+- (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode targetState:(NSString *)targetState completionBlock:(void (^)(NSDictionary *))callback;
 
 @end

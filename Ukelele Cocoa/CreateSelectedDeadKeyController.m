@@ -11,6 +11,8 @@
 #import "UkeleleConstantStrings.h"
 #import "UKKeyboardController+Housekeeping.h"
 
+#define theNibName @"CreateSelectedDeadKeySheet"
+
 @interface CreateSelectedDeadKeyController ()
 
 @property (strong, nonatomic) NSArray *stateNames;
@@ -23,7 +25,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[[NSBundle mainBundle] loadNibNamed:@"CreateSelectedDeadKeySheet" owner:self topLevelObjects:nil];
+	[[NSBundle mainBundle] loadNibNamed:theNibName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.
@@ -34,14 +36,24 @@
 }
 
 + (CreateSelectedDeadKeyController *)createSelectedDeadKeyController {
-	return [[CreateSelectedDeadKeyController alloc] initWithWindowNibName:@"CreateSelectedDeadKeySheet"];
+	return [[CreateSelectedDeadKeyController alloc] initWithWindowNibName:theNibName];
 }
 
-- (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode completionBlock:(void (^)(NSDictionary *))callback {
-	self.stateNames = [keyboardObject stateNamesExcept:kStateNameNone];
+- (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode targetState:(NSString *)targetState completionBlock:(void (^)(NSDictionary *))callback {
+	NSMutableArray *states = [[keyboardObject stateNamesExcept:kStateNameNone] mutableCopy];
+	[states insertObject:[keyboardObject uniqueStateName] atIndex:0];
+	self.stateNames = states;
 	completionBlock = callback;
 	[self.stateField removeAllItems];
 	[self.stateField addItemsWithObjectValues:self.stateNames];
+	if (targetState != nil) {
+			// Select the target state
+		[self.stateField selectItemWithObjectValue:targetState];
+	}
+	else {
+			// Select the newly created state name
+		[self.stateField selectItemAtIndex:0];
+	}
 	[self.missingStateWarning setHidden:YES];
 	[self.invalidStateNameWarning setHidden:YES];
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];

@@ -112,9 +112,19 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	else if (typeCode == kCreateDeadKeyHandlerKeyCode) {
 			// Starting from key code only
 		createWithSelectedSheet = [CreateSelectedDeadKeyController createSelectedDeadKeyController];
+		NSString *currentTargetState = nil;
+		NSDictionary *dataDict = @{kKeyKeyboardID: @(currentKeyboardID),
+								   kKeyKeyCode: @(selectedKeyCode),
+								   kKeyModifiers: @(currentModifiers),
+								   kKeyState: currentState};
+		if ([keyboardObject isDeadKey:dataDict]) {
+				// Get the target state
+			currentTargetState = [keyboardObject getNextState:dataDict];
+		}
 		[createWithSelectedSheet runSheetForWindow:parentWindow
 										  keyboard:keyboardObject
 										   keyCode:selectedKeyCode
+									   targetState:currentTargetState
 								   completionBlock:^(NSDictionary *keyData) {
 									   if (!keyData) {
 											   // User cancelled
