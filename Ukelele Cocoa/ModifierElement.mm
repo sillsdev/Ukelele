@@ -433,6 +433,7 @@ ErrorMessage ModifierElement::CreateFromXMLTree(const NXMLNode& inXMLTree, Modif
 NXMLNode *ModifierElement::CreateXMLTree(void)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kModifierElement);
+	xmlTree->SetElementUnpaired(true);
 	xmlTree->SetElementAttribute(kKeysAttribute, GetModifierKeyList());
 	AddCommentsToXMLTree(*xmlTree);
 	return xmlTree;
@@ -484,17 +485,12 @@ UInt32 ModifierElement::SimplifiedModifier(const UInt32 inStatus)
 ModifierElement *ModifierElement::SimplifiedModifierElement(void)
 {
     ModifierElement *simplifiedElement = new ModifierElement();
-    UInt32 modifierStatus;
-    modifierStatus = GetModifierStatus(alphaLock);
-    simplifiedElement->AddModifier(alphaLock, 0, modifierStatus);
-    modifierStatus = GetModifierStatus(cmdKey);
-    simplifiedElement->AddModifier(cmdKey, 0, modifierStatus);
-    modifierStatus = GetModifierPairStatus(shiftKey, rightShiftKey);
-    simplifiedElement->AddModifierPair(shiftKey, rightShiftKey, SimplifiedModifier(modifierStatus));
-    modifierStatus = GetModifierPairStatus(optionKey, rightOptionKey);
-    simplifiedElement->AddModifierPair(optionKey, rightOptionKey, SimplifiedModifier(modifierStatus));
-    modifierStatus = GetModifierPairStatus(controlKey, rightControlKey);
-    simplifiedElement->AddModifierPair(controlKey, rightControlKey, SimplifiedModifier(modifierStatus));
+	UInt32 capsLockStatus = GetModifierStatus(alphaLock);
+	UInt32 cmdStatus = GetModifierStatus(cmdKey);
+	UInt32 shiftStatus = SimplifiedModifier(GetModifierPairStatus(shiftKey, rightShiftKey));
+	UInt32 optionStatus = SimplifiedModifier(GetModifierPairStatus(optionKey, rightOptionKey));
+	UInt32 controlStatus = SimplifiedModifier(GetModifierPairStatus(controlKey, rightControlKey));
+	simplifiedElement->SetModifierStatus(shiftStatus, capsLockStatus, optionStatus, cmdStatus, controlStatus);
     return simplifiedElement;
 }
 

@@ -173,6 +173,7 @@ NXMLNode *KeyElement::CreateXMLTree(void)
 	xmlTree->SetElementAttribute(kCodeAttribute, keyCodeString);
 	if (mElementType == kKeyFormAction) {
 		xmlTree->SetElementAttribute(kActionAttribute, XMLUtilities::ConvertToXMLString(mActionName));
+		xmlTree->SetElementUnpaired(true);
 	}
 	else if (mElementType == kKeyFormInlineAction) {
 		NXMLNode *childTree = mInlineAction->CreateXMLTree();
@@ -180,6 +181,7 @@ NXMLNode *KeyElement::CreateXMLTree(void)
 	}
 	else {
 		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput));
+		xmlTree->SetElementUnpaired(true);
 	}
 	return xmlTree;
 }

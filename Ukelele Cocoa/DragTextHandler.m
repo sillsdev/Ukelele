@@ -50,7 +50,7 @@
 		[handler startWithWindow:parentWindow callBack:^(NSInteger theChoice) {
 			switch (theChoice) {
 				case -1:	// User cancelled
-					return;
+					break;
 					
 				case 0:		// Change terminator
 					[[keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:nextState to:dragText];

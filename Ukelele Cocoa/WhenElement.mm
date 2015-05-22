@@ -181,6 +181,7 @@ WhenElement::CreateXMLTree(void)
 {
 		// Create the tree
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kWhenElement);
+	xmlTree->SetElementUnpaired(true);
 		// Set the attributes
 	xmlTree->SetElementAttribute(kStateAttribute, XMLUtilities::ConvertToXMLString(mState));
 	if (!mOutput.IsEmpty() || mNext.IsEmpty()) {

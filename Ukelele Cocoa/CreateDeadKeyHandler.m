@@ -135,6 +135,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 									   deadKeyData[kCreateDeadKeySelectedKeyCode] = @(selectedKeyCode);
 									   deadKeyData[kDeadKeyDataKeyCode] = @(selectedKeyCode);
 									   deadKeyData[kDeadKeyDataModifiers] = @(currentModifiers);
+									   deadKeyData[kDeadKeyDataTerminator] = keyData[kCreateSelectedDeadKeyTerminator];
 									   [self checkDeadKeyParameters];
 								   }];
 	}

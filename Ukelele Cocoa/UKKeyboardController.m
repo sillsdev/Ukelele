@@ -535,8 +535,6 @@ const CGFloat kTextPaneHeight = 17.0f;
     }
     else if ([kTabNameModifiers isEqualTo:[tabViewItem identifier]]) {
 			// Activating the modifiers tab
-        [self.modifiersTableView setDoubleAction:@selector(doubleClickRow:)];
-        [self.modifiersTableView setTarget:self];
         [self updateModifiers];
         [self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0)];
         [self.simplifyModifiersButton setEnabled:![self.keyboardLayout hasSimplifiedModifiers]];

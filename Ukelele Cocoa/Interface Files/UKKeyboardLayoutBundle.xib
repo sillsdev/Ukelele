@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -37,24 +37,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="showVersionInfo:" target="-2" id="rXb-oH-p34"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
-                        <rect key="frame" x="259" y="13" width="114" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="102" id="CP3-j7-3kQ"/>
-                        </constraints>
-                        <buttonCell key="cell" type="push" title="Language…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfm-In-UYV">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="chooseIntendedLanguage:" target="-2" id="SXY-3f-eYc"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="ZVu-vi-rnL">
-                                <dictionary key="options">
-                                    <string key="NSValueTransformerName">NSIsNotNil</string>
-                                </dictionary>
-                            </binding>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R44-1f-ZB9">
@@ -122,7 +104,7 @@
                     </popUpButton>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZ0-ZP-oRP">
                         <rect key="frame" x="20" y="57" width="472" height="208"/>
-                        <clipView key="contentView" misplaced="YES" id="8IO-07-0Ig">
+                        <clipView key="contentView" id="8IO-07-0Ig">
                             <rect key="frame" x="1" y="0.0" width="470" height="207"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -194,14 +176,14 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="cn3-Dq-hFV"/>
-                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="cn3-Dq-hFV" id="XhV-IP-pFF"/>
+                                        <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="tyT-64-a4Q"/>
+                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="tyT-64-a4Q" id="nXp-CA-dFg"/>
                                         <binding destination="-2" name="doubleClickTarget" keyPath="self" id="Vfc-GN-p5v">
                                             <dictionary key="options">
                                                 <string key="NSSelectorName">openKeyboardLayout:</string>
                                             </dictionary>
                                         </binding>
-                                        <outlet property="dataSource" destination="-2" id="xXa-M7-v64"/>
+                                        <outlet property="dataSource" destination="-2" id="Gig-Sk-I9s"/>
                                         <outlet property="delegate" destination="-2" id="fhk-hp-Fya"/>
                                         <outlet property="menu" destination="wxf-v3-tUG" id="r3c-HP-gnY"/>
                                     </connections>
@@ -228,11 +210,21 @@
                         </buttonCell>
                         <connections>
                             <action selector="attachIconFile:" target="-2" id="cDa-vv-KvK"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="qxU-Mi-0Pw">
-                                <dictionary key="options">
-                                    <string key="NSValueTransformerName">NSIsNotNil</string>
-                                </dictionary>
-                            </binding>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selectionIndexes.count" id="FYC-XM-yWV"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
+                        <rect key="frame" x="259" y="13" width="114" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="102" id="CP3-j7-3kQ"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Language…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfm-In-UYV">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="chooseIntendedLanguage:" target="-2" id="SXY-3f-eYc"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selectionIndexes.count" id="aw5-AY-Mg4"/>
                         </connections>
                     </button>
                 </subviews>

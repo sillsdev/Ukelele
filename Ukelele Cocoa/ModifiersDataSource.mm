@@ -70,7 +70,10 @@ static NSMutableDictionary *statusDictionary = nil;
 			// No modifiers to show, so it's the empty string
 		result = [[NSAttributedString alloc] initWithString:@""];
 	}
-	else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight || modifierStatus == kModifierRight) {
+	else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight ||
+			 modifierStatus == kModifierRight || modifierStatus == kModifierLeftOpt ||
+			 modifierStatus == kModifierLeftOptRight || modifierStatus == kModifierLeftRightOpt ||
+			 modifierStatus == kModifierRightOpt) {
 			// Need to show both a left and a right
 		NSMutableAttributedString *leftString, *rightString;
 		NSAssert((modifier == shiftIndex || modifier == optionIndex || modifier == controlIndex), @"Must be a paired modifier");
@@ -92,23 +95,25 @@ static NSMutableDictionary *statusDictionary = nil;
 		}
 		NSMutableAttributedString *partialString = [[NSMutableAttributedString alloc] initWithString:@""];
 		NSMutableAttributedString *stringFragment;
-		if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight) {
+		if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [leftString length])];
 			[partialString appendAttributedString:stringFragment];
 		}
-		else {
+		else if (modifierStatus == kModifierRight || modifierStatus == kModifierRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [leftString length])];
 			[partialString appendAttributedString:stringFragment];
 		}
-		[partialString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@", "]];
-		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight) {
+		if ([partialString length] > 0) {
+			[partialString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@", "]];
+		}
+		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftOptRight) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:stringFragment];
 		}
-		else {
+		else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:stringFragment];
