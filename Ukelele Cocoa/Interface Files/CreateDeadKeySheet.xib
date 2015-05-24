@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -192,7 +192,7 @@ Gw
                                     <rect key="frame" x="18" y="14" width="410" height="60"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="FsF-eh-eJh">
                                         <font key="font" metaFont="smallSystem"/>
-                                        <string key="title">You can only specify a terminator if you are creating a new dead key state. A terminator is optional, and defaults to the empty string, so that a dead key followed by another key that does not have output assigned produces nothing.</string>
+                                        <string key="title">When you create a new dead key state, you can optionally specify a terminator, which is the character produced when the key typed after the dead key is not defined as having output in that dead key state.</string>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>

@@ -360,9 +360,9 @@ enum {
     ModifiersSheet *theSheet = [[ModifiersSheet alloc] initWithWindowNibName:nibSimplifiedWindowName];
     if (choiceMenu == nil) {
         choiceMenu = [[NSMenu alloc] init];
-        [choiceMenu addItemWithTitle:@"Not Pressed" action:nil keyEquivalent:@""];
-        [choiceMenu addItemWithTitle:@"Pressed" action:nil keyEquivalent:@""];
-        [choiceMenu addItemWithTitle:@"Either" action:nil keyEquivalent:@""];
+        [choiceMenu addItemWithTitle:@"Up" action:nil keyEquivalent:@""];
+        [choiceMenu addItemWithTitle:@"Down" action:nil keyEquivalent:@""];
+        [choiceMenu addItemWithTitle:@"Either Up or Down" action:nil keyEquivalent:@""];
     }
     [theSheet.shiftPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.shiftPopup withStatus:[modifierInfo shiftValue]];
@@ -455,7 +455,7 @@ enum {
     }
     NSWindow *myWindow = [self isSimplified] ? [self simplifiedWindow] : [self window];
 	[myWindow orderOut:self];
-	[NSApp endSheet:[self window]];
+	[NSApp endSheet:myWindow];
 	callBack(modifierInfo);
 }
 
@@ -463,7 +463,7 @@ enum {
 {
     NSWindow *myWindow = [self isSimplified] ? [self simplifiedWindow] : [self window];
 	[myWindow orderOut:self];
-	[NSApp endSheet:[self window]];
+	[NSApp endSheet:myWindow];
 	callBack(nil);
 }
 

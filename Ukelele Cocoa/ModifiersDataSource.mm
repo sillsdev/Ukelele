@@ -105,17 +105,20 @@ static NSMutableDictionary *statusDictionary = nil;
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [leftString length])];
 			[partialString appendAttributedString:stringFragment];
 		}
+		NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@""];
 		if ([partialString length] > 0) {
-			[partialString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@", "]];
+			separator = [[NSAttributedString alloc] initWithString:@", "];
 		}
 		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftOptRight) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [rightString length])];
+			[partialString appendAttributedString:separator];
 			[partialString appendAttributedString:stringFragment];
 		}
 		else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [rightString length])];
+			[partialString appendAttributedString:separator];
 			[partialString appendAttributedString:stringFragment];
 		}
 		result = partialString;
@@ -285,13 +288,15 @@ static NSMutableDictionary *statusDictionary = nil;
 - (NSInteger)indexForRow:(NSInteger)rowNumber
 {
 	NSDictionary *rowEntry = rowArray[rowNumber];
-	return [rowEntry[kLabelIndex] integerValue];
+	NSDictionary *indexEntry = rowEntry[kLabelIndex];
+	return [indexEntry[kLabelIntegerRepresentation] integerValue];
 }
 
 - (NSInteger)subindexForRow:(NSInteger)rowNumber
 {
 	NSDictionary *rowEntry = rowArray[rowNumber];
-	return [rowEntry[kLabelSubindex] integerValue];
+	NSDictionary *indexEntry = rowEntry[kLabelSubindex];
+	return [indexEntry[kLabelIntegerRepresentation] integerValue];
 }
 
 #pragma mark Table data source methods
