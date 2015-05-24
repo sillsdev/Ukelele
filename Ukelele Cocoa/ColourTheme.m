@@ -219,7 +219,7 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultColourTheme setSelectedDownTextColour:[NSColor whiteColor]];
 		[sDefaultColourTheme setSelectedGradientType:gradientTypeRadial];
 		[sDefaultColourTheme setSelectedDeadUpInnerColour:[NSColor colorWithCalibratedRed:componentB0
-																				green:componentD1
+																				green:component88
 																				 blue:component16
 																				alpha:1.0]];
 		[sDefaultColourTheme setSelectedDeadUpOuterColour:[NSColor colorWithCalibratedRed:componentE2
