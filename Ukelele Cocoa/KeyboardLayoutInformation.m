@@ -20,9 +20,15 @@
 	else {
 		_keyboardName = fileName;
 	}
-	_hasIcon = NO;
 	_keyboardFileWrapper = nil;
+	_intendedLanguage = nil;
+	_iconData = nil;
+	_keyboardController = nil;
 	return self;
+}
+
+- (BOOL)hasIcon {
+	return self.iconData != nil;
 }
 
 @end

@@ -21,6 +21,7 @@
 #import "UkeleleKeyboardInstaller.h"
 #import "UKNewKeyboardLayoutController.h"
 #import "UKDocumentPrintViewController.h"
+#import "UKKeyboardPasteboardItem.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -33,6 +34,9 @@ NSString *kKeyboardNameKey = @"KeyboardName";
 NSString *kKeyboardWindowKey = @"KeyboardWindow";
 NSString *kKeyboardFileNameKey = @"KeyboardFileName";
 NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
+
+	// Key paths
+NSString *kKeyboardName = @"keyboardName";
 
 @implementation IconImageTransformer
 
@@ -55,6 +59,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	IntendedLanguageSheet *intendedLanguageSheet;
 	AskFromList *askFromListSheet;
 	NSMutableDictionary *languageList;
+	UkeleleKeyboardObject *currentObservation;
 }
 
 - (id)init
@@ -74,6 +79,7 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 		_sourceVersion = @"";
 		_bundleName = @"";
 		_bundleIdentifier = @"";
+		currentObservation = nil;
     }
     return self;
 }
@@ -102,6 +108,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	return self;
 }
 
+- (void)dealloc {
+	if (currentObservation != nil) {
+		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
+	}
+}
+
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
@@ -122,10 +134,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
-	if ([aController isKindOfClass:[UKKeyboardDocument class]]) {
-		[keyboardLayoutsTable registerForDraggedTypes:@[NSURLPboardType]];
-	}
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"keyboardName" ascending:YES selector:@selector(localizedCompare:)];
+	[keyboardLayoutsTable registerForDraggedTypes:@[NSURLPboardType, UKKeyboardPasteType]];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
 }
@@ -609,7 +619,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		UkeleleKeyboardObject *keyboardObject = keyboardData[kKeyboardObjectKey];
 		KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:keyboardObject fileName:keyboardData[kKeyboardFileNameKey]];
 		NSFileWrapper *keyboardIconFile = keyboardData[kIconFileKey];
-		[keyboardInfo setHasIcon:nil != keyboardIconFile];
 		if (nil != keyboardIconFile) {
 			[keyboardInfo setIconData:[keyboardIconFile regularFileContents]];
 		}
@@ -693,10 +702,21 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
 	[self inspectorSetKeyboardSection];
+	if (currentObservation != nil) {
+		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
+		currentObservation = nil;
+	}
+	if ([keyboardLayoutsTable selectedRow] != -1) {
+		currentObservation = [[self controllerForCurrentEntry] keyboardLayout];
+		[currentObservation addObserver:self
+							 forKeyPath:kKeyboardName
+								options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+								context:nil];
+	}
 }
 
 - (void)setTableSelectionForMenu {
-	NSUInteger clickedRow = [keyboardLayoutsTable clickedRow];
+	NSInteger clickedRow = [keyboardLayoutsTable clickedRow];
 	if (clickedRow != -1) {
 		if ([keyboardLayoutsTable selectedRow] != clickedRow) {
 			[keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
@@ -716,6 +736,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				 proposedRow:(NSInteger)row
 	   proposedDropOperation:(NSTableViewDropOperation)dropOperation {
 	NSPasteboard *pasteBoard = [info draggingPasteboard];
+	if ([[pasteBoard types] containsObject:UKKeyboardPasteType]) {
+		if ([info draggingSource] != tableView && dropOperation == NSTableViewDropAbove) {
+				// Dragging into a different document
+			return YES;
+		}
+		return NO;
+	}
 	if ([[pasteBoard types] containsObject:NSURLPboardType]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
@@ -736,14 +763,53 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			  row:(NSInteger)row
 	dropOperation:(NSTableViewDropOperation)dropOperation {
 	NSPasteboard *pasteBoard = [info draggingPasteboard];
-	if ([[pasteBoard types] containsObject:NSURLPboardType]) {
+	NSError *theError;
+	KeyboardLayoutInformation *keyboardInfo;
+	if ([[pasteBoard types] containsObject:UKKeyboardPasteType]) {
+		if ([info draggingSource] != tableView && dropOperation == NSTableViewDropAbove) {
+				// Dragging into another document
+			UKKeyboardPasteboardItem *pasteBoardData = [[UKKeyboardPasteboardItem alloc] initWithPasteboardPropertyList:[pasteBoard propertyListForType:UKKeyboardPasteType] ofType:UKKeyboardPasteType];
+			NSData *keyboardData = [NSData dataWithContentsOfURL:[pasteBoardData keyboardLayoutFile]];
+			if (keyboardData == nil || [keyboardData length] == 0) {
+					// Failed to read the document
+				[NSApp presentError:theError];
+				return NO;
+			}
+			UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:keyboardData withError:&theError];
+			if (theKeyboard == nil) {
+					// Failed to read the document
+				[NSApp presentError:theError];
+				return NO;
+			}
+			NSString *keyboardName = [[[pasteBoardData keyboardLayoutFile] lastPathComponent] stringByDeletingPathExtension];
+			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:theKeyboard fileName:keyboardName];
+			[keyboardInfo setFileName:keyboardName];
+			if ([pasteBoardData iconFile] != nil) {
+					// Have an icon
+				NSData *iconData = [NSData dataWithContentsOfURL:[pasteBoardData iconFile] options:0 error:&theError];
+				if (iconData == nil || [iconData length] == 0) {
+						// Failed to read the icon file
+					[NSApp presentError:theError];
+					return NO;
+				}
+				[keyboardInfo setIconData:iconData];
+			}
+			if ([pasteBoardData languageCode] != nil) {
+					// Have an intended language
+				[keyboardInfo setIntendedLanguage:[pasteBoardData languageCode]];
+			}
+			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
+			return YES;
+		}
+		return NO;
+	}
+	if ([[pasteBoard types] containsObject:(NSString *)kUTTypeFileURL]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
 		BOOL isKeyboardLayout = [fileExtension isEqualToString:kStringKeyboardLayoutExtension];
 		BOOL isIconFile = [fileExtension isEqualToString:kStringIcnsExtension];
 		if (isKeyboardLayout) {
 				// Dropping a keyboard layout file
-			NSError *theError;
 			NSData *fileData = [NSData dataWithContentsOfURL:dragURL options:0 error:&theError];
 			if (fileData == nil || [fileData length] == 0) {
 					// Failed to read the document
@@ -756,10 +822,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				[NSApp presentError:theError];
 				return NO;
 			}
-			[self insertDocument:keyboardObject atIndex:row];
 			NSString *fileName = [[dragURL lastPathComponent] stringByDeletingPathExtension];
-			KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[row];
-			[keyboardInfo setFileName:fileName];
+			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:keyboardObject fileName:fileName];
+			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
 			return YES;
 		}
 		else if (isIconFile && dropOperation == NSTableViewDropOn) {
@@ -780,6 +845,28 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 	}
 	return NO;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard {
+	if ([rowIndexes count] != 1) {
+		return NO;
+	}
+		// Have exactly one row
+	NSUInteger selectedRow = [rowIndexes firstIndex];
+	NSAssert(selectedRow != NSNotFound, @"Must have an index");
+	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[selectedRow];
+	NSURL *baseURL = [self.fileURL URLByAppendingPathComponent:kStringContentsName isDirectory:YES];
+	baseURL = [baseURL URLByAppendingPathComponent:kStringResourcesName isDirectory:YES];
+	NSURL *keyboardURL = [[baseURL URLByAppendingPathComponent:[layoutInfo fileName]] URLByAppendingPathExtension:kStringKeyboardLayoutExtension];
+	NSURL *iconURL = nil;
+	if ([layoutInfo hasIcon]) {
+		iconURL = [[baseURL URLByAppendingPathComponent:[layoutInfo fileName]] URLByAppendingPathExtension:kStringIcnsExtension];
+	}
+	NSString *languageCode = [layoutInfo intendedLanguage];
+	UKKeyboardPasteboardItem *pasteboardData = [UKKeyboardPasteboardItem pasteboardTypeForKeyboard:keyboardURL icon:iconURL language:languageCode];
+	[pboard clearContents];
+	[pboard writeObjects:@[pasteboardData]];
+	return YES;
 }
 
 #pragma mark Accessors
@@ -1437,6 +1524,19 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[inspectorController unbind:@"currentDocument"];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	if ([keyPath isEqualToString:kKeyboardName]) {
+			// Name change
+		NSString *oldName = change[NSKeyValueChangeOldKey];
+		NSString *newName = change[NSKeyValueChangeNewKey];
+		NSLog(@"Change name from %@ to %@", oldName, newName);
+		if (![oldName isEqualToString:newName]) {
+				// New name
+			[[self controllerForCurrentEntry] changeKeyboardName:newName];
+		}
+	}
+}
+
 #pragma mark Callbacks
 
 - (void)confirmDelete:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
@@ -1530,11 +1630,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)insertDocument:(UkeleleKeyboardObject *)newDocument atIndex:(NSInteger)newIndex {
 	NSAssert(newIndex <= [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
+		// Create dictionary with appropriate information
+	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
+	[self insertDocumentWithInfo:keyboardInfo atIndex:newIndex];
+}
+
+- (void)insertDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSInteger)newIndex {
+	NSAssert(newIndex <= [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
 	[undoManager setActionName:@"Insert keyboard layout"];
-		// Create dictionary with appropriate information
-	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
@@ -1558,7 +1663,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Add icon"];
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
 	[keyboardInfo setIconData:iconData];
-	[keyboardInfo setHasIcon:YES];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 }
@@ -1571,7 +1675,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] addIcon:iconData atIndex:index];
 	[undoManager setActionName:@"Add icon"];
 	[keyboardInfo setIconData:nil];
-	[keyboardInfo setHasIcon:NO];
 		// Notify the list that it's been updated
 	[keyboardLayoutsTable reloadData];
 }

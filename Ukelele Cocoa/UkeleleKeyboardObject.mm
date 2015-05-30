@@ -351,6 +351,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSArray *)stateNamesExcept:(NSString *)stateToOmit
 {
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray stateNames = keyboardElement->GetStateNames(ToNN(stateToOmit), kAllStates);
 	return ToNS(stateNames);
@@ -362,6 +363,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	for (NSString *stateName in statesToOmit) {
 		omitStateArray.AppendValue(ToNN(stateName));
 	}
+	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray result = keyboardElement->GetStateNames(omitStateArray, kAllStates);
 	return ToNS(result);

@@ -215,6 +215,7 @@
 		52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C2B5CF192743C20052D418 /* UkelelePreferences.xib */; };
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
+		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
 		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
@@ -586,6 +587,8 @@
 		52C2B5CF192743C20052D418 /* UkelelePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkelelePreferences.xib; path = "Interface Files/UkelelePreferences.xib"; sourceTree = "<group>"; };
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
+		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
+		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
 		52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardTypeSheet.xib; path = "Interface Files/KeyboardTypeSheet.xib"; sourceTree = "<group>"; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
@@ -991,6 +994,8 @@
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
 				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
 				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
+				52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */,
+				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
 				523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */,
 				523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
@@ -1486,6 +1491,7 @@
 				5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */,
 				523B0187191CA18C00E06DF3 /* AskKeyCode.m in Sources */,
 				5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */,
+				52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */,
 				523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */,
 				52AD7D96196139F800B3CD3F /* UKKeyboardController+Housekeeping.m in Sources */,
 				523B0189191CA18C00E06DF3 /* AskReplaceDeadKeySheet.m in Sources */,

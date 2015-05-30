@@ -176,8 +176,8 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="tyT-64-a4Q"/>
-                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="tyT-64-a4Q" id="nXp-CA-dFg"/>
+                                        <binding destination="Wvh-L2-Xlb" name="content" keyPath="arrangedObjects" id="maS-Ao-McP"/>
+                                        <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="maS-Ao-McP" id="bef-7i-ifG"/>
                                         <binding destination="-2" name="doubleClickTarget" keyPath="self" id="Vfc-GN-p5v">
                                             <dictionary key="options">
                                                 <string key="NSSelectorName">openKeyboardLayout:</string>
