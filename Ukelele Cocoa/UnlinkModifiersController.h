@@ -28,6 +28,7 @@
 
 + (UnlinkModifiersController *)unlinkModifiersController;
 - (void)beginDialogWithWindow:(NSWindow *)window callback:(void (^)(NSNumber *))theCallback;
+- (void)beginDialogWithWindow:(NSWindow *)window isSimplified:(BOOL)isSimplified callback:(void (^)(NSNumber *))theCallback;
 
 - (void)setText:(NSString *)infoText;
 - (void)setUsesSimplifiedModifiers:(BOOL)useSimplified;

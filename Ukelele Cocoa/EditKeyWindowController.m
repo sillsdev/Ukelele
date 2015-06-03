@@ -74,6 +74,19 @@
 		if ([stateNames count] > 0) {
 			[self.nextState addItemsWithObjectValues:stateNames];
 		}
+			// If we have a dead key, then we should select the correct dead key state and terminator
+		NSInteger keyCode = [self.keyCode integerValue];
+		callerData[kKeyKeyCode] = @(keyCode);
+		callerData[kKeyModifiers] = @([self currentModifiers]);
+		NSString *nextState;
+		NSString *theOutput;
+		BOOL isDeadKey;
+		theOutput = [keyboard getCharOutput:callerData isDead:&isDeadKey nextState:&nextState];
+		if (isDeadKey) {
+			[self.nextState selectItemWithObjectValue:nextState];
+			[self.terminatorField setStringValue:[keyboard getTerminatorForState:nextState]];
+			[self.terminatorField selectText:self];
+		}
 	}
 }
 

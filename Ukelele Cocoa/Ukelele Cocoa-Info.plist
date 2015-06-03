@@ -71,7 +71,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015 John Brownie, SIL. All rights reserved.</string>
+	<string>Copyright © 2003–2015 John Brownie, SIL. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -84,7 +84,7 @@
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUFeedURL</key>
-	<string>http://scripts.sil.org/ukelelefeed</string>
+	<string>http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&amp;format=file&amp;media_id=ukelele_su_feed&amp;filename=ukelele_su_feed.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

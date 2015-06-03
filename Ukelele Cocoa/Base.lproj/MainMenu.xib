@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
@@ -15,11 +15,11 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="Ukelele Cocoa" id="1Xt-HY-uBw">
+                <menuItem title="Ukelele" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Ukelele Cocoa" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="Ukelele" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About Ukelele Cocoa" id="5kV-Vb-QxS">
+                            <menuItem title="About Ukelele" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
@@ -31,13 +31,23 @@
                                     <action selector="doPreferences:" target="-1" id="H14-82-ELA"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Check for Updates…" id="mH2-eh-Nfe">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="8PE-zw-N2v" name="target" keyPath="self" id="rjs-dZ-Eln">
+                                        <dictionary key="options">
+                                            <string key="NSSelectorName">checkForUpdates:</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide Ukelele Cocoa" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem title="Hide Ukelele" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
@@ -55,7 +65,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Quit Ukelele Cocoa" keyEquivalent="q" id="4sb-4s-VLi">
+                            <menuItem title="Quit Ukelele" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
                                 </connections>
@@ -72,7 +82,7 @@
                                     <action selector="newBundle:" target="-1" id="2xA-Z7-TVv"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New Keyboard Layout…" keyEquivalent="N" id="Was-JA-tGl">
+                            <menuItem title="New Keyboard Layout" keyEquivalent="N" id="Was-JA-tGl">
                                 <connections>
                                     <action selector="newDocument:" target="-1" id="4Si-XN-c54"/>
                                 </connections>
@@ -723,7 +733,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                         <items>
-                            <menuItem title="Ukelele Cocoa Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                            <menuItem title="Ukelele Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                 <connections>
                                     <action selector="showHelp:" target="-1" id="y7X-2Q-9no"/>
                                 </connections>
@@ -735,5 +745,6 @@
         </menu>
         <customObject id="8PE-zw-N2v" customClass="SUUpdater"/>
         <customObject id="g79-zY-rS9" customClass="UkeleleAppDelegate"/>
+        <userDefaultsController representsSharedInstance="YES" id="Ogb-jT-LaM"/>
     </objects>
 </document>

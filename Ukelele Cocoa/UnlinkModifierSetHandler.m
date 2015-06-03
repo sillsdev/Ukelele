@@ -38,8 +38,8 @@
 	unlinkModifiersController = [UnlinkModifiersController unlinkModifiersController];
 	callback = theCallBack;
 	UkeleleKeyboardObject *keyboard = [parentDocumentWindow keyboardLayout];
-	[unlinkModifiersController setUsesSimplifiedModifiers:[keyboard hasSimplifiedModifiers]];
-	[unlinkModifiersController beginDialogWithWindow:parentWindow callback:^(NSNumber *result) {
+//	[unlinkModifiersController setUsesSimplifiedModifiers:[keyboard hasSimplifiedModifiers]];
+	[unlinkModifiersController beginDialogWithWindow:parentWindow isSimplified:[keyboard hasSimplifiedModifiers] callback:^(NSNumber *result) {
 		[self acceptModifiers:result];
 		[self interactionCompleted];
 	}];

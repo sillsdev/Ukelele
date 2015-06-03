@@ -663,7 +663,11 @@ typedef struct KeyEntryRec {
 
 - (void)magnifyWithEvent:(NSEvent *)event
 {
-	[self scaleViewBy:[event magnification] + 1.0 limited:YES];
+	CGFloat magnification = [event magnification] + 1.0;
+	if (magnification <= 0.0) {
+		magnification = 0.1;
+	}
+	[self scaleViewBy:magnification limited:YES];
 	[self setEventState:kEventStateMagnify];
 }
 

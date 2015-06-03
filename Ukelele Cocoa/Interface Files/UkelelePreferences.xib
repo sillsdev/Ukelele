@@ -54,7 +54,7 @@
                                     </connections>
                                 </popUpButton>
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eoE-ng-tgC">
-                                    <rect key="frame" x="191" y="28" width="75" height="26"/>
+                                    <rect key="frame" x="191" y="28" width="84" height="26"/>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="jGZ-mm-7vj" id="l1B-Oi-wZ3">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>

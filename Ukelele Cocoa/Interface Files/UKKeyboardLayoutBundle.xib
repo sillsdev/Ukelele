@@ -58,11 +58,7 @@
                         </buttonCell>
                         <connections>
                             <action selector="removeKeyboardLayout:" target="-2" id="kNW-cC-nqX"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="0Ws-f5-mJI">
-                                <dictionary key="options">
-                                    <string key="NSValueTransformerName">NSIsNotNil</string>
-                                </dictionary>
-                            </binding>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="cQs-4A-brX"/>
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
@@ -202,7 +198,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-c8-4cj">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-c8-4cj">
                         <rect key="frame" x="177" y="13" width="80" height="32"/>
                         <buttonCell key="cell" type="push" title="Icon…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ngg-fR-XL2">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -210,7 +206,7 @@
                         </buttonCell>
                         <connections>
                             <action selector="attachIconFile:" target="-2" id="cDa-vv-KvK"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selectionIndexes.count" id="FYC-XM-yWV"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="v67-ni-yyF"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
@@ -224,11 +220,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="chooseIntendedLanguage:" target="-2" id="SXY-3f-eYc"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selectionIndexes.count" id="aw5-AY-Mg4"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="YVc-h8-szn"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="lsp-Sh-MR9" secondAttribute="bottom" constant="20" id="3Ty-Rf-bnW"/>
                     <constraint firstItem="R44-1f-ZB9" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="22" id="6Is-eK-NAy"/>
                     <constraint firstItem="90p-nh-emO" firstAttribute="leading" secondItem="eZ0-ZP-oRP" secondAttribute="leading" id="75u-0x-xns"/>
                     <constraint firstItem="mJd-Dd-4U2" firstAttribute="leading" secondItem="lsp-Sh-MR9" secondAttribute="trailing" constant="12" symbolic="YES" id="7Cg-Ll-0kZ"/>
@@ -238,14 +235,19 @@
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="top" secondItem="R44-1f-ZB9" secondAttribute="bottom" constant="8" symbolic="YES" id="Hrz-d0-0he"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="JUT-YY-pQ4"/>
                     <constraint firstItem="90p-nh-emO" firstAttribute="top" secondItem="eZ0-ZP-oRP" secondAttribute="bottom" constant="16" id="KnS-R1-1uM"/>
+                    <constraint firstAttribute="bottom" secondItem="ERy-c8-4cj" secondAttribute="bottom" constant="20" id="Qbd-Bh-ZCk"/>
                     <constraint firstItem="90p-nh-emO" firstAttribute="top" secondItem="2k1-ap-Wrj" secondAttribute="top" id="Si2-7O-HrR"/>
+                    <constraint firstItem="mJd-Dd-4U2" firstAttribute="leading" secondItem="lsp-Sh-MR9" secondAttribute="trailing" constant="12" id="ThU-So-9Vm"/>
                     <constraint firstItem="lsp-Sh-MR9" firstAttribute="baseline" secondItem="mJd-Dd-4U2" secondAttribute="baseline" id="URS-GF-3Nl"/>
+                    <constraint firstAttribute="trailing" secondItem="mJd-Dd-4U2" secondAttribute="trailing" constant="20" id="VLi-o6-Vsd"/>
                     <constraint firstItem="lsp-Sh-MR9" firstAttribute="top" secondItem="2k1-ap-Wrj" secondAttribute="top" id="VoN-b0-iSL"/>
                     <constraint firstItem="mJd-Dd-4U2" firstAttribute="top" secondItem="lsp-Sh-MR9" secondAttribute="top" id="bff-Ut-Yzc"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="mJd-Dd-4U2" secondAttribute="trailing" id="dZo-jF-SX1"/>
                     <constraint firstItem="lsp-Sh-MR9" firstAttribute="bottom" secondItem="2k1-ap-Wrj" secondAttribute="bottom" id="khx-sU-m6w"/>
+                    <constraint firstAttribute="bottom" secondItem="mJd-Dd-4U2" secondAttribute="bottom" constant="20" id="nTF-aI-rd5"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" id="wfB-DR-d3l"/>
                     <constraint firstAttribute="bottom" secondItem="90p-nh-emO" secondAttribute="bottom" constant="20" symbolic="YES" id="zDG-ss-caw"/>
+                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="leading" secondItem="ERy-c8-4cj" secondAttribute="trailing" constant="14" id="zEO-gi-cKV"/>
                 </constraints>
             </view>
             <connections>

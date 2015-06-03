@@ -9,8 +9,8 @@
 #import "WrongStateChosenSheet.h"
 #import "UkeleleDeadKeyConstants.h"
 
-NSString *nibFileName = @"WrongStateChosenSheet";
-NSString *nibWindowName = @"WrongState";
+static NSString *nibFileName = @"WrongStateChosenSheet";
+static NSString *nibWindowName = @"WrongState";
 
 	// Data dictionary keys
 NSString *kWrongStateType = @"WrongStateType";

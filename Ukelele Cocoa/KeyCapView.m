@@ -228,10 +228,11 @@ static CGAffineTransform kTextTransform = {
 
 - (void)createDisplayText
 {
-	if ([self.outputString length] == 0) {
+	NSUInteger stringLength = [self.outputString length];
+	if (stringLength == 0) {
 		displayText = [[NSMutableAttributedString alloc] initWithString:@""];
 	}
-	else {
+	else if (stringLength == 1) {
 		unichar firstChar = [self.outputString characterAtIndex:0];
 		BOOL isLowASCII = firstChar >= kFirstASCIIPrintingChar &&
 						  firstChar <= kLastASCIIPrintingChar;
@@ -243,10 +244,10 @@ static CGAffineTransform kTextTransform = {
 			displayText = [LayoutInfo getKeySymbolString:(unsigned int)self.keyCode
 											  withString:self.outputString];
 			if ([displayText length] == 0) {
-				displayText = [[NSMutableAttributedString alloc] initWithString:self.outputString];
+				displayText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"U+%X", firstChar]];
 			}
 		}
-		else if ([self.outputString length] == 1 && [XMLCocoaUtilities isCombiningDiacritic:firstChar]) {
+		else if (stringLength == 1 && [XMLCocoaUtilities isCombiningDiacritic:firstChar]) {
 				// Combining diacritic by itself
 			unichar combinedString[2];
 			unichar diacriticChar = [[NSUserDefaults standardUserDefaults] integerForKey:UKDiacriticDisplayCharacter];
@@ -257,6 +258,28 @@ static CGAffineTransform kTextTransform = {
 		}
 		else {
 			displayText = [[NSMutableAttributedString alloc] initWithString:self.outputString];
+		}
+	}
+	else {
+			// More than a single character
+		displayText = [[NSMutableAttributedString alloc] init];
+		for (NSUInteger i = 0; i < stringLength; i++) {
+			unichar theChar = [self.outputString characterAtIndex:i];
+			BOOL isLowASCII = theChar >= kFirstASCIIPrintingChar &&
+							  theChar <= kLastASCIIPrintingChar;
+			BOOL isAboveControlRange = theChar > kLastControlChar;
+			BOOL isControlCharacter = !isLowASCII && !isAboveControlRange;
+			NSAttributedString *charString;
+			NSString *formatString;
+			if (isControlCharacter) {
+					// Create a hex representation
+				formatString = @"U+%X";
+			}
+			else {
+				formatString = @"%C";
+			}
+			charString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:formatString, theChar]];
+			[displayText appendAttributedString:charString];
 		}
 	}
 	[self clearFrame];
@@ -512,9 +535,12 @@ static CGAffineTransform kTextTransform = {
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
-	self.dragHighlight = YES;
-	[self setNeedsDisplay:YES];
-	return NSDragOperationGeneric;
+	if (self.keyType != kSpecialKeyType) {
+		self.dragHighlight = YES;
+		[self setNeedsDisplay:YES];
+		return NSDragOperationGeneric;
+	}
+	return NSDragOperationNone;
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender

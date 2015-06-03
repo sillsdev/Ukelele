@@ -133,8 +133,10 @@ NSString *kKeyboardName = @"keyboardName";
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
-	[keyboardLayoutsTable registerForDraggedTypes:@[NSURLPboardType, UKKeyboardPasteType]];
+		// Register for our drag types
+	[keyboardLayoutsTable registerForDraggedTypes:@[UKKeyboardPasteType, (NSString *)kUTTypeFileURL]];
+		// Tell the Finder that it can copy files out
+	[keyboardLayoutsTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
@@ -267,6 +269,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	int tempFileDescriptor = mkstemps(tempFileTemplate, 5);
 	if (tempFileDescriptor == -1) {
 			// Could not create temporary file
+		free(tempFileTemplate);
 		return nil;
 	}
 	tempFilePath = @(tempFileTemplate);
@@ -1642,7 +1645,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+//	[keyboardLayoutsTable reloadData];
 	[keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 

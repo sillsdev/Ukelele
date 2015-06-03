@@ -14,7 +14,7 @@
 @end
 
 static NSString *nibFileName = @"UnlinkModifierDialog";
-static NSString *nibWindowName = @"UnlinkModifiers";
+static NSString *nibWindowName = @"UnlinkModifiersDialog";
 
 @implementation UnlinkModifiersController
 
@@ -40,6 +40,11 @@ static NSString *nibWindowName = @"UnlinkModifiers";
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
+- (void)beginDialogWithWindow:(NSWindow *)window isSimplified:(BOOL)isSimplified callback:(void (^)(NSNumber *))theCallback {
+	[self beginDialogWithWindow:window callback:theCallback];
+	[self setUsesSimplifiedModifiers:isSimplified];
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
@@ -48,7 +53,7 @@ static NSString *nibWindowName = @"UnlinkModifiers";
 }
 
 - (void)setText:(NSString *)infoText {
-	[_textField setStringValue:infoText];
+	[self.textField setStringValue:infoText];
 }
 
 - (void)setUsesSimplifiedModifiers:(BOOL)useSimplified {

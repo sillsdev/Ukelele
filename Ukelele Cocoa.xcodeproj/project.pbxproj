@@ -563,7 +563,7 @@
 		52B2E9CF1925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateSelectedDeadKeySheet.xib; path = "Interface Files/CreateSelectedDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskStateAndTerminatorSheet.xib; path = "Interface Files/AskStateAndTerminatorSheet.xib"; sourceTree = "<group>"; };
 		52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KCAPResources.plist; sourceTree = "<group>"; };
-		52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ukelele Cocoa.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BBECFF191B4C3900E48394 /* Ukelele.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ukelele.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED02191B4C3900E48394 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		52BBED06191B4C3900E48394 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -829,11 +829,11 @@
 				529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */,
 				52EB2B261927397000712272 /* ToolboxController.xib */,
 				52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */,
-				52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */,
 				5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */,
 				5252055C19273D7500CDE5BD /* UkeleleDocument.xib */,
 				52C2B5CF192743C20052D418 /* UkelelePreferences.xib */,
 				525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */,
+				52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */,
 				52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */,
 				528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */,
 			);
@@ -858,7 +858,7 @@
 		52BBED00191B4C3900E48394 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */,
+				52BBECFF191B4C3900E48394 /* Ukelele.app */,
 				52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */,
 				523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */,
@@ -1206,7 +1206,7 @@
 			);
 			name = "Ukelele Cocoa";
 			productName = "Ukelele Cocoa";
-			productReference = 52BBECFF191B4C3900E48394 /* Ukelele Cocoa.app */;
+			productReference = 52BBECFF191B4C3900E48394 /* Ukelele.app */;
 			productType = "com.apple.product-type.application";
 		};
 		52BBED22191B4C3900E48394 /* Ukelele CocoaTests */ = {
@@ -1777,7 +1777,7 @@
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ukelele;
 				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1802,7 +1802,7 @@
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ukelele;
 				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;
 			};
