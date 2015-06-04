@@ -183,6 +183,7 @@
 		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
+		52897C461B20363400B5869D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52897C451B20363400B5869D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
@@ -277,6 +278,16 @@
 			dstSubfolderSpec = 1;
 			files = (
 				5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52897C441B20360700B5869D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				52897C461B20363400B5869D /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +552,7 @@
 		5277EB9F1AAF01A500C471C3 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UninstallHelperTool.sh; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
+		52897C451B20363400B5869D /* Sparkle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Sparkle.framework; path = "/Users/john/Library/Developer/Xcode/DerivedData/Ukelele_Workspace-ejdkxiqgbpwyecfaasfmaufpjoph/Build/Products/Debug/Sparkle.framework"; sourceTree = "<absolute>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDiacriticDisplay.h; sourceTree = "<group>"; };
 		528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDiacriticDisplay.m; sourceTree = "<group>"; };
@@ -843,6 +855,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
+				52897C451B20363400B5869D /* Sparkle.framework */,
 				52BBED3E191B50B700E48394 /* Ukelele.icns */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C1191D7F5C00E06DF3 /* Common */,
@@ -1198,6 +1211,7 @@
 				5209B7301935632100B195E9 /* CopyFiles */,
 				5227A40E196520E6004F35EA /* CopyFiles */,
 				5277EBBB1AB2744100C471C3 /* CopyFiles */,
+				52897C441B20360700B5869D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1777,6 +1791,7 @@
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
 				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;
@@ -1801,7 +1816,8 @@
 				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
 				USER_HEADER_SEARCH_PATHS = "\"/Xcode3/Nano/nano-master/Library/Source\"/**";
 				WRAPPER_EXTENSION = app;

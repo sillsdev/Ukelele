@@ -285,11 +285,6 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="askKeyboardIdentifiers:" target="-2" id="gfr-aG-u2x"/>
-                        <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="selection" id="hMI-Ma-ir9">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Set Keyboard Language…" id="hEE-13-tmp">

@@ -616,7 +616,7 @@
             <point key="canvasLocation" x="433" y="360"/>
         </window>
         <customObject id="vyz-He-UxM" customClass="ModifiersDataSource"/>
-        <menu title="Non-dead key contextual menu" id="nEq-8b-aYJ">
+        <menu title="Non-dead key contextual menu" autoenablesItems="NO" id="nEq-8b-aYJ">
             <items>
                 <menuItem title="Unlink" id="eF5-Ad-4Bi">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -665,7 +665,7 @@
                 </menuItem>
             </items>
         </menu>
-        <menu title="Dead key contextual menu" id="i6v-9N-pDp">
+        <menu title="Dead key contextual menu" autoenablesItems="NO" id="i6v-9N-pDp">
             <items>
                 <menuItem title="Unlink" id="nw6-Eq-dcn">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -711,7 +711,7 @@
                         <action selector="copyKey:" target="-1" id="Lrn-fL-rOx"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Paste Key" id="ly2-5k-RfD">
+                <menuItem title="Paste Key" enabled="NO" id="ly2-5k-RfD">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="pasteKey:" target="-1" id="OPf-tH-5Pg"/>

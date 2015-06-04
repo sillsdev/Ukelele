@@ -568,14 +568,18 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(runPageLayout:) ||
 		selector == @selector(printDocument:) ||
 		selector == @selector(findKeyStroke:) ||
-		selector == @selector(askKeyboardIdentifiers:) ||
+//		selector == @selector(askKeyboardIdentifiers:) ||
 		selector == @selector(installForAllUsers:) ||
 		selector == @selector(installForCurrentUser:) ||
 		selector == @selector(removeUnusedStates:) ||
 		selector == @selector(changeStateName:) ||
 		selector == @selector(changeActionName:) ||
 		selector == @selector(removeUnusedActions:) ||
-		selector == @selector(setDefaultIndex:)) {
+		selector == @selector(setDefaultIndex:) ||
+		selector == @selector(changeOutput:) ||
+		selector == @selector(makeDeadKey:) ||
+		selector == @selector(makeOutput:) ||
+		selector == @selector(changeNextState:)) {
 		return YES;
 	}
 	return NO;
@@ -592,7 +596,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 		action == @selector(selectKeyByCode:) || action == @selector(cutKey:) ||
 		action == @selector(copyKey:) || action == @selector(setKeyboardType:) ||
 		action == @selector(findKeyStroke:) || action == @selector(runPageLayout:) ||
-		action == @selector(printDocument:)) {
+		action == @selector(printDocument:) || action == @selector(changeOutput:) ||
+		action == @selector(makeDeadKey:) || action == @selector(makeOutput:) ||
+		action == @selector(changeNextState:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
@@ -1747,6 +1753,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	else if (keyType == kOrdinaryKeyType || keyType == kSpecialKeyType) {
 			// Ordinary or special key
+			// First, select the key
+		self.selectedKey = keyCode;
+			// Now find out whether it is a dead key
 		NSDictionary *keyData = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
 								  kKeyKeyCode: @(keyCode),
 								  kKeyModifiers: internalState[kStateCurrentModifiers],
