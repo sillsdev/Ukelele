@@ -57,7 +57,9 @@ public:
 	void UnlinkKeyMapElement(shared_ptr<ActionElementSet> inActionList);
 	
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyMapElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
+	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, KeyMapElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);
@@ -108,6 +110,7 @@ public:
 	void GetUsedActions(NSMutableSet *ioActionSet) const;
 	
 	void AddToXMLTree(NXMLNode& inXMLTree);
+	void AddToXML(NSXMLElement *inXMLTree);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

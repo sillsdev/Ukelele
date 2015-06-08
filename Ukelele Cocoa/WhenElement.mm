@@ -174,6 +174,42 @@ WhenElement::CreateFromXMLTree(const NXMLNode& inTree, WhenElement*& outElement)
 	return errorValue;
 }
 
+ErrorMessage
+WhenElement::CreateFromXMLTree(NSXMLElement *inTree, WhenElement *&outElement) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NSXMLNode *attributeNode = [inTree attributeForName:ToNS(kStateAttribute)];
+	if (attributeNode == nil) {
+			// No state attribute
+		NString errorString = NBundleString(kWhenElementMissingState, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+		return errorValue;
+	}
+		// Get the attributes
+	NString state = ToNN([attributeNode stringValue]);
+	NString output;
+	attributeNode = [inTree attributeForName:ToNS(kOutputAttribute)];
+	if (attributeNode != nil) {
+		output = ToNN([attributeNode stringValue]);
+	}
+	NString next;
+	attributeNode = [inTree attributeForName:ToNS(kNextAttribute)];
+	if (attributeNode != nil) {
+		next = ToNN([attributeNode stringValue]);
+	}
+	NString through;
+	attributeNode = [inTree attributeForName:ToNS(kThroughAttribute)];
+	if (attributeNode != nil) {
+		through = ToNN([attributeNode stringValue]);
+	}
+	NString multiplier;
+	attributeNode = [inTree attributeForName:ToNS(kMultiplierAttribute)];
+	if (attributeNode != nil) {
+		multiplier = ToNN([attributeNode stringValue]);
+	}
+	outElement = new WhenElement(state, output, next, through, multiplier);
+	return errorValue;
+}
+
 	// CreateXMLTree: Construct an XML tree encapsulating the when element
 
 NXMLNode *
@@ -197,6 +233,31 @@ WhenElement::CreateXMLTree(void)
 		xmlTree->SetElementAttribute(kMultiplierAttribute, XMLUtilities::ConvertToXMLString(mMultiplier));
 	}
 	return xmlTree;
+}
+
+NSXMLElement *
+WhenElement::CreateXMLNode(void) {
+	NSXMLElement *theNode = [[NSXMLElement alloc] initWithName:ToNS(kWhenElement)];
+		// Set the attributes
+	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kStateAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mState))];
+	[theNode addAttribute:attributeNode];
+	if (!mOutput.IsEmpty() || mNext.IsEmpty()) {
+		attributeNode = [NSXMLNode attributeWithName:ToNS(kOutputAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mOutput))];
+		[theNode addAttribute:attributeNode];
+	}
+	if (!mNext.IsEmpty()) {
+		attributeNode = [NSXMLNode attributeWithName:ToNS(kNextAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mNext))];
+		[theNode addAttribute:attributeNode];
+	}
+	if (!mThrough.IsEmpty()) {
+		attributeNode = [NSXMLNode attributeWithName:ToNS(kThroughAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mThrough))];
+		[theNode addAttribute:attributeNode];
+	}
+	if (!mMultiplier.IsEmpty()) {
+		attributeNode = [NSXMLNode attributeWithName:ToNS(kMultiplierAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mMultiplier))];
+		[theNode addAttribute:attributeNode];
+	}
+	return theNode;
 }
 
 NString WhenElement::GetDescription(void)
@@ -466,6 +527,31 @@ WhenElementSet::AddToXMLTree(NXMLNode& inTree)
 				// Add comments (deleting duplicates on the fly)
 			whenElement->RemoveDuplicateComments();
 			whenElement->AddCommentsToXMLTree(inTree);
+		}
+	}
+}
+
+void
+WhenElementSet::AddToXML(NSXMLElement *inTree) {
+	WhenElement keyElement(kStateNone, "", "", "", "");
+	WhenElementSetIterator pos = mElementSet.find(&keyElement);
+	if (pos != mElementSet.end()) {
+		WhenElement *noneElement = *pos;
+			// Get the XML tree for the when element and add it
+		NSXMLElement *xmlElement = noneElement->CreateXMLNode();
+		[inTree addChild:xmlElement];
+			// Add comments (deleting duplicates on the fly)
+		noneElement->RemoveDuplicateComments();
+		noneElement->AddCommentsToXML(inTree);
+	}
+	for (pos = mElementSet.begin(); pos != mElementSet.end(); ++pos) {
+		WhenElement *whenElement = *pos;
+		if (whenElement->GetState() != kStateNone) {
+				// Get the XML tree for the when element and add it
+			[inTree addChild:whenElement->CreateXMLNode()];
+				// Add comments (deleting duplicates on the fly)
+			whenElement->RemoveDuplicateComments();
+			whenElement->AddCommentsToXML(inTree);
 		}
 	}
 }

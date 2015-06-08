@@ -134,9 +134,9 @@ NSString *kKeyboardName = @"keyboardName";
 {
     [super windowControllerDidLoadNib:aController];
 		// Register for our drag types
-	[keyboardLayoutsTable registerForDraggedTypes:@[UKKeyboardPasteType, (NSString *)kUTTypeFileURL]];
+	[self.keyboardLayoutsTable registerForDraggedTypes:@[UKKeyboardPasteType, (NSString *)kUTTypeFileURL]];
 		// Tell the Finder that it can copy files out
-	[keyboardLayoutsTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+	[self.keyboardLayoutsTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
@@ -691,7 +691,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (UKKeyboardController *)controllerForCurrentEntry {
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	NSAssert(selectedRowNumber >= 0, @"Must have a selected row");
 	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
 	UKKeyboardController *theController = [selectedRowInfo keyboardController];
@@ -709,7 +709,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
 		currentObservation = nil;
 	}
-	if ([keyboardLayoutsTable selectedRow] != -1) {
+	if ([self.keyboardLayoutsTable selectedRow] != -1) {
 		currentObservation = [[self controllerForCurrentEntry] keyboardLayout];
 		[currentObservation addObserver:self
 							 forKeyPath:kKeyboardName
@@ -719,17 +719,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)setTableSelectionForMenu {
-	NSInteger clickedRow = [keyboardLayoutsTable clickedRow];
+	NSInteger clickedRow = [self.keyboardLayoutsTable clickedRow];
 	if (clickedRow != -1) {
-		if ([keyboardLayoutsTable selectedRow] != clickedRow) {
-			[keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
+		if ([self.keyboardLayoutsTable selectedRow] != clickedRow) {
+			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
 		}
 	}
 }
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-	[self.keyboardLayoutsController setSortDescriptors:[keyboardLayoutsTable sortDescriptors]];
-	[self.keyboardLayouts sortUsingDescriptors:[keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 }
 
 #pragma mark Drag and Drop
@@ -935,9 +935,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(removeKeyboardLayout:) ||
 			 theAction == @selector(duplicateKeyboardLayout:)) {
 			// Only active if there's a selection in the table
-		NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+		NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [keyboardLayoutsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		}
 		return (selectedRowNumber != -1);
 	}
@@ -1147,7 +1147,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)removeKeyboardLayout:(id)sender {
 	[self setTableSelectionForMenu];
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1177,7 +1177,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)openKeyboardLayout:(id)sender {
 	[self setTableSelectionForMenu];
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1194,7 +1194,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)chooseIntendedLanguage:(id)sender {
 	[self setTableSelectionForMenu];
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1212,7 +1212,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 											forWindow:myWindow
 											 callBack:^(LanguageCode *newLanguage) {
 												 if (newLanguage != nil) {
-													 NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+													 NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 													 NSAssert(selectedRowNumber >= 0, @"There must be a selected row");
 													 [self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:newLanguage];
 												 }
@@ -1291,7 +1291,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[openPanel setCanChooseFiles:YES];
 	[openPanel setResolvesAliases:YES];
 	[openPanel setAllowedFileTypes:@[kFileTypeKeyboardLayout]];
-	NSWindow *docWindow = [keyboardLayoutsTable window];
+	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	[openPanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse response) {
 		if (response == NSModalResponseOK) {
 				// User selected a file
@@ -1320,7 +1320,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)attachIconFile:(id)sender {
 	[self setTableSelectionForMenu];
-	__block NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	__block NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1331,7 +1331,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[openPanel setCanChooseFiles:YES];
 	[openPanel setResolvesAliases:YES];
 	[openPanel setAllowedFileTypes:@[(NSString *)kUTTypeAppleICNS]];
-	NSWindow *docWindow = [keyboardLayoutsTable window];
+	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	[openPanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse response) {
 		if (response == NSModalResponseOK) {
 				// User selected a file
@@ -1346,7 +1346,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	// Set the keyboard's name, script and/or id
 - (IBAction)askKeyboardIdentifiers:(id)sender {
 	[self setTableSelectionForMenu];
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1357,7 +1357,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		keyboardController = [self createControllerForEntry:keyboardEntry];
 	}
 	NSAssert(keyboardController, @"Keyboard controller must exist");
-	NSWindow *docWindow = [keyboardLayoutsTable window];
+	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	NSAssert(docWindow, @"Must have a document window");
 	[keyboardController askKeyboardIdentifiers:docWindow];
 }
@@ -1370,7 +1370,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		targetWindow = [(UKKeyboardController *)sender window];
 	}
 	else {
-		targetWindow = [keyboardLayoutsTable window];
+		targetWindow = [self.keyboardLayoutsTable window];
 	}
 	NSAssert(targetWindow, @"Must have a valid window");
 	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
@@ -1387,7 +1387,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		targetWindow = [(UKKeyboardController *)sender window];
 	}
 	else {
-		targetWindow = [keyboardLayoutsTable window];
+		targetWindow = [self.keyboardLayoutsTable window];
 	}
 	NSAssert(targetWindow, @"Must have a valid window");
 	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
@@ -1400,7 +1400,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)duplicateKeyboardLayout:(id)sender {
 	[self setTableSelectionForMenu];
-	NSInteger selectedRowNumber = [keyboardLayoutsTable selectedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	if (selectedRowNumber < 0) {
 		return;
 	}
@@ -1467,7 +1467,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
@@ -1485,7 +1485,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)inspectorSetKeyboardSection {
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
-	if ([[keyboardLayoutsTable selectedRowIndexes] count] == 1) {
+	if ([[self.keyboardLayoutsTable selectedRowIndexes] count] == 1) {
 			// We have a single selected keyboard layout
 		UKKeyboardController *selectedWindow = [self controllerForCurrentEntry];
 		[inspectorController setCurrentWindow:selectedWindow];
@@ -1511,7 +1511,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 						 };
 	});
 	[inspectorController bind:@"currentKeyboard" toObject:self.keyboardLayoutsController withKeyPath:@"selection.keyboardObject" options:bindingsDict];
-	if ([keyboardLayoutsTable selectedRow] == -1) {
+	if ([self.keyboardLayoutsTable selectedRow] == -1) {
 		[inspectorController setCurrentKeyboard:NSNoSelectionMarker];
 	}
 	[self inspectorSetKeyboardSection];
@@ -1621,9 +1621,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
 	[undoManager setActionName:@"Remove keyboard layout"];
 	[self.keyboardLayoutsController removeObjectAtArrangedObjectIndex:indexToRemove];
-	[keyboardLayoutsTable deselectAll:self];
+	[self.keyboardLayoutsTable deselectAll:self];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 		// Hide the document's windows, if they are shown
 	UKKeyboardController *keyboardController = [keyboardInfo keyboardController];
 	if (keyboardController != nil) {
@@ -1645,8 +1645,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
 		// Notify the list that it's been updated
-//	[keyboardLayoutsTable reloadData];
-	[keyboardLayoutsTable scrollRowToVisible:newIndex];
+//	[self.keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 
 - (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {
@@ -1656,7 +1656,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:index];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)addIcon:(NSData *)iconData atIndex:(NSUInteger)index {
@@ -1667,7 +1667,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)removeIconAtIndex:(NSUInteger)index {
@@ -1679,7 +1679,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Add icon"];
 	[keyboardInfo setIconData:nil];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)replaceIconAtIndex:(NSUInteger)index withIcon:(NSData *)iconData {
@@ -1691,7 +1691,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Change icon"];
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)replaceIntendedLanguageAtIndex:(NSUInteger)index withLanguage:(LanguageCode *)newLanguage {
@@ -1703,7 +1703,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Change intended language"];
 	[keyboardInfo setIntendedLanguage:[newLanguage stringRepresentation]];
 		// Notify the list that it's been updated
-	[keyboardLayoutsTable reloadData];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument withIcon:(NSData *)iconData withLanguage:(NSString *)intendedLanguage {

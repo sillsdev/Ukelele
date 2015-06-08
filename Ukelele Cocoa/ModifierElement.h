@@ -67,7 +67,9 @@ public:
     bool IsSimplified(void);
 	
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, ModifierElement*& outElement);
+	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, ModifierElement*& outElement);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

@@ -12,6 +12,7 @@
 #include "UkeleleStrings.h"
 #include "XMLErrors.h"
 #include "NBundle.h"
+#include "NCocoa.h"
 
 // Key strings
 const NString kLayoutsElementWrongElementType = "LayoutsElementWrongElementType";
@@ -236,6 +237,64 @@ ErrorMessage LayoutsElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 	return errorValue;
 }
 
+ErrorMessage LayoutsElement::CreateFromXML(NSXMLElement *inXMLTree, LayoutsElement *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	outElement = new LayoutsElement;
+	NString childValue;
+	NString errorString;
+	XMLCommentHolder *commentHolder = outElement;
+	for (NSXMLNode *childNode in [inXMLTree children]) {
+		switch ([childNode kind]) {
+			case NSXMLElementKind: {
+					// An element, which should be a layout element
+				childValue = ToNN([childNode name]);
+				if (childValue != kLayoutElement) {
+					// Not a layout element
+					NString errorFormat = NBundleString(kLayoutsElementWrongElementType, "", kErrorTableName);
+					errorString.Format(errorFormat, childValue);
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
+					break;
+				}
+				LayoutElement *layoutElement;
+				errorValue = LayoutElement::CreateFromXML((NSXMLElement *)childNode, layoutElement);
+				if (errorValue == XMLNoError) {
+					// Got a valid layout element
+					outElement->AddLayout(layoutElement);
+					// Deal with comments
+					if (commentHolder != NULL) {
+						commentHolder->RemoveDuplicateComments();
+					}
+					commentHolder = layoutElement;
+					ioCommentContainer->AddCommentHolder(layoutElement);
+				}
+			}
+			break;
+				
+			case NSXMLCommentKind: {
+					// A comment, so add it to the structure
+				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), commentHolder);
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+				// Invalid node type
+				errorString = NBundleString(kLayoutsElementInvalidNodeType, "", kErrorTableName);
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError) {
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+		// An error in processing, so delete the partially constructed element
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 // Create an XML tree representing the layouts element
 
 NXMLNode *LayoutsElement::CreateXMLTree(void)
@@ -250,6 +309,18 @@ NXMLNode *LayoutsElement::CreateXMLTree(void)
 		result->AddChild(childTree);
 	}
 	return result;
+}
+
+NSXMLElement *LayoutsElement::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kLayoutsElement)];
+	AddCommentsToXML(xmlTree);
+	LayoutElementList::iterator pos;
+	for (pos = mLayoutList.begin(); pos != mLayoutList.end(); ++pos) {
+		LayoutElement *layoutElement = *pos;
+		NSXMLElement *childTree = layoutElement->CreateXML();
+		[xmlTree addChild:childTree];
+	}
+	return xmlTree;
 }
 
 NString LayoutsElement::GetDescription(void)

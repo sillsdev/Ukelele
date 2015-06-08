@@ -12,6 +12,7 @@
 #include "XMLErrors.h"
 #include "UkeleleStrings.h"
 #include "NBundle.h"
+#import "NCocoa.h"
 
 	// Key strings
 const NString kTerminatorsElementNotWhen = "TerminatorsElementNotWhen";
@@ -214,6 +215,82 @@ ErrorMessage TerminatorsElement::CreateFromXMLTree(const NXMLNode& inTree,
 	return errorValue;
 }
 
+ErrorMessage TerminatorsElement::CreateFromXML(NSXMLElement *inTree, TerminatorsElement *&outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	outElement = new TerminatorsElement;
+	NString childValue;
+	NString errorString;
+	NString errorFormat;
+	XMLCommentHolder *commentHolder = outElement;
+	for (NSXMLNode *childNode in [inTree children]) {
+		switch ([childNode kind]) {
+			case NSXMLElementKind: {
+					// An element, which should be a when element
+				childValue = ToNN([childNode name]);
+				if (childValue != kWhenElement) {
+						// Not a when element
+					errorFormat = NBundleString(kTerminatorsElementNotWhen, "", kErrorTableName);
+					errorString.Format(errorFormat, childValue);
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
+					break;
+				}
+				WhenElement *whenElement;
+				errorValue = WhenElement::CreateFromXMLTree((NSXMLElement *)childNode, whenElement);
+				if (errorValue == XMLNoError &&
+					(whenElement->GetNext() != "" ||
+					 whenElement->GetThrough() != "" ||
+					 whenElement->GetMultiplier() != "")) {
+						// When element does not specify only the output attribute
+					errorFormat = NBundleString(kTerminatorsElementWhenExtraAttributes, "", kErrorTableName);
+					errorString.Format(errorFormat, whenElement->GetState());
+					errorValue = ErrorMessage(XMLTerminatorWhenNotOutputError, errorString);
+				}
+				if (errorValue == XMLNoError) {
+						// Got a valid when element. Check that it's not a repeated one
+					if (outElement->AddWhenElement(whenElement)) {
+							// Not a repeated element. Deal with comments
+						if (commentHolder != NULL) {
+							commentHolder->RemoveDuplicateComments();
+						}
+						commentHolder = whenElement;
+						ioCommentContainer->AddCommentHolder(whenElement);
+					}
+					else {
+							// Repeated when element
+						errorFormat = NBundleString(kTerminatorsElementRepeatedWhen, "", kErrorTableName);
+						errorString.Format(errorFormat, whenElement->GetState());
+						errorValue = ErrorMessage(XMLRepeatedWhenElement, errorString);
+					}
+				}
+			}
+			break;
+				
+			case NSXMLCommentKind: {
+					// A comment, so add it to the structure
+				childValue = ToNN([childNode stringValue]);
+				XMLComment *childComment = new XMLComment(childValue, commentHolder);
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+					// Invalid node type
+				errorString = NBundleString(kTerminatorsElementInvalidNodeType, "", kErrorTableName);
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError) {
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+			// An error in processing, so delete the partially constructed element
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 	// CreateXMLTree
 	//	Create an XML tree for the terminators element
 
@@ -226,6 +303,17 @@ NXMLNode *TerminatorsElement::CreateXMLTree(void)
 		NXMLNode *whenElementTree = whenElement->CreateXMLTree();
 		xmlTree->AddChild(whenElementTree);
 		whenElement->AddCommentsToXMLTree(*xmlTree);
+	}
+	return xmlTree;
+}
+
+NSXMLElement *TerminatorsElement::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kTerminatorsElement)];
+	AddCommentsToXML(xmlTree);
+	for (WhenElement *whenElement = mWhenElementList->GetFirstWhenElement(); whenElement != NULL; whenElement = mWhenElementList->GetNextWhenElement()) {
+		NSXMLElement *whenElementTree = whenElement->CreateXMLNode();
+		[xmlTree addChild:whenElementTree];
+		whenElement->AddCommentsToXML(xmlTree);
 	}
 	return xmlTree;
 }

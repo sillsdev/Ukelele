@@ -29,7 +29,9 @@ public:
 	NString GetMapSet() const { return mMapSet; }
 	
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, LayoutElement*& outElement);
+	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, LayoutElement*& outElement);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

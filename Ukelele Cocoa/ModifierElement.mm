@@ -12,6 +12,7 @@
 #include "XMLErrors.h"
 #include "UkeleleStrings.h"
 #include "NBundle.h"
+#include "NCocoa.h"
 
 // Key strings
 const NString kModifierElementMissingKeysAttribute = "ModifierElementMissingKeysAttribute";
@@ -428,6 +429,25 @@ ErrorMessage ModifierElement::CreateFromXMLTree(const NXMLNode& inXMLTree, Modif
 	return errorValue;
 }
 
+ErrorMessage ModifierElement::CreateFromXML(NSXMLElement *inXMLTree, ModifierElement *&outElement) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NSXMLNode *attributeNode = [inXMLTree attributeForName:ToNS(kKeysAttribute)];
+	if (attributeNode == nil) {
+		// No keys attribute
+		NString errorString = NBundleString(kModifierElementMissingKeysAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+		return errorValue;
+	}
+	NString keysAttribute = ToNN([attributeNode stringValue]);
+	outElement = new ModifierElement();
+	errorValue = outElement->AddModifierKeyList(keysAttribute);
+	if (errorValue != XMLNoError) {
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 // Create an XML tree
 
 NXMLNode *ModifierElement::CreateXMLTree(void)
@@ -436,6 +456,14 @@ NXMLNode *ModifierElement::CreateXMLTree(void)
 	xmlTree->SetElementUnpaired(true);
 	xmlTree->SetElementAttribute(kKeysAttribute, GetModifierKeyList());
 	AddCommentsToXMLTree(*xmlTree);
+	return xmlTree;
+}
+
+NSXMLElement *ModifierElement::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kModifierElement)];
+	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kKeysAttribute) stringValue:ToNS(GetModifierKeyList())];
+	[xmlTree addAttribute:attributeNode];
+	AddCommentsToXML(xmlTree);
 	return xmlTree;
 }
 

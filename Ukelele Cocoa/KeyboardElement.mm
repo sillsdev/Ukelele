@@ -12,6 +12,7 @@
 #include "UkeleleStrings.h"
 #include "RandomNumberGenerator.h"
 #include "NBundle.h"
+#include "NCocoa.h"
 
 const UInt32 kStateMaximum = 1 << 30;
 
@@ -240,6 +241,193 @@ ErrorMessage KeyboardElement::CreateFromXMLTree(const NXMLNode& inTree,
 	return errorValue;
 }
 
+ErrorMessage KeyboardElement::CreateFromXML(NSXMLElement *inTree, KeyboardElement *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NString errorMessage;
+	NSXMLNode *groupAttributeNode = [inTree attributeForName:ToNS(kGroupAttribute)];
+	NSXMLNode *idAttributeNode = [inTree attributeForName:ToNS(kIDAttribute)];
+	NSXMLNode *nameAttributeNode = [inTree attributeForName:ToNS(kNameAttribute)];
+	NSXMLNode *maxoutAttributeNode = [inTree attributeForName:ToNS(kMaxoutAttribute)];
+	if (groupAttributeNode == nil || idAttributeNode == nil || nameAttributeNode == nil) {
+			// Handle missing attributes
+		errorMessage = NBundleString(kKeyboardElementMissingAttributes, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorMessage);
+		return errorValue;
+	}
+	NNumber groupNumber(ToNN([groupAttributeNode stringValue]));
+	int32_t groupValue = groupNumber.GetInt32();
+	NNumber idNumber(ToNN([idAttributeNode stringValue]));
+	int32_t idValue = idNumber.GetInt32();
+	NNumber maxoutNumber(ToNN([maxoutAttributeNode stringValue]));
+	UInt32 maxoutValue = maxoutNumber.GetUInt32();
+	if ([inTree childCount] == 0) {
+			// Handle empty keyboard
+		errorMessage = NBundleString(kKeyboardElementNoElements, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingChildrenError, errorMessage);
+		return errorValue;
+	}
+	outElement = new KeyboardElement(groupValue, idValue, ToNN([nameAttributeNode stringValue]), maxoutValue);
+	outElement->mLayouts.reset();
+	outElement->mTerminatorsElement.reset();
+	XMLCommentHolder *commentHolder = outElement;
+	ioCommentContainer->AddCommentHolder(outElement);
+	for (NSXMLNode *childNode in [inTree children]) {
+		NString childString = ToNN([childNode name]);
+		NString errorFormat;
+		switch ([childNode kind]) {
+			case NSXMLElementKind: {
+					// An element node, check which one
+				if (childString == kLayoutsElement) {
+						// A layouts element, which must be unique
+					if (outElement->mLayouts.get() != NULL) {
+							// Repeated layouts element
+						errorMessage = NBundleString(kKeyboardElementRepeatedLayoutsElement, "", kErrorTableName);
+						errorValue = ErrorMessage(XMLRepeatedElementError, errorMessage);
+					}
+					else {
+						LayoutsElement *layoutsElement;
+						errorValue = LayoutsElement::CreateFromXML((NSXMLElement *)childNode, layoutsElement, ioCommentContainer);
+						if (errorValue == XMLNoError && layoutsElement->IsEmpty()) {
+								// Layouts element is empty
+							errorMessage = NBundleString(kKeyboardElementEmptyLayoutsElement, "", kErrorTableName);
+							errorValue = ErrorMessage(XMLEmptyLayoutsElementError, errorMessage);
+						}
+						if (errorValue == XMLNoError) {
+							outElement->AddLayoutsElement(layoutsElement);
+							if (commentHolder != NULL) {
+								commentHolder->RemoveDuplicateComments();
+							}
+							commentHolder = layoutsElement;
+							ioCommentContainer->AddCommentHolder(commentHolder);
+						}
+					}
+				}
+				else if (childString == kModifierMapElement) {
+						// A modifier map element
+					ModifierMap *modifierMap;
+					errorValue = ModifierMap::CreateFromXML((NSXMLElement *)childNode, modifierMap, ioCommentContainer);
+					if (errorValue == XMLNoError) {
+							// Check whether we already have a modifier map with the same id
+						if (outElement->FindModifierMap(modifierMap->GetID()) != NULL) {
+							errorFormat = NBundleString(kKeyboardRepeatedModifierMap, "", kErrorTableName);
+							errorMessage.Format(errorFormat, modifierMap->GetID());
+							errorValue = ErrorMessage(XMLRepeatedModifierMapError, errorMessage);
+						}
+					}
+					if (errorValue == XMLNoError) {
+						outElement->AddModifierMap(modifierMap);
+						if (commentHolder != NULL) {
+							commentHolder->RemoveDuplicateComments();
+						}
+						commentHolder = modifierMap;
+						ioCommentContainer->AddCommentHolder(commentHolder);
+					}
+				}
+				else if (childString == kKeyMapSetElement) {
+						// A key map set element
+					KeyMapSet *keyMapSet;
+					errorValue = KeyMapSet::CreateFromXML((NSXMLElement *)childNode, keyMapSet, ioCommentContainer);
+					if (errorValue == XMLNoError) {
+							// Check for a repeated key map set
+						if (outElement->mKeyMapSetList->FindKeyMapSet(keyMapSet->GetID()) != NULL) {
+							errorFormat = NBundleString(kKeyboardElementRepeatedKeyMapSet, "", kErrorTableName);
+							errorMessage.Format(errorFormat, keyMapSet->GetID());
+							errorValue = ErrorMessage(XMLRepeatedKeyMapSetError, errorMessage);
+						}
+					}
+					if (errorValue == XMLNoError) {
+						outElement->AddKeyMapSet(keyMapSet);
+						if (commentHolder != NULL) {
+							commentHolder->RemoveDuplicateComments();
+						}
+						commentHolder = keyMapSet;
+						ioCommentContainer->AddCommentHolder(commentHolder);
+					}
+				}
+				else if (childString == kActionsElement) {
+						// An actions element, which must be unique
+					if (!outElement->mActionList->IsEmpty()) {
+							// Repeated actions element
+						errorMessage = NBundleString(kKeyboardElementRepeatedActionsElement, "", kErrorTableName);
+						errorValue = ErrorMessage(XMLRepeatedElementError, errorMessage);
+					}
+					else {
+						errorValue = outElement->mActionList->CreateFromXML((NSXMLElement *)childNode, ioCommentContainer);
+						if (errorValue == XMLNoError) {
+							if (commentHolder != NULL) {
+								commentHolder->RemoveDuplicateComments();
+							}
+							commentHolder = outElement->mActionList.get();
+							ioCommentContainer->AddCommentHolder(commentHolder);
+						}
+					}
+				}
+				else if (childString == kTerminatorsElement) {
+						// A terminators element, which must be unique
+					if (outElement->mTerminatorsElement.get() != NULL) {
+							// Repeated terminators element
+						errorMessage = NBundleString(kKeyboardElementRepeatedTerminatorsElement, "", kErrorTableName);
+						errorValue = ErrorMessage(XMLRepeatedElementError, errorMessage);
+					}
+					else {
+						TerminatorsElement *terminatorsElement;
+						errorValue = TerminatorsElement::CreateFromXML((NSXMLElement *)childNode, terminatorsElement, ioCommentContainer);
+						if (errorValue == XMLNoError) {
+							outElement->AddTerminatorsElement(terminatorsElement);
+							if (commentHolder != NULL) {
+								commentHolder->RemoveDuplicateComments();
+							}
+							commentHolder = terminatorsElement;
+							ioCommentContainer->AddCommentHolder(commentHolder);
+						}
+					}
+				}
+				else {
+						// An unknown element
+					errorFormat = NBundleString(kKeyboardElementInvalidElementType, "", kErrorTableName);
+					errorMessage.Format(errorFormat, childString);
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorMessage);
+				}
+			}
+			break;
+				
+			case NSXMLCommentKind: {
+					// A comment, so add it to the structure
+				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), commentHolder);
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+					// Invalid node type
+				errorFormat = NBundleString(kKeyboardElementWrongNodeType, "", kErrorTableName);
+				errorMessage.Format(errorFormat, static_cast<SInt32>([childNode kind]));
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorMessage);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError && outElement->mLayouts.get() == NULL) {
+			// Missing layouts attribute
+		errorMessage = NBundleString(kMissingLayoutsElement, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingLayoutsError, errorMessage);
+	}
+	if (errorValue == XMLNoError && outElement->mModifierMapList.empty()) {
+			// Missing modifierMap element
+		errorMessage = NBundleString(kMissingModifierMapElement, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingChildrenError, errorMessage);
+	}
+	if (errorValue == XMLNoError) {
+		outElement->mKeyMapSetList->CompleteSet();
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+			// An error in processing, so delete the partially constructed element
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 NXMLNode *KeyboardElement::CreateXMLTree(void)
 {
 		// Make sure that maxout is correct
@@ -283,6 +471,51 @@ NXMLNode *KeyboardElement::CreateXMLTree(void)
 	if (mTerminatorsElement.get() != NULL && mTerminatorsElement->GetWhenElementCount() > 0) {
 		childTree = mTerminatorsElement->CreateXMLTree();
 		xmlTree->AddChild(childTree);
+	}
+	return xmlTree;
+}
+
+NSXMLElement *KeyboardElement::CreateXML(void) {
+		// Make sure that maxout is correct
+	UpdateMaxout();
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kKeyboardElement)];
+		// Add the attributes
+	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kGroupAttribute) stringValue:[NSString stringWithFormat:@"%d", mGroup]];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kIDAttribute) stringValue:[NSString stringWithFormat:@"%d", mID]];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kNameAttribute) stringValue:ToNS(mName)];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kMaxoutAttribute) stringValue:[NSString stringWithFormat:@"%d", mMaxout]];
+	[xmlTree addAttribute:attributeNode];
+		// Add comments
+	AddCommentsToXML(xmlTree);
+		// Add the layouts element
+	NSXMLElement *childTree = mLayouts->CreateXML();
+	[xmlTree addChild:childTree];
+		// Add modifier map elements
+	ModifierMapConstIterator modIter;
+	for (modIter = mModifierMapList.begin(); modIter != mModifierMapList.end(); ++modIter) {
+		ModifierMap *childElement = *modIter;
+		childTree = childElement->CreateXML();
+		[xmlTree addChild:childTree];
+	}
+		// Add key map set elements
+	SInt32 keyMapSetCount = mKeyMapSetList->GetCount();
+	for (SInt32 i = 1; i <= keyMapSetCount; i++) {
+		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);
+		childTree = keyMapSet->CreateXML();
+		[xmlTree addChild:childTree];
+	}
+		// Add actions element, if not empty
+	if (!mActionList->IsEmpty()) {
+		childTree = mActionList->CreateXML();
+		[xmlTree addChild:childTree];
+	}
+		// Add terminators element, if any
+	if (mTerminatorsElement.get() != NULL && mTerminatorsElement->GetWhenElementCount() > 0) {
+		childTree = mTerminatorsElement->CreateXML();
+		[xmlTree addChild:childTree];
 	}
 	return xmlTree;
 }

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "523B0204191D8C3100E06DF3"
-               BuildableName = "org.sil.Ukelele.KeyboardInstallerTool"
-               BlueprintName = "org.sil.Ukelele.KeyboardInstallerTool"
-               ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+               BlueprintIdentifier = "523B01E6191D865100E06DF3"
+               BuildableName = "KeyboardInstallerTool"
+               BlueprintName = "KeyboardInstallerTool"
+               ReferencedContainer = "container:Ukelele.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,18 +32,17 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "523B0204191D8C3100E06DF3"
-            BuildableName = "org.sil.Ukelele.KeyboardInstallerTool"
-            BlueprintName = "org.sil.Ukelele.KeyboardInstallerTool"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintIdentifier = "523B01E6191D865100E06DF3"
+            BuildableName = "KeyboardInstallerTool"
+            BlueprintName = "KeyboardInstallerTool"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      debugAsWhichUser = "root"
-      launchStyle = "1"
+      launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
@@ -52,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "523B0204191D8C3100E06DF3"
-            BuildableName = "org.sil.Ukelele.KeyboardInstallerTool"
-            BlueprintName = "org.sil.Ukelele.KeyboardInstallerTool"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintIdentifier = "523B01E6191D865100E06DF3"
+            BuildableName = "KeyboardInstallerTool"
+            BlueprintName = "KeyboardInstallerTool"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "523B0204191D8C3100E06DF3"
-            BuildableName = "org.sil.Ukelele.KeyboardInstallerTool"
-            BlueprintName = "org.sil.Ukelele.KeyboardInstallerTool"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintIdentifier = "523B01E6191D865100E06DF3"
+            BuildableName = "KeyboardInstallerTool"
+            BlueprintName = "KeyboardInstallerTool"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

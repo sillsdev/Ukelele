@@ -10,6 +10,7 @@
 #include "XMLCommentHolder.h"
 #include <algorithm>
 #include <iterator>
+#include "NCocoa.h"
 
 #pragma mark === XMLComment ===
 
@@ -48,6 +49,13 @@ XMLComment::AddCommentToXMLTree(NXMLNode& ioXMLTree)
 {
 	NXMLNode *commentTree = new NXMLNode(kNXMLNodeComment, mComment);
 	ioXMLTree.AddChild(commentTree);
+}
+
+void
+XMLComment::AddCommentToXML(NSXMLElement *xmlTree) {
+	NSXMLElement *commentElement = [[NSXMLElement alloc] initWithKind:NSXMLCommentKind];
+	[commentElement setStringValue:ToNS(mComment)];
+	[xmlTree addChild:commentElement];
 }
 
 void XMLComment::SetHolder(XMLCommentHolder *inHolder)
@@ -203,6 +211,13 @@ XMLCommentHolder::AddCommentsToXMLTree(NXMLNode& ioTree)
 		(*mIterator)->AddCommentToXMLTree(ioTree);
 	}
 	
+}
+
+void
+XMLCommentHolder::AddCommentsToXML(NSXMLElement *xmlTree) {
+	for (mIterator = mCommentList.begin(); mIterator != mCommentList.end(); ++mIterator) {
+		(*mIterator)->AddCommentToXML(xmlTree);
+	}
 }
 
 	// Find a comment

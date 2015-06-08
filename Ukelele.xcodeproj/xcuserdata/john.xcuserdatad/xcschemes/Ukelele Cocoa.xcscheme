@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "52BBECFE191B4C3900E48394"
                BuildableName = "Ukelele.app"
-               BlueprintName = "Ukelele Cocoa"
-               ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+               BlueprintName = "Ukelele"
+               ReferencedContainer = "container:Ukelele.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "52BBED22191B4C3900E48394"
-               BuildableName = "Ukelele CocoaTests.xctest"
-               BlueprintName = "Ukelele CocoaTests"
-               ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+               BuildableName = "UkeleleTests.xctest"
+               BlueprintName = "UkeleleTests"
+               ReferencedContainer = "container:Ukelele.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52BBECFE191B4C3900E48394"
             BuildableName = "Ukelele.app"
-            BlueprintName = "Ukelele Cocoa"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintName = "Ukelele"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52BBECFE191B4C3900E48394"
             BuildableName = "Ukelele.app"
-            BlueprintName = "Ukelele Cocoa"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintName = "Ukelele"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52BBECFE191B4C3900E48394"
             BuildableName = "Ukelele.app"
-            BlueprintName = "Ukelele Cocoa"
-            ReferencedContainer = "container:Ukelele Cocoa.xcodeproj">
+            BlueprintName = "Ukelele"
+            ReferencedContainer = "container:Ukelele.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

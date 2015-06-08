@@ -14,11 +14,11 @@
 
 @end
 
-@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate> {
-	IBOutlet NSTableView *keyboardLayoutsTable;
-	IBOutlet NSButton *languageButton;
-	IBOutlet NSButton *removeKeyboardButton;
-}
+@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate>
+
+@property (strong) IBOutlet NSTableView *keyboardLayoutsTable;
+@property (strong) IBOutlet NSButton *languageButton;
+@property (strong) IBOutlet NSButton *removeKeyboardButton;
 
 @property (nonatomic, strong) NSString *bundleVersion;
 @property (nonatomic, strong) NSString *buildVersion;

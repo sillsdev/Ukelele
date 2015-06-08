@@ -26,6 +26,7 @@ public:
 	void SetCommentString(NString inComment);
 	NString GetCommentString(void) const { return mComment; }
 	void AddCommentToXMLTree(NXMLNode& ioXMLTree);
+	void AddCommentToXML(NSXMLElement *xmlTree);
 	
 	void SetHolder(XMLCommentHolder *inHolder);
 	XMLCommentHolder *GetHolder(void) const { return mHolder; }
@@ -79,6 +80,7 @@ public:
 	bool RemoveComment(NString inCommentString);
 	void RemoveDuplicateComments(void);
 	void AddCommentsToXMLTree(NXMLNode& ioTree);
+	void AddCommentsToXML(NSXMLElement *xmlTree);
 	UInt32 GetCommentCount(void) { return static_cast<UInt32>(mCommentList.size()); }
 	bool HasComments(void) { return !mCommentList.empty(); }
 	

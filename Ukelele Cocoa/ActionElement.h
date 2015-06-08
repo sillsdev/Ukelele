@@ -60,7 +60,9 @@ public:
 	
 		// Convert to and from an XML tree
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, ActionElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
+	static ErrorMessage CreateFromXML(NSXMLElement *inTree, ActionElement*& outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 		// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);
@@ -102,7 +104,9 @@ public:
 	
 		// XML tree creation and construction
 	ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, shared_ptr<XMLCommentContainer> ioCommentContainer);
+	ErrorMessage CreateFromXML(NSXMLElement *inTree, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 		// Create hex-entry keyboard actions
 	void CreateHexEntryActions(void);

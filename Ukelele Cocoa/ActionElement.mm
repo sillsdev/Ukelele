@@ -238,6 +238,84 @@ ErrorMessage ActionElement::CreateFromXMLTree(const NXMLNode& inTree,
 	return errorValue;
 }
 
+ErrorMessage ActionElement::CreateFromXML(NSXMLElement *inTree, ActionElement *&outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NString errorString;
+	NString errorFormat;
+	NSXMLNode *attributeNode = [inTree attributeForName:ToNS(kIDAttribute)];
+	if (attributeNode == nil) {
+		errorString = NBundleString(kActionElementMissingIDAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+		return errorValue;
+	}
+	NString actionID = ToNN([attributeNode stringValue]);
+	outElement = new ActionElement(actionID);
+	XMLCommentHolder *commentHolder = outElement;
+	for (NSXMLNode *childNode in [inTree children]) {
+		switch ([childNode kind]) {
+			case NSXMLElementKind: {
+					// An element, which should be a when element
+				NSXMLElement *childElement = (NSXMLElement *)childNode;
+				if (ToNN([childElement name]) != kWhenElement) {
+						// Not a when element
+					errorFormat = NBundleString(kActionElementNotWhenElement, "", kErrorTableName);
+					errorString.Format(errorFormat, actionID, ToNN([childElement stringValue]));
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
+					break;
+				}
+				WhenElement *whenElement;
+				errorValue = WhenElement::CreateFromXMLTree(childElement, whenElement);
+				if (errorValue == XMLNoError) {
+						// Got a valid element. Check that it's not a repeated one
+					if (outElement->AddWhenElement(whenElement)) {
+							// Not a repeated element. Deal with comments
+						if (commentHolder != NULL) {
+							commentHolder->RemoveDuplicateComments();
+						}
+						commentHolder = whenElement;
+						ioCommentContainer->AddCommentHolder(whenElement);
+					}
+					else {
+							// Repeated when element
+						errorFormat = NBundleString(kActionElementRepeatedWhenElement, "", kErrorTableName);
+						errorString.Format(errorFormat, actionID, whenElement->GetState());
+						errorValue = ErrorMessage(XMLRepeatedWhenElement, errorString);
+					}
+				}
+			}
+			break;
+				
+			case NSXMLCommentKind: {
+				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]));
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+					// Invalid node type
+				errorFormat = NBundleString(kActionElementInvalidNodeType, "", kErrorTableName);
+				errorString.Format(errorFormat, actionID);
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError && outElement->mWhenElementSet->GetWhenElementCount() == 0) {
+			// Empty action element
+		errorFormat = NBundleString(kActionElementEmpty, "", kErrorTableName);
+		errorString.Format(errorFormat, actionID);
+		errorValue = ErrorMessage(XMLEmptyActionElementError, errorString);
+	}
+	if (errorValue == XMLNoError) {
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+			// An error in processing, so delete the partially constructed element
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 	// Create an XML tree to represent the action element
 
 NXMLNode *ActionElement::CreateXMLTree(void)
@@ -259,6 +337,27 @@ NXMLNode *ActionElement::CreateXMLTree(void)
 			NXMLNode *whenElementTree = whenElement->CreateXMLTree();
 			xmlTree->AddChild(whenElementTree);
 			whenElement->AddCommentsToXMLTree(*xmlTree);
+		}
+	}
+	return xmlTree;
+}
+
+NSXMLElement *ActionElement::CreateXML(void) {
+	NSXMLElement *xmlTree = [[NSXMLElement alloc] initWithName:ToNS(kActionElement)];
+	[xmlTree addAttribute:[NSXMLNode attributeWithName:ToNS(kIDAttribute) stringValue:ToNS(mActionID)]];
+	WhenElement *stateNoneElement = mWhenElementSet->FindWhenElement(kStateNone);
+	if (stateNoneElement == NULL) {
+			// No element for state none: create one
+		stateNoneElement = new WhenElement(kStateNone, "", "", "", "");
+		mWhenElementSet->AddWhenElement(stateNoneElement);
+	}
+	NSXMLElement *stateNoneTree = stateNoneElement->CreateXMLNode();
+	[xmlTree addChild:stateNoneTree];
+	stateNoneElement->AddCommentsToXML(xmlTree);
+	for (WhenElement *whenElement = mWhenElementSet->GetFirstWhenElement(); whenElement != NULL; whenElement = mWhenElementSet->GetNextWhenElement()) {
+		if (whenElement->GetState() != kStateNone) {
+			[xmlTree addChild:whenElement->CreateXMLNode()];
+			whenElement->AddCommentsToXML(xmlTree);
 		}
 	}
 	return xmlTree;
@@ -597,6 +696,67 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 	return errorValue;
 }
 
+ErrorMessage ActionElementSet::CreateFromXML(NSXMLElement *inTree, shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NString errorMessage;
+	XMLCommentHolder *commentHolder = this;
+	for (NSXMLNode *childNode in [inTree children]) {
+		switch ([childNode kind]) {
+			case NSXMLElementKind:
+					// An element, which should be an action element
+				if (ToNN([childNode name]) != kActionElement) {
+						// Handle non-action element
+					NString errorString = NBundleString(kActionsElementWrongElementType, "", kErrorTableName);
+					errorMessage.Format(errorString, ToNN([childNode name]));
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorMessage);
+				}
+				else {
+					ActionElement *actionElement;
+					errorValue = ActionElement::CreateFromXML((NSXMLElement *)childNode, actionElement, ioCommentContainer);
+					if (errorValue == XMLNoError) {
+						AddActionElement(actionElement);
+						if (commentHolder != NULL) {
+							commentHolder->RemoveDuplicateComments();
+						}
+						commentHolder = actionElement;
+						ioCommentContainer->AddCommentHolder(actionElement);
+					}
+				}
+			break;
+				
+			case NSXMLCommentKind: {
+					// A comment, so add it to the structure
+				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), commentHolder);
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+					// Invalid node type
+				errorMessage = NBundleString(kActionsElementInvalidNodeType, "", kErrorTableName);
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorMessage);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError) {
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+			// An error in processing, so delete the partially constructed element
+		if (!mActionElementSet.empty()) {
+			std::set<ActionElement *, DereferenceLess>::iterator pos;
+			for (pos = mActionElementSet.begin(); pos != mActionElementSet.end(); ++pos) {
+				ActionElement *actionElement = *pos;
+				if (actionElement != NULL) {
+					delete actionElement;
+				}
+			}
+			Clear();
+		}
+	}
+	return errorValue;
+}
+
 	// Create an XML tree from the action element set
 
 NXMLNode *ActionElementSet::CreateXMLTree(void)
@@ -609,6 +769,19 @@ NXMLNode *ActionElementSet::CreateXMLTree(void)
 		NXMLNode *childTree = actionElement->CreateXMLTree();
 		xmlTree->AddChild(childTree);
 		actionElement->AddCommentsToXMLTree(*xmlTree);
+	}
+	return xmlTree;
+}
+
+NSXMLElement *ActionElementSet::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kActionsElement)];
+	AddCommentsToXML(xmlTree);
+	std::set<ActionElement *, DereferenceLess>::iterator pos;
+	for (pos = mActionElementSet.begin(); pos != mActionElementSet.end(); ++pos) {
+		ActionElement *actionElement = *pos;
+		NSXMLElement *childTree = actionElement->CreateXML();
+		[xmlTree addChild:childTree];
+		actionElement->AddCommentsToXML(xmlTree);
 	}
 	return xmlTree;
 }

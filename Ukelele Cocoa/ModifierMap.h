@@ -68,7 +68,9 @@ public:
 	static ModifierMap *CreateStandardModifierMap(void);
 	static ModifierMap *CreateStandardModifierMap(bool inCapsLockLayout, bool inCommandLayout);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, ModifierMap*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
+	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, ModifierMap*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
+	NSXMLElement *CreateXML(void);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5209B731193563C000B195E9 /* kluchrtoxml */; };
 		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
+		520BEB151B22BF7900DDA757 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 520BEB141B22BF7900DDA757 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 521270E4194AD6E3003103CA /* UKKeyboardDocument.m */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
@@ -52,7 +53,7 @@
 		523B00CF191CA00A00E06DF3 /* UkeleleKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00B7191CA00A00E06DF3 /* UkeleleKeyboard.mm */; };
 		523B00D0191CA00A00E06DF3 /* UkeleleKeyboardObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00B9191CA00A00E06DF3 /* UkeleleKeyboardObject.mm */; };
 		523B00D1191CA00A00E06DF3 /* WhenElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BB191CA00A00E06DF3 /* WhenElement.mm */; };
-		523B00D2191CA00A00E06DF3 /* XMLCommentHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BC191CA00A00E06DF3 /* XMLCommentHolder.cpp */; };
+		523B00D2191CA00A00E06DF3 /* XMLCommentHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BC191CA00A00E06DF3 /* XMLCommentHolder.mm */; };
 		523B00FF191CA0D100E06DF3 /* ActionElementSetHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00D4191CA0D100E06DF3 /* ActionElementSetHolder.mm */; };
 		523B0100191CA0D100E06DF3 /* ActionElementSetWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00D6191CA0D100E06DF3 /* ActionElementSetWrapper.mm */; };
 		523B0101191CA0D100E06DF3 /* AddMissingOutputData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00D8191CA0D100E06DF3 /* AddMissingOutputData.mm */; };
@@ -158,7 +159,7 @@
 		5277EB841AAEF4BA00C471C3 /* UkeleleKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00B7191CA00A00E06DF3 /* UkeleleKeyboard.mm */; };
 		5277EB851AAEF4BD00C471C3 /* UkeleleKeyboardObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00B9191CA00A00E06DF3 /* UkeleleKeyboardObject.mm */; };
 		5277EB861AAEF4C000C471C3 /* WhenElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BB191CA00A00E06DF3 /* WhenElement.mm */; };
-		5277EB871AAEF4C400C471C3 /* XMLCommentHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BC191CA00A00E06DF3 /* XMLCommentHolder.cpp */; };
+		5277EB871AAEF4C400C471C3 /* XMLCommentHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00BC191CA00A00E06DF3 /* XMLCommentHolder.mm */; };
 		5277EB881AAEF4D800C471C3 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0071191C9CA900E06DF3 /* KeyCapView.m */; };
 		5277EB891AAEF4D800C471C3 /* KeyCapView2Rect.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0073191C9CA900E06DF3 /* KeyCapView2Rect.m */; };
 		5277EB8A1AAEF4D800C471C3 /* UkeleleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0079191C9CA900E06DF3 /* UkeleleView.m */; };
@@ -183,7 +184,6 @@
 		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
-		52897C461B20363400B5869D /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52897C451B20363400B5869D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
@@ -287,7 +287,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				52897C461B20363400B5869D /* Sparkle.framework in CopyFiles */,
+				520BEB151B22BF7900DDA757 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +296,7 @@
 /* Begin PBXFileReference section */
 		5209B731193563C000B195E9 /* kluchrtoxml */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kluchrtoxml; sourceTree = "<group>"; };
 		5209F18119236083001F9923 /* AskCommentSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskCommentSheet.xib; path = "Interface Files/AskCommentSheet.xib"; sourceTree = "<group>"; };
+		520BEB141B22BF7900DDA757 /* Sparkle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Sparkle.framework; path = "/Users/john/Library/Developer/Xcode/DerivedData/Ukelele_Workspace-ejdkxiqgbpwyecfaasfmaufpjoph/Build/Products/Release/Sparkle.framework"; sourceTree = "<absolute>"; };
 		521270E3194AD6E3003103CA /* UKKeyboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardDocument.h; sourceTree = "<group>"; };
 		521270E4194AD6E3003103CA /* UKKeyboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UKKeyboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
@@ -384,7 +385,7 @@
 		523B00B9191CA00A00E06DF3 /* UkeleleKeyboardObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UkeleleKeyboardObject.mm; sourceTree = "<group>"; };
 		523B00BA191CA00A00E06DF3 /* WhenElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhenElement.h; sourceTree = "<group>"; };
 		523B00BB191CA00A00E06DF3 /* WhenElement.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WhenElement.mm; sourceTree = "<group>"; };
-		523B00BC191CA00A00E06DF3 /* XMLCommentHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLCommentHolder.cpp; sourceTree = "<group>"; };
+		523B00BC191CA00A00E06DF3 /* XMLCommentHolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XMLCommentHolder.mm; sourceTree = "<group>"; };
 		523B00BD191CA00A00E06DF3 /* XMLCommentHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLCommentHolder.h; sourceTree = "<group>"; };
 		523B00BE191CA00A00E06DF3 /* XMLErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLErrors.h; sourceTree = "<group>"; };
 		523B00D3191CA0D100E06DF3 /* ActionElementSetHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionElementSetHolder.h; sourceTree = "<group>"; };
@@ -580,16 +581,16 @@
 		52BBED05191B4C3900E48394 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		52BBED06191B4C3900E48394 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		52BBED07191B4C3900E48394 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele Cocoa-Info.plist"; sourceTree = "<group>"; };
+		52BBED0A191B4C3900E48394 /* Ukelele-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele-Info.plist"; sourceTree = "<group>"; };
 		52BBED0C191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52BBED0E191B4C3900E48394 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ukelele Cocoa-Prefix.pch"; sourceTree = "<group>"; };
+		52BBED10191B4C3900E48394 /* Ukelele-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ukelele-Prefix.pch"; sourceTree = "<group>"; };
 		52BBED12191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		52BBED1B191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		52BBED1D191B4C3900E48394 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ukelele CocoaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BBED23191B4C3900E48394 /* UkeleleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UkeleleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED24191B4C3900E48394 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		52BBED2B191B4C3900E48394 /* Ukelele CocoaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ukelele CocoaTests-Info.plist"; sourceTree = "<group>"; };
+		52BBED2B191B4C3900E48394 /* UkeleleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UkeleleTests-Info.plist"; sourceTree = "<group>"; };
 		52BBED2D191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ukelele_CocoaTests.m; sourceTree = "<group>"; };
 		52BBED3C191B4F6900E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
@@ -743,7 +744,7 @@
 				523B00B9191CA00A00E06DF3 /* UkeleleKeyboardObject.mm */,
 				523B00BA191CA00A00E06DF3 /* WhenElement.h */,
 				523B00BB191CA00A00E06DF3 /* WhenElement.mm */,
-				523B00BC191CA00A00E06DF3 /* XMLCommentHolder.cpp */,
+				523B00BC191CA00A00E06DF3 /* XMLCommentHolder.mm */,
 				523B00BD191CA00A00E06DF3 /* XMLCommentHolder.h */,
 				523B00BE191CA00A00E06DF3 /* XMLErrors.h */,
 			);
@@ -855,6 +856,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
+				520BEB141B22BF7900DDA757 /* Sparkle.framework */,
 				52897C451B20363400B5869D /* Sparkle.framework */,
 				52BBED3E191B50B700E48394 /* Ukelele.icns */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
@@ -872,7 +874,7 @@
 			isa = PBXGroup;
 			children = (
 				52BBECFF191B4C3900E48394 /* Ukelele.app */,
-				52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */,
+				52BBED23191B4C3900E48394 /* UkeleleTests.xctest */,
 				523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */,
 			);
@@ -935,8 +937,8 @@
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
 				52BBED0E191B4C3900E48394 /* main.m */,
 				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
-				52BBED0A191B4C3900E48394 /* Ukelele Cocoa-Info.plist */,
-				52BBED10191B4C3900E48394 /* Ukelele Cocoa-Prefix.pch */,
+				52BBED0A191B4C3900E48394 /* Ukelele-Info.plist */,
+				52BBED10191B4C3900E48394 /* Ukelele-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -953,7 +955,7 @@
 		52BBED2A191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52BBED2B191B4C3900E48394 /* Ukelele CocoaTests-Info.plist */,
+				52BBED2B191B4C3900E48394 /* UkeleleTests-Info.plist */,
 				52BBED2C191B4C3900E48394 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -1201,31 +1203,31 @@
 			productReference = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */;
 			productType = "com.apple.product-type.bundle";
 		};
-		52BBECFE191B4C3900E48394 /* Ukelele Cocoa */ = {
+		52BBECFE191B4C3900E48394 /* Ukelele */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele Cocoa" */;
+			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele" */;
 			buildPhases = (
 				52BBECFB191B4C3900E48394 /* Sources */,
+				52897C441B20360700B5869D /* CopyFiles */,
 				52BBECFC191B4C3900E48394 /* Frameworks */,
 				52BBECFD191B4C3900E48394 /* Resources */,
 				5209B7301935632100B195E9 /* CopyFiles */,
 				5227A40E196520E6004F35EA /* CopyFiles */,
 				5277EBBB1AB2744100C471C3 /* CopyFiles */,
-				52897C441B20360700B5869D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				52E1EF0019662813007B6738 /* PBXTargetDependency */,
 			);
-			name = "Ukelele Cocoa";
+			name = Ukelele;
 			productName = "Ukelele Cocoa";
 			productReference = 52BBECFF191B4C3900E48394 /* Ukelele.app */;
 			productType = "com.apple.product-type.application";
 		};
-		52BBED22191B4C3900E48394 /* Ukelele CocoaTests */ = {
+		52BBED22191B4C3900E48394 /* UkeleleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele CocoaTests" */;
+			buildConfigurationList = 52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "UkeleleTests" */;
 			buildPhases = (
 				52BBED1F191B4C3900E48394 /* Sources */,
 				52BBED20191B4C3900E48394 /* Frameworks */,
@@ -1236,9 +1238,9 @@
 			dependencies = (
 				52BBED28191B4C3900E48394 /* PBXTargetDependency */,
 			);
-			name = "Ukelele CocoaTests";
+			name = UkeleleTests;
 			productName = "Ukelele CocoaTests";
-			productReference = 52BBED23191B4C3900E48394 /* Ukelele CocoaTests.xctest */;
+			productReference = 52BBED23191B4C3900E48394 /* UkeleleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1262,7 +1264,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */;
+			buildConfigurationList = 52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1275,8 +1277,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				52BBECFE191B4C3900E48394 /* Ukelele Cocoa */,
-				52BBED22191B4C3900E48394 /* Ukelele CocoaTests */,
+				52BBECFE191B4C3900E48394 /* Ukelele */,
+				52BBED22191B4C3900E48394 /* UkeleleTests */,
 				523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				5277EB621AAE844600C471C3 /* Ukelele Quick Look Generator */,
 			);
@@ -1401,7 +1403,7 @@
 				5277EB831AAEF4B600C471C3 /* TerminatorsElement.mm in Sources */,
 				5277EB761AAEF48500C471C3 /* KeyboardElement.mm in Sources */,
 				5277EB7D1AAEF49D00C471C3 /* KeyMapSetList.mm in Sources */,
-				5277EB871AAEF4C400C471C3 /* XMLCommentHolder.cpp in Sources */,
+				5277EB871AAEF4C400C471C3 /* XMLCommentHolder.mm in Sources */,
 				5277EB981AAEFEEA00C471C3 /* RemoveStateDataBlock.mm in Sources */,
 				5277EB861AAEF4C000C471C3 /* WhenElement.mm in Sources */,
 				5277EB851AAEF4BD00C471C3 /* UkeleleKeyboardObject.mm in Sources */,
@@ -1530,7 +1532,7 @@
 				523B0084191C9CD200E06DF3 /* SelectionRing.m in Sources */,
 				523B007D191C9CA900E06DF3 /* UkeleleContainerView.m in Sources */,
 				523B01B7191CA18C00E06DF3 /* UkeleleAppDelegate.m in Sources */,
-				523B00D2191CA00A00E06DF3 /* XMLCommentHolder.cpp in Sources */,
+				523B00D2191CA00A00E06DF3 /* XMLCommentHolder.mm in Sources */,
 				523B01C5191D7F8500E06DF3 /* Common.m in Sources */,
 				523B0091191C9D2200E06DF3 /* NString_hash.cpp in Sources */,
 				523B01B3191CA18C00E06DF3 /* ReplaceNameSheet.m in Sources */,
@@ -1553,7 +1555,7 @@
 /* Begin PBXTargetDependency section */
 		52BBED28191B4C3900E48394 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 52BBECFE191B4C3900E48394 /* Ukelele Cocoa */;
+			target = 52BBECFE191B4C3900E48394 /* Ukelele */;
 			targetProxy = 52BBED27191B4C3900E48394 /* PBXContainerItemProxy */;
 		};
 		52E1EF0019662813007B6738 /* PBXTargetDependency */ = {
@@ -1657,7 +1659,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1683,7 +1685,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1779,8 +1781,9 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1788,8 +1791,12 @@
 					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
 					/usr/local/boost_1_42_0,
 				);
-				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = (
+					"-fconstant-cfstrings",
+					"-fno-common",
+				);
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
@@ -1806,16 +1813,21 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
+				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
 					/usr/local/boost_1_42_0,
 				);
-				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele Cocoa-Info.plist";
+				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = (
+					"-fconstant-cfstrings",
+					"-fno-common",
+				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
@@ -1839,8 +1851,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Ukelele CocoaTests/Ukelele CocoaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Ukelele CocoaTests/UkeleleTests-Info.plist";
+				PRODUCT_NAME = UkeleleTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1857,8 +1869,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
-				INFOPLIST_FILE = "Ukelele CocoaTests/Ukelele CocoaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Ukelele CocoaTests/UkeleleTests-Info.plist";
+				PRODUCT_NAME = UkeleleTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1885,7 +1897,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele Cocoa" */ = {
+		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				52BBED31191B4C3900E48394 /* Debug */,
@@ -1894,7 +1906,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele Cocoa" */ = {
+		52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				52BBED34191B4C3900E48394 /* Debug */,
@@ -1903,7 +1915,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele CocoaTests" */ = {
+		52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "UkeleleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				52BBED37191B4C3900E48394 /* Debug */,

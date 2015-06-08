@@ -12,6 +12,7 @@
 #include "XMLErrors.h"
 #include "UkeleleStrings.h"
 #include "NBundle.h"
+#include "NCocoa.h"
 
 // Key strings
 const NString kLayoutElementMissingFirstAttribute = "LayoutElementMissingFirstAttribute";
@@ -84,6 +85,45 @@ ErrorMessage LayoutElement::CreateFromXMLTree(const NXMLNode& inXMLTree, LayoutE
 	return errorValue;
 }
 
+ErrorMessage LayoutElement::CreateFromXML(NSXMLElement *inXMLTree, LayoutElement *&outElement) {
+	ErrorMessage errorValue(XMLNoError, "");
+	// Check that all the attributes are present
+	NString errorString;
+	NSXMLNode *firstAttribute = [inXMLTree attributeForName:ToNS(kFirstAttribute)];
+	NSXMLNode *lastAttribute = [inXMLTree attributeForName:ToNS(kLastAttribute)];
+	NSXMLNode *modifiersAttribute = [inXMLTree attributeForName:ToNS(kModifiersAttribute)];
+	NSXMLNode *mapSetAttribute = [inXMLTree attributeForName:ToNS(kMapSetAttribute)];
+	if (firstAttribute == nil) {
+		errorString = NBundleString(kLayoutElementMissingFirstAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+	}
+	else if (lastAttribute == nil) {
+		errorString = NBundleString(kLayoutElementMissingLastAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+	}
+	else if (modifiersAttribute == nil) {
+		errorString = NBundleString(kLayoutElementMissingModifiersAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+	}
+	else if (mapSetAttribute == nil) {
+		errorString = NBundleString(kLayoutElementMissingMapSetAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+	}
+	else {
+			// Get the attributes
+		NString firstString = ToNN([firstAttribute stringValue]);
+		NString lastString = ToNN([lastAttribute stringValue]);
+		NString modifiersString = ToNN([modifiersAttribute stringValue]);
+		NString mapSetString = ToNN([mapSetAttribute stringValue]);
+		NNumber firstNumber(firstString);
+		UInt32 firstValue = firstNumber.GetUInt32();
+		NNumber lastNumber(lastString);
+		UInt32 lastValue = lastNumber.GetUInt32();
+		outElement = new LayoutElement(firstValue, lastValue, modifiersString, mapSetString);
+	}
+	return errorValue;
+}
+
 // Create an XML tree representing the LayoutElement
 
 NXMLNode *LayoutElement::CreateXMLTree(void)
@@ -100,6 +140,21 @@ NXMLNode *LayoutElement::CreateXMLTree(void)
 	xmlTree->SetElementAttribute(kModifiersAttribute, mModifiers);
 	xmlTree->SetElementAttribute(kMapSetAttribute, mMapSet);
 	AddCommentsToXMLTree(*xmlTree);
+	return xmlTree;
+}
+
+NSXMLElement *LayoutElement::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kLayoutElement)];
+		// Set the attributes
+	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kFirstAttribute) stringValue:[NSString stringWithFormat:@"%d", mFirst]];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kLastAttribute) stringValue:[NSString stringWithFormat:@"%d", mLast]];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kModifiersAttribute) stringValue:ToNS(mModifiers)];
+	[xmlTree addAttribute:attributeNode];
+	attributeNode = [NSXMLNode attributeWithName:ToNS(kMapSetAttribute) stringValue:ToNS(mMapSet)];
+	[xmlTree addAttribute:attributeNode];
+	AddCommentsToXML(xmlTree);
 	return xmlTree;
 }
 

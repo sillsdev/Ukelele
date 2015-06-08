@@ -13,6 +13,7 @@
 #include "UkeleleStrings.h"
 #include "NBundle.h"
 #include "LayoutInfo.h"
+#include "NCocoa.h"
 
 // Key strings
 const NString kKeyMapSetMissingIDAttribute = "KeyMapSetMissingIDAttribute";
@@ -204,6 +205,75 @@ ErrorMessage KeyMapSet::CreateFromXMLTree(const NXMLNode& inXMLTree,
 	return errorValue;
 }
 
+ErrorMessage KeyMapSet::CreateFromXML(NSXMLElement *inXMLTree, KeyMapSet *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer) {
+	ErrorMessage errorValue(XMLNoError, "");
+	NString errorString;
+	NSXMLNode *attributeNode = [inXMLTree attributeForName:ToNS(kIDAttribute)];
+	if (attributeNode == nil) {
+		errorString = NBundleString(kKeyMapSetMissingIDAttribute, "", kErrorTableName);
+		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
+		return errorValue;
+	}
+	NString mapSetID = ToNN([attributeNode stringValue]);
+	outElement = new KeyMapSet(mapSetID);
+	XMLCommentHolder *commentHolder = outElement;
+	for (NSXMLNode *childNode in [inXMLTree children]) {
+		NString errorFormat;
+		switch ([childNode kind]) {
+			case NSXMLElementKind: {
+					// An element, which should be a key map
+				if (ToNN([childNode name]) != kKeyMapElement) {
+					errorFormat = NBundleString(kKeyMapSetWrongElementType, "", kErrorTableName);
+					errorString.Format(errorFormat, mapSetID, ToNN([childNode name]));
+					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
+					break;
+				}
+				KeyMapElement *keyMapElement;
+				errorValue = KeyMapElement::CreateFromXML((NSXMLElement *)childNode, keyMapElement, ioCommentContainer);
+				if (errorValue == XMLNoError) {
+					// Check for a repeated keyMap element
+					if (outElement->HasKeyMapElement(keyMapElement->GetIndex())) {
+						errorFormat = NBundleString(kKeyMapSetRepeatedKeyMap, "", kErrorTableName);
+						errorString.Format(errorFormat, mapSetID, keyMapElement->GetIndex());
+						errorValue = ErrorMessage(XMLRepeatedKeyMapError, errorString);
+					}
+				}
+				if (errorValue == XMLNoError) {
+					outElement->mKeyMapTable->AppendKeyMapElement(keyMapElement);
+				}
+				if (commentHolder != NULL) {
+					commentHolder->RemoveDuplicateComments();
+				}
+				commentHolder = keyMapElement;
+				ioCommentContainer->AddCommentHolder(keyMapElement);
+			}
+			break;
+				
+			case NSXMLCommentKind: {
+				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), commentHolder);
+				commentHolder->AddXMLComment(childComment);
+			}
+			break;
+				
+			default:
+				// Wrong kind of node
+				errorFormat = NBundleString(kKeyMapSetInvalidNodeType, "", kErrorTableName);
+				errorString.Format(errorFormat, mapSetID);
+				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
+			break;
+		}
+	}
+	if (errorValue == XMLNoError) {
+		commentHolder->RemoveDuplicateComments();
+	}
+	else {
+		// An error in processing, so delete the partially constructed element
+		delete outElement;
+		outElement = NULL;
+	}
+	return errorValue;
+}
+
 // Create an XML tree representing the key map set element
 
 NXMLNode *KeyMapSet::CreateXMLTree(void)
@@ -212,6 +282,15 @@ NXMLNode *KeyMapSet::CreateXMLTree(void)
 	xmlTree->SetElementAttribute(kIDAttribute, mID);
 	AddCommentsToXMLTree(*xmlTree);
 	mKeyMapTable->AddToXMLTree(*xmlTree);
+	return xmlTree;
+}
+
+NSXMLElement *KeyMapSet::CreateXML(void) {
+	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kKeyMapSetElement)];
+	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kIDAttribute) stringValue:ToNS(mID)];
+	[xmlTree addAttribute:attributeNode];
+	AddCommentsToXML(xmlTree);
+	mKeyMapTable->AddToXML(xmlTree);
 	return xmlTree;
 }
 
