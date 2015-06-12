@@ -30,7 +30,7 @@
 }
 
 + (HandleDeadKeyController *)handleDeadKeyController {
-	return [[HandleDeadKeyController alloc] initWithWindowNibName:@"HandleDeadKeySheet"];
+	return [[[HandleDeadKeyController alloc] initWithWindowNibName:@"HandleDeadKeySheet"] autorelease];
 }
 
 - (HandleDeadKeyType)typeForTab:(NSString *)tabIdentifier {
@@ -64,12 +64,13 @@
 	[stateNames removeObjectIdenticalTo:theState];
 	[stateNames removeObjectIdenticalTo:nextState];
 	[self.statePopup removeAllItems];
-	[self.statePopup addItemsWithObjectValues:stateNames];
+	[self.statePopup addItemsWithObjectValues:[stateNames autorelease]];
 	[self.statePopup selectItemWithObjectValue:nextState];
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
 - (IBAction)acceptChoice:(id)sender {
+#pragma unused(sender)
 	HandleDeadKeyType choice = [self typeForTab:[[self.choiceTabView selectedTabViewItem] identifier]];
 	NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithCapacity:2];
 	dataDict[kHandleDeadKeyType] = @(choice);
@@ -96,6 +97,7 @@
 }
 
 - (IBAction)cancelChoice:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);

@@ -129,6 +129,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[self readVariant:childNode];
 		}
 	}
+	[theDocument release];
 }
 
 - (void)readLanguage:(NSXMLNode *)languageNode {
@@ -158,7 +159,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[languageEntry setOther:[childNode stringValue]];
 		}
 	}
-	[languageList addObject:languageEntry];
+	[languageList addObject:[languageEntry autorelease]];
 }
 
 - (void)readScript:(NSXMLNode *)scriptNode {
@@ -185,7 +186,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[scriptEntry setName:descriptionEntry];
 		}
 	}
-	[scriptList addObject:scriptEntry];
+	[scriptList addObject:[scriptEntry autorelease]];
 }
 
 - (void)readRegion:(NSXMLNode *)regionNode {
@@ -212,7 +213,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[regionEntry setName:descriptionEntry];
 		}
 	}
-	[regionList addObject:regionEntry];
+	[regionList addObject:[regionEntry autorelease]];
 }
 
 - (void)readVariant:(NSXMLNode *)variantNode {
@@ -239,7 +240,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[variantEntry setName:descriptionEntry];
 		}
 	}
-	[variantList addObject:variantEntry];
+	[variantList addObject:[variantEntry autorelease]];
 }
 
 - (NSArray *)searchLanguage:(NSString *)searchTerm {
@@ -322,7 +323,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 	[normalisedCode setScriptCode:script];
 	[normalisedCode setRegionCode:region];
 	[normalisedCode setVariantCode:variant];
-	return normalisedCode;
+	return [normalisedCode autorelease];
 }
 
 @end

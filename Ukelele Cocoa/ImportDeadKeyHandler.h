@@ -14,7 +14,7 @@
 
 @interface ImportDeadKeyHandler : NSObject<UKInteractionHandler>
 
-@property (weak, nonatomic) id<UKInteractionCompletion> completionTarget;
+@property (assign, nonatomic) id<UKInteractionCompletion> completionTarget;
 
 + (ImportDeadKeyHandler *)importDeadKeyHandler;
 

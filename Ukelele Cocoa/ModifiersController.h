@@ -10,7 +10,7 @@
 #import "KeyCapView.h"
 
 @interface ModifiersController : NSObject {
-#if __cplusplus
+#if defined(__cplusplus)
 	std::vector<KeyCapView *> shiftKeys;
 	std::vector<KeyCapView *> optionKeys;
 	std::vector<KeyCapView *> controlKeys;

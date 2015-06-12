@@ -31,7 +31,7 @@
 }
 
 + (SelectKeyByCodeController *)selectKeyByCodeController {
-	return [[SelectKeyByCodeController alloc] initWithWindowNibName:@"SelectKeyByCodeSheet"];
+	return [[[SelectKeyByCodeController alloc] initWithWindowNibName:@"SelectKeyByCodeSheet"] autorelease];
 }
 
 - (void)windowDidLoad
@@ -55,6 +55,7 @@
 }
 
 - (IBAction)acceptKeyCode:(id)sender {
+#pragma unused(sender)
 	NSInteger keyCode = [self.keyCodeField integerValue];
 	if ([LayoutInfo getKeyType:(unsigned)keyCode] == kModifierKeyType) {
 			// Can't select a modifier
@@ -67,12 +68,15 @@
 }
 
 - (IBAction)cancelKeyCode:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(kNoKeyCode);
 }
 
 - (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(NSString *)error {
+#pragma unused(control)
+#pragma unused(string)
 	[self.minorTextField setStringValue:error];
 	NSBeep();
 }

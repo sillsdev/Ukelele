@@ -24,45 +24,25 @@
 	return self;
 }
 
++ (ScriptInfo *)scriptWithName:(NSString *)theName script:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID {
+	return [[[ScriptInfo alloc] initWithName:theName scriptID:ID minID:minimumID maxID:maximumID] autorelease];
+}
+
 + (NSArray *)standardScripts
 {
 	static NSArray *scriptArray = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		scriptArray = @[[[ScriptInfo alloc] initWithName:@"Unicode"
-												scriptID:kTextEncodingMacUnicode
-												   minID:kIDMinimumUnicode
-												   maxID:kIDMaximumUnicode],
-		[[ScriptInfo alloc] initWithName:@"Roman"
-								scriptID:kTextEncodingMacRoman
-								   minID:kIDMinimumRoman
-								   maxID:kIDMaximumRoman],
-		[[ScriptInfo alloc] initWithName:@"Japanese"
-								scriptID:kTextEncodingMacJapanese
-								   minID:kIDMinimumJapanese
-								   maxID:kIDMaximumJapanese],
-		[[ScriptInfo alloc] initWithName:@"Simplified Chinese"
-								scriptID:kTextEncodingMacChineseSimp
-								   minID:kIDMinimumSimplifiedChinese
-								   maxID:kIDMaximumSimplifiedChinese],
-		[[ScriptInfo alloc] initWithName:@"Traditional Chinese"
-								scriptID:kTextEncodingMacChineseTrad
-								   minID:kIDMinimumTraditionalChinese
-								   maxID:kIDMaximumTraditionalChinese],
-		[[ScriptInfo alloc] initWithName:@"Korean"
-								scriptID:kTextEncodingMacKorean
-								   minID:kIDMinimumKorean
-								   maxID:kIDMaximumKorean],
-		[[ScriptInfo alloc] initWithName:@"Cyrillic"
-								scriptID:kTextEncodingMacCyrillic
-								   minID:kIDMinimumCyrillic
-								   maxID:kIDMaximumCyrillic],
-		[[ScriptInfo alloc] initWithName:@"Central European"
-								scriptID:kTextEncodingMacCentralEurRoman
-								   minID:kIDMinimumCentralEuropean
-								   maxID:kIDMaximumCentralEuropean]];
+		scriptArray = @[[ScriptInfo scriptWithName:@"Unicode" script:kTextEncodingMacUnicode minID:kIDMinimumUnicode maxID:kIDMaximumUnicode],
+						[ScriptInfo scriptWithName:@"Roman" script:kTextEncodingMacRoman minID:kIDMinimumRoman maxID:kIDMaximumRoman],
+						[ScriptInfo scriptWithName:@"Japanese" script:kTextEncodingMacJapanese minID:kIDMinimumJapanese maxID:kIDMaximumJapanese],
+						[ScriptInfo scriptWithName:@"Simplified Chinese" script:kTextEncodingMacChineseSimp minID:kIDMinimumSimplifiedChinese maxID:kIDMaximumSimplifiedChinese],
+						[ScriptInfo scriptWithName:@"Traditional Chinese" script:kTextEncodingMacChineseTrad minID:kIDMinimumTraditionalChinese maxID:kIDMaximumTraditionalChinese],
+						[ScriptInfo scriptWithName:@"Korean" script:kTextEncodingMacKorean minID:kIDMinimumKorean maxID:kIDMaximumKorean],
+						[ScriptInfo scriptWithName:@"Cyrillic" script:kTextEncodingMacCyrillic minID:kIDMinimumCyrillic maxID:kIDMaximumCyrillic],
+						[ScriptInfo scriptWithName:@"Central European" script:kTextEncodingMacCentralEurRoman minID:kIDMinimumCentralEuropean maxID:kIDMaximumCentralEuropean]];
 	});
-	return scriptArray;
+	return scriptArray ;
 }
 
 - (NSInteger)randomID {
@@ -83,7 +63,7 @@
 + (NSInteger)indexForScript:(NSInteger)scriptID {
 	NSInteger theIndex = -1;
 	NSArray *theScripts = [ScriptInfo standardScripts];
-	for (NSInteger index = 0; index < [theScripts count]; index++) {
+	for (NSInteger index = 0; index < (NSInteger)[theScripts count]; index++) {
 		ScriptInfo *theInfo = theScripts[index];
 		if ([theInfo scriptID] == scriptID) {
 			theIndex = index;

@@ -73,7 +73,7 @@
 - (id)transformedValue:(id)value {
 	NSAssert([value isKindOfClass:[NSNumber class]], @"Must be a number");
 	UKDiacriticDisplay *diacriticDisplay = [UKDiacriticDisplay getInstance];
-	NSUInteger theIndex = [diacriticDisplay indexForDiacritic:[value unsignedIntValue]];
+	NSUInteger theIndex = [diacriticDisplay indexForDiacritic:(UniChar)[value unsignedIntValue]];
 	return [diacriticDisplay textForIndex:theIndex];
 }
 
@@ -144,11 +144,13 @@ static NSString *nibWindow = @"Preferences";
 }
 
 - (IBAction)returnToDefaults:(id)sender {
+#pragma unused(sender)
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:self];
 	[self syncPreferences];
 }
 
 - (IBAction)changeDefaultFont:(id)sender {
+#pragma unused(sender)
 	if ([[self window] makeFirstResponder:nil]) {
 		NSFontManager *fontManager = [NSFontManager sharedFontManager];
 			// Set the font
@@ -197,6 +199,7 @@ static NSString *nibWindow = @"Preferences";
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
+#pragma unused(notification)
 		// Note the default keyboard type
 	NSInteger selectedType = [self.keyboardType indexOfSelectedItem];
 	NSInteger selectedCoding = [self.keyboardCoding indexOfSelectedItem];
@@ -206,7 +209,7 @@ static NSString *nibWindow = @"Preferences";
 	}
 	
 		// Note the zoom level
-	float zoomLevel = [self.defaultZoom floatValue] / 100.0;
+	CGFloat zoomLevel = [self.defaultZoom floatValue] / 100.0;
 	if (zoomLevel <= 0) {
 			// Fit width
 		zoomLevel = -1.0f;
@@ -219,7 +222,7 @@ static NSString *nibWindow = @"Preferences";
 			// Too big
 		zoomLevel = kMaxZoom;
 	}
-	[[NSUserDefaults standardUserDefaults] setFloat:zoomLevel forKey:UKScaleFactor];
+	[[NSUserDefaults standardUserDefaults] setDouble:zoomLevel forKey:UKScaleFactor];
 }
 
 @end

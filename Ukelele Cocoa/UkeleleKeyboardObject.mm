@@ -121,6 +121,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 				if (outError != NULL) {
 					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorMalformedXML userInfo:errorDictionary];
 				}
+				[self release];
                 self = nil;
                 return self;
             }
@@ -131,6 +132,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 				if (outError != NULL) {
 					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorMalformedXML userInfo:errorDictionary];
 				}
+				[self release];
                 self = nil;
                 return self;
             }
@@ -145,6 +147,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 												code:error.GetErrorCode()
 											userInfo:errorDictionary];
 			}
+			[self release];
 			self = nil;
 		}
 	}
@@ -543,7 +546,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
 	NString outputString = ToNN(newOutput);
-	NSString *nextState;
+	NSString *nextState = nil;
 	[self getCharOutput:keyDataDict isDead:nil nextState:&nextState];
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MakeDeadKeyOutput([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
@@ -732,7 +735,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	KeyElementBundleObject *keyElementBundle = [[KeyElementBundleObject alloc] init];
 	[keyElementBundle setKeyElementBundle:keyBundle];
 	NSUndoManager *undoManager = [parentController undoManager];
-	[[undoManager prepareWithInvocationTarget:self] undoPasteKeyCode:keyCode bundle:keyElementBundle];
+	[[undoManager prepareWithInvocationTarget:self] undoPasteKeyCode:keyCode bundle:[keyElementBundle autorelease]];
 	[undoManager setActionName:@"Paste Key"];
     [self.delegate documentDidChange];
 }
@@ -1039,6 +1042,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (BOOL)hasModifierSetWithIndex:(NSInteger)setIndex {
+#pragma unused(setIndex)
 	return YES;
 }
 
@@ -1073,7 +1077,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		commentHolder = [[XMLCommentHolderObject alloc] init];
 		[commentHolder setCommentHolder:currentComment->GetHolder()];
 	}
-	return commentHolder;
+	return [commentHolder autorelease];
 }
 
 - (XMLCommentHolderObject *)commentHolderForKey:(NSDictionary *)keyDataDict {
@@ -1084,14 +1088,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 															YES);
 	XMLCommentHolderObject *commentHolder = [[XMLCommentHolderObject alloc] init];
 	[commentHolder setCommentHolder:keyElement];
-	return commentHolder;
+	return [commentHolder autorelease];
 }
 
 - (XMLCommentHolderObject *)documentCommentHolder {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	XMLCommentHolderObject *commentHolder = [[XMLCommentHolderObject alloc] init];
 	[commentHolder setCommentHolder:keyboardElement.get()];
-	return commentHolder;
+	return [commentHolder autorelease];
 }
 
 - (BOOL)isFirstComment {
@@ -1222,7 +1226,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		[result setActionElements:holder];
 	}
     [self.delegate documentDidChange];
-	return result;
+	return [result autorelease];
 }
 
 - (void)undoRemoveUnusedActions:(ActionElementSetWrapper *)removedActions

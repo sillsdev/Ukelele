@@ -35,7 +35,7 @@
 }
 
 + (UKAskYesNoController *)askYesNoController {
-	return [[UKAskYesNoController alloc] initWithWindowNibName:@"AskYesNo"];
+	return [[[UKAskYesNoController alloc] initWithWindowNibName:@"AskYesNo"] autorelease];
 }
 
 - (void)askQuestion:(NSString *)theQuestion forWindow:(NSWindow *)theWindow completion:(void (^)(BOOL))theBlock {
@@ -49,12 +49,14 @@
 }
 
 - (IBAction)handleYes:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(YES);
 }
 
 - (IBAction)handleNo:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(NO);

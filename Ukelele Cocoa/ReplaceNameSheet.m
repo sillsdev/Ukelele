@@ -32,7 +32,7 @@
 
 + (ReplaceNameSheet *)createReplaceNameSheet
 {
-	return [[ReplaceNameSheet alloc] initWithWindowNibName:@"ReplaceNameSheet"];
+	return [[[ReplaceNameSheet alloc] initWithWindowNibName:@"ReplaceNameSheet"] autorelease];
 }
 
 - (void)beginReplaceNameSheetWithText:(NSString *)infoText
@@ -53,6 +53,7 @@
 
 - (IBAction)acceptChoice:(id)sender
 {
+#pragma unused(sender)
 	if (!verifyCallBack([replacementNameField stringValue])) {
 			// Doesn't work!
 		[errorField setHidden:NO];
@@ -65,6 +66,7 @@
 
 - (IBAction)cancelChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	acceptCallBack(nil, nil);

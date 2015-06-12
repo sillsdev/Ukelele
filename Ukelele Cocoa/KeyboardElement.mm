@@ -565,6 +565,8 @@ KeyboardElement *KeyboardElement::CreateStandardKeyboard(NString inName, UInt32 
 	// Create a keyboard with standard modifiers and some things filled in
 
 KeyboardElement *KeyboardElement::CreateKeyboad(NString inName, UInt32 inScript, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard) {
+#pragma unused(inStandardKeyboard)
+#pragma unused(inCommandKeyboard)
 	SInt32 keyboardID = GetRandomKeyboardID(inScript);
 	KeyboardElement *newKeyboard = new KeyboardElement(inScript, keyboardID, inName, 1);
 	LayoutsElement *layoutsElement = LayoutsElement::CreateBasicLayoutsElement();
@@ -1190,12 +1192,12 @@ void KeyboardElement::MoveModifierMap(const UInt32 inFromIndex, const UInt32 inT
 		upperBound = inFromIndex;
 	}
 		// Handle the unchanging entries
-	for (i = 0; i < lowerBound; i++) {
+	for (i = 0; i < (UInt32)lowerBound; i++) {
 		if (modifierMap->GetKeyMapSelectElement(i)) {
 			newIndexes[i] = i;
 		}
 	}
-	for (i = upperBound + 1; i < keyMapSelectCount; i++) {
+	for (i = upperBound + 1; i < (UInt32)keyMapSelectCount; i++) {
 		if (modifierMap->GetKeyMapSelectElement(i)) {
 			newIndexes[i] = i;
 		}
@@ -1203,8 +1205,8 @@ void KeyboardElement::MoveModifierMap(const UInt32 inFromIndex, const UInt32 inT
 	newIndexes[inFromIndex] = inToIndex;
 	if (inFromIndex > inToIndex) {
 			// Moving it to a lower index
-		for (i = inToIndex; i < inFromIndex; i++) {
-			UInt32 oldIndex = reverseIndexMap[i];
+		for (i = inToIndex; i < (UInt32)inFromIndex; i++) {
+			SInt32 oldIndex = reverseIndexMap[i];
 			if (oldIndex == -1) {
 				newIndexes[i] = -1;
 			}
@@ -1215,8 +1217,8 @@ void KeyboardElement::MoveModifierMap(const UInt32 inFromIndex, const UInt32 inT
 	}
 	else {
 			// Moving it to a higher index
-		for (i = inFromIndex + 1; i <= inToIndex; i++) {
-			UInt32 oldIndex = reverseIndexMap[i];
+		for (i = inFromIndex + 1; i <= (UInt32)inToIndex; i++) {
+			SInt32 oldIndex = reverseIndexMap[i];
 			if (oldIndex == -1) {
 				newIndexes[i] = -1;
 			}

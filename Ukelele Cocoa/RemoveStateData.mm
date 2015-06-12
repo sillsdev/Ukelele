@@ -22,6 +22,7 @@
 - (void)dealloc
 {
 	delete _dataBlock;
+	[super dealloc];
 }
 
 @end

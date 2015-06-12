@@ -36,7 +36,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 + (AskNewKeyMap *)askNewKeyMap
 {
-	return [[AskNewKeyMap alloc] initWithWindowNibName:nibWindowName];
+	return [[[AskNewKeyMap alloc] initWithWindowNibName:nibWindowName] autorelease];
 }
 
 - (void)beginNewKeyMapWithText:(NSString *)informationText
@@ -60,6 +60,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 - (IBAction)selectKeyMapType:(id)sender
 {
+#pragma unused(sender)
 	switch ([self.keyMapType selectedRow]) {
 		case kNewKeyMapEmpty:
 			[self.standardKeyMaps setEnabled:NO];
@@ -83,6 +84,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 - (IBAction)acceptNewKeyMap:(id)sender
 {
+#pragma unused(sender)
 	NewKeyMapInfo *infoBlock = [[NewKeyMapInfo alloc] init];
 	[infoBlock setKeyMapTypeSelection:[self.keyMapType selectedRow]];
 	switch ([self.keyMapType selectedRow]) {
@@ -102,6 +104,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 - (IBAction)cancelNewKeyMap:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

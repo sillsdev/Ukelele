@@ -35,26 +35,26 @@ enum {
 }
 
     // Regular sheet
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *shiftTogether;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *shiftLeft;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *shiftRight;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *capsLock;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *optionTogether;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *optionLeft;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *optionRight;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *command;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *controlTogether;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *controlLeft;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *controlRight;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *existingOrNewIndex;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *shiftTogether;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *shiftLeft;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *shiftRight;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *capsLock;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *optionTogether;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *optionLeft;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *optionRight;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *command;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *controlTogether;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *controlLeft;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *controlRight;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *existingOrNewIndex;
     // Simplified sheet
-@property (nonatomic, weak, readonly) IBOutlet NSPopUpButton *shiftPopup;
-@property (nonatomic, weak, readonly) IBOutlet NSPopUpButton *capsLockPopup;
-@property (nonatomic, weak, readonly) IBOutlet NSPopUpButton *optionPopup;
-@property (nonatomic, weak, readonly) IBOutlet NSPopUpButton *commandPopup;
-@property (nonatomic, weak, readonly) IBOutlet NSPopUpButton *controlPopup;
-@property (nonatomic, weak, readonly) IBOutlet NSMatrix *existingOrNewIndexSimplified;
-@property (nonatomic, weak, readonly) IBOutlet NSWindow *simplifiedWindow;
+@property (nonatomic, strong, readonly) IBOutlet NSPopUpButton *shiftPopup;
+@property (nonatomic, strong, readonly) IBOutlet NSPopUpButton *capsLockPopup;
+@property (nonatomic, strong, readonly) IBOutlet NSPopUpButton *optionPopup;
+@property (nonatomic, strong, readonly) IBOutlet NSPopUpButton *commandPopup;
+@property (nonatomic, strong, readonly) IBOutlet NSPopUpButton *controlPopup;
+@property (nonatomic, strong, readonly) IBOutlet NSMatrix *existingOrNewIndexSimplified;
+@property (nonatomic, strong, readonly) IBOutlet NSWindow *simplifiedWindow;
 @property (nonatomic, readwrite) BOOL isSimplified;
 
 - (IBAction)shiftTogetherChoice:(id)sender;

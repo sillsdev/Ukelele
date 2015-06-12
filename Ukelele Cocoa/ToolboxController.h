@@ -13,7 +13,7 @@
 
 @property (strong) IBOutlet NSButton *stickyModifiers;
 @property (strong) IBOutlet NSButton *JISOnly;
-@property (readonly, weak) ToolboxData *toolboxData;
+@property (readonly, assign) ToolboxData *toolboxData;
 
 + (ToolboxController *)sharedToolboxController;
 

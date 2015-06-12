@@ -792,7 +792,7 @@ NSDictionary *sStandardKeyMapList;
 {
 	[LayoutInfo checkForInit];
 	NString result = "";
-	boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find(keyCode);
+	boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find((UInt16)keyCode);
 	if (pos != sSpecialKeyList.end()) {
 		BOOL codeNonAscii = [[NSUserDefaults standardUserDefaults] boolForKey:UKCodeNonAscii];
 		result = XMLUtilities::MakeXMLString(&(pos->second), 1, codeNonAscii);
@@ -809,7 +809,7 @@ NSDictionary *sStandardKeyMapList;
 	if (myString.GetSize() == 1) {
 			// Is the key a special key? If so, check whether the string is the
 			// standard output for that special key
-		boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find(keyCode);
+		boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find((UInt16)keyCode);
 		const UniChar *stringChars = myString.GetUTF16();
 		UniChar symbol = stringChars[0];
 		if (pos != sSpecialKeyList.end() && symbol == pos->second) {
@@ -1103,7 +1103,7 @@ NSDictionary *sStandardKeyMapList;
 	if (myString.GetSize() == 1) {
 			// Is the key a special key? If so, check whether the string is the
 			// standard output for that special key
-		boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find(keyCode);
+		boost::unordered_map<UInt16, UniChar>::iterator pos = sSpecialKeyList.find((UInt16)keyCode);
 		const UniChar *stringChars = myString.GetUTF16();
 		UniChar symbol = stringChars[0];
 		if (pos != sSpecialKeyList.end() && symbol == pos->second) {
@@ -1593,9 +1593,10 @@ NSDictionary *sStandardKeyMapList;
 			break;
 	}
 	if ([resultString length] > 0) {
-		return resultString;
+		return [resultString autorelease];
 	}
-	return [[NSMutableAttributedString alloc] initWithString:@""];
+	[resultString release];
+	return [[[NSMutableAttributedString alloc] initWithString:@""] autorelease];
 }
 
 + (unsigned int)getKeyboardLayoutType:(int)keyboardID
@@ -1621,7 +1622,7 @@ NSDictionary *sStandardKeyMapList;
 + (int)getKeyboardNameIndex:(int)keyboardID
 {
 	[LayoutInfo checkForInit];
-	boost::unordered_map<SInt16, SInt16>::iterator pos = sKeyboardNameIndexTable.find(keyboardID);
+	boost::unordered_map<SInt16, SInt16>::iterator pos = sKeyboardNameIndexTable.find((UInt16)keyboardID);
 	if (pos != sKeyboardNameIndexTable.end()) {
 		return pos->second;
 	}

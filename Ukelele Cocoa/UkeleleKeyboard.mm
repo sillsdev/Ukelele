@@ -195,7 +195,7 @@ NSXMLDocument *UkeleleKeyboard::CreateXML(void) {
 	NSXMLDTDNode *dtdNode = [NSXMLNode DTDNodeWithXMLString:ToNS(mDTDHeader)];
 	NSXMLDTD *dtdTree = [[NSXMLDTD alloc] init];
 	[dtdTree addChild:dtdNode];
-	[xmlTree setDTD:dtdTree];
+	[xmlTree setDTD:[dtdTree autorelease]];
 	AddCommentsToXML((NSXMLElement *)xmlTree);
 	NSXMLElement *keyboardTree = mKeyboard->CreateXML();
 	[xmlTree addChild:keyboardTree];
@@ -251,7 +251,7 @@ shared_ptr<KeyStrokeLookUpTable> UkeleleKeyboard::CreateKeyStrokeLookUpTable(con
 			KeyElement *keyElement = mKeyboard->GetKeyElement(inKeyboardID, keyCode, modifierCombination, true);
 			if (keyElement != NULL) {
 				ActionElement *actionElement = NULL;
-				KeyStroke keyStroke(keyCode, modifierCombination);
+				KeyStroke keyStroke((SInt16)keyCode, modifierCombination);
 				switch (keyElement->GetElementType()) {
 					case kKeyFormOutput:
 						// Have output, so call it from state none
@@ -279,7 +279,7 @@ shared_ptr<KeyStrokeLookUpTable> UkeleleKeyboard::CreateKeyStrokeLookUpTable(con
 						else if (transitionState != "") {
 							// Transition from stateName to transitionState
 							if (!transitionTable->HasTransition(stateName, transitionState)) {
-								transitionTable->AddTransition(stateName, transitionState, keyCode, modifierCombination);
+								transitionTable->AddTransition(stateName, transitionState, (SInt16)keyCode, modifierCombination);
 							}
 						}
 					}

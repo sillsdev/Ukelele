@@ -22,15 +22,17 @@
 
 + (PrintAccessoryPanel *)printAccessoryPanel {
 	PrintAccessoryPanel *panel = [[PrintAccessoryPanel alloc] initWithNibName:@"PrintAccessoryPanel" bundle:nil];
-	return panel;
+	return [panel autorelease];
 }
 
 - (IBAction)toggleAllStates:(id)sender {
-	[self.printView setAllStates:[allStates intValue]];
+#pragma unused(sender)
+	[self.printView setAllStates:(BOOL)[allStates intValue]];
 }
 
 - (IBAction)toggleAllModifiers:(id)sender {
-	[self.printView setAllModifiers:[allModifiers intValue]];
+#pragma unused(sender)
+	[self.printView setAllModifiers:(BOOL)[allModifiers intValue]];
 }
 
 - (NSArray *)localizedSummaryItems {

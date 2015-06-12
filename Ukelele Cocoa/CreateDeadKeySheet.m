@@ -37,7 +37,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 + (CreateDeadKeySheet *)createDeadKeySheet
 {
-	return [[CreateDeadKeySheet alloc] initWithWindowNibName:windowName];
+	return [[[CreateDeadKeySheet alloc] initWithWindowNibName:windowName] autorelease];
 }
 
 - (void)beginCreateDeadKeySheet:(UkeleleKeyboardObject *)keyboardLayout
@@ -54,7 +54,7 @@ static NSString *windowName = @"CreateDeadKey";
 	NSMutableArray *stateArray = [[keyboardObject stateNamesNotInSet:stateSet] mutableCopy];
 	[self.deadKeyState removeAllItems];
 	[stateArray insertObject:[keyboardObject uniqueStateName] atIndex:0];
-	[self.deadKeyState addItemsWithObjectValues:stateArray];
+	[self.deadKeyState addItemsWithObjectValues:[stateArray autorelease]];
 	[self.deadKeyState selectItemAtIndex:0];
 	[self.badKeyCodeMessage setStringValue:@""];
 	NSString *baseStateName = [keyboardObject uniqueStateName];
@@ -64,6 +64,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (IBAction)cancelChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);
@@ -71,6 +72,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (IBAction)acceptChoice:(id)sender
 {
+#pragma unused(sender)
 	NSNumber *keyCode;
 	if ([self.chooseDeadKey selectedRow] == 0) {
 			// Direct selection
@@ -121,6 +123,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (IBAction)pickDeadKey:(id)sender
 {
+#pragma unused(sender)
 	switch ([self.chooseDeadKey selectedRow]) {
 		case 0:
 				// Direct entry
@@ -136,6 +139,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
 {
+#pragma unused(string)
 	if (control == self.deadKeyCode) {
 			// Bad data
 		[self.badKeyCodeMessage setStringValue:error];
@@ -146,6 +150,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
+#pragma unused(fieldEditor)
 	if (control == self.deadKeyCode) {
 		[self.badKeyCodeMessage setStringValue:@""];
 	}

@@ -19,7 +19,8 @@
 
 - (IBAction)addComment:(id)sender
 {
-    if (commentChanged) {
+#pragma unused(sender)
+   if (commentChanged) {
 		[self saveUnsavedComment];
 	}
     XMLCommentHolderObject *commentHolder = [self.keyboardLayout currentCommentHolder];
@@ -33,6 +34,7 @@
 
 - (IBAction)removeComment:(id)sender
 {
+#pragma unused(sender)
     XMLCommentHolderObject *commentHolder = [self.keyboardLayout currentCommentHolder];
 	NSAssert(commentHolder, @"Must have a comment holder");
 	NSString *commentText = [self.keyboardLayout currentComment];
@@ -50,7 +52,8 @@
 
 - (IBAction)firstComment:(id)sender
 {
-    if (commentChanged) {
+#pragma unused(sender)
+   if (commentChanged) {
 		[self saveUnsavedComment];
 	}
 	NSString *commentText = [self.keyboardLayout firstComment];
@@ -61,6 +64,7 @@
 
 - (IBAction)previousComment:(id)sender
 {
+#pragma unused(sender)
     if (commentChanged) {
 		[self saveUnsavedComment];
 	}
@@ -72,6 +76,7 @@
 
 - (IBAction)nextComment:(id)sender
 {
+#pragma unused(sender)
     if (commentChanged) {
 		[self saveUnsavedComment];
 	}
@@ -83,6 +88,7 @@
 
 - (IBAction)lastComment:(id)sender
 {
+#pragma unused(sender)
     if (commentChanged) {
 		[self saveUnsavedComment];
 	}
@@ -191,6 +197,7 @@
 #pragma mark Delegate methods
 
 - (void)textDidChange:(NSNotification *)notification {
+#pragma unused(notification)
 	commentChanged = YES;
 }
 

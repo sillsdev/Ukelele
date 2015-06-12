@@ -55,7 +55,7 @@ bool StateTransition::operator==(const StateTransition& inCompareTo) const
 KeyStroke::KeyStroke(const SInt16 inKeyCode, const UInt32 inModifiers)
 	: mKeyCode(inKeyCode), mModifiers(inModifiers)
 {
-	mModifierCount = NMathUtilities::CountBits(mModifiers);
+	mModifierCount = (SInt16)NMathUtilities::CountBits(mModifiers);
 }
 
 KeyStroke::KeyStroke(const KeyStroke& inOriginal)

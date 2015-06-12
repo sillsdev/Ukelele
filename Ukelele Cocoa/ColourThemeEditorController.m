@@ -52,7 +52,7 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 }
 
 + (ColourThemeEditorController *)colourThemeEditorController {
-	return [[ColourThemeEditorController alloc] initWithWindowNibName:@"ColourThemeEditor"];
+	return [[[ColourThemeEditorController alloc] initWithWindowNibName:@"ColourThemeEditor"] autorelease];
 }
 
 //- (void)startEditingTheme:(ColourTheme *)colourTheme
@@ -90,38 +90,46 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 }
 
 - (IBAction)newColourTheme:(id)sender {
+#pragma unused(sender)
 	
 }
 
 - (IBAction)editColourTheme:(id)sender {
+#pragma unused(sender)
 	
 }
 
 - (IBAction)duplicateColourTheme:(id)sender {
+#pragma unused(sender)
 	
 }
 
 - (IBAction)deleteColourTheme:(id)sender {
+#pragma unused(sender)
 	
 }
 
 - (IBAction)renameColourTheme:(id)sender {
+#pragma unused(sender)
 	
 }
 
 - (IBAction)acceptColourTheme:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	completionBlock([currentTheme themeName]);
 	[NSApp endSheet:[self window]];
 }
 
 - (IBAction)cancelColourTheme:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	completionBlock(nil);
 	[NSApp endSheet:[self window]];
 }
 
 - (void)handleKeyCapClick:(KeyCapView *)keyCapView clickCount:(NSInteger)clickCount {
+#pragma unused(clickCount)
 	[self.normalUpSelection setSelected:NO];
 	[self.normalDownSelection setSelected:NO];
 	[self.deadKeyUpSelection setSelected:NO];

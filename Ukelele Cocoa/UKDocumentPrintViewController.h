@@ -16,7 +16,7 @@
 @property (strong) IBOutlet NSTextField *buildVersionField;
 @property (strong) IBOutlet NSTextField *sourceVersionField;
 
-@property (weak) UKKeyboardDocument *currentDocument;
+@property (assign) UKKeyboardDocument *currentDocument;
 
 + (UKDocumentPrintViewController *)documentPrintViewController;
 

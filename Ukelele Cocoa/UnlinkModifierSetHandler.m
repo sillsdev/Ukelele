@@ -31,7 +31,7 @@
 }
 
 + (UnlinkModifierSetHandler *)unlinkModifierSetHandler:(UKKeyboardController *)theDocumentWindow {
-	return [[UnlinkModifierSetHandler alloc] initWithDocument:theDocumentWindow];
+	return [[[UnlinkModifierSetHandler alloc] initWithDocument:theDocumentWindow] autorelease];
 }
 
 - (void)beginInteractionWithCallback:(void (^)(NSInteger))theCallBack {
@@ -68,6 +68,7 @@
 }
 
 - (void)handleMessage:(NSDictionary *)messageData {
+#pragma unused(messageData)
 		// No messages to handle
 }
 

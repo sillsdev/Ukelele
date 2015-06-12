@@ -77,6 +77,7 @@ static NSDictionary *defaultValues() {
 
 - (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error
 {
+#pragma unused(application)
     if ([[error domain] isEqualToString:kDomainUkelele]) {
 		NSError *underlyingError = [error userInfo][NSUnderlyingErrorKey];
         return underlyingError == nil ? error : underlyingError;
@@ -85,12 +86,14 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)doPreferences:(id)sender {
+#pragma unused(sender)
 		// Create (if necessary) and run the preference window
 	UkelelePreferenceController *thePrefsController = [UkelelePreferenceController getInstance];
 	[thePrefsController runPreferences];
 }
 
 - (IBAction)newBundle:(id)sender {
+#pragma unused(sender)
 	NSError *theError;
 	UKKeyboardDocument *theDocument = [[NSDocumentController sharedDocumentController]
 										 makeUntitledDocumentOfType:(NSString *)kUTTypeBundle error:&theError];
@@ -103,6 +106,7 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)newFromCurrentInput:(id)sender {
+#pragma unused(sender)
 	NSError *theError;
 	UKKeyboardDocument *theDocument = [[NSDocumentController sharedDocumentController]
 									   makeUntitledDocumentOfType:(NSString *)kUTTypeBundle error:&theError];
@@ -116,6 +120,7 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)toggleToolbox:(id)sender {
+#pragma unused(sender)
 	ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 	NSWindow *toolboxWindow = [toolboxController window];
 	NSAssert(toolboxWindow, @"Window should not be nil");
@@ -128,6 +133,7 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)toggleStickyModifiers:(id)sender {
+#pragma unused(sender)
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	NSAssert(toolboxData, @"Toolbox data cannot be nil");
 	[toolboxData setStickyModifiers:![toolboxData stickyModifiers]];
@@ -155,6 +161,7 @@ static NSDictionary *defaultValues() {
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
+#pragma unused(notification)
 		// Register defaults
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues()];
 	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues()];
@@ -176,7 +183,7 @@ static NSDictionary *defaultValues() {
         err = AuthorizationMakeExternalForm(self->_authRef, &extForm);
     }
     if (err == errAuthorizationSuccess) {
-        self.authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
+        self.authorization = [[[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)] autorelease];
     }
     assert(err == errAuthorizationSuccess);
     
@@ -227,8 +234,10 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)removeHelperTool:(id)sender {
+#pragma unused(sender)
 	NSAssert([self helperToolIsInstalled], @"Helper tool must be installed before removal");
-	[self connectAndExecuteCommandBlock:^(NSError *error) {
+	[self connectAndExecuteCommandBlock:^(NSError *theError) {
+#pragma unused(theError)
 			// Tell the tool to uninstall itself
 		NSXPCConnection *connection = [self helperToolConnection];
 		id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
@@ -275,7 +284,7 @@ static NSDictionary *defaultValues() {
 {
     assert([NSThread isMainThread]);
     if (self.helperToolConnection == nil) {
-        self.helperToolConnection = [[NSXPCConnection alloc] initWithMachServiceName:kHelperToolMachServiceName options:NSXPCConnectionPrivileged];
+        self.helperToolConnection = [[[NSXPCConnection alloc] initWithMachServiceName:kHelperToolMachServiceName options:NSXPCConnectionPrivileged] autorelease];
         self.helperToolConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(KeyboardInstallerProtocol)];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"

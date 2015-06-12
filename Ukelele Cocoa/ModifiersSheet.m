@@ -352,7 +352,7 @@ enum {
     NSMatrix *matrixItem = [theSheet existingOrNewIndex];
 	[matrixItem selectCellAtRow:theValue column:0];
     [theSheet setIsSimplified:NO];
-	return theSheet;
+	return [theSheet autorelease];
 }
 
 + (ModifiersSheet *)simplifiedModifiersSheet:(ModifiersInfo *)modifierInfo
@@ -364,19 +364,20 @@ enum {
         [choiceMenu addItemWithTitle:@"Down" action:nil keyEquivalent:@""];
         [choiceMenu addItemWithTitle:@"Either Up or Down" action:nil keyEquivalent:@""];
     }
-    [theSheet.shiftPopup setMenu:[choiceMenu copy]];
+    [theSheet.shiftPopup setMenu:[[choiceMenu copy] autorelease]];
     [theSheet setPopupMenuItem:theSheet.shiftPopup withStatus:[modifierInfo shiftValue]];
-    [theSheet.capsLockPopup setMenu:[choiceMenu copy]];
+    [theSheet.capsLockPopup setMenu:[[choiceMenu copy] autorelease]];
     [theSheet setPopupMenuItem:theSheet.capsLockPopup withStatus:[modifierInfo capsLockValue]];
-    [theSheet.optionPopup setMenu:[choiceMenu copy]];
+    [theSheet.optionPopup setMenu:[[choiceMenu copy] autorelease]];
     [theSheet setPopupMenuItem:theSheet.optionPopup withStatus:[modifierInfo optionValue]];
-    [theSheet.commandPopup setMenu:[choiceMenu copy]];
+    [theSheet.commandPopup setMenu:[[choiceMenu copy] autorelease]];
     [theSheet setPopupMenuItem:theSheet.commandPopup withStatus:[modifierInfo commandValue]];
-    [theSheet.controlPopup setMenu:[choiceMenu copy]];
+    [theSheet.controlPopup setMenu:[[choiceMenu copy] autorelease]];
     [theSheet setPopupMenuItem:theSheet.controlPopup withStatus:[modifierInfo controlValue]];
     [theSheet.existingOrNewIndexSimplified selectCellAtRow:[modifierInfo existingOrNewValue] column:0];
     [theSheet setIsSimplified:YES];
-    return theSheet;
+	[choiceMenu release];
+    return [theSheet autorelease];
 }
 
 - (void)beginModifiersSheetWithCallback:(void (^)(ModifiersInfo *))theCallback
@@ -417,21 +418,25 @@ enum {
 
 - (IBAction)shiftTogetherChoice:(id)sender
 {
+#pragma unused(sender)
 	[shiftRight setEnabled:[shiftTogether selectedRow] == 1];
 }
 
 - (IBAction)optionTogetherChoice:(id)sender
 {
+#pragma unused(sender)
 	[optionRight setEnabled:[optionTogether selectedRow] == 1];
 }
 
 - (IBAction)controlTogetherChoice:(id)sender
 {
+#pragma unused(sender)
 	[controlRight setEnabled:[controlTogether selectedRow] == 1];
 }
 
 - (IBAction)acceptModifiers:(id)sender
 {
+#pragma unused(sender)
 	ModifiersInfo *modifierInfo = [[ModifiersInfo alloc] init];
     if ([self isSimplified]) {
         [modifierInfo setShiftValue:[self getDoubleModifierFromButton:shiftPopup]];
@@ -461,6 +466,7 @@ enum {
 
 - (IBAction)cancelModifiers:(id)sender
 {
+#pragma unused(sender)
     NSWindow *myWindow = [self isSimplified] ? [self simplifiedWindow] : [self window];
 	[myWindow orderOut:self];
 	[NSApp endSheet:myWindow];

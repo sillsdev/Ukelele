@@ -92,7 +92,9 @@
 				// Couldn't create the folder
 			localErrorDict = @{NSLocalizedDescriptionKey: @"Cannot create the Keyboard Layouts folder"};
 			localError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotCreateKeyboardLayouts userInfo:localErrorDict];
-			*installError = localError;
+			if (installError) {
+				*installError = localError;
+			}
 			return NO;
 		}
 	}
@@ -128,23 +130,27 @@
 		NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: @"Could not install the keyboard layout",
 									NSUnderlyingErrorKey: copyError};
 		NSError *error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotSaveInInstallDirectory userInfo:errorDictionary];
-		*installError = error;
+		if (installError) {
+			*installError = error;
+		}
 	}
 	return createdOK;
 }
 
 - (BOOL)authenticatedInstallFromURL:(NSURL *)sourceURL toURL:(NSURL *)targetURL error:(NSError **)installError {
+#pragma unused(targetURL)
 		// Call the helper tool
-	UkeleleAppDelegate *appDelegate = (UkeleleAppDelegate *)[NSApp delegate];
+	UkeleleAppDelegate *appDelegate = (UkeleleAppDelegate *)[[NSApplication sharedApplication] delegate];
 	BOOL helperInstalled = [appDelegate helperToolIsInstalled];
 	if (!helperInstalled) {
 		helperInstalled = [appDelegate installHelperTool];
 	}
 	if (helperInstalled) {
-		[appDelegate connectAndExecuteCommandBlock:^(NSError *error) {
+		[appDelegate connectAndExecuteCommandBlock:^(NSError *outerError) {
+#pragma unused(outerError)
 			NSXPCConnection *connection = [appDelegate helperToolConnection];
 			id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
-				[NSApp performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:YES];
+				[[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:YES];
 				return;
 			}];
 			NSData *authorization = [appDelegate authorization];

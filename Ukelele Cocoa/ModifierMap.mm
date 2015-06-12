@@ -401,7 +401,7 @@ ErrorMessage ModifierMap::CreateFromXMLTree(const NXMLNode& inXMLTree,
 				// An element, which should be a keyMapSelect
 				childValue = childTree->GetTextValue();
 				if (childValue != kKeyMapSelectElement) {
-					NString errorFormat = NBundleString(kNotKeyMapSelectError, "", kErrorTableName);
+					errorFormat = NBundleString(kNotKeyMapSelectError, "", kErrorTableName);
 					errorString.Format(errorFormat, childValue);
 					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
 					break;
@@ -486,7 +486,7 @@ ErrorMessage ModifierMap::CreateFromXML(NSXMLElement *inXMLTree, ModifierMap *&o
 					// An element, which should be a key map select
 				childValue = ToNN([childNode name]);
 				if (childValue != kKeyMapSelectElement) {
-					NString errorFormat = NBundleString(kNotKeyMapSelectError, "", kErrorTableName);
+					errorFormat = NBundleString(kNotKeyMapSelectError, "", kErrorTableName);
 					errorString.Format(errorFormat, childValue);
 					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
 					break;

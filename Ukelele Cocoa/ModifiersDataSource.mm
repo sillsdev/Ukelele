@@ -65,7 +65,7 @@ static NSMutableDictionary *statusDictionary = nil;
 			NSStrikethroughStyleAttributeName : @(NSUnderlineStyleThick)};
 		downAttributeDictionary = @{NSForegroundColorAttributeName : [NSColor blueColor]};
 	});
-	NSAttributedString *result;
+	NSAttributedString *result = nil;
 	if (modifierStatus == kModifierEither || modifierStatus == kModifierAnyOpt) {
 			// No modifiers to show, so it's the empty string
 		result = [[NSAttributedString alloc] initWithString:@""];
@@ -75,7 +75,8 @@ static NSMutableDictionary *statusDictionary = nil;
 			 modifierStatus == kModifierLeftOptRight || modifierStatus == kModifierLeftRightOpt ||
 			 modifierStatus == kModifierRightOpt) {
 			// Need to show both a left and a right
-		NSMutableAttributedString *leftString, *rightString;
+		NSMutableAttributedString *leftString = nil;
+		NSMutableAttributedString *rightString = nil;
 		NSAssert((modifier == shiftIndex || modifier == optionIndex || modifier == controlIndex), @"Must be a paired modifier");
 		switch (modifier) {
 			case shiftIndex:
@@ -94,38 +95,42 @@ static NSMutableDictionary *statusDictionary = nil;
 				break;
 		}
 		NSMutableAttributedString *partialString = [[NSMutableAttributedString alloc] initWithString:@""];
-		NSMutableAttributedString *stringFragment;
+		NSMutableAttributedString *stringFragment = nil;
 		if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [leftString length])];
-			[partialString appendAttributedString:stringFragment];
+			[partialString appendAttributedString:[stringFragment autorelease]];
 		}
 		else if (modifierStatus == kModifierRight || modifierStatus == kModifierRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [leftString length])];
-			[partialString appendAttributedString:stringFragment];
+			[partialString appendAttributedString:[stringFragment autorelease]];
 		}
+		[leftString release];
 		NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@""];
 		if ([partialString length] > 0) {
+			[separator release];
 			separator = [[NSAttributedString alloc] initWithString:@", "];
 		}
 		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftOptRight) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:separator];
-			[partialString appendAttributedString:stringFragment];
+			[partialString appendAttributedString:[stringFragment autorelease]];
 		}
 		else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:separator];
-			[partialString appendAttributedString:stringFragment];
+			[partialString appendAttributedString:[stringFragment autorelease]];
 		}
+		[separator release];
+		[rightString release];
 		result = partialString;
 	}
 	else {
 			// One modifier
-		NSString *modifierString;
+		NSString *modifierString = nil;
 		switch (modifier) {
 			case shiftIndex:
 				modifierString = shiftKeyString;
@@ -164,7 +169,7 @@ static NSMutableDictionary *statusDictionary = nil;
 				break;
 		}
 	}
-	return result;
+	return [result autorelease];
 }
 
 - (NSString *)getModifierString:(unsigned int)modifierStatus
@@ -222,7 +227,7 @@ static NSMutableDictionary *statusDictionary = nil;
 	}
 	NSArray *modifierIndices = [keyboardLayout getModifierIndices];
 	[indexDictionary removeAllObjects];
-	for (NSInteger i = 0; i < [modifierIndices count]; i++) {
+	for (NSUInteger i = 0; i < [modifierIndices count]; i++) {
 		NSMutableDictionary *indexRelations = [NSMutableDictionary dictionary];
 		if (i > 0) {
 			indexRelations[MDSPrevKey] = modifierIndices[i - 1];
@@ -303,11 +308,13 @@ static NSMutableDictionary *statusDictionary = nil;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
+#pragma unused(tableView)
 	return [rowArray count];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+#pragma unused(tableView)
 	NSDictionary *rowData = rowArray[row];
 	NSDictionary *statusData = rowData[[tableColumn identifier]];
 	return statusData[kLabelStringRepresentation];
@@ -316,6 +323,7 @@ static NSMutableDictionary *statusDictionary = nil;
 #pragma mark Drag and drop
 
 - (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard {
+#pragma unused(tableView)
 	if ([rowIndexes count] != 1) {
 			// Only drag single rows
 		return NO;
@@ -333,7 +341,7 @@ static NSMutableDictionary *statusDictionary = nil;
 	}
 		// We can accept a drop anywhere except in the same set
 	NSInteger proposedRowSet;
-	if (row >= [rowArray count]) {
+	if (row >= (NSInteger)[rowArray count]) {
 			// Dropping at the end of the table
 		proposedRowSet = [self indexForRow:[rowArray count] - 1];
 	}
@@ -359,7 +367,7 @@ static NSMutableDictionary *statusDictionary = nil;
 	}
 		// Find the first row with the destination set number
 	NSInteger destinationRow;
-	if (row >= [rowArray count]) {
+	if (row >= (NSInteger)[rowArray count]) {
 		destinationRow = row;
 	}
 	else {
@@ -375,7 +383,9 @@ static NSMutableDictionary *statusDictionary = nil;
 
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
 	NSInteger destinationSet;
-	if (row >= [rowArray count]) {
+#pragma unused(tableView)
+#pragma unused(dropOperation)
+	if (row >= (NSInteger)[rowArray count]) {
 		destinationSet = [self indexForRow:[rowArray count] - 1] + 1;
 	}
 	else {

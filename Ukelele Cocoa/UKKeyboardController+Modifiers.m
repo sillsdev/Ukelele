@@ -63,6 +63,7 @@
 
 - (IBAction)doubleClickRow:(id)sender
 {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.modifiersTableView selectedRow];
     if (selectedRow < 0) {
         return;
@@ -70,7 +71,7 @@
     ModifiersInfo *modifiersInfo = internalState[kStateModifiersInfo];
     if (modifiersInfo == nil) {
         modifiersInfo = [[ModifiersInfo alloc] init];
-        internalState[kStateModifiersInfo] = modifiersInfo;
+        internalState[kStateModifiersInfo] = [modifiersInfo autorelease];
     }
 	[modifiersInfo setShiftValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelShift]];
 	[modifiersInfo setCapsLockValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelCapsLock]];
@@ -99,6 +100,7 @@
 
 - (IBAction)setDefaultIndex:(id)sender
 {
+#pragma unused(sender)
 	NSUInteger newIndex = [[[self.defaultIndexButton selectedItem] title] integerValue];
 	if (newIndex != [self.keyboardLayout getDefaultModifierIndex]) {
 		[self.keyboardLayout setDefaultModifierIndex:newIndex];
@@ -109,16 +111,18 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
+#pragma unused(notification)
 	[self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0)];
 }
 
 - (IBAction)addModifiers:(id)sender
 {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.modifiersTableView selectedRow];
     ModifiersInfo *modifiersInfo = internalState[kStateModifiersInfo];
     if (modifiersInfo == nil) {
         modifiersInfo = [[ModifiersInfo alloc] init];
-        internalState[kStateModifiersInfo] = modifiersInfo;
+        internalState[kStateModifiersInfo] = [modifiersInfo autorelease];
     }
 	if (selectedRow != -1) {
 		[modifiersInfo setExistingOrNewValue:kModifiersSameIndex];
@@ -148,13 +152,14 @@
 
 - (IBAction)removeModifiers:(id)sender
 {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.modifiersTableView selectedRow];
 	NSAssert(selectedRow != -1, @"No selected row to delete");
 	NSInteger selectedIndex = [self.modifiersDataSource indexForRow:selectedRow];
 	NSInteger selectedSubindex = [self.modifiersDataSource subindexForRow:selectedRow];
 	if ([self.keyboardLayout keyMapSelectHasOneModifierCombination:selectedIndex]) {
 			// Deleting a whole map
-		if (selectedIndex == [self.keyboardLayout getDefaultModifierIndex]) {
+		if (selectedIndex == (NSInteger)[self.keyboardLayout getDefaultModifierIndex]) {
 				// Deleting the map with default index
 			NSArray *modifierIndices = [self.keyboardLayout getModifierIndices];
 			NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:[modifierIndices count]];
@@ -216,11 +221,13 @@
 
 - (IBAction)simplifyModifiers:(id)sender
 {
+#pragma unused(sender)
     [self.keyboardLayout simplifyModifiers];
 }
 
 - (IBAction)unlinkModifierSet:(id)sender
 {
+#pragma unused(sender)
 	if ([kTabNameKeyboard isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
 			// We're on the keyboard tab, so invoke unlinking a set
 		[self unlinkModifierCombination];

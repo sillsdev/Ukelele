@@ -51,6 +51,7 @@
 #pragma mark Delegate methods
 
 - (void)windowDidMove:(NSNotification *)notification {
+#pragma unused(notification)
 	NSRect newFrame = [self.window frame];
 	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];

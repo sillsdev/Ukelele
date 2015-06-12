@@ -26,7 +26,7 @@
 }
 
 + (ChooseStateController *)chooseStateController {
-	return [[ChooseStateController alloc] initWithWindowNibName:@"ChooseStateSheet"];
+	return [[[ChooseStateController alloc] initWithWindowNibName:@"ChooseStateSheet"] autorelease];
 }
 
 - (void)askStateForWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))callBack {
@@ -41,12 +41,14 @@
 }
 
 - (IBAction)acceptState:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock([self.stateList stringValue]);
 }
 
 - (IBAction)cancelState:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);

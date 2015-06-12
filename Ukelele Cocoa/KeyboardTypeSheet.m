@@ -15,6 +15,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
+#pragma unused(owner)
 	[[NSBundle mainBundle] loadNibNamed:nibName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];
     if (self) {
@@ -38,11 +39,12 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 + (KeyboardTypeSheet *)createKeyboardTypeSheet
 {
-	return [[KeyboardTypeSheet alloc] initWithWindowNibName:nibWindowName owner:self];
+	return [[[KeyboardTypeSheet alloc] initWithWindowNibName:nibWindowName owner:self] autorelease];
 }
 
 - (IBAction)acceptChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSInteger keyboardID = [self.keyboardResources resourceForType:[keyboardTypeTable selectedRow] code:[codingButton indexOfSelectedItem]];
 	[NSApp endSheet:[self window]];
@@ -51,6 +53,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 - (IBAction)cancelChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

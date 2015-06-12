@@ -30,11 +30,12 @@ NSString *kConfirmStateName = @"Name";
 
 + (ConfirmStateNameSheet *)confirmStateNameSheet
 {
-	return [[ConfirmStateNameSheet alloc] initWithWindowNibName:nibWindowName];
+	return [[[ConfirmStateNameSheet alloc] initWithWindowNibName:nibWindowName] autorelease];
 }
 
 - (IBAction)useExistingState:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSDictionary *dataDictionary = @{kConfirmStateType: kConfirmStateExisting};
 	[NSApp endSheet:[self window]];
@@ -43,6 +44,7 @@ NSString *kConfirmStateName = @"Name";
 
 - (IBAction)useNewState:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSDictionary *dataDictionary = @{kConfirmStateType: kConfirmStateNew,
 									kConfirmStateName: [newStateField stringValue]};
@@ -52,6 +54,7 @@ NSString *kConfirmStateName = @"Name";
 
 - (IBAction)cancelDialog:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

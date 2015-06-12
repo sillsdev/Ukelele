@@ -12,7 +12,7 @@
 
 @interface ScriptInfo : NSObject
 
-@property (weak, readonly) NSString *scriptName;
+@property (strong, readonly) NSString *scriptName;
 @property (readonly) NSInteger scriptID;
 @property (readonly) NSInteger minID;
 @property (readonly) NSInteger maxID;

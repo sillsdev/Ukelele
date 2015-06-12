@@ -200,6 +200,7 @@ ULONG QuickLookGeneratorPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 void *QuickLookGeneratorPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
+#pragma unused(allocator)
     QuickLookGeneratorPluginType *result;
     CFUUIDRef                 uuid;
 

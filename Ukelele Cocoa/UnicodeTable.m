@@ -71,6 +71,8 @@
 	NSError *theError;
 	NSRegularExpression *regEx = [NSRegularExpression regularExpressionWithPattern:@"([0-9A-Fa-f]+)\\t(.*)\\n" options:0 error:&theError];
 	[regEx enumerateMatchesInString:sourceString options:0 range:NSMakeRange(0, [sourceString length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+#pragma unused(flags)
+#pragma unused(stop)
 		NSScanner *scanner = [NSScanner scannerWithString:[sourceString substringWithRange:[result rangeAtIndex:1]]];
 		unsigned int codePoint;
 		if ([scanner scanHexInt:&codePoint]) {

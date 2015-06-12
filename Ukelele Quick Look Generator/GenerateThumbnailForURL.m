@@ -13,11 +13,19 @@ void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbn
 
 OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize)
 {
-    // To complete your generator please implement the function GenerateThumbnailForURL in GenerateThumbnailForURL.c
+#pragma unused(thisInterface)
+#pragma unused(thumbnail)
+#pragma unused(url)
+#pragma unused(contentTypeUTI)
+#pragma unused(options)
+#pragma unused(maxSize)
+   // To complete your generator please implement the function GenerateThumbnailForURL in GenerateThumbnailForURL.c
     return noErr;
 }
 
 void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbnail)
 {
+#pragma unused(thisInterface)
+#pragma unused(thumbnail)
     // Implement only if supported
 }

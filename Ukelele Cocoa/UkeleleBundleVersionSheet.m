@@ -30,7 +30,7 @@
 }
 
 + (UkeleleBundleVersionSheet *)bundleVersionSheet {
-	return [[UkeleleBundleVersionSheet alloc] initWithWindowNibName:@"UkeleleBundleVersionSheet"];
+	return [[[UkeleleBundleVersionSheet alloc] initWithWindowNibName:@"UkeleleBundleVersionSheet"] autorelease];
 }
 
 - (void)beginSheetWithBundleName:(NSString *)theBundleName
@@ -48,12 +48,14 @@
 }
 
 - (IBAction)acceptEdit:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(self);
 }
 
 - (IBAction)cancel:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

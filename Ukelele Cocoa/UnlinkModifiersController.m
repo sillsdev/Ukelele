@@ -20,6 +20,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 
 - (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
+#pragma unused(owner)
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];
     if (self) {
@@ -31,7 +32,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 }
 
 + (UnlinkModifiersController *)unlinkModifiersController {
-	return [[UnlinkModifiersController alloc] initWithWindowNibName:nibWindowName owner:self];
+	return [[[UnlinkModifiersController alloc] initWithWindowNibName:nibWindowName owner:self] autorelease];
 }
 
 - (void)beginDialogWithWindow:(NSWindow *)window callback:(void (^)(NSNumber *))theCallback {
@@ -76,6 +77,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 }
 
 - (IBAction)acceptModifiers:(id)sender {
+#pragma unused(sender)
 	NSInteger result = 0;
 	if ([self.leftShift integerValue] == NSOnState) {
 		result |= UKShiftKey;
@@ -107,6 +109,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 }
 
 - (IBAction)cancelModifiers:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callback(nil);

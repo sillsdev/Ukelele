@@ -29,7 +29,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 + (WrongStateChosenSheet *)wrongStateChosenSheet
 {
-	return [[WrongStateChosenSheet alloc] initWithWindowNibName:nibWindowName];
+	return [[[WrongStateChosenSheet alloc] initWithWindowNibName:nibWindowName] autorelease];
 }
 
 - (void)beginInteractionForWindow:(NSWindow *)theWindow
@@ -54,6 +54,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 - (IBAction)acceptNewState:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSInteger stateType = [stateChoice selectedRow] == 0 ? kDeadKeyTypeExisting : kDeadKeyTypeNew;
 	NSString *stateName = nil;
@@ -71,6 +72,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 - (IBAction)cancelNewState:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);
@@ -78,6 +80,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 - (IBAction)chooseStateType:(id)sender
 {
+#pragma unused(sender)
 	switch ([stateChoice selectedRow]) {
 		case 0:
 				// Existing state

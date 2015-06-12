@@ -18,6 +18,9 @@ void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
 
 OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options)
 {
+#pragma unused(thisInterface)
+#pragma unused(contentTypeUTI)
+#pragma unused(options)
 		// Get the contents of the file
 	NSError *error;
 	NSURL *theURL = (__bridge NSURL *)url;
@@ -26,6 +29,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		return kCFURLErrorFileDoesNotExist;
 	}
 	NSData *fileData = [fileWrapper regularFileContents];
+	[fileWrapper release];
 	if (fileData == nil) {
 		return kCFURLErrorCannotOpenFile;
 	}
@@ -35,6 +39,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		// Parse the file into a keyboard object
 	UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:&error];
 	if (QLPreviewRequestIsCancelled(preview)) {
+		[keyboardObject release];
 		return noErr;
 	}
 		// Create a view
@@ -49,6 +54,8 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	[ukeleleView createViewWithStream:resourcePtr forID:kStandardKeyboard withScale:1.25];
 	[ukeleleView setFrameOrigin:NSZeroPoint];
 	if (QLPreviewRequestIsCancelled(preview)) {
+		[ukeleleView release];
+		[keyboardObject release];
 		return noErr;
 	}
 		// Now populate the view
@@ -86,11 +93,15 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		QLPreviewRequestFlushContext(preview, cgContext);
 		CFRelease(cgContext);
 	}
+	[ukeleleView release];
+	[keyboardObject release];
     // To complete your generator please implement the function GeneratePreviewForURL in GeneratePreviewForURL.c
     return noErr;
 }
 
 void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview)
 {
+#pragma unused(thisInterface)
+#pragma unused(preview)
     // Implement only if supported
 }

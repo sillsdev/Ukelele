@@ -262,6 +262,7 @@ enum ProcessingStates {
 
 - (void)popoverWillClose:(NSNotification *)notification
 {
+#pragma unused(notification)
 	if (processingState != kProcessingCompleted) {
 		processingState = kProcessingCompleted;
 		[self interactionCompleted];
@@ -323,6 +324,7 @@ enum ProcessingStates {
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
+#pragma unused(textView)
 	if (commandSelector == @selector(complete:) || commandSelector == @selector(cancelOperation:)) {
         UKKeyboardController *theDocumentWindow = keyDataDict[kKeyDocument];
 		[control removeFromSuperview];
@@ -343,6 +345,7 @@ enum ProcessingStates {
 
 - (void)handleMessage:(NSDictionary *)messageData
 {
+#pragma unused(messageData)
 		// We don't handle any messages at this point
 }
 

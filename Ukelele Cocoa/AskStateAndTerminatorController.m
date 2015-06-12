@@ -31,7 +31,7 @@
 }
 
 + (AskStateAndTerminatorController *)askStateAndTerminatorController {
-	return [[AskStateAndTerminatorController alloc] initWithWindowNibName:@"AskStateAndTerminatorSheet"];
+	return [[[AskStateAndTerminatorController alloc] initWithWindowNibName:@"AskStateAndTerminatorSheet"] autorelease];
 }
 
 - (void)beginInteractionWithWindow:(NSWindow *)parentWindow
@@ -47,12 +47,14 @@
 }
 
 - (IBAction)selectState:(id)sender {
+#pragma unused(sender)
 	NSString *stateName = [self.statePopup titleOfSelectedItem];
 	NSString *terminator = [keyboardObject terminatorForState:stateName];
 	[self.currentTerminator setStringValue:terminator];
 }
 
 - (IBAction)acceptTerminator:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSDictionary *resultDictionary = nil;
 	if (![[self.statePopup stringValue] isEqualToString:@""]) {
@@ -65,6 +67,7 @@
 }
 
 - (IBAction)cancelTerminator:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);

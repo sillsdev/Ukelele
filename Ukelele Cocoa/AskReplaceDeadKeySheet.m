@@ -27,7 +27,7 @@ static NSString *windowName = @"AskReplace";
 
 + (AskReplaceDeadKeySheet *)askReplaceDeadKeySheet
 {
-	return [[AskReplaceDeadKeySheet alloc] initWithWindowNibName:windowName];
+	return [[[AskReplaceDeadKeySheet alloc] initWithWindowNibName:windowName] autorelease];
 }
 
 - (void)setMessage:(NSString *)messageText
@@ -44,6 +44,7 @@ static NSString *windowName = @"AskReplace";
 
 - (IBAction)acceptChange:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(kAskReplaceDeadKeyAccept);
@@ -51,6 +52,7 @@ static NSString *windowName = @"AskReplace";
 
 - (IBAction)rejectChange:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(kAskReplaceDeadKeyReject);
@@ -58,6 +60,7 @@ static NSString *windowName = @"AskReplace";
 
 - (IBAction)cancelChange:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

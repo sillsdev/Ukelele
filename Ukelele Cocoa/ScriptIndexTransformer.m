@@ -86,7 +86,7 @@
 		standardScripts = [ScriptInfo standardScripts];
 	});
 	NSInteger index = -1;
-	for (NSInteger i = 0; i < [standardScripts count]; i++) {
+	for (NSInteger i = 0; i < (NSInteger)[standardScripts count]; i++) {
 		ScriptInfo *scriptInfo = standardScripts[i];
 		if ([scriptInfo scriptID] == scriptID) {
 			index = i;

@@ -27,7 +27,7 @@
 }
 
 + (UKNewKeyboardLayoutController *)createController {
-	return [[UKNewKeyboardLayoutController alloc] initWithWindowNibName:@"NewKeyboardLayout"];
+	return [[[UKNewKeyboardLayoutController alloc] initWithWindowNibName:@"NewKeyboardLayout"] autorelease];
 }
 
 - (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *, BaseLayoutTypes, CommandLayoutTypes, CapsLockLayoutTypes))completion {
@@ -39,6 +39,7 @@
 }
 
 - (IBAction)acceptSelection:(id)sender {
+#pragma unused(sender)
 	NSString *keyboardName = [self.keyboardName stringValue];
 	BaseLayoutTypes baseLayout = [self.baseLayoutPopup indexOfSelectedItem];
 	CommandLayoutTypes commandLayout = [self.commandLayoutPopup indexOfSelectedItem];
@@ -49,6 +50,7 @@
 }
 
 - (IBAction)cancelSelection:(id)sender {
+#pragma unused(sender)
 	[self.window orderOut:self];
 	[NSApp endSheet:self.window];
 	completionBlock(nil, baseLayoutNone, commandLayoutNone, capsLockLayoutNone);

@@ -12,6 +12,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
+#pragma unused(windowNibName)
     self = [super initWithWindowNibName:@"IntendedLanguageSheet"];
     if (self) {
         // Initialization code here.
@@ -27,7 +28,7 @@
 }
 
 + (IntendedLanguageSheet *)intendedLanguageSheet {
-	return [[IntendedLanguageSheet alloc] initWithWindowNibName:@"IntendedLanguageSheet"];
+	return [[[IntendedLanguageSheet alloc] initWithWindowNibName:@"IntendedLanguageSheet"] autorelease];
 }
 
 
@@ -54,6 +55,7 @@
 #pragma mark Action methods
 
 - (IBAction)acceptLanguage:(id)sender {
+#pragma unused(sender)
 	if ([self.languageTable selectedRow] == -1) {
 			// No selection!
 		[self.languageRequired setHidden:NO];
@@ -66,6 +68,7 @@
 }
 
 - (IBAction)cancelLanguage:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);
@@ -113,6 +116,7 @@
 #pragma mark Filter methods
 
 - (IBAction)searchLanguage:(id)sender {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.languageTable selectedRow];
 	LanguageRegistryEntry *selectedLanguage = nil;
 	if (selectedRow >= 0) {
@@ -143,6 +147,7 @@
 }
 
 - (IBAction)searchScript:(id)sender {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.scriptTable selectedRow];
 	LanguageRegistryEntry *selectedScript = nil;
 	if (selectedRow >= 0) {
@@ -173,6 +178,7 @@
 }
 
 - (IBAction)searchRegion:(id)sender {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.regionTable selectedRow];
 	LanguageRegistryEntry *selectedRegion = nil;
 	if (selectedRow >= 0) {
@@ -203,6 +209,7 @@
 }
 
 - (IBAction)searchVariant:(id)sender {
+#pragma unused(sender)
 	NSInteger selectedRow = [self.variantTable selectedRow];
 	LanguageRegistryEntry *selectedVariant = nil;
 	if (selectedRow >= 0) {
@@ -335,7 +342,7 @@
 		LanguageRegistryEntry *variantEntry = variantList[selectionIndex];
 		[languageCode setVariantCode:[variantEntry code]];
 	}
-	return [languageRegistry normaliseLanguageCode:languageCode];
+	return [languageRegistry normaliseLanguageCode:[languageCode autorelease]];
 }
 
 @end

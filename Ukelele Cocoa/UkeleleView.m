@@ -82,7 +82,7 @@ typedef struct KeyEntryRec {
     _smallAttributes = [NSMutableDictionary dictionary];
     [_smallAttributes setValue:defaultSmallFont forKey:NSFontAttributeName];
     [_smallAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [_smallAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
+    [_smallAttributes setValue:[paraStyle autorelease] forKey:NSParagraphStyleAttributeName];
 	CGFloat textSize = [theDefaults floatForKey:UKTextSize];
 	if (textSize <= 0) {
 			// Nothing came from the defaults
@@ -128,6 +128,7 @@ typedef struct KeyEntryRec {
 	if (_smallParagraphStyle) {
 		CFRelease(_smallParagraphStyle);
 	}
+	[super dealloc];
 }
 
 - (BOOL)isFlipped {
@@ -182,7 +183,7 @@ typedef struct KeyEntryRec {
 	NSRect boundingRect = [self get1RectBounds:originPoint
 									 withPoint:newPoint
 							   withScaleFactor:scaleValue];
-	KeyCapView *keyCap = [[KeyCapView alloc] initWithFrame:boundingRect];
+	KeyCapView *keyCap = [[[KeyCapView alloc] initWithFrame:boundingRect] autorelease];
 	return keyCap;
 }
 
@@ -279,7 +280,7 @@ typedef struct KeyEntryRec {
 					toRect1:&keyRect1
 					toRect2:&keyRect2];
 	KeyCapView2Rect *keyCap = [[KeyCapView2Rect alloc] initWithRect1:keyRect1 withRect2:keyRect2];
-	return keyCap;
+	return [keyCap autorelease];
 }
 
 	// Set the absolute scale to a given figure
@@ -326,8 +327,8 @@ typedef struct KeyEntryRec {
 									toSize:baseFontSize * scaleValue * kDefaultSmallFontSize / kDefaultLargeFontSize];
 	newSmallAttributes[NSFontAttributeName] = newSmallFont;
 	[self setScaleFactor:scaleValue];
-	[self setLargeAttributes:newLargeAttributes];
-	[self setSmallAttributes:newSmallAttributes];
+	[self setLargeAttributes:[newLargeAttributes autorelease]];
+	[self setSmallAttributes:[newSmallAttributes autorelease]];
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
 }
@@ -375,7 +376,7 @@ typedef struct KeyEntryRec {
 		// Get a list of heights of key rectangles we find
 	int maxHeight = (boundaryRect.bottom - boundaryRect.top);
 	unsigned int *heightList = malloc(maxHeight * sizeof(unsigned int));
-	for (unsigned int h = 0; h <= maxHeight; h++) {
+	for (unsigned int h = 0; h <= (unsigned int)maxHeight; h++) {
 		heightList[h] = 0;
 	}
 
@@ -443,14 +444,14 @@ typedef struct KeyEntryRec {
 							withScaleFactor:2.0];
 			}
 			keyCapBounds = [keyCap boundingRect];
-			if (contentRect.size.width == 0 && contentRect.size.height == 0) {
+			if ((NSInteger)contentRect.size.width == 0 && (NSInteger)contentRect.size.height == 0) {
 				contentRect = keyCapBounds;
 			}
 			else {
 				contentRect = NSRectFromCGRect(CGRectUnion(NSRectToCGRect(contentRect), NSRectToCGRect(keyCapBounds)));
 			}
 				// Note the height
-			SInt16 keyHeight = ceil(keyCapBounds.size.height);
+			SInt16 keyHeight = (SInt16)(ceil(keyCapBounds.size.height));
 			heightList[keyHeight]++;
 				// Get the key codes
 			unsigned int fnKeyCode = [layoutInfo getFnKeyCodeForKey:keyCode];
@@ -473,7 +474,7 @@ typedef struct KeyEntryRec {
 			CFRelease(smallFont);
 			CFRelease(largeFont);
 			[keyCapMap addKeyCode:keyCode withKeyKapView:keyCap];
-			if (fnKeyCode != keyCode && fnKeyCode != kNoKeyCode) {
+			if ((char)fnKeyCode != keyCode && fnKeyCode != kNoKeyCode) {
 				[keyCapMap addKeyCode:fnKeyCode withKeyKapView:keyCap];
 			}
 				// Set the string for modifier keys
@@ -491,6 +492,7 @@ typedef struct KeyEntryRec {
 		}
 		free(pointList);
 	}
+	[layoutInfo release];
 	
 		// Work out whether we need to move the views
 	contentRect = NSRectFromCGRect(CGRectOffset(NSRectToCGRect(contentRect), -kKeyCapInset, -kKeyCapInset));
@@ -499,7 +501,7 @@ typedef struct KeyEntryRec {
 	BOOL needMove = fabs(contentRect.origin.x) > 0.5 || fabs(contentRect.origin.y) > 0.5;
 	
 		// Find the most common key height
-	SInt16 commonHeight = heightList[0];
+	SInt16 commonHeight = (SInt16)heightList[0];
 	for (SInt16 h = 1; h <= maxHeight; h++) {
 		if (heightList[h] > heightList[commonHeight]) {
 			commonHeight = h;
@@ -584,6 +586,7 @@ typedef struct KeyEntryRec {
 
 - (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text
 {
+#pragma unused(modifiers)
 	NSArray *keyList = [keyCapMap getKeysWithCode:keyCode];
 	NSUInteger keyCount = [keyList count];
 	for (NSUInteger i = 0; i < keyCount; i++) {
@@ -673,6 +676,7 @@ typedef struct KeyEntryRec {
 
 - (void)endGestureWithEvent:(NSEvent *)event
 {
+#pragma unused(event)
 	if ([self eventState] == kEventStateMagnify) {
 		UKKeyboardController *theDocumentWindow = [[self window] windowController];
 		[theDocumentWindow messageScaleCompleted];

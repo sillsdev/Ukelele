@@ -29,7 +29,7 @@ static NSString *windowName = @"AskTextSheet";
 + (AskTextSheet *)askTextSheet
 {
 	AskTextSheet *theSheet = [[AskTextSheet alloc] initWithWindowNibName:windowName];
-	return theSheet;
+	return [theSheet autorelease];
 }
 
 - (void)beginAskText:(NSString *)theMajorText
@@ -71,6 +71,7 @@ static NSString *windowName = @"AskTextSheet";
 
 - (IBAction)acceptAskText:(id)sender
 {
+#pragma unused(sender)
 	NSString *theText = [askTextField stringValue];
 	if ([unacceptableStrings containsObject:theText]) {
 			// Unacceptable string
@@ -84,6 +85,7 @@ static NSString *windowName = @"AskTextSheet";
 
 - (IBAction)cancelAskText:(id)sender
 {
+#pragma unused(sender)
 	[askTextSheet orderOut:self];
 	[NSApp endSheet:askTextSheet];
 	askTextCallBack(nil);

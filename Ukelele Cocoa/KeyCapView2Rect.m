@@ -90,12 +90,12 @@ static CGAffineTransform kTextTransform = {
                                                                     options:trackingOptions
                                                                       owner:self
                                                                    userInfo:nil];
-		[self addTrackingArea:trackingArea];
+		[self addTrackingArea:[trackingArea autorelease]];
 		trackingArea = [[NSTrackingArea alloc] initWithRect:rect2
                                                     options:trackingOptions
                                                       owner:self
                                                    userInfo:nil];
-		[self addTrackingArea:trackingArea];
+		[self addTrackingArea:[trackingArea autorelease]];
 	}
 	return self;
 }
@@ -120,11 +120,13 @@ static CGAffineTransform kTextTransform = {
 			// Linear gradient
 		colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 		[colourGradient drawInRect:boundingRect angle:90];
+		[colourGradient release];
 	}
 	else if (gradientType == gradientTypeRadial) {
 			// Radial gradient
 		colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 		[colourGradient drawInRect:boundingRect relativeCenterPosition:NSZeroPoint];
+		[colourGradient release];
 	}
 	else {
 			// No gradient

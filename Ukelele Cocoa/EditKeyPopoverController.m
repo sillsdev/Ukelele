@@ -21,23 +21,26 @@
 }
 
 + (EditKeyPopoverController *)popoverController {
-	return [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil];
+	return [[[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil] autorelease];
 }
 
 - (IBAction)makeStandard:(id)sender
 {
+#pragma unused(sender)
 	self.callBack(self.standardOutput);
 	[self.myPopover performClose:self];
 }
 
 - (IBAction)cancelOperation:(id)sender
 {
+#pragma unused(sender)
 	self.callBack(nil);
 	[self.myPopover performClose:self];
 }
 
 - (IBAction)acceptOutput:(id)sender
 {
+#pragma unused(sender)
 	self.callBack([self.outputField stringValue]);
 	[self.myPopover performClose:self];
 }

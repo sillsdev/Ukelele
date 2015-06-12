@@ -28,7 +28,7 @@
 }
 
 + (AskCommentController *)askCommentController {
-	return [[AskCommentController alloc] initWithWindowNibName:@"AskCommentSheet"];
+	return [[[AskCommentController alloc] initWithWindowNibName:@"AskCommentSheet"] autorelease];
 }
 
 - (void)windowDidLoad
@@ -48,12 +48,14 @@
 }
 
 - (IBAction)acceptComment:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock([self.commentField string]);
 }
 
 - (IBAction)cancelComment:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);

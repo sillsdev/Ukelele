@@ -25,7 +25,7 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 + (AskKeyCode *)askKeyCode
 {
-	return [[AskKeyCode alloc] initWithWindowNibName:nibWindowName];
+	return [[[AskKeyCode alloc] initWithWindowNibName:nibWindowName] autorelease];
 }
 
 - (void)beginDialogForWindow:(NSWindow *)theWindow
@@ -48,6 +48,7 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 - (IBAction)acceptKeyCode:(id)sender
 {
+#pragma unused(sender)
 	if ([[self window] firstResponder] == keyCodeField) {
 		[[self window] endEditingFor:keyCodeField];
 	}
@@ -59,6 +60,7 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 - (IBAction)cancelKeyCode:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);
@@ -66,6 +68,8 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 - (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
 {
+#pragma unused(control)
+#pragma unused(string)
 	[errorField setStringValue:error];
 	NSBeep();
 	return NO;
@@ -73,6 +77,8 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
+#pragma unused(control)
+#pragma unused(fieldEditor)
 	[errorField setStringValue:@""];
 	return YES;
 }

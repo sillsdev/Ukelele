@@ -29,7 +29,7 @@
 	[result setKeyboardLayoutFile:keyboard];
 	[result setIconFile:icon];
 	[result setLanguageCode:language];
-	return result;
+	return [result autorelease];
 }
 
 - (instancetype)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type {
@@ -66,14 +66,17 @@
 }
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard {
+#pragma unused(pasteboard)
 	return @[UKKeyboardPasteType, (NSString *)kUTTypeFileURL];
 }
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard {
+#pragma unused(pasteboard)
 	return @[UKKeyboardPasteType, (NSString *)kUTTypeFileURL];
 }
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard {
+#pragma unused(pasteboard)
 	if ([type isEqualToString:UKKeyboardPasteType]) {
 		NSLog(@"Keyboard paste type");
 		return NSPasteboardReadingAsPropertyList;
@@ -86,6 +89,8 @@
 }
 
 - (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard {
+#pragma unused(type)
+#pragma unused(pasteboard)
 	return 0;
 }
 

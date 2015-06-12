@@ -23,7 +23,7 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 
 + (ChooseFrom3Sheet *)chooseFrom3Sheet
 {
-	return [[ChooseFrom3Sheet alloc] init];
+	return [[[ChooseFrom3Sheet alloc] init] autorelease];
 }
 
 - (void)beginChooseOption1:(NSString *)option1
@@ -49,6 +49,7 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 
 - (void)acceptChoice:(id)sender
 {
+#pragma unused(sender)
 	[chooseSheet orderOut:self];
 	NSInteger chosenRow = [radioButtons selectedRow];
 	[NSApp endSheet:chooseSheet];
@@ -57,6 +58,7 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 
 - (void)cancelChoice:(id)sender
 {
+#pragma unused(sender)
 	[chooseSheet orderOut:self];
 	[NSApp endSheet:chooseSheet];
 	callBack(-1);

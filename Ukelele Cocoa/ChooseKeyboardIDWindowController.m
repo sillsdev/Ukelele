@@ -35,7 +35,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 + (ChooseKeyboardIDWindowController *)chooseKeyboardID
 {
-	return [[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"];
+	return [[[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"] autorelease];
 }
 
 - (void)windowDidLoad
@@ -61,6 +61,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 - (IBAction)selectScript:(id)sender
 {
+#pragma unused(sender)
 	NSInteger selectedScript = [scriptButton indexOfSelectedItem];
 	if (selectedScript == -1) {
 			// No selection
@@ -77,6 +78,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 - (IBAction)generateID:(id)sender
 {
+#pragma unused(sender)
 	NSInteger selectedScript = [scriptButton indexOfSelectedItem];
 	ScriptInfo *scriptInfo = scriptList[selectedScript];
 	NSInteger generatedID = [scriptInfo randomID];
@@ -85,6 +87,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 - (IBAction)ok:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionary];
@@ -96,6 +99,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 - (IBAction)cancel:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

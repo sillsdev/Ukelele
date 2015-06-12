@@ -11,6 +11,8 @@
 
 int main(int argc, const char * argv[])
 {
+#pragma unused(argc)
+#pragma unused(argv)
 
 	@autoreleasepool {
 	    

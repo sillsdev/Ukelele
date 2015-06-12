@@ -35,7 +35,7 @@ static const double kMaxValidValue = 500.0;
 
 + (ChooseScale *)makeChooseScale
 {
-    return [[ChooseScale alloc] initWithWindowNibName:@"ChooseScale"];
+    return [[[ChooseScale alloc] initWithWindowNibName:@"ChooseScale"] autorelease];
 }
 
 - (void)beginChooseScale:(double)initialValue
@@ -57,6 +57,7 @@ static const double kMaxValidValue = 500.0;
 
 - (IBAction)acceptScale:(id)sender
 {
+#pragma unused(sender)
     // User clicked OK
     [[self window] orderOut:self];
     [NSApp endSheet:[self window]];
@@ -65,6 +66,7 @@ static const double kMaxValidValue = 500.0;
 
 - (IBAction)cancelScale:(id)sender
 {
+#pragma unused(sender)
     // User cancelled
     [[self window] orderOut:self];
     [NSApp endSheet:[self window]];
@@ -73,18 +75,21 @@ static const double kMaxValidValue = 500.0;
 
 - (IBAction)slideScale:(id)sender
 {
+#pragma unused(sender)
     // User changed the slider position
     [self setValue:[slider doubleValue]];
 }
 
 - (IBAction)stepScale:(id)sender
 {
+#pragma unused(sender)
     // User clicked the stepper
     [self setValue:[stepper doubleValue]];
 }
 
 - (IBAction)textFieldEdited:(id)sender
 {
+#pragma unused(sender)
     // User finished editing the text field, so validate
     double newValue = [textField doubleValue];
     if (newValue >= kMinValidValue && newValue <= kMaxValidValue) {

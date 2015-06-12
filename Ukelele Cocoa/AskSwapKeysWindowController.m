@@ -30,7 +30,7 @@
 }
 
 + (AskSwapKeysWindowController *)askSwapKeysWindowController {
-	return [[self alloc] initWithWindowNibName:@"AskSwapKeyCodesWindow"];
+	return [[[self alloc] initWithWindowNibName:@"AskSwapKeyCodesWindow"] autorelease];
 }
 
 - (void)windowDidLoad
@@ -50,6 +50,7 @@
 }
 
 - (IBAction)acceptCodes:(id)sender {
+#pragma unused(sender)
 	if ([[self.keyCode1 stringValue] length] == 0 || [[self.keyCode2 stringValue] length] == 0) {
 		[[self keyCodeWarning] setHidden:NO];
 		return;
@@ -66,6 +67,7 @@
 }
 
 - (IBAction)cancelDialog:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callerCallback(nil);
@@ -74,6 +76,8 @@
 	// Show an error message if an invalid key code is entered
 
 - (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(NSString *)error {
+#pragma unused(string)
+#pragma unused(error)
 	[control setStringValue:@""];
 	[[self keyCodeWarning] setHidden:NO];
 	[[self sameKeyCodeWarning] setHidden:YES];

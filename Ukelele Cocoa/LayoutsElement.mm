@@ -70,7 +70,7 @@ LayoutElement *LayoutsElement::FindLayout(const UInt32 inKeyboardType)
 	
 	// We did not find the keyboard code, so it is the first layout, unless
 	// the keyboard code is for a JIS keyboard
-	OSType keyboardType = ::KBGetLayoutType(inKeyboardType);
+	OSType keyboardType = ::KBGetLayoutType((SInt16)inKeyboardType);
 	if (keyboardType == kKeyboardJIS) {
 		// It is JIS, so find the first layout to handle the default JIS layout
 		const UInt32 defaultJIS = gestaltPwrBkEKJISKbd;

@@ -93,13 +93,13 @@ XMLUtilities::IsValidUnicode(const UInt32 inCodePoint, NString& outErrorString)
 		formatString = NBundleString(kCodePointBeyondUnicode, "", kErrorTableName);
 		errorString.Format(formatString, inCodePoint);
 	}
-	else if (UCIsSurrogateHighCharacter(inCodePoint)) {
+	else if (UCIsSurrogateHighCharacter((UniChar)inCodePoint)) {
 			// High surrogate
 		isValid = false;
 		formatString = NBundleString(kCodePointInSurrogateRange, "", kErrorTableName);
 		errorString.Format(formatString, inCodePoint);
 	}
-	else if (UCIsSurrogateLowCharacter(inCodePoint)) {
+	else if (UCIsSurrogateLowCharacter((UniChar)inCodePoint)) {
 			// Low surrogate
 		isValid = false;
 		formatString = NBundleString(kCodePointInSurrogateRange, "", kErrorTableName);
@@ -379,11 +379,11 @@ XMLUtilities::ConvertEncodedString(const NString inString, UniChar *ioBuffer, UI
 				part1 += kUCHighSurrogateRangeStart;
 				UInt32 part2 = result & 0x3ff;
 				part2 += kUCLowSurrogateRangeStart;
-				ioBuffer[outputPtr++] = part1;
-				ioBuffer[outputPtr++] = part2;
+				ioBuffer[outputPtr++] = (UniChar)part1;
+				ioBuffer[outputPtr++] = (UniChar)part2;
 			}
 			else {
-				ioBuffer[outputPtr++] = result;
+				ioBuffer[outputPtr++] = (UniChar)result;
 			}
 		}
 	}

@@ -41,7 +41,7 @@ static CGAffineTransform kTextTransform = {
 										 options:NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
 										   owner:self
 										userInfo:nil];
-		[self addTrackingArea:trackingArea];
+		[self addTrackingArea:[trackingArea autorelease]];
         _largeAttributes = nil;
         _smallAttributes = nil;
         textStorage = nil;
@@ -71,6 +71,7 @@ static CGAffineTransform kTextTransform = {
 		CFRelease(_largeCTFont);
 	}
 	[self clearFrame];
+	[super dealloc];
 }
 
 - (BOOL)isFlipped {
@@ -207,9 +208,9 @@ static CGAffineTransform kTextTransform = {
             NSRect neededBox = NSZeroRect;
             @try {
                 NSArray *layoutManagerList = [textStorage layoutManagers];
-                NSLayoutManager *layoutManager = layoutManagerList[0];
+                layoutManager = layoutManagerList[0];
                 NSArray *textContainerList = [layoutManager textContainers];
-                NSTextContainer *textContainer = textContainerList[0];
+                textContainer = textContainerList[0];
                 NSSize textContainerSize = [textContainer containerSize];
                 [textContainer setContainerSize:NSMakeSize(FLT_MAX, textContainerSize.height)];
                 [layoutManager glyphRangeForTextContainer:textContainer];
@@ -250,7 +251,7 @@ static CGAffineTransform kTextTransform = {
 		else if (stringLength == 1 && [XMLCocoaUtilities isCombiningDiacritic:firstChar]) {
 				// Combining diacritic by itself
 			unichar combinedString[2];
-			unichar diacriticChar = [[NSUserDefaults standardUserDefaults] integerForKey:UKDiacriticDisplayCharacter];
+			unichar diacriticChar = (unichar)[[NSUserDefaults standardUserDefaults] integerForKey:UKDiacriticDisplayCharacter];
 			combinedString[0] = diacriticChar;
 			combinedString[1] = firstChar;
 			displayText = [[NSMutableAttributedString alloc]
@@ -279,7 +280,7 @@ static CGAffineTransform kTextTransform = {
 				formatString = @"%C";
 			}
 			charString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:formatString, theChar]];
-			[displayText appendAttributedString:charString];
+			[displayText appendAttributedString:[charString autorelease]];
 		}
 	}
 	[self clearFrame];
@@ -323,6 +324,7 @@ static CGAffineTransform kTextTransform = {
 
 - (void)drawText:(NSRect)dirtyRect
 {
+#pragma unused(dirtyRect)
 	if ([displayText length] == 0) {
 		return;
 	}
@@ -381,11 +383,13 @@ static CGAffineTransform kTextTransform = {
 		case gradientTypeLinear:
 			colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 			[colourGradient drawInRect:boundingRect angle:90];
+			[colourGradient release];
 			break;
 			
 		case gradientTypeRadial:
 			colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 			[colourGradient drawInRect:boundingRect relativeCenterPosition:NSZeroPoint];
+			[colourGradient release];
 			break;
 			
 		default:
@@ -507,6 +511,7 @@ static CGAffineTransform kTextTransform = {
 #pragma mark Events
 
 - (void)mouseEntered:(NSEvent *)theEvent {
+#pragma unused(theEvent)
 	mouseIsInside = YES;
 	[self signalMouseEntered];
 }
@@ -517,6 +522,7 @@ static CGAffineTransform kTextTransform = {
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
+#pragma unused(theEvent)
 	mouseIsInside = NO;
 	[self signalMouseExited];
 }
@@ -535,6 +541,7 @@ static CGAffineTransform kTextTransform = {
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
+#pragma unused(sender)
 	if (self.keyType != kSpecialKeyType) {
 		self.dragHighlight = YES;
 		[self setNeedsDisplay:YES];
@@ -545,6 +552,7 @@ static CGAffineTransform kTextTransform = {
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender
 {
+#pragma unused(sender)
 	self.dragHighlight = NO;
 	[self setNeedsDisplay:YES];
 }
@@ -567,6 +575,7 @@ static CGAffineTransform kTextTransform = {
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)event {
+#pragma unused(event)
 	NSDictionary *dataDictionary = @{kKeyKeyCode: @(self.keyCode)};
 	return [self.menuDelegate contextualMenuForData:dataDictionary];
 }
@@ -574,42 +583,52 @@ static CGAffineTransform kTextTransform = {
 #pragma mark Contextual menus
 
 - (IBAction)cutKey:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(cutKey:) with:self];
 }
 
 - (IBAction)copyKey:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(copyKey:) with:self];
 }
 
 - (IBAction)pasteKey:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(pasteKey:) with:self];
 }
 
 - (IBAction)unlinkKey:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(unlinkKey:) with:self];
 }
 
 - (IBAction)makeOutput:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(makeOutput:) with:self];
 }
 
 - (IBAction)makeDeadKey:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(makeDeadKey:) with:self];
 }
 
 - (IBAction)changeNextState:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(changeNextState:) with:self];
 }
 
 - (IBAction)changeTerminator:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(changeTerminator:) with:self];
 }
 
 - (IBAction)changeOutput:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(changeOutput:) with:self];
 }
 
 - (IBAction)attachComment:(id)sender {
+#pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(attachComment:) with:self];
 }
 

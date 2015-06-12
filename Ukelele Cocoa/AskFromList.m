@@ -23,7 +23,7 @@
 
 + (AskFromList *)askFromList
 {
-	return [[AskFromList alloc] initWithWindowNibName:@"AskFromList"];
+	return [[[AskFromList alloc] initWithWindowNibName:@"AskFromList"] autorelease];
 }
 
 - (void)beginAskFromListWithText:(NSString *)infoText
@@ -40,6 +40,7 @@
 
 - (IBAction)acceptChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	NSString *chosenItem = [listButton titleOfSelectedItem];
 	[NSApp endSheet:[self window]];
@@ -48,6 +49,7 @@
 
 - (IBAction)cancelChoice:(id)sender
 {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	callBack(nil);

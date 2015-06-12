@@ -62,6 +62,7 @@
 }
 
 - (IBAction)generateID:(id)sender {
+#pragma unused(sender)
 		// Work out the script
 	NSInteger selectedScript = [self.keyboardScriptButton indexOfSelectedItem];
 	ScriptInfo *scriptInfo = self.scriptList[selectedScript];
@@ -76,6 +77,8 @@
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
+#pragma unused(tableView)
+#pragma unused(row)
 	return NO;
 }
 
@@ -89,7 +92,7 @@
 }
 
 - (void)setScript:(NSInteger)scriptCode {
-	for (NSInteger i = 0; i < [self.scriptList count]; i++) {
+	for (NSUInteger i = 0; i < [self.scriptList count]; i++) {
 		ScriptInfo *scriptInfo = self.scriptList[i];
 		NSInteger scriptID = [scriptInfo scriptID];
 		if (scriptID == scriptCode) {
@@ -109,6 +112,7 @@
 #pragma mark Delegate methods
 
 - (void)windowDidMove:(NSNotification *)notification {
+#pragma unused(notification)
 	NSRect newFrame = [self.window frame];
 	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];

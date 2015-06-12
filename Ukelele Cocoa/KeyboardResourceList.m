@@ -32,7 +32,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	[result setKeyboardDescription:theDescription];
 	[result setKeyboardCodings:theCodings];
 	[result setKeyboardResourceIDs:theIDs];
-	return result;
+	return [result autorelease];
 }
 
 @end
@@ -58,6 +58,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		for (NSString *theKey in [resourceDict allKeys]) {
 			[resourceIDs addObject:[theFormatter numberFromString:theKey]];
 		}
+		[theFormatter release];
 		
 			// Go through the list and pick out the basic types
 		resourceSet = resourceIDs;
@@ -172,7 +173,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	if ([resourceSet containsObject:@(resourceID)]) {
 		NSInteger keyboardNameIndex = [LayoutInfo getKeyboardNameIndex:(int)resourceID];
 		if (keyboardNameIndex != 0) {
-			for (nameIndex = 0; nameIndex < [knownKeyboardsList count]; nameIndex++) {
+			for (nameIndex = 0; nameIndex < (NSInteger)[knownKeyboardsList count]; nameIndex++) {
 				if ([LayoutInfo getKeyboardNameIndex:[resourceIDNumber intValue]] == [knownKeyboardsList[nameIndex] intValue]) {
 					break;
 				}
@@ -180,7 +181,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		}
 		else {
 			NSInteger index;
-			for (index = 0; index < [unknownKeyboardsList count]; index++) {
+			for (index = 0; index < (NSInteger)[unknownKeyboardsList count]; index++) {
 				if ([resourceIDNumber isEqualToNumber:unknownKeyboardsList[index]]) {
 					break;
 				}
@@ -190,10 +191,10 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	}
 		// Now work out the index in the type list
 		//	Get the type for the resource
-	PhysicalKeyboardLayoutType layoutType = KBGetLayoutType(resourceID);
+	PhysicalKeyboardLayoutType layoutType = KBGetLayoutType((SInt16)resourceID);
 		//	Get the list of keyboards of this type
 	NSDictionary *keyboardList = nil;
-	if (nameIndex >= 0 && nameIndex < [knownKeyboardsList count]) {
+	if (nameIndex >= 0 && nameIndex < (NSInteger)[knownKeyboardsList count]) {
 		keyboardList = [LayoutInfo getKeyboardList:(unsigned)nameIndex];
 	}
 	else {

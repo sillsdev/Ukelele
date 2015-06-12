@@ -22,6 +22,7 @@
 - (void)dealloc
 {
 	delete _actionElements;
+	[super dealloc];
 }
 
 @end

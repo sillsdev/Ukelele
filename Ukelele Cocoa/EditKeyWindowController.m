@@ -36,7 +36,7 @@
 }
 
 + (EditKeyWindowController *)editKeyWindowController {
-	return [[EditKeyWindowController alloc] initWithWindowNibName:@"EditKeyWindow"];
+	return [[[EditKeyWindowController alloc] initWithWindowNibName:@"EditKeyWindow"] autorelease];
 }
 
 - (void)beginInteractionForWindow:(NSWindow *)parentWindow withData:(NSDictionary *)dataDict action:(void (^)(NSDictionary *))theCallback {
@@ -62,6 +62,7 @@
 }
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
+#pragma unused(tabView)
 	if ([kEditKeyOutputTab isEqualToString:[tabViewItem identifier]]) {
 			// Selected the output tab
 	}
@@ -79,9 +80,8 @@
 		callerData[kKeyKeyCode] = @(keyCode);
 		callerData[kKeyModifiers] = @([self currentModifiers]);
 		NSString *nextState;
-		NSString *theOutput;
 		BOOL isDeadKey;
-		theOutput = [keyboard getCharOutput:callerData isDead:&isDeadKey nextState:&nextState];
+		[keyboard getCharOutput:callerData isDead:&isDeadKey nextState:&nextState];
 		if (isDeadKey) {
 			[self.nextState selectItemWithObjectValue:nextState];
 			[self.terminatorField setStringValue:[keyboard getTerminatorForState:nextState]];
@@ -91,6 +91,7 @@
 }
 
 - (IBAction)getCurrentOutput:(id)sender {
+#pragma unused(sender)
 	[self.keyCodeWarning setHidden:YES];
 	NSInteger keyCode = [self.keyCode integerValue];
 	callerData[kKeyKeyCode] = @(keyCode);
@@ -166,12 +167,16 @@
 }
 
 - (IBAction)cancelOperation:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	actionCallback(nil);
 }
 
 - (void)control:(NSControl *)control didFailToValidatePartialString:(NSString *)string errorDescription:(NSString *)error {
+#pragma unused(control)
+#pragma unused(string)
+#pragma unused(error)
 	[self.keyCodeWarning setHidden:NO];
 	[self.keyCode setStringValue:@""];
 }

@@ -85,6 +85,7 @@
 
 - (void)handleMessage:(NSDictionary *)messageData
 {
+#pragma unused(messageData)
 		// We don't handle any messages at this point
 }
 

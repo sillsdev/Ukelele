@@ -19,6 +19,7 @@
 
 - (IBAction)removeUnusedStates:(id)sender
 {
+#pragma unused(sender)
 	RemoveStateData *removeStateData = [self.keyboardLayout removeUnusedStates];
 	if (nil == removeStateData) {
 			// No states removed
@@ -37,6 +38,7 @@
 
 - (IBAction)removeUnusedActions:(id)sender
 {
+#pragma unused(sender)
 	ActionElementSetWrapper *removedActions = [self.keyboardLayout removeUnusedActions];
 	if (nil == removedActions) {
 		NSAlert *alert = [[NSAlert alloc] init];
@@ -54,6 +56,7 @@
 
 - (IBAction)changeStateName:(id)sender
 {
+#pragma unused(sender)
 	NSArray *stateNames = [self.keyboardLayout stateNamesExcept:kStateNameNone];
 	NSAssert(stateNames && [stateNames count] > 0, @"Must have some states");
 	NSString *infoText = @"Choose the state name to replace";
@@ -81,6 +84,7 @@
 
 - (IBAction)changeActionName:(id)sender
 {
+#pragma unused(sender)
 	NSArray *actionNames = [self.keyboardLayout actionNames];
 	NSAssert(actionNames && [actionNames count] > 0, @"Must have some actions");
 	NSString *infoText = @"Choose the action name to replace";
@@ -106,6 +110,7 @@
 
 - (IBAction)addSpecialKeyOutput:(id)sender
 {
+#pragma unused(sender)
 	AddMissingOutputData *addMissingOutputData = [self.keyboardLayout addSpecialKeyOutput];
 	NSUndoManager *undoManager = [self undoManager];
 	NSAssert(undoManager, @"Must have an undo manager");
@@ -133,27 +138,27 @@
 	}
 	[keyboardIDSheet startDialogWithInfo:infoDictionary
 							   forWindow:targetWindow
-								callBack:^(NSDictionary *infoDictionary) {
-									if (infoDictionary == nil) {
+								callBack:^(NSDictionary *infoDict) {
+									if (infoDict == nil) {
 											// User cancelled
 										return;
 									}
 									NSString *existingName = [self.keyboardLayout keyboardName];
-									NSString *newName = infoDictionary[kKeyboardIDWindowName];
+									NSString *newName = infoDict[kKeyboardIDWindowName];
 									if (![existingName isEqualToString:newName]) {
 											// New keyboard layout name
 										[self changeKeyboardName:newName];
 									}
-									NSInteger scriptIndex = [infoDictionary[kKeyboardIDWindowScript] integerValue];
+									NSInteger theScriptIndex = [infoDict[kKeyboardIDWindowScript] integerValue];
 									NSArray *scriptArray = [ScriptInfo standardScripts];
-									ScriptInfo *selectedInfo = scriptArray[scriptIndex];
+									ScriptInfo *selectedInfo = scriptArray[theScriptIndex];
 									NSInteger scriptID = [selectedInfo scriptID];
 									NSInteger existingScript = [self.keyboardLayout keyboardGroup];
 									if (scriptID != existingScript) {
 											// New script code
 										[self changeKeyboardScript:scriptID];
 									}
-									NSInteger keyboardID = [infoDictionary[kKeyboardIDWindowID] integerValue];
+									NSInteger keyboardID = [infoDict[kKeyboardIDWindowID] integerValue];
 									NSInteger oldID = [self.keyboardLayout keyboardID];
 									if (keyboardID != oldID) {
 											// New keyboard ID
@@ -163,6 +168,7 @@
 }
 
 - (IBAction)colourThemes:(id)sender {
+#pragma unused(sender)
 	__block ColourThemeEditorController *theController = [ColourThemeEditorController colourThemeEditorController];
 	[theController showColourThemesWithWindow:self.window completionBlock:^(NSString *theTheme) {
 		if (theTheme) {
@@ -214,6 +220,7 @@
 
 - (void)undoAddSpecialKeyOutput:(AddMissingOutputData *)addOutputData
 {
+#pragma unused(addOutputData)
 	NSUndoManager *undoManager = [self undoManager];
 	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] addSpecialKeyOutput:self];

@@ -46,7 +46,7 @@
 	[result setScriptCode:ToNS(scriptCode)];
 	[result setRegionCode:ToNS(regionCode)];
 	[result setVariantCode:ToNS(variantCode)];
-	return result;
+	return [result autorelease];
 }
 
 - (NSString *)stringRepresentation {
@@ -60,7 +60,7 @@
 	if (![self.variantCode isEqualToString:@""]) {
 		[result appendFormat:@"-%@", self.variantCode];
 	}
-	return result;
+	return [result autorelease];
 }
 
 @end

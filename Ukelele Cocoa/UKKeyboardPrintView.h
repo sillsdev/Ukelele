@@ -26,7 +26,7 @@
 
 @property (nonatomic) BOOL allStates;
 @property (nonatomic) BOOL allModifiers;
-@property (nonatomic) NSString *currentState;
+@property (copy, nonatomic) NSString *currentState;
 @property (nonatomic) NSUInteger currentModifierIndex;
 @property (strong) UKKeyboardPrintInfo *printingInfo;
 

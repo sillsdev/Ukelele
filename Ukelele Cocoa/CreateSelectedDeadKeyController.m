@@ -36,13 +36,14 @@
 }
 
 + (CreateSelectedDeadKeyController *)createSelectedDeadKeyController {
-	return [[CreateSelectedDeadKeyController alloc] initWithWindowNibName:theNibName];
+	return [[[CreateSelectedDeadKeyController alloc] initWithWindowNibName:theNibName] autorelease];
 }
 
 - (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode targetState:(NSString *)targetState completionBlock:(void (^)(NSDictionary *))callback {
+#pragma unused(keyCode)
 	NSMutableArray *states = [[keyboardObject stateNamesExcept:kStateNameNone] mutableCopy];
 	[states insertObject:[keyboardObject uniqueStateName] atIndex:0];
-	self.stateNames = states;
+	self.stateNames = [states autorelease];
 	completionBlock = callback;
 	[self.stateField removeAllItems];
 	[self.stateField addItemsWithObjectValues:self.stateNames];
@@ -60,6 +61,7 @@
 }
 
 - (IBAction)acceptDeadKey:(id)sender {
+#pragma unused(sender)
 	NSString *stateName = [self.stateField stringValue];
 	if ([self.stateField indexOfSelectedItem] == -1 && [stateName length] == 0) {
 			// No state specified
@@ -83,6 +85,7 @@
 }
 
 - (IBAction)cancelDeadKey:(id)sender {
+#pragma unused(sender)
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(nil);
