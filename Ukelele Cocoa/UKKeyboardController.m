@@ -44,7 +44,7 @@ const float kScalePercentageFactor = 100.0f;
 const CGFloat kTextPaneHeight = 17.0f;
 
 @interface UKKeyboardController ()
-@property NSMutableIndexSet *keyStates;
+@property (strong) NSMutableIndexSet *keyStates;
 @end
 
 @implementation UKKeyboardController {
@@ -1179,13 +1179,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSFont *newLargeFont = [sender convertFont:oldLargeFont];
 	NSMutableDictionary *newLargeAttributes = [largeAttributes mutableCopy];
 	newLargeAttributes[NSFontAttributeName] = newLargeFont;
-	[ukeleleView setLargeAttributes:[newLargeAttributes autorelease]];
+	[ukeleleView setLargeAttributes:newLargeAttributes];
 	CGFloat largeSize = [newLargeFont pointSize];
 	CGFloat smallSize = largeSize * kDefaultSmallFontSize / kDefaultLargeFontSize;
 	NSFont *newSmallFont = [sender convertFont:newLargeFont toSize:smallSize];
 	NSMutableDictionary *newSmallAttributes = [smallAttributes mutableCopy];
 	newSmallAttributes[NSFontAttributeName] = newSmallFont;
-	[ukeleleView setSmallAttributes:[newSmallAttributes autorelease]];
+	[ukeleleView setSmallAttributes:newSmallAttributes];
 }
 
 - (IBAction)cutKey:(id)sender {
@@ -1408,7 +1408,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 	CGFloat desiredScale = availableWidth / keyboardWidth;
 	[keyboardView scaleViewToScale:desiredScale limited:NO];
 	CGFloat iterationSize = [keyboardView bounds].size.height + kTextPaneHeight;
-	[keyboardView release];
 	[printingInfo setViewHeight:(NSUInteger)iterationSize];
 	[printView setFrameSize:NSMakeSize(availableWidth, iterationSize)];
 	[printingInfo setViewsPerPage:(NSUInteger)(floor(availableHeight / iterationSize))];
@@ -1426,9 +1425,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[stateNameView setAlignment:NSCenterTextAlignment];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
-			[hostView addSubview:[theKeyboard autorelease]];
-			[hostView addSubview:[stateNameView autorelease]];
-			stateViews[i] = [hostView autorelease];
+			[hostView addSubview:theKeyboard];
+			[hostView addSubview:stateNameView];
+			stateViews[i] = hostView;
 		}
 		printingInfo.viewDict[stateName] = stateViews;
 	}
@@ -1440,7 +1439,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	
 	[op setCanSpawnSeparateThread:YES];
 	PrintAccessoryPanel *accessoryPanel =[PrintAccessoryPanel printAccessoryPanel];
-	[accessoryPanel setPrintView:[printView autorelease]];
+	[accessoryPanel setPrintView:printView];
 	[[op printPanel] addAccessoryController:accessoryPanel];
 	[op runOperationModalForWindow:self.window delegate:self didRunSelector:@selector(printOperationDidRun:success:contextInfo:) contextInfo:nil];
 }

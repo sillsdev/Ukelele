@@ -99,33 +99,29 @@ static NSMutableDictionary *statusDictionary = nil;
 		if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [leftString length])];
-			[partialString appendAttributedString:[stringFragment autorelease]];
+			[partialString appendAttributedString:stringFragment];
 		}
 		else if (modifierStatus == kModifierRight || modifierStatus == kModifierRightOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:leftString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [leftString length])];
-			[partialString appendAttributedString:[stringFragment autorelease]];
+			[partialString appendAttributedString:stringFragment];
 		}
-		[leftString release];
 		NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@""];
 		if ([partialString length] > 0) {
-			[separator release];
 			separator = [[NSAttributedString alloc] initWithString:@", "];
 		}
 		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftOptRight) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:downAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:separator];
-			[partialString appendAttributedString:[stringFragment autorelease]];
+			[partialString appendAttributedString:stringFragment];
 		}
 		else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftOpt) {
 			stringFragment = [[NSMutableAttributedString alloc] initWithAttributedString:rightString];
 			[stringFragment addAttributes:upAttributeDictionary range:NSMakeRange(0, [rightString length])];
 			[partialString appendAttributedString:separator];
-			[partialString appendAttributedString:[stringFragment autorelease]];
+			[partialString appendAttributedString:stringFragment];
 		}
-		[separator release];
-		[rightString release];
 		result = partialString;
 	}
 	else {
@@ -169,7 +165,7 @@ static NSMutableDictionary *statusDictionary = nil;
 				break;
 		}
 	}
-	return [result autorelease];
+	return result;
 }
 
 - (NSString *)getModifierString:(unsigned int)modifierStatus

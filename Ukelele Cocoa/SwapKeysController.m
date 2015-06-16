@@ -35,7 +35,7 @@
 }
 
 + (SwapKeysController *)swapKeysController:(UKKeyboardController *)theWindowController {
-	return [[[SwapKeysController alloc] initWithDocument:theWindowController] autorelease];
+	return [[SwapKeysController alloc] initWithDocument:theWindowController];
 }
 
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget {

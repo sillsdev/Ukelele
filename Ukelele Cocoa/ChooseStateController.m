@@ -26,7 +26,7 @@
 }
 
 + (ChooseStateController *)chooseStateController {
-	return [[[ChooseStateController alloc] initWithWindowNibName:@"ChooseStateSheet"] autorelease];
+	return [[ChooseStateController alloc] initWithWindowNibName:@"ChooseStateSheet"];
 }
 
 - (void)askStateForWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))callBack {

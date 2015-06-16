@@ -352,7 +352,7 @@ enum {
     NSMatrix *matrixItem = [theSheet existingOrNewIndex];
 	[matrixItem selectCellAtRow:theValue column:0];
     [theSheet setIsSimplified:NO];
-	return [theSheet autorelease];
+	return theSheet;
 }
 
 + (ModifiersSheet *)simplifiedModifiersSheet:(ModifiersInfo *)modifierInfo
@@ -364,20 +364,19 @@ enum {
         [choiceMenu addItemWithTitle:@"Down" action:nil keyEquivalent:@""];
         [choiceMenu addItemWithTitle:@"Either Up or Down" action:nil keyEquivalent:@""];
     }
-    [theSheet.shiftPopup setMenu:[[choiceMenu copy] autorelease]];
+    [theSheet.shiftPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.shiftPopup withStatus:[modifierInfo shiftValue]];
-    [theSheet.capsLockPopup setMenu:[[choiceMenu copy] autorelease]];
+    [theSheet.capsLockPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.capsLockPopup withStatus:[modifierInfo capsLockValue]];
-    [theSheet.optionPopup setMenu:[[choiceMenu copy] autorelease]];
+    [theSheet.optionPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.optionPopup withStatus:[modifierInfo optionValue]];
-    [theSheet.commandPopup setMenu:[[choiceMenu copy] autorelease]];
+    [theSheet.commandPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.commandPopup withStatus:[modifierInfo commandValue]];
-    [theSheet.controlPopup setMenu:[[choiceMenu copy] autorelease]];
+    [theSheet.controlPopup setMenu:[choiceMenu copy]];
     [theSheet setPopupMenuItem:theSheet.controlPopup withStatus:[modifierInfo controlValue]];
     [theSheet.existingOrNewIndexSimplified selectCellAtRow:[modifierInfo existingOrNewValue] column:0];
     [theSheet setIsSimplified:YES];
-	[choiceMenu release];
-    return [theSheet autorelease];
+    return theSheet;
 }
 
 - (void)beginModifiersSheetWithCallback:(void (^)(ModifiersInfo *))theCallback

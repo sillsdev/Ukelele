@@ -30,7 +30,7 @@ NSString *kConfirmStateName = @"Name";
 
 + (ConfirmStateNameSheet *)confirmStateNameSheet
 {
-	return [[[ConfirmStateNameSheet alloc] initWithWindowNibName:nibWindowName] autorelease];
+	return [[ConfirmStateNameSheet alloc] initWithWindowNibName:nibWindowName];
 }
 
 - (IBAction)useExistingState:(id)sender

@@ -31,7 +31,7 @@
 }
 
 + (AskStateAndTerminatorController *)askStateAndTerminatorController {
-	return [[[AskStateAndTerminatorController alloc] initWithWindowNibName:@"AskStateAndTerminatorSheet"] autorelease];
+	return [[AskStateAndTerminatorController alloc] initWithWindowNibName:@"AskStateAndTerminatorSheet"];
 }
 
 - (void)beginInteractionWithWindow:(NSWindow *)parentWindow

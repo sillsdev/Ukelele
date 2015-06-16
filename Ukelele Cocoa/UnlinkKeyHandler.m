@@ -31,7 +31,7 @@
 
 
 + (UnlinkKeyHandler *)unlinkKeyHandler:(UKKeyboardController *)theDocumentWindow {
-	return [[[UnlinkKeyHandler alloc] initWithDocumentWindow:theDocumentWindow] autorelease];
+	return [[UnlinkKeyHandler alloc] initWithDocumentWindow:theDocumentWindow];
 }
 
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget

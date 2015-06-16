@@ -195,7 +195,7 @@ NSXMLDocument *UkeleleKeyboard::CreateXML(void) {
 	NSXMLDTDNode *dtdNode = [NSXMLNode DTDNodeWithXMLString:ToNS(mDTDHeader)];
 	NSXMLDTD *dtdTree = [[NSXMLDTD alloc] init];
 	[dtdTree addChild:dtdNode];
-	[xmlTree setDTD:[dtdTree autorelease]];
+	[xmlTree setDTD:dtdTree];
 	AddCommentsToXML((NSXMLElement *)xmlTree);
 	NSXMLElement *keyboardTree = mKeyboard->CreateXML();
 	[xmlTree addChild:keyboardTree];

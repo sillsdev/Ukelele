@@ -30,7 +30,7 @@
 }
 
 + (UkeleleBundleVersionSheet *)bundleVersionSheet {
-	return [[[UkeleleBundleVersionSheet alloc] initWithWindowNibName:@"UkeleleBundleVersionSheet"] autorelease];
+	return [[UkeleleBundleVersionSheet alloc] initWithWindowNibName:@"UkeleleBundleVersionSheet"];
 }
 
 - (void)beginSheetWithBundleName:(NSString *)theBundleName

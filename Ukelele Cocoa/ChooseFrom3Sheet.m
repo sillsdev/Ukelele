@@ -23,7 +23,7 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 
 + (ChooseFrom3Sheet *)chooseFrom3Sheet
 {
-	return [[[ChooseFrom3Sheet alloc] init] autorelease];
+	return [[ChooseFrom3Sheet alloc] init];
 }
 
 - (void)beginChooseOption1:(NSString *)option1

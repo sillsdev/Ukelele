@@ -16,7 +16,7 @@
 @property (strong) IBOutlet NSButton *standardButton;
 @property (strong) void (^callBack)(NSString *);
 @property (copy) NSString *standardOutput;
-@property (assign) NSPopover *myPopover;
+@property (weak) NSPopover *myPopover;
 
 + (EditKeyPopoverController *)popoverController;
 

@@ -82,7 +82,7 @@ typedef struct KeyEntryRec {
     _smallAttributes = [NSMutableDictionary dictionary];
     [_smallAttributes setValue:defaultSmallFont forKey:NSFontAttributeName];
     [_smallAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [_smallAttributes setValue:[paraStyle autorelease] forKey:NSParagraphStyleAttributeName];
+    [_smallAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
 	CGFloat textSize = [theDefaults floatForKey:UKTextSize];
 	if (textSize <= 0) {
 			// Nothing came from the defaults
@@ -128,7 +128,6 @@ typedef struct KeyEntryRec {
 	if (_smallParagraphStyle) {
 		CFRelease(_smallParagraphStyle);
 	}
-	[super dealloc];
 }
 
 - (BOOL)isFlipped {
@@ -183,7 +182,7 @@ typedef struct KeyEntryRec {
 	NSRect boundingRect = [self get1RectBounds:originPoint
 									 withPoint:newPoint
 							   withScaleFactor:scaleValue];
-	KeyCapView *keyCap = [[[KeyCapView alloc] initWithFrame:boundingRect] autorelease];
+	KeyCapView *keyCap = [[KeyCapView alloc] initWithFrame:boundingRect];
 	return keyCap;
 }
 
@@ -280,7 +279,7 @@ typedef struct KeyEntryRec {
 					toRect1:&keyRect1
 					toRect2:&keyRect2];
 	KeyCapView2Rect *keyCap = [[KeyCapView2Rect alloc] initWithRect1:keyRect1 withRect2:keyRect2];
-	return [keyCap autorelease];
+	return keyCap;
 }
 
 	// Set the absolute scale to a given figure
@@ -327,8 +326,8 @@ typedef struct KeyEntryRec {
 									toSize:baseFontSize * scaleValue * kDefaultSmallFontSize / kDefaultLargeFontSize];
 	newSmallAttributes[NSFontAttributeName] = newSmallFont;
 	[self setScaleFactor:scaleValue];
-	[self setLargeAttributes:[newLargeAttributes autorelease]];
-	[self setSmallAttributes:[newSmallAttributes autorelease]];
+	[self setLargeAttributes:newLargeAttributes];
+	[self setSmallAttributes:newSmallAttributes];
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
 }
@@ -492,7 +491,6 @@ typedef struct KeyEntryRec {
 		}
 		free(pointList);
 	}
-	[layoutInfo release];
 	
 		// Work out whether we need to move the views
 	contentRect = NSRectFromCGRect(CGRectOffset(NSRectToCGRect(contentRect), -kKeyCapInset, -kKeyCapInset));

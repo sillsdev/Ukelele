@@ -7,8 +7,8 @@
 //
 
 #import "LanguageRegistry.h"
-
-	// Dictionary keys
+	
+// Dictionary keys
 NSString *kLTRLanguageNameKey = @"LanguageName";
 NSString *kLTRLanguageCodeKey = @"LanguageCode";
 NSString *kLTRLanguageSuppressScriptKey = @"LanguageSuppressScript";
@@ -62,12 +62,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 	NSMutableArray *variantList;
 }
 
-@synthesize languageList = languageList;
-@synthesize scriptList = scriptList;
-@synthesize regionList = regionList;
-@synthesize variantList = variantList;
-
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 	if (self) {
 		languageList = [NSMutableArray array];
@@ -89,6 +84,22 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 		[theInstance parseXMLFile:registryData];
 	});
 	return theInstance;
+}
+
+- (NSArray *)languageList {
+	return languageList;
+}
+
+- (NSArray *)scriptList {
+	return scriptList;
+}
+
+- (NSArray *)regionList {
+	return regionList;
+}
+
+- (NSArray *)variantList {
+	return variantList;
 }
 
 - (void)parseXMLFile:(NSData *)xmlData {
@@ -129,7 +140,6 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[self readVariant:childNode];
 		}
 	}
-	[theDocument release];
 }
 
 - (void)readLanguage:(NSXMLNode *)languageNode {
@@ -159,7 +169,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[languageEntry setOther:[childNode stringValue]];
 		}
 	}
-	[languageList addObject:[languageEntry autorelease]];
+	[languageList addObject:languageEntry];
 }
 
 - (void)readScript:(NSXMLNode *)scriptNode {
@@ -186,7 +196,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[scriptEntry setName:descriptionEntry];
 		}
 	}
-	[scriptList addObject:[scriptEntry autorelease]];
+	[scriptList addObject:scriptEntry];
 }
 
 - (void)readRegion:(NSXMLNode *)regionNode {
@@ -213,7 +223,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[regionEntry setName:descriptionEntry];
 		}
 	}
-	[regionList addObject:[regionEntry autorelease]];
+	[regionList addObject:regionEntry];
 }
 
 - (void)readVariant:(NSXMLNode *)variantNode {
@@ -240,7 +250,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 			[variantEntry setName:descriptionEntry];
 		}
 	}
-	[variantList addObject:[variantEntry autorelease]];
+	[variantList addObject:variantEntry];
 }
 
 - (NSArray *)searchLanguage:(NSString *)searchTerm {
@@ -323,7 +333,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 	[normalisedCode setScriptCode:script];
 	[normalisedCode setRegionCode:region];
 	[normalisedCode setVariantCode:variant];
-	return [normalisedCode autorelease];
+	return normalisedCode;
 }
 
 @end

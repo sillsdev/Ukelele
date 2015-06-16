@@ -35,7 +35,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 + (ChooseKeyboardIDWindowController *)chooseKeyboardID
 {
-	return [[[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"] autorelease];
+	return [[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"];
 }
 
 - (void)windowDidLoad

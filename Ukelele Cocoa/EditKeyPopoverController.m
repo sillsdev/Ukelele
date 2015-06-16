@@ -21,7 +21,7 @@
 }
 
 + (EditKeyPopoverController *)popoverController {
-	return [[[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil] autorelease];
+	return [[EditKeyPopoverController alloc] initWithNibName:@"EditKeyPopover" bundle:nil];
 }
 
 - (IBAction)makeStandard:(id)sender

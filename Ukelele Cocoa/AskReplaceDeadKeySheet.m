@@ -27,7 +27,7 @@ static NSString *windowName = @"AskReplace";
 
 + (AskReplaceDeadKeySheet *)askReplaceDeadKeySheet
 {
-	return [[[AskReplaceDeadKeySheet alloc] initWithWindowNibName:windowName] autorelease];
+	return [[AskReplaceDeadKeySheet alloc] initWithWindowNibName:windowName];
 }
 
 - (void)setMessage:(NSString *)messageText

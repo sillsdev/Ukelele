@@ -50,7 +50,7 @@ NSString *kKeyboardName = @"keyboardName";
 }
 
 - (id)transformedValue:(id)value {
-	return [[[NSImage alloc] initWithData:(NSData *)value] autorelease];
+	return [[NSImage alloc] initWithData:(NSData *)value];
 }
 
 @end
@@ -113,7 +113,6 @@ NSString *kKeyboardName = @"keyboardName";
 	if (currentObservation != nil) {
 		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
 	}
-	[super dealloc];
 }
 
 - (void)makeWindowControllers {
@@ -123,14 +122,12 @@ NSString *kKeyboardName = @"keyboardName";
 		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
 		[self setFileType:kFileTypeKeyboardLayout];
-		[keyboardController release];
 	}
 	else {
 		NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"UKKeyboardLayoutBundle" owner:self];
 		NSAssert(windowController, @"Must be able to create a window controller");
 		[self addWindowController:windowController];
 		[self setFileType:kFileTypeGenericBundle];
-		[windowController release];
 	}
 }
 
@@ -343,7 +340,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return nil;
 	}
-	return [[[UkeleleKeyboardObject alloc] initWithData:myData withError:outError] autorelease];
+	return [[UkeleleKeyboardObject alloc] initWithData:myData withError:outError];
 }
 
 #pragma mark File wrapper methods
@@ -373,7 +370,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Put the InfoPlist.strings file into an English.lproj directory
 	NSFileWrapper *englishLprojDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[englishLprojDirectory setPreferredFilename:kStringEnglishLocalisationName];
-	[englishLprojDirectory addFileWrapper:[infoPlistStringsFile autorelease]];
+	[englishLprojDirectory addFileWrapper:infoPlistStringsFile];
 		// Create the version.plist file
 	NSMutableDictionary *versionPlistDictionary = [NSMutableDictionary dictionary];
 	versionPlistDictionary[kStringBuildVersionKey] = self.buildVersion;
@@ -389,7 +386,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create the Resources directory
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[resourcesDirectory setPreferredFilename:kStringResourcesName];
-	[resourcesDirectory addFileWrapper:[englishLprojDirectory autorelease]];
+	[resourcesDirectory addFileWrapper:englishLprojDirectory];
 		// Add all the keyboard layout and icon files
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry fileName];
@@ -408,7 +405,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSData *fileData = [[keyboardEntry keyboardObject] convertToData];
 			NSFileWrapper *newFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 			[newFileWrapper setPreferredFilename:keyboardFileName];
-			[keyboardEntry setKeyboardFileWrapper:[newFileWrapper autorelease]];
+			[keyboardEntry setKeyboardFileWrapper:newFileWrapper];
 				// The actual name shouldn't change, but we should cover all bases
 			NSString *actualFileName = [resourcesDirectory addFileWrapper:newFileWrapper];
 			NSString *baseName = [actualFileName stringByDeletingPathExtension];
@@ -419,7 +416,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[resourcesDirectory addRegularFileWithContents:[keyboardEntry iconData] preferredFilename:iconFileName];
 		}
 	}
-	[keyboardLayouts release];
 		// Create the Info.plist file
 	NSDictionary *infoPlist = [self createInfoPlist];
 	NSFileWrapper *infoPlistFile =
@@ -431,15 +427,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create the Contents directory
 	NSFileWrapper *contentsDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[contentsDirectory setPreferredFilename:kStringContentsName];
-	[contentsDirectory addFileWrapper:[infoPlistFile autorelease]];
-	[contentsDirectory addFileWrapper:[versionPlistFile autorelease]];
-	[contentsDirectory addFileWrapper:[resourcesDirectory autorelease]];
+	[contentsDirectory addFileWrapper:infoPlistFile];
+	[contentsDirectory addFileWrapper:versionPlistFile];
+	[contentsDirectory addFileWrapper:resourcesDirectory];
 		// Create the top level directory
 	NSFileWrapper *topFileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
-	[topFileWrapper addFileWrapper:[contentsDirectory autorelease]];
+	[topFileWrapper addFileWrapper:contentsDirectory];
 	NSString *bundleName = [NSString stringWithFormat:@"%@.bundle", _bundleName];
 	[topFileWrapper setPreferredFilename:bundleName];
-	return [topFileWrapper autorelease];
+	return topFileWrapper;
 }
 
 - (NSDictionary *)createInfoPlist {
@@ -497,7 +493,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:fileData withError:outError];
 	if (theKeyboard != nil) {
-		[self setupKeyboard:[theKeyboard autorelease]];
+		[self setupKeyboard:theKeyboard];
 		return YES;
 	}
 		// No valid keyboard layout created, outError is already set
@@ -511,7 +507,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(windowController, @"Must get a valid window controller");
 	[windowController setKeyboardLayout:theKeyboard];
 	[windowController setParentDocument:self];
-	[self addWindowController:[windowController autorelease]];
+	[self addWindowController:windowController];
 }
 
 - (BOOL)parseBundleFileWrapper:(NSFileWrapper *)theFileWrapper withError:(NSError **)error {
@@ -640,7 +636,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (nil != keyboardFileWrapper) {
 			[keyboardInfo setKeyboardFileWrapper:keyboardFileWrapper];
 		}
-		[self.keyboardLayouts addObject:[keyboardInfo autorelease]];
+		[self.keyboardLayouts addObject:keyboardInfo];
 	}
 	return YES;
 }
@@ -685,17 +681,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (keyboardObject == nil) {
 				// Couldn't read the file
 			[self presentError:readError];
-			[keyboardController release];
 			return nil;
 		}
 		[keyboardEntry setKeyboardObject:keyboardObject];
 		[keyboardEntry setKeyboardName:[keyboardObject keyboardName]];
-		[keyboardObject release];
 	}
 	[keyboardController setKeyboardLayout:[keyboardEntry keyboardObject]];
 	[keyboardEntry setKeyboardController:keyboardController];
 	[keyboardController setParentDocument:self];
-	return [keyboardController autorelease];
+	return keyboardController;
 }
 
 - (UKKeyboardController *)controllerForCurrentEntry {
@@ -716,7 +710,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self inspectorSetKeyboardSection];
 	if (currentObservation != nil) {
 		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
-		[currentObservation release];
 		currentObservation = nil;
 	}
 	if ([self.keyboardLayoutsTable selectedRow] != -1) {
@@ -790,18 +783,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					// Failed to read the document
 				theError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotCreateFromFile userInfo:nil];
 				[NSApp presentError:theError];
-				[pasteBoardData release];
 				return NO;
 			}
 			UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:keyboardData withError:&theError];
 			if (theKeyboard == nil) {
 					// Failed to read the document
 				[NSApp presentError:theError];
-				[pasteBoardData release];
 				return NO;
 			}
 			NSString *keyboardName = [[[pasteBoardData keyboardLayoutFile] lastPathComponent] stringByDeletingPathExtension];
-			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:[theKeyboard autorelease] fileName:keyboardName];
+			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:theKeyboard fileName:keyboardName];
 			[keyboardInfo setFileName:keyboardName];
 			if ([pasteBoardData iconFile] != nil) {
 					// Have an icon
@@ -809,8 +800,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				if (iconData == nil || [iconData length] == 0) {
 						// Failed to read the icon file
 					[NSApp presentError:theError];
-					[keyboardInfo release];
-					[pasteBoardData release];
 					return NO;
 				}
 				[keyboardInfo setIconData:iconData];
@@ -819,8 +808,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					// Have an intended language
 				[keyboardInfo setIntendedLanguage:[pasteBoardData languageCode]];
 			}
-			[pasteBoardData release];
-			[self insertDocumentWithInfo:[keyboardInfo autorelease] atIndex:row];
+			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
 			return YES;
 		}
 		return NO;
@@ -845,8 +833,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				return NO;
 			}
 			NSString *fileName = [[dragURL lastPathComponent] stringByDeletingPathExtension];
-			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:[keyboardObject autorelease] fileName:fileName];
-			[self insertDocumentWithInfo:[keyboardInfo autorelease] atIndex:row];
+			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:keyboardObject fileName:fileName];
+			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
 			return YES;
 		}
 		else if (isIconFile && dropOperation == NSTableViewDropOn) {
@@ -854,7 +842,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			NSFileWrapper *iconFile = [[NSFileWrapper alloc] initWithURL:dragURL options:NSFileWrapperReadingImmediate error:&readError];
 			NSData *iconData = [iconFile regularFileContents];
-			[iconFile release];
 			KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
 			if ([keyboardEntry hasIcon]) {
 					// Replace an existing icon file
@@ -1163,7 +1150,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			theName = @"Untitled";
 		}
 		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:theName base:base command:command capsLock:capsLock];
-		[self addNewDocument:[keyboardObject autorelease]];
+		[self addNewDocument:keyboardObject];
 	}
 }
 
@@ -1293,7 +1280,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				iconData = NULL;
 			}
 			CFRelease(imageDestination);
-			[iconImage release];
 		}
 	}
 	CFArrayRef keyboardLanguages = TISGetInputSourceProperty(currentInputSource, kTISPropertyInputSourceLanguages);
@@ -1314,7 +1300,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)openKeyboardFile:(id)sender {
 #pragma unused(sender)
-	__block NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];
@@ -1334,7 +1320,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				[NSApp presentError:readError];
 			}
 			else {
-				[self addNewDocument:[keyboardLayout autorelease]];
+				[self addNewDocument:keyboardLayout];
 					// Autosave the document after adding the new keyboard layout
 				[self autosaveWithImplicitCancellability:YES completionHandler:^(NSError *errorOrNil) {
 					if (errorOrNil) {
@@ -1355,7 +1341,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	__block NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];
@@ -1450,7 +1436,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[self presentError:readError];
 			return;
 		}
-		[selectedRowInfo setKeyboardObject:[keyboardObject autorelease]];
+		[selectedRowInfo setKeyboardObject:keyboardObject];
 		[selectedRowInfo setKeyboardName:[keyboardObject keyboardName]];
 	}
 	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
@@ -1459,7 +1445,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (newDocument != nil) {
 			// Got the document
 		[theController addDocument:newDocument];
-		[newDocument setupKeyboard:[[keyboardObject copy] autorelease]];
+		[newDocument setupKeyboard:[keyboardObject copy]];
 		[newDocument showWindows];
 	}
 }
@@ -1619,12 +1605,12 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			UkeleleKeyboardObject *newKeyboard = [[UkeleleKeyboardObject alloc] initWithData:[NSData dataWithContentsOfURL:documentURL] withError:&readError];
 			NSAssert(newKeyboard != nil, @"Copied keyboard should not create an error in reading");
-			[self addNewDocument:[newKeyboard autorelease]];
+			[self addNewDocument:newKeyboard];
 		}
 		else {
 				// It hasn't been saved, so just copy it
 			UkeleleKeyboardObject *copiedKeyboard = [[chosenDocument keyboardLayout] copy];
-			[self addNewDocument:[copiedKeyboard autorelease]];
+			[self addNewDocument:copiedKeyboard];
 		}
 	}
 	askFromListSheet = nil;
@@ -1676,7 +1662,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(newIndex <= (NSInteger)[self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
 		// Create dictionary with appropriate information
 	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
-	[self insertDocumentWithInfo:[keyboardInfo autorelease] atIndex:newIndex];
+	[self insertDocumentWithInfo:keyboardInfo atIndex:newIndex];
 }
 
 - (void)insertDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSInteger)newIndex {

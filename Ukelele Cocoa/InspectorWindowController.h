@@ -38,9 +38,9 @@
 @property (strong) IBOutlet NSTextField *scriptRange;
 @property (strong) NSArray *scriptRangeList;
 
-@property (assign, nonatomic) UkeleleKeyboardObject *currentKeyboard;
-@property (assign, nonatomic) UKKeyboardController *currentWindow;
-@property (assign, nonatomic) UKKeyboardDocument *currentBundle;
+@property (weak, nonatomic) UkeleleKeyboardObject *currentKeyboard;
+@property (weak, nonatomic) UKKeyboardController *currentWindow;
+@property (weak, nonatomic) UKKeyboardDocument *currentBundle;
 
 + (InspectorWindowController *)getInstance;
 - (IBAction)generateID:(id)sender;

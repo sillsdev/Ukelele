@@ -30,7 +30,7 @@
 }
 
 + (AskSwapKeysWindowController *)askSwapKeysWindowController {
-	return [[[self alloc] initWithWindowNibName:@"AskSwapKeyCodesWindow"] autorelease];
+	return [[self alloc] initWithWindowNibName:@"AskSwapKeyCodesWindow"];
 }
 
 - (void)windowDidLoad

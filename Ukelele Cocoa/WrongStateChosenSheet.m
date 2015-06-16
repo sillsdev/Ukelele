@@ -29,7 +29,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 + (WrongStateChosenSheet *)wrongStateChosenSheet
 {
-	return [[[WrongStateChosenSheet alloc] initWithWindowNibName:nibWindowName] autorelease];
+	return [[WrongStateChosenSheet alloc] initWithWindowNibName:nibWindowName];
 }
 
 - (void)beginInteractionForWindow:(NSWindow *)theWindow

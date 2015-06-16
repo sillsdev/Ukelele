@@ -23,7 +23,7 @@
 
 + (AskFromList *)askFromList
 {
-	return [[[AskFromList alloc] initWithWindowNibName:@"AskFromList"] autorelease];
+	return [[AskFromList alloc] initWithWindowNibName:@"AskFromList"];
 }
 
 - (void)beginAskFromListWithText:(NSString *)infoText

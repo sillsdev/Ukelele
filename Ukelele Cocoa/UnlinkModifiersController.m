@@ -32,7 +32,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 }
 
 + (UnlinkModifiersController *)unlinkModifiersController {
-	return [[[UnlinkModifiersController alloc] initWithWindowNibName:nibWindowName owner:self] autorelease];
+	return [[UnlinkModifiersController alloc] initWithWindowNibName:nibWindowName owner:self];
 }
 
 - (void)beginDialogWithWindow:(NSWindow *)window callback:(void (^)(NSNumber *))theCallback {

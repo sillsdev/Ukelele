@@ -61,11 +61,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.0</string>
+	<string>3.0b1</string>
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.0</string>
+	<string>3.0b1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -79,12 +79,12 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>org.sil.Ukelele.KeyboardInstallerTool</key>
-		<string>identifier &quot;org.sil.Ukelele.KeyboardInstallerTool&quot; and anchor apple generic and certificate leaf[subject.CN] = &quot;Mac Developer: John Brownie (85E2V6773Y)&quot; and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		<string>identifier "org.sil.Ukelele.KeyboardInstallerTool" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: John Brownie (85E2V6773Y)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 	</dict>
+	<key>SUFeedURL</key>
+	<string>https://dl.dropboxusercontent.com/u/60565698/Ukelele_appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
-	<key>SUFeedURL</key>
-	<string>http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&amp;format=file&amp;media_id=ukelele_su_feed&amp;filename=ukelele_su_feed.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

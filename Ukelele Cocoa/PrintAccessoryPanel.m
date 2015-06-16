@@ -22,7 +22,7 @@
 
 + (PrintAccessoryPanel *)printAccessoryPanel {
 	PrintAccessoryPanel *panel = [[PrintAccessoryPanel alloc] initWithNibName:@"PrintAccessoryPanel" bundle:nil];
-	return [panel autorelease];
+	return panel;
 }
 
 - (IBAction)toggleAllStates:(id)sender {

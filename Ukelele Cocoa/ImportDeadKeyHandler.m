@@ -36,7 +36,7 @@
 }
 
 + (ImportDeadKeyHandler *)importDeadKeyHandler {
-	return [[[ImportDeadKeyHandler alloc] init] autorelease];
+	return [[ImportDeadKeyHandler alloc] init];
 }
 
 - (void)beginInteractionForWindow:(UKKeyboardController *)theDocumentWindow {
@@ -101,12 +101,9 @@
 		NSError *readError;
 		if ([bundleDocument readFromFileWrapper:fileWrapper ofType:(NSString *)kUTTypeBundle error:&readError]) {
 				// It reads OK
-			[fileWrapper release];
-			return [bundleDocument autorelease];
+			return bundleDocument;
 		}
-		[fileWrapper release];
 	}
-	[bundleDocument release];
 	return nil;
 }
 
@@ -119,7 +116,7 @@
 		UKKeyboardController *keyboardWindow = [docInfo keyboardController];
 		if (keyboardWindow == nil) {
 			UkeleleKeyboardObject *obj = [docInfo keyboardObject];
-			keyboardWindow = [[[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"] autorelease];
+			keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 			[keyboardWindow setKeyboardLayout:obj];
 		}
 		[self handleDocument:keyboardWindow];
@@ -142,7 +139,7 @@
 			UKKeyboardController *keyboardWindow = [info keyboardController];
 			if (keyboardWindow == nil) {
 				UkeleleKeyboardObject *obj = [info keyboardObject];
-				keyboardWindow = [[[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"] autorelease];
+				keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 				[keyboardWindow setKeyboardLayout:obj];
 			}
 			[self handleDocument:keyboardWindow];
@@ -176,13 +173,11 @@
 		NSAlert *alert = [NSAlert alertWithError:theError];
 		[alert runModal];
 		[self interactionCompleted];
-		[theDocument release];
 		return;
 	}
 	UKKeyboardController *keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
 	[keyboardWindow setKeyboardLayout:[theDocument keyboardLayout]];
-	[theDocument autorelease];
-	[self handleDocument:[keyboardWindow autorelease]];
+	[self handleDocument:keyboardWindow];
 }
 
 - (void)handleDocument:(UKKeyboardController *)theDocumentWindow {

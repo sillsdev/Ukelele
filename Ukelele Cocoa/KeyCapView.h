@@ -29,15 +29,15 @@
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL small;
 @property (nonatomic) BOOL dragHighlight;
-@property (nonatomic, assign) NSColor *currentTextColour;
+@property (nonatomic, weak) NSColor *currentTextColour;
 @property (nonatomic, assign) CTParagraphStyleRef largeCTStyle;
 @property (nonatomic, assign) CTParagraphStyleRef smallCTStyle;
 @property (nonatomic) CTFontRef largeCTFont;
 @property (nonatomic) CTFontRef smallCTFont;
 @property (nonatomic, strong) NSDictionary *largeAttributes;
 @property (nonatomic, strong) NSDictionary *smallAttributes;
-@property (nonatomic, assign) id<UKMenuDelegate> menuDelegate;
-@property (nonatomic, assign) IBOutlet id<UKKeyCapClick> clickDelegate;
+@property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;
+@property (nonatomic, weak) IBOutlet id<UKKeyCapClick> clickDelegate;
 
 - (NSRect)boundingRect;
 - (NSRect)insideRect;

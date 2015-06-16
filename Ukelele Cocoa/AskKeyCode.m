@@ -25,7 +25,7 @@ static NSString *nibWindowName = @"AskKeyCode";
 
 + (AskKeyCode *)askKeyCode
 {
-	return [[[AskKeyCode alloc] initWithWindowNibName:nibWindowName] autorelease];
+	return [[AskKeyCode alloc] initWithWindowNibName:nibWindowName];
 }
 
 - (void)beginDialogForWindow:(NSWindow *)theWindow

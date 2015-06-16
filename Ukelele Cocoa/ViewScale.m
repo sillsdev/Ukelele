@@ -16,7 +16,7 @@
 	ViewScale *viewScale = [[ViewScale alloc] init];
 	[viewScale setScaleLabel:label];
 	[viewScale setScaleValue:value];
-	return [viewScale autorelease];
+	return viewScale;
 }
 
 + (NSMutableArray *)standardScales

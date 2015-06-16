@@ -36,7 +36,7 @@
 }
 
 + (EditKeyWindowController *)editKeyWindowController {
-	return [[[EditKeyWindowController alloc] initWithWindowNibName:@"EditKeyWindow"] autorelease];
+	return [[EditKeyWindowController alloc] initWithWindowNibName:@"EditKeyWindow"];
 }
 
 - (void)beginInteractionForWindow:(NSWindow *)parentWindow withData:(NSDictionary *)dataDict action:(void (^)(NSDictionary *))theCallback {

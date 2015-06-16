@@ -214,10 +214,6 @@
 		52BBED13191B4C3900E48394 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED11191B4C3900E48394 /* Credits.rtf */; };
 		52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1A191B4C3900E48394 /* MainMenu.xib */; };
 		52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1D191B4C3900E48394 /* Images.xcassets */; };
-		52BBED25191B4C3900E48394 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED24191B4C3900E48394 /* XCTest.framework */; };
-		52BBED26191B4C3900E48394 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BBED02191B4C3900E48394 /* Cocoa.framework */; };
-		52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED2C191B4C3900E48394 /* InfoPlist.strings */; };
-		52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */; };
 		52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED3E191B50B700E48394 /* Ukelele.icns */; };
 		52BEADEC192484A6008A3314 /* AskText.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEB192484A6008A3314 /* AskText.xib */; };
 		52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEF1924856F008A3314 /* AskYesNo.xib */; };
@@ -242,13 +238,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		52BBED27191B4C3900E48394 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 52BBECF7191B4C3900E48394 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 52BBECFE191B4C3900E48394;
-			remoteInfo = "Ukelele Cocoa";
-		};
 		52E1EEFF19662813007B6738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 52BBECF7191B4C3900E48394 /* Project object */;
@@ -593,7 +582,6 @@
 		52BBED12191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		52BBED1B191B4C3900E48394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		52BBED1D191B4C3900E48394 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		52BBED23191B4C3900E48394 /* UkeleleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UkeleleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BBED24191B4C3900E48394 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		52BBED2B191B4C3900E48394 /* UkeleleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UkeleleTests-Info.plist"; sourceTree = "<group>"; };
 		52BBED2D191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -651,15 +639,6 @@
 				523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */,
 				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		52BBED20191B4C3900E48394 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				52BBED26191B4C3900E48394 /* Cocoa.framework in Frameworks */,
-				52BBED25191B4C3900E48394 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,7 +875,6 @@
 			isa = PBXGroup;
 			children = (
 				52BBECFF191B4C3900E48394 /* Ukelele.app */,
-				52BBED23191B4C3900E48394 /* UkeleleTests.xctest */,
 				523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */,
 			);
@@ -1247,24 +1225,6 @@
 			productReference = 52BBECFF191B4C3900E48394 /* Ukelele.app */;
 			productType = "com.apple.product-type.application";
 		};
-		52BBED22191B4C3900E48394 /* UkeleleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "UkeleleTests" */;
-			buildPhases = (
-				52BBED1F191B4C3900E48394 /* Sources */,
-				52BBED20191B4C3900E48394 /* Frameworks */,
-				52BBED21191B4C3900E48394 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				52BBED28191B4C3900E48394 /* PBXTargetDependency */,
-			);
-			name = UkeleleTests;
-			productName = "Ukelele CocoaTests";
-			productReference = 52BBED23191B4C3900E48394 /* UkeleleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1280,9 +1240,6 @@
 					};
 					52BBECFE191B4C3900E48394 = {
 						DevelopmentTeam = 3V2DRMTWC4;
-					};
-					52BBED22191B4C3900E48394 = {
-						TestTargetID = 52BBECFE191B4C3900E48394;
 					};
 				};
 			};
@@ -1300,7 +1257,6 @@
 			projectRoot = "";
 			targets = (
 				52BBECFE191B4C3900E48394 /* Ukelele */,
-				52BBED22191B4C3900E48394 /* UkeleleTests */,
 				523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */,
 				5277EB621AAE844600C471C3 /* Ukelele Quick Look Generator */,
 			);
@@ -1376,14 +1332,6 @@
 				528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */,
 				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
 				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		52BBED21191B4C3900E48394 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				52BBED2E191B4C3900E48394 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1571,22 +1519,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		52BBED1F191B4C3900E48394 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				52BBED30191B4C3900E48394 /* Ukelele_CocoaTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		52BBED28191B4C3900E48394 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 52BBECFE191B4C3900E48394 /* Ukelele */;
-			targetProxy = 52BBED27191B4C3900E48394 /* PBXContainerItemProxy */;
-		};
 		52E1EF0019662813007B6738 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 523B0204191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */;
@@ -1633,6 +1568,8 @@
 		523B020F191D8C3100E06DF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "org.sil.Ukelele.KeyboardInstallerTool/org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch";
@@ -1659,6 +1596,8 @@
 		523B0210191D8C3100E06DF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "org.sil.Ukelele.KeyboardInstallerTool/org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch";
@@ -1681,6 +1620,8 @@
 		5277EB6E1AAE844600C471C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1702,6 +1643,8 @@
 		5277EB6F1AAE844600C471C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1798,7 +1741,9 @@
 		52BBED34191B4C3900E48394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1823,7 +1768,9 @@
 		52BBED35191B4C3900E48394 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1841,46 +1788,6 @@
 				PRODUCT_NAME = Ukelele;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		52BBED37191B4C3900E48394 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ukelele Cocoa.app/Contents/MacOS/Ukelele Cocoa";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Ukelele CocoaTests/UkeleleTests-Info.plist";
-				PRODUCT_NAME = UkeleleTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		52BBED38191B4C3900E48394 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ukelele Cocoa.app/Contents/MacOS/Ukelele Cocoa";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele Cocoa-Prefix.pch";
-				INFOPLIST_FILE = "Ukelele CocoaTests/UkeleleTests-Info.plist";
-				PRODUCT_NAME = UkeleleTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -1919,15 +1826,6 @@
 			buildConfigurations = (
 				52BBED34191B4C3900E48394 /* Debug */,
 				52BBED35191B4C3900E48394 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		52BBED36191B4C3900E48394 /* Build configuration list for PBXNativeTarget "UkeleleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				52BBED37191B4C3900E48394 /* Debug */,
-				52BBED38191B4C3900E48394 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

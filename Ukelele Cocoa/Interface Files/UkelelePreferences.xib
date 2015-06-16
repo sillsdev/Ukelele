@@ -342,7 +342,6 @@
                             </menu>
                         </popUpButtonCell>
                         <connections>
-                            <binding destination="siP-e5-9bz" name="enabled" keyPath="automaticallyChecksForUpdates" id="r1g-Pa-jTK"/>
                             <binding destination="siP-e5-9bz" name="selectedTag" keyPath="updateCheckInterval" id="7zD-1A-FfJ"/>
                         </connections>
                     </popUpButton>

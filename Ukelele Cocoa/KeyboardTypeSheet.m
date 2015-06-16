@@ -39,7 +39,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 + (KeyboardTypeSheet *)createKeyboardTypeSheet
 {
-	return [[[KeyboardTypeSheet alloc] initWithWindowNibName:nibWindowName owner:self] autorelease];
+	return [[KeyboardTypeSheet alloc] initWithWindowNibName:nibWindowName owner:self];
 }
 
 - (IBAction)acceptChoice:(id)sender

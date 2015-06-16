@@ -27,7 +27,7 @@
 }
 
 + (UKNewKeyboardLayoutController *)createController {
-	return [[[UKNewKeyboardLayoutController alloc] initWithWindowNibName:@"NewKeyboardLayout"] autorelease];
+	return [[UKNewKeyboardLayoutController alloc] initWithWindowNibName:@"NewKeyboardLayout"];
 }
 
 - (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *, BaseLayoutTypes, CommandLayoutTypes, CapsLockLayoutTypes))completion {

@@ -14,7 +14,7 @@
 	IBOutlet NSButton *allModifiers;
 }
 
-@property (assign) UKKeyboardPrintView *printView;
+@property (weak) UKKeyboardPrintView *printView;
 
 + (PrintAccessoryPanel *)printAccessoryPanel;
 

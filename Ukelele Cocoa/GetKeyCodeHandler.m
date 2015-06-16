@@ -23,7 +23,7 @@
 }
 
 + (GetKeyCodeHandler *)getKeyCodeHandler {
-	return [[[GetKeyCodeHandler alloc] init] autorelease];
+	return [[GetKeyCodeHandler alloc] init];
 }
 
 - (void)beginInteractionWithCompletion:(void (^)(NSInteger))completionBlock {

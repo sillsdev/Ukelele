@@ -548,7 +548,7 @@ WhenElementSet::AddToXML(NSXMLElement *inTree) {
 		WhenElement *whenElement = *pos;
 		if (whenElement->GetState() != kStateNone) {
 				// Get the XML tree for the when element and add it
-			[inTree addChild:[whenElement->CreateXMLNode() autorelease]];
+			[inTree addChild:whenElement->CreateXMLNode()];
 				// Add comments (deleting duplicates on the fly)
 			whenElement->RemoveDuplicateComments();
 			whenElement->AddCommentsToXML(inTree);

@@ -35,7 +35,7 @@
 }
 
 + (UKAskYesNoController *)askYesNoController {
-	return [[[UKAskYesNoController alloc] initWithWindowNibName:@"AskYesNo"] autorelease];
+	return [[UKAskYesNoController alloc] initWithWindowNibName:@"AskYesNo"];
 }
 
 - (void)askQuestion:(NSString *)theQuestion forWindow:(NSWindow *)theWindow completion:(void (^)(BOOL))theBlock {

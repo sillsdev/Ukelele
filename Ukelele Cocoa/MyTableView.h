@@ -11,6 +11,6 @@
 
 @interface MyTableView : NSTableView
 
-@property (assign) NSWindowController *windowController;
+@property (weak) NSWindowController *windowController;
 
 @end

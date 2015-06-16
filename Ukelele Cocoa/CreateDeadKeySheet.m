@@ -37,7 +37,7 @@ static NSString *windowName = @"CreateDeadKey";
 
 + (CreateDeadKeySheet *)createDeadKeySheet
 {
-	return [[[CreateDeadKeySheet alloc] initWithWindowNibName:windowName] autorelease];
+	return [[CreateDeadKeySheet alloc] initWithWindowNibName:windowName];
 }
 
 - (void)beginCreateDeadKeySheet:(UkeleleKeyboardObject *)keyboardLayout
@@ -54,7 +54,7 @@ static NSString *windowName = @"CreateDeadKey";
 	NSMutableArray *stateArray = [[keyboardObject stateNamesNotInSet:stateSet] mutableCopy];
 	[self.deadKeyState removeAllItems];
 	[stateArray insertObject:[keyboardObject uniqueStateName] atIndex:0];
-	[self.deadKeyState addItemsWithObjectValues:[stateArray autorelease]];
+	[self.deadKeyState addItemsWithObjectValues:stateArray];
 	[self.deadKeyState selectItemAtIndex:0];
 	[self.badKeyCodeMessage setStringValue:@""];
 	NSString *baseStateName = [keyboardObject uniqueStateName];

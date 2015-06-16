@@ -32,7 +32,7 @@
 
 + (ReplaceNameSheet *)createReplaceNameSheet
 {
-	return [[[ReplaceNameSheet alloc] initWithWindowNibName:@"ReplaceNameSheet"] autorelease];
+	return [[ReplaceNameSheet alloc] initWithWindowNibName:@"ReplaceNameSheet"];
 }
 
 - (void)beginReplaceNameSheetWithText:(NSString *)infoText

@@ -52,7 +52,7 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 }
 
 + (ColourThemeEditorController *)colourThemeEditorController {
-	return [[[ColourThemeEditorController alloc] initWithWindowNibName:@"ColourThemeEditor"] autorelease];
+	return [[ColourThemeEditorController alloc] initWithWindowNibName:@"ColourThemeEditor"];
 }
 
 //- (void)startEditingTheme:(ColourTheme *)colourTheme

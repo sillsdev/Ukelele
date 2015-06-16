@@ -1593,10 +1593,9 @@ NSDictionary *sStandardKeyMapList;
 			break;
 	}
 	if ([resultString length] > 0) {
-		return [resultString autorelease];
+		return resultString;
 	}
-	[resultString release];
-	return [[[NSMutableAttributedString alloc] initWithString:@""] autorelease];
+	return [[NSMutableAttributedString alloc] initWithString:@""];
 }
 
 + (unsigned int)getKeyboardLayoutType:(int)keyboardID

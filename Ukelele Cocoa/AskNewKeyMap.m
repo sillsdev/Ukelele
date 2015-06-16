@@ -36,7 +36,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 + (AskNewKeyMap *)askNewKeyMap
 {
-	return [[[AskNewKeyMap alloc] initWithWindowNibName:nibWindowName] autorelease];
+	return [[AskNewKeyMap alloc] initWithWindowNibName:nibWindowName];
 }
 
 - (void)beginNewKeyMapWithText:(NSString *)informationText

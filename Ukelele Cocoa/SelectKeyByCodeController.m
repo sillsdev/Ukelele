@@ -31,7 +31,7 @@
 }
 
 + (SelectKeyByCodeController *)selectKeyByCodeController {
-	return [[[SelectKeyByCodeController alloc] initWithWindowNibName:@"SelectKeyByCodeSheet"] autorelease];
+	return [[SelectKeyByCodeController alloc] initWithWindowNibName:@"SelectKeyByCodeSheet"];
 }
 
 - (void)windowDidLoad

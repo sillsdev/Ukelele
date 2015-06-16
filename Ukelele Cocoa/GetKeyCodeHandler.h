@@ -12,7 +12,7 @@
 
 @interface GetKeyCodeHandler : NSObject<UKInteractionHandler>
 
-@property (assign, nonatomic) id<UKInteractionCompletion> completionTarget;
+@property (weak, nonatomic) id<UKInteractionCompletion> completionTarget;
 
 + (GetKeyCodeHandler *)getKeyCodeHandler;
 

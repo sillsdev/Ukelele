@@ -29,7 +29,7 @@ static NSString *windowName = @"AskTextSheet";
 + (AskTextSheet *)askTextSheet
 {
 	AskTextSheet *theSheet = [[AskTextSheet alloc] initWithWindowNibName:windowName];
-	return [theSheet autorelease];
+	return theSheet;
 }
 
 - (void)beginAskText:(NSString *)theMajorText

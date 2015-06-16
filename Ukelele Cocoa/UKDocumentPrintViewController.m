@@ -20,7 +20,7 @@
 }
 
 + (UKDocumentPrintViewController *)documentPrintViewController {
-	return [[[UKDocumentPrintViewController alloc] initWithNibName:@"UKDocumentPrintView" bundle:nil] autorelease];
+	return [[UKDocumentPrintViewController alloc] initWithNibName:@"UKDocumentPrintView" bundle:nil];
 }
 
 @end

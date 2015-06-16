@@ -29,7 +29,7 @@
 	[result setKeyboardLayoutFile:keyboard];
 	[result setIconFile:icon];
 	[result setLanguageCode:language];
-	return [result autorelease];
+	return result;
 }
 
 - (instancetype)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type {

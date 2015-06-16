@@ -19,10 +19,10 @@
 
 @interface LanguageRegistry : NSObject
 
-@property (readonly) NSArray *languageList;
-@property (readonly) NSArray *scriptList;
-@property (readonly) NSArray *regionList;
-@property (readonly) NSArray *variantList;
+@property (weak, readonly) NSArray *languageList;
+@property (weak, readonly) NSArray *scriptList;
+@property (weak, readonly) NSArray *regionList;
+@property (weak, readonly) NSArray *variantList;
 
 + (LanguageRegistry *)getInstance;
 

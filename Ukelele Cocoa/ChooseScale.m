@@ -35,7 +35,7 @@ static const double kMaxValidValue = 500.0;
 
 + (ChooseScale *)makeChooseScale
 {
-    return [[[ChooseScale alloc] initWithWindowNibName:@"ChooseScale"] autorelease];
+    return [[ChooseScale alloc] initWithWindowNibName:@"ChooseScale"];
 }
 
 - (void)beginChooseScale:(double)initialValue

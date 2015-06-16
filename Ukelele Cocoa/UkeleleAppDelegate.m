@@ -183,7 +183,7 @@ static NSDictionary *defaultValues() {
         err = AuthorizationMakeExternalForm(self->_authRef, &extForm);
     }
     if (err == errAuthorizationSuccess) {
-        self.authorization = [[[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)] autorelease];
+        self.authorization = [[NSData alloc] initWithBytes:&extForm length:sizeof(extForm)];
     }
     assert(err == errAuthorizationSuccess);
     
@@ -284,7 +284,7 @@ static NSDictionary *defaultValues() {
 {
     assert([NSThread isMainThread]);
     if (self.helperToolConnection == nil) {
-        self.helperToolConnection = [[[NSXPCConnection alloc] initWithMachServiceName:kHelperToolMachServiceName options:NSXPCConnectionPrivileged] autorelease];
+        self.helperToolConnection = [[NSXPCConnection alloc] initWithMachServiceName:kHelperToolMachServiceName options:NSXPCConnectionPrivileged];
         self.helperToolConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(KeyboardInstallerProtocol)];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"

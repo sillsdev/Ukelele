@@ -25,7 +25,7 @@
 }
 
 + (ScriptInfo *)scriptWithName:(NSString *)theName script:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID {
-	return [[[ScriptInfo alloc] initWithName:theName scriptID:ID minID:minimumID maxID:maximumID] autorelease];
+	return [[ScriptInfo alloc] initWithName:theName scriptID:ID minID:minimumID maxID:maximumID];
 }
 
 + (NSArray *)standardScripts

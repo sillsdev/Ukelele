@@ -28,11 +28,11 @@ typedef void * UkeleleKeyboard;
 @interface UkeleleKeyboardObject : NSObject<NSCopying>
 
 @property (readonly) UkeleleKeyboard *keyboard;
-@property (assign) id<UkeleleDocumentDelegate> delegate;
+@property (weak) id<UkeleleDocumentDelegate> delegate;
 @property (nonatomic) NSInteger keyboardGroup;
 @property (nonatomic) NSInteger keyboardID;
 @property (nonatomic, strong) NSString *keyboardName;
-@property (assign) NSWindowController *parentController;
+@property (weak) NSWindowController *parentController;
 
 - (id)initWithName:(NSString *)keyboardName;
 - (id)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout;

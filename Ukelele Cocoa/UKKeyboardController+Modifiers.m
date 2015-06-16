@@ -71,7 +71,7 @@
     ModifiersInfo *modifiersInfo = internalState[kStateModifiersInfo];
     if (modifiersInfo == nil) {
         modifiersInfo = [[ModifiersInfo alloc] init];
-        internalState[kStateModifiersInfo] = [modifiersInfo autorelease];
+        internalState[kStateModifiersInfo] = modifiersInfo;
     }
 	[modifiersInfo setShiftValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelShift]];
 	[modifiersInfo setCapsLockValue:[self.modifiersDataSource modifierValueForRow:selectedRow column:kLabelCapsLock]];
@@ -122,7 +122,7 @@
     ModifiersInfo *modifiersInfo = internalState[kStateModifiersInfo];
     if (modifiersInfo == nil) {
         modifiersInfo = [[ModifiersInfo alloc] init];
-        internalState[kStateModifiersInfo] = [modifiersInfo autorelease];
+        internalState[kStateModifiersInfo] = modifiersInfo;
     }
 	if (selectedRow != -1) {
 		[modifiersInfo setExistingOrNewValue:kModifiersSameIndex];

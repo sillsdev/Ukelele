@@ -28,7 +28,7 @@
 }
 
 + (IntendedLanguageSheet *)intendedLanguageSheet {
-	return [[[IntendedLanguageSheet alloc] initWithWindowNibName:@"IntendedLanguageSheet"] autorelease];
+	return [[IntendedLanguageSheet alloc] initWithWindowNibName:@"IntendedLanguageSheet"];
 }
 
 
@@ -342,7 +342,7 @@
 		LanguageRegistryEntry *variantEntry = variantList[selectionIndex];
 		[languageCode setVariantCode:[variantEntry code]];
 	}
-	return [languageRegistry normaliseLanguageCode:[languageCode autorelease]];
+	return [languageRegistry normaliseLanguageCode:languageCode];
 }
 
 @end

@@ -28,7 +28,7 @@
 }
 
 + (AskCommentController *)askCommentController {
-	return [[[AskCommentController alloc] initWithWindowNibName:@"AskCommentSheet"] autorelease];
+	return [[AskCommentController alloc] initWithWindowNibName:@"AskCommentSheet"];
 }
 
 - (void)windowDidLoad

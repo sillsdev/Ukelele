@@ -14,7 +14,7 @@
 
 @interface UKKeyStrokeLookupInteractionHandler : NSObject<UKInteractionHandler>
 
-@property (assign) id<UKInteractionCompletion> completionTarget;
+@property (weak) id<UKInteractionCompletion> completionTarget;
 
 - (void)beginInteractionWithKeyboard:(UKKeyboardController *)theKeyboard;
 

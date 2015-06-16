@@ -30,7 +30,7 @@
 }
 
 + (HandleDeadKeyController *)handleDeadKeyController {
-	return [[[HandleDeadKeyController alloc] initWithWindowNibName:@"HandleDeadKeySheet"] autorelease];
+	return [[HandleDeadKeyController alloc] initWithWindowNibName:@"HandleDeadKeySheet"];
 }
 
 - (HandleDeadKeyType)typeForTab:(NSString *)tabIdentifier {
@@ -64,7 +64,7 @@
 	[stateNames removeObjectIdenticalTo:theState];
 	[stateNames removeObjectIdenticalTo:nextState];
 	[self.statePopup removeAllItems];
-	[self.statePopup addItemsWithObjectValues:[stateNames autorelease]];
+	[self.statePopup addItemsWithObjectValues:stateNames];
 	[self.statePopup selectItemWithObjectValue:nextState];
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }

@@ -32,7 +32,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	[result setKeyboardDescription:theDescription];
 	[result setKeyboardCodings:theCodings];
 	[result setKeyboardResourceIDs:theIDs];
-	return [result autorelease];
+	return result;
 }
 
 @end
@@ -58,7 +58,6 @@ NSString *kKeyCodingIndex = @"codingIndex";
 		for (NSString *theKey in [resourceDict allKeys]) {
 			[resourceIDs addObject:[theFormatter numberFromString:theKey]];
 		}
-		[theFormatter release];
 		
 			// Go through the list and pick out the basic types
 		resourceSet = resourceIDs;

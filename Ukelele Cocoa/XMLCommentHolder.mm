@@ -55,7 +55,7 @@ void
 XMLComment::AddCommentToXML(NSXMLElement *xmlTree) {
 	NSXMLElement *commentElement = [[NSXMLElement alloc] initWithKind:NSXMLCommentKind];
 	[commentElement setStringValue:ToNS(mComment)];
-	[xmlTree addChild:[commentElement autorelease]];
+	[xmlTree addChild:commentElement];
 }
 
 void XMLComment::SetHolder(XMLCommentHolder *inHolder)

@@ -36,14 +36,14 @@
 }
 
 + (CreateSelectedDeadKeyController *)createSelectedDeadKeyController {
-	return [[[CreateSelectedDeadKeyController alloc] initWithWindowNibName:theNibName] autorelease];
+	return [[CreateSelectedDeadKeyController alloc] initWithWindowNibName:theNibName];
 }
 
 - (void)runSheetForWindow:(NSWindow *)parentWindow keyboard:(UkeleleKeyboardObject *)keyboardObject keyCode:(NSInteger)keyCode targetState:(NSString *)targetState completionBlock:(void (^)(NSDictionary *))callback {
 #pragma unused(keyCode)
 	NSMutableArray *states = [[keyboardObject stateNamesExcept:kStateNameNone] mutableCopy];
 	[states insertObject:[keyboardObject uniqueStateName] atIndex:0];
-	self.stateNames = [states autorelease];
+	self.stateNames = states;
 	completionBlock = callback;
 	[self.stateField removeAllItems];
 	[self.stateField addItemsWithObjectValues:self.stateNames];

@@ -41,7 +41,7 @@ static CGAffineTransform kTextTransform = {
 										 options:NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
 										   owner:self
 										userInfo:nil];
-		[self addTrackingArea:[trackingArea autorelease]];
+		[self addTrackingArea:trackingArea];
         _largeAttributes = nil;
         _smallAttributes = nil;
         textStorage = nil;
@@ -71,7 +71,6 @@ static CGAffineTransform kTextTransform = {
 		CFRelease(_largeCTFont);
 	}
 	[self clearFrame];
-	[super dealloc];
 }
 
 - (BOOL)isFlipped {
@@ -280,7 +279,7 @@ static CGAffineTransform kTextTransform = {
 				formatString = @"%C";
 			}
 			charString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:formatString, theChar]];
-			[displayText appendAttributedString:[charString autorelease]];
+			[displayText appendAttributedString:charString];
 		}
 	}
 	[self clearFrame];
@@ -383,13 +382,11 @@ static CGAffineTransform kTextTransform = {
 		case gradientTypeLinear:
 			colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 			[colourGradient drawInRect:boundingRect angle:90];
-			[colourGradient release];
 			break;
 			
 		case gradientTypeRadial:
 			colourGradient = [[NSGradient alloc] initWithStartingColor:innerColour endingColor:outerColour];
 			[colourGradient drawInRect:boundingRect relativeCenterPosition:NSZeroPoint];
-			[colourGradient release];
 			break;
 			
 		default:
