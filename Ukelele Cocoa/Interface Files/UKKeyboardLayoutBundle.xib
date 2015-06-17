@@ -66,13 +66,13 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="29" id="fge-eN-MtD"/>
                         </constraints>
-                        <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="eL5-gG-4lb" id="Q7e-TI-Ta7">
+                        <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="Q7e-TI-Ta7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="ZXs-gW-Moh">
                                 <items>
                                     <menuItem state="on" image="NSAddTemplate" hidden="YES" id="pT0-Rp-TrO"/>
-                                    <menuItem title="Standard Keyboard Layout" id="Jae-gt-8aR">
+                                    <menuItem title="Standard Keyboard Layout…" id="Jae-gt-8aR">
                                         <connections>
                                             <action selector="addKeyboardLayout:" target="-1" id="owp-WK-pWr"/>
                                         </connections>

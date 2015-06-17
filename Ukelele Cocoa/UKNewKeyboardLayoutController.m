@@ -18,7 +18,7 @@
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
-	[[NSBundle mainBundle] loadNibNamed:@"NewKeyboardLayout" owner:self topLevelObjects:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"NewKeyboardDialog" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];
     if (self) {
         // Initialization code here.

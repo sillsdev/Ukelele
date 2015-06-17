@@ -103,6 +103,58 @@
 
 @end
 
+@interface UKIntervalTransformer : NSValueTransformer
+
+@end
+
+@implementation UKIntervalTransformer
+
++ (Class)transformedValueClass {
+	return [NSString class];
+}
+
++ (BOOL)allowsReverseTransformation {
+	return YES;
+}
+
+#define DailySeconds	60 * 60 * 24
+#define WeeklySeconds	DailySeconds * 7
+#define MonthlySeconds	DailySeconds * 30
+#define DailyString		@"Daily"
+#define WeeklyString	@"Weekly"
+#define MonthlyString	@"Monthly"
+
+- (id)transformedValue:(id)value {
+	NSInteger secondsValue = [value integerValue];
+	NSString *stringValue = @"";
+	if (secondsValue == DailySeconds) {
+		stringValue = @"Daily";
+	}
+	else if (secondsValue == WeeklySeconds) {
+		stringValue = @"Weekly";
+	}
+	else if (secondsValue == MonthlySeconds) {
+		stringValue = @"Monthly";
+	}
+	return stringValue;
+}
+
+- (id)reverseTransformedValue:(id)value {
+	NSInteger secondsValue = 0;
+	if ([value isEqualToString:DailyString]) {
+		secondsValue = DailySeconds;
+	}
+	else if ([value isEqualToString:WeeklyString]) {
+		secondsValue = WeeklySeconds;
+	}
+	else if ([value isEqualToString:MonthlyString]) {
+		secondsValue = MonthlySeconds;
+	}
+	return @(secondsValue);
+}
+
+@end
+
 @interface UkelelePreferenceController ()
 @property (strong) NSMutableArray *scalesList;
 @end

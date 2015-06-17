@@ -330,19 +330,24 @@
                     </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xn1-gw-MiG">
                         <rect key="frame" x="353" y="53" width="130" height="26"/>
-                        <popUpButtonCell key="cell" type="push" title="Monthly" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Oei-VM-iYA" id="eRI-YQ-sYj">
+                        <popUpButtonCell key="cell" type="push" title="Daily" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="L1i-P5-pWb" id="eRI-YQ-sYj">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="O3S-Xx-Ezn">
                                 <items>
-                                    <menuItem title="Monthly" state="on" id="Oei-VM-iYA"/>
+                                    <menuItem title="Monthly" id="Oei-VM-iYA"/>
                                     <menuItem title="Weekly" id="Qfa-0Q-Zwm"/>
-                                    <menuItem title="Daily" id="L1i-P5-pWb"/>
+                                    <menuItem title="Daily" state="on" id="L1i-P5-pWb"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                         <connections>
-                            <binding destination="siP-e5-9bz" name="selectedTag" keyPath="updateCheckInterval" id="7zD-1A-FfJ"/>
+                            <binding destination="siP-e5-9bz" name="enabled" keyPath="automaticallyChecksForUpdates" id="cMp-CI-1Ri"/>
+                            <binding destination="siP-e5-9bz" name="selectedValue" keyPath="updateCheckInterval" id="hlz-cA-D4s">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">UKIntervalTransformer</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </popUpButton>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j0p-4J-Ura">

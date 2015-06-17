@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NewKeyboardDialogController">
+        <customObject id="-2" userLabel="File's Owner" customClass="UKNewKeyboardLayoutController">
             <connections>
-                <outlet property="commandKeyLayout" destination="Gu8-zk-Jtl" id="k3w-1T-PwV"/>
+                <outlet property="baseLayoutPopup" destination="MXT-Xl-Ojp" id="mGt-AY-ScA"/>
+                <outlet property="capsLockLayoutPopup" destination="yVn-Hs-ZfJ" id="osG-Gc-DEk"/>
+                <outlet property="commandLayoutPopup" destination="Gu8-zk-Jtl" id="lfc-Bl-KVS"/>
                 <outlet property="keyboardName" destination="tNB-Vc-yVM" id="oYd-J2-tVi"/>
-                <outlet property="keyboardScript" destination="MXT-Xl-Ojp" id="xev-Aj-tO7"/>
-                <outlet property="keyboardType" destination="yVn-Hs-ZfJ" id="ZPf-iD-bnR"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="AXI-bM-kmd"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="358" height="177"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <rect key="contentRect" x="196" y="240" width="413" height="278"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="358" height="177"/>
+                <rect key="frame" x="0.0" y="0.0" width="413" height="278"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-ro-Kwa">
+                        <rect key="frame" x="18" y="134" width="377" height="94"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="I9d-Nz-uWF">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">To create a new keyboard layout, you need to choose what the base keyboard layout will be, that is, the output when no modifier keys are pressed. You can optionally have another keyboard layout when the caps lock key or the command key is pressed.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yed-Df-Y1F">
-                        <rect key="frame" x="18" y="137" width="45" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="18" y="238" width="45" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="W2w-Or-oCC">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -34,65 +43,15 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tNB-Vc-yVM">
-                        <rect key="frame" x="69" y="135" width="269" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Keyboard name" drawsBackground="YES" id="enJ-NH-Fr0">
+                        <rect key="frame" x="69" y="236" width="324" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Keyboard Layout Name" drawsBackground="YES" id="enJ-NH-Fr0">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fd2-rl-xgR">
-                        <rect key="frame" x="18" y="109" width="149" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Script:" id="lfQ-6a-auG">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MXT-Xl-Ojp">
-                        <rect key="frame" x="171" y="103" width="170" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oqC-yV-I8B" id="Zs2-65-dgF">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="LNm-cQ-0aO">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="oqC-yV-I8B"/>
-                                    <menuItem title="Item 2" id="cS0-m3-Ot6"/>
-                                    <menuItem title="Item 3" id="5YU-wj-5Dr"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyF-b7-Dst">
-                        <rect key="frame" x="18" y="83" width="149" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Initial keyboard layout:" id="CWS-9Z-0bU">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVn-Hs-ZfJ">
-                        <rect key="frame" x="171" y="77" width="170" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ymw-Jj-08o" id="kSz-hr-vB0">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="FpQ-nY-XrN">
-                                <items>
-                                    <menuItem title="Item 1" state="on" id="ymw-Jj-08o"/>
-                                    <menuItem title="Item 2" id="gUp-Ir-Ez6"/>
-                                    <menuItem title="Item 3" id="Bnf-cQ-v6l"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wEY-Ho-83n">
-                        <rect key="frame" x="262" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wEY-Ho-83n">
+                        <rect key="frame" x="317" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QAz-oe-m4X">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -101,12 +60,11 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ok:" target="-1" id="E1g-He-fSY"/>
+                            <action selector="acceptSelection:" target="-2" id="Q7Z-by-cZY"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spj-JA-CqC">
-                        <rect key="frame" x="185" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spj-JA-CqC">
+                        <rect key="frame" x="240" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FAr-X5-Igg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -115,38 +73,140 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="cancel:" target="-1" id="sMf-yd-IGP"/>
+                            <action selector="cancelSelection:" target="-2" id="Ha0-XU-F2l"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jj8-GP-Eun">
-                        <rect key="frame" x="22" y="56" width="145" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Command-key layout:" id="PmO-L1-kai">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fd2-rl-xgR">
+                        <rect key="frame" x="18" y="108" width="197" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Base keyboard layout:" id="lfQ-6a-auG">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gu8-zk-Jtl">
-                        <rect key="frame" x="171" y="51" width="170" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="EZv-lp-ITs" id="Xae-8Z-bGp">
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MXT-Xl-Ojp">
+                        <rect key="frame" x="226" y="102" width="170" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="165" id="FbW-Jw-RpB"/>
+                        </constraints>
+                        <popUpButtonCell key="cell" type="push" title="Empty" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oqC-yV-I8B" id="Zs2-65-dgF">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="j0C-sW-si9">
+                            <menu key="menu" title="OtherViews" id="LNm-cQ-0aO">
                                 <items>
-                                    <menuItem title="Item 1" state="on" id="EZv-lp-ITs"/>
-                                    <menuItem title="Item 2" id="gCa-OE-AcN"/>
-                                    <menuItem title="Item 3" id="j86-nX-1b1"/>
+                                    <menuItem title="Empty" state="on" id="oqC-yV-I8B"/>
+                                    <menuItem title="QWERTY" id="cS0-m3-Ot6"/>
+                                    <menuItem title="QWERTZ" id="5YU-wj-5Dr"/>
+                                    <menuItem title="AZERTY" id="pAY-eP-Sji">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Dvorak" id="zmD-Uw-mZN">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Colemak" id="JBP-Cr-S2j">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyF-b7-Dst">
+                        <rect key="frame" x="18" y="56" width="197" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Layout with caps lock key:" id="CWS-9Z-0bU">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yVn-Hs-ZfJ">
+                        <rect key="frame" x="226" y="50" width="170" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="165" id="MBn-dd-hRv"/>
+                        </constraints>
+                        <popUpButtonCell key="cell" type="push" title="Same as base" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ymw-Jj-08o" id="kSz-hr-vB0">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" title="OtherViews" id="FpQ-nY-XrN">
+                                <items>
+                                    <menuItem title="Same as base" state="on" id="ymw-Jj-08o"/>
+                                    <menuItem title="Empty" id="jYP-iD-xA9">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="QWERTY" id="gUp-Ir-Ez6"/>
+                                    <menuItem title="QWERTZ" id="Bnf-cQ-v6l"/>
+                                    <menuItem title="AZERTY" id="2ZX-UN-AAB">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Dvorak" id="qTn-aB-ZAg">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Colemak" id="sQw-yh-Dct">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gu8-zk-Jtl">
+                        <rect key="frame" x="226" y="76" width="170" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="165" id="I7z-9W-hKC"/>
+                        </constraints>
+                        <popUpButtonCell key="cell" type="push" title="Same as base" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="EZv-lp-ITs" id="Xae-8Z-bGp">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" title="OtherViews" id="j0C-sW-si9">
+                                <items>
+                                    <menuItem title="Same as base" state="on" id="EZv-lp-ITs">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Empty" id="vfU-Kn-ANF">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="QWERTY" id="gCa-OE-AcN"/>
+                                    <menuItem title="QWERTZ" id="j86-nX-1b1"/>
+                                    <menuItem title="AZERTY" id="a6W-re-aRH">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Dvorak" id="ft0-63-UK2">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Colemak" id="jTH-QX-6oZ">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jj8-GP-Eun">
+                        <rect key="frame" x="18" y="82" width="197" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Layout with command key:" id="PmO-L1-kai">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Gu8-zk-Jtl" firstAttribute="baseline" secondItem="Jj8-GP-Eun" secondAttribute="baseline" id="Te4-Yx-mVW"/>
+                    <constraint firstAttribute="bottom" secondItem="wEY-Ho-83n" secondAttribute="bottom" constant="20" id="3qd-wn-9zs"/>
+                    <constraint firstItem="MXT-Xl-Ojp" firstAttribute="top" secondItem="1pd-ro-Kwa" secondAttribute="bottom" constant="8" id="6Hw-gl-yam"/>
+                    <constraint firstItem="wEY-Ho-83n" firstAttribute="leading" secondItem="Spj-JA-CqC" secondAttribute="trailing" constant="7" id="6uT-VS-WCd"/>
+                    <constraint firstItem="Gu8-zk-Jtl" firstAttribute="baseline" secondItem="Jj8-GP-Eun" secondAttribute="baseline" id="BFd-LX-SSz"/>
+                    <constraint firstItem="MXT-Xl-Ojp" firstAttribute="baseline" secondItem="fd2-rl-xgR" secondAttribute="baseline" id="FBH-y4-GUU"/>
+                    <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="baseline" secondItem="lyF-b7-Dst" secondAttribute="baseline" id="Gwd-fS-XE3"/>
+                    <constraint firstAttribute="trailing" secondItem="wEY-Ho-83n" secondAttribute="trailing" constant="20" id="IDb-mr-IHL"/>
+                    <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="top" secondItem="Gu8-zk-Jtl" secondAttribute="bottom" constant="5" id="M4v-BK-vzK"/>
+                    <constraint firstItem="Gu8-zk-Jtl" firstAttribute="top" secondItem="MXT-Xl-Ojp" secondAttribute="bottom" constant="5" id="X8K-9F-D4W"/>
+                    <constraint firstAttribute="bottom" secondItem="Spj-JA-CqC" secondAttribute="bottom" constant="20" id="btM-0S-I18"/>
+                    <constraint firstAttribute="trailing" secondItem="yVn-Hs-ZfJ" secondAttribute="trailing" constant="20" id="d0C-dI-1Ch"/>
+                    <constraint firstItem="Gu8-zk-Jtl" firstAttribute="top" secondItem="MXT-Xl-Ojp" secondAttribute="bottom" constant="5" id="gwQ-Ip-TcK"/>
+                    <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="top" secondItem="Gu8-zk-Jtl" secondAttribute="bottom" constant="5" id="h9k-xF-RCq"/>
+                    <constraint firstAttribute="trailing" secondItem="MXT-Xl-Ojp" secondAttribute="trailing" constant="20" id="jw6-kY-j6l"/>
+                    <constraint firstAttribute="trailing" secondItem="Gu8-zk-Jtl" secondAttribute="trailing" constant="20" id="myf-pA-jjt"/>
+                    <constraint firstItem="Spj-JA-CqC" firstAttribute="top" secondItem="yVn-Hs-ZfJ" secondAttribute="bottom" constant="12" id="uOC-OK-4b0"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="460.5" y="438"/>
         </window>
     </objects>
 </document>
