@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"Simple Help Editor 5.0">
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8" />
+<title>Problems Using a Keyboard Layout</title>
+<link href="../styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="98%">
+<tr>
+<td>Alas, not everything works as you might hope! Sometimes there
+are problems in using a keyboard layout, and it is often hard to
+know what is happening.<br />
+<br />
+The first question to ask is whether the program you are using
+supports Unicode. The vast majority of programs do support it. Some
+older programs do not, and some have limited support. Often the
+developer can tell you whether a program will work with Unicode.
+The usual symptoms are either that the keyboard layout simply
+doesn’t work, or the characters produced are not what you expect,
+or that some characters don’t appear while others do.<br />
+<br />
+Mac OS X has had an annoying tendency, though it has been
+improving, of suddenly switching input sources without the user
+making the change. This might be when you switch applications, or
+even move between fields on a web form. The nastiest trick is when
+you tab into a password field in Safari, which may switch keyboard
+layouts to some standard such as US.<br />
+<br />
+Apple seems to privilege the system’s keyboard layouts. You must
+have at least one active, so you cannot just have your own keyboard
+layouts active. If the input source switches by itself, it will
+often be to one of the system’s keyboard layouts. Just keep an eye
+on the input menu if something appears to be going wrong. Also, the
+login window usually uses only Apple’s keyboard layouts.<br />
+<br />
+If you cannot find your keyboard layout in the International
+preference pane, there is a small possibility that there is an
+error in the XML format. The way to verify this is to look in the
+Console application to see if there is some message that mentions
+the string uchr, probably complaining about some error. If this is
+the case, please contact the developer at the email address in the
+Read Me file.<br />
+<br />
+Another issue that people see is when they try to change some keys
+in unusual ways. In particular, there what are referred to as the
+“special” keys, that is, ones that do no produce a regular
+character, such as the arrow keys, delete, help, and so on. Trying
+to change the output of these keys, or making another key behave
+like one of them, is not always supported. Some of Apple’s own
+applications do not support this. You are best off not trying this,
+or being sure that the application you use will work correctly.
+<p class="navlinks"><a href="100048.html">Previous
+page</a><span class="navlinks">&nbsp; &nbsp;
+&nbsp;</span><span class="navlinks"><a href="100046.html">Using a
+Keyboard Layout</a></span></p>
+</td>
+</tr>
+</table>
+</body>
+</html>

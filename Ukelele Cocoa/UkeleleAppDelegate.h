@@ -17,6 +17,7 @@
 - (IBAction)toggleStickyModifiers:(id)sender;
 - (IBAction)showHideInspector:(id)sender;
 - (IBAction)removeHelperTool:(id)sender;
+- (IBAction)openManual:(id)sender;
 
 - (void)connectAndExecuteCommandBlock:(void(^)(NSError *))commandBlock;
 - (BOOL)installHelperTool;

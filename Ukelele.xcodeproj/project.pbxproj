@@ -11,7 +11,10 @@
 		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
 		521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 521270E4194AD6E3003103CA /* UKKeyboardDocument.m */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
+		521B78F21B32BB0100946529 /* Ukelele Help.help in Resources */ = {isa = PBXBuildFile; fileRef = 521B78F11B32BB0100946529 /* Ukelele Help.help */; };
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
+		5224CD011B37C3A6004AB2B6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52897C451B20363400B5869D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
 		522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AB1953C8F3004F12AA /* dialogs.strings */; };
@@ -258,6 +261,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5224CCFF1B37C376004AB2B6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5224CD011B37C3A6004AB2B6 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		5227A40E196520E6004F35EA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,7 +300,9 @@
 		521270E4194AD6E3003103CA /* UKKeyboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UKKeyboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
 		52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLayoutInformation.m; sourceTree = "<group>"; };
+		521B78F11B32BB0100946529 /* Ukelele Help.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Ukelele Help.help"; sourceTree = "<group>"; };
 		521E5EA61926228000C45A4A /* InspectorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectorWindow.xib; path = "Interface Files/InspectorWindow.xib"; sourceTree = "<group>"; };
+		5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Ukelele Manual.pdf"; sourceTree = "<group>"; };
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
 		5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleBundleVersionSheet.xib; path = "Interface Files/UkeleleBundleVersionSheet.xib"; sourceTree = "<group>"; };
 		522C30AB1953C8F3004F12AA /* dialogs.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = dialogs.strings; sourceTree = "<group>"; };
@@ -928,6 +943,8 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
+				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				522C30AB1953C8F3004F12AA /* dialogs.strings */,
 				522C30AC1953C8F3004F12AA /* Errors.strings */,
@@ -1214,6 +1231,7 @@
 				5209B7301935632100B195E9 /* CopyFiles */,
 				5227A40E196520E6004F35EA /* CopyFiles */,
 				5277EBBB1AB2744100C471C3 /* CopyFiles */,
+				5224CCFF1B37C376004AB2B6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1309,9 +1327,11 @@
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
 				5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */,
 				5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */,
+				521B78F21B32BB0100946529 /* Ukelele Help.help in Resources */,
 				52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */,
 				525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */,
 				52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */,
+				5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */,
 				522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */,
 				523F9FC4196FB39900A896CA /* NewKeyboardDialog.xib in Resources */,
 				522C30B01953C8F3004F12AA /* keyboards.strings in Resources */,
@@ -1760,6 +1780,7 @@
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
+				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1786,6 +1807,7 @@
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = Ukelele;
+				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};

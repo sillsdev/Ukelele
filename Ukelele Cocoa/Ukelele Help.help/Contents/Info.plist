@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.sil.ukelele.help_v3.help</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Ukelele Help</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>CFBundleVersion</key>
+	<string>3.0</string>
+	<key>HPDBookAccessPath</key>
+	<string>UkeleleHelp.html</string>
+	<key>HPDBookIconPath</key>
+	<string>images/Ukulele 16.png</string>
+	<key>HPDBookIndexPath</key>
+	<string>UkeleleHelp.helpindex</string>
+	<key>HPDBookTitle</key>
+	<string>Ukelele Help</string>
+	<key>HPDBookTopicListCSSPath</key>
+	<string>tocstyles.css</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>

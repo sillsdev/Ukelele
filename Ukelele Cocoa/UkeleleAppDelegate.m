@@ -22,6 +22,8 @@
 #import "UKKeyboardDocument.h"
 #include <ServiceManagement/ServiceManagement.h>
 
+#define UkeleleManualName	@"Ukelele Manual"
+
 @interface UkeleleAppDelegate () {
 	AuthorizationRef _authRef;
 }
@@ -258,6 +260,13 @@ static NSDictionary *defaultValues() {
 			}
 		}];
 	}];
+}
+
+- (IBAction)openManual:(id)sender {
+#pragma unused(sender)
+	NSBundle *myBundle = [NSBundle mainBundle];
+	NSString *manualPath = [myBundle pathForResource:UkeleleManualName ofType:@"pdf"];
+	[[NSWorkspace sharedWorkspace] openFile:manualPath];
 }
 
 - (BOOL)installHelperTool {

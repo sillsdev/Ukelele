@@ -79,7 +79,7 @@ Gw
                                 <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oEO-aa-eRC">
                                     <rect key="frame" x="18" y="48" width="319" height="38"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="cellSize" width="311" height="18"/>
+                                    <size key="cellSize" width="312" height="18"/>
                                     <size key="intercellSpacing" width="4" height="2"/>
                                     <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="EZj-WI-85P">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -87,7 +87,7 @@ Gw
                                     </buttonCell>
                                     <cells>
                                         <column>
-                                            <buttonCell type="radio" title="Type of click key (after this dialog is dismissed)" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="MJW-bl-Lmb">
+                                            <buttonCell type="radio" title="Type or click key (after this dialog is dismissed)" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="MJW-bl-Lmb">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
