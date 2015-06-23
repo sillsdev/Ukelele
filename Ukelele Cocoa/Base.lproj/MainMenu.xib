@@ -738,10 +738,23 @@
                                     <action selector="showHelp:" target="-1" id="y7X-2Q-9no"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Manual" id="hYZ-LX-bKE">
+                            <menuItem title="Ukelele Manual (PDF)" id="hYZ-LX-bKE">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="openManual:" target="-1" id="d26-vf-EFg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="8v0-jh-r3l"/>
+                            <menuItem title="Ukelele Web Site" id="vHM-xD-hRO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openWebSite:" target="-1" id="w9k-0d-JPm"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Ukelele Users Group" id="w3f-XV-9hX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openUkeleleUsersGroup:" target="-1" id="tf5-ve-Hqz"/>
                                 </connections>
                             </menuItem>
                         </items>

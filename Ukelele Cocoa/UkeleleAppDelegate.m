@@ -23,6 +23,8 @@
 #include <ServiceManagement/ServiceManagement.h>
 
 #define UkeleleManualName	@"Ukelele Manual"
+#define UkeleleWebSite		@"http://scripts.sil.org/ukelele"
+#define UkeleleUsersGroup	@"http://groups.google.com/group/ukelele-users"
 
 @interface UkeleleAppDelegate () {
 	AuthorizationRef _authRef;
@@ -267,6 +269,18 @@ static NSDictionary *defaultValues() {
 	NSBundle *myBundle = [NSBundle mainBundle];
 	NSString *manualPath = [myBundle pathForResource:UkeleleManualName ofType:@"pdf"];
 	[[NSWorkspace sharedWorkspace] openFile:manualPath];
+}
+
+- (IBAction)openWebSite:(id)sender {
+#pragma unused(sender)
+	NSURL *groupURL = [NSURL URLWithString:UkeleleWebSite];
+	[[NSWorkspace sharedWorkspace] openURL:groupURL];
+}
+
+- (IBAction)openUkeleleUsersGroup:(id)sender {
+#pragma unused(sender)
+	NSURL *groupURL = [NSURL URLWithString:UkeleleUsersGroup];
+	[[NSWorkspace sharedWorkspace] openURL:groupURL];
 }
 
 - (BOOL)installHelperTool {
