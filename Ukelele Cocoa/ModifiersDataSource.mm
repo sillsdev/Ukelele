@@ -24,7 +24,11 @@ enum {
 #define MDSNextKey @"Next"
 #define MDSPrevKey @"Prev"
 
-@implementation ModifiersDataSource
+@implementation ModifiersDataSource {
+	NSMutableArray *rowArray;
+	UkeleleKeyboardObject *keyboardLayout;
+	NSMutableDictionary *indexDictionary;
+}
 
 #pragma mark Internal routines
 
@@ -221,7 +225,7 @@ static NSMutableDictionary *statusDictionary = nil;
 			rowCount++;
 		}
 	}
-	NSArray *modifierIndices = [keyboardLayout getModifierIndices];
+	NSArray *modifierIndices = [keyboardLayout modifierIndices];
 	[indexDictionary removeAllObjects];
 	for (NSUInteger i = 0; i < [modifierIndices count]; i++) {
 		NSMutableDictionary *indexRelations = [NSMutableDictionary dictionary];
@@ -237,11 +241,11 @@ static NSMutableDictionary *statusDictionary = nil;
 
 #pragma mark Initialisation
 
-- (id)init {
+- (instancetype)init {
 	return [self initWithKeyboardObject:nil];
 }
 
-- (id)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboard
+- (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboard
 {
 	self = [super init];
 	if (self) {

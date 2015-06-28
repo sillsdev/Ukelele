@@ -14,9 +14,8 @@
 @property (copy) NSString *scriptCode;
 @property (copy) NSString *regionCode;
 @property (copy) NSString *variantCode;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringRepresentation;
 
 + (LanguageCode *)languageCodeFromString:(NSString *)languageString;
-
-- (NSString *)stringRepresentation;
 
 @end

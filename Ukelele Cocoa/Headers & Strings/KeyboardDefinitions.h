@@ -270,17 +270,17 @@ enum eStandardKeyMapTypes {
 	kStandardKeyMapMaximum = 18
 };
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, eStandardKeyboardTypes) {
     kStandardKeyboardEmpty,
     kStandardKeyboardQWERTY,
     kStandardKeyboardQWERTZ,
 	kStandardKeyboardAZERTY,
 	kStandardKeyboardDvorak,
 	kStandardKeyboardColemak
-} eStandardKeyboardTypes;
+};
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, eStandardKeyMapIndex) {
     kStandardKeyMapLowerCase,
     kStandardKeyMapUpperCase,
     kStandardKeyMapCapsLock
-} eStandardKeyMapIndex;
+};

@@ -42,7 +42,12 @@ typedef struct KeyEntryRec {
 @property UkeleleViewEventState eventState;
 @end
 
-@implementation UkeleleView
+@implementation UkeleleView {
+	KeyCodeMap *keyCapMap;
+	NSMutableArray *keyCapList;
+	CGFloat baseFontSize;
+	ModifiersController *modifiersController;
+}
 
 - (void)setUpStyles
 {
@@ -91,7 +96,7 @@ typedef struct KeyEntryRec {
 	baseFontSize = textSize / [self scaleFactor];
 }
 
-- (id)initWithFrame:(NSRect)frame {
+- (instancetype)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _scaleFactor = 1.0;

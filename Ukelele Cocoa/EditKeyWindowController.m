@@ -23,7 +23,7 @@
 	void (^actionCallback)(NSDictionary *callbackData);
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"EditKeyWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

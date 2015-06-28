@@ -256,18 +256,15 @@ NSDictionary *sStandardKeyMapList;
 
 @implementation LayoutInfo
 
-@synthesize layoutID;
-@synthesize flags;
-
 #pragma mark Initialisation
 
-- (id)initWithLayoutID:(int)layout
+- (instancetype)initWithLayoutID:(int)layout
 {
 	self = [super init];
 	if (self) {
-		layoutID = layout;
-		flags = 0;
-		switch (layoutID) {
+		_layoutID = layout;
+		_flags = 0;
+		switch (_layoutID) {
 			case gestaltPwrBkEKDomKbd:
 			case gestaltPwrBkEKISOKbd:
 			case gestaltPwrBkEKJISKbd:
@@ -281,8 +278,8 @@ NSDictionary *sStandardKeyMapList;
 			case kGestaltAppleANSIKbd:
 			case kGestaltAppleISOKbd:
 			case kGestaltAppleJISKbd:
-				flags |= kHasFnKey;
-				flags |= kHasEmbeddedKeypad;
+				_flags |= kHasFnKey;
+				_flags |= kHasEmbeddedKeypad;
 				break;
 				
 			case kGestaltAppleWirelessANSIKbd:
@@ -291,11 +288,11 @@ NSDictionary *sStandardKeyMapList;
 			case kGestaltMacBookLate2007ANSIkbd:
 			case kGestaltMacBookLate2007ISOkbd:
 			case kGestaltMacBookLate2007JISkbd:
-				flags |= kHasFnKey;
-				flags &= ~kHasEmbeddedKeypad;
+				_flags |= kHasFnKey;
+				_flags &= ~kHasEmbeddedKeypad;
 				break;
 		}
-		switch (layoutID) {
+		switch (_layoutID) {
 			case gestaltMacKbd:
 			case gestaltMacAndPad:
 			case gestaltExtADBKbd:
@@ -305,11 +302,11 @@ NSDictionary *sStandardKeyMapList;
 			case gestaltExtISOADBKbd:
 			case gestaltAppleAdjustKeypad:
 			case gestaltPS2Keyboard:
-				flags |= kHasSeparateRightKeys;
+				_flags |= kHasSeparateRightKeys;
 				break;
 				
 			default:
-				flags &= ~kHasSeparateRightKeys;
+				_flags &= ~kHasSeparateRightKeys;
 				break;
 		}
 	}
@@ -1644,7 +1641,7 @@ NSDictionary *sStandardKeyMapList;
 + (void)initStandardKeyboards {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		NSDictionary *emptyKeyMap = [NSDictionary dictionary];	// No entries
+		NSDictionary *emptyKeyMap = @{};	// No entries
 		NSDictionary *QWERTYLowerCaseKeyMap = @{
 			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
 			@(kKeyF) : @"f", @(kKeyG) : @"g", @(kKeyH) : @"h", @(kKeyI) : @"i", @(kKeyJ) : @"j",
@@ -2397,18 +2394,18 @@ NSDictionary *sStandardKeyMapList;
 
 - (BOOL)hasFnKey
 {
-	return flags & kHasFnKey;
+	return self.flags & kHasFnKey;
 }
 
 - (BOOL)hasSeparateRightKeys
 {
-	return flags & kHasSeparateRightKeys;
+	return self.flags & kHasSeparateRightKeys;
 }
 
 - (unsigned int)getFnKeyCodeForKey:(unsigned int)keyCode
 {
 	unsigned int fnKeyCode;
-	if ((flags & kHasFnKey) && (flags & kHasEmbeddedKeypad)) {
+	if ((self.flags & kHasFnKey) && (self.flags & kHasEmbeddedKeypad)) {
 		switch (keyCode) {
 			case kKey6:
 				fnKeyCode = kKeyPadClear;
@@ -2507,7 +2504,7 @@ NSDictionary *sStandardKeyMapList;
 				break;
 		}
 	}
-	else if (flags & kHasFnKey) {
+	else if (self.flags & kHasFnKey) {
 		switch (keyCode) {
 			case kKeyReturn:
 				fnKeyCode = kKeyEnter;

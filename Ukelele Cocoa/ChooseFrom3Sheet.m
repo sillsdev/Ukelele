@@ -14,7 +14,7 @@
 static NSString *nibName = @"ChooseFrom3Sheet";
 static NSString *windowName = @"ChooseFrom3Sheet";
 
-- (id)init
+- (instancetype)init
 {
 	[[NSBundle mainBundle] loadNibNamed:nibName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowName];

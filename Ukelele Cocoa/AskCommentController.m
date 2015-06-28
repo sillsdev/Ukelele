@@ -16,7 +16,7 @@
 
 @implementation AskCommentController
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"AskCommentSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

@@ -29,6 +29,7 @@
 @property (strong, nonatomic) UkeleleKeyboardObject *keyboardLayout;
 @property (nonatomic, strong) NSMutableArray *keyboardLayouts;
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) UKKeyboardController *controllerForCurrentEntry;
 
 - (IBAction)addOpenDocument:(id)sender;
 - (IBAction)showVersionInfo:(id)sender;
@@ -48,7 +49,5 @@
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
-
-- (UKKeyboardController *)controllerForCurrentEntry;
 
 @end

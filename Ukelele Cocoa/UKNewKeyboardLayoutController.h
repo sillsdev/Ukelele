@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, BaseLayoutTypes) {
     baseLayoutEmpty,
     baseLayoutQWERTY,
     baseLayoutQWERTZ,
@@ -16,9 +16,9 @@ typedef enum : NSUInteger {
 	baseLayoutDvorak,
 	baseLayoutColemak,
 	baseLayoutNone
-} BaseLayoutTypes;
+};
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, CommandLayoutTypes) {
     commandLayoutSame,
     commandLayoutEmpty,
     commandLayoutQWERTY,
@@ -27,9 +27,9 @@ typedef enum : NSUInteger {
 	commandLayoutDvorak,
 	commandLayoutColemak,
 	commandLayoutNone
-} CommandLayoutTypes;
+};
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, CapsLockLayoutTypes) {
     capsLockLayoutSame,
     capsLockLayoutEmpty,
 	capsLockLayoutQWERTY,
@@ -38,7 +38,7 @@ typedef enum : NSUInteger {
 	capsLockLayoutDvorak,
 	capsLockLayoutColemak,
 	capsLockLayoutNone
-} CapsLockLayoutTypes;
+};
 
 @interface UKNewKeyboardLayoutController : NSWindowController
 

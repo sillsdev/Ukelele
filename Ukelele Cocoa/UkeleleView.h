@@ -13,12 +13,7 @@
 #import "ModifiersController.h"
 #import "UKMenuDelegate.h"
 
-@interface UkeleleView : NSView {
-	KeyCodeMap *keyCapMap;
-	NSMutableArray *keyCapList;
-	CGFloat baseFontSize;
-	ModifiersController *modifiersController;
-}
+@interface UkeleleView : NSView
 
 @property (nonatomic) CGFloat scaleFactor;
 @property (nonatomic) NSRect baseFrame;
@@ -28,13 +23,13 @@
 @property (assign, nonatomic) CTParagraphStyleRef smallParagraphStyle;
 @property (strong, nonatomic) NSDictionary *largeAttributes;
 @property (strong, nonatomic) NSDictionary *smallAttributes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *keyCapViews;
 
 - (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue;
 - (KeyCapView *)getKeyWithIndex:(int)keyIndex;
 - (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text;
 - (KeyCapView *)findKeyWithCode:(int)keyCode;
-- (NSArray *)keyCapViews;
 - (void)updateModifiers:(unsigned int)modifierCombination;
 - (void)scaleViewToScale:(CGFloat)scaleValue limited:(BOOL)limited;
 - (void)scaleViewBy:(CGFloat)scaleValue limited:(BOOL)limited;

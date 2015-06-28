@@ -19,7 +19,7 @@
 	UnlinkModifiersController *unlinkModifiersController;
 }
 
-- (id)initWithDocument:(UKKeyboardController *)theDocumentWindow {
+- (instancetype)initWithDocument:(UKKeyboardController *)theDocumentWindow {
 	if (self = [super init]) {
 		parentDocumentWindow = theDocumentWindow;
 		parentWindow = [theDocumentWindow window];

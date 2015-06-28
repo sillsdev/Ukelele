@@ -164,7 +164,7 @@
 static NSString *nibFileName = @"UkelelePreferences";
 static NSString *nibWindow = @"Preferences";
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

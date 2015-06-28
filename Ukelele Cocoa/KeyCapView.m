@@ -24,7 +24,7 @@ static CGAffineTransform kTextTransform = {
 
 @implementation KeyCapView
 
-- (id)initWithFrame:(NSRect)frame {
+- (instancetype)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         keyRect = frame;

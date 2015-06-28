@@ -22,13 +22,13 @@ typedef enum CreateDeadKeyHandlerType : NSInteger {
 
 @interface CreateDeadKeyHandler : NSObject<UKInteractionHandler>
 
-- (id)initWithCurrentState:(NSString *)stateName
+- (instancetype)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID
 			keyboardWindow:(UKKeyboardController *)theDocument
 				   keyCode:(NSInteger)keyCode
 				 nextState:(NSString *)nextStateName
-				terminator:(NSString *)theTerminator;
+				terminator:(NSString *)theTerminator NS_DESIGNATED_INITIALIZER;
 - (void)startHandling;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)theTarget;
 

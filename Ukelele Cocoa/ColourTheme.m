@@ -86,7 +86,7 @@ NSString *kPrintThemeName = @"Print";
 	unsigned int gradientTypes;
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	_normalUpInnerColour = nil;
@@ -359,7 +359,7 @@ NSString *kPrintThemeName = @"Print";
 	[aCoder encodeInt:gradientTypes forKey:kCTGradientTypeKey];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	_themeName = [aDecoder decodeObjectForKey:kCTThemeNameKey];
 	_normalUpInnerColour = [aDecoder decodeObjectForKey:kCTNormalUpInnerColourKey];

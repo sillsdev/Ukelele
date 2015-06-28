@@ -18,7 +18,7 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 
 @implementation UnlinkModifiersController
 
-- (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
 #pragma unused(owner)
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];

@@ -10,7 +10,7 @@
 
 @implementation UkeleleBundleVersionSheet
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"UkeleleBundleVersionSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

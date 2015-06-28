@@ -34,7 +34,7 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 
 @implementation LanguageRegistryEntry
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 	if (self) {
 		_code = @"";

@@ -15,7 +15,7 @@
 static NSString *nibFileName = @"AskText";
 static NSString *windowName = @"AskTextSheet";
 
-- (id)initWithWindowNibName:(NSString *)nibName
+- (instancetype)initWithWindowNibName:(NSString *)nibName
 {
 		//	[NSBundle loadNibNamed:nibFileName owner:self];
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];

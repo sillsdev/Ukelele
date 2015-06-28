@@ -43,7 +43,7 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	NSArray *resourceSet;
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	if (self) {

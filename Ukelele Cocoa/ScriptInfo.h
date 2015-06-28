@@ -17,12 +17,12 @@
 @property (readonly) NSInteger minID;
 @property (readonly) NSInteger maxID;
 
-- (id)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID;
+- (instancetype)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID NS_DESIGNATED_INITIALIZER;
 
 + (NSArray *)standardScripts;
 + (NSInteger)randomIDforScript:(NSInteger)scriptID;
 + (NSInteger)indexForScript:(NSInteger)scriptID;
 
-- (NSInteger)randomID;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger randomID;
 
 @end

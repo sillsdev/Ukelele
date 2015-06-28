@@ -18,7 +18,7 @@ NSString *kWrongStateName = @"WrongStateName";
 
 @implementation WrongStateChosenSheet
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     if (self = [super initWithWindowNibName:windowNibName]) {

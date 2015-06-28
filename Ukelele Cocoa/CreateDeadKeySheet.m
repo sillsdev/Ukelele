@@ -23,7 +23,7 @@ NSString *kDeadKeyDataTerminatorSpecified = @"TerminatorSpecified";
 static NSString *nibFileName = @"CreateDeadKeySheet";
 static NSString *windowName = @"CreateDeadKey";
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

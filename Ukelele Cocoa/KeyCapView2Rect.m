@@ -15,7 +15,16 @@ static CGAffineTransform kTextTransform = {
 	1.0, 0.0, 0.0, 1.0, 0.0, 0.0
 };
 
-@implementation KeyCapView2Rect
+@implementation KeyCapView2Rect {
+	NSRect keyRect1;
+	NSRect keyRect2;
+	NSRect frameRect;
+	NSRect frameRect1;
+	NSRect frameRect2;
+	unsigned int orientation;
+	NSRect interiorRect;
+	NSPoint pointList[6];
+}
 
 - (void)setRect1:(NSRect)rect1 andRect2:(NSRect)rect2
 {
@@ -78,7 +87,7 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
-- (id) initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2
+- (instancetype) initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2
 {
 	frameRect = NSUnionRect(rect1, rect2);
 	self = [super initWithFrame:frameRect];

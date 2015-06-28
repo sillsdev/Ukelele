@@ -19,7 +19,7 @@
 	UkeleleKeyboardObject *keyboardObject;
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"AskStateAndTerminatorSheet" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

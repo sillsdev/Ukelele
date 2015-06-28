@@ -10,7 +10,7 @@
 
 @implementation ModifiersInfo
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -316,7 +316,7 @@ enum {
 
 #pragma mark Initialisation
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibWindowName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];

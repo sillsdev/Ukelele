@@ -13,7 +13,7 @@ static NSString *nibWindowName = @"Keyboard Type";
 
 @implementation KeyboardTypeSheet
 
-- (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
 #pragma unused(owner)
 	[[NSBundle mainBundle] loadNibNamed:nibName owner:self topLevelObjects:nil];

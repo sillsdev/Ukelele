@@ -26,12 +26,12 @@
 	NSMenu *indexMenu = [self.defaultIndexButton menu];
 	NSAssert(indexMenu, @"Index menu must exist");
 	[indexMenu removeAllItems];
-	NSArray *modifierIndices = [keyboardObject getModifierIndices];
+	NSArray *modifierIndices = [keyboardObject modifierIndices];
 	NSAssert(modifierIndices && [modifierIndices count] > 0, @"Must have modifier indices");
 	for (NSNumber *theIndex in modifierIndices) {
 		[indexMenu addItemWithTitle:[NSString stringWithFormat:@"%@", theIndex] action:nil keyEquivalent:@""];
 	}
-	NSUInteger defaultIndex = [keyboardObject getDefaultModifierIndex];
+	NSUInteger defaultIndex = [keyboardObject defaultModifierIndex];
 	[self.defaultIndexButton selectItemWithTitle:[NSString stringWithFormat:@"%d", (int)defaultIndex]];
 }
 
@@ -102,7 +102,7 @@
 {
 #pragma unused(sender)
 	NSUInteger newIndex = [[[self.defaultIndexButton selectedItem] title] integerValue];
-	if (newIndex != [self.keyboardLayout getDefaultModifierIndex]) {
+	if (newIndex != [self.keyboardLayout defaultModifierIndex]) {
 		[self.keyboardLayout setDefaultModifierIndex:newIndex];
 		[self.modifiersDataSource setKeyboard:self.keyboardLayout];
 		[self.modifiersTableView reloadData];
@@ -159,9 +159,9 @@
 	NSInteger selectedSubindex = [self.modifiersDataSource subindexForRow:selectedRow];
 	if ([self.keyboardLayout keyMapSelectHasOneModifierCombination:selectedIndex]) {
 			// Deleting a whole map
-		if (selectedIndex == (NSInteger)[self.keyboardLayout getDefaultModifierIndex]) {
+		if (selectedIndex == (NSInteger)[self.keyboardLayout defaultModifierIndex]) {
 				// Deleting the map with default index
-			NSArray *modifierIndices = [self.keyboardLayout getModifierIndices];
+			NSArray *modifierIndices = [self.keyboardLayout modifierIndices];
 			NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:[modifierIndices count]];
 			for (NSNumber *modIndex in modifierIndices) {
 				if ([modIndex integerValue] != selectedIndex) {
@@ -200,7 +200,7 @@
 		}
 		else {
 				// Delete the row
-			NSInteger newDefaultIndex = [self.keyboardLayout getDefaultModifierIndex];
+			NSInteger newDefaultIndex = [self.keyboardLayout defaultModifierIndex];
 			if (newDefaultIndex > selectedIndex) {
 				newDefaultIndex--;
 			}
@@ -286,7 +286,7 @@
         }
 		NSString *infoString = NSLocalizedStringFromTable(@"Choose what kind of key map to create:", @"dialogs",
 														  @"Ask user for key map type");
-		NSArray *modifierIndices = [self.keyboardLayout getModifierIndices];
+		NSArray *modifierIndices = [self.keyboardLayout modifierIndices];
 		NSMutableArray *keyMaps = [NSMutableArray arrayWithCapacity:[modifierIndices count]];
 		for (NSNumber *theIndex in modifierIndices) {
 			[keyMaps addObject:[NSString stringWithFormat:@"%@", theIndex]];

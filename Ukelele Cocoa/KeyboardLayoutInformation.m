@@ -10,7 +10,7 @@
 
 @implementation KeyboardLayoutInformation
 
-- (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName {
+- (instancetype)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName {
 	self = [super init];
 	_keyboardObject = theKeyboard;
 	_fileName = fileName;

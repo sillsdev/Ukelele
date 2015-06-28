@@ -26,7 +26,7 @@
 	UKKeyboardController *targetDocumentWindow;
 }
 
-- (id)init {
+- (instancetype)init {
 	if (self = [super init]) {
 		parentWindow = nil;
 		targetDocumentWindow = nil;

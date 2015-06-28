@@ -44,7 +44,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	AskTextSheet *askTextSheet;
 }
 
-- (id)initWithCurrentState:(NSString *)stateName
+- (instancetype)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID
 			keyboardWindow:(UKKeyboardController *)theDocumentWindow

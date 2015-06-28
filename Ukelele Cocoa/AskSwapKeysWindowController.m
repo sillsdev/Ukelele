@@ -18,7 +18,7 @@
 
 @implementation AskSwapKeysWindowController
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"AskSwapKeyCodesWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

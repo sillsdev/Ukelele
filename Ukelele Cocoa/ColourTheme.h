@@ -45,18 +45,14 @@ MY_EXTERN NSString *kPrintThemeName;
 @property (copy) NSColor *selectedDeadDownOuterColour;
 @property (copy) NSColor *selectedDeadDownTextColour;
 @property (copy) NSColor *windowBackgroundColour;
+@property (nonatomic) unsigned int normalGradientType;
+@property (nonatomic) unsigned int deadKeyGradientType;
+@property (nonatomic) unsigned int selectedGradientType;
+@property (nonatomic) unsigned int selectedDeadGradientType;
 
 + (ColourTheme *)defaultColourTheme;
 + (ColourTheme *)defaultPrintTheme;
 
 - (ColourTheme *)copy;
-- (unsigned int)normalGradientType;
-- (unsigned int)deadKeyGradientType;
-- (unsigned int)selectedGradientType;
-- (unsigned int)selectedDeadGradientType;
-- (void)setNormalGradientType:(unsigned int)gradientType;
-- (void)setDeadKeyGradientType:(unsigned int)gradientType;
-- (void)setSelectedGradientType:(unsigned int)gradientType;
-- (void)setSelectedDeadGradientType:(unsigned int)gradientType;
 
 @end

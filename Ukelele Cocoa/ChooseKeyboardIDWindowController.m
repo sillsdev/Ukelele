@@ -15,7 +15,7 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 @implementation ChooseKeyboardIDWindowController
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"ChooseKeyboardIDWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

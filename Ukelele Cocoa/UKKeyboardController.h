@@ -92,6 +92,9 @@ enum ToolbarItemTags {
 @property (weak, readonly) NSString *currentState;
 @property (weak) UKKeyboardDocument *parentDocument;
 @property (strong, nonatomic) NSUndoManager *undoManager;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *keyboardDisplayName;
+@property (NS_NONATOMIC_IOSONLY, readonly) CGFloat currentScale;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger currentKeyboard;
 
 	// Actions
 	// View scale
@@ -129,10 +132,7 @@ enum ToolbarItemTags {
 - (void)printOperationDidRun:(NSPrintOperation *)printOperation success:(BOOL)success contextInfo:(void *)contextInfo;
 
 	// Accessors
-- (NSString *)keyboardDisplayName;
 - (NSRect)keyRect:(NSInteger)keyCode;
-- (CGFloat)currentScale;
-- (NSUInteger)currentKeyboard;
 
 	// Validate interface element states
 - (BOOL)setsStatusForSelector:(SEL)selector;

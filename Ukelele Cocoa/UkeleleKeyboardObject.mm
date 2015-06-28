@@ -40,7 +40,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 @synthesize keyElementBundle = keyElementBundle;
 
-- (id)init {
+- (instancetype)init {
 	return [super init];
 }
 
@@ -56,7 +56,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 @implementation XMLCommentHolderObject
 
-- (id)init {
+- (instancetype)init {
 	return [super init];
 }
 
@@ -69,7 +69,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 @synthesize parentController = parentController;
 
-- (id)initWithName:(NSString *)keyboardName
+- (instancetype)initWithName:(NSString *)keyboardName
 {
 	self = [super init];
 	if (self) {
@@ -79,7 +79,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return self;
 }
 
-- (id)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout {
+- (instancetype)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout {
 	self = [super init];
 	if (self) {
 		_keyboard = new UkeleleKeyboard;
@@ -88,7 +88,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return self;
 }
 
-- (id)initWithData:(NSData *)xmlData withError:(NSError **)outError
+- (instancetype)initWithData:(NSData *)xmlData withError:(NSError **)outError
 {
 	self = [super init];
 	if (self) {
@@ -180,7 +180,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	parentDocument = parent;
 }
 
-- (NSArray *)getModifierIndices
+- (NSArray *)modifierIndices
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap(static_cast<UInt32>([[KeyboardEnvironment instance] currentKeyboardID]));
@@ -197,7 +197,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	return modifierIndices;
 }
 
-- (NSUInteger)getDefaultModifierIndex
+- (NSUInteger)defaultModifierIndex
 {
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap(static_cast<UInt32>([[KeyboardEnvironment instance] currentKeyboardID]));

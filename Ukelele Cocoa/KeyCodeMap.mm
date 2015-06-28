@@ -13,7 +13,7 @@
 	std::multimap<int, KeyCapView *> codeMap;
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	if (self) {

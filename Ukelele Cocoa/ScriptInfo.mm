@@ -12,7 +12,7 @@
 
 @implementation ScriptInfo
 
-- (id)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID
+- (instancetype)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID
 {
 	self = [super init];
 	if (self) {

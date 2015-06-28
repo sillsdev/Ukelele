@@ -10,7 +10,7 @@
 
 @implementation IntendedLanguageSheet
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 #pragma unused(windowNibName)
     self = [super initWithWindowNibName:@"IntendedLanguageSheet"];

@@ -12,15 +12,11 @@
 
 #define ModifiersTableDragType @"ModifiersTableDragType"
 
-@interface ModifiersDataSource : NSObject<NSTableViewDataSource> {
-	NSMutableArray *rowArray;
-	UkeleleKeyboardObject *keyboardLayout;
-	NSMutableDictionary *indexDictionary;
-}
+@interface ModifiersDataSource : NSObject<NSTableViewDataSource>
 
-- (id)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboard;
-- (UkeleleKeyboardObject *)keyboard;
-- (void)setKeyboard:(UkeleleKeyboardObject *)keyboard;
+@property (NS_NONATOMIC_IOSONLY, copy) UkeleleKeyboardObject *keyboard;
+
+- (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboard NS_DESIGNATED_INITIALIZER;
 - (void)updateKeyboard;
 - (NSInteger)modifierValueForRow:(NSInteger)rowNumber column:(NSString *)columnLabel;
 - (NSInteger)indexForRow:(NSInteger)rowNumber;

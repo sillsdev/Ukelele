@@ -9,17 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "KeyCapView.h"
 
-@interface KeyCapView2Rect : KeyCapView {
-	NSRect keyRect1;
-	NSRect keyRect2;
-	NSRect frameRect;
-	NSRect frameRect1;
-	NSRect frameRect2;
-	unsigned int orientation;
-	NSRect interiorRect;
-	NSPoint pointList[6];
-}
+@interface KeyCapView2Rect : KeyCapView
 
-- (id)initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2;
+- (instancetype)initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2;
 
 @end

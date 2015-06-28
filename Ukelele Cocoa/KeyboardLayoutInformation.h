@@ -22,6 +22,6 @@
 @property (strong) UKKeyboardController *keyboardController;
 @property (strong) NSFileWrapper *keyboardFileWrapper;
 
-- (id)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName;
+- (instancetype)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName NS_DESIGNATED_INITIALIZER;
 
 @end

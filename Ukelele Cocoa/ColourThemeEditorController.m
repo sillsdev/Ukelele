@@ -31,7 +31,7 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	void (^completionBlock)(NSString *);
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
@@ -74,7 +74,7 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary *colourThemeDict = [[theDefaults dictionaryForKey:UKColourThemes] mutableCopy];
 	NSString *currentColourTheme = [theDefaults stringForKey:UKColourTheme];
-	currentTheme = [colourThemeDict objectForKey:currentColourTheme];
+	currentTheme = colourThemeDict[currentColourTheme];
 	[self.themeList removeAllItems];
 	[self.themeList addItemsWithTitles:[colourThemeDict keysSortedByValueUsingSelector:@selector(compare:)]];
 	[self.themeList selectItemWithTitle:currentColourTheme];

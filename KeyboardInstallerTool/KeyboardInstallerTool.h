@@ -27,7 +27,7 @@
 
 @interface KeyboardInstallerTool : NSObject
 
-- (id)init;
+- (instancetype)init;
 - (void)run;
 
 @end

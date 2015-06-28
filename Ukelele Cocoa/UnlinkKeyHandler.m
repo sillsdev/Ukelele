@@ -18,7 +18,7 @@
 	NSInteger selectedKeyCode;
 }
 
-- (id)initWithDocumentWindow:(UKKeyboardController *)theDocumentWindow {
+- (instancetype)initWithDocumentWindow:(UKKeyboardController *)theDocumentWindow {
 	if (self = [super init]) {
 		parentDocumentWindow = theDocumentWindow;
 		parentWindow = [theDocumentWindow window];

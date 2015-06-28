@@ -53,7 +53,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 @synthesize keyboardLayout = _keyboardLayout;
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
     self = [super initWithWindowNibName:windowNibName];
     if (self) {

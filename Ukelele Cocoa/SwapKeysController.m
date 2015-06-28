@@ -22,7 +22,7 @@
 	NSInteger keyCode;
 }
 
-- (id)initWithDocument:(UKKeyboardController *)theWindowController {
+- (instancetype)initWithDocument:(UKKeyboardController *)theWindowController {
 	self = [super init];
 	if (self) {
 		parentDocumentController = theWindowController;

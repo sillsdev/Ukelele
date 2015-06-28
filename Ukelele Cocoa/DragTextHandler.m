@@ -14,7 +14,7 @@
 
 @implementation DragTextHandler
 
-- (id)initWithData:(NSMutableDictionary *)dataDict dragText:(NSString *)draggedText window:(NSWindow *)theWindow
+- (instancetype)initWithData:(NSMutableDictionary *)dataDict dragText:(NSString *)draggedText window:(NSWindow *)theWindow
 {
 	self = [super init];
 	if (self) {

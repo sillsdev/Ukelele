@@ -33,15 +33,14 @@ typedef void * UkeleleKeyboard;
 @property (nonatomic) NSInteger keyboardID;
 @property (nonatomic, strong) NSString *keyboardName;
 @property (weak) NSWindowController *parentController;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *modifierIndices;
+@property (NS_NONATOMIC_IOSONLY) NSUInteger defaultModifierIndex;
 
 - (id)initWithName:(NSString *)keyboardName;
 - (id)initWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout;
 - (id)initWithData:(NSData *)xmlData withError:(NSError **)outError;
 - (NSData *)convertToData;
 - (void)setParentDocument:(NSDocument *)parent;
-- (NSArray *)getModifierIndices;
-- (NSUInteger)getDefaultModifierIndex;
-- (void)setDefaultModifierIndex:(NSUInteger)defaultIndex;
 - (BOOL)keyMapSelectHasOneModifierCombination:(NSInteger)modifierIndex;
 - (void)updateEditingComment;
 - (void)addCreationComment;
@@ -63,19 +62,21 @@ typedef void * UkeleleKeyboard;
 - (void)changeDeadKeyNextState:(NSDictionary *)keyDataDict toState:(NSString *)newState;
 
 	// Actions
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *actionNames;
+
 - (BOOL)isActionElement:(NSDictionary *)keyDataDict;
 - (NSString *)actionNameForKey:(NSDictionary *)keyDataDict;
 - (void)unlinkKey:(NSDictionary *)keyDataDict;
 - (void)relinkKey:(NSDictionary *)keyDataDict actionName:(NSString *)originalAction;
 - (void)unlinkModifierSet:(NSUInteger)modifierCombination forKeyboard:(NSInteger)keyboardID;
 - (NSUInteger)modifiersForIndex:(NSUInteger)theIndex forKeyboard:(NSInteger)keyboardID;
-- (NSArray *)actionNames;
 - (BOOL)hasActionWithName:(NSString *)actionName;
 
 	// States
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger stateCount;
+
 - (NSArray *)stateNamesExcept:(NSString *)stateToOmit;
 - (NSArray *)stateNamesNotInSet:(NSSet *)statesToOmit;
-- (NSUInteger)stateCount;
 - (BOOL)hasStateWithName:(NSString *)stateName;
 - (NSString *)uniqueStateName;
 - (void)createState:(NSString *)stateName withTerminator:(NSString *)terminator;
@@ -89,13 +90,16 @@ typedef void * UkeleleKeyboard;
 - (void)swapKeyCode:(NSInteger)keyCode1 withKeyCode:(NSInteger)keyCode2;
 
 	// Cut, copy, paste keys
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasKeyOnPasteboard;
+
 - (void)cutKeyCode:(NSInteger)keyCode;
 - (void)undoCutKeyCode:(NSInteger)keyCode;
 - (void)copyKeyCode:(NSInteger)keyCode;
-- (BOOL)hasKeyOnPasteboard;
 - (void)pasteKeyCode:(NSInteger)keyCode;
 
 	// Modifiers
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasSimplifiedModifiers;
+
 - (void)changeModifiersIndex:(NSInteger)index
 					subIndex:(NSInteger)subindex
 					   shift:(NSInteger)newShift
@@ -127,13 +131,22 @@ typedef void * UkeleleKeyboard;
           forKeyboard:(NSInteger)keyboardID
         withModifiers:(ModifiersInfo *)modifierInfo;
 - (void)simplifyModifiers;
-- (BOOL)hasSimplifiedModifiers;
 - (NSUInteger)modifierSetCountForKeyboard:(NSUInteger)keyboardID;
 - (NSUInteger)modifierSetIndexForModifiers:(NSUInteger)modifiers forKeyboard:(NSUInteger)keyboardID;
 - (void)moveModifierSetIndex:(NSInteger)sourceSet toIndex:(NSInteger)destinationSet forKeyboard:(NSUInteger)keyboardID;
 - (BOOL)hasModifierSetWithIndex:(NSInteger)setIndex;
 
 	// Comments
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) XMLCommentHolderObject *currentCommentHolder;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) XMLCommentHolderObject *documentCommentHolder;
+@property (NS_NONATOMIC_IOSONLY, getter=isEditableComment, readonly) BOOL editableComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *firstComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *previousComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *nextComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lastComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *currentComment;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *currentHolderText;
+
 - (void)addComment:(NSString *)commentText
 		  toHolder:(XMLCommentHolderObject *)commentHolder;
 - (void)removeComment:(NSString *)commentText
@@ -141,21 +154,12 @@ typedef void * UkeleleKeyboard;
 - (void)changeCommentText:(NSString *)oldText
 					   to:(NSString *)newText
 				forHolder:(XMLCommentHolderObject *)commentHolder;
-- (XMLCommentHolderObject *)currentCommentHolder;
 - (XMLCommentHolderObject *)commentHolderForKey:(NSDictionary *)keyDataDict;
-- (XMLCommentHolderObject *)documentCommentHolder;
 - (BOOL)isFirstComment;
 - (BOOL)isLastComment;
-- (BOOL)isEditableComment;
-- (NSString *)firstComment;
-- (NSString *)previousComment;
-- (NSString *)nextComment;
-- (NSString *)lastComment;
 
 - (void)addComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
 - (void)removeComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
-- (NSString *)currentComment;
-- (NSString *)currentHolderText;
 
 	// Housekeeping: Removing unused elements
 - (RemoveStateData *)removeUnusedStates;

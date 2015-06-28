@@ -18,7 +18,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 
 @implementation AskNewKeyMap
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:nibFileName owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName];

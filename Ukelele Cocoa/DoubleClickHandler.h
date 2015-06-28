@@ -23,9 +23,9 @@ typedef enum DoubleClickDeadKeyType : NSInteger {
 
 @interface DoubleClickHandler : NSObject<NSTextFieldDelegate, UKInteractionHandler, NSPopoverDelegate>
 
-- (id)initWithData:(NSMutableDictionary *)dataDict
+- (instancetype)initWithData:(NSMutableDictionary *)dataDict
 	keyboardLayout:(UkeleleKeyboardObject *)keyboardLayout
-			window:(NSWindow *)window;
+			window:(NSWindow *)window NS_DESIGNATED_INITIALIZER;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)target;
 - (void)startDoubleClick;
 - (void)setDeadKeyProcessingType:(DoubleClickDeadKeyType)theType;

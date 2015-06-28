@@ -20,7 +20,7 @@
 
 @implementation UnicodeTable
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 	if (self) {
 		unicodeTable = [NSMutableDictionary dictionaryWithCapacity:30000];

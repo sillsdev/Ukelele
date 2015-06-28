@@ -40,7 +40,7 @@ enum ProcessingStates {
 
 #pragma mark Entry
 
-- (id)initWithData:(NSMutableDictionary *)dataDict
+- (instancetype)initWithData:(NSMutableDictionary *)dataDict
 	keyboardLayout:(UkeleleKeyboardObject *)keyboardLayout
 			window:(NSWindow *)window
 {

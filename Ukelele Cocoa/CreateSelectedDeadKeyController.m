@@ -23,7 +23,7 @@
 	void (^completionBlock)(NSDictionary *);
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:theNibName owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

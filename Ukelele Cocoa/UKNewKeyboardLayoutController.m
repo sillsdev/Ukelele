@@ -16,7 +16,7 @@
 	void (^completionBlock)(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout);
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"NewKeyboardDialog" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName owner:self];

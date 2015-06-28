@@ -20,7 +20,7 @@
     id<UKInteractionHandler> subsidiaryHandler;
 }
 
-- (id)initWithData:(NSMutableDictionary *)dataDict dragText:(NSString *)draggedText window:(NSWindow *)theWindow;
+- (instancetype)initWithData:(NSMutableDictionary *)dataDict dragText:(NSString *)draggedText window:(NSWindow *)theWindow NS_DESIGNATED_INITIALIZER;
 - (void)setCompletionTarget:(id<UKInteractionCompletion>)target;
 - (void)startDrag;
 

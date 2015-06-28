@@ -63,7 +63,7 @@ NSString *kKeyboardName = @"keyboardName";
 	UkeleleKeyboardObject *currentObservation;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -247,7 +247,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(self.isBundle, @"Trying to convert a non-bundle to a non-bundle");
 	NSAssert([[self.keyboardLayoutsController arrangedObjects] count] == 1, @"Cannot convert a bundle with more than one keyboard layout");
 	[self setIsBundle:NO];
-	KeyboardLayoutInformation *layoutInfo = [[self.keyboardLayoutsController arrangedObjects] objectAtIndex:0];
+	KeyboardLayoutInformation *layoutInfo = [self.keyboardLayoutsController arrangedObjects][0];
 	NSArray *controllers = [self windowControllers];
 	if ([controllers count] > 0) {
 		NSAssert([controllers count] == 1, @"More than one window controller");

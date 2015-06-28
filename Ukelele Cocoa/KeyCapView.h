@@ -38,9 +38,9 @@
 @property (nonatomic, strong) NSDictionary *smallAttributes;
 @property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;
 @property (nonatomic, weak) IBOutlet id<UKKeyCapClick> clickDelegate;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect boundingRect;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRect insideRect;
 
-- (NSRect)boundingRect;
-- (NSRect)insideRect;
 - (void)flipInRect:(NSRect)boundingRect;
 - (void)getInnerColour:(NSColor **)innerColour
 		   outerColour:(NSColor **)outerColour

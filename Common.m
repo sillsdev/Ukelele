@@ -81,13 +81,13 @@ static NSString *kCommandKeyAuthRightDesc    = @"authRightDescription";
         commandDict = (NSDictionary *) obj;
         assert([commandDict isKindOfClass:[NSDictionary class]]);
 		
-        authRightName = [commandDict objectForKey:kCommandKeyAuthRightName];
+        authRightName = commandDict[kCommandKeyAuthRightName];
         assert([authRightName isKindOfClass:[NSString class]]);
 		
-        authRightDefault = [commandDict objectForKey:kCommandKeyAuthRightDefault];
+        authRightDefault = commandDict[kCommandKeyAuthRightDefault];
         assert(authRightDefault != nil);
 		
-        authRightDesc = [commandDict objectForKey:kCommandKeyAuthRightDesc];
+        authRightDesc = commandDict[kCommandKeyAuthRightDesc];
         assert([authRightDesc isKindOfClass:[NSString class]]);
 		
         block(authRightName, authRightDefault, authRightDesc);

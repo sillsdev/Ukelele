@@ -9,13 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "KeyboardDefinitions.h"
 
-@interface LayoutInfo : NSObject {
-	int layoutID;
-	unsigned int flags;
-}
+@interface LayoutInfo : NSObject
 
 @property int layoutID;
 @property unsigned int flags;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasFnKey;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasSeparateRightKeys;
 
 + (unsigned int)getKeyType:(unsigned int)keyCode;
 + (NSString *)getSpecialKeyOutput:(unsigned int)keyCode;
@@ -33,9 +32,7 @@
 + (NSUInteger)getModifierFromKeyCode:(NSUInteger)keyCode;
 + (NSString *)stringForModifiers:(NSUInteger)modifiers;
 
-- (id)initWithLayoutID:(int)layout;
-- (BOOL)hasFnKey;
-- (BOOL)hasSeparateRightKeys;
+- (instancetype)initWithLayoutID:(int)layout NS_DESIGNATED_INITIALIZER;
 - (unsigned int)getFnKeyCodeForKey:(unsigned int)keyCode;
 - (unsigned int)getLeftModifierKey:(unsigned int)rightModifierKey;
 - (unsigned int)getRightModifierKey:(unsigned int)leftModifierKey;

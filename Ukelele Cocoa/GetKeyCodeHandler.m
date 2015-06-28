@@ -14,7 +14,7 @@
     void (^callBack)(NSInteger);
 }
 
-- (id)init {
+- (instancetype)init {
 	if (self = [super init]) {
 		_completionTarget = nil;
 		callBack = nil;

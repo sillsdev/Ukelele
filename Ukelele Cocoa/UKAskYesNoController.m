@@ -16,7 +16,7 @@
 	void (^completionBlock)(BOOL);
 }
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
 	[[NSBundle mainBundle] loadNibNamed:@"AskYesNo" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];

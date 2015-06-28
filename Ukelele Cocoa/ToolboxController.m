@@ -13,7 +13,7 @@
 
 @synthesize toolboxData;
 
-- (id)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner
 {
     self = [super initWithWindowNibName:windowNibName owner:owner];
     if (self) {

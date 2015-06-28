@@ -21,7 +21,7 @@
 	NSUInteger keyboardID;
 }
 
-- (id)init {
+- (instancetype)init {
 	self = [super init];
 	if (self) {
 		askTextSheet = nil;

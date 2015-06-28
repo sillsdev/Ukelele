@@ -26,13 +26,13 @@ extern NSString *kKeyCodingIndex;
 @interface KeyboardResourceList : NSObject
 
 @property (strong) NSArray *keyboardTypeTable;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *namesList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *descriptionsList;
 
 + (KeyboardResourceList *)getInstance;
 
 - (NSInteger)resourceForType:(NSInteger)typeIndex code:(NSInteger)codeIndex;
 - (NSDictionary *)indicesForResourceID:(NSInteger)resourceID;
-- (NSArray *)namesList;
-- (NSArray *)descriptionsList;
 - (NSArray *)codingsForType:(NSInteger)typeIndex;
 
 @end
