@@ -11,6 +11,8 @@
 #import "UKMenuDelegate.h"
 #import "UKKeyCapClick.h"
 
+#define fallbackAlpha	0.5
+
 @interface KeyCapView : NSView {
 	NSRect keyRect;
 	NSMutableAttributedString *displayText;
@@ -27,6 +29,7 @@
 @property (nonatomic) BOOL down;
 @property (nonatomic) BOOL deadKey;
 @property (nonatomic) BOOL selected;
+@property (nonatomic) BOOL fallback;
 @property (nonatomic) BOOL small;
 @property (nonatomic) BOOL dragHighlight;
 @property (nonatomic, weak) NSColor *currentTextColour;

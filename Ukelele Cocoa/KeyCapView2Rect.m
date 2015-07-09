@@ -87,7 +87,7 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
-- (instancetype) initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2
+- (instancetype)initWithRect1:(NSRect)rect1 withRect2:(NSRect)rect2
 {
 	frameRect = NSUnionRect(rect1, rect2);
 	self = [super initWithFrame:frameRect];
@@ -190,6 +190,13 @@ static CGAffineTransform kTextTransform = {
 		// Restore state
 	[NSGraphicsContext restoreGraphicsState];
 	[self drawText:dirtyRect];
+	if (self.fallback) {
+			// Draw grey
+		NSColor *greyColour = [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:0.5 alpha:fallbackAlpha];
+		[greyColour setFill];
+		[NSBezierPath fillRect:keyRect1];
+		[NSBezierPath fillRect:keyRect2];
+	}
 }
 
 - (NSRect)boundingRect

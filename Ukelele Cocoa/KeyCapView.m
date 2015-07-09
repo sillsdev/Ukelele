@@ -402,6 +402,12 @@ static CGAffineTransform kTextTransform = {
 	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
 	CGContextSetTextMatrix(myContext, kTextTransform);
 	[self drawText:dirtyRect];
+	if (self.fallback) {
+			// Paint over the whole rect with a transparent grey
+		NSColor *greyColour = [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:0.5 alpha:fallbackAlpha];
+		[greyColour setFill];
+		[NSBezierPath fillRect:dirtyRect];
+	}
 	[NSGraphicsContext restoreGraphicsState];
 }
 

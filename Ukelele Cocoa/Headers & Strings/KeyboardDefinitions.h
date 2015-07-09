@@ -206,10 +206,6 @@ enum {
 	kSpecialKeyCount = 40
 };
 
-//const UInt32 kKeyCodeTableSize = 128;
-//const UInt32 kKeyboardLayoutCount = 25;
-//const UInt32 kSpecialKeyCount = 40;
-
 typedef struct {
 	SInt16 all;
 	SInt16 ANSI;

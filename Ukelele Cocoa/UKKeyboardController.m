@@ -406,6 +406,8 @@ const CGFloat kTextPaneHeight = 17.0f;
     keyDataDict[kKeyKeyCode] = @0;
     keyDataDict[kKeyModifiers] = @(modifiers);
     keyDataDict[kKeyState] = stateName;
+	NSMutableDictionary *keyDataDictStateNone = [keyDataDict mutableCopy];
+	keyDataDictStateNone[kKeyState] = kStateNameNone;
 	for (KeyCapView *keyCapView in subViews) {
 		NSInteger keyCode = [keyCapView keyCode];
 		if (modifiers & NSNumericPadKeyMask) {
@@ -416,6 +418,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *nextState;
         keyDataDict[kKeyKeyCode] = @(keyCode);
 		output = [self.keyboardLayout getCharOutput:keyDataDict isDead:&deadKey nextState:&nextState];
+		if ([output isEqualToString:@""]) {
+			keyDataDictStateNone[kKeyKeyCode] = @(keyCode);
+			output = [self.keyboardLayout getCharOutput:keyDataDictStateNone isDead:&deadKey nextState:&nextState];
+			[keyCapView setFallback:YES];
+		}
+		else {
+			[keyCapView setFallback:NO];
+		}
 		[keyCapView setOutputString:output];
 		[keyCapView setDeadKey:deadKey];
 	}
