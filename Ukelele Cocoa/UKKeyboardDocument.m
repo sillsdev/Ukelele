@@ -170,7 +170,6 @@ NSString *kKeyboardName = @"keyboardName";
   forSaveOperation:(NSSaveOperationType)saveOperation
 originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 error:(NSError *__autoreleasing *)outError {
-#pragma unused(saveOperation)
 	if (self.isBundle) {
 			// The document is a bundle
 		if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
@@ -185,12 +184,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				if (outError != nil) {
 					NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Can only convert a bundle with a single keyboard layout to an unbundled file"};
 					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotConvertToUnbundled userInfo:errorDict];
-					return NO;
 				}
+				return NO;
 			}
 		}
 		else if (self.isBundle && ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle])) {
 				// A bundle
+			if ((saveOperation == NSSaveAsOperation || saveOperation == NSSaveToOperation) && [[self.keyboardLayoutsController arrangedObjects] count] == 0) {
+					// Can't save a bundle with no keyboard layouts
+				if (outError != nil) {
+					NSDictionary *localError = @{NSLocalizedDescriptionKey: @"Cannot save a bundle containing no keyboard layouts"};
+					*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorNoKeyboardLayoutsInBundle userInfo:localError];
+				}
+				return NO;
+			}
 			if (absoluteOriginalContentsURL != nil) {
 					// Try to save only what has changed
 					// NOT IMPLEMENTED!
