@@ -418,7 +418,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *nextState;
         keyDataDict[kKeyKeyCode] = @(keyCode);
 		output = [self.keyboardLayout getCharOutput:keyDataDict isDead:&deadKey nextState:&nextState];
-		if ([output isEqualToString:@""]) {
+		if ([output isEqualToString:@""] && ![stateName isEqualToString:kStateNameNone]) {
 			keyDataDictStateNone[kKeyKeyCode] = @(keyCode);
 			output = [self.keyboardLayout getCharOutput:keyDataDictStateNone isDead:&deadKey nextState:&nextState];
 			[keyCapView setFallback:YES];
