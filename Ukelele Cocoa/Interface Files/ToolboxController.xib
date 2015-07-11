@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ToolboxController">
@@ -19,11 +19,13 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="292" height="85"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="200" height="85"/>
+            <value key="maxSize" type="size" width="300" height="85"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="292" height="85"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mni-wx-I6O">
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Mni-wx-I6O">
                         <rect key="frame" x="18" y="49" width="256" height="18"/>
                         <buttonCell key="cell" type="check" title="Sticky Modifiers" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CWI-dU-RVM">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -33,7 +35,7 @@
                             <binding destination="-2" name="value" keyPath="toolboxData.stickyModifiers" id="beA-1q-4E7"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OuG-Z5-auH">
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="OuG-Z5-auH">
                         <rect key="frame" x="18" y="18" width="256" height="18"/>
                         <buttonCell key="cell" type="check" title="JIS Only" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uOP-LF-Gyy">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -44,6 +46,14 @@
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Mni-wx-I6O" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="EFL-t6-Fif"/>
+                    <constraint firstAttribute="trailing" secondItem="OuG-Z5-auH" secondAttribute="trailing" constant="20" id="STt-l4-1od"/>
+                    <constraint firstItem="Mni-wx-I6O" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="ibB-hH-emU"/>
+                    <constraint firstItem="OuG-Z5-auH" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="ipg-UC-hii"/>
+                    <constraint firstAttribute="trailing" secondItem="Mni-wx-I6O" secondAttribute="trailing" constant="20" id="ni9-3s-qb0"/>
+                    <constraint firstItem="OuG-Z5-auH" firstAttribute="top" secondItem="Mni-wx-I6O" secondAttribute="bottom" constant="17" id="tYc-0J-e9m"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="DIP-gZ-KuH"/>
