@@ -284,6 +284,13 @@ XMLUtilities::MakeXMLString(const UniChar *inString, const UInt32 inStringLength
 			codeString.Format("&#x%04X;", inString[i]);
 			xmlString += codeString;
 		}
+		else if (UCIsSurrogateHighCharacter(inString[i])) {
+				// We have a surrogate pair
+			assert(i < inStringLength - 1);
+			assert(UCIsSurrogateLowCharacter(inString[i + 1]));
+			xmlString += NString(&inString[i], 2 * sizeof(UniChar), kNStringEncodingUTF16);
+			i++;
+		}
 		else {
 			xmlString += NString(&inString[i], sizeof(UniChar), kNStringEncodingUTF16);
 		}

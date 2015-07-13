@@ -273,17 +273,18 @@ enum ProcessingStates {
 
 - (void)acceptAskText:(NSString *)theText
 {
+	NSString *replacementText = [XMLCocoaUtilities convertEncodedString:theText];
 	if (theText == nil) {
 			// User pressed cancel
 	}
 	else if (deadKeyProcessingType == kDoubleClickDeadKeyChangeToOutput) {
 			// User provided text, but it was a dead key
-		[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
+		[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:replacementText];
 	}
 	else {
 			// User provided text
 		[keyDataDict[kKeyDocument] changeOutputForKey:keyDataDict
-												   to:theText
+												   to:replacementText
 										 usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 	}
 	processingState = kProcessingCompleted;
