@@ -17,8 +17,8 @@
 #import "CreateSelectedDeadKeyController.h"
 #import "UKKeyboardController+Housekeeping.h"
 #import "UKKeyboardDocument.h"
-
-	// Dictionary keys
+	
+// Dictionary keys
 NSString *kDeadKeyDataReplaceDeadKeyOK = @"ReplaceDeadKeyOK";
 NSString *kDeadKeyDataReplaceTerminatorOK = @"ReplaceTerminatorOK";
 NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";

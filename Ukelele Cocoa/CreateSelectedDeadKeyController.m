@@ -79,6 +79,9 @@
 			// Return the terminator as well
 		resultDict[kCreateSelectedDeadKeyTerminator] = [self.terminatorField stringValue];
 	}
+	else {
+		resultDict[kCreateSelectedDeadKeyTerminator] = @"";
+	}
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
 	completionBlock(resultDict);

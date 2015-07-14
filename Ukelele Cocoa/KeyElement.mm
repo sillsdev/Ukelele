@@ -431,7 +431,6 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 	NString oldOutput("");
 	switch (mElementType) {
 		case kKeyFormUndefined:
-			NN_ASSERT(inState == kStateNone);
 			mElementType = kKeyFormOutput;
 			mOutput = inNewOutput;
 			return oldOutput;
