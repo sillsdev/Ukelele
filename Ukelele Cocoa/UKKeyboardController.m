@@ -390,7 +390,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert(ukeleleView, @"Must have a document view");
 	[self updateUkeleleView:ukeleleView
 					  state:internalState[kStateCurrentState]
-				  modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]];
+				  modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]
+			  usingFallback:YES];
 	NSString *keyboardName = [self.keyboardLayout keyboardName];
 	if (keyboardName) {
 		[self.window setTitle:keyboardName];
@@ -398,7 +399,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[ukeleleView setNeedsDisplay:YES];
 }
 
-- (void)updateUkeleleView:(UkeleleView *)ukeleleView state:(NSString *)stateName modifiers:(NSUInteger)modifiers {
+- (void)updateUkeleleView:(UkeleleView *)ukeleleView state:(NSString *)stateName modifiers:(NSUInteger)modifiers usingFallback:(BOOL)useFallback {
 	NSArray *subViews = [ukeleleView keyCapViews];
 	NSAssert(subViews && [subViews count] > 0, @"Must have some key caps");
     NSMutableDictionary *keyDataDict = [NSMutableDictionary dictionary];
@@ -418,7 +419,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *nextState;
         keyDataDict[kKeyKeyCode] = @(keyCode);
 		output = [self.keyboardLayout getCharOutput:keyDataDict isDead:&deadKey nextState:&nextState];
-		if ([output isEqualToString:@""] && ![stateName isEqualToString:kStateNameNone]) {
+		if (useFallback && [output isEqualToString:@""] && ![stateName isEqualToString:kStateNameNone]) {
 			keyDataDictStateNone[kKeyKeyCode] = @(keyCode);
 			output = [self.keyboardLayout getCharOutput:keyDataDictStateNone isDead:&deadKey nextState:&nextState];
 			[keyCapView setFallback:YES];
@@ -1428,7 +1429,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 			UkeleleView *theKeyboard = [[UkeleleView alloc] init];
 			[theKeyboard createViewWithKeyboardID:keyboardID withScale:1.0];
 			[theKeyboard scaleViewToScale:desiredScale limited:NO];
-			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers];
+			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers usingFallback:NO];
 			[theKeyboard setFrameOrigin:NSMakePoint(0, kTextPaneHeight)];
 			[theKeyboard setColourTheme:[ColourTheme defaultPrintTheme]];
 			NSTextView *stateNameView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, kTextPaneHeight)];
