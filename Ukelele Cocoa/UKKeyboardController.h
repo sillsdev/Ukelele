@@ -65,6 +65,7 @@ enum ToolbarItemTags {
 @property (strong) IBOutlet NSComboBox *scaleComboBox;
 @property (strong) IBOutlet NSTextField *messageBar;
 @property (strong) IBOutlet NSScrollView *keyboardView;
+@property (strong) IBOutlet NSButton *cancelButton;
 	// Modifiers tab
 @property (strong) IBOutlet NSTableView *modifiersTableView;
 @property (strong) IBOutlet NSButton *removeModifiersButton;

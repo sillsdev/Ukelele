@@ -96,4 +96,11 @@
 	[completionTarget interactionDidComplete:self];
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	[parentDocumentController setMessageBarText:@""];
+	[parentDocumentController clearSelectedKey];
+	[self interactionCompleted];
+}
+
 @end

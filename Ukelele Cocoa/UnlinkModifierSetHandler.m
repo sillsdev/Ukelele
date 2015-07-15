@@ -72,4 +72,10 @@
 		// No messages to handle
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	callback(-1);
+	[self interactionCompleted];
+}
+
 @end

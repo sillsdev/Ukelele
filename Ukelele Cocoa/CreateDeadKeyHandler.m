@@ -363,4 +363,9 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	}
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	[self interactionCompleted];
+}
+
 @end

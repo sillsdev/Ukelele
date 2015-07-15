@@ -13,5 +13,6 @@
 
 - (void)interactionCompleted;
 - (void)handleMessage:(NSDictionary *)messageData;
+- (void)cancelInteraction;
 
 @end

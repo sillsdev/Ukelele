@@ -106,4 +106,10 @@
 	}
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	[parentDocumentWindow setMessageBarText:@""];
+	[self interactionCompleted];
+}
+
 @end

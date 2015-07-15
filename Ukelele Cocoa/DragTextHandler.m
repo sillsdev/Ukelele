@@ -89,4 +89,8 @@
 		// We don't handle any messages at this point
 }
 
+- (void)cancelInteraction {
+	[self interactionCompleted];
+}
+
 @end

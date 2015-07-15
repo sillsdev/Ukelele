@@ -350,4 +350,9 @@ enum ProcessingStates {
 		// We don't handle any messages at this point
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	[self interactionCompleted];
+}
+
 @end

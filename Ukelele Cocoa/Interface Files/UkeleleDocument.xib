@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardController">
             <connections>
+                <outlet property="cancelButton" destination="xdz-JZ-Y6L" id="Iud-GU-aqf"/>
                 <outlet property="commentBindingPane" destination="3Oj-mq-If4" id="vfh-Zg-hxD"/>
                 <outlet property="commentPane" destination="Vnz-1Z-fWP" id="YMv-hf-QVT"/>
                 <outlet property="deadKeyContextualMenu" destination="i6v-9N-pDp" id="AbT-mB-dLL"/>
@@ -49,8 +50,8 @@
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
-                                            <rect key="frame" x="15" y="322" width="522" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
+                                            <rect key="frame" x="15" y="322" width="470" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="2z3-D3-1ig">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -110,6 +111,16 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
+                                        <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
+                                            <rect key="frame" x="513" y="310" width="82" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="cancel:" target="-1" id="ieO-Sz-9QB"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="GcK-Mo-ulK" firstAttribute="top" secondItem="M6q-7f-oxV" secondAttribute="top" constant="3" id="5Yw-MY-BhC"/>
@@ -120,6 +131,7 @@
                                         <constraint firstAttribute="trailing" secondItem="pxh-Py-4Pd" secondAttribute="trailing" constant="-3" id="aLY-0B-f9l"/>
                                         <constraint firstItem="pxh-Py-4Pd" firstAttribute="top" secondItem="GcK-Mo-ulK" secondAttribute="bottom" constant="8" id="b5w-AN-Yk7"/>
                                         <constraint firstAttribute="trailing" secondItem="7DR-6A-223" secondAttribute="trailing" constant="17" id="dru-lA-iWk"/>
+                                        <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="xdz-JZ-Y6L" secondAttribute="trailing" constant="8" id="eI0-ab-RAJ"/>
                                         <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="GcK-Mo-ulK" secondAttribute="trailing" constant="62" id="eUF-5J-Mn0"/>
                                         <constraint firstItem="7DR-6A-223" firstAttribute="top" secondItem="M6q-7f-oxV" secondAttribute="top" constant="3" id="iL2-mn-2vF"/>
                                         <constraint firstItem="7DR-6A-223" firstAttribute="leading" secondItem="VD4-cu-A5u" secondAttribute="trailing" constant="8" id="nJO-cc-tXS"/>
@@ -206,7 +218,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="718" height="19"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
                                                             <tableColumn identifier="Index" editable="NO" width="92" minWidth="40" maxWidth="1000" id="Ig1-mf-3Ks">

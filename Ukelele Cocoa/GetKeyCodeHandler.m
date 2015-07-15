@@ -52,4 +52,10 @@
 	[self.completionTarget interactionDidComplete:self];
 }
 
+- (void)cancelInteraction {
+		// User cancelled
+	callBack(kNoKeyCode);
+	[self interactionCompleted];
+}
+
 @end

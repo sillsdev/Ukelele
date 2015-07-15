@@ -513,6 +513,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// Deselect any selected key
 	[self setSelectedKey:kNoKeyCode];
     interactionHandler = nil;
+	[self.cancelButton setEnabled:NO];
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	if (!usingStickyModifiers) {
 		internalState[kStateCurrentModifiers] = @([NSEvent modifierFlags]);
@@ -548,7 +549,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma unused(tabView)
     if ([kTabNameKeyboard isEqualTo:[tabViewItem identifier]]) {
 			// Activating the keyboard tab
-        [self setMessageBarText:@""];
+		if (interactionHandler == nil) {
+			[self setMessageBarText:@""];
+		}
 		[self setViewScaleComboBox];
 		[self.window makeFirstResponder:self.keyboardView];
     }
@@ -998,6 +1001,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
+	[self.cancelButton setEnabled:YES];
 	UnlinkKeyType keyType = kUnlinkKeyTypeAskKey;
 	if (selectedKey != kNoKeyCode || [sender isMemberOfClass:[KeyCapView class]]) {
 		keyType = kUnlinkKeyTypeSelectedKey;
@@ -1018,6 +1022,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UnlinkKeyHandler *theHandler = [UnlinkKeyHandler unlinkKeyHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
+	[self.cancelButton setEnabled:YES];
 	[theHandler beginInteraction:kUnlinkKeyTypeAskCode];
 }
 
@@ -1026,6 +1031,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UnlinkModifierSetHandler *theHandler = [UnlinkModifierSetHandler unlinkModifierSetHandler:self];
 	interactionHandler = theHandler;
 	[theHandler setCompletionTarget:self];
+	[self.cancelButton setEnabled:YES];
 	[theHandler beginInteractionWithCallback:^(NSInteger modifierSet) {
 		if (modifierSet >= 0) {
 				// Unlink the set
@@ -1039,6 +1045,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma unused(sender)
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
 	interactionHandler = [SwapKeysController swapKeysController:self];
+	[self.cancelButton setEnabled:YES];
 	[(SwapKeysController *)interactionHandler beginInteraction:NO];
 }
 
@@ -1046,6 +1053,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma unused(sender)
 	NSAssert(interactionHandler == nil, @"Interaction is in progress");
 	interactionHandler = [SwapKeysController swapKeysController:self];
+	[self.cancelButton setEnabled:YES];
 	[(SwapKeysController *)interactionHandler beginInteraction:YES];
 }
 
@@ -1073,6 +1081,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	ImportDeadKeyHandler *importHandler = [ImportDeadKeyHandler importDeadKeyHandler];
 	interactionHandler = importHandler;
 	[importHandler setCompletionTarget:self];
+	[self.cancelButton setEnabled:YES];
 	[importHandler beginInteractionForWindow:self];
 }
 
@@ -1214,6 +1223,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[self setMessageBarText:@"Click or type the key you wish to cut"];
 		interactionHandler = [GetKeyCodeHandler getKeyCodeHandler];
 		[(GetKeyCodeHandler *)interactionHandler setCompletionTarget:self];
+		[self.cancelButton setEnabled:YES];
 		[(GetKeyCodeHandler *)interactionHandler beginInteractionWithCompletion:^(NSInteger enteredKeyCode) {
 			if (enteredKeyCode != kNoKeyCode) {
 				[self doCutKey:enteredKeyCode];
@@ -1240,6 +1250,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[self setMessageBarText:@"Click or type the key you wish to copy"];
 		interactionHandler = [GetKeyCodeHandler getKeyCodeHandler];
 		[(GetKeyCodeHandler *)interactionHandler setCompletionTarget:self];
+		[self.cancelButton setEnabled:YES];
 		[(GetKeyCodeHandler *)interactionHandler beginInteractionWithCompletion:^(NSInteger enteredKeyCode) {
 			if (enteredKeyCode != kNoKeyCode) {
 				[self doCopyKey:enteredKeyCode];
@@ -1266,6 +1277,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[self setMessageBarText:@"Click or type the key you wish to paste onto"];
 		interactionHandler = [GetKeyCodeHandler getKeyCodeHandler];
 		[(GetKeyCodeHandler *)interactionHandler setCompletionTarget:self];
+		[self.cancelButton setEnabled:YES];
 		[(GetKeyCodeHandler *)interactionHandler beginInteractionWithCompletion:^(NSInteger enteredKeyCode) {
 			if (enteredKeyCode != kNoKeyCode) {
 				[self doPasteKey:enteredKeyCode];
@@ -1366,6 +1378,13 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[theHandler setCompletionTarget:self];
 	interactionHandler = theHandler;
 	[theHandler beginInteractionWithKeyboard:self];
+}
+
+- (IBAction)cancel:(id)sender {
+#pragma unused(sender)
+	NSAssert(interactionHandler != nil, @"Can only have cancel when an interaction is in progress");
+	[interactionHandler cancelInteraction];
+	[self.cancelButton setEnabled:NO];
 }
 
 #pragma mark Printing
