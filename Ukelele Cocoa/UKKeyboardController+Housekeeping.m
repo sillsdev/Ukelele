@@ -14,6 +14,7 @@
 #import "ColourThemeEditorController.h"
 #import "UkeleleConstantStrings.h"
 #import "UKKeyboardDocument.h"
+#import "XMLCocoaUtilities.h"
 
 @implementation UKKeyboardController (Housekeeping)
 
@@ -57,8 +58,12 @@
 - (IBAction)changeStateName:(id)sender
 {
 #pragma unused(sender)
-	NSArray *stateNames = [self.keyboardLayout stateNamesExcept:kStateNameNone];
-	NSAssert(stateNames && [stateNames count] > 0, @"Must have some states");
+	NSArray *rawStateNames = [self.keyboardLayout stateNamesExcept:kStateNameNone];
+	NSAssert(rawStateNames && [rawStateNames count] > 0, @"Must have some states");
+	NSMutableArray *stateNames = [NSMutableArray arrayWithCapacity:[rawStateNames count]];
+	for (NSString *stateName in rawStateNames) {
+		[stateNames addObject:[XMLCocoaUtilities convertToXMLString:stateName]];
+	}
 	NSString *infoText = @"Choose the state name to replace";
 	if (nil == replaceNameSheet) {
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
@@ -85,9 +90,13 @@
 - (IBAction)changeActionName:(id)sender
 {
 #pragma unused(sender)
-	NSArray *actionNames = [self.keyboardLayout actionNames];
-	NSAssert(actionNames && [actionNames count] > 0, @"Must have some actions");
+	NSArray *rawActionNames = [self.keyboardLayout actionNames];
+	NSAssert(rawActionNames && [rawActionNames count] > 0, @"Must have some actions");
 	NSString *infoText = @"Choose the action name to replace";
+	NSMutableArray *actionNames = [NSMutableArray arrayWithCapacity:[rawActionNames count]];
+	for (NSString *actionName in rawActionNames) {
+		[actionNames addObject:[XMLCocoaUtilities convertToXMLString:actionName]];
+	}
 	if (nil == replaceNameSheet) {
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];
 	}
