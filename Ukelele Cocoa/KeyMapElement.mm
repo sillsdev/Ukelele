@@ -270,6 +270,10 @@ void KeyMapElement::ImportDeadKey(const KeyMapElement *inSource,
 			continue;
 		}
 		KeyElement *localElement = GetKeyElement(eltIndex);
+		if (localElement == NULL) {
+			localElement = new KeyElement(eltIndex);
+			mElementTable->AddKeyElement(eltIndex, localElement);
+		}
 		NString importString;
 		UInt32 sourceType = sourceElement->GetTypeForState(inSourceState, inSourceActionList, importString);
 		switch (sourceType) {

@@ -158,12 +158,11 @@ void KeyMapSetList::ImportDeadKey(KeyMapSetList *inSource,
 {
 	KeyMapSetIterator localPos;
 	KeyMapSetIterator sourcePos = inSource->mList.begin();
-	for (localPos = mList.begin(); localPos != mList.end(); ++localPos) {
+	for (localPos = mList.begin(); localPos != mList.end() && sourcePos != inSource->mList.end(); ++localPos, ++sourcePos) {
 		KeyMapSet *localKeyMapSet = *localPos;
 		KeyMapSet *sourceKeyMapSet = *sourcePos;
 		localKeyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet,
 			inLocalActionList, inSourceActionList);
-		++sourcePos;
 	}
 }
 

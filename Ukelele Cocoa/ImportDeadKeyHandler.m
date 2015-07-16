@@ -58,6 +58,7 @@
 			NSArray *panelURLs = [openPanel URLs];
 			NSAssert([panelURLs count] == 1, @"Must have only one file");
 			NSURL *documentURL = panelURLs[0];
+			[openPanel orderOut:self];
 			[self handleChoiceOfSourceFile:documentURL];
 		}
 	}];
@@ -155,19 +156,18 @@
 
 - (void)handleDocumentWithURL:(NSURL *)documentURL {
 		// We have a URL which should be a valid keyboard layout
-	NSData *documentData = [NSData dataWithContentsOfURL:documentURL];
-	if (documentData == nil) {
-			// Couldn't read the file
-		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not read the document" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-		[alert runModal];
-		[self interactionCompleted];
-		return;
-	}
+	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:documentURL options:0 error:NULL];
+//	NSData *documentData = [NSData dataWithContentsOfURL:documentURL];
+//	if (documentData == nil) {
+//			// Couldn't read the file
+//		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not read the document" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+//		[alert runModal];
+//		[self interactionCompleted];
+//		return;
+//	}
 	UKKeyboardDocument *theDocument = [[UKKeyboardDocument alloc] init];
 	NSError *theError;
-	BOOL success = [theDocument readFromData:documentData
-									  ofType:kFileTypeKeyboardLayout
-									   error:&theError];
+	BOOL success = [theDocument readFromFileWrapper:fileWrapper ofType:kFileTypeKeyboardLayout error:&theError];
 	if (!success) {
 			// Couldn't create the document
 		NSAlert *alert = [NSAlert alertWithError:theError];
@@ -242,6 +242,11 @@
 - (void)handleMessage:(NSDictionary *)messageData {
 #pragma unused(messageData)
 		// No messages to handle
+}
+
+- (void)cancelInteraction {
+		// User cancelled
+	[self interactionCompleted];
 }
 
 @end
