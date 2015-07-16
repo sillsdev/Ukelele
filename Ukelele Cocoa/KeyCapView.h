@@ -13,7 +13,7 @@
 
 #define fallbackAlpha	0.5
 
-@interface KeyCapView : NSView {
+@interface KeyCapView : NSView<NSDraggingSource, NSPasteboardWriting> {
 	NSRect keyRect;
 	NSMutableAttributedString *displayText;
 	CTFrameRef textFrame;

@@ -542,6 +542,20 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
+- (void)mouseDragged:(NSEvent *)theEvent {
+		// Only drag text for ordinary keys
+	if (self.keyType == kOrdinaryKeyType) {
+		NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:self];
+		NSImage *dragImage = [[NSImage alloc] initWithSize:keyRect.size];
+		[dragImage lockFocus];
+		[self drawText:keyRect];
+		[dragImage unlockFocus];
+		[dragItem setDraggingFrame:NSMakeRect(0.0, 0.0, keyRect.size.width, keyRect.size.height) contents:dragImage];
+		NSArray *dragItems = [NSArray arrayWithObject:dragItem];
+		[self beginDraggingSessionWithItems:dragItems event:theEvent source:self];
+	}
+}
+
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
 #pragma unused(sender)
@@ -633,6 +647,39 @@ static CGAffineTransform kTextTransform = {
 - (IBAction)attachComment:(id)sender {
 #pragma unused(sender)
 	[[self nextResponder] tryToPerform:@selector(attachComment:) with:self];
+}
+
+#pragma mark Drag and Drop
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+#pragma unused(session)
+	switch (context) {
+		case NSDraggingContextWithinApplication:
+		case NSDraggingContextOutsideApplication:
+			break;
+			
+		default:
+			return NSDragOperationNone;
+	}
+		// Can supply a drag if we have some display text
+	if ([displayText length] > 0) {
+		return NSDragOperationCopy;
+	}
+	else {
+		return NSDragOperationNone;
+	}
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard {
+#pragma unused(pasteboard)
+	return @[(NSString *)kUTTypeUTF8PlainText];
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type {
+	if ([type isEqualToString:(NSString *)kUTTypeUTF8PlainText]) {
+		return self.outputString;
+	}
+	return nil;
 }
 
 @end
