@@ -450,7 +450,7 @@ void ActionElementSet::AddActionElement(ActionElement *inActionElement)
 {
 	std::pair<std::set<ActionElement *, DereferenceLess>::iterator, bool> result =
 	mActionElementSet.insert(inActionElement);
-	NN_ASSERT(result.second);
+	assert(result.second);
 	mIterator = mActionElementSet.end();
 }
 

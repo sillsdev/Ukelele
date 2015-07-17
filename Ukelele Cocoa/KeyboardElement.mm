@@ -1002,6 +1002,9 @@ void KeyboardElement::ImportDeadKey(const NString inLocalState,
 								  mActionList, inSource->mActionList);
 		// Handle the terminators
 	TerminatorsElement *sourceTerminators = inSource->GetTerminatorsElement();
+	if (mTerminatorsElement.get() == NULL) {
+		mTerminatorsElement.reset(new TerminatorsElement);
+	}
 	mTerminatorsElement->ImportDeadKey(inLocalState, sourceTerminators->FindWhenElement(inSourceState));
 }
 
@@ -1517,6 +1520,28 @@ void KeyboardElement::ReplaceStateName(const NString inOldName, const NString in
 	mKeyMapSetList->ReplaceStateName(inOldName, inNewName);
 		// Replace state name in the terminators
 	mTerminatorsElement->ReplaceStateName(inOldName, inNewName);
+}
+
+RemoveStateData *KeyboardElement::RemoveState(const NString inState) {
+	RemoveStateData *stateData = [[RemoveStateData alloc] init];
+	RemoveStateDataBlock *dataBlock;
+	if (HasInlineAction()) {
+		dataBlock = new RemoveStateDataBlock(shared_ptr<KeyMapSetList>(), mActionList, mTerminatorsElement);
+	}
+	else {
+		dataBlock = new RemoveStateDataBlock(mKeyMapSetList, mActionList, mTerminatorsElement);
+	}
+	[stateData setDataBlock:dataBlock];
+	NSSet *statesToRemove = [NSSet setWithObject:ToNS(inState)];
+	ActionElement *actionElement;
+	for (actionElement = mActionList->GetFirstElement(); actionElement != NULL; actionElement = mActionList->GetNextElement()) {
+		actionElement->RemoveStates(statesToRemove);
+	}
+	mKeyMapSetList->RemoveStates(statesToRemove);
+	if (mTerminatorsElement.get() != NULL) {
+		mTerminatorsElement->RemoveStates(statesToRemove);
+	}
+	return stateData;
 }
 
 	// Remove all states that are not reachable

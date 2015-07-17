@@ -480,9 +480,29 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (void)importDeadKeyState:(NSString *)sourceState toState:(NSString *)localState fromKeyboard:(UkeleleKeyboardObject *)sourceKeyboard {
+	NSUndoManager *undoManager = [parentController undoManager];
+	[[undoManager prepareWithInvocationTarget:self] undoImportDeadKeyState:localState];
+	[undoManager setActionName:@"Import dead key state"];
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	boost::shared_ptr<KeyboardElement> sourceKeyboardElement = [sourceKeyboard keyboard]->GetKeyboard();
 	keyboardElement->ImportDeadKey(ToNN(localState), ToNN(sourceState), sourceKeyboardElement.get());
+	[self.delegate documentDidChange];
+}
+
+- (void)undoImportDeadKeyState:(NSString *)importedState {
+	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	RemoveStateData *removeData = keyboardElement->RemoveState(ToNN(importedState));
+	NSUndoManager *undoManager = [parentController undoManager];
+	[[undoManager prepareWithInvocationTarget:self] redoImportDeadKeyState:importedState data:removeData];
+	[undoManager setActionName:@"Import dead key state"];
+}
+
+- (void)redoImportDeadKeyState:(NSString *)importedState data:(RemoveStateData *)removeStateData {
+	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	keyboardElement->ReplaceRemovedStates(removeStateData);
+	NSUndoManager *undoManager = [parentController undoManager];
+	[[undoManager prepareWithInvocationTarget:self] undoImportDeadKeyState:importedState];
+	[undoManager setActionName:@"Import dead key state"];
 }
 
 #pragma mark Changing output

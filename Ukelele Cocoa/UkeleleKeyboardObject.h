@@ -85,6 +85,8 @@ typedef void * UkeleleKeyboard;
 	// Importing a dead key state
 - (BOOL)hasEquivalentModifierMap:(UkeleleKeyboardObject *)otherKeyboard;
 - (void)importDeadKeyState:(NSString *)sourceState toState:(NSString *)localState fromKeyboard:(UkeleleKeyboardObject *)sourceKeyboard;
+- (void)undoImportDeadKeyState:(NSString *)importedState;
+- (void)redoImportDeadKeyState:(NSString *)importedState data:(RemoveStateData *)removeStateData;
 
 	// Swap keys
 - (void)swapKeyCode:(NSInteger)keyCode1 withKeyCode:(NSInteger)keyCode2;

@@ -105,6 +105,7 @@ public:
 	NArray GetStateNames(const NString inOmitName, const UInt32 inReachable);
 	NArray GetStateNames(const NArray inOmitStates, const UInt32 inReachable);
 	void ReplaceStateName(const NString inOldName, const NString inNewName);
+	RemoveStateData *RemoveState(const NString inState);
 	RemoveStateData *RemoveUnusedStates(void);
 	void ReplaceRemovedStates(RemoveStateData *inStateData);
 	

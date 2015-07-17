@@ -20,6 +20,7 @@
 #import "AskFromList.h"
 #import "UkeleleConstantStrings.h"
 #import "AskTextSheet.h"
+#import "AskImportState.h"
 
 @implementation ImportDeadKeyHandler {
 	NSWindow *parentWindow;
@@ -157,14 +158,6 @@
 - (void)handleDocumentWithURL:(NSURL *)documentURL {
 		// We have a URL which should be a valid keyboard layout
 	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:documentURL options:0 error:NULL];
-//	NSData *documentData = [NSData dataWithContentsOfURL:documentURL];
-//	if (documentData == nil) {
-//			// Couldn't read the file
-//		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not read the document" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-//		[alert runModal];
-//		[self interactionCompleted];
-//		return;
-//	}
 	UKKeyboardDocument *theDocument = [[UKKeyboardDocument alloc] init];
 	NSError *theError;
 	BOOL success = [theDocument readFromFileWrapper:fileWrapper ofType:kFileTypeKeyboardLayout error:&theError];
@@ -201,17 +194,22 @@
 		return;
 	}
 		// Bring up a dialog to choose the state name to import
-	__block AskFromList *askFromList = [AskFromList askFromList];
-	[askFromList beginAskFromListWithText:@"Choose the dead key state to import" withMenu:stateNames forWindow:parentWindow callBack:^(NSString *stateName) {
-		if (stateName) {
-				// Valid state name
-			[self importState:stateName fromDocument:theDocumentWindow];
+	NSArray *targetStateList = [targetObject stateNamesExcept:@""];
+	__block AskImportState *askImport = [AskImportState askImportState];
+	[askImport setImportPrompt:@"Choose the dead key state to import"];
+	[askImport setDestinationStatePrompt:@"Enter a name for the imported dead key state"];
+	[askImport askImportFromState:stateNames
+				  excludingStates:targetStateList
+					   withWindow:parentWindow
+				  completionBlock:^(NSString *importState, NSString *destinationState) {
+		if (importState != nil) {
+				// Have valid states
+			[[targetDocumentWindow keyboardLayout] importDeadKeyState:importState
+															  toState:destinationState
+														 fromKeyboard:sourceObject];
 		}
-		else {
-				// User cancelled
-			[self interactionCompleted];
-		}
-		askFromList = nil;
+		[self interactionCompleted];
+		askImport = nil;
 	}];
 }
 
