@@ -574,6 +574,11 @@ static CGAffineTransform kTextTransform = {
 	[self setNeedsDisplay:YES];
 }
 
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
+#pragma unused(sender)
+	return self.keyType != kSpecialKeyType;
+}
+
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
 	NSPasteboard *pboard = [sender draggingPasteboard];
@@ -585,10 +590,17 @@ static CGAffineTransform kTextTransform = {
 			// Got the text
 		UKKeyboardController *theDocumentWindow = [[self window] windowController];
 		[theDocumentWindow messageDragText:draggedItems[0] toKey:(int)self.keyCode];
+		[self setNeedsDisplay:YES];
 		return YES;
 	}
 	[self setNeedsDisplay:YES];
 	return NO;
+}
+
+- (void)concludeDragOperation:(id<NSDraggingInfo>)sender {
+#pragma unused(sender)
+	self.dragHighlight = NO;
+	[self setNeedsLayout:YES];
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)event {
