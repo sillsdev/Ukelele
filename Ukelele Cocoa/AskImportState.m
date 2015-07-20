@@ -53,7 +53,7 @@
 
 - (IBAction)acceptState:(id)sender {
 #pragma unused(sender)
-	NSString *sourceState = [self.ChooseStatePopup stringValue];
+	NSString *sourceState = [self.ChooseStatePopup titleOfSelectedItem];
 	NSString *newState = [self.AskStateNameField stringValue];
 	if ([targetStates containsObject:newState]) {
 			// We already have a state with this name

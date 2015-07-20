@@ -998,8 +998,25 @@ void KeyboardElement::ImportDeadKey(const NString inLocalState,
 									const KeyboardElement *inSource)
 {
 		// Handle the key map sets and the actions
-	mKeyMapSetList->ImportDeadKey(inSource->mKeyMapSetList.get(), inLocalState, inSourceState,
-								  mActionList, inSource->mActionList);
+	LayoutElement *layoutElement = mLayouts->FindLayout(gestaltUSBAndyANSIKbd);
+	NString keyMapID = layoutElement->GetMapSet();
+	KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(keyMapID);
+	LayoutElement *sourceLayoutElement = inSource->mLayouts->FindLayout(gestaltUSBAndyANSIKbd);
+	NString sourceKeyMapID = sourceLayoutElement->GetMapSet();
+	KeyMapSet *sourceKeyMapSet = inSource->mKeyMapSetList->FindKeyMapSet(sourceKeyMapID);
+	keyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet, mActionList, inSource->mActionList);
+	if (mLayouts->FindLayout(gestaltUSBAndyJISKbd) != layoutElement && inSource->mLayouts->FindLayout(gestaltUSBAndyJISKbd) != sourceLayoutElement) {
+			// We have JIS overrides for both
+		layoutElement = mLayouts->FindLayout(gestaltUSBAndyJISKbd);
+		keyMapID = layoutElement->GetMapSet();
+		keyMapSet = mKeyMapSetList->FindKeyMapSet(keyMapID);
+		sourceLayoutElement = inSource->mLayouts->FindLayout(gestaltUSBAndyJISKbd);
+		sourceKeyMapID = sourceLayoutElement->GetMapSet();
+		sourceKeyMapSet = inSource->mKeyMapSetList->FindKeyMapSet(sourceKeyMapID);
+		keyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet, mActionList, inSource->mActionList);
+	}
+//	mKeyMapSetList->ImportDeadKey(inSource->mKeyMapSetList.get(), inLocalState, inSourceState,
+//								  mActionList, inSource->mActionList);
 		// Handle the terminators
 	TerminatorsElement *sourceTerminators = inSource->GetTerminatorsElement();
 	if (mTerminatorsElement.get() == NULL) {

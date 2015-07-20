@@ -58,7 +58,7 @@
 - (IBAction)changeStateName:(id)sender
 {
 #pragma unused(sender)
-	NSArray *rawStateNames = [self.keyboardLayout stateNamesExcept:kStateNameNone];
+	NSArray *rawStateNames = [[self.keyboardLayout stateNamesExcept:kStateNameNone] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
 	NSAssert(rawStateNames && [rawStateNames count] > 0, @"Must have some states");
 	NSMutableArray *stateNames = [NSMutableArray arrayWithCapacity:[rawStateNames count]];
 	for (NSString *stateName in rawStateNames) {
@@ -90,7 +90,7 @@
 - (IBAction)changeActionName:(id)sender
 {
 #pragma unused(sender)
-	NSArray *rawActionNames = [self.keyboardLayout actionNames];
+	NSArray *rawActionNames = [[self.keyboardLayout actionNames] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
 	NSAssert(rawActionNames && [rawActionNames count] > 0, @"Must have some actions");
 	NSString *infoText = @"Choose the action name to replace";
 	NSMutableArray *actionNames = [NSMutableArray arrayWithCapacity:[rawActionNames count]];

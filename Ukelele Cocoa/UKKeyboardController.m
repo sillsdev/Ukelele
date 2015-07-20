@@ -954,7 +954,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	NSString *dialogText = NSLocalizedStringFromTable(@"Choose the dead key state to enter.",
 													  @"dialogs", @"Choose dead key state to enter");
-	NSArray *menuItems = [self.keyboardLayout stateNamesExcept:internalState[kStateCurrentState]];
+	NSArray *menuItems = [[self.keyboardLayout stateNamesExcept:internalState[kStateCurrentState]] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
 	NSAssert(menuItems && [menuItems count] > 0, @"Must have some states to enter");
 	[askFromList beginAskFromListWithText:dialogText
 								 withMenu:menuItems
