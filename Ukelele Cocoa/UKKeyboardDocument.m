@@ -138,7 +138,7 @@ NSString *kKeyboardName = @"keyboardName";
 	[self.keyboardLayoutsTable registerForDraggedTypes:@[UKKeyboardPasteType, (NSString *)kUTTypeFileURL]];
 		// Tell the Finder that it can copy files out
 	[self.keyboardLayoutsTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedCompare:)];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedStandardCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
 }
