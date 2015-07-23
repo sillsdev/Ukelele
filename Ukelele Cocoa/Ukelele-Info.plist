@@ -67,7 +67,7 @@
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.0b1</string>
+	<string>3001</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>

@@ -13,7 +13,7 @@
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
 		521B78F21B32BB0100946529 /* Ukelele Help.help in Resources */ = {isa = PBXBuildFile; fileRef = 521B78F11B32BB0100946529 /* Ukelele Help.help */; };
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
-		5224CD011B37C3A6004AB2B6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52897C451B20363400B5869D /* Sparkle.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5224CD011B37C3A6004AB2B6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52897C451B20363400B5869D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
@@ -22,7 +22,7 @@
 		522C30B01953C8F3004F12AA /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AD1953C8F3004F12AA /* keyboards.strings */; };
 		52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */; };
 		523451C71927208B00CAEB41 /* PrintAccessoryPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */; };
-		5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardController.m */; };
+		5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5235CAD819481A6E009F8B42 /* UKKeyboardController.m */; settings = {COMPILER_FLAGS = "-Wno-selector"; }; };
 		523A4C2D192454770019F062 /* AskFromList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523A4C2C192454770019F062 /* AskFromList.xib */; };
 		523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */; };
 		523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0071191C9CA900E06DF3 /* KeyCapView.m */; };
@@ -37,7 +37,7 @@
 		523B0092191C9D2200E06DF3 /* XMLCocoaUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B008C191C9D2200E06DF3 /* XMLCocoaUtilities.mm */; };
 		523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B008E191C9D2200E06DF3 /* XMLUtilities.mm */; };
 		523B00BF191CA00A00E06DF3 /* ActionElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0097191CA00A00E06DF3 /* ActionElement.mm */; };
-		523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0099191CA00A00E06DF3 /* KeyboardElement.mm */; };
+		523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0099191CA00A00E06DF3 /* KeyboardElement.mm */; settings = {COMPILER_FLAGS = "-Wno-shadow"; }; };
 		523B00C1191CA00A00E06DF3 /* KeyElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B009B191CA00A00E06DF3 /* KeyElement.mm */; };
 		523B00C2191CA00A00E06DF3 /* KeyElementBundle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B009D191CA00A00E06DF3 /* KeyElementBundle.mm */; };
 		523B00C3191CA00A00E06DF3 /* KeyElementTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B009F191CA00A00E06DF3 /* KeyElementTable.mm */; };
@@ -68,9 +68,9 @@
 		523B010A191CA0D100E06DF3 /* LanguageCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00EA191CA0D100E06DF3 /* LanguageCode.mm */; };
 		523B010B191CA0D100E06DF3 /* LanguageRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00EC191CA0D100E06DF3 /* LanguageRegistry.m */; };
 		523B010C191CA0D100E06DF3 /* LayoutInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00EE191CA0D100E06DF3 /* LayoutInfo.mm */; };
-		523B010D191CA0D100E06DF3 /* RandomNumberGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */; };
+		523B010D191CA0D100E06DF3 /* RandomNumberGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */; settings = {COMPILER_FLAGS = "-Wno-shadow"; }; };
 		523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */; };
-		523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */; };
+		523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */; settings = {COMPILER_FLAGS = "-Wno-shadow"; }; };
 		523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FA191CA0D100E06DF3 /* ToolboxData.m */; };
 		523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */; };
 		523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FE191CA0D100E06DF3 /* UnicodeTable.m */; };
@@ -119,7 +119,7 @@
 		523B01BE191CA18C00E06DF3 /* UnlinkModifiersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0180191CA18C00E06DF3 /* UnlinkModifiersController.m */; };
 		523B01BF191CA18C00E06DF3 /* UnlinkModifierSetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0182191CA18C00E06DF3 /* UnlinkModifierSetHandler.m */; };
 		523B01C0191CA18C00E06DF3 /* WrongStateChosenSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */; };
-		523B01C5191D7F8500E06DF3 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
+		523B01C5191D7F8500E06DF3 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; settings = {COMPILER_FLAGS = "-Wno-selector"; }; };
 		523B01C6191D7F8500E06DF3 /* Common.strings in Resources */ = {isa = PBXBuildFile; fileRef = 523B01C4191D7F8500E06DF3 /* Common.strings */; };
 		523B0206191D8C3100E06DF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B01E8191D865100E06DF3 /* Foundation.framework */; };
 		523B0236191D917400E06DF3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
@@ -134,7 +134,7 @@
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
-		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
+		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; settings = {COMPILER_FLAGS = "-Wno-selector"; }; };
 		525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */; };
 		526EFF8519F0838B001FB994 /* UKNewKeyboardLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */; };
 		5277EB681AAE844600C471C3 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB671AAE844600C471C3 /* GenerateThumbnailForURL.m */; };
@@ -145,7 +145,7 @@
 		5277EB731AAEF46100C471C3 /* ColourTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00DC191CA0D100E06DF3 /* ColourTheme.m */; };
 		5277EB741AAEF46900C471C3 /* LayoutInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00EE191CA0D100E06DF3 /* LayoutInfo.mm */; };
 		5277EB751AAEF48100C471C3 /* ActionElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0097191CA00A00E06DF3 /* ActionElement.mm */; };
-		5277EB761AAEF48500C471C3 /* KeyboardElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0099191CA00A00E06DF3 /* KeyboardElement.mm */; };
+		5277EB761AAEF48500C471C3 /* KeyboardElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0099191CA00A00E06DF3 /* KeyboardElement.mm */; settings = {COMPILER_FLAGS = "-Wno-shadow"; }; };
 		5277EB771AAEF48700C471C3 /* KeyElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B009B191CA00A00E06DF3 /* KeyElement.mm */; };
 		5277EB791AAEF48D00C471C3 /* KeyElementTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B009F191CA00A00E06DF3 /* KeyElementTable.mm */; };
 		5277EB7A1AAEF49400C471C3 /* KeyMapElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00A1191CA00A00E06DF3 /* KeyMapElement.mm */; };
@@ -178,7 +178,7 @@
 		5277EB961AAEFE7300C471C3 /* UnicodeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FE191CA0D100E06DF3 /* UnicodeTable.m */; };
 		5277EB971AAEFEC900C471C3 /* KeyStrokeLookupTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00A9191CA00A00E06DF3 /* KeyStrokeLookupTable.mm */; };
 		5277EB981AAEFEEA00C471C3 /* RemoveStateDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */; };
-		5277EB991AAEFEF900C471C3 /* RandomNumberGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */; };
+		5277EB991AAEFEF900C471C3 /* RandomNumberGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */; settings = {COMPILER_FLAGS = "-Wno-shadow"; }; };
 		5277EB9A1AAEFF0500C471C3 /* ActionElementSetHolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00D4191CA0D100E06DF3 /* ActionElementSetHolder.mm */; };
 		5277EB9B1AAEFF1600C471C3 /* AddMissingOutputDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00DA191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm */; };
 		5277EB9C1AAEFFF000C471C3 /* NString_hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B0089191C9D2200E06DF3 /* NString_hash.cpp */; };
