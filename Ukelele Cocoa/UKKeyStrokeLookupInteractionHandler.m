@@ -96,4 +96,8 @@
 	[self.completionTarget interactionDidComplete:self];
 }
 
+- (void)cancelInteraction {
+	[self interactionCompleted];
+}
+
 @end

@@ -18,6 +18,12 @@ const CGFloat kSmallKeyInset = 1.0f;
 const unichar kFirstASCIIPrintingChar = 0x20;
 const unichar kLastASCIIPrintingChar = 0x7e;
 const unichar kLastControlChar = 0x9f;
+const unichar kDiscretionaryHyphen = 0xad;
+const unichar kFirstSpaceChar = 0x2000;
+const unichar kLastSpaceChar = 0x200f;
+const unichar kFirstSeparatorChar = 0x2028;
+const unichar kLastSeparatorChar = 0x202f;
+const unichar kZeroWidthNonBreakSpace = 0xfeff;
 static CGAffineTransform kTextTransform = {
 	1.0, 0.0, 0.0, 1.0, 0.0, 0.0
 };
@@ -237,8 +243,12 @@ static CGAffineTransform kTextTransform = {
 		BOOL isLowASCII = firstChar >= kFirstASCIIPrintingChar &&
 						  firstChar <= kLastASCIIPrintingChar;
 		BOOL isAboveControlRange = firstChar > kLastControlChar;
+		BOOL isInvisibleCharacter = firstChar == kDiscretionaryHyphen ||
+						firstChar == kZeroWidthNonBreakSpace ||
+						(firstChar >= kFirstSpaceChar && firstChar <= kLastSpaceChar) ||
+						(firstChar >= kFirstSeparatorChar && firstChar <= kLastSeparatorChar);
 		BOOL isControlCharacter = [self.outputString length] == 1 &&
-								  !isLowASCII && !isAboveControlRange;
+								  ((!isLowASCII && !isAboveControlRange) || isInvisibleCharacter);
 		if (isControlCharacter) {
 				// A control character - see if we have a symbol for it
 			displayText = [LayoutInfo getKeySymbolString:(unsigned int)self.keyCode
@@ -559,7 +569,7 @@ static CGAffineTransform kTextTransform = {
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
 #pragma unused(sender)
-	if (self.keyType != kSpecialKeyType) {
+	if (self.keyType == kOrdinaryKeyType) {
 		self.dragHighlight = YES;
 		[self setNeedsDisplay:YES];
 		return NSDragOperationGeneric;
@@ -576,7 +586,7 @@ static CGAffineTransform kTextTransform = {
 
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
 #pragma unused(sender)
-	return self.keyType != kSpecialKeyType;
+	return self.keyType == kOrdinaryKeyType;
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender

@@ -35,7 +35,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="54F-J1-TTp">
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="54F-J1-TTp">
                         <rect key="frame" x="18" y="126" width="445" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rRl-dj-OgP" id="SOM-IJ-ki0">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -65,8 +65,11 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IGb-wE-HvP">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IGb-wE-HvP">
                         <rect key="frame" x="384" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="YOS-bv-EQW"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TE8-lk-gof">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -78,8 +81,11 @@ DQ
                             <action selector="acceptState:" target="-2" id="w3j-Vu-ygh"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2b-QP-hMm">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y2b-QP-hMm">
                         <rect key="frame" x="302" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="rcn-iZ-Tss"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SLh-yy-57J">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -102,12 +108,14 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Onj-TV-DQc" secondAttribute="trailing" constant="20" id="2Hp-LT-HC0"/>
+                    <constraint firstItem="54F-J1-TTp" firstAttribute="trailing" secondItem="9Sk-mC-Qtw" secondAttribute="trailing" id="3Iw-th-LMd"/>
                     <constraint firstAttribute="trailing" secondItem="9Sk-mC-Qtw" secondAttribute="trailing" constant="20" id="5yf-Oo-oIi"/>
                     <constraint firstAttribute="trailing" secondItem="IGb-wE-HvP" secondAttribute="trailing" constant="20" id="D7X-lQ-26p"/>
                     <constraint firstItem="Onj-TV-DQc" firstAttribute="top" secondItem="XEx-XF-NyL" secondAttribute="bottom" constant="8" id="HCy-1H-inI"/>
                     <constraint firstAttribute="trailing" secondItem="UZq-ZX-dXe" secondAttribute="trailing" constant="20" id="ONe-BL-gcV"/>
                     <constraint firstItem="IGb-wE-HvP" firstAttribute="top" secondItem="UZq-ZX-dXe" secondAttribute="bottom" constant="8" id="Oeu-fA-wt8"/>
                     <constraint firstItem="IGb-wE-HvP" firstAttribute="leading" secondItem="y2b-QP-hMm" secondAttribute="trailing" constant="12" id="PQ9-hc-qcb"/>
+                    <constraint firstItem="54F-J1-TTp" firstAttribute="leading" secondItem="9Sk-mC-Qtw" secondAttribute="leading" id="QWS-EO-6xp"/>
                     <constraint firstAttribute="bottom" secondItem="IGb-wE-HvP" secondAttribute="bottom" constant="20" id="V4I-KK-DBR"/>
                     <constraint firstItem="UZq-ZX-dXe" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="Vqd-Me-wxG"/>
                     <constraint firstItem="UZq-ZX-dXe" firstAttribute="top" secondItem="Onj-TV-DQc" secondAttribute="bottom" constant="8" id="YKg-Pp-Vpv"/>

@@ -50,8 +50,11 @@
                                     <rect key="frame" x="10" y="33" width="754" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
                                             <rect key="frame" x="15" y="322" width="470" height="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="466" id="7xZ-eB-1IL"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="2z3-D3-1ig">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -111,8 +114,11 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
                                             <rect key="frame" x="513" y="310" width="82" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
+                                            </constraints>
                                             <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -123,16 +129,15 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="GcK-Mo-ulK" firstAttribute="top" secondItem="M6q-7f-oxV" secondAttribute="top" constant="3" id="5Yw-MY-BhC"/>
+                                        <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="xdz-JZ-Y6L" secondAttribute="trailing" constant="8" symbolic="YES" id="3gq-Bp-X5F"/>
                                         <constraint firstItem="pxh-Py-4Pd" firstAttribute="leading" secondItem="M6q-7f-oxV" secondAttribute="leading" constant="-3" id="EzE-Tw-31m"/>
+                                        <constraint firstItem="GcK-Mo-ulK" firstAttribute="leading" secondItem="M6q-7f-oxV" secondAttribute="leading" constant="17" id="Hiz-9o-mWH"/>
+                                        <constraint firstItem="GcK-Mo-ulK" firstAttribute="baseline" secondItem="VD4-cu-A5u" secondAttribute="baseline" id="K7T-Vs-rV9"/>
+                                        <constraint firstItem="xdz-JZ-Y6L" firstAttribute="baseline" secondItem="7DR-6A-223" secondAttribute="baseline" id="OkK-yZ-b3T"/>
                                         <constraint firstAttribute="bottom" secondItem="pxh-Py-4Pd" secondAttribute="bottom" constant="-3" id="Q1W-N0-P9q"/>
-                                        <constraint firstItem="GcK-Mo-ulK" firstAttribute="leading" secondItem="M6q-7f-oxV" secondAttribute="leading" constant="17" id="TRM-Do-Q8n"/>
                                         <constraint firstItem="pxh-Py-4Pd" firstAttribute="top" secondItem="7DR-6A-223" secondAttribute="bottom" constant="5" id="YT3-0N-dfW"/>
                                         <constraint firstAttribute="trailing" secondItem="pxh-Py-4Pd" secondAttribute="trailing" constant="-3" id="aLY-0B-f9l"/>
-                                        <constraint firstItem="pxh-Py-4Pd" firstAttribute="top" secondItem="GcK-Mo-ulK" secondAttribute="bottom" constant="8" id="b5w-AN-Yk7"/>
                                         <constraint firstAttribute="trailing" secondItem="7DR-6A-223" secondAttribute="trailing" constant="17" id="dru-lA-iWk"/>
-                                        <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="xdz-JZ-Y6L" secondAttribute="trailing" constant="8" id="eI0-ab-RAJ"/>
-                                        <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="GcK-Mo-ulK" secondAttribute="trailing" constant="62" id="eUF-5J-Mn0"/>
                                         <constraint firstItem="7DR-6A-223" firstAttribute="top" secondItem="M6q-7f-oxV" secondAttribute="top" constant="3" id="iL2-mn-2vF"/>
                                         <constraint firstItem="7DR-6A-223" firstAttribute="leading" secondItem="VD4-cu-A5u" secondAttribute="trailing" constant="8" id="nJO-cc-tXS"/>
                                         <constraint firstItem="VD4-cu-A5u" firstAttribute="top" secondItem="M6q-7f-oxV" secondAttribute="top" constant="3" id="x84-t0-YIU"/>
