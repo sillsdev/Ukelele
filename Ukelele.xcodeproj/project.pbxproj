@@ -210,7 +210,6 @@
 		52BBED13191B4C3900E48394 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED11191B4C3900E48394 /* Credits.rtf */; };
 		52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1A191B4C3900E48394 /* MainMenu.xib */; };
 		52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED1D191B4C3900E48394 /* Images.xcassets */; };
-		52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */ = {isa = PBXBuildFile; fileRef = 52BBED3E191B50B700E48394 /* Ukelele.icns */; };
 		52BEADEC192484A6008A3314 /* AskText.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEB192484A6008A3314 /* AskText.xib */; };
 		52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEADEF1924856F008A3314 /* AskYesNo.xib */; };
 		52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C2B5CF192743C20052D418 /* UkelelePreferences.xib */; };
@@ -596,8 +595,6 @@
 		52BBED2B191B4C3900E48394 /* UkeleleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UkeleleTests-Info.plist"; sourceTree = "<group>"; };
 		52BBED2D191B4C3900E48394 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		52BBED2F191B4C3900E48394 /* Ukelele_CocoaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ukelele_CocoaTests.m; sourceTree = "<group>"; };
-		52BBED3C191B4F6900E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
-		52BBED3E191B50B700E48394 /* Ukelele.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Ukelele.icns; sourceTree = "<group>"; };
 		52BEADEB192484A6008A3314 /* AskText.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskText.xib; path = "Interface Files/AskText.xib"; sourceTree = "<group>"; };
 		52BEADEF1924856F008A3314 /* AskYesNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskYesNo.xib; path = "Interface Files/AskYesNo.xib"; sourceTree = "<group>"; };
 		52C2B5CF192743C20052D418 /* UkelelePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkelelePreferences.xib; path = "Interface Files/UkelelePreferences.xib"; sourceTree = "<group>"; };
@@ -873,7 +870,6 @@
 			children = (
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52897C451B20363400B5869D /* Sparkle.framework */,
-				52BBED3E191B50B700E48394 /* Ukelele.icns */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C1191D7F5C00E06DF3 /* Common */,
 				523B01C7191D7F9300E06DF3 /* Dependencies */,
@@ -933,7 +929,6 @@
 				52A481EF1923484B00D412D7 /* Interface Files */,
 				52BBED1A191B4C3900E48394 /* MainMenu.xib */,
 				52BBED1D191B4C3900E48394 /* Images.xcassets */,
-				52BBED3C191B4F6900E48394 /* Ukelele.icns */,
 				52BBED09191B4C3900E48394 /* Supporting Files */,
 			);
 			path = "Ukelele Cocoa";
@@ -1295,7 +1290,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52BBED3F191B50B700E48394 /* Ukelele.icns in Resources */,
 				52EB2B271927397000712272 /* ToolboxController.xib in Resources */,
 				52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
@@ -1644,6 +1638,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_FAST_MATH = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/boost_1_42_0,

@@ -2,8 +2,8 @@
 #include <CoreServices/CoreServices.h>
 #include <QuickLook/QuickLook.h>
 
-OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize);
-void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbnail);
+__attribute__((visibility("default"))) OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize);
+__attribute__((visibility("default"))) void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbnail);
 
 /* -----------------------------------------------------------------------------
     Generate a thumbnail for file

@@ -7,8 +7,8 @@
 
 #define kStandardKeyboard gestaltUSBAndyANSIKbd
 
-OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
-void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
+__attribute__((visibility("default"))) OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
+__attribute__((visibility("default"))) void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file
