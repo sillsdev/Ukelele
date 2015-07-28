@@ -32,7 +32,7 @@
 @property (nonatomic) BOOL fallback;
 @property (nonatomic) BOOL small;
 @property (nonatomic) BOOL dragHighlight;
-@property (nonatomic, weak) NSColor *currentTextColour;
+@property (nonatomic, assign) NSColor *currentTextColour;
 @property (nonatomic, assign) CTParagraphStyleRef largeCTStyle;
 @property (nonatomic, assign) CTParagraphStyleRef smallCTStyle;
 @property (nonatomic) CTFontRef largeCTFont;
