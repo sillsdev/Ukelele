@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UkelelePreferenceController">
@@ -123,7 +123,7 @@
                                     <connections>
                                         <binding destination="Hj3-nb-Czb" name="content" keyPath="arrangedObjects" id="z3W-ga-wuT"/>
                                         <binding destination="Hj3-nb-Czb" name="contentValues" keyPath="arrangedObjects.key" previousBinding="z3W-ga-wuT" id="U8U-H0-LNi"/>
-                                        <binding destination="hMj-Q9-PR8" name="selectedIndex" keyPath="values.ColourTheme" previousBinding="U8U-H0-LNi" id="CUp-M4-Toh"/>
+                                        <binding destination="hMj-Q9-PR8" name="selectedValue" keyPath="values.ColourTheme" previousBinding="U8U-H0-LNi" id="oyZ-Tv-X6U"/>
                                     </connections>
                                 </popUpButton>
                                 <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7f-Zx-xcE">

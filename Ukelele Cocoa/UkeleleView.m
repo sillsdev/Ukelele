@@ -100,10 +100,17 @@ typedef struct KeyEntryRec {
     self = [super initWithFrame:frame];
     if (self) {
         _scaleFactor = 1.0;
-		_colourTheme = [[ColourTheme defaultColourTheme] copy];
 		keyCapMap = [[KeyCodeMap alloc] init];
 		keyCapList = [NSMutableArray arrayWithCapacity:128];
 		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+		NSString *themeName = [theDefaults stringForKey:UKColourTheme];
+		if (themeName == nil || themeName.length == 0) {
+				// No default theme
+			_colourTheme = [[ColourTheme defaultColourTheme] copy];
+		}
+		else {
+			_colourTheme = [ColourTheme colourThemeNamed:themeName];
+		}
 		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
 		if (defaultFontName == nil || defaultFontName.length == 0) {
 				// Nothing came from the defaults

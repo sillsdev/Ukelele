@@ -7,8 +7,10 @@
 //
 
 #import "ColourTheme.h"
+#import "UkeleleConstantStrings.h"
 
-	// Constants for encoding gradient type information
+	
+// Constants for encoding gradient type information
 
 enum {
 	kNormalShift = 0,
@@ -278,6 +280,25 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultPrintTheme setWindowBackgroundColour:[NSColor whiteColor]];
 	}
 	return sDefaultPrintTheme;
+}
+
++ (ColourTheme *)colourThemeNamed:(NSString *)themeName {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
+	if (colourThemes != nil) {
+		ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:colourThemes[themeName]];
+		if (theTheme != nil) {
+			return [theTheme copy];
+		}
+	}
+		// Getting here means the name was not in the dictionary
+	if ([themeName isEqualToString:kDefaultThemeName]) {
+		return [[ColourTheme defaultColourTheme] copy];
+	}
+	else if ([themeName isEqualToString:kPrintThemeName]) {
+		return [[ColourTheme defaultPrintTheme] copy];
+	}
+	return [[ColourTheme defaultColourTheme] copy];
 }
 
 #pragma mark Access routines
