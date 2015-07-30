@@ -139,6 +139,7 @@ NXMLNode *LayoutElement::CreateXMLTree(void)
 	xmlTree->SetElementAttribute(kLastAttribute, lastString);
 	xmlTree->SetElementAttribute(kModifiersAttribute, mModifiers);
 	xmlTree->SetElementAttribute(kMapSetAttribute, mMapSet);
+	xmlTree->SetElementUnpaired(true);
 	AddCommentsToXMLTree(*xmlTree);
 	return xmlTree;
 }
