@@ -361,7 +361,8 @@ static CGAffineTransform kTextTransform = {
         [layoutManager glyphRangeForTextContainer:textContainer];
         NSRect neededBox = [layoutManager usedRectForTextContainer:textContainer];
         drawPoint.x += textRect.size.width / 2.0 - neededBox.size.width / 2.0;
-		drawPoint.y -= neededBox.size.height * 0.3;	// Just a value that seems to work!
+		CGFloat yOffset = self.small ? 0.4 : 0.3;	// Just a value that seems to work!
+		drawPoint.y -= neededBox.size.height * yOffset;
 		NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
 		[layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawPoint];
     }
