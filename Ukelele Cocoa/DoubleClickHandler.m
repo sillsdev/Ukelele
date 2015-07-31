@@ -264,8 +264,7 @@ enum ProcessingStates {
 {
 #pragma unused(notification)
 	if (processingState != kProcessingCompleted) {
-		processingState = kProcessingCompleted;
-		[self interactionCompleted];
+		[self acceptAskText:[[popoverController outputField] stringValue]];
 	}
 }
 

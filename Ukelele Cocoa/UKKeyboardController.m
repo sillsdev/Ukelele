@@ -1632,9 +1632,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 	DoubleClickHandler *handler = [[DoubleClickHandler alloc] initWithData:dataDict
 															keyboardLayout:self.keyboardLayout
 																	window:self.window];
+    interactionHandler = handler;
     [handler setCompletionTarget:self];
 	[handler startDoubleClick];
-    interactionHandler = handler;
 }
 
 - (void)messageDragText:(NSString *)draggedText toKey:(int)keyCode
