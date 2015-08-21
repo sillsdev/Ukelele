@@ -10,7 +10,7 @@
 #import "KeyCapView.h"
 #import "SelectionRing.h"
 
-@interface ColourThemeEditorController : NSWindowController<UKKeyCapClick>
+@interface ColourThemeEditorController : NSWindowController<UKKeyCapClick, NSWindowDelegate, NSPopoverDelegate>
 
 @property (strong) IBOutlet NSPopUpButton *themeList;
 @property (strong) IBOutlet KeyCapView *normalUp;
@@ -46,10 +46,11 @@
 - (IBAction)duplicateColourTheme:(id)sender;
 - (IBAction)deleteColourTheme:(id)sender;
 - (IBAction)renameColourTheme:(id)sender;
+- (IBAction)selectColourTheme:(id)sender;
+- (IBAction)setGradient:(id)sender;
 
 + (ColourThemeEditorController *)colourThemeEditorController;
 
-//- (void)startEditingTheme:(ColourTheme *)colourTheme withWindow:(NSWindow *)parentWindow completionBlock:(void (^)(ColourTheme *))theBlock;
 - (void)showColourThemesWithWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))theBlock;
 
 @end

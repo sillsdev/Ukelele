@@ -11,6 +11,7 @@
 #import "KeyCapView.h"
 #import "ColourTheme.h"
 #import "ModifiersController.h"
+#import "UKStyleInfo.h"
 #import "UKMenuDelegate.h"
 
 @interface UkeleleView : NSView
@@ -18,11 +19,7 @@
 @property (nonatomic) CGFloat scaleFactor;
 @property (nonatomic) NSRect baseFrame;
 @property (strong, nonatomic) ColourTheme *colourTheme;
-@property (assign, nonatomic) CTFontDescriptorRef fontDescriptor;
-@property (assign, nonatomic) CTParagraphStyleRef largeParagraphStyle;
-@property (assign, nonatomic) CTParagraphStyleRef smallParagraphStyle;
-@property (strong, nonatomic) NSDictionary *largeAttributes;
-@property (strong, nonatomic) NSDictionary *smallAttributes;
+@property (strong, nonatomic) UKStyleInfo *styleInfo;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *keyCapViews;
 
 - (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;

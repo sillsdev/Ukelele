@@ -20,6 +20,7 @@
 - (IBAction)openManual:(id)sender;
 - (IBAction)openWebSite:(id)sender;
 - (IBAction)openUkeleleUsersGroup:(id)sender;
+- (IBAction)colourThemes:(id)sender;
 
 - (void)connectAndExecuteCommandBlock:(void(^)(NSError *))commandBlock;
 - (BOOL)installHelperTool;

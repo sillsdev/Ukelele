@@ -30,16 +30,15 @@ static CGAffineTransform kTextTransform = {
 
 @implementation KeyCapView
 
+@synthesize tag;
+
 - (instancetype)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         keyRect = frame;
 		_outputString = @"";
 		_colourTheme = [[ColourTheme defaultColourTheme] copy];
-		_largeCTStyle = nil;
-		_smallCTStyle = nil;
-		_largeCTFont = nil;
-		_smallCTFont = nil;
+		_styleInfo = nil;
 		textFrame = nil;
 		displayText = [[NSMutableAttributedString alloc] initWithString:@""];
 		NSTrackingArea *trackingArea =
@@ -48,8 +47,6 @@ static CGAffineTransform kTextTransform = {
 										   owner:self
 										userInfo:nil];
 		[self addTrackingArea:trackingArea];
-        _largeAttributes = nil;
-        _smallAttributes = nil;
         textStorage = nil;
 		_currentTextColour = [NSColor whiteColor];
 		mouseIsInside = NO;
@@ -70,12 +67,6 @@ static CGAffineTransform kTextTransform = {
 
 - (void) dealloc
 {
-	if (_smallCTFont) {
-		CFRelease(_smallCTFont);
-	}
-	if (_largeCTFont) {
-		CFRelease(_largeCTFont);
-	}
 	[self clearFrame];
 }
 
@@ -97,26 +88,28 @@ static CGAffineTransform kTextTransform = {
 				*innerColour = [self.colourTheme selectedDeadDownInnerColour];
 				*outerColour = [self.colourTheme selectedDeadDownOuterColour];
 				*textColour = [self.colourTheme selectedDeadDownTextColour];
+				*gradientType = [self.colourTheme selectedDeadDownGradientType];
 			}
 			else {
 				*innerColour = [self.colourTheme selectedDeadUpInnerColour];
 				*outerColour = [self.colourTheme selectedDeadUpOuterColour];
 				*textColour = [self.colourTheme selectedDeadUpTextColour];
+				*gradientType = [self.colourTheme selectedDeadGradientType];
 			}
-			*gradientType = [self.colourTheme selectedDeadGradientType];
 		}
 		else {
 			if (self.down) {
 				*innerColour = [self.colourTheme deadKeyDownInnerColour];
 				*outerColour = [self.colourTheme deadKeyDownOuterColour];
 				*textColour = [self.colourTheme deadKeyDownTextColour];
+				*gradientType = [self.colourTheme deadKeyDownGradientType];
 			}
 			else {
 				*innerColour = [self.colourTheme deadKeyUpInnerColour];
 				*outerColour = [self.colourTheme deadKeyUpOuterColour];
 				*textColour = [self.colourTheme deadKeyUpTextColour];
+				*gradientType = [self.colourTheme deadKeyGradientType];
 			}
-			*gradientType = [self.colourTheme deadKeyGradientType];
 		}
 	}
 	else {
@@ -125,26 +118,28 @@ static CGAffineTransform kTextTransform = {
 				*innerColour = [self.colourTheme selectedDownInnerColour];
 				*outerColour = [self.colourTheme selectedDownOuterColour];
 				*textColour = [self.colourTheme selectedDownTextColour];
+				*gradientType = [self.colourTheme selectedDownGradientType];
 			}
 			else {
 				*innerColour = [self.colourTheme selectedUpInnerColour];
 				*outerColour = [self.colourTheme selectedUpOuterColour];
 				*textColour = [self.colourTheme selectedUpTextColour];
+				*gradientType = [self.colourTheme selectedGradientType];
 			}
-			*gradientType = [self.colourTheme selectedGradientType];
 		}
 		else {
 			if (self.down) {
 				*innerColour = [self.colourTheme normalDownInnerColour];
 				*outerColour = [self.colourTheme normalDownOuterColour];
 				*textColour = [self.colourTheme normalDownTextColour];
+				*gradientType = [self.colourTheme normalDownGradientType];
 			}
 			else {
 				*innerColour = [self.colourTheme normalUpInnerColour];
 				*outerColour = [self.colourTheme normalUpOuterColour];
 				*textColour = [self.colourTheme normalUpTextColour];
+				*gradientType = [self.colourTheme normalGradientType];
 			}
-			*gradientType = [self.colourTheme normalGradientType];
 		}
 	}
 }
@@ -152,7 +147,7 @@ static CGAffineTransform kTextTransform = {
 - (void)setUpFrame
 {
 	[self clearFrame];
-    if (!self.largeAttributes) {
+    if (!self.styleInfo.largeAttributes) {
         // Do it with Core Text
         CFMutableDictionaryRef textAttributes =
 			CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
@@ -160,9 +155,9 @@ static CGAffineTransform kTextTransform = {
 									  &kCFTypeDictionaryValueCallBacks);
         CFDictionaryAddValue(textAttributes, kCTForegroundColorAttributeName,
 							 (__bridge const void *)(self.currentTextColour));
-        CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.small ? self.smallCTFont : self.largeCTFont);
-        if (self.largeCTStyle && self.smallCTStyle) {
-            CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.small ? self.smallCTStyle : self.largeCTStyle);
+        CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.small ? self.styleInfo.smallFont : self.styleInfo.largeFont);
+        if (self.styleInfo.largeParagraphStyle && self.styleInfo.smallParagraphStyle) {
+            CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.small ? self.styleInfo.smallParagraphStyle : self.styleInfo.largeParagraphStyle);
         }
         NSMutableAttributedString *displayTextString = [displayText mutableCopy];
         [displayTextString setAttributes:(__bridge NSMutableDictionary *)textAttributes
@@ -170,7 +165,7 @@ static CGAffineTransform kTextTransform = {
         CTFramesetterRef theFramesetter =
 		CTFramesetterCreateWithAttributedString((__bridge CFMutableAttributedStringRef)displayTextString);
         NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
-        textRect.size.height -= CTFontGetLeading(self.small ? self.smallCTFont : self.largeCTFont);
+        textRect.size.height -= CTFontGetLeading(self.small ? self.styleInfo.smallFont : self.styleInfo.largeFont);
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddRect(path, NULL, NSRectToCGRect(textRect));
         textFrame = CTFramesetterCreateFrame(theFramesetter, CFRangeMake(0, 0), path, NULL);
@@ -181,8 +176,8 @@ static CGAffineTransform kTextTransform = {
             CFRange visibleRange = CTFrameGetVisibleStringRange(textFrame);
             if (visibleRange.length < stringRange.length) {
 				// Did not fit, so we make it small
-                CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.smallCTFont);
-                CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.smallCTStyle);
+                CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.styleInfo.smallFont);
+                CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.styleInfo.smallParagraphStyle);
                 displayTextString = [displayText mutableCopy];
                 [displayTextString setAttributes:(__bridge NSMutableDictionary *)textAttributes
                                            range:NSMakeRange(0, [displayTextString length])];
@@ -199,17 +194,17 @@ static CGAffineTransform kTextTransform = {
         // Do it with Cocoa Text
         NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
         NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:textRect.size];
-        [self.smallAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
-        [self.largeAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
+        [self.styleInfo.smallAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
+        [self.styleInfo.largeAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
         textStorage = [[NSTextStorage alloc] initWithAttributedString:displayText];
         NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
         [layoutManager addTextContainer: textContainer];
         [textStorage addLayoutManager: layoutManager];
         if (self.small) {
-            [textStorage setAttributes:self.smallAttributes range:NSMakeRange(0, [textStorage length])];
+            [textStorage setAttributes:self.styleInfo.smallAttributes range:NSMakeRange(0, [textStorage length])];
         }
         else {
-            [textStorage setAttributes:self.largeAttributes range:NSMakeRange(0, [textStorage length])];
+            [textStorage setAttributes:self.styleInfo.largeAttributes range:NSMakeRange(0, [textStorage length])];
             NSRect neededBox = NSZeroRect;
             @try {
                 NSArray *layoutManagerList = [textStorage layoutManagers];
@@ -225,7 +220,7 @@ static CGAffineTransform kTextTransform = {
                 // Do nothing?
             }
             if (neededBox.size.width > textRect.size.width) {
-                [textStorage setAttributes:self.smallAttributes
+                [textStorage setAttributes:self.styleInfo.smallAttributes
 									 range:NSMakeRange(0, [textStorage length])];
             }
         }
@@ -337,15 +332,7 @@ static CGAffineTransform kTextTransform = {
 	if ([displayText length] == 0) {
 		return;
 	}
-    if (!self.largeAttributes) {
-			// Use CoreText
-        if (!textFrame) {
-            [self setUpFrame];
-        }
-        CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
-        CTFrameDraw(textFrame, myContext);
-    }
-    else {
+    if (self.styleInfo.largeAttributes) {
 			// Use Cocoa text
         if (!textStorage) {
             [self setUpFrame];
@@ -365,6 +352,14 @@ static CGAffineTransform kTextTransform = {
 		drawPoint.y -= neededBox.size.height * yOffset;
 		NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
 		[layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawPoint];
+    }
+    else {
+			// Use CoreText
+        if (!textFrame) {
+            [self setUpFrame];
+        }
+        CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
+        CTFrameDraw(textFrame, myContext);
     }
 }
 
@@ -460,57 +455,11 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
-- (void)setLargeAttributes:(NSDictionary *)newAttributes
-{
-    _largeAttributes = newAttributes;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setSmallAttributes:(NSDictionary *)newAttributes
-{
-    _smallAttributes = newAttributes;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setLargeCTStyle:(CTParagraphStyleRef)newStyle
-{
-    _largeCTStyle = newStyle;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setSmallCTStyle:(CTParagraphStyleRef)newStyle
-{
-    _smallCTStyle = newStyle;
-    [self clearFrame];
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setLargeCTFont:(CTFontRef)newFont
-{
-	if (_largeCTFont != newFont) {
-		CFRetain(newFont);
-		if (_largeCTFont) {
-			CFRelease(_largeCTFont);
-		}
-		_largeCTFont = newFont;
+- (void)setStyleInfo:(UKStyleInfo *)styleInfo {
+	if (styleInfo != _styleInfo) {
+		_styleInfo = styleInfo;
 		[self clearFrame];
-		[self setNeedsDisplay:YES];
-	}
-}
-
-- (void)setSmallCTFont:(CTFontRef)newFont
-{
-	if (_smallCTFont != newFont) {
-		CFRetain(newFont);
-		if (_smallCTFont) {
-			CFRelease(_smallCTFont);
-		}
-		_smallCTFont = newFont;
-		[self clearFrame];
-		[self setNeedsDisplay:YES];
+		[self setNeedsLayout:YES];
 	}
 }
 

@@ -8,7 +8,10 @@
 
 #import "ColourThemeEditorController.h"
 #import "ColourTheme.h"
+#import "UkeleleConstants.h"
 #import "UkeleleConstantStrings.h"
+#import "UKStyleInfo.h"
+#import "AskTextViewController.h"
 
 typedef enum UKKeyTypeStatus: NSUInteger {
 	normalUnselectedUp = 0,
@@ -18,8 +21,19 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	deadKeyUnselectedUp = 4,
 	deadKeyUnselectedDown = 5,
 	deadKeySelectedUp = 6,
-	deadKeySelectedDown = 7
+	deadKeySelectedDown = 7,
+	noKeyStatus = 99
 } UKKeyTypeStatus;
+
+typedef enum : NSUInteger {
+	changingNothing,
+	changingInnerColour,
+	changingOuterColour,
+	changingTextColour
+} UKColourThemeChangeStatus;
+
+#define kDefaultFontName	@"Lucida Grande"
+#define kDefaultFontSize	18.0
 
 @interface ColourThemeEditorController ()
 
@@ -28,17 +42,62 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 @implementation ColourThemeEditorController {
 	ColourTheme *currentTheme;
 	UKKeyTypeStatus currentKeyTypeStatus;
+	NSWindow *theWindow;
 	void (^completionBlock)(NSString *);
+	UKStyleInfo *styleInfo;
+	NSUndoManager *undoManager;
+//	BOOL hasUndoGroup;
+//	UKColourThemeChangeStatus changeStatus;
+//	UKKeyTypeStatus changeTarget;
+	NSPopover *editPopover;
+	AskTextViewController *askTextController;
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
+	[[NSBundle mainBundle] loadNibNamed:@"ColourThemeEditor" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         // Initialization code here.
-		currentKeyTypeStatus = normalUnselectedUp;
+		currentKeyTypeStatus = noKeyStatus;
 		currentTheme = nil;
 		completionBlock = nil;
+		undoManager = [[NSUndoManager alloc] init];
+//		hasUndoGroup = NO;
+//		changeStatus = changingNothing;
+//		changeTarget = noKeyStatus;
+		editPopover = nil;
+		askTextController = nil;
+		_normalUp.tag = 0;
+		_deadKeyUp.tag = 1;
+		_selectedUp.tag = 2;
+		_selectedDeadUp.tag = 3;
+		_normalDown.tag = 4;
+		_deadKeyDown.tag = 5;
+		_selectedDown.tag = 6;
+		_selectedDeadDown.tag = 7;
+		styleInfo = [[UKStyleInfo alloc] init];
+		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
+		if (defaultFontName == nil || defaultFontName.length == 0) {
+				// Nothing came from the defaults
+			defaultFontName = kDefaultFontName;
+		}
+		CGFloat textSize = [theDefaults floatForKey:UKTextSize];
+		if (textSize <= 0) {
+				// Nothing came from the defaults
+			textSize = kDefaultFontSize;
+		}
+		CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
+		[styleInfo setFontDescriptor:fontDescriptor];
+		[self.normalUp setStyleInfo:styleInfo];
+		[self.deadKeyUp setStyleInfo:styleInfo];
+		[self.selectedUp setStyleInfo:styleInfo];
+		[self.selectedDeadUp setStyleInfo:styleInfo];
+		[self.normalDown setStyleInfo:styleInfo];
+		[self.deadKeyDown setStyleInfo:styleInfo];
+		[self.selectedDown setStyleInfo:styleInfo];
+		[self.selectedDeadDown setStyleInfo:styleInfo];
     }
     
     return self;
@@ -55,29 +114,15 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	return [[ColourThemeEditorController alloc] initWithWindowNibName:@"ColourThemeEditor"];
 }
 
-//- (void)startEditingTheme:(ColourTheme *)colourTheme
-//			   withWindow:(NSWindow *)parentWindow
-//		  completionBlock:(void (^)(ColourTheme *))theBlock {
-//	currentTheme = [colourTheme copy];
-//	completionBlock = theBlock;
-//	if (parentWindow) {
-//			// Run as a sheet
-//		[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
-//	}
-//	else {
-//			// Run as a window
-//		[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
-//	}
-//}
-
 - (void)showColourThemesWithWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))theBlock {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary *colourThemeDict = [[theDefaults dictionaryForKey:UKColourThemes] mutableCopy];
+	NSDictionary *colourThemeDict = [theDefaults dictionaryForKey:UKColourThemes];
 	NSString *currentColourTheme = [theDefaults stringForKey:UKColourTheme];
-	currentTheme = colourThemeDict[currentColourTheme];
+	currentTheme = [ColourTheme colourThemeNamed:currentColourTheme];
 	[self.themeList removeAllItems];
-	[self.themeList addItemsWithTitles:[colourThemeDict keysSortedByValueUsingSelector:@selector(compare:)]];
+	[self.themeList addItemsWithTitles:[[colourThemeDict allKeys] sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
 	[self.themeList selectItemWithTitle:currentColourTheme];
+	theWindow = parentWindow;
 	completionBlock = theBlock;
 	if (parentWindow) {
 			// Run as a sheet
@@ -85,13 +130,58 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	}
 	else {
 			// Run as a window
-		[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[self.window setIsVisible:YES];
+	}
+}
+
+#pragma mark User actions
+
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem {
+	SEL action = [anItem action];
+	if (action == @selector(deleteColourTheme:)) {
+			// Cannot delete the Default and Print themes
+		return ![[currentTheme themeName] isEqualToString:kDefaultThemeName] &&
+			![[currentTheme themeName] isEqualToString:kPrintThemeName];
+	}
+	return YES;
+}
+
+- (IBAction)selectColourTheme:(id)sender {
+	NSString *themeName = [sender title];
+	if (![themeName isEqualToString:[currentTheme themeName]]) {
+			// New theme chosen
+		currentTheme = [ColourTheme colourThemeNamed:themeName];
+		[self loadColours];
+		[self.normalUp setColourTheme:currentTheme];
+		[self.deadKeyUp setColourTheme:currentTheme];
+		[self.selectedUp setColourTheme:currentTheme];
+		[self.selectedDeadUp setColourTheme:currentTheme];
+		[self.normalDown setColourTheme:currentTheme];
+		[self.deadKeyDown setColourTheme:currentTheme];
+		[self.selectedDown setColourTheme:currentTheme];
+		[self.selectedDeadDown setColourTheme:currentTheme];
 	}
 }
 
 - (IBAction)newColourTheme:(id)sender {
-#pragma unused(sender)
-	
+	if (editPopover == nil) {
+		editPopover = [[NSPopover alloc] init];
+	}
+	if (askTextController == nil) {
+		askTextController = [AskTextViewController askViewText];
+	}
+	[editPopover setDelegate:self];
+	[editPopover setContentViewController:askTextController];
+	[editPopover setBehavior:NSPopoverBehaviorTransient];
+	[askTextController setMyPopover:editPopover];
+	__weak ColourThemeEditorController *weakSelf = self;
+	[askTextController setupPopoverWithText:@"Enter the name of the new colour theme" callback:^(NSString *nameString) {
+		if (nameString) {
+				// Accept the name
+			[weakSelf createNewThemeNamed:nameString];
+		}
+	}];
+	[editPopover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
 }
 
 - (IBAction)editColourTheme:(id)sender {
@@ -114,19 +204,37 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	
 }
 
+- (IBAction)setGradient:(id)sender {
+#pragma unused(sender)
+	unsigned int newGradientType = (unsigned int)[self.gradientType selectedRow];
+	[self setNewGradientType:newGradientType forKeyType:currentKeyTypeStatus];
+}
+
 - (IBAction)acceptColourTheme:(id)sender {
 #pragma unused(sender)
-	[[self window] orderOut:self];
+//	if (hasUndoGroup) {
+//		[undoManager endUndoGrouping];
+//		NSLog(@"End undo group");
+//		hasUndoGroup = NO;
+//	}
+	[self saveTheme];
+	[self.window orderOut:self];
+	if (theWindow) {
+		[NSApp endSheet:self.window];
+	}
 	completionBlock([currentTheme themeName]);
-	[NSApp endSheet:[self window]];
 }
 
 - (IBAction)cancelColourTheme:(id)sender {
 #pragma unused(sender)
-	[[self window] orderOut:self];
+	[self.window orderOut:self];
+	if (theWindow) {
+		[NSApp endSheet:self.window];
+	}
 	completionBlock(nil);
-	[NSApp endSheet:[self window]];
 }
+
+#pragma mark Events
 
 - (void)handleKeyCapClick:(KeyCapView *)keyCapView clickCount:(NSInteger)clickCount {
 #pragma unused(clickCount)
@@ -180,11 +288,395 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 			break;
 			
 		default:
+			NSLog(@"Unknown tag %ld", [keyCapView tag]);
 			break;
+	}
+	[self loadColours];
+}
+
+- (IBAction)changeInnerColour:(id)sender {
+//	if (hasUndoGroup && (changeStatus != changingInnerColour || changeTarget != currentKeyTypeStatus)) {
+//			// We have a set of undos which are for something else, so end it and start a new one
+//		[self completeUndoGroup];
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		hasUndoGroup = YES;
+//		changeStatus = changingInnerColour;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+//	else if (!hasUndoGroup) {
+//			// No undo group, start a new one
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		hasUndoGroup = YES;
+//		changeStatus = changingInnerColour;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+	if (currentKeyTypeStatus != noKeyStatus) {
+		[self setNewInnerColour:[sender color] forKeyType:currentKeyTypeStatus];
 	}
 }
 
+- (IBAction)changeOuterColour:(id)sender {
+//	if (hasUndoGroup && (changeStatus != changingOuterColour || changeTarget != currentKeyTypeStatus)) {
+//			// We have a set of undos which are for something else, so end it and start a new one
+//		[self completeUndoGroup];
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		changeStatus = changingOuterColour;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+//	else if (!hasUndoGroup) {
+//			// No undo group, start a new one
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		hasUndoGroup = YES;
+//		changeStatus = changingOuterColour;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+	if (currentKeyTypeStatus != noKeyStatus) {
+		[self setNewOuterColour:[sender color] forKeyType:currentKeyTypeStatus];
+	}
+}
+
+- (IBAction)changeTextColour:(id)sender {
+//	if (hasUndoGroup && (changeStatus != changingTextColour || changeTarget != currentKeyTypeStatus)) {
+//			// We have a set of undos which are for something else, so end it and start a new one
+//		[self completeUndoGroup];
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		changeStatus = changingTextColour;
+//		hasUndoGroup = YES;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+//	else if (!hasUndoGroup) {
+//			// No undo group, start a new one
+//		[undoManager beginUndoGrouping];
+//		NSLog(@"Begin undo group");
+//		changeStatus = changingTextColour;
+//		hasUndoGroup = YES;
+//		changeTarget = currentKeyTypeStatus;
+//	}
+	if (currentKeyTypeStatus != noKeyStatus) {
+		[self setNewTextColour:[sender color] forKeyType:currentKeyTypeStatus];
+	}
+}
+
+#pragma mark Undoable actions
+
+- (void)completeUndoGroup {
+//	if (hasUndoGroup) {
+//		hasUndoGroup = NO;
+//		[undoManager endUndoGrouping];
+//		NSLog(@"End undo group");
+//		switch (changeStatus) {
+//			case changingNothing:
+//					// Nothing to do
+//				break;
+//				
+//			case changingTextColour:
+//			case changingInnerColour:
+//			case changingOuterColour:
+//				[self saveTheme];
+//				break;
+//		}
+//		changeStatus = changingNothing;
+//		changeTarget = noKeyStatus;
+//	}
+}
+
+- (void)setNewInnerColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
+	NSColor *oldColour = nil;
+	NSUInteger gradientType = gradientTypeRadial;
+	switch (keyType) {
+		case normalUnselectedUp:
+			oldColour = [currentTheme normalUpInnerColour];
+			[currentTheme setNormalUpInnerColour:newColour];
+			gradientType = [currentTheme normalGradientType];
+			break;
+			
+		case deadKeyUnselectedUp:
+			oldColour = [currentTheme deadKeyUpInnerColour];
+			[currentTheme setDeadKeyUpInnerColour:newColour];
+			gradientType = [currentTheme deadKeyGradientType];
+			break;
+			
+		case normalSelectedUp:
+			oldColour = [currentTheme selectedUpInnerColour];
+			[currentTheme setSelectedUpInnerColour:newColour];
+			gradientType = [currentTheme selectedGradientType];
+			break;
+			
+		case deadKeySelectedUp:
+			oldColour = [currentTheme selectedDeadUpInnerColour];
+			[currentTheme setSelectedDeadUpInnerColour:newColour];
+			gradientType = [currentTheme selectedDeadGradientType];
+			break;
+			
+		case normalUnselectedDown:
+			oldColour = [currentTheme normalDownInnerColour];
+			[currentTheme setNormalDownInnerColour:newColour];
+			gradientType = [currentTheme normalDownGradientType];
+			break;
+			
+		case deadKeyUnselectedDown:
+			oldColour = [currentTheme deadKeyDownInnerColour];
+			[currentTheme setDeadKeyDownInnerColour:newColour];
+			gradientType = [currentTheme deadKeyDownGradientType];
+			break;
+			
+		case normalSelectedDown:
+			oldColour = [currentTheme selectedDownInnerColour];
+			[currentTheme setSelectedDownInnerColour:newColour];
+			gradientType = [currentTheme selectedDownGradientType];
+			break;
+			
+		case deadKeySelectedDown:
+			oldColour = [currentTheme selectedDeadDownInnerColour];
+			[currentTheme setSelectedDeadDownInnerColour:newColour];
+			gradientType = [currentTheme selectedDeadDownGradientType];
+			break;
+			
+		default:
+			NSLog(@"Unknown key type %ld!", keyType);
+			break;
+	}
+	[self saveTheme];
+	[self loadColours];
+	[self refreshCurrentKeyCap];
+	NSAssert(oldColour != nil, @"Must have the old colour");
+	NSString *actionName = @"Set Inner Colour";
+	if (gradientType == gradientTypeNone) {
+		actionName = @"Set Fill Colour";
+	}
+	else if (gradientType == gradientTypeLinear) {
+		actionName = @"Set Top Colour";
+	}
+	[[undoManager prepareWithInvocationTarget:self] setNewInnerColour:oldColour forKeyType:keyType];
+	[undoManager setActionName:actionName];
+}
+
+- (void)setNewOuterColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
+	NSColor *oldColour = nil;
+	NSUInteger gradientType = gradientTypeRadial;
+	switch (keyType) {
+		case normalUnselectedUp:
+			oldColour = [currentTheme normalUpOuterColour];
+			[currentTheme setNormalUpOuterColour:newColour];
+			gradientType = [currentTheme normalGradientType];
+			break;
+			
+		case deadKeyUnselectedUp:
+			oldColour = [currentTheme deadKeyUpOuterColour];
+			[currentTheme setDeadKeyUpOuterColour:newColour];
+			gradientType = [currentTheme deadKeyGradientType];
+			break;
+			
+		case normalSelectedUp:
+			oldColour = [currentTheme selectedUpOuterColour];
+			[currentTheme setSelectedUpOuterColour:newColour];
+			gradientType = [currentTheme selectedGradientType];
+			break;
+			
+		case deadKeySelectedUp:
+			oldColour = [currentTheme selectedDeadUpOuterColour];
+			[currentTheme setSelectedDeadUpOuterColour:newColour];
+			gradientType = [currentTheme selectedDeadGradientType];
+			break;
+			
+		case normalUnselectedDown:
+			oldColour = [currentTheme normalDownOuterColour];
+			[currentTheme setNormalDownOuterColour:newColour];
+			gradientType = [currentTheme normalDownGradientType];
+			break;
+			
+		case deadKeyUnselectedDown:
+			oldColour = [currentTheme deadKeyDownOuterColour];
+			[currentTheme setDeadKeyDownOuterColour:newColour];
+			gradientType = [currentTheme deadKeyDownGradientType];
+			break;
+			
+		case normalSelectedDown:
+			oldColour = [currentTheme selectedDownOuterColour];
+			[currentTheme setSelectedDownOuterColour:newColour];
+			gradientType = [currentTheme selectedDownGradientType];
+			break;
+			
+		case deadKeySelectedDown:
+			oldColour = [currentTheme selectedDeadDownOuterColour];
+			[currentTheme setSelectedDeadDownOuterColour:newColour];
+			gradientType = [currentTheme selectedDeadDownGradientType];
+			break;
+			
+		default:
+			NSLog(@"Unknown key type %ld!", keyType);
+			break;
+	}
+	[self saveTheme];
+	[self loadColours];
+	[self refreshCurrentKeyCap];
+	NSAssert(oldColour != nil, @"Must have the old colour");
+	NSString *actionName = @"Set Outer Colour";
+	if (gradientType == gradientTypeNone) {
+		actionName = @"Set Border Colour";
+	}
+	else if (gradientType == gradientTypeLinear) {
+		actionName = @"Set Bottom Colour";
+	}
+	[[undoManager prepareWithInvocationTarget:self] setNewOuterColour:oldColour forKeyType:keyType];
+	[undoManager setActionName:actionName];
+}
+
+- (void)setNewTextColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
+	NSColor *oldColour = nil;
+	switch (keyType) {
+		case normalUnselectedUp:
+			oldColour = [currentTheme normalUpTextColour];
+			[currentTheme setNormalUpTextColour:newColour];
+			break;
+			
+		case deadKeyUnselectedUp:
+			oldColour = [currentTheme deadKeyUpTextColour];
+			[currentTheme setDeadKeyUpTextColour:newColour];
+			break;
+			
+		case normalSelectedUp:
+			oldColour = [currentTheme selectedUpTextColour];
+			[currentTheme setSelectedUpTextColour:newColour];
+			break;
+			
+		case deadKeySelectedUp:
+			oldColour = [currentTheme selectedDeadUpTextColour];
+			[currentTheme setSelectedDeadUpTextColour:newColour];
+			break;
+			
+		case normalUnselectedDown:
+			oldColour = [currentTheme normalDownTextColour];
+			[currentTheme setNormalDownTextColour:newColour];
+			break;
+			
+		case deadKeyUnselectedDown:
+			oldColour = [currentTheme deadKeyDownTextColour];
+			[currentTheme setDeadKeyDownTextColour:newColour];
+			break;
+			
+		case normalSelectedDown:
+			oldColour = [currentTheme selectedDownTextColour];
+			[currentTheme setSelectedDownTextColour:newColour];
+			break;
+			
+		case deadKeySelectedDown:
+			oldColour = [currentTheme selectedDeadDownTextColour];
+			[currentTheme setSelectedDeadDownTextColour:newColour];
+			break;
+			
+		default:
+			NSLog(@"Unknown key type %ld!", keyType);
+			break;
+	}
+	[self saveTheme];
+	[self loadColours];
+	[self refreshCurrentKeyCap];
+	NSAssert(oldColour != nil, @"Must have the old colour");
+	NSString *actionName = @"Set Text Colour";
+	[[undoManager prepareWithInvocationTarget:self] setNewTextColour:oldColour forKeyType:keyType];
+	[undoManager setActionName:actionName];
+}
+
+- (void)setNewGradientType:(unsigned int)gradientType forKeyType:(NSInteger)keyType {
+//	if (hasUndoGroup) {
+//		[self completeUndoGroup];
+//	}
+	unsigned int oldGradientType = gradientTypeNone;
+	switch (keyType) {
+		case normalUnselectedUp:
+			oldGradientType = [currentTheme normalGradientType];
+			[currentTheme setNormalGradientType:gradientType];
+			break;
+			
+		case deadKeyUnselectedUp:
+			oldGradientType = [currentTheme deadKeyGradientType];
+			[currentTheme setDeadKeyGradientType:gradientType];
+			break;
+			
+		case normalSelectedUp:
+			oldGradientType = [currentTheme selectedGradientType];
+			[currentTheme setSelectedGradientType:gradientType];
+			break;
+			
+		case deadKeySelectedUp:
+			oldGradientType = [currentTheme selectedDeadGradientType];
+			[currentTheme setSelectedDeadGradientType:gradientType];
+			break;
+			
+		case normalUnselectedDown:
+			oldGradientType = [currentTheme normalDownGradientType];
+			[currentTheme setNormalDownGradientType:gradientType];
+			break;
+			
+		case deadKeyUnselectedDown:
+			oldGradientType = [currentTheme deadKeyDownGradientType];
+			[currentTheme setDeadKeyDownGradientType:gradientType];
+			break;
+			
+		case normalSelectedDown:
+			oldGradientType = [currentTheme selectedDownGradientType];
+			[currentTheme setSelectedDownGradientType:gradientType];
+			break;
+			
+		case deadKeySelectedDown:
+			oldGradientType = [currentTheme selectedDeadDownGradientType];
+			[currentTheme setSelectedDeadDownGradientType:gradientType];
+			break;
+			
+		default:
+			NSLog(@"Unknown key type %ld!", keyType);
+			break;
+	}
+	[self saveTheme];
+	[self loadColours];
+	NSString *actionName = @"Set GradientType";
+	[[undoManager prepareWithInvocationTarget:self] setNewGradientType:oldGradientType forKeyType:keyType];
+	[undoManager setActionName:actionName];
+}
+
+- (void)createNewThemeNamed:(NSString *)themeName {
+	ColourTheme *newTheme = [ColourTheme colourThemeNamed:themeName];
+	if (newTheme != nil) {
+			// This theme exists already
+		return;
+	}
+	newTheme = [currentTheme copy];
+	[newTheme setThemeName:themeName];
+	[ColourTheme addTheme:newTheme];
+		// Add it to the popup
+	[self.themeList addItemWithTitle:themeName];
+	[self.themeList selectItemWithTitle:themeName];
+	[self activateTheme:themeName];
+	[self saveTheme];
+}
+
+#pragma mark Marshal data
+
+- (void)activateTheme:(NSString *)themeName {
+		// New theme chosen
+	currentTheme = [ColourTheme colourThemeNamed:themeName];
+	[self loadColours];
+	[self.normalUp setColourTheme:currentTheme];
+	[self.deadKeyUp setColourTheme:currentTheme];
+	[self.selectedUp setColourTheme:currentTheme];
+	[self.selectedDeadUp setColourTheme:currentTheme];
+	[self.normalDown setColourTheme:currentTheme];
+	[self.deadKeyDown setColourTheme:currentTheme];
+	[self.selectedDown setColourTheme:currentTheme];
+	[self.selectedDeadDown setColourTheme:currentTheme];
+}
+
 - (void)loadColours {
+	if (currentKeyTypeStatus == noKeyStatus) {
+			// Don't set anything
+		return;
+	}
 	NSColor *innerColourValue = nil;
 	NSColor *outerColourValue = nil;
 	NSColor *textColourValue = nil;
@@ -254,20 +746,33 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	[self.outerColour setColor:outerColourValue];
 	[self.textColour setColor:textColourValue];
 		// Set the gradient type
-	[self.gradientType selectCellAtRow:gradientTypeValue column:0];
+	NSInteger gradientIndex = 0;
+	switch (gradientTypeValue) {
+		case gradientTypeNone:
+			gradientIndex = 2;
+			break;
+			
+		case gradientTypeLinear:
+			gradientIndex = 1;
+			break;
+			
+		case gradientTypeRadial:
+			gradientIndex = 0;
+	}
+	[self.gradientType selectCellAtRow:gradientIndex column:0];
 		// Set the colour labels for the gradient type
 	switch (gradientTypeValue) {
-		case 0:	// Radial
+		case gradientTypeRadial:	// Radial
 			[self.innerColourLabel setStringValue:@"Inner colour"];
 			[self.outerColourLabel setStringValue:@"Outer colour"];
 			break;
 			
-		case 1: // Linear
+		case gradientTypeLinear: // Linear
 			[self.innerColourLabel setStringValue:@"Top colour"];
 			[self.outerColourLabel setStringValue:@"Bottom colour"];
 			break;
 			
-		case 2:	// None
+		case gradientTypeNone:	// None
 			[self.innerColourLabel setStringValue:@"Fill colour"];
 			[self.outerColourLabel setStringValue:@"Border colour"];
 			break;
@@ -277,112 +782,91 @@ typedef enum UKKeyTypeStatus: NSUInteger {
 	}
 }
 
-- (IBAction)changeInnerColour:(id)sender {
+- (void)refreshCurrentKeyCap {
 	switch (currentKeyTypeStatus) {
+		case noKeyStatus:
+			break;
+			
 		case normalUnselectedUp:
-			[currentTheme setNormalUpInnerColour:[sender color]];
-			break;
-			
-		case deadKeyUnselectedUp:
-			[currentTheme setDeadKeyUpInnerColour:[sender color]];
-			break;
-			
-		case normalSelectedUp:
-			[currentTheme setSelectedUpInnerColour:[sender color]];
-			break;
-			
-		case deadKeySelectedUp:
-			[currentTheme setSelectedDeadUpInnerColour:[sender color]];
+			[self.normalUp setNeedsLayout:YES];
 			break;
 			
 		case normalUnselectedDown:
-			[currentTheme setNormalDownInnerColour:[sender color]];
+			[self.normalDown setNeedsLayout:YES];
+			break;
+			
+		case deadKeyUnselectedUp:
+			[self.deadKeyUp setNeedsLayout:YES];
 			break;
 			
 		case deadKeyUnselectedDown:
-			[currentTheme setDeadKeyDownInnerColour:[sender color]];
+			[self.deadKeyDown setNeedsLayout:YES];
+			break;
+			
+		case normalSelectedUp:
+			[self.selectedUp setNeedsLayout:YES];
 			break;
 			
 		case normalSelectedDown:
-			[currentTheme setSelectedDownInnerColour:[sender color]];
+			[self.selectedDown setNeedsLayout:YES];
+			break;
+			
+		case deadKeySelectedUp:
+			[self.selectedDeadUp setNeedsLayout:YES];
 			break;
 			
 		case deadKeySelectedDown:
-			[currentTheme setSelectedDeadDownInnerColour:[sender color]];
+			[self.selectedDown setNeedsLayout:YES];
+			break;
+			
+		default:
+			NSLog(@"Unrecognised key");
 			break;
 	}
 }
 
-- (IBAction)changeOuterColour:(id)sender {
-	switch (currentKeyTypeStatus) {
-		case normalUnselectedUp:
-			[currentTheme setNormalUpOuterColour:[sender color]];
-			break;
-			
-		case deadKeyUnselectedUp:
-			[currentTheme setDeadKeyUpOuterColour:[sender color]];
-			break;
-			
-		case normalSelectedUp:
-			[currentTheme setSelectedUpOuterColour:[sender color]];
-			break;
-			
-		case deadKeySelectedUp:
-			[currentTheme setSelectedDeadUpOuterColour:[sender color]];
-			break;
-			
-		case normalUnselectedDown:
-			[currentTheme setNormalDownOuterColour:[sender color]];
-			break;
-			
-		case deadKeyUnselectedDown:
-			[currentTheme setDeadKeyDownOuterColour:[sender color]];
-			break;
-			
-		case normalSelectedDown:
-			[currentTheme setSelectedDownOuterColour:[sender color]];
-			break;
-			
-		case deadKeySelectedDown:
-			[currentTheme setSelectedDeadDownOuterColour:[sender color]];
-			break;
-	}
+- (void)saveTheme {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSMutableDictionary *colourThemeDict = [[theDefaults dictionaryForKey:UKColourThemes] mutableCopy];
+	NSData *themeData = [NSKeyedArchiver archivedDataWithRootObject:currentTheme];
+	colourThemeDict[[currentTheme themeName]] = themeData;
+	[theDefaults setObject:colourThemeDict forKey:UKColourThemes];
 }
 
-- (IBAction)changeTextColour:(id)sender {
-	switch (currentKeyTypeStatus) {
-		case normalUnselectedUp:
-			[currentTheme setNormalUpTextColour:[sender color]];
-			break;
-			
-		case deadKeyUnselectedUp:
-			[currentTheme setDeadKeyUpTextColour:[sender color]];
-			break;
-			
-		case normalSelectedUp:
-			[currentTheme setSelectedUpTextColour:[sender color]];
-			break;
-			
-		case deadKeySelectedUp:
-			[currentTheme setSelectedDeadUpTextColour:[sender color]];
-			break;
-			
-		case normalUnselectedDown:
-			[currentTheme setNormalDownTextColour:[sender color]];
-			break;
-			
-		case deadKeyUnselectedDown:
-			[currentTheme setDeadKeyDownTextColour:[sender color]];
-			break;
-			
-		case normalSelectedDown:
-			[currentTheme setSelectedDownTextColour:[sender color]];
-			break;
-			
-		case deadKeySelectedDown:
-			[currentTheme setSelectedDeadDownTextColour:[sender color]];
-			break;
-	}
+#pragma mark Mouse events
+
+- (void)messageMouseEntered:(int)keyCode {
+#pragma unused(keyCode)
+}
+
+- (void)messageMouseExited:(int)keyCode {
+#pragma unused(keyCode)
+}
+
+#pragma mark Delegate methods
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+#pragma unused(window)
+	return undoManager;
+}
+
+- (void)windowDidBecomeMain:(NSNotification *)notification {
+#pragma unused(notification)
+}
+
+- (void)windowDidResignMain:(NSNotification *)notification {
+#pragma unused(notification)
+	[self completeUndoGroup];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+#pragma unused(notification)
+	[self completeUndoGroup];
+}
+
+- (void)popoverWillClose:(NSNotification *)notification {
+#pragma unused(notification)
+	[askTextController acceptText:self];
 }
 
 @end

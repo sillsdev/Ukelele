@@ -16,14 +16,22 @@ enum {
 	kNormalShift = 0,
 	kDeadKeyShift = 3,
 	kSelectedShift = 6,
-	kSelectedDeadShift = 9
+	kSelectedDeadShift = 9,
+	kNormalDownShift = 12,
+	kDeadKeyDownShift = 15,
+	kSelectedDownShift = 18,
+	kSelectedDeadDownShift = 21
 };
 
 enum {
 	kNormalMask = 0x7,
-	kDeadKeyMask = 0x38,
-	kSelectedMask = 0x1c0,
-	kSelectedDeadMask = 0xe00
+	kDeadKeyMask = 0x7 << kDeadKeyShift,
+	kSelectedMask = 0x7 << kSelectedShift,
+	kSelectedDeadMask = 0x7 << kSelectedDeadShift,
+	kNormalDownMask = 0x7 << kNormalDownShift,
+	kDeadKeyDownMask = 0x7 << kSelectedDeadDownShift,
+	kSelectedDownMask = 0x7 << kSelectedDownShift,
+	kSelectedDeadDownMask = 0x7 << kSelectedDeadDownShift
 };
 
 	// Standard colour components
@@ -75,7 +83,6 @@ static NSString *kCTSelectedDeadUpTextColourKey = @"CTSelectedDeadUpTextColour";
 static NSString *kCTSelectedDeadDownInnerColourKey = @"CTSelectedDeadDownInnerColour";
 static NSString *kCTSelectedDeadDownOuterColourKey = @"CTSelectedDeadDownOuterColour";
 static NSString *kCTSelectedDeadDownTextColourKey = @"CTSelectedDeadDownTextColour";
-//static NSString *kCTTextColourKey = @"CTTextColour";
 static NSString *kCTWindowBackgroundColourKey = @"CTWindowBackgroundColour";
 
 static ColourTheme *sDefaultColourTheme = nil;
@@ -154,6 +161,10 @@ NSString *kPrintThemeName = @"Print";
 	[theCopy setDeadKeyGradientType:[self deadKeyGradientType]];
 	[theCopy setSelectedGradientType:[self selectedGradientType]];
 	[theCopy setSelectedDeadGradientType:[self selectedDeadGradientType]];
+	[theCopy setNormalDownGradientType:[self normalDownGradientType]];
+	[theCopy setDeadKeyDownGradientType:[self deadKeyDownGradientType]];
+	[theCopy setSelectedDownGradientType:[self selectedDownGradientType]];
+	[theCopy setSelectedDeadDownGradientType:[self selectedDeadDownGradientType]];
 	return theCopy;
 }
 
@@ -182,6 +193,7 @@ NSString *kPrintThemeName = @"Print";
 																				alpha:1.0]];
 		[sDefaultColourTheme setNormalDownTextColour:[NSColor whiteColor]];
 		[sDefaultColourTheme setNormalGradientType:gradientTypeRadial];
+		[sDefaultColourTheme setNormalDownGradientType:gradientTypeRadial];
 		[sDefaultColourTheme setDeadKeyUpInnerColour:[NSColor colorWithCalibratedRed:component94
 																			   green:component3E
 																			    blue:0.0
@@ -201,6 +213,7 @@ NSString *kPrintThemeName = @"Print";
 																				 alpha:1.0]];
 		[sDefaultColourTheme setDeadKeyDownTextColour:[NSColor whiteColor]];
 		[sDefaultColourTheme setDeadKeyGradientType:gradientTypeRadial];
+		[sDefaultColourTheme setDeadKeyDownGradientType:gradientTypeRadial];
 		[sDefaultColourTheme setSelectedUpInnerColour:[NSColor colorWithCalibratedRed:componentB0
 																				green:componentD1
 																				 blue:component16
@@ -220,6 +233,7 @@ NSString *kPrintThemeName = @"Print";
 																				  alpha:1.0]];
 		[sDefaultColourTheme setSelectedDownTextColour:[NSColor whiteColor]];
 		[sDefaultColourTheme setSelectedGradientType:gradientTypeRadial];
+		[sDefaultColourTheme setSelectedDownGradientType:gradientTypeRadial];
 		[sDefaultColourTheme setSelectedDeadUpInnerColour:[NSColor colorWithCalibratedRed:componentB0
 																				green:component88
 																				 blue:component16
@@ -239,6 +253,7 @@ NSString *kPrintThemeName = @"Print";
 																				  alpha:1.0]];
 		[sDefaultColourTheme setSelectedDeadDownTextColour:[NSColor whiteColor]];
 		[sDefaultColourTheme setSelectedDeadGradientType:gradientTypeLinear];
+		[sDefaultColourTheme setSelectedDeadDownGradientType:gradientTypeLinear];
 		[sDefaultColourTheme setWindowBackgroundColour:[NSColor whiteColor]];
 	}
 	return sDefaultColourTheme;
@@ -256,13 +271,15 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultPrintTheme setNormalDownOuterColour:[NSColor blackColor]];
 		[sDefaultPrintTheme setNormalDownTextColour:[NSColor blackColor]];
 		[sDefaultPrintTheme setNormalGradientType:gradientTypeNone];
+		[sDefaultPrintTheme setNormalDownGradientType:gradientTypeNone];
 		[sDefaultPrintTheme setDeadKeyUpInnerColour:[NSColor colorWithCalibratedWhite:0.2 alpha:1.0]];
 		[sDefaultPrintTheme setDeadKeyUpOuterColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setDeadKeyUpTextColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setDeadKeyDownInnerColour:[NSColor colorWithCalibratedWhite:0.1 alpha:1.0]];
 		[sDefaultPrintTheme setDeadKeyDownOuterColour:[NSColor whiteColor]];
-		[sDefaultPrintTheme setDeadKeyDownTextColour:[NSColor blackColor]];
+		[sDefaultPrintTheme setDeadKeyDownTextColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setDeadKeyGradientType:gradientTypeNone];
+		[sDefaultPrintTheme setDeadKeyDownGradientType:gradientTypeNone];
 		[sDefaultPrintTheme setSelectedUpInnerColour:[NSColor colorWithCalibratedWhite:0.9 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedUpOuterColour:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedUpTextColour:[NSColor blackColor]];
@@ -270,6 +287,7 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultPrintTheme setSelectedDownOuterColour:[NSColor colorWithCalibratedWhite:0.2 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedDownTextColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setSelectedGradientType:gradientTypeLinear];
+		[sDefaultPrintTheme setSelectedDownGradientType:gradientTypeLinear];
 		[sDefaultPrintTheme setSelectedDeadUpInnerColour:[NSColor colorWithCalibratedWhite:0.9 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedDeadUpOuterColour:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedDeadUpTextColour:[NSColor blackColor]];
@@ -277,6 +295,7 @@ NSString *kPrintThemeName = @"Print";
 		[sDefaultPrintTheme setSelectedDeadDownOuterColour:[NSColor colorWithCalibratedWhite:0.2 alpha:1.0]];
 		[sDefaultPrintTheme setSelectedDeadDownTextColour:[NSColor whiteColor]];
 		[sDefaultPrintTheme setSelectedDeadGradientType:gradientTypeNone];
+		[sDefaultPrintTheme setSelectedDeadDownGradientType:gradientTypeNone];
 		[sDefaultPrintTheme setWindowBackgroundColour:[NSColor whiteColor]];
 	}
 	return sDefaultPrintTheme;
@@ -286,65 +305,122 @@ NSString *kPrintThemeName = @"Print";
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
 	if (colourThemes != nil) {
-		ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:colourThemes[themeName]];
-		if (theTheme != nil) {
-			return [theTheme copy];
+		NSData *themeData = colourThemes[themeName];
+		if (themeData != nil) {
+			ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:themeData];
+			if (theTheme != nil) {
+				return theTheme;
+			}
 		}
 	}
 		// Getting here means the name was not in the dictionary
 	if ([themeName isEqualToString:kDefaultThemeName]) {
-		return [[ColourTheme defaultColourTheme] copy];
+		return [ColourTheme defaultColourTheme];
 	}
 	else if ([themeName isEqualToString:kPrintThemeName]) {
-		return [[ColourTheme defaultPrintTheme] copy];
+		return [ColourTheme defaultPrintTheme];
 	}
-	return [[ColourTheme defaultColourTheme] copy];
+	return nil;
+}
+
++ (ColourTheme *)createColourThemeNamed:(NSString *)themeName {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
+	if (colourThemes == nil) {
+		colourThemes = @{};
+	}
+	NSMutableDictionary *themeDict = [colourThemes mutableCopy];
+	NSAssert([themeDict objectForKey:themeName] == nil, @"Cannot create a theme that already exists");
+	ColourTheme *newTheme = [[ColourTheme defaultColourTheme] copy];
+	[newTheme setThemeName:themeName];
+	themeDict[themeName] = [NSKeyedArchiver archivedDataWithRootObject:newTheme];
+	[theDefaults setObject:themeDict forKey:UKColourThemes];
+	return newTheme;
+}
+
++ (void)addTheme:(ColourTheme *)colourTheme {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
+	if (colourThemes == nil) {
+		colourThemes = @{};
+	}
+	NSMutableDictionary *themeDict = [colourThemes mutableCopy];
+	themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
+	[theDefaults setObject:themeDict forKey:UKColourThemes];
 }
 
 #pragma mark Access routines
 
-- (unsigned int)normalGradientType
-{
+- (unsigned int)normalGradientType {
 	return gradientTypes & kNormalMask;
 }
 
-- (unsigned int)deadKeyGradientType
-{
+- (unsigned int)deadKeyGradientType {
 	return (gradientTypes & kDeadKeyMask) >> kDeadKeyShift;
 }
 
-- (unsigned int)selectedGradientType
-{
+- (unsigned int)selectedGradientType {
 	return (gradientTypes & kSelectedMask) >> kSelectedShift;
 }
 
-- (unsigned int)selectedDeadGradientType
-{
+- (unsigned int)selectedDeadGradientType {
 	return (gradientTypes & kSelectedDeadMask) >> kSelectedDeadShift;
 }
 
-- (void)setNormalGradientType:(unsigned int)gradientType
-{
+- (unsigned int)normalDownGradientType {
+	return (gradientTypes & kNormalDownMask) >> kNormalDownShift;
+}
+
+- (unsigned int)deadKeyDownGradientType {
+	return (gradientTypes & kDeadKeyDownMask) >> kDeadKeyDownShift;
+}
+
+- (unsigned int)selectedDownGradientType {
+	return (gradientTypes & kSelectedDownMask) >> kSelectedDownShift;
+}
+
+- (unsigned int)selectedDeadKeyDownGradientType {
+	return (gradientTypes & kSelectedDeadDownMask) >> kSelectedDeadDownShift;
+}
+
+- (void)setNormalGradientType:(unsigned int)gradientType {
 	gradientTypes &= ~kNormalMask;
 	gradientTypes |= gradientType;
 }
 
-- (void)setDeadKeyGradientType:(unsigned int)gradientType
-{
+- (void)setDeadKeyGradientType:(unsigned int)gradientType {
 	gradientTypes &= ~kDeadKeyMask;
 	gradientTypes |= (gradientType << kDeadKeyShift);
 }
 
-- (void)setSelectedGradientType:(unsigned int)gradientType
-{
+- (void)setSelectedGradientType:(unsigned int)gradientType {
 	gradientTypes &= ~kSelectedMask;
 	gradientTypes |= (gradientType << kSelectedShift);
 }
 
-- (void)setSelectedDeadGradientType:(unsigned int)gradientType
-{
+- (void)setSelectedDeadGradientType:(unsigned int)gradientType {
 	gradientTypes &= ~kSelectedDeadMask;
 	gradientTypes |= (gradientType << kSelectedDeadShift);
+}
+
+- (void)setNormalDownGradientType:(unsigned int)gradientType {
+	gradientTypes &= ~kNormalDownMask;
+	gradientTypes |= (gradientType << kNormalDownShift);
+}
+
+- (void)setDeadKeyDownGradientType:(unsigned int)gradientType {
+	gradientTypes &= ~kDeadKeyDownMask;
+	gradientTypes |= (gradientType << kDeadKeyDownShift);
+}
+
+- (void)setSelectedDownGradientType:(unsigned int)gradientType {
+	gradientTypes &= ~kSelectedDownMask;
+	gradientTypes |= (gradientType << kSelectedDownShift);
+}
+
+- (void)setSelectedDeadKeyDownGradientType:(unsigned int)gradientType {
+	gradientTypes &= ~kSelectedDeadDownMask;
+	gradientTypes |= (gradientType << kSelectedDeadDownShift);
 }
 
 #pragma mark Coding

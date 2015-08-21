@@ -49,53 +49,6 @@ typedef struct KeyEntryRec {
 	ModifiersController *modifiersController;
 }
 
-- (void)setUpStyles
-{
-		// Set up Core Text styles
-	CTFontRef largeFont = CTFontCreateWithFontDescriptor(_fontDescriptor, 0.0f, NULL);
-	CGFloat largeFontSize = CTFontGetSize(largeFont);
-	CGFloat smallFontSize = largeFontSize * kDefaultSmallFontSize / kDefaultLargeFontSize;
-	CTParagraphStyleSetting styleSetting[2];
-	styleSetting[0].spec = kCTParagraphStyleSpecifierAlignment;
-	styleSetting[0].valueSize = sizeof(CTTextAlignment);
-	CTTextAlignment alignType = kCTCenterTextAlignment;
-	styleSetting[0].value = &alignType;
-	styleSetting[1].spec = kCTParagraphStyleSpecifierMinimumLineHeight;
-	styleSetting[1].valueSize = sizeof(CGFloat);
-	CGFloat minLineHeight = largeFontSize * kLineHeightFactor;
-	styleSetting[1].value = &minLineHeight;
-	_largeParagraphStyle = CTParagraphStyleCreate(styleSetting, 2);
-	minLineHeight = smallFontSize * kSmallLineHeightFactor;
-	_smallParagraphStyle = CTParagraphStyleCreate(styleSetting, 2);
-	CFRelease(largeFont);
-    
-		// Set up Cocoa styles
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSString *fontName = [theDefaults stringForKey:UKTextFont];
-	if (fontName == nil || fontName.length == 0) {
-			// Nothing came from the defaults
-		fontName = kDefaultFontName;
-	}
-    NSFont *defaultLargeFont = [NSFont fontWithName:fontName size:kDefaultLargeFontSize];
-    _largeAttributes = [NSMutableDictionary dictionary];
-    [_largeAttributes setValue:defaultLargeFont forKey:NSFontAttributeName];
-    [_largeAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    [paraStyle setAlignment:NSCenterTextAlignment];
-    [_largeAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
-    NSFont *defaultSmallFont = [[NSFontManager sharedFontManager] convertFont:defaultLargeFont toSize:kDefaultSmallFontSize];
-    _smallAttributes = [NSMutableDictionary dictionary];
-    [_smallAttributes setValue:defaultSmallFont forKey:NSFontAttributeName];
-    [_smallAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-    [_smallAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
-	CGFloat textSize = [theDefaults floatForKey:UKTextSize];
-	if (textSize <= 0) {
-			// Nothing came from the defaults
-		textSize = kDefaultFontSize;
-	}
-	baseFontSize = textSize / [self scaleFactor];
-}
-
 - (instancetype)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -121,25 +74,14 @@ typedef struct KeyEntryRec {
 				// Nothing came from the defaults
 			textSize = kDefaultFontSize;
 		}
-		_fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
-		[self setUpStyles];
+		CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
+		_styleInfo = [[UKStyleInfo alloc] init];
+		[_styleInfo setFontDescriptor:fontDescriptor];
+		CFRelease(fontDescriptor);
 		modifiersController = [[ModifiersController alloc] init];
 		_eventState = kEventStateNone;
     }
     return self;
-}
-
-- (void)dealloc
-{
-	if (_fontDescriptor) {
-		CFRelease(_fontDescriptor);
-	}
-	if (_largeParagraphStyle) {
-		CFRelease(_largeParagraphStyle);
-	}
-	if (_smallParagraphStyle) {
-		CFRelease(_smallParagraphStyle);
-	}
 }
 
 - (BOOL)isFlipped {
@@ -327,19 +269,7 @@ typedef struct KeyEntryRec {
 		newFrame.size.width = self.baseFrame.size.width * scaleValue;
 		[self setFrame:newFrame];
 	}
-	NSMutableDictionary *newLargeAttributes = [[self largeAttributes] mutableCopy];
-	NSFont *largeFont = newLargeAttributes[NSFontAttributeName];
-	NSFontManager *fm = [NSFontManager sharedFontManager];
-	NSFont *newLargeFont = [fm convertFont:largeFont toSize:baseFontSize * scaleValue];
-	newLargeAttributes[NSFontAttributeName] = newLargeFont;
-	NSMutableDictionary *newSmallAttributes = [[self smallAttributes] mutableCopy];
-	NSFont *smallFont = newSmallAttributes[NSFontAttributeName];
-	NSFont *newSmallFont = [fm convertFont:smallFont
-									toSize:baseFontSize * scaleValue * kDefaultSmallFontSize / kDefaultLargeFontSize];
-	newSmallAttributes[NSFontAttributeName] = newSmallFont;
-	[self setScaleFactor:scaleValue];
-	[self setLargeAttributes:newLargeAttributes];
-	[self setSmallAttributes:newSmallAttributes];
+	[self.styleInfo setScaleFactor:scaleValue];
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
 }
@@ -356,7 +286,6 @@ typedef struct KeyEntryRec {
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue {
 	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
 	NSAssert(keyboardID >= 0, @"Must have a valid keyboard ID");
-	CGFloat kFontSizeFactor = kDefaultSmallFontSize / kDefaultLargeFontSize;
 	char *resourcePtr = theStream;
 	[self clearView];
 	
@@ -470,20 +399,8 @@ typedef struct KeyEntryRec {
 			[keyCap setKeyCode:keyCode];
 			[keyCap setFnKeyCode:fnKeyCode];
 			[keyCap setColourTheme:[self colourTheme]];
-			CTFontRef largeFont = CTFontCreateWithFontDescriptor([self fontDescriptor], 0.0f, NULL);
-			CGFloat smallFontSize = CTFontGetSize(largeFont) * kFontSizeFactor;
-			CTFontRef smallFont = CTFontCreateWithFontDescriptor([self fontDescriptor], smallFontSize, NULL);
-			[keyCap setLargeCTFont:largeFont];
-			[keyCap setSmallCTFont:smallFont];
-			[keyCap setLargeCTStyle:[self largeParagraphStyle]];
-			[keyCap setSmallCTStyle:[self smallParagraphStyle]];
-            if ([self largeAttributes]) {
-                [keyCap setLargeAttributes:[self largeAttributes]];
-                [keyCap setSmallAttributes:[self smallAttributes]];
-            }
+			[keyCap setStyleInfo:self.styleInfo];
 			[self addSubview:keyCap];
-			CFRelease(smallFont);
-			CFRelease(largeFont);
 			[keyCapMap addKeyCode:keyCode withKeyKapView:keyCap];
 			if ((char)fnKeyCode != keyCode && fnKeyCode != kNoKeyCode) {
 				[keyCapMap addKeyCode:fnKeyCode withKeyKapView:keyCap];
@@ -565,30 +482,6 @@ typedef struct KeyEntryRec {
 
 #pragma mark Access routines
 
-- (void)setLargeAttributes:(NSDictionary *)newAttributes
-{
-    _largeAttributes = newAttributes;
-	NSFont *font = _largeAttributes[NSFontAttributeName];
-	baseFontSize = [font pointSize] / [self scaleFactor];
-    // Have to update all the key views
-    NSArray *subViews = [self subviews];
-    for (KeyCapView *subView in subViews) {
-        [subView setLargeAttributes:_largeAttributes];
-    }
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setSmallAttributes:(NSDictionary *)newAttributes
-{
-    _smallAttributes = newAttributes;
-    // Have to update all the key views
-    NSArray *subViews = [self subviews];
-    for (KeyCapView *subView in subViews) {
-        [subView setSmallAttributes:_smallAttributes];
-    }
-    [self setNeedsDisplay:YES];
-}
-
 - (KeyCapView *)getKeyWithIndex:(int)keyIndex
 {
 	return keyCapList[keyIndex];
@@ -612,35 +505,6 @@ typedef struct KeyEntryRec {
 		return nil;
 	}
 	return keyList[0];
-}
-
-- (void)setFontDescriptor:(CTFontDescriptorRef)newFont
-{
-	if (newFont != _fontDescriptor) {
-		CFRelease(_fontDescriptor);
-		_fontDescriptor = newFont;
-		CFRetain(_fontDescriptor);
-		CTFontRef largeFont = CTFontCreateWithFontDescriptor(_fontDescriptor, 0.0f, NULL);
-		CGFloat largeFontSize = CTFontGetSize(largeFont);
-		CGFloat smallFontSize = largeFontSize * kDefaultLargeFontSize / kDefaultSmallFontSize;
-		CTFontRef smallFont = CTFontCreateWithFontDescriptor(_fontDescriptor, smallFontSize, NULL);
-			// Update the styles
-		CFRelease(_largeParagraphStyle);
-		CFRelease(_smallParagraphStyle);
-		[self setUpStyles];
-			// Replace the styles for all the subviews
-		NSArray *allSubViews = [self subviews];
-		NSUInteger subViewCount = [allSubViews count];
-		for (NSUInteger i = 0; i < subViewCount; i++) {
-			KeyCapView *keyCapView = allSubViews[i];
-			[keyCapView setLargeCTFont:largeFont];
-			[keyCapView setSmallCTFont:smallFont];
-			[keyCapView setLargeCTStyle:[self largeParagraphStyle]];
-			[keyCapView setSmallCTStyle:[self smallParagraphStyle]];
-		}
-		CFRelease(smallFont);
-		CFRelease(largeFont);
-	}
 }
 
 - (NSArray *)keyCapViews

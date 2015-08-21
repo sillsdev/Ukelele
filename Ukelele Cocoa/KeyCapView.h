@@ -10,6 +10,7 @@
 #import "ColourTheme.h"
 #import "UKMenuDelegate.h"
 #import "UKKeyCapClick.h"
+#import "UKStyleInfo.h"
 
 #define fallbackAlpha	0.5
 
@@ -33,16 +34,12 @@
 @property (nonatomic) BOOL small;
 @property (nonatomic) BOOL dragHighlight;
 @property (nonatomic, assign) NSColor *currentTextColour;
-@property (nonatomic, assign) CTParagraphStyleRef largeCTStyle;
-@property (nonatomic, assign) CTParagraphStyleRef smallCTStyle;
-@property (nonatomic) CTFontRef largeCTFont;
-@property (nonatomic) CTFontRef smallCTFont;
-@property (nonatomic, strong) NSDictionary *largeAttributes;
-@property (nonatomic, strong) NSDictionary *smallAttributes;
+@property (nonatomic, strong) UKStyleInfo *styleInfo;
 @property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;
 @property (nonatomic, weak) IBOutlet id<UKKeyCapClick> clickDelegate;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect boundingRect;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect insideRect;
+@property (readwrite) NSInteger tag;
 
 - (void)flipInRect:(NSRect)boundingRect;
 - (void)getInnerColour:(NSColor **)innerColour

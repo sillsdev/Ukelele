@@ -36,6 +36,7 @@
 #import "UKKeyStrokeLookupInteractionHandler.h"
 #import "UKKeyboardPrintView.h"
 #import "PrintAccessoryPanel.h"
+#import "UKStyleInfo.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
@@ -479,7 +480,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// Tell the font panel what font we have
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
+	NSDictionary *largeAttributes = [ukeleleView.styleInfo largeAttributes];
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
 	[fontManager setSelectedFont:largeFont isMultiple:NO];
@@ -1191,21 +1192,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// The font has changed in the font panel, so update the window
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
+	NSDictionary *largeAttributes = [ukeleleView.styleInfo largeAttributes];
 	NSAssert(largeAttributes, @"Must have large size attributes");
-	NSDictionary *smallAttributes = [ukeleleView smallAttributes];
-	NSAssert(smallAttributes, @"Must have small size attributes");
 	NSFont *oldLargeFont = largeAttributes[NSFontAttributeName];
 	NSFont *newLargeFont = [sender convertFont:oldLargeFont];
-	NSMutableDictionary *newLargeAttributes = [largeAttributes mutableCopy];
-	newLargeAttributes[NSFontAttributeName] = newLargeFont;
-	[ukeleleView setLargeAttributes:newLargeAttributes];
-	CGFloat largeSize = [newLargeFont pointSize];
-	CGFloat smallSize = largeSize * kDefaultSmallFontSize / kDefaultLargeFontSize;
-	NSFont *newSmallFont = [sender convertFont:newLargeFont toSize:smallSize];
-	NSMutableDictionary *newSmallAttributes = [smallAttributes mutableCopy];
-	newSmallAttributes[NSFontAttributeName] = newSmallFont;
-	[ukeleleView setSmallAttributes:newSmallAttributes];
+	[ukeleleView.styleInfo changeLargeFont:newLargeFont];
 }
 
 - (IBAction)cutKey:(id)sender {
@@ -1669,7 +1660,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 {
 		// Tell the font panel what font we have
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
-	NSDictionary *largeAttributes = [ukeleleView largeAttributes];
+	NSDictionary *largeAttributes = [ukeleleView.styleInfo largeAttributes];
 	NSFont *largeFont = largeAttributes[NSFontAttributeName];
 	NSFontManager *fontManager = [NSFontManager sharedFontManager];
 	[fontManager setSelectedFont:largeFont isMultiple:NO];

@@ -29,4 +29,9 @@
 	}
 }
 
+- (void)setSelected:(BOOL)selected {
+	_selected = selected;
+	[self setNeedsDisplay:YES];
+}
+
 @end

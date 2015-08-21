@@ -20,6 +20,7 @@
 #import "Common.h"
 #import "UKKeyboardController.h"
 #import "UKKeyboardDocument.h"
+#import "ColourThemeEditorController.h"
 #include <ServiceManagement/ServiceManagement.h>
 
 #define UkeleleManualName	@"Ukelele Manual"
@@ -281,6 +282,19 @@ static NSDictionary *defaultValues() {
 #pragma unused(sender)
 	NSURL *groupURL = [NSURL URLWithString:UkeleleUsersGroup];
 	[[NSWorkspace sharedWorkspace] openURL:groupURL];
+}
+
+- (IBAction)colourThemes:(id)sender {
+#pragma unused(sender)
+	__block ColourThemeEditorController *theController = [ColourThemeEditorController colourThemeEditorController];
+	[theController showColourThemesWithWindow:nil completionBlock:^(NSString *theTheme) {
+		if (theTheme) {
+				// Set the current theme
+			NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+			[theDefaults setObject:theTheme forKey:UKColourTheme];
+		}
+		theController = nil;
+	}];
 }
 
 - (BOOL)installHelperTool {

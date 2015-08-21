@@ -17,6 +17,9 @@
 		5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
+		522A481D1B75EF6B00DA40ED /* UKStyleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */; };
+		522A481E1B75EF6B00DA40ED /* UKStyleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */; };
+		522A481F1B75EF6B00DA40ED /* UKStyleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */; };
 		522C30AE1953C8F3004F12AA /* dialogs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AB1953C8F3004F12AA /* dialogs.strings */; };
 		522C30AF1953C8F3004F12AA /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AC1953C8F3004F12AA /* Errors.strings */; };
 		522C30B01953C8F3004F12AA /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 522C30AD1953C8F3004F12AA /* keyboards.strings */; };
@@ -190,6 +193,8 @@
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
 		528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */; };
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
+		529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529344A01B86B20C00DF0659 /* AskTextView.xib */; };
+		529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529344A31B86B2A200DF0659 /* AskTextViewController.m */; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
 		5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
@@ -299,6 +304,8 @@
 		5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Ukelele Manual.pdf"; sourceTree = "<group>"; };
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
 		5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleBundleVersionSheet.xib; path = "Interface Files/UkeleleBundleVersionSheet.xib"; sourceTree = "<group>"; };
+		522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKStyleInfo.h; sourceTree = "<group>"; };
+		522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKStyleInfo.m; sourceTree = "<group>"; };
 		522C30AB1953C8F3004F12AA /* dialogs.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = dialogs.strings; sourceTree = "<group>"; };
 		522C30AC1953C8F3004F12AA /* Errors.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Errors.strings; sourceTree = "<group>"; };
 		522C30AD1953C8F3004F12AA /* keyboards.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = keyboards.strings; sourceTree = "<group>"; };
@@ -561,6 +568,9 @@
 		528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDiacriticDisplay.m; sourceTree = "<group>"; };
 		528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseFrom3Sheet.xib; path = "Interface Files/ChooseFrom3Sheet.xib"; sourceTree = "<group>"; };
 		5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HandleDeadKeySheet.xib; path = "Interface Files/HandleDeadKeySheet.xib"; sourceTree = "<group>"; };
+		529344A01B86B20C00DF0659 /* AskTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskTextView.xib; path = "Interface Files/AskTextView.xib"; sourceTree = "<group>"; };
+		529344A21B86B2A200DF0659 /* AskTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskTextViewController.h; sourceTree = "<group>"; };
+		529344A31B86B2A200DF0659 /* AskTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskTextViewController.m; sourceTree = "<group>"; };
 		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
 		5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptIndexTransformer.m; sourceTree = "<group>"; };
 		5294EB951A5E58F800765E94 /* StringArrayFirstTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringArrayFirstTransformer.h; sourceTree = "<group>"; };
@@ -823,16 +833,17 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
-				52C2D85E1B577FB6001DD5F6 /* AskImportState.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
+				52C2D85E1B577FB6001DD5F6 /* AskImportState.xib */,
 				52E347C9192457200046ABA7 /* AskKeyCode.xib */,
 				52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */,
 				52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */,
 				52BA90441924795200C7F138 /* AskStateAndTerminatorSheet.xib */,
 				5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */,
 				52BEADEB192484A6008A3314 /* AskText.xib */,
+				529344A01B86B20C00DF0659 /* AskTextView.xib */,
 				52BEADEF1924856F008A3314 /* AskYesNo.xib */,
 				528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */,
 				52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */,
@@ -1021,6 +1032,8 @@
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
 				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
 				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
+				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
+				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
 				52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */,
 				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
 				523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */,
@@ -1076,6 +1089,8 @@
 				523B0120191CA18C00E06DF3 /* AskSwapKeysWindowController.m */,
 				523B0121191CA18C00E06DF3 /* AskTextSheet.h */,
 				523B0122191CA18C00E06DF3 /* AskTextSheet.m */,
+				529344A21B86B2A200DF0659 /* AskTextViewController.h */,
+				529344A31B86B2A200DF0659 /* AskTextViewController.m */,
 				523B0129191CA18C00E06DF3 /* ChooseDeadKeyHandling.h */,
 				523B012A191CA18C00E06DF3 /* ChooseDeadKeyHandling.m */,
 				523B012B191CA18C00E06DF3 /* ChooseFrom3Sheet.h */,
@@ -1177,6 +1192,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				522A481D1B75EF6B00DA40ED /* UKStyleInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,6 +1325,7 @@
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
+				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
 				52BAE0BA1AA3FA2400D761C2 /* KCAPResources.plist in Resources */,
@@ -1362,6 +1379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5277EB891AAEF4D800C471C3 /* KeyCapView2Rect.m in Sources */,
+				522A481F1B75EF6B00DA40ED /* UKStyleInfo.m in Sources */,
 				5277EB7A1AAEF49400C471C3 /* KeyMapElement.mm in Sources */,
 				5277EB791AAEF48D00C471C3 /* KeyElementTable.mm in Sources */,
 				5277EB8F1AAEFD3300C471C3 /* RemoveStateData.mm in Sources */,
@@ -1423,6 +1441,7 @@
 				523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */,
 				523B01C0191CA18C00E06DF3 /* WrongStateChosenSheet.m in Sources */,
 				523B01A8191CA18C00E06DF3 /* InspectorWindowController.m in Sources */,
+				522A481E1B75EF6B00DA40ED /* UKStyleInfo.m in Sources */,
 				523B01BC191CA18C00E06DF3 /* UkelelePreferenceController.m in Sources */,
 				521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */,
 				523B00D0191CA00A00E06DF3 /* UkeleleKeyboardObject.mm in Sources */,
@@ -1464,6 +1483,7 @@
 				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
 				523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */,
+				529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */,
 				523B00CE191CA00A00E06DF3 /* TerminatorsElement.mm in Sources */,
 				523B019B191CA18C00E06DF3 /* CreateSelectedDeadKeyController.m in Sources */,
 				523B01AE191CA18C00E06DF3 /* ModifiersController.mm in Sources */,

@@ -49,10 +49,16 @@ MY_EXTERN NSString *kPrintThemeName;
 @property (nonatomic) unsigned int deadKeyGradientType;
 @property (nonatomic) unsigned int selectedGradientType;
 @property (nonatomic) unsigned int selectedDeadGradientType;
+@property (nonatomic) unsigned int normalDownGradientType;
+@property (nonatomic) unsigned int deadKeyDownGradientType;
+@property (nonatomic) unsigned int selectedDownGradientType;
+@property (nonatomic) unsigned int selectedDeadDownGradientType;
 
 + (ColourTheme *)defaultColourTheme;
 + (ColourTheme *)defaultPrintTheme;
 + (ColourTheme *)colourThemeNamed:(NSString *)themeName;
++ (ColourTheme *)createColourThemeNamed:(NSString *)themeName;
++ (void)addTheme:(ColourTheme *)colourTheme;
 
 - (ColourTheme *)copy;
 
