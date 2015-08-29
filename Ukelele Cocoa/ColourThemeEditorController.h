@@ -42,8 +42,6 @@
 - (IBAction)changeInnerColour:(id)sender;
 - (IBAction)changeTextColour:(id)sender;
 - (IBAction)newColourTheme:(id)sender;
-- (IBAction)editColourTheme:(id)sender;
-- (IBAction)duplicateColourTheme:(id)sender;
 - (IBAction)deleteColourTheme:(id)sender;
 - (IBAction)renameColourTheme:(id)sender;
 - (IBAction)selectColourTheme:(id)sender;

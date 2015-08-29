@@ -466,8 +466,8 @@ static CGAffineTransform kTextTransform = {
 - (void)setCurrentTextColour:(NSColor *)newTextColour {
 	if (_currentTextColour != newTextColour) {
 		_currentTextColour = newTextColour;
-		[self clearFrame];
-		[self setNeedsDisplay:YES];
+//		[self clearFrame];
+//		[self setNeedsDisplay:YES];
 	}
 }
 

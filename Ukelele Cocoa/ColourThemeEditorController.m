@@ -132,6 +132,7 @@ typedef enum : NSUInteger {
 			// Run as a window
 		[self.window setIsVisible:YES];
 	}
+	[self activateTheme:currentColourTheme];
 }
 
 #pragma mark User actions
@@ -149,17 +150,7 @@ typedef enum : NSUInteger {
 - (IBAction)selectColourTheme:(id)sender {
 	NSString *themeName = [sender title];
 	if (![themeName isEqualToString:[currentTheme themeName]]) {
-			// New theme chosen
-		currentTheme = [ColourTheme colourThemeNamed:themeName];
-		[self loadColours];
-		[self.normalUp setColourTheme:currentTheme];
-		[self.deadKeyUp setColourTheme:currentTheme];
-		[self.selectedUp setColourTheme:currentTheme];
-		[self.selectedDeadUp setColourTheme:currentTheme];
-		[self.normalDown setColourTheme:currentTheme];
-		[self.deadKeyDown setColourTheme:currentTheme];
-		[self.selectedDown setColourTheme:currentTheme];
-		[self.selectedDeadDown setColourTheme:currentTheme];
+		[self activateTheme:themeName];
 	}
 }
 
@@ -184,16 +175,6 @@ typedef enum : NSUInteger {
 	[editPopover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
 }
 
-- (IBAction)editColourTheme:(id)sender {
-#pragma unused(sender)
-	
-}
-
-- (IBAction)duplicateColourTheme:(id)sender {
-#pragma unused(sender)
-	
-}
-
 - (IBAction)deleteColourTheme:(id)sender {
 #pragma unused(sender)
 	
@@ -206,7 +187,24 @@ typedef enum : NSUInteger {
 
 - (IBAction)setGradient:(id)sender {
 #pragma unused(sender)
-	unsigned int newGradientType = (unsigned int)[self.gradientType selectedRow];
+	unsigned int newGradientType = (unsigned int)[[self.gradientType selectedCell] tag];
+	NSLog(@"Set gradient %u", newGradientType);
+//	switch ([self.gradientType selectedRow]) {
+//		case 0:
+//			newGradientType = gradientTypeRadial;
+//			break;
+//			
+//		case 1:
+//			newGradientType = gradientTypeLinear;
+//			break;
+//			
+//		case 2:
+//			newGradientType = gradientTypeNone;
+//			break;
+//			
+//		default:
+//			break;
+//	}
 	[self setNewGradientType:newGradientType forKeyType:currentKeyTypeStatus];
 }
 
@@ -387,54 +385,54 @@ typedef enum : NSUInteger {
 
 - (void)setNewInnerColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
 	NSColor *oldColour = nil;
-	NSUInteger gradientType = gradientTypeRadial;
+	NSUInteger theGradientType = gradientTypeRadial;
 	switch (keyType) {
 		case normalUnselectedUp:
 			oldColour = [currentTheme normalUpInnerColour];
 			[currentTheme setNormalUpInnerColour:newColour];
-			gradientType = [currentTheme normalGradientType];
+			theGradientType = [currentTheme normalGradientType];
 			break;
 			
 		case deadKeyUnselectedUp:
 			oldColour = [currentTheme deadKeyUpInnerColour];
 			[currentTheme setDeadKeyUpInnerColour:newColour];
-			gradientType = [currentTheme deadKeyGradientType];
+			theGradientType = [currentTheme deadKeyGradientType];
 			break;
 			
 		case normalSelectedUp:
 			oldColour = [currentTheme selectedUpInnerColour];
 			[currentTheme setSelectedUpInnerColour:newColour];
-			gradientType = [currentTheme selectedGradientType];
+			theGradientType = [currentTheme selectedGradientType];
 			break;
 			
 		case deadKeySelectedUp:
 			oldColour = [currentTheme selectedDeadUpInnerColour];
 			[currentTheme setSelectedDeadUpInnerColour:newColour];
-			gradientType = [currentTheme selectedDeadGradientType];
+			theGradientType = [currentTheme selectedDeadGradientType];
 			break;
 			
 		case normalUnselectedDown:
 			oldColour = [currentTheme normalDownInnerColour];
 			[currentTheme setNormalDownInnerColour:newColour];
-			gradientType = [currentTheme normalDownGradientType];
+			theGradientType = [currentTheme normalDownGradientType];
 			break;
 			
 		case deadKeyUnselectedDown:
 			oldColour = [currentTheme deadKeyDownInnerColour];
 			[currentTheme setDeadKeyDownInnerColour:newColour];
-			gradientType = [currentTheme deadKeyDownGradientType];
+			theGradientType = [currentTheme deadKeyDownGradientType];
 			break;
 			
 		case normalSelectedDown:
 			oldColour = [currentTheme selectedDownInnerColour];
 			[currentTheme setSelectedDownInnerColour:newColour];
-			gradientType = [currentTheme selectedDownGradientType];
+			theGradientType = [currentTheme selectedDownGradientType];
 			break;
 			
 		case deadKeySelectedDown:
 			oldColour = [currentTheme selectedDeadDownInnerColour];
 			[currentTheme setSelectedDeadDownInnerColour:newColour];
-			gradientType = [currentTheme selectedDeadDownGradientType];
+			theGradientType = [currentTheme selectedDeadDownGradientType];
 			break;
 			
 		default:
@@ -446,10 +444,10 @@ typedef enum : NSUInteger {
 	[self refreshCurrentKeyCap];
 	NSAssert(oldColour != nil, @"Must have the old colour");
 	NSString *actionName = @"Set Inner Colour";
-	if (gradientType == gradientTypeNone) {
+	if (theGradientType == gradientTypeNone) {
 		actionName = @"Set Fill Colour";
 	}
-	else if (gradientType == gradientTypeLinear) {
+	else if (theGradientType == gradientTypeLinear) {
 		actionName = @"Set Top Colour";
 	}
 	[[undoManager prepareWithInvocationTarget:self] setNewInnerColour:oldColour forKeyType:keyType];
@@ -458,54 +456,54 @@ typedef enum : NSUInteger {
 
 - (void)setNewOuterColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
 	NSColor *oldColour = nil;
-	NSUInteger gradientType = gradientTypeRadial;
+	NSUInteger theGradientType = gradientTypeRadial;
 	switch (keyType) {
 		case normalUnselectedUp:
 			oldColour = [currentTheme normalUpOuterColour];
 			[currentTheme setNormalUpOuterColour:newColour];
-			gradientType = [currentTheme normalGradientType];
+			theGradientType = [currentTheme normalGradientType];
 			break;
 			
 		case deadKeyUnselectedUp:
 			oldColour = [currentTheme deadKeyUpOuterColour];
 			[currentTheme setDeadKeyUpOuterColour:newColour];
-			gradientType = [currentTheme deadKeyGradientType];
+			theGradientType = [currentTheme deadKeyGradientType];
 			break;
 			
 		case normalSelectedUp:
 			oldColour = [currentTheme selectedUpOuterColour];
 			[currentTheme setSelectedUpOuterColour:newColour];
-			gradientType = [currentTheme selectedGradientType];
+			theGradientType = [currentTheme selectedGradientType];
 			break;
 			
 		case deadKeySelectedUp:
 			oldColour = [currentTheme selectedDeadUpOuterColour];
 			[currentTheme setSelectedDeadUpOuterColour:newColour];
-			gradientType = [currentTheme selectedDeadGradientType];
+			theGradientType = [currentTheme selectedDeadGradientType];
 			break;
 			
 		case normalUnselectedDown:
 			oldColour = [currentTheme normalDownOuterColour];
 			[currentTheme setNormalDownOuterColour:newColour];
-			gradientType = [currentTheme normalDownGradientType];
+			theGradientType = [currentTheme normalDownGradientType];
 			break;
 			
 		case deadKeyUnselectedDown:
 			oldColour = [currentTheme deadKeyDownOuterColour];
 			[currentTheme setDeadKeyDownOuterColour:newColour];
-			gradientType = [currentTheme deadKeyDownGradientType];
+			theGradientType = [currentTheme deadKeyDownGradientType];
 			break;
 			
 		case normalSelectedDown:
 			oldColour = [currentTheme selectedDownOuterColour];
 			[currentTheme setSelectedDownOuterColour:newColour];
-			gradientType = [currentTheme selectedDownGradientType];
+			theGradientType = [currentTheme selectedDownGradientType];
 			break;
 			
 		case deadKeySelectedDown:
 			oldColour = [currentTheme selectedDeadDownOuterColour];
 			[currentTheme setSelectedDeadDownOuterColour:newColour];
-			gradientType = [currentTheme selectedDeadDownGradientType];
+			theGradientType = [currentTheme selectedDeadDownGradientType];
 			break;
 			
 		default:
@@ -517,10 +515,10 @@ typedef enum : NSUInteger {
 	[self refreshCurrentKeyCap];
 	NSAssert(oldColour != nil, @"Must have the old colour");
 	NSString *actionName = @"Set Outer Colour";
-	if (gradientType == gradientTypeNone) {
+	if (theGradientType == gradientTypeNone) {
 		actionName = @"Set Border Colour";
 	}
-	else if (gradientType == gradientTypeLinear) {
+	else if (theGradientType == gradientTypeLinear) {
 		actionName = @"Set Bottom Colour";
 	}
 	[[undoManager prepareWithInvocationTarget:self] setNewOuterColour:oldColour forKeyType:keyType];
@@ -583,7 +581,7 @@ typedef enum : NSUInteger {
 	[undoManager setActionName:actionName];
 }
 
-- (void)setNewGradientType:(unsigned int)gradientType forKeyType:(NSInteger)keyType {
+- (void)setNewGradientType:(unsigned int)newGradientType forKeyType:(NSInteger)keyType {
 //	if (hasUndoGroup) {
 //		[self completeUndoGroup];
 //	}
@@ -591,42 +589,42 @@ typedef enum : NSUInteger {
 	switch (keyType) {
 		case normalUnselectedUp:
 			oldGradientType = [currentTheme normalGradientType];
-			[currentTheme setNormalGradientType:gradientType];
+			[currentTheme setNormalGradientType:newGradientType];
 			break;
 			
 		case deadKeyUnselectedUp:
 			oldGradientType = [currentTheme deadKeyGradientType];
-			[currentTheme setDeadKeyGradientType:gradientType];
+			[currentTheme setDeadKeyGradientType:newGradientType];
 			break;
 			
 		case normalSelectedUp:
 			oldGradientType = [currentTheme selectedGradientType];
-			[currentTheme setSelectedGradientType:gradientType];
+			[currentTheme setSelectedGradientType:newGradientType];
 			break;
 			
 		case deadKeySelectedUp:
 			oldGradientType = [currentTheme selectedDeadGradientType];
-			[currentTheme setSelectedDeadGradientType:gradientType];
+			[currentTheme setSelectedDeadGradientType:newGradientType];
 			break;
 			
 		case normalUnselectedDown:
 			oldGradientType = [currentTheme normalDownGradientType];
-			[currentTheme setNormalDownGradientType:gradientType];
+			[currentTheme setNormalDownGradientType:newGradientType];
 			break;
 			
 		case deadKeyUnselectedDown:
 			oldGradientType = [currentTheme deadKeyDownGradientType];
-			[currentTheme setDeadKeyDownGradientType:gradientType];
+			[currentTheme setDeadKeyDownGradientType:newGradientType];
 			break;
 			
 		case normalSelectedDown:
 			oldGradientType = [currentTheme selectedDownGradientType];
-			[currentTheme setSelectedDownGradientType:gradientType];
+			[currentTheme setSelectedDownGradientType:newGradientType];
 			break;
 			
 		case deadKeySelectedDown:
 			oldGradientType = [currentTheme selectedDeadDownGradientType];
-			[currentTheme setSelectedDeadDownGradientType:gradientType];
+			[currentTheme setSelectedDeadDownGradientType:newGradientType];
 			break;
 			
 		default:
@@ -649,6 +647,8 @@ typedef enum : NSUInteger {
 	newTheme = [currentTheme copy];
 	[newTheme setThemeName:themeName];
 	[ColourTheme addTheme:newTheme];
+	[[undoManager prepareWithInvocationTarget:self] deleteThemeNamed:themeName];
+	[undoManager setActionName:@"Add colour theme"];
 		// Add it to the popup
 	[self.themeList addItemWithTitle:themeName];
 	[self.themeList selectItemWithTitle:themeName];
@@ -656,10 +656,40 @@ typedef enum : NSUInteger {
 	[self saveTheme];
 }
 
+- (void)deleteThemeNamed:(NSString *)themeName {
+	ColourTheme *theTheme = [ColourTheme colourThemeNamed:themeName];
+	if (theTheme == nil) {
+			// Theme did not exist
+		return;
+	}
+	[[undoManager prepareWithInvocationTarget:self] replaceTheme:theTheme];
+	[undoManager setActionName:@"Delete colour theme"];
+	[ColourTheme deleteThemeNamed:themeName];
+		// Remove it from the popup
+	NSInteger selectedIndex = [self.themeList indexOfSelectedItem];
+	[self.themeList removeItemWithTitle:themeName];
+	if (selectedIndex >= [self.themeList numberOfItems]) {
+		selectedIndex = [self.themeList numberOfItems] - 1;
+	}
+	[self.themeList selectItemAtIndex:selectedIndex];
+	[self activateTheme:[self.themeList titleOfSelectedItem]];
+}
+
+- (void)replaceTheme:(ColourTheme *)colourTheme {
+	[[undoManager prepareWithInvocationTarget:self] deleteThemeNamed:[colourTheme themeName]];
+	[undoManager setActionName:@"Replace colour theme"];
+	[ColourTheme addTheme:colourTheme];
+		// Add it to the popup
+	[self.themeList addItemWithTitle:[colourTheme themeName]];
+	[self.themeList selectItemWithTitle:[colourTheme themeName]];
+	[self activateTheme:[colourTheme themeName]];
+}
+
 #pragma mark Marshal data
 
 - (void)activateTheme:(NSString *)themeName {
 		// New theme chosen
+	NSLog(@"Activate theme %@", themeName);
 	currentTheme = [ColourTheme colourThemeNamed:themeName];
 	[self loadColours];
 	[self.normalUp setColourTheme:currentTheme];
@@ -677,6 +707,7 @@ typedef enum : NSUInteger {
 			// Don't set anything
 		return;
 	}
+	NSLog(@"Loading colours");
 	NSColor *innerColourValue = nil;
 	NSColor *outerColourValue = nil;
 	NSColor *textColourValue = nil;
@@ -714,28 +745,28 @@ typedef enum : NSUInteger {
 			innerColourValue = [currentTheme normalDownInnerColour];
 			outerColourValue = [currentTheme normalDownOuterColour];
 			textColourValue = [currentTheme normalDownTextColour];
-			gradientTypeValue = [currentTheme normalGradientType];
+			gradientTypeValue = [currentTheme normalDownGradientType];
 			break;
 			
 		case normalSelectedDown:
 			innerColourValue = [currentTheme selectedDownInnerColour];
 			outerColourValue = [currentTheme selectedDownOuterColour];
 			textColourValue = [currentTheme selectedDownTextColour];
-			gradientTypeValue = [currentTheme selectedGradientType];
+			gradientTypeValue = [currentTheme selectedDownGradientType];
 			break;
 			
 		case deadKeyUnselectedDown:
 			innerColourValue = [currentTheme deadKeyDownInnerColour];
 			outerColourValue = [currentTheme deadKeyDownOuterColour];
 			textColourValue = [currentTheme deadKeyDownTextColour];
-			gradientTypeValue = [currentTheme deadKeyGradientType];
+			gradientTypeValue = [currentTheme deadKeyDownGradientType];
 			break;
 			
 		case deadKeySelectedDown:
 			innerColourValue = [currentTheme selectedDeadDownInnerColour];
 			outerColourValue = [currentTheme selectedDeadDownOuterColour];
 			textColourValue = [currentTheme selectedDeadDownTextColour];
-			gradientTypeValue = [currentTheme selectedDeadGradientType];
+			gradientTypeValue = [currentTheme selectedDeadDownGradientType];
 			break;
 			
 		default:
@@ -746,20 +777,24 @@ typedef enum : NSUInteger {
 	[self.outerColour setColor:outerColourValue];
 	[self.textColour setColor:textColourValue];
 		// Set the gradient type
-	NSInteger gradientIndex = 0;
-	switch (gradientTypeValue) {
-		case gradientTypeNone:
-			gradientIndex = 2;
-			break;
-			
-		case gradientTypeLinear:
-			gradientIndex = 1;
-			break;
-			
-		case gradientTypeRadial:
-			gradientIndex = 0;
-	}
-	[self.gradientType selectCellAtRow:gradientIndex column:0];
+	[self.gradientType selectCellWithTag:gradientTypeValue];
+	NSLog(@"Selected gradient %u", (unsigned int)gradientTypeValue);
+//	NSInteger gradientIndex = 0;
+//	switch (gradientTypeValue) {
+//		case gradientTypeNone:
+//			gradientIndex = 2;
+//			break;
+//			
+//		case gradientTypeLinear:
+//			gradientIndex = 1;
+//			break;
+//			
+//		case gradientTypeRadial:
+//			gradientIndex = 0;
+//			break;
+//	}
+//	NSLog(@"Gradient type value %d, row %d", (int)gradientTypeValue, (int)gradientIndex);
+//	[self.gradientType selectCellAtRow:gradientIndex column:0];
 		// Set the colour labels for the gradient type
 	switch (gradientTypeValue) {
 		case gradientTypeRadial:	// Radial
@@ -768,8 +803,8 @@ typedef enum : NSUInteger {
 			break;
 			
 		case gradientTypeLinear: // Linear
-			[self.innerColourLabel setStringValue:@"Top colour"];
-			[self.outerColourLabel setStringValue:@"Bottom colour"];
+			[self.innerColourLabel setStringValue:@"Bottom colour"];
+			[self.outerColourLabel setStringValue:@"Top colour"];
 			break;
 			
 		case gradientTypeNone:	// None
@@ -783,6 +818,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)refreshCurrentKeyCap {
+	NSLog(@"Refreshing current key");
 	switch (currentKeyTypeStatus) {
 		case noKeyStatus:
 			break;
@@ -820,17 +856,13 @@ typedef enum : NSUInteger {
 			break;
 			
 		default:
-			NSLog(@"Unrecognised key");
+			NSLog(@"Unrecognised key %d", (int)currentKeyTypeStatus);
 			break;
 	}
 }
 
 - (void)saveTheme {
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary *colourThemeDict = [[theDefaults dictionaryForKey:UKColourThemes] mutableCopy];
-	NSData *themeData = [NSKeyedArchiver archivedDataWithRootObject:currentTheme];
-	colourThemeDict[[currentTheme themeName]] = themeData;
-	[theDefaults setObject:colourThemeDict forKey:UKColourThemes];
+	[ColourTheme saveTheme:currentTheme];
 }
 
 #pragma mark Mouse events

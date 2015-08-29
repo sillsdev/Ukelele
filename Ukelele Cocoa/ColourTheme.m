@@ -14,13 +14,13 @@
 
 enum {
 	kNormalShift = 0,
-	kDeadKeyShift = 3,
-	kSelectedShift = 6,
-	kSelectedDeadShift = 9,
-	kNormalDownShift = 12,
-	kDeadKeyDownShift = 15,
-	kSelectedDownShift = 18,
-	kSelectedDeadDownShift = 21
+	kDeadKeyShift = 4,
+	kSelectedShift = 8,
+	kSelectedDeadShift = 12,
+	kNormalDownShift = 16,
+	kDeadKeyDownShift = 20,
+	kSelectedDownShift = 24,
+	kSelectedDeadDownShift = 28
 };
 
 enum {
@@ -29,7 +29,7 @@ enum {
 	kSelectedMask = 0x7 << kSelectedShift,
 	kSelectedDeadMask = 0x7 << kSelectedDeadShift,
 	kNormalDownMask = 0x7 << kNormalDownShift,
-	kDeadKeyDownMask = 0x7 << kSelectedDeadDownShift,
+	kDeadKeyDownMask = 0x7 << kDeadKeyDownShift,
 	kSelectedDownMask = 0x7 << kSelectedDownShift,
 	kSelectedDeadDownMask = 0x7 << kSelectedDeadDownShift
 };
@@ -302,15 +302,12 @@ NSString *kPrintThemeName = @"Print";
 }
 
 + (ColourTheme *)colourThemeNamed:(NSString *)themeName {
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
-	if (colourThemes != nil) {
-		NSData *themeData = colourThemes[themeName];
-		if (themeData != nil) {
-			ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:themeData];
-			if (theTheme != nil) {
-				return theTheme;
-			}
+	NSDictionary *colourThemes = [ColourTheme colourThemeDictionary];
+	NSData *themeData = colourThemes[themeName];
+	if (themeData != nil) {
+		ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:themeData];
+		if (theTheme != nil) {
+			return theTheme;
 		}
 	}
 		// Getting here means the name was not in the dictionary
@@ -324,29 +321,43 @@ NSString *kPrintThemeName = @"Print";
 }
 
 + (ColourTheme *)createColourThemeNamed:(NSString *)themeName {
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
-	if (colourThemes == nil) {
-		colourThemes = @{};
-	}
-	NSMutableDictionary *themeDict = [colourThemes mutableCopy];
+	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
 	NSAssert([themeDict objectForKey:themeName] == nil, @"Cannot create a theme that already exists");
 	ColourTheme *newTheme = [[ColourTheme defaultColourTheme] copy];
 	[newTheme setThemeName:themeName];
 	themeDict[themeName] = [NSKeyedArchiver archivedDataWithRootObject:newTheme];
-	[theDefaults setObject:themeDict forKey:UKColourThemes];
+	[ColourTheme saveColourThemes:themeDict];
 	return newTheme;
 }
 
 + (void)addTheme:(ColourTheme *)colourTheme {
+	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
+	themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
+	[ColourTheme saveColourThemes:themeDict];
+}
+
++ (void)deleteThemeNamed:(NSString *)themeName {
+	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
+	[themeDict removeObjectForKey:themeName];
+	[ColourTheme saveColourThemes:themeDict];
+}
+
++ (void)saveTheme:(ColourTheme *)updatedTheme {
+	NSMutableDictionary *theThemes = [ColourTheme colourThemeDictionary];
+	theThemes[[updatedTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:updatedTheme];
+	[ColourTheme saveColourThemes:theThemes];
+}
+
++ (NSMutableDictionary *)colourThemeDictionary {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
-	if (colourThemes == nil) {
-		colourThemes = @{};
-	}
-	NSMutableDictionary *themeDict = [colourThemes mutableCopy];
-	themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
-	[theDefaults setObject:themeDict forKey:UKColourThemes];
+	NSAssert(colourThemes != nil, @"Must have a colour themes dictionary");
+	return [colourThemes mutableCopy];
+}
+
++ (void)saveColourThemes:(NSDictionary *)themeDictionary {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	[theDefaults setObject:themeDictionary forKey:UKColourThemes];
 }
 
 #pragma mark Access routines
@@ -379,7 +390,7 @@ NSString *kPrintThemeName = @"Print";
 	return (gradientTypes & kSelectedDownMask) >> kSelectedDownShift;
 }
 
-- (unsigned int)selectedDeadKeyDownGradientType {
+- (unsigned int)selectedDeadDownGradientType {
 	return (gradientTypes & kSelectedDeadDownMask) >> kSelectedDeadDownShift;
 }
 
@@ -418,7 +429,7 @@ NSString *kPrintThemeName = @"Print";
 	gradientTypes |= (gradientType << kSelectedDownShift);
 }
 
-- (void)setSelectedDeadKeyDownGradientType:(unsigned int)gradientType {
+- (void)setSelectedDeadDownGradientType:(unsigned int)gradientType {
 	gradientTypes &= ~kSelectedDeadDownMask;
 	gradientTypes |= (gradientType << kSelectedDeadDownShift);
 }
