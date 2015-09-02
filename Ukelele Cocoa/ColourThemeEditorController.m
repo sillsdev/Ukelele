@@ -116,11 +116,11 @@ typedef enum : NSUInteger {
 
 - (void)showColourThemesWithWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))theBlock {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSDictionary *colourThemeDict = [theDefaults dictionaryForKey:UKColourThemes];
 	NSString *currentColourTheme = [theDefaults stringForKey:UKColourTheme];
 	currentTheme = [ColourTheme colourThemeNamed:currentColourTheme];
 	[self.themeList removeAllItems];
-	[self.themeList addItemsWithTitles:[[colourThemeDict allKeys] sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
+	NSArray *allThemes = [[ColourTheme allColourThemes] allObjects];
+	[self.themeList addItemsWithTitles:[allThemes sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
 	[self.themeList selectItemWithTitle:currentColourTheme];
 	theWindow = parentWindow;
 	completionBlock = theBlock;
@@ -173,6 +173,7 @@ typedef enum : NSUInteger {
 		}
 	}];
 	[editPopover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+	[askTextController.messageField setStringValue:@"Enter the name of the new colour theme:"];
 }
 
 - (IBAction)deleteColourTheme:(id)sender {
@@ -181,30 +182,29 @@ typedef enum : NSUInteger {
 }
 
 - (IBAction)renameColourTheme:(id)sender {
-#pragma unused(sender)
-	
+	if (editPopover == nil) {
+		editPopover = [[NSPopover alloc] init];
+	}
+	if (askTextController == nil) {
+		askTextController = [AskTextViewController askViewText];
+	}
+	[editPopover setDelegate:self];
+	[editPopover setContentViewController:askTextController];
+	[editPopover setBehavior:NSPopoverBehaviorTransient];
+	[askTextController setMyPopover:editPopover];
+	__weak ColourThemeEditorController *weakSelf = self;
+	[askTextController setCallBack:^(NSString *themeName) {
+		[weakSelf acceptThemeName:themeName];
+	}];
+	[askTextController setInvalidStrings:[ColourTheme allColourThemes]];
+	[askTextController setWarningString:@"That name is in use. Please enter a new name."];
+	[editPopover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+	[askTextController.messageField setStringValue:@"Enter a new name for the colour theme:"];
 }
 
 - (IBAction)setGradient:(id)sender {
 #pragma unused(sender)
 	unsigned int newGradientType = (unsigned int)[[self.gradientType selectedCell] tag];
-	NSLog(@"Set gradient %u", newGradientType);
-//	switch ([self.gradientType selectedRow]) {
-//		case 0:
-//			newGradientType = gradientTypeRadial;
-//			break;
-//			
-//		case 1:
-//			newGradientType = gradientTypeLinear;
-//			break;
-//			
-//		case 2:
-//			newGradientType = gradientTypeNone;
-//			break;
-//			
-//		default:
-//			break;
-//	}
 	[self setNewGradientType:newGradientType forKeyType:currentKeyTypeStatus];
 }
 
@@ -230,6 +230,10 @@ typedef enum : NSUInteger {
 		[NSApp endSheet:self.window];
 	}
 	completionBlock(nil);
+}
+
+- (void)acceptThemeName:(NSString *)theName {
+	[self renameThemeNamed:[currentTheme themeName] to:theName];
 }
 
 #pragma mark Events
@@ -685,11 +689,23 @@ typedef enum : NSUInteger {
 	[self activateTheme:[colourTheme themeName]];
 }
 
+- (void)renameThemeNamed:(NSString *)oldName to:(NSString *)newName {
+	[[undoManager prepareWithInvocationTarget:self] renameThemeNamed:newName to:oldName];
+	[undoManager setActionName:@"Rename colour theme"];
+	NSAssert([ColourTheme themeExistsWithName:oldName], @"Must have the old theme");
+	NSAssert(![ColourTheme themeExistsWithName:newName], @"Must not have the new name");
+	ColourTheme *theTheme = [ColourTheme colourThemeNamed:oldName];
+	[theTheme renameTheme:newName];
+	[self.themeList removeAllItems];
+	NSArray *allThemes = [[ColourTheme allColourThemes] allObjects];
+	[self.themeList addItemsWithTitles:[allThemes sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
+	[self.themeList selectItemWithTitle:newName];
+}
+
 #pragma mark Marshal data
 
 - (void)activateTheme:(NSString *)themeName {
 		// New theme chosen
-	NSLog(@"Activate theme %@", themeName);
 	currentTheme = [ColourTheme colourThemeNamed:themeName];
 	[self loadColours];
 	[self.normalUp setColourTheme:currentTheme];
@@ -707,7 +723,6 @@ typedef enum : NSUInteger {
 			// Don't set anything
 		return;
 	}
-	NSLog(@"Loading colours");
 	NSColor *innerColourValue = nil;
 	NSColor *outerColourValue = nil;
 	NSColor *textColourValue = nil;
@@ -778,23 +793,6 @@ typedef enum : NSUInteger {
 	[self.textColour setColor:textColourValue];
 		// Set the gradient type
 	[self.gradientType selectCellWithTag:gradientTypeValue];
-	NSLog(@"Selected gradient %u", (unsigned int)gradientTypeValue);
-//	NSInteger gradientIndex = 0;
-//	switch (gradientTypeValue) {
-//		case gradientTypeNone:
-//			gradientIndex = 2;
-//			break;
-//			
-//		case gradientTypeLinear:
-//			gradientIndex = 1;
-//			break;
-//			
-//		case gradientTypeRadial:
-//			gradientIndex = 0;
-//			break;
-//	}
-//	NSLog(@"Gradient type value %d, row %d", (int)gradientTypeValue, (int)gradientIndex);
-//	[self.gradientType selectCellAtRow:gradientIndex column:0];
 		// Set the colour labels for the gradient type
 	switch (gradientTypeValue) {
 		case gradientTypeRadial:	// Radial
@@ -818,7 +816,6 @@ typedef enum : NSUInteger {
 }
 
 - (void)refreshCurrentKeyCap {
-	NSLog(@"Refreshing current key");
 	switch (currentKeyTypeStatus) {
 		case noKeyStatus:
 			break;

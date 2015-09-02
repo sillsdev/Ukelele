@@ -87,6 +87,7 @@ static NSString *kCTWindowBackgroundColourKey = @"CTWindowBackgroundColour";
 
 static ColourTheme *sDefaultColourTheme = nil;
 static ColourTheme *sDefaultPrintTheme = nil;
+static NSString *currentlySetColourTheme = nil;
 
 NSString *kDefaultThemeName = @"Default";
 NSString *kPrintThemeName = @"Print";
@@ -301,6 +302,14 @@ NSString *kPrintThemeName = @"Print";
 	return sDefaultPrintTheme;
 }
 
++ (ColourTheme *)currentColourTheme {
+	return [ColourTheme colourThemeNamed:currentlySetColourTheme];
+}
+
++ (void)setCurrentColourTheme:(NSString *)themeName {
+	currentlySetColourTheme = themeName;
+}
+
 + (ColourTheme *)colourThemeNamed:(NSString *)themeName {
 	NSDictionary *colourThemes = [ColourTheme colourThemeDictionary];
 	NSData *themeData = colourThemes[themeName];
@@ -358,6 +367,27 @@ NSString *kPrintThemeName = @"Print";
 + (void)saveColourThemes:(NSDictionary *)themeDictionary {
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	[theDefaults setObject:themeDictionary forKey:UKColourThemes];
+}
+
++ (BOOL)themeExistsWithName:(NSString *)themeName {
+	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
+	return [themeDict objectForKey:themeName] != nil;
+}
+
++ (NSSet *)allColourThemes {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
+	return [NSSet setWithArray:[colourThemes allKeys]];
+}
+
+- (void)renameTheme:(NSString *)newName {
+	NSAssert(![ColourTheme themeExistsWithName:newName], @"Cannot rename a theme to an existing name");
+	NSString *oldName = self.themeName;
+	[self setThemeName:newName];
+	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
+	[themeDict removeObjectForKey:oldName];
+	themeDict[newName] = [NSKeyedArchiver archivedDataWithRootObject:self];
+	[ColourTheme saveColourThemes:themeDict];
 }
 
 #pragma mark Access routines

@@ -231,9 +231,12 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if (action == @selector(removeHelperTool:))	{
+	else if (action == @selector(removeHelperTool:)) {
 			// Only enabled if it is installed
 		return [self helperToolIsInstalled];
+	}
+	else if (action == @selector(colourThemes:)) {
+		return YES;
 	}
 	return YES;
 }
@@ -295,6 +298,30 @@ static NSDictionary *defaultValues() {
 		}
 		theController = nil;
 	}];
+}
+
+- (void)menuNeedsUpdate:(NSMenu *)menu {
+	NSAssert([[menu title] isEqualToString:@"Colour Themes"], @"Must have the right menu");
+	NSArray *colourThemes = [[[ColourTheme allColourThemes] allObjects] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
+	[menu removeAllItems];
+	ColourTheme *currentTheme = [ColourTheme currentColourTheme];
+	NSString *currentThemeName = [currentTheme themeName];
+	for (NSUInteger i = 0; i < [colourThemes count]; i++) {
+		NSString *themeName = colourThemes[i];
+		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:themeName action:@selector(chooseColourTheme:) keyEquivalent:@""];
+		if ([currentThemeName isEqualTo:themeName]) {
+				// The current theme, so mark it
+			[menuItem setState:NSOnState];
+		}
+		[menu addItem:menuItem];
+	}
+		// Add the separator and the editor item
+	[menu addItem:[NSMenuItem separatorItem]];
+	[menu addItemWithTitle:@"Edit Themes…" action:@selector(colourThemes:) keyEquivalent:@""];
+}
+
+- (IBAction)chooseColourTheme:(id)sender {
+	[ColourTheme setCurrentColourTheme:[sender title]];
 }
 
 - (BOOL)installHelperTool {

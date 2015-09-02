@@ -127,6 +127,7 @@ enum ToolbarItemTags {
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)findKeyStroke:(id)sender;
+- (IBAction)chooseColourTheme:(id)sender;
 
 	// Printing
 - (IBAction)runPageLayout:(id)sender;

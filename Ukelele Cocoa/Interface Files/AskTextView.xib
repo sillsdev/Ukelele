@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AskTextViewController">
             <connections>
-                <outlet property="messageField" destination="WTc-EJ-o0X" id="d6I-qp-oZm"/>
+                <outlet property="messageField" destination="7pe-Sg-Dbv" id="5RS-Nt-bi7"/>
                 <outlet property="textField" destination="3kA-kW-WD2" id="B5t-xw-OkF"/>
                 <outlet property="view" destination="c22-O7-iKe" id="Acr-lk-wNq"/>
             </connections>
@@ -18,14 +18,6 @@
             <rect key="frame" x="0.0" y="-1" width="256" height="144"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTc-EJ-o0X">
-                    <rect key="frame" x="20" y="79" width="218" height="45"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Label" id="wyc-Oh-yNc">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2qy-F5-bdE">
                     <rect key="frame" x="160" y="13" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Lq-E6-uzA">
@@ -58,6 +50,14 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pe-Sg-Dbv">
+                    <rect key="frame" x="18" y="79" width="220" height="45"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="Dbc-IC-5MI">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>

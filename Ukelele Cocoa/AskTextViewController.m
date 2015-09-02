@@ -20,6 +20,8 @@
 	if (self) {
 			// Initialise
 		hasCompleted = NO;
+		_invalidStrings = nil;
+		_warningString = @"";
 	}
 	return self;
 }
@@ -42,6 +44,18 @@
 - (IBAction)acceptText:(id)sender {
 #pragma unused(sender)
 	if (!hasCompleted) {
+		if (self.invalidStrings) {
+				// Check for a valid string
+			NSString *theText = [self.textField stringValue];
+			if ([self.invalidStrings containsObject:theText]) {
+					// Invalid string
+				[self.messageField setStringValue:self.warningString];
+				[self.textField selectText:self];
+				return;
+			}
+				// Delete the invalid strings
+			self.invalidStrings = nil;
+		}
 		hasCompleted = YES;
 		self.callBack([self.textField stringValue]);
 		[self.myPopover performClose:self];
@@ -52,6 +66,9 @@
 #pragma unused(sender)
 	if (!hasCompleted) {
 		hasCompleted = YES;
+		if (self.invalidStrings) {
+			self.invalidStrings = nil;
+		}
 		self.callBack(nil);
 		[self.myPopover performClose:self];
 	}

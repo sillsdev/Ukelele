@@ -602,7 +602,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(changeOutput:) ||
 		selector == @selector(makeDeadKey:) ||
 		selector == @selector(makeOutput:) ||
-		selector == @selector(changeNextState:)) {
+		selector == @selector(changeNextState:) ||
+		selector == @selector(chooseColourTheme:)) {
 		return YES;
 	}
 	return NO;
@@ -678,6 +679,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 	else if (action == @selector(setDefaultIndex:)) {
 			// This can only be selected if we are on the modifiers tab
 		return [kTabNameModifiers isEqualToString:currentTabName];
+	}
+	else if (action == @selector(chooseColourTheme:)) {
+			// This is always enabled
+		return YES;
 	}
 	return NO;
 }
@@ -1369,6 +1374,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[theHandler setCompletionTarget:self];
 	interactionHandler = theHandler;
 	[theHandler beginInteractionWithKeyboard:self];
+}
+
+- (IBAction)chooseColourTheme:(id)sender {
+	NSString *themeName = [sender title];
+	[ColourTheme setCurrentColourTheme:themeName];
+	ColourTheme *colourTheme = [ColourTheme colourThemeNamed:themeName];
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	[ukeleleView setColourTheme:colourTheme];
 }
 
 - (IBAction)cancel:(id)sender {

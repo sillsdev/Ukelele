@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UkeleleAppDelegate : NSObject<NSApplicationDelegate>
+@interface UkeleleAppDelegate : NSObject<NSApplicationDelegate, NSMenuDelegate>
 
 - (IBAction)doPreferences:(id)sender;
 - (IBAction)newBundle:(id)sender;
@@ -21,6 +21,7 @@
 - (IBAction)openWebSite:(id)sender;
 - (IBAction)openUkeleleUsersGroup:(id)sender;
 - (IBAction)colourThemes:(id)sender;
+- (IBAction)chooseColourTheme:(id)sender;
 
 - (void)connectAndExecuteCommandBlock:(void(^)(NSError *))commandBlock;
 - (BOOL)installHelperTool;

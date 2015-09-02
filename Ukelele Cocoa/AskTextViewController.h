@@ -14,6 +14,8 @@
 @property (strong) IBOutlet NSTextField *messageField;
 @property (strong) void (^callBack)(NSString *);
 @property (weak) NSPopover *myPopover;
+@property (strong) NSString *warningString;
+@property (strong) NSSet *invalidStrings;
 
 - (IBAction)acceptText:(id)sender;
 - (IBAction)cancelText:(id)sender;
