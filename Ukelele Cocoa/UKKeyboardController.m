@@ -489,6 +489,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// Start observing the sticky modifiers flag
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	[toolboxData addObserver:self forKeyPath:@"stickyModifiers" options:NSKeyValueObservingOptionNew context:nil];
+		// Set the current colour theme
+	[ColourTheme setCurrentColourTheme:[[ukeleleView colourTheme] themeName]];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
@@ -11,6 +10,7 @@
                 <outlet property="deadKeyDownSelection" destination="GUa-TX-woR" id="LgB-pz-WTu"/>
                 <outlet property="deadKeyUp" destination="PuW-3f-Owy" id="Bf0-fp-YvT"/>
                 <outlet property="deadKeyUpSelection" destination="d2d-eF-vj5" id="eov-8I-pft"/>
+                <outlet property="deleteButton" destination="IyU-oQ-q2U" id="l5n-da-N6d"/>
                 <outlet property="gradientType" destination="LEp-Tx-MNx" id="bpp-dU-pcz"/>
                 <outlet property="innerColour" destination="rBA-ri-cxt" id="8HX-jI-LWM"/>
                 <outlet property="innerColourLabel" destination="TIf-39-iQx" id="1Hg-J0-bkl"/>
@@ -44,7 +44,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="458" height="461"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZM-CV-rpA">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NZM-CV-rpA">
                         <rect key="frame" x="362" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cN7-Dm-EMs">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -67,7 +67,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="cancelColourTheme:" target="-2" id="WJC-Rd-PVf"/>
+                            <action selector="revertColourThemes:" target="-2" id="Bbe-Nj-fYC"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HOR-CM-eZN">
@@ -98,7 +98,7 @@ Gw
                             <action selector="selectColourTheme:" target="-2" id="OE1-eg-oLV"/>
                         </connections>
                     </popUpButton>
-                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d7m-61-GHy">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d7m-61-GHy">
                         <rect key="frame" x="362" y="372" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="New" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BwX-73-lIY">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -108,9 +108,12 @@ Gw
                             <action selector="newColourTheme:" target="-2" id="VIc-x8-mOm"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IyU-oQ-q2U">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IyU-oQ-q2U">
                         <rect key="frame" x="196" y="372" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YDX-0V-PNX">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="quN-cp-4Ea"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YDX-0V-PNX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -436,11 +439,13 @@ Gw
                     <constraint firstItem="hTT-VE-oAE" firstAttribute="leading" secondItem="AcU-vJ-TZN" secondAttribute="trailing" constant="8" symbolic="YES" id="8n5-SN-rJA"/>
                     <constraint firstItem="TIf-39-iQx" firstAttribute="trailing" secondItem="DIF-wL-S3d" secondAttribute="trailing" id="A6S-I0-d3e"/>
                     <constraint firstItem="hPf-BH-4O2" firstAttribute="top" secondItem="fkv-Hj-GbX" secondAttribute="bottom" constant="20" symbolic="YES" id="A8z-ga-iuT"/>
+                    <constraint firstItem="IyU-oQ-q2U" firstAttribute="baseline" secondItem="d7m-61-GHy" secondAttribute="baseline" id="Azx-ww-zXr"/>
                     <constraint firstItem="d2d-eF-vj5" firstAttribute="top" secondItem="smL-Or-W0h" secondAttribute="top" id="BRe-K5-j2E"/>
                     <constraint firstItem="DIF-wL-S3d" firstAttribute="leading" secondItem="LEp-Tx-MNx" secondAttribute="trailing" constant="73" id="BVQ-yF-ukf"/>
                     <constraint firstItem="UWH-fe-F26" firstAttribute="trailing" secondItem="BkD-3K-19v" secondAttribute="trailing" id="Cs6-hr-w12"/>
                     <constraint firstItem="hTT-VE-oAE" firstAttribute="centerY" secondItem="AcU-vJ-TZN" secondAttribute="centerY" id="E61-4i-Mrw"/>
                     <constraint firstItem="R9v-X6-CIj" firstAttribute="top" secondItem="fXa-s6-173" secondAttribute="bottom" constant="15" id="G2l-3H-jtY"/>
+                    <constraint firstItem="IyU-oQ-q2U" firstAttribute="baseline" secondItem="fkv-Hj-GbX" secondAttribute="baseline" id="Giw-UZ-Did"/>
                     <constraint firstItem="fkv-Hj-GbX" firstAttribute="top" secondItem="HOR-CM-eZN" secondAttribute="bottom" constant="23" id="HW3-bb-tgB"/>
                     <constraint firstItem="d2d-eF-vj5" firstAttribute="leading" secondItem="R9v-X6-CIj" secondAttribute="trailing" constant="22" id="Hft-e4-kph"/>
                     <constraint firstItem="Mlp-gO-amL" firstAttribute="top" secondItem="LEp-Tx-MNx" secondAttribute="top" id="JK5-wa-b7v"/>
@@ -489,6 +494,7 @@ Gw
                     <constraint firstItem="hTT-VE-oAE" firstAttribute="top" secondItem="rBA-ri-cxt" secondAttribute="bottom" constant="9" id="cCp-ED-62I"/>
                     <constraint firstItem="rBA-ri-cxt" firstAttribute="top" secondItem="uRP-vi-zxN" secondAttribute="bottom" constant="12" id="caF-i7-DM0"/>
                     <constraint firstItem="AcU-vJ-TZN" firstAttribute="leading" secondItem="TIf-39-iQx" secondAttribute="leading" id="ciE-fb-OaL"/>
+                    <constraint firstItem="d7m-61-GHy" firstAttribute="leading" secondItem="IyU-oQ-q2U" secondAttribute="trailing" constant="96" id="d3y-DB-ILD"/>
                     <constraint firstItem="fXa-s6-173" firstAttribute="top" secondItem="hPf-BH-4O2" secondAttribute="bottom" constant="14" id="e6r-ic-BDL"/>
                     <constraint firstAttribute="bottom" secondItem="LEp-Tx-MNx" secondAttribute="bottom" constant="77" id="esv-ZK-zzR"/>
                     <constraint firstItem="smL-Or-W0h" firstAttribute="top" secondItem="UWH-fe-F26" secondAttribute="top" id="gRO-aD-eOF"/>

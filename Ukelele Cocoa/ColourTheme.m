@@ -88,6 +88,7 @@ static NSString *kCTWindowBackgroundColourKey = @"CTWindowBackgroundColour";
 static ColourTheme *sDefaultColourTheme = nil;
 static ColourTheme *sDefaultPrintTheme = nil;
 static NSString *currentlySetColourTheme = nil;
+static NSMutableDictionary *savedColourThemes = nil;
 
 NSString *kDefaultThemeName = @"Default";
 NSString *kPrintThemeName = @"Print";
@@ -378,6 +379,23 @@ NSString *kPrintThemeName = @"Print";
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
 	return [NSSet setWithArray:[colourThemes allKeys]];
+}
+
++ (void)saveCurrentColourThemes {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	NSDictionary *colourThemes = [theDefaults objectForKey:UKColourThemes];
+	savedColourThemes = [NSMutableDictionary dictionaryWithCapacity:[colourThemes count]];
+	for (NSString *themeName in [colourThemes allKeys]) {
+		ColourTheme *theTheme = colourThemes[themeName];
+		savedColourThemes[themeName] = [theTheme copy];
+	}
+}
+
++ (void)restoreColourThemes {
+	NSAssert(savedColourThemes != nil, @"Can only restore when there has been a save");
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	[theDefaults setObject:savedColourThemes forKey:UKColourThemes];
+	savedColourThemes = nil;
 }
 
 - (void)renameTheme:(NSString *)newName {

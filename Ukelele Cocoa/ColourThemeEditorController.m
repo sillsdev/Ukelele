@@ -115,9 +115,17 @@ typedef enum : NSUInteger {
 }
 
 - (void)showColourThemesWithWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSString *))theBlock {
-	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSString *currentColourTheme = [theDefaults stringForKey:UKColourTheme];
-	currentTheme = [ColourTheme colourThemeNamed:currentColourTheme];
+	currentTheme = [ColourTheme currentColourTheme];
+	if (currentTheme == nil) {
+			// No current theme, so use the default one
+		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+		NSString *defaultTheme = [theDefaults stringForKey:UKColourTheme];
+		if (defaultTheme == nil || [defaultTheme length] == 0 || ![ColourTheme themeExistsWithName:defaultTheme]) {
+			defaultTheme = kDefaultThemeName;
+		}
+		currentTheme = [ColourTheme colourThemeNamed:defaultTheme];
+	}
+	NSString *currentColourTheme = [currentTheme themeName];
 	[self.themeList removeAllItems];
 	NSArray *allThemes = [[ColourTheme allColourThemes] allObjects];
 	[self.themeList addItemsWithTitles:[allThemes sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
@@ -133,25 +141,18 @@ typedef enum : NSUInteger {
 		[self.window setIsVisible:YES];
 	}
 	[self activateTheme:currentColourTheme];
+	[self.deleteButton setEnabled:!([currentColourTheme isEqualToString:kDefaultThemeName] || [currentColourTheme isEqualToString:kPrintThemeName])];
+	[ColourTheme saveCurrentColourThemes];
 }
 
 #pragma mark User actions
-
-- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem {
-	SEL action = [anItem action];
-	if (action == @selector(deleteColourTheme:)) {
-			// Cannot delete the Default and Print themes
-		return ![[currentTheme themeName] isEqualToString:kDefaultThemeName] &&
-			![[currentTheme themeName] isEqualToString:kPrintThemeName];
-	}
-	return YES;
-}
 
 - (IBAction)selectColourTheme:(id)sender {
 	NSString *themeName = [sender title];
 	if (![themeName isEqualToString:[currentTheme themeName]]) {
 		[self activateTheme:themeName];
 	}
+	[self.deleteButton setEnabled:!([themeName isEqualToString:kDefaultThemeName] || [themeName isEqualToString:kPrintThemeName])];
 }
 
 - (IBAction)newColourTheme:(id)sender {
@@ -178,7 +179,12 @@ typedef enum : NSUInteger {
 
 - (IBAction)deleteColourTheme:(id)sender {
 #pragma unused(sender)
-	
+	NSString *themeName = [self.themeList titleOfSelectedItem];
+	if ([themeName isEqualToString:kDefaultThemeName] || [themeName isEqualToString:kPrintThemeName]) {
+			// Can't delete the required themes
+		return;
+	}
+	[self deleteThemeNamed:themeName];
 }
 
 - (IBAction)renameColourTheme:(id)sender {
@@ -223,12 +229,13 @@ typedef enum : NSUInteger {
 	completionBlock([currentTheme themeName]);
 }
 
-- (IBAction)cancelColourTheme:(id)sender {
+- (IBAction)revertColourThemes:(id)sender {
 #pragma unused(sender)
 	[self.window orderOut:self];
 	if (theWindow) {
 		[NSApp endSheet:self.window];
 	}
+	[ColourTheme restoreColourThemes];
 	completionBlock(nil);
 }
 
@@ -681,7 +688,7 @@ typedef enum : NSUInteger {
 
 - (void)replaceTheme:(ColourTheme *)colourTheme {
 	[[undoManager prepareWithInvocationTarget:self] deleteThemeNamed:[colourTheme themeName]];
-	[undoManager setActionName:@"Replace colour theme"];
+//	[undoManager setActionName:@"Replace colour theme"];
 	[ColourTheme addTheme:colourTheme];
 		// Add it to the popup
 	[self.themeList addItemWithTitle:[colourTheme themeName]];
@@ -849,7 +856,7 @@ typedef enum : NSUInteger {
 			break;
 			
 		case deadKeySelectedDown:
-			[self.selectedDown setNeedsLayout:YES];
+			[self.selectedDeadDown setNeedsLayout:YES];
 			break;
 			
 		default:
@@ -860,6 +867,7 @@ typedef enum : NSUInteger {
 
 - (void)saveTheme {
 	[ColourTheme saveTheme:currentTheme];
+	[self activateTheme:[currentTheme themeName]];
 }
 
 #pragma mark Mouse events

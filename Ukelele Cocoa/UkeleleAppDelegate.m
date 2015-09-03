@@ -174,6 +174,13 @@ static NSDictionary *defaultValues() {
 		// Set up the Unicode table
 	[UnicodeTable setup];
 	
+		// Activate the default colour theme
+	NSString *defaultTheme = [[NSUserDefaults standardUserDefaults] stringForKey:UKColourTheme];
+	if (defaultTheme == nil || [defaultTheme length] == 0 || ![ColourTheme themeExistsWithName:defaultTheme]) {
+		defaultTheme = kDefaultThemeName;
+	}
+	[ColourTheme setCurrentColourTheme:defaultTheme];
+	
 		// Create our connection to the authorization system.
 		//
 		// If we can't create an authorization reference then the app is not going to be able
@@ -293,14 +300,14 @@ static NSDictionary *defaultValues() {
 	[theController showColourThemesWithWindow:nil completionBlock:^(NSString *theTheme) {
 		if (theTheme) {
 				// Set the current theme
-			NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-			[theDefaults setObject:theTheme forKey:UKColourTheme];
+			[ColourTheme setCurrentColourTheme:theTheme];
 		}
 		theController = nil;
 	}];
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
+		// We only use this for the colour themes menu
 	NSAssert([[menu title] isEqualToString:@"Colour Themes"], @"Must have the right menu");
 	NSArray *colourThemes = [[[ColourTheme allColourThemes] allObjects] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
 	[menu removeAllItems];

@@ -65,6 +65,8 @@ MY_EXTERN NSString *kPrintThemeName;
 + (NSSet *)allColourThemes;
 + (ColourTheme *)currentColourTheme;
 + (void)setCurrentColourTheme:(NSString *)themeName;
++ (void)saveCurrentColourThemes;
++ (void)restoreColourThemes;
 
 - (ColourTheme *)copy;
 - (void)renameTheme:(NSString *)newName;

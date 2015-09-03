@@ -35,9 +35,10 @@
 @property (strong) IBOutlet NSColorWell *textColour;
 @property (strong) IBOutlet NSTextField *outerColourLabel;
 @property (strong) IBOutlet NSTextField *innerColourLabel;
+@property (strong) IBOutlet NSButton *deleteButton;
 
 - (IBAction)acceptColourTheme:(id)sender;
-- (IBAction)cancelColourTheme:(id)sender;
+- (IBAction)revertColourThemes:(id)sender;
 - (IBAction)changeOuterColour:(id)sender;
 - (IBAction)changeInnerColour:(id)sender;
 - (IBAction)changeTextColour:(id)sender;
