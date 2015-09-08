@@ -521,7 +521,7 @@ typedef struct KeyEntryRec {
 	if (_colourTheme != newColourTheme) {
 		_colourTheme = newColourTheme;
 		for (NSView *subView in [self subviews]) {
-			if ([subView isKindOfClass:[KeyCapView class]]  || [subView isKindOfClass:[KeyCapView2Rect class]]) {
+			if ([subView isKindOfClass:[KeyCapView class]] || [subView isKindOfClass:[KeyCapView2Rect class]]) {
 				[(KeyCapView *)subView setColourTheme:_colourTheme];
 			}
 		}
@@ -530,8 +530,17 @@ typedef struct KeyEntryRec {
 
 - (void)setMenuDelegate:(id<UKMenuDelegate>)theDelegate {
 	for (NSView *subView in [self subviews]) {
-		if ([subView isKindOfClass:[KeyCapView class]]  || [subView isKindOfClass:[KeyCapView2Rect class]]) {
+		if ([subView isKindOfClass:[KeyCapView class]] || [subView isKindOfClass:[KeyCapView2Rect class]]) {
 			[(KeyCapView *)subView setMenuDelegate:theDelegate];
+		}
+	}
+}
+
+- (void)changeLargeFont:(NSFont *)newLargeFont {
+	[self.styleInfo changeLargeFont:newLargeFont];
+	for (NSView *subView in [self subviews]) {
+		if ([subView isKindOfClass:[KeyCapView class]] || [subView isKindOfClass:[KeyCapView2Rect class]]) {
+			[(KeyCapView *)subView styleDidUpdate];
 		}
 	}
 }

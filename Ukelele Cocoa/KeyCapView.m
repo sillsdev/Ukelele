@@ -147,7 +147,42 @@ static CGAffineTransform kTextTransform = {
 - (void)setUpFrame
 {
 	[self clearFrame];
-    if (!self.styleInfo.largeAttributes) {
+    if (self.styleInfo.largeAttributes) {
+        // Do it with Cocoa Text
+        NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
+        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:textRect.size];
+        [self.styleInfo.smallAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
+        [self.styleInfo.largeAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
+        textStorage = [[NSTextStorage alloc] initWithAttributedString:displayText];
+        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+        [layoutManager addTextContainer: textContainer];
+        [textStorage addLayoutManager: layoutManager];
+        if (self.small) {
+            [textStorage setAttributes:self.styleInfo.smallAttributes range:NSMakeRange(0, [textStorage length])];
+        }
+        else {
+            [textStorage setAttributes:self.styleInfo.largeAttributes range:NSMakeRange(0, [textStorage length])];
+            NSRect neededBox = NSZeroRect;
+            @try {
+                NSArray *layoutManagerList = [textStorage layoutManagers];
+                layoutManager = layoutManagerList[0];
+                NSArray *textContainerList = [layoutManager textContainers];
+                textContainer = textContainerList[0];
+                NSSize textContainerSize = [textContainer containerSize];
+                [textContainer setContainerSize:NSMakeSize(FLT_MAX, textContainerSize.height)];
+                [layoutManager glyphRangeForTextContainer:textContainer];
+                neededBox = [layoutManager usedRectForTextContainer:textContainer];
+            }
+            @catch (NSException *e) {
+                // Do nothing?
+            }
+            if (neededBox.size.width > textRect.size.width) {
+                [textStorage setAttributes:self.styleInfo.smallAttributes
+									 range:NSMakeRange(0, [textStorage length])];
+            }
+        }
+    }
+    else {
         // Do it with Core Text
         CFMutableDictionaryRef textAttributes =
 			CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
@@ -189,41 +224,6 @@ static CGAffineTransform kTextTransform = {
         }
         CFRelease(textAttributes);
         CGPathRelease(path);
-    }
-    else {
-        // Do it with Cocoa Text
-        NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
-        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:textRect.size];
-        [self.styleInfo.smallAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
-        [self.styleInfo.largeAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
-        textStorage = [[NSTextStorage alloc] initWithAttributedString:displayText];
-        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-        [layoutManager addTextContainer: textContainer];
-        [textStorage addLayoutManager: layoutManager];
-        if (self.small) {
-            [textStorage setAttributes:self.styleInfo.smallAttributes range:NSMakeRange(0, [textStorage length])];
-        }
-        else {
-            [textStorage setAttributes:self.styleInfo.largeAttributes range:NSMakeRange(0, [textStorage length])];
-            NSRect neededBox = NSZeroRect;
-            @try {
-                NSArray *layoutManagerList = [textStorage layoutManagers];
-                layoutManager = layoutManagerList[0];
-                NSArray *textContainerList = [layoutManager textContainers];
-                textContainer = textContainerList[0];
-                NSSize textContainerSize = [textContainer containerSize];
-                [textContainer setContainerSize:NSMakeSize(FLT_MAX, textContainerSize.height)];
-                [layoutManager glyphRangeForTextContainer:textContainer];
-                neededBox = [layoutManager usedRectForTextContainer:textContainer];
-            }
-            @catch (NSException *e) {
-                // Do nothing?
-            }
-            if (neededBox.size.width > textRect.size.width) {
-                [textStorage setAttributes:self.styleInfo.smallAttributes
-									 range:NSMakeRange(0, [textStorage length])];
-            }
-        }
    }
 }
 
@@ -567,6 +567,12 @@ static CGAffineTransform kTextTransform = {
 #pragma unused(event)
 	NSDictionary *dataDictionary = @{kKeyKeyCode: @(self.keyCode)};
 	return [self.menuDelegate contextualMenuForData:dataDictionary];
+}
+
+- (void)styleDidUpdate {
+		// Notification that the style was updated
+	[self clearFrame];
+	[self setNeedsDisplay:YES];
 }
 
 #pragma mark Contextual menus

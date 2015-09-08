@@ -1204,7 +1204,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert(largeAttributes, @"Must have large size attributes");
 	NSFont *oldLargeFont = largeAttributes[NSFontAttributeName];
 	NSFont *newLargeFont = [sender convertFont:oldLargeFont];
-	[ukeleleView.styleInfo changeLargeFont:newLargeFont];
+	[ukeleleView changeLargeFont:newLargeFont];
 }
 
 - (IBAction)cutKey:(id)sender {

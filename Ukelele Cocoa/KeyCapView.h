@@ -51,5 +51,6 @@
 - (void)changeScaleBy:(CGFloat)scaleMultiplier;
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset;
 - (void)finishInit;
+- (void)styleDidUpdate;
 
 @end

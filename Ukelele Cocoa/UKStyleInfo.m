@@ -102,9 +102,53 @@ static CGFloat kSmallLineHeightFactor = 1.3f;
 	baseFontSize = textSize / self.scaleFactor;
 }
 
+- (void)updateStyles {
+		// Set up Core Text styles
+	CGFloat largeFontSize = CTFontGetSize(_largeFont);
+	CGFloat smallFontSize = largeFontSize * kDefaultSmallFontSize / kDefaultLargeFontSize;
+	CTParagraphStyleSetting styleSetting[2];
+	styleSetting[0].spec = kCTParagraphStyleSpecifierAlignment;
+	styleSetting[0].valueSize = sizeof(CTTextAlignment);
+	CTTextAlignment alignType = kCTCenterTextAlignment;
+	styleSetting[0].value = &alignType;
+	styleSetting[1].spec = kCTParagraphStyleSpecifierMinimumLineHeight;
+	styleSetting[1].valueSize = sizeof(CGFloat);
+	CGFloat minLineHeight = largeFontSize * kLineHeightFactor;
+	styleSetting[1].value = &minLineHeight;
+	if (_largeParagraphStyle) {
+		CFRelease(_largeParagraphStyle);
+	}
+	self.largeParagraphStyle = CTParagraphStyleCreate(styleSetting, 2);
+	minLineHeight = smallFontSize * kSmallLineHeightFactor;
+	if (_smallParagraphStyle) {
+		CFRelease(_smallParagraphStyle);
+	}
+	self.smallParagraphStyle = CTParagraphStyleCreate(styleSetting, 2);
+	
+		// Set up Cocoa styles
+	NSString *fontName = CFBridgingRelease(CTFontCopyName(_largeFont, kCTFontFullNameKey));
+	if (fontName == nil || fontName.length == 0) {
+			// No font name found
+		fontName = kDefaultFontName;
+	}
+	NSFont *cocoaLargeFont = [NSFont fontWithName:fontName size:largeFontSize];
+	self.largeAttributes = [NSMutableDictionary dictionary];
+	[self.largeAttributes setValue:cocoaLargeFont forKey:NSFontAttributeName];
+	[self.largeAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+	[paraStyle setAlignment:NSCenterTextAlignment];
+	[self.largeAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
+	NSFont *cocoaSmallFont = [[NSFontManager sharedFontManager] convertFont:cocoaLargeFont toSize:smallFontSize];
+	self.smallAttributes = [NSMutableDictionary dictionary];
+	[self.smallAttributes setValue:cocoaSmallFont forKey:NSFontAttributeName];
+	[self.smallAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	[self.smallAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
+	baseFontSize = largeFontSize / self.scaleFactor;
+}
+
 - (void)setScaleFactor:(CGFloat)scaleFactor {
 	_scaleFactor = scaleFactor;
-	[self setUpStyles];
+	[self updateStyles];
 }
 
 - (void)setFontDescriptor:(CTFontDescriptorRef)fontDescriptor {
@@ -119,7 +163,7 @@ static CGFloat kSmallLineHeightFactor = 1.3f;
 		CGFloat smallFontSize = largeFontSize * kDefaultLargeFontSize / kDefaultSmallFontSize;
 		self.smallFont = CTFontCreateWithFontDescriptor(_fontDescriptor, smallFontSize, NULL);
 			// Update the styles
-		[self setUpStyles];
+		[self updateStyles];
 	}
 }
 
