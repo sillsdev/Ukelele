@@ -682,8 +682,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 			// This can only be selected if we are on the modifiers tab
 		return [kTabNameModifiers isEqualToString:currentTabName];
 	}
-	else if (action == @selector(chooseColourTheme:)) {
-			// This is always enabled
+	else if (action == @selector(chooseColourTheme:) || action == @selector(colourThemes:) ||
+			 action == @selector(saveDocument:)) {
+			// These are always enabled
 		return YES;
 	}
 	return NO;
@@ -1391,6 +1392,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert(interactionHandler != nil, @"Can only have cancel when an interaction is in progress");
 	[interactionHandler cancelInteraction];
 	[self.cancelButton setEnabled:NO];
+}
+
+- (IBAction)saveDocument:(id)sender {
+	[self.parentDocument saveDocument:sender];
 }
 
 #pragma mark Printing
