@@ -46,9 +46,6 @@ typedef enum : NSUInteger {
 	void (^completionBlock)(NSString *);
 	UKStyleInfo *styleInfo;
 	NSUndoManager *undoManager;
-//	BOOL hasUndoGroup;
-//	UKColourThemeChangeStatus changeStatus;
-//	UKKeyTypeStatus changeTarget;
 	NSPopover *editPopover;
 	AskTextViewController *askTextController;
 }
@@ -63,9 +60,6 @@ typedef enum : NSUInteger {
 		currentTheme = nil;
 		completionBlock = nil;
 		undoManager = [[NSUndoManager alloc] init];
-//		hasUndoGroup = NO;
-//		changeStatus = changingNothing;
-//		changeTarget = noKeyStatus;
 		editPopover = nil;
 		askTextController = nil;
 		_normalUp.tag = 0;
@@ -216,11 +210,6 @@ typedef enum : NSUInteger {
 
 - (IBAction)acceptColourTheme:(id)sender {
 #pragma unused(sender)
-//	if (hasUndoGroup) {
-//		[undoManager endUndoGrouping];
-//		NSLog(@"End undo group");
-//		hasUndoGroup = NO;
-//	}
 	[self saveTheme];
 	[self.window orderOut:self];
 	if (theWindow) {
@@ -304,95 +293,24 @@ typedef enum : NSUInteger {
 }
 
 - (IBAction)changeInnerColour:(id)sender {
-//	if (hasUndoGroup && (changeStatus != changingInnerColour || changeTarget != currentKeyTypeStatus)) {
-//			// We have a set of undos which are for something else, so end it and start a new one
-//		[self completeUndoGroup];
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		hasUndoGroup = YES;
-//		changeStatus = changingInnerColour;
-//		changeTarget = currentKeyTypeStatus;
-//	}
-//	else if (!hasUndoGroup) {
-//			// No undo group, start a new one
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		hasUndoGroup = YES;
-//		changeStatus = changingInnerColour;
-//		changeTarget = currentKeyTypeStatus;
-//	}
 	if (currentKeyTypeStatus != noKeyStatus) {
 		[self setNewInnerColour:[sender color] forKeyType:currentKeyTypeStatus];
 	}
 }
 
 - (IBAction)changeOuterColour:(id)sender {
-//	if (hasUndoGroup && (changeStatus != changingOuterColour || changeTarget != currentKeyTypeStatus)) {
-//			// We have a set of undos which are for something else, so end it and start a new one
-//		[self completeUndoGroup];
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		changeStatus = changingOuterColour;
-//		changeTarget = currentKeyTypeStatus;
-//	}
-//	else if (!hasUndoGroup) {
-//			// No undo group, start a new one
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		hasUndoGroup = YES;
-//		changeStatus = changingOuterColour;
-//		changeTarget = currentKeyTypeStatus;
-//	}
 	if (currentKeyTypeStatus != noKeyStatus) {
 		[self setNewOuterColour:[sender color] forKeyType:currentKeyTypeStatus];
 	}
 }
 
 - (IBAction)changeTextColour:(id)sender {
-//	if (hasUndoGroup && (changeStatus != changingTextColour || changeTarget != currentKeyTypeStatus)) {
-//			// We have a set of undos which are for something else, so end it and start a new one
-//		[self completeUndoGroup];
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		changeStatus = changingTextColour;
-//		hasUndoGroup = YES;
-//		changeTarget = currentKeyTypeStatus;
-//	}
-//	else if (!hasUndoGroup) {
-//			// No undo group, start a new one
-//		[undoManager beginUndoGrouping];
-//		NSLog(@"Begin undo group");
-//		changeStatus = changingTextColour;
-//		hasUndoGroup = YES;
-//		changeTarget = currentKeyTypeStatus;
-//	}
 	if (currentKeyTypeStatus != noKeyStatus) {
 		[self setNewTextColour:[sender color] forKeyType:currentKeyTypeStatus];
 	}
 }
 
 #pragma mark Undoable actions
-
-- (void)completeUndoGroup {
-//	if (hasUndoGroup) {
-//		hasUndoGroup = NO;
-//		[undoManager endUndoGrouping];
-//		NSLog(@"End undo group");
-//		switch (changeStatus) {
-//			case changingNothing:
-//					// Nothing to do
-//				break;
-//				
-//			case changingTextColour:
-//			case changingInnerColour:
-//			case changingOuterColour:
-//				[self saveTheme];
-//				break;
-//		}
-//		changeStatus = changingNothing;
-//		changeTarget = noKeyStatus;
-//	}
-}
 
 - (void)setNewInnerColour:(NSColor *)newColour forKeyType:(NSInteger)keyType {
 	NSColor *oldColour = nil;
@@ -593,9 +511,6 @@ typedef enum : NSUInteger {
 }
 
 - (void)setNewGradientType:(unsigned int)newGradientType forKeyType:(NSInteger)keyType {
-//	if (hasUndoGroup) {
-//		[self completeUndoGroup];
-//	}
 	unsigned int oldGradientType = gradientTypeNone;
 	switch (keyType) {
 		case normalUnselectedUp:
@@ -889,16 +804,6 @@ typedef enum : NSUInteger {
 
 - (void)windowDidBecomeMain:(NSNotification *)notification {
 #pragma unused(notification)
-}
-
-- (void)windowDidResignMain:(NSNotification *)notification {
-#pragma unused(notification)
-	[self completeUndoGroup];
-}
-
-- (void)windowWillClose:(NSNotification *)notification {
-#pragma unused(notification)
-	[self completeUndoGroup];
 }
 
 - (void)popoverWillClose:(NSNotification *)notification {
