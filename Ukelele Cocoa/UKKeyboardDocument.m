@@ -1564,7 +1564,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			// Name change
 		NSString *oldName = change[NSKeyValueChangeOldKey];
 		NSString *newName = change[NSKeyValueChangeNewKey];
-		NSLog(@"Change name from %@ to %@", oldName, newName);
 		if (![oldName isEqualToString:newName]) {
 				// New name
 			[[self controllerForCurrentEntry] changeKeyboardName:newName];

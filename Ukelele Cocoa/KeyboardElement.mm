@@ -1889,6 +1889,9 @@ void KeyboardElement::SetKeyBundle(const UInt32 inKeyCode, shared_ptr<KeyElement
 			KeyMapElement *keyMapElement = keyMapSet->GetKeyMapElement(keyMapIndex);
 			KeyElement *keyElement = inKeyBundle->GetKeyElement(keyMapSetIndex - 1, keyMapIndex);
 			KeyElement *newKeyElement = keyElement != NULL ? new KeyElement(*keyElement) : NULL;
+			if (newKeyElement) {
+				newKeyElement->ChangeKeyCode(inKeyCode);
+			}
 			keyMapElement->AddKeyElement(inKeyCode, newKeyElement);
 		}
 	}
