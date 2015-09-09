@@ -1389,6 +1389,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	// Install the keyboard layout
 
 - (IBAction)installForAllUsers:(id)sender {
+	if (![self canInstall]) {
+		return;
+	}
 	NSWindow *targetWindow;
 	if ([sender isKindOfClass:[UKKeyboardController class]]) {
 		targetWindow = [(UKKeyboardController *)sender window];
@@ -1406,6 +1409,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (IBAction)installForCurrentUser:(id)sender {
+	if (![self canInstall]) {
+		return;
+	}
 	NSWindow *targetWindow;
 	if ([sender isKindOfClass:[UKKeyboardController class]]) {
 		targetWindow = [(UKKeyboardController *)sender window];
@@ -1420,6 +1426,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (!installOK) {
 		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
 	}
+}
+
+- (BOOL)canInstall {
+	if ([self fileURL] == nil) {
+		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"This keyboard layout has not yet been saved. Please save it first, and then install it."};
+		NSError *myError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotInstallUnsavedFile userInfo:errorDict];
+		[self presentError:myError];
+		return NO;
+	}
+	return YES;
 }
 
 - (IBAction)duplicateKeyboardLayout:(id)sender {
