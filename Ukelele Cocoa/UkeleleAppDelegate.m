@@ -301,9 +301,22 @@ static NSDictionary *defaultValues() {
 		if (theTheme) {
 				// Set the current theme
 			[ColourTheme setCurrentColourTheme:theTheme];
+			[self updateWindowsWithColourThemes];
 		}
 		theController = nil;
 	}];
+}
+
+- (void)updateWindowsWithColourThemes {
+	NSArray *allWindows = [[NSApplication sharedApplication] windows];
+	for (NSWindow *theWindow in allWindows) {
+			// Look for a window which is a keyboard window
+		if ([[theWindow windowController] isKindOfClass:[UKKeyboardController class]]) {
+				// Have a keyboard window
+			UKKeyboardController *theController = [theWindow windowController];
+			[theController updateColourThemes];
+		}
+	}
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {

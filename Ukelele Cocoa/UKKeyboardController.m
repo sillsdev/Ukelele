@@ -881,6 +881,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 }
 
+- (void)updateColourThemes {
+		// The colour themes have been updated, so apply the changes
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	ColourTheme *currentTheme = [ukeleleView colourTheme];
+	NSString *themeName = [currentTheme themeName];
+	[ukeleleView setColourTheme:[ColourTheme colourThemeNamed:themeName]];
+}
+
 #pragma mark Callbacks
 
 - (void)showEditingPaneForKeyCode:(int)keyCode text:(NSString *)initialText target:(id)target action:(SEL)action

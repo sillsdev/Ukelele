@@ -806,6 +806,11 @@ typedef enum : NSUInteger {
 #pragma unused(notification)
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+#pragma unused(notification)
+	[self acceptColourTheme:self];
+}
+
 - (void)popoverWillClose:(NSNotification *)notification {
 #pragma unused(notification)
 	[askTextController acceptText:self];

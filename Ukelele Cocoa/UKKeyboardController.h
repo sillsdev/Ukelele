@@ -169,6 +169,7 @@ enum ToolbarItemTags {
 - (void)setMessageBarText:(NSString *)message;
 - (void)setSelectedKey:(NSInteger)keyCode;
 - (void)clearSelectedKey;
+- (void)updateColourThemes;
 
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;

@@ -947,8 +947,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
-			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(removeKeyboardLayout:) ||
-			 theAction == @selector(duplicateKeyboardLayout:)) {
+			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:)) {
 			// Only active if there's a selection in the table
 		NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {

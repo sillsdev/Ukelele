@@ -179,7 +179,7 @@
 - (IBAction)colourThemes:(id)sender {
 #pragma unused(sender)
 	__block ColourThemeEditorController *theController = [ColourThemeEditorController colourThemeEditorController];
-	[theController showColourThemesWithWindow:self.window completionBlock:^(NSString *theTheme) {
+	[theController showColourThemesWithWindow:nil completionBlock:^(NSString *theTheme) {
 		if (theTheme) {
 				// Set the current theme
 			NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
