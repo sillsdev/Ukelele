@@ -78,11 +78,9 @@
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard {
 #pragma unused(pasteboard)
 	if ([type isEqualToString:UKKeyboardPasteType]) {
-		NSLog(@"Keyboard paste type");
 		return NSPasteboardReadingAsPropertyList;
 	}
 	if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
-		NSLog(@"URL type");
 		return NSPasteboardReadingAsString;
 	}
 	return NSPasteboardReadingAsData;

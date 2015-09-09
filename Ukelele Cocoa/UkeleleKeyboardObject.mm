@@ -138,7 +138,6 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		_keyboard = new UkeleleKeyboard;
 		ErrorMessage error = _keyboard->CreateKeyboardFromXMLTree(*treeRepresentation);
 		if (error != XMLNoError) {
-			NSLog(@"Got error %d, %s", (int)error.GetErrorCode(), error.GetErrorMessage().GetUTF8());
 			if (outError != nil) {
 				errorDictionary = @{NSLocalizedDescriptionKey: ToNS(error.GetErrorMessage())};
 				*outError = [NSError errorWithDomain:@"org.sil.ukelele"

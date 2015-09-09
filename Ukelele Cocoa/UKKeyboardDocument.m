@@ -678,6 +678,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry {
+	if ([keyboardEntry hasBadKeyboard]) {
+			// The keyboard layout can't load successfully, so don't try it
+		return nil;
+	}
 	UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 	if ([keyboardEntry keyboardObject] == nil) {
 			// Not loaded, so load it now
@@ -688,6 +692,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (keyboardObject == nil) {
 				// Couldn't read the file
 			[self presentError:readError];
+			[keyboardEntry setHasBadKeyboard:YES];
 			return nil;
 		}
 		[keyboardEntry setKeyboardObject:keyboardObject];
@@ -1204,6 +1209,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
 	if (keyboardController == nil) {
 		keyboardController = [self createControllerForEntry:selectedRowInfo];
+		if (keyboardController == nil) {
+				// Bad keyboard layout, so bail
+			return;
+		}
 	}
 	NSAssert(keyboardController, @"Keyboard controller must exist");
 	[keyboardController showWindow:self];

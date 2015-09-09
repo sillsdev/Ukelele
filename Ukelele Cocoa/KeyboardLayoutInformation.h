@@ -21,6 +21,7 @@
 @property (strong) NSData *iconData;
 @property (strong) UKKeyboardController *keyboardController;
 @property (strong) NSFileWrapper *keyboardFileWrapper;
+@property (assign) BOOL hasBadKeyboard;
 
 - (instancetype)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName NS_DESIGNATED_INITIALIZER;
 

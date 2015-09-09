@@ -24,6 +24,7 @@
 	_intendedLanguage = nil;
 	_iconData = nil;
 	_keyboardController = nil;
+	_hasBadKeyboard = NO;
 	return self;
 }
 
