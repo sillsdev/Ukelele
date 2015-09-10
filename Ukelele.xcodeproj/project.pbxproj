@@ -536,12 +536,12 @@
 		523B51191B292ECA00E8982E /* NanoReleaseiOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NanoReleaseiOS.xcconfig; sourceTree = "<group>"; };
 		523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NanoReleaseMac.xcconfig; sourceTree = "<group>"; };
 		523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewKeyboardDialog.xib; sourceTree = "<group>"; };
-		524EAE271B9FD16900B77B43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/dialogs.strings; sourceTree = "<group>"; };
-		524EAE2A1B9FD16F00B77B43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Errors.strings; sourceTree = "<group>"; };
-		524EAE2D1B9FD17800B77B43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/keyboards.strings; sourceTree = "<group>"; };
-		524EAE2F1B9FD1A400B77B43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/keyboards.strings; sourceTree = "<group>"; };
-		524EAE301B9FD1AB00B77B43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/dialogs.strings; sourceTree = "<group>"; };
-		524EAE311B9FD1B100B77B43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Errors.strings; sourceTree = "<group>"; };
+		524EAE271B9FD16900B77B43 /* Base */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/dialogs.strings; sourceTree = "<group>"; };
+		524EAE2A1B9FD16F00B77B43 /* Base */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Errors.strings; sourceTree = "<group>"; };
+		524EAE2D1B9FD17800B77B43 /* Base */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/keyboards.strings; sourceTree = "<group>"; };
+		524EAE2F1B9FD1A400B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/keyboards.strings; sourceTree = "<group>"; };
+		524EAE301B9FD1AB00B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/dialogs.strings; sourceTree = "<group>"; };
+		524EAE311B9FD1B100B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Errors.strings; sourceTree = "<group>"; };
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };

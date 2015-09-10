@@ -18,8 +18,6 @@ static int kWindowLeftMargin = 10;
 static int kWindowBottomMargin = 9;
 static int kWindowRightMargin = 8;
 static int kKeyCapInset = 2;
-static CGFloat kLineHeightFactor = 1.5f;
-static CGFloat kSmallLineHeightFactor = 1.3f;
 static CGFloat kMininumScaleFactor = 1.0f;
 static CGFloat kMaximumScaleFactor = 5.0f;
 

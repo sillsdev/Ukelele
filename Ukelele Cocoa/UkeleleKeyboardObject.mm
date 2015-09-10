@@ -92,22 +92,6 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	self = [super init];
 	if (self) {
-//		NSXMLDocument *keyboardDocument = [[NSXMLDocument alloc] initWithData:xmlData options:NSXMLNodePreserveCharacterReferences error:outError];
-//		if (keyboardDocument == nil) {
-//				// Failed to parse
-//			self = nil;
-//			return self;
-//		}
-//		_keyboard = new UkeleleKeyboard;
-//		ErrorMessage error = _keyboard->CreateKeyboardFromXML(keyboardDocument);
-//		if (error != XMLNoError) {
-//				// Failed to create
-//			if (outError != nil) {
-//				NSDictionary *errorDictionary = @{NSLocalizedDescriptionKey: ToNS(error.GetErrorMessage())};
-//				*outError = [NSError errorWithDomain:@"org.sil.ukelele" code:error.GetErrorCode() userInfo:errorDictionary];
-//			}
-//			self = nil;
-//		}
 		NXMLEncoder xmlEncoder;
 		NString xmlString(ToNN(xmlData));
         NStatus xmlError;
@@ -163,12 +147,9 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (updateComment) {
 		[self updateEditingComment];
 	}
-//	NSXMLDocument *documentTree = self.keyboard->CreateXML();
 	NXMLEncoder xmlEncoder;
 	NXMLNode *treeRepresentation = self.keyboard->CreateXMLTree();
 	[parentDocument unblockUserInteraction];
-//	NSData *xmlData = [documentTree XMLDataWithOptions:NSXMLNodePreserveAttributeOrder | NSXMLNodePreserveQuotes | NSXMLNodePrettyPrint];
-//	return xmlData;
 	NString xmlString = xmlEncoder.Encode(treeRepresentation);
 	NData xmlData = xmlString.GetData(kNStringEncodingUTF8);
 	return ToNS(xmlData);
