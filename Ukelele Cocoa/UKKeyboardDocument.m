@@ -402,6 +402,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[keyboardName compare:UKUntitledName options:(NSAnchoredSearch | NSCaseInsensitiveSearch)] == NSOrderedSame) {
 			keyboardName = [keyboardEntry keyboardName];
 		}
+		if (![[keyboardEntry keyboardName] isEqualToString:[keyboardEntry fileName]]) {
+				// The keyboard name doesn't match the file name
+			keyboardName = [keyboardEntry keyboardName];
+			[keyboardEntry setFileName:keyboardName];
+			if ([keyboardEntry keyboardFileWrapper] != nil) {
+					// We have to remove the file wrapper, since we're changing the name
+				[keyboardEntry setKeyboardFileWrapper:nil];
+			}
+		}
 		if ([keyboardEntry keyboardFileWrapper] != nil) {
 				// Already have a file wrapper
 			[resourcesDirectory addFileWrapper:[keyboardEntry keyboardFileWrapper]];
@@ -470,7 +479,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				fileName = keyboardName;
 			}
 			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, fileName];
-			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[keyboardName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[fileName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
 			NSDictionary *languageDictionary = @{kStringInfoPlistInputSourceID: keyboardIdentifier,
 												 kStringInfoPlistIntendedLanguageKey: languageIdentifier};
 			infoPlist[KLInfoIdentifier] = languageDictionary;
