@@ -92,6 +92,8 @@ NSString *kKeyboardName = @"keyboardName";
 		if ([typeName isEqualToString:kFileTypeKeyboardLayout]) {
 				// Unbundled keyboard layout
 			_isBundle = NO;
+			_keyboardLayout = [[UkeleleKeyboardObject alloc] initWithName:@"Untitled"];
+			[_keyboardLayout setParentDocument:self];
 		}
 		else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle]) {
 				// Bundle
@@ -121,6 +123,7 @@ NSString *kKeyboardName = @"keyboardName";
 		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
+		[keyboardController setKeyboardLayout:self.keyboardLayout];
 		[self setFileType:kFileTypeKeyboardLayout];
 	}
 	else {
