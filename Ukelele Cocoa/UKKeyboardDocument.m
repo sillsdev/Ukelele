@@ -456,12 +456,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (NSDictionary *)createInfoPlist {
 	NSMutableDictionary *infoPlist = [NSMutableDictionary dictionary];
-	if ([_bundleIdentifier isEqualToString:@""]) {
+		// Check for no bundle ID or an old one with two dots
+	if ([self.bundleIdentifier isEqualToString:@""] ||
+		[self.bundleIdentifier hasPrefix:[NSString stringWithFormat:@"%@..", kStringAppleKeyboardLayoutBundleID]] ||
+		[self.bundleIdentifier hasPrefix:[NSString stringWithFormat:@"%@..", kStringUkeleleKeyboardLayoutBundleID]] ||
+		[self.bundleIdentifier hasSuffix:@"."]) {
 			// Create the bundle identifier
 		BOOL tigerCompatibleBundleIdentifier = [[NSUserDefaults standardUserDefaults] boolForKey:UKTigerCompatibleBundles];
 		NSString *baseString = tigerCompatibleBundleIdentifier ? kStringAppleKeyboardLayoutBundleID : kStringUkeleleKeyboardLayoutBundleID;
 		NSString *extensionString = [[self.bundleName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
-		self.bundleIdentifier = [baseString stringByAppendingString:extensionString];
+		self.bundleIdentifier = [NSString stringWithFormat:@"%@.%@", baseString, extensionString];
 	}
 	infoPlist[@"CFBundleIdentifier"] = self.bundleIdentifier;
 		// Set the bundle name
