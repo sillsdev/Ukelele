@@ -120,6 +120,11 @@ NSString *kKeyboardName = @"keyboardName";
 - (void)makeWindowControllers {
 	if (!self.isBundle) {
 			// Stand-alone keyboard layout
+		NSArray *theControllers = [self windowControllers];
+		if ([theControllers count] > 0) {
+				// We already have a controller
+			return;
+		}
 		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
