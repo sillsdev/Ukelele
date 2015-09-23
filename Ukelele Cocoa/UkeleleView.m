@@ -62,6 +62,10 @@ typedef struct KeyEntryRec {
 		else {
 			_colourTheme = [ColourTheme colourThemeNamed:themeName];
 		}
+		if (_colourTheme == nil) {
+				// Failed to get a valid colour theme, so get the default one
+			_colourTheme = [[ColourTheme defaultColourTheme] copy];
+		}
 		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
 		if (defaultFontName == nil || defaultFontName.length == 0) {
 				// Nothing came from the defaults

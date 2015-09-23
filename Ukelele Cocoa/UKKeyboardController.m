@@ -886,7 +886,12 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	ColourTheme *currentTheme = [ukeleleView colourTheme];
 	NSString *themeName = [currentTheme themeName];
-	[ukeleleView setColourTheme:[ColourTheme colourThemeNamed:themeName]];
+	ColourTheme *theTheme = [ColourTheme colourThemeNamed:themeName];
+	if (theTheme == nil) {
+			// No theme, get the default one
+		theTheme = [ColourTheme defaultColourTheme];
+	}
+	[ukeleleView setColourTheme:theTheme];
 }
 
 #pragma mark Callbacks
