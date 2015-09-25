@@ -186,7 +186,7 @@
 		5277EB9B1AAEFF1600C471C3 /* AddMissingOutputDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00DA191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm */; };
 		5277EB9C1AAEFFF000C471C3 /* NString_hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B0089191C9D2200E06DF3 /* NString_hash.cpp */; };
 		5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5277EB9F1AAF01A500C471C3 /* Carbon.framework */; };
-		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
@@ -224,7 +224,7 @@
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
-		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; };
+		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -1265,7 +1265,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UK;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					5277EB621AAE844600C471C3 = {
@@ -1695,6 +1695,7 @@
 				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = qlgenerator;
@@ -1719,6 +1720,7 @@
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				OTHER_CODE_SIGN_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = qlgenerator;
@@ -1739,6 +1741,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_TESTABILITY = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1820,6 +1823,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Ukelele;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
@@ -1847,6 +1851,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Ukelele;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
