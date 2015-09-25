@@ -520,6 +520,7 @@ typedef struct KeyEntryRec {
 }
 
 - (void)setColourTheme:(ColourTheme *)newColourTheme {
+	NSAssert(newColourTheme != nil, @"Must have a non-nil theme");
 	if (_colourTheme != newColourTheme) {
 		_colourTheme = newColourTheme;
 		for (NSView *subView in [self subviews]) {
