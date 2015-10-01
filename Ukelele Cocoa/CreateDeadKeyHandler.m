@@ -44,6 +44,10 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 	AskTextSheet *askTextSheet;
 }
 
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
+
 - (instancetype)initWithCurrentState:(NSString *)stateName
 				 modifiers:(NSUInteger)theModifiers
 				keyboardID:(NSInteger)keyboardID

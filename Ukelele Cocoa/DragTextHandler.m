@@ -14,6 +14,10 @@
 
 @implementation DragTextHandler
 
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
+
 - (instancetype)initWithData:(NSMutableDictionary *)dataDict dragText:(NSString *)draggedText window:(NSWindow *)theWindow
 {
 	self = [super init];

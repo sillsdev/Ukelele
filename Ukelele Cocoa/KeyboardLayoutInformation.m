@@ -10,6 +10,10 @@
 
 @implementation KeyboardLayoutInformation
 
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
+
 - (instancetype)initWithObject:(UkeleleKeyboardObject *)theKeyboard fileName:(NSString *)fileName {
 	self = [super init];
 	_keyboardObject = theKeyboard;

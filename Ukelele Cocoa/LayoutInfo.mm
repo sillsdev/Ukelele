@@ -19,7 +19,8 @@
 #import "NBundle.h"
 #import "UkeleleConstantStrings.h"
 
-	// Constants
+	
+// Constants
 const unsigned int kHasFnKey = 1;
 const unsigned int kHasEmbeddedKeypad = 2;
 const unsigned int kHasSeparateRightKeys = 4;
@@ -257,6 +258,10 @@ NSDictionary *sStandardKeyMapList;
 @implementation LayoutInfo
 
 #pragma mark Initialisation
+
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
 
 - (instancetype)initWithLayoutID:(int)layout
 {

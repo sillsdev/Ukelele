@@ -12,6 +12,10 @@
 
 @implementation ScriptInfo
 
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
+
 - (instancetype)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID
 {
 	self = [super init];

@@ -40,6 +40,10 @@ enum ProcessingStates {
 
 #pragma mark Entry
 
+- (instancetype) init NS_UNAVAILABLE {
+	abort();
+}
+
 - (instancetype)initWithData:(NSMutableDictionary *)dataDict
 	keyboardLayout:(UkeleleKeyboardObject *)keyboardLayout
 			window:(NSWindow *)window

@@ -17,7 +17,8 @@
 #include "boost/scoped_array.hpp"
 #include "NSystemUtilities.h"
 
-	// Key strings
+	
+// Key strings
 const NString kWhenElementMissingState = "WhenElementMissingState";
 
 	// Default constructor
@@ -125,7 +126,7 @@ WhenElement::GetMaxout(void) const
 	else {
 			// Convert string from possibly encoded value
 		UInt32 stringLength = mOutput.GetSize();
-		boost::scoped_array<UniChar> buffer(new UniChar(2 * stringLength));
+		boost::scoped_array<UniChar> buffer(new UniChar(2 * (UInt16)stringLength));
 		XMLUtilities::ConvertEncodedString(mOutput, buffer.get(), stringLength);
 		maxout = stringLength;
 	}
