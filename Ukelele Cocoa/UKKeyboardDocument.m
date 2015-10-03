@@ -475,9 +475,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		NSString *extensionString = [[self.bundleName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
 		self.bundleIdentifier = [NSString stringWithFormat:@"%@.%@", baseString, extensionString];
 	}
-	infoPlist[@"CFBundleIdentifier"] = self.bundleIdentifier;
+	infoPlist[(NSString *)kCFBundleIdentifierKey] = self.bundleIdentifier;
 		// Set the bundle name
-	infoPlist[@"CFBundleName"] = self.bundleName;
+	infoPlist[(NSString *)kCFBundleNameKey] = self.bundleName;
 		// Set the version number
 	infoPlist[(NSString *)kCFBundleVersionKey] = self.bundleVersion;
 		// Get the intended languages for each keyboard layout in the bundle
