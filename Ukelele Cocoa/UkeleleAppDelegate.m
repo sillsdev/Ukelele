@@ -38,9 +38,9 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
+//    if (self) {
+//        // Initialization code here.
+//    }
 //	[NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask handler:^(NSEvent *inEvent){
 //		NSString *characters = [inEvent characters];
 //		NSString *charsWithoutModifiers = [inEvent charactersIgnoringModifiers];
