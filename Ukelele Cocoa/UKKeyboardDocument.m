@@ -753,7 +753,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	free(tempDirectoryTemplate);
 	NSURL *tempDirectoryURL = [NSURL fileURLWithPath:tempDirectoryPath isDirectory:YES];
 		// Create the target directory
-	NSString *targetDirectoryName = [NSString stringWithFormat:@"Install %@", self.bundleName];
+	NSString *targetDirectoryName = [[targetURL lastPathComponent] stringByDeletingPathExtension];
 	NSURL *targetDirectoryURL = [tempDirectoryURL URLByAppendingPathComponent:targetDirectoryName isDirectory:YES];
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	[fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
@@ -776,7 +776,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
 		// Now create the task to turn the directory into a disk image
 	NSString *taskPath = @"/usr/bin/hdiutil";
-	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], [targetURL path]];
+	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-quiet", [targetURL path]];
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
 	[createTask waitUntilExit];
 }
@@ -1568,7 +1568,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (result == NSFileHandlingPanelOKButton) {
 				// Save it
 			NSURL *saveURL = [savePanel URL];
-			[self exportInstallerTo:saveURL];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self exportInstallerTo:saveURL];
+			});
 		}
 	}];
 }
