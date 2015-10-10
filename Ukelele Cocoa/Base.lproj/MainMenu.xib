@@ -158,6 +158,12 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Export…" id="8Vq-SY-yMq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportKeyboardLayout:" target="-1" id="pZR-v3-kYh"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Revert to Saved" id="KaW-ft-85H">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

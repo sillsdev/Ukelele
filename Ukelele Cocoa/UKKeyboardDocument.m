@@ -736,6 +736,51 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return theController;
 }
 
+- (void)exportInstallerTo:(NSURL *)targetURL {
+		// Create a temporary directory
+	NSString *tempDirectory = NSTemporaryDirectory();
+	NSString *tempDirectoryPath = [NSString stringWithFormat:@"%@UkeleleExportXXXXX", tempDirectory];
+	NSUInteger pathLength = [tempDirectoryPath length];
+	char *tempDirectoryTemplate = malloc(pathLength * 3 + 1);
+	[tempDirectoryPath getCString:tempDirectoryTemplate maxLength:pathLength * 3 encoding:NSUTF8StringEncoding];
+	char *tempDirectoryName = mkdtemp(tempDirectoryTemplate);
+	if (tempDirectoryName == NULL) {
+			// Could not create temporary directory
+		free(tempDirectoryTemplate);
+		return;
+	}
+	tempDirectoryPath = @(tempDirectoryTemplate);
+	free(tempDirectoryTemplate);
+	NSURL *tempDirectoryURL = [NSURL fileURLWithPath:tempDirectoryPath isDirectory:YES];
+		// Create the target directory
+	NSString *targetDirectoryName = [NSString stringWithFormat:@"Install %@", self.bundleName];
+	NSURL *targetDirectoryURL = [tempDirectoryURL URLByAppendingPathComponent:targetDirectoryName isDirectory:YES];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	[fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
+		// Add a copy of the document to the directory
+	NSString *documentName;
+	if (self.isBundle) {
+		documentName = [NSString stringWithFormat:@"%@%@", self.bundleName, kStringBundleExtension];
+	}
+	else {
+		documentName = [NSString stringWithFormat:@"%@.%@", self.bundleName, kStringKeyboardLayoutExtension];
+	}
+	NSURL *saveURL = [targetDirectoryURL URLByAppendingPathComponent:documentName];
+	NSString *saveType = self.isBundle ? kFileTypeGenericBundle : kFileTypeKeyboardLayout;
+	NSError *theError;
+	[self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
+		// Create the alias to Keyboard Layouts
+	NSURL *keyboardLayoutsURL = [NSURL fileURLWithPath:@"/Library/Keyboard Layouts" isDirectory:YES];
+	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
+	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:@"Keyboard Layouts" isDirectory:NO];
+	[NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
+		// Now create the task to turn the directory into a disk image
+	NSString *taskPath = @"/usr/bin/hdiutil";
+	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], [targetURL path]];
+	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
+	[createTask waitUntilExit];
+}
+
 #pragma mark Table delegate methods
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
@@ -1509,6 +1554,23 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(printViewController, @"Must have a print view controller");
 	[printViewController setCurrentDocument:self];
 	return [NSPrintOperation printOperationWithView:[printViewController view]];
+}
+
+- (IBAction)exportKeyboardLayout:(id)sender {
+#pragma unused(sender)
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setAllowedFileTypes:@[(NSString *)kUTTypeDiskImage]];
+	[savePanel setAllowsOtherFileTypes:NO];
+	NSArray *windowControllers = [self windowControllers];
+	NSWindowController *windowController = windowControllers[0];
+	NSWindow *myWindow = [windowController window];
+	[savePanel beginSheetModalForWindow:myWindow completionHandler:^(NSInteger result) {
+		if (result == NSFileHandlingPanelOKButton) {
+				// Save it
+			NSURL *saveURL = [savePanel URL];
+			[self exportInstallerTo:saveURL];
+		}
+	}];
 }
 
 #pragma mark Notifications

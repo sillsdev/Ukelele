@@ -44,6 +44,7 @@
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;
+- (IBAction)exportKeyboardLayout:(id)sender;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;
 - (void)inspectorDidAppear;
