@@ -760,7 +760,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	BOOL success = [fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:&theError];
 	if (!success) {
 			// Failed to create the target directory
-		[[NSApplication sharedApplication] presentError:theError];
+		[self presentError:theError];
 		return;
 	}
 		// Add a copy of the document to the directory
@@ -776,28 +776,28 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	success = [self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
 	if (!success) {
 			// Failed to save
-		[[NSApplication sharedApplication] presentError:theError];
+		[self presentError:theError];
 		return;
 	}
 		// Create the alias to Keyboard Layouts
 	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
 	if (libraryURL == nil) {
 			// Failed to create the URL for the Library directory
-		[[NSApplication sharedApplication] presentError:theError];
+		[self presentError:theError];
 		return;
 	}
 	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
 	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
 	if (aliasData == nil) {
 			// Failed to create the bookmark data
-		[[NSApplication sharedApplication] presentError:theError];
+		[self presentError:theError];
 		return;
 	}
 	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
 	success = [NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
 	if (!success) {
 			// Failed to save the alias
-		[[NSApplication sharedApplication] presentError:theError];
+		[self presentError:theError];
 		return;
 	}
 		// Now create and run the task to turn the directory into a disk image
@@ -807,8 +807,21 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[createTask waitUntilExit];
 	if ([createTask terminationStatus] != 0) {
 			// The disk image creation failed
-		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Creating the disk image failed with error %d", [createTask terminationStatus]]};
-		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:[createTask terminationStatus] userInfo:errorDict];
+		int errorCode = [createTask terminationStatus];
+		NSString *errorMessage;
+		switch (errorCode) {
+			case EPERM:
+			case EACCES:
+				errorMessage = @"Could not save the disk image in that location, as you do not have permission to create a file in that folder";
+				break;
+				
+			default:
+				errorMessage = [NSString stringWithFormat:@"Creating the disk image failed with error %d", errorCode];
+				break;
+		}
+		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: errorMessage};
+		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:errorCode userInfo:errorDict];
+		[self presentError:theError];
 	}
 }
 
