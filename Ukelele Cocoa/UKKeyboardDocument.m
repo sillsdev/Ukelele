@@ -812,7 +812,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		switch (errorCode) {
 			case EPERM:
 			case EACCES:
-				errorMessage = @"Could not save the disk image in that location, as you do not have permission to create a file in that folder";
+				errorMessage = @"Could not save the disk image in that location. You do not have permission to create a file in that folder";
 				break;
 				
 			default:
