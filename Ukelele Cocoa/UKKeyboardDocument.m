@@ -22,6 +22,7 @@
 #import "UKNewKeyboardLayoutController.h"
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
+#import "UKProgressWindow.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -737,6 +738,21 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)exportInstallerTo:(NSURL *)targetURL {
+		// Make a progress reporter (assuming we can...)
+	UKProgressWindow *progressWindow = [UKProgressWindow progressWindow];
+	NSString *messageText;
+	if (self.isBundle) {
+		messageText = @"Saving keyboard layout collection to a disk image";
+	}
+	else {
+		messageText = @"Saving keyboard layout to a disk image";
+	}
+	[progressWindow.mainText setStringValue:messageText];
+	[progressWindow.secondaryText setStringValue:@"Assembling data"];
+	NSWindow *myWindow = self.windowControllers[0].window;
+	[[NSApplication sharedApplication] beginSheet:progressWindow.window modalForWindow:myWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[progressWindow showWindow:self];
+	[progressWindow.progressIndicator startAnimation:nil];
 		// Create a temporary directory
 	NSString *tempDirectory = NSTemporaryDirectory();
 	NSString *tempDirectoryPath = [NSString stringWithFormat:@"%@UkeleleExportXXXXX", tempDirectory];
@@ -747,6 +763,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (tempDirectoryName == NULL) {
 			// Could not create temporary directory
 		free(tempDirectoryTemplate);
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		return;
 	}
 	tempDirectoryPath = @(tempDirectoryTemplate);
@@ -760,6 +778,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	BOOL success = [fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:&theError];
 	if (!success) {
 			// Failed to create the target directory
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		[self presentError:theError];
 		return;
 	}
@@ -776,6 +796,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	success = [self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
 	if (!success) {
 			// Failed to save
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		[self presentError:theError];
 		return;
 	}
@@ -783,6 +805,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
 	if (libraryURL == nil) {
 			// Failed to create the URL for the Library directory
+		[progressWindow close];
 		[self presentError:theError];
 		return;
 	}
@@ -790,6 +813,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
 	if (aliasData == nil) {
 			// Failed to create the bookmark data
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		[self presentError:theError];
 		return;
 	}
@@ -797,12 +822,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	success = [NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
 	if (!success) {
 			// Failed to save the alias
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		[self presentError:theError];
 		return;
 	}
 		// Now create and run the task to turn the directory into a disk image
+	[progressWindow.secondaryText setStringValue:@"Creating the disk image…"];
 	NSString *taskPath = @"/usr/bin/hdiutil";
-	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-quiet", [targetURL path]];
+	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-ov", @"-quiet", [targetURL path]];
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
 	[createTask waitUntilExit];
 	if ([createTask terminationStatus] != 0) {
@@ -821,8 +849,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: errorMessage};
 		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:errorCode userInfo:errorDict];
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 		[self presentError:theError];
+		return;
 	}
+	[progressWindow.window orderOut:self];
+	[[NSApplication sharedApplication] endSheet:progressWindow.window];
 }
 
 #pragma mark Table delegate methods
@@ -1612,9 +1645,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (result == NSFileHandlingPanelOKButton) {
 				// Save it
 			NSURL *saveURL = [savePanel URL];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self exportInstallerTo:saveURL];
-			});
+			[savePanel orderOut:nil];
+			[self exportInstallerTo:saveURL];
 		}
 	}];
 }
