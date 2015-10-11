@@ -103,3 +103,4 @@ MY_EXTERN NSString *UKToolboxWindowLocation;
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;
 MY_EXTERN NSString *UKUntitledName;
+MY_EXTERN NSString *kStringKeyboardLayouts;

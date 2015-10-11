@@ -155,14 +155,14 @@
                                                 <action selector="installForAllUsers:" target="-1" id="oMS-aI-7ed"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Export Installer Disk Image…" id="ghN-Vq-Uk2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportKeyboardLayout:" target="-1" id="nPb-Pl-QBs"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                            <menuItem title="Export…" id="8Vq-SY-yMq">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportKeyboardLayout:" target="-1" id="pZR-v3-kYh"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Revert to Saved" id="KaW-ft-85H">
                                 <modifierMask key="keyEquivalentModifierMask"/>

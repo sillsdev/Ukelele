@@ -755,30 +755,61 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create the target directory
 	NSString *targetDirectoryName = [[targetURL lastPathComponent] stringByDeletingPathExtension];
 	NSURL *targetDirectoryURL = [tempDirectoryURL URLByAppendingPathComponent:targetDirectoryName isDirectory:YES];
+	NSError *theError;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	[fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
+	BOOL success = [fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:&theError];
+	if (!success) {
+			// Failed to create the target directory
+		[[NSApplication sharedApplication] presentError:theError];
+		return;
+	}
 		// Add a copy of the document to the directory
 	NSString *documentName;
 	if (self.isBundle) {
 		documentName = [NSString stringWithFormat:@"%@%@", self.bundleName, kStringBundleExtension];
 	}
 	else {
-		documentName = [NSString stringWithFormat:@"%@.%@", self.bundleName, kStringKeyboardLayoutExtension];
+		documentName = [NSString stringWithFormat:@"%@.%@", [self.keyboardLayout keyboardName], kStringKeyboardLayoutExtension];
 	}
 	NSURL *saveURL = [targetDirectoryURL URLByAppendingPathComponent:documentName];
 	NSString *saveType = self.isBundle ? kFileTypeGenericBundle : kFileTypeKeyboardLayout;
-	NSError *theError;
-	[self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
+	success = [self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
+	if (!success) {
+			// Failed to save
+		[[NSApplication sharedApplication] presentError:theError];
+		return;
+	}
 		// Create the alias to Keyboard Layouts
-	NSURL *keyboardLayoutsURL = [NSURL fileURLWithPath:@"/Library/Keyboard Layouts" isDirectory:YES];
+	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
+	if (libraryURL == nil) {
+			// Failed to create the URL for the Library directory
+		[[NSApplication sharedApplication] presentError:theError];
+		return;
+	}
+	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
 	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
-	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:@"Keyboard Layouts" isDirectory:NO];
-	[NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
-		// Now create the task to turn the directory into a disk image
+	if (aliasData == nil) {
+			// Failed to create the bookmark data
+		[[NSApplication sharedApplication] presentError:theError];
+		return;
+	}
+	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
+	success = [NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
+	if (!success) {
+			// Failed to save the alias
+		[[NSApplication sharedApplication] presentError:theError];
+		return;
+	}
+		// Now create and run the task to turn the directory into a disk image
 	NSString *taskPath = @"/usr/bin/hdiutil";
 	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-quiet", [targetURL path]];
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
 	[createTask waitUntilExit];
+	if ([createTask terminationStatus] != 0) {
+			// The disk image creation failed
+		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Creating the disk image failed with error %d", [createTask terminationStatus]]};
+		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:[createTask terminationStatus] userInfo:errorDict];
+	}
 }
 
 #pragma mark Table delegate methods

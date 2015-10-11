@@ -107,3 +107,4 @@ NSString *UKToolboxWindowLocation = @"ToolboxWindowLocation";
 	// File names
 NSString *UKKCAPListFile = @"KCAPResources";
 NSString *UKUntitledName = @"untitled";
+NSString *kStringKeyboardLayouts = @"Keyboard Layouts";
