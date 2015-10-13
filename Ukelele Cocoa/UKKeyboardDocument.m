@@ -738,7 +738,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)exportInstallerTo:(NSURL *)targetURL {
-		// Make a progress reporter (assuming we can...)
+		// Make a progress reporter
 	UKProgressWindow *progressWindow = [UKProgressWindow progressWindow];
 	NSString *messageText;
 	if (self.isBundle) {
@@ -753,6 +753,12 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[NSApplication sharedApplication] beginSheet:progressWindow.window modalForWindow:myWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 	[progressWindow showWindow:self];
 	[progressWindow.progressIndicator startAnimation:nil];
+	dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+		[self createInstallerDiskImage:targetURL withProgress:progressWindow];
+	});
+}
+
+- (void)createInstallerDiskImage:(NSURL *)targetURL withProgress:(UKProgressWindow *)progressWindow {
 		// Create a temporary directory
 	NSString *tempDirectory = NSTemporaryDirectory();
 	NSString *tempDirectoryPath = [NSString stringWithFormat:@"%@UkeleleExportXXXXX", tempDirectory];
@@ -763,8 +769,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (tempDirectoryName == NULL) {
 			// Could not create temporary directory
 		free(tempDirectoryTemplate);
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+		});
 		return;
 	}
 	tempDirectoryPath = @(tempDirectoryTemplate);
@@ -778,9 +786,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	BOOL success = [fileManager createDirectoryAtURL:targetDirectoryURL withIntermediateDirectories:YES attributes:nil error:&theError];
 	if (!success) {
 			// Failed to create the target directory
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
 		// Add a copy of the document to the directory
@@ -796,39 +806,50 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	success = [self writeToURL:saveURL ofType:saveType forSaveOperation:NSSaveToOperation originalContentsURL:nil error:&theError];
 	if (!success) {
 			// Failed to save
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
 		// Create the alias to Keyboard Layouts
 	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
 	if (libraryURL == nil) {
 			// Failed to create the URL for the Library directory
-		[progressWindow close];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
 	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
 	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
 	if (aliasData == nil) {
 			// Failed to create the bookmark data
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
 	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
 	success = [NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
 	if (!success) {
 			// Failed to save the alias
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
 		// Now create and run the task to turn the directory into a disk image
-	[progressWindow.secondaryText setStringValue:@"Creating the disk image…"];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[progressWindow.secondaryText setStringValue:@"Creating the disk image…"];
+	});
 	NSString *taskPath = @"/usr/bin/hdiutil";
 	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-ov", @"-quiet", [targetURL path]];
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
@@ -849,13 +870,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: errorMessage};
 		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:errorCode userInfo:errorDict];
-		[progressWindow.window orderOut:self];
-		[[NSApplication sharedApplication] endSheet:progressWindow.window];
-		[self presentError:theError];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[progressWindow.window orderOut:self];
+			[[NSApplication sharedApplication] endSheet:progressWindow.window];
+			[self presentError:theError];
+		});
 		return;
 	}
-	[progressWindow.window orderOut:self];
-	[[NSApplication sharedApplication] endSheet:progressWindow.window];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[progressWindow.window orderOut:self];
+		[[NSApplication sharedApplication] endSheet:progressWindow.window];
+	});
 }
 
 #pragma mark Table delegate methods

@@ -140,6 +140,8 @@
 		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; settings = {COMPILER_FLAGS = "-Wno-selector"; }; };
 		525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */; };
 		526EFF8519F0838B001FB994 /* UKNewKeyboardLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */; };
+		52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52743F591BCA30B200C41310 /* ProgressWindow.xib */; settings = {ASSET_TAGS = (); }; };
+		52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52743F5C1BCA396900C41310 /* UKProgressWindow.m */; settings = {ASSET_TAGS = (); }; };
 		5277EB681AAE844600C471C3 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB671AAE844600C471C3 /* GenerateThumbnailForURL.m */; };
 		5277EB6A1AAE844600C471C3 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB691AAE844600C471C3 /* GeneratePreviewForURL.m */; };
 		5277EB6C1AAE844600C471C3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB6B1AAE844600C471C3 /* main.c */; };
@@ -556,6 +558,9 @@
 		525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKKeyboardLayoutBundle.xib; path = "Interface Files/UKKeyboardLayoutBundle.xib"; sourceTree = "<group>"; };
 		526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKNewKeyboardLayoutController.h; sourceTree = "<group>"; };
 		526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKNewKeyboardLayoutController.m; sourceTree = "<group>"; };
+		52743F591BCA30B200C41310 /* ProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressWindow.xib; path = "Interface Files/ProgressWindow.xib"; sourceTree = "<group>"; };
+		52743F5B1BCA396900C41310 /* UKProgressWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKProgressWindow.h; sourceTree = "<group>"; };
+		52743F5C1BCA396900C41310 /* UKProgressWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKProgressWindow.m; sourceTree = "<group>"; };
 		5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ukelele Quick Look Generator.qlgenerator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5277EB661AAE844600C471C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5277EB671AAE844600C471C3 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
@@ -836,6 +841,7 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				52743F591BCA30B200C41310 /* ProgressWindow.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -1176,6 +1182,8 @@
 				52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */,
 				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
 				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
+				52743F5B1BCA396900C41310 /* UKProgressWindow.h */,
+				52743F5C1BCA396900C41310 /* UKProgressWindow.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
 				523B017E191CA18C00E06DF3 /* UnlinkKeyHandler.m */,
 				523B017F191CA18C00E06DF3 /* UnlinkModifiersController.h */,
@@ -1309,6 +1317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */,
 				52EB2B271927397000712272 /* ToolboxController.xib in Resources */,
 				52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
@@ -1440,6 +1449,7 @@
 				523B0190191CA18C00E06DF3 /* ChooseDeadKeyHandling.m in Sources */,
 				523B010D191CA0D100E06DF3 /* RandomNumberGenerator.cpp in Sources */,
 				523B00BF191CA00A00E06DF3 /* ActionElement.mm in Sources */,
+				52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */,
 				523B0092191C9D2200E06DF3 /* XMLCocoaUtilities.mm in Sources */,
 				523B0069191C9BCF00E06DF3 /* UkeleleConstantStrings.m in Sources */,
 				523B01C0191CA18C00E06DF3 /* WrongStateChosenSheet.m in Sources */,
