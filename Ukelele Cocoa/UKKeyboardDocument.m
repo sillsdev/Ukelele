@@ -857,7 +857,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
 	[createTask waitUntilExit];
 		// Clean up the temporary files
-	[fileManager removeItemAtURL:targetDirectoryURL error:nil];
+	[fileManager removeItemAtURL:tempDirectoryURL error:nil];
 		// Check exit status
 	if ([createTask terminationStatus] != 0) {
 			// The disk image creation failed
