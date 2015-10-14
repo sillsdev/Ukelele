@@ -345,11 +345,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 	CFRelease(tempFileName);
 	CFRelease(parentURL);
+	[fileManager removeItemAtURL:tempFileURL error:nil];
 	[fileManager changeCurrentDirectoryPath:currentDirectory];
 		// Finally, read the resulting file
 	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.keylayout", tempDirectory, keyboardName]];
 	NSError *theError = nil;
 	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
+	[fileManager removeItemAtURL:outputFileURL error:nil];
 	if (myData == nil || [myData length] == 0) {
 		if (outError != nil) {
 			*outError = theError;
@@ -854,6 +856,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSArray *taskParameters = @[@"create", @"-srcfolder", [targetDirectoryURL path], @"-ov", @"-quiet", [targetURL path]];
 	NSTask *createTask = [NSTask launchedTaskWithLaunchPath:taskPath arguments:taskParameters];
 	[createTask waitUntilExit];
+		// Clean up the temporary files
+	[fileManager removeItemAtURL:targetDirectoryURL error:nil];
+		// Check exit status
 	if ([createTask terminationStatus] != 0) {
 			// The disk image creation failed
 		int errorCode = [createTask terminationStatus];
