@@ -815,7 +815,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		});
 		return;
 	}
-		// Create the alias to Keyboard Layouts
+		// Create the link to Keyboard Layouts
 	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
 	if (libraryURL == nil) {
 			// Failed to create the URL for the Library directory
@@ -827,20 +827,12 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return;
 	}
 	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
-	NSData *aliasData = [keyboardLayoutsURL bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile includingResourceValuesForKeys:nil relativeToURL:nil error:&theError];
-	if (aliasData == nil) {
-			// Failed to create the bookmark data
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[progressWindow.window orderOut:self];
-			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:theError];
-		});
-		return;
-	}
-	NSURL *aliasURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
-	success = [NSURL writeBookmarkData:aliasData toURL:aliasURL options:0 error:&theError];
-	if (!success) {
-			// Failed to save the alias
+	NSURL *linkURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
+	int linkError = symlink([keyboardLayoutsURL fileSystemRepresentation], [linkURL fileSystemRepresentation]);
+	if (linkError) {
+			// Failed to create the link
+		NSDictionary *errDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Creating alias failed with error code %d", linkError]};
+		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:linkError userInfo:errDict];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[progressWindow.window orderOut:self];
 			[[NSApplication sharedApplication] endSheet:progressWindow.window];
