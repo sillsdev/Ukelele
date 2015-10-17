@@ -1660,6 +1660,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	[savePanel setAllowedFileTypes:@[(NSString *)kUTTypeDiskImage]];
 	[savePanel setAllowsOtherFileTypes:NO];
+	NSString *documentName;
+	if (self.isBundle) {
+		documentName = self.bundleName;
+	}
+	else {
+		documentName = [self.keyboardLayout keyboardName];
+	}
+	[savePanel setNameFieldStringValue:documentName];
 	NSArray *windowControllers = [self windowControllers];
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
