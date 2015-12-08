@@ -116,7 +116,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
     internalState[kStateCurrentKeyboard] = @(keyboardType);
     [self.tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
-	UkeleleView *ukeleleView = [[UkeleleView alloc] init];
+	UkeleleView *ukeleleView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
     NSNumber *scaleValue = internalState[kStateCurrentScale];
 	if ([scaleValue doubleValue] <= 0.0) {
 			// Fit width
@@ -1455,7 +1455,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printView setFrame:NSMakeRect(0, 0, availableWidth, availableHeight)];
 	[printingInfo setAvailablePageHeight:(NSUInteger)availableHeight];
 		// Create the views and work out pagination
-	UkeleleView *keyboardView = [[UkeleleView alloc] init];
+	UkeleleView *keyboardView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
 	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
 	[keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
 	CGFloat keyboardWidth = [keyboardView bounds].size.width;
@@ -1469,7 +1469,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSMutableArray *stateViews = [NSMutableArray arrayWithCapacity:modifierCombinations];
 		for (NSUInteger i = 0; i < modifierCombinations; i++) {
 			NSUInteger modifiers = [modifierSets[i] unsignedIntegerValue];
-			UkeleleView *theKeyboard = [[UkeleleView alloc] init];
+			UkeleleView *theKeyboard = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
 			[theKeyboard createViewWithKeyboardID:keyboardID withScale:1.0];
 			[theKeyboard scaleViewToScale:desiredScale limited:NO];
 			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers usingFallback:NO];
