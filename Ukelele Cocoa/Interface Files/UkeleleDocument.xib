@@ -89,13 +89,26 @@
                                                 <action selector="setScaleLevel:" target="-2" id="mp0-Ee-9L7"/>
                                             </connections>
                                         </comboBox>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
+                                            <rect key="frame" x="513" y="310" width="82" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
+                                            </constraints>
+                                            <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="cancel:" target="-1" id="ieO-Sz-9QB"/>
+                                            </connections>
+                                        </button>
                                         <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-Py-4Pd">
                                             <rect key="frame" x="-3" y="-3" width="760" height="317"/>
                                             <clipView key="contentView" id="UbK-L1-wwU">
                                                 <rect key="frame" x="1" y="1" width="743" height="300"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <view autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
+                                                    <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
                                                         <rect key="frame" x="0.0" y="0.0" width="743" height="300"/>
                                                     </view>
                                                 </subviews>
@@ -115,19 +128,6 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
-                                            <rect key="frame" x="513" y="310" width="82" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="cancel:" target="-1" id="ieO-Sz-9QB"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="xdz-JZ-Y6L" secondAttribute="trailing" constant="8" symbolic="YES" id="3gq-Bp-X5F"/>
