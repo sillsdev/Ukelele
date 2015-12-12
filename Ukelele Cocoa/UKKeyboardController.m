@@ -116,12 +116,12 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
     internalState[kStateCurrentKeyboard] = @(keyboardType);
     [self.tabView selectTabViewItemWithIdentifier:kTabNameKeyboard];
-	UkeleleView *ukeleleView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
     NSNumber *scaleValue = internalState[kStateCurrentScale];
 	if ([scaleValue doubleValue] <= 0.0) {
 			// Fit width
 		scaleValue = @(1.25);
 	}
+	UkeleleView *ukeleleView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
 	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:(float)[scaleValue doubleValue]];
 	[ukeleleView setMenuDelegate:self];
 	[self.keyboardView setDocumentView:ukeleleView];

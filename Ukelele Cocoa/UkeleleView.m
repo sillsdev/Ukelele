@@ -474,6 +474,10 @@ typedef struct KeyEntryRec {
 	NSData *resourceData = resourceDict[idString];
 	if (resourceData == nil) {
 			// No such keyboard
+		NSLog(@"Failed to create a keyboard with id %d, using default", keyboardID);
+		idString = [NSString stringWithFormat:@"%d", gestaltUSBAndyANSIKbd];
+		resourceData = resourceDict[idString];
+		NSAssert(resourceData != nil, @"Must be able to create the default keyboard");
 		return;
 	}
 		// The data is what used to be a resource, and we'll get a pointer to it and use
