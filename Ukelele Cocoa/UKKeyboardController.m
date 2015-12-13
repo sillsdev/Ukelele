@@ -122,7 +122,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 		scaleValue = @(1.25);
 	}
 	UkeleleView *ukeleleView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
-	[ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:(float)[scaleValue doubleValue]];
+	int actualID = [ukeleleView createViewWithKeyboardID:(int)keyboardType withScale:(float)[scaleValue doubleValue]];
+	if (actualID != (int)keyboardType) {
+		internalState[kStateCurrentKeyboard] = @(actualID);
+	}
 	[ukeleleView setMenuDelegate:self];
 	[self.keyboardView setDocumentView:ukeleleView];
 	[self assignClickTargets];
@@ -451,7 +454,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert(ukeleleView, @"Must have a document view");
 	internalState[kStateCurrentKeyboard] = @(newKeyboardType);
 	NSNumber *scaleValue = internalState[kStateCurrentScale];
-	[ukeleleView createViewWithKeyboardID:(int)newKeyboardType withScale:(float)[scaleValue doubleValue]];
+	int actualID = [ukeleleView createViewWithKeyboardID:(int)newKeyboardType withScale:(float)[scaleValue doubleValue]];
+	if (actualID != newKeyboardType) {
+		internalState[kStateCurrentKeyboard] = @(actualID);
+	}
 	[ukeleleView setMenuDelegate:self];
 	[self assignClickTargets];
     [self calculateSize];
@@ -1457,7 +1463,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		// Create the views and work out pagination
 	UkeleleView *keyboardView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
 	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
-	[keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
+	int actualID = [keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
+	NSAssert(keyboardID == actualID, @"Must have a valid keyboard ID");
 	CGFloat keyboardWidth = [keyboardView bounds].size.width;
 	CGFloat desiredScale = availableWidth / keyboardWidth;
 	[keyboardView scaleViewToScale:desiredScale limited:NO];

@@ -464,10 +464,11 @@ typedef struct KeyEntryRec {
 	[self setNeedsDisplay:YES];
 }
 
-- (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue
+- (int)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue
 {
 	NSAssert(scaleValue > 0.0, @"Must have a positive scale factor");
 		// Read the resource into memory and treat as a stream
+	int actualID = keyboardID;
 	NSURL *resourceURL = [[NSBundle mainBundle] URLForResource:UKKCAPListFile withExtension:@"plist"];
 	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
 	NSString *idString = [NSString stringWithFormat:@"%d", keyboardID];
@@ -475,15 +476,16 @@ typedef struct KeyEntryRec {
 	if (resourceData == nil) {
 			// No such keyboard
 		NSLog(@"Failed to create a keyboard with id %d, using default", keyboardID);
-		idString = [NSString stringWithFormat:@"%d", gestaltUSBAndyANSIKbd];
+		actualID = gestaltUSBAndyANSIKbd;
+		idString = [NSString stringWithFormat:@"%d", actualID];
 		resourceData = resourceDict[idString];
 		NSAssert(resourceData != nil, @"Must be able to create the default keyboard");
-		return;
 	}
 		// The data is what used to be a resource, and we'll get a pointer to it and use
 		// that as a stream of characters
 	char *resourcePtr = (char *)[resourceData bytes];
 	[self createViewWithStream:resourcePtr forID:keyboardID withScale:scaleValue];
+	return actualID;
 }
 
 #pragma mark Access routines

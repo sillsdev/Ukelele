@@ -22,7 +22,7 @@
 @property (strong, nonatomic) UKStyleInfo *styleInfo;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *keyCapViews;
 
-- (void)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;
+- (int)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue;
 - (KeyCapView *)getKeyWithIndex:(int)keyIndex;
 - (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text;
