@@ -65,10 +65,12 @@ static NSString *nibWindowName = @"Keyboard Type";
 {
 	callBack = theCallBack;
 	NSDictionary *indexDictionary = [self.keyboardResources indicesForResourceID:keyboardID];
-	[keyboardTypeTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[indexDictionary[kKeyNameIndex] integerValue]]
-				   byExtendingSelection:NO];
-	[keyboardTypeTable scrollRowToVisible:[keyboardTypeTable selectedRow]];
-	[codingButton selectItemAtIndex:[indexDictionary[kKeyCodingIndex] integerValue] - 1];
+	if ([indexDictionary[kKeyNameIndex] integerValue] != -1 && [indexDictionary[kKeyCodingIndex] integerValue] != -1) {
+		[keyboardTypeTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[indexDictionary[kKeyNameIndex] integerValue]]
+					   byExtendingSelection:NO];
+		[keyboardTypeTable scrollRowToVisible:[keyboardTypeTable selectedRow]];
+		[codingButton selectItemAtIndex:[indexDictionary[kKeyCodingIndex] integerValue] - 1];
+	}
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
