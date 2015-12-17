@@ -202,7 +202,8 @@ enum ProcessingStates {
 	NSString *outputString = [keyboardObject getCharOutput:keyDataDict
 													isDead:&deadKey
 												 nextState:&nextDeadKeyState];
-	currentOutput = [XMLCocoaUtilities makeXMLString:outputString codingNonAscii:NO];
+	NSString *unencodedString = [XMLCocoaUtilities convertEncodedString:outputString];
+	currentOutput = [XMLCocoaUtilities makeXMLString:unencodedString codingNonAscii:NO];
 	if (deadKey && deadKeyProcessingType != kDoubleClickDeadKeyChangeToOutput) {
 			// Handle a dead key click
 		nextState = nextDeadKeyState;
