@@ -325,15 +325,16 @@ NString KeyElement::GetDescription(void)
 void KeyElement::NewOutputElement(const NString inOutputString)
 {
 	NN_ASSERT(mElementType == kKeyFormUndefined || mElementType == kKeyFormOutput);
+	NString newOutput = XMLUtilities::ConvertEncodedString(inOutputString);
 	switch (mElementType) {
 		case kKeyFormUndefined:
 			mElementType = kKeyFormOutput;
-			mOutput = inOutputString;
+			mOutput = newOutput;
 			break;
 			
 		case kKeyFormOutput:
-			if (mOutput != inOutputString) {
-				mOutput = inOutputString;
+			if (mOutput != newOutput) {
+				mOutput = newOutput;
 			}
 			break;
 	}
@@ -428,22 +429,23 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 {
 	ActionElement *actionElement = NULL;
 	WhenElement *whenElement = NULL;
+	NString newOutput = XMLUtilities::ConvertEncodedString(inNewOutput);
 	NString oldOutput("");
 	switch (mElementType) {
 		case kKeyFormUndefined:
 			mElementType = kKeyFormOutput;
-			mOutput = inNewOutput;
+			mOutput = newOutput;
 			return oldOutput;
 			
 		case kKeyFormOutput:
 			oldOutput = mOutput;
-			if (oldOutput == inNewOutput) {
+			if (oldOutput == newOutput) {
 					// No change of output
 				return oldOutput;
 			}
 			if (inState == kStateNone) {
 					// Simple case: just switch to the new output
-				mOutput = inNewOutput;
+				mOutput = newOutput;
 				return oldOutput;
 			}
 				// We need to create an action at this point
@@ -477,14 +479,14 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 	if (whenElement != NULL) {
 		oldOutput = whenElement->GetOutput();
 		if (!inNewOutput.IsEmpty()) {
-			whenElement->SetOutput(inNewOutput);
+			whenElement->SetOutput(newOutput);
 		}
 		else {
 			actionElement->DeleteWhenElement(inState);
 		}
 	}
 	else if (!inNewOutput.IsEmpty()) {
-		whenElement = new WhenElement(inState, inNewOutput, "", "", "");
+		whenElement = new WhenElement(inState, newOutput, "", "", "");
 		actionElement->AddWhenElement(whenElement);
 	}
 	return oldOutput;
@@ -542,6 +544,7 @@ void KeyElement::ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, 
 NString KeyElement::ChangeDeadKeyToOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList)
 {
 	NString oldState;
+	NString newOutput = XMLUtilities::ConvertEncodedString(inNewOutput);
 	ActionElement *actionElement = NULL;
 	NN_ASSERT(mElementType != kKeyFormUndefined && mElementType != kKeyFormOutput);
 	switch (mElementType) {
@@ -567,7 +570,7 @@ NString KeyElement::ChangeDeadKeyToOutput(NString inState, NString inNewOutput, 
 			mInlineAction.reset();
 		}
 		if (!inNewOutput.IsEmpty()) {
-			mOutput = inNewOutput;
+			mOutput = newOutput;
 		}
 		else {
 			mOutput = "";
@@ -577,7 +580,7 @@ NString KeyElement::ChangeDeadKeyToOutput(NString inState, NString inNewOutput, 
 	else {
 		if (!inNewOutput.IsEmpty()) {
 			whenElement->SetNext("");
-			whenElement->SetOutput(inNewOutput);
+			whenElement->SetOutput(newOutput);
 		}
 		else {
 			actionElement->DeleteWhenElement(oldState);

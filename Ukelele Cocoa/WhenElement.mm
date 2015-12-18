@@ -53,6 +53,9 @@ mThrough(inThrough), mMultiplier(inMultiplier)
 	else {
 		mMultiplierInteger = NSystemUtilities::GetInt32(mMultiplier);
 	}
+	if (!mOutput.IsEmpty()) {
+		mOutput = XMLUtilities::ConvertEncodedString(inOutput);
+	}
 }
 
 	// Copy constructor
