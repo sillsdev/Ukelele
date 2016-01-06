@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
@@ -623,10 +623,22 @@
                                     <action selector="chooseIntendedLanguage:" target="-1" id="tko-u2-ory"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Remove Keyboard Language" id="uFH-S0-3ql">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeIntendedLanguage:" target="-1" id="hNZ-ud-Mll"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Attach Icon…" id="h06-t5-gsd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="attachIconFile:" target="-1" id="X6Z-MB-h6i"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Remove Icon" id="jcU-Gx-1zn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeIcon:" target="-1" id="Ii3-eA-aWe"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Add Comment…" id="5VY-1Y-PtO">

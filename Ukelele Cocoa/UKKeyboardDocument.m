@@ -1413,6 +1413,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 											 }];
 }
 
+- (IBAction)removeIntendedLanguage:(id)sender {
+#pragma unused(sender)
+	[self setTableSelectionForMenu];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+		// Create an empty language code
+	LanguageCode *emptyLanguage = [[LanguageCode alloc] init];
+	[self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:emptyLanguage];
+}
+
 	// Create a new keyboard layout from the current keyboard input source
 
 - (IBAction)captureInputSource:(id)sender {
@@ -1538,6 +1550,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[self addIcon:iconData atIndex:selectedRowNumber];
 		}
 	}];
+}
+
+- (IBAction)removeIcon:(id)sender {
+#pragma unused(sender)
+	[self setTableSelectionForMenu];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	[self removeIconAtIndex:selectedRowNumber];
 }
 
 	// Set the keyboard's name, script and/or id
@@ -1924,7 +1946,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSData *iconData = [keyboardInfo iconData];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addIcon:iconData atIndex:index];
-	[undoManager setActionName:@"Add icon"];
+	[undoManager setActionName:@"Remove icon"];
 	[keyboardInfo setIconData:nil];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];

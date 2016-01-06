@@ -37,9 +37,11 @@
 - (IBAction)removeKeyboardLayout:(id)sender;
 - (IBAction)openKeyboardLayout:(id)sender;
 - (IBAction)chooseIntendedLanguage:(id)sender;
+- (IBAction)removeIntendedLanguage:(id)sender;
 - (IBAction)captureInputSource:(id)sender;
 - (IBAction)openKeyboardFile:(id)sender;
 - (IBAction)attachIconFile:(id)sender;
+- (IBAction)removeIcon:(id)sender;
 - (IBAction)askKeyboardIdentifiers:(id)sender;
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
