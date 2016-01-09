@@ -208,18 +208,6 @@
                             <animations/>
                         </tableHeaderView>
                     </scrollView>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-c8-4cj">
-                        <rect key="frame" x="177" y="13" width="80" height="32"/>
-                        <animations/>
-                        <buttonCell key="cell" type="push" title="Icon…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ngg-fR-XL2">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="attachIconFile:" target="-2" id="cDa-vv-KvK"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="v67-ni-yyF"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Sh-MR9">
                         <rect key="frame" x="259" y="13" width="114" height="32"/>
                         <constraints>
@@ -233,6 +221,18 @@
                         <connections>
                             <action selector="chooseIntendedLanguage:" target="-2" id="SXY-3f-eYc"/>
                             <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="YVc-h8-szn"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-c8-4cj">
+                        <rect key="frame" x="182" y="13" width="77" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Icon…" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ngg-fR-XL2">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="attachIconFile:" target="-2" id="cDa-vv-KvK"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="v67-ni-yyF"/>
                         </connections>
                     </button>
                 </subviews>
@@ -259,7 +259,7 @@
                     <constraint firstAttribute="bottom" secondItem="mJd-Dd-4U2" secondAttribute="bottom" constant="20" id="nTF-aI-rd5"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" id="wfB-DR-d3l"/>
                     <constraint firstAttribute="bottom" secondItem="90p-nh-emO" secondAttribute="bottom" constant="20" symbolic="YES" id="zDG-ss-caw"/>
-                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="leading" secondItem="ERy-c8-4cj" secondAttribute="trailing" constant="14" id="zEO-gi-cKV"/>
+                    <constraint firstItem="lsp-Sh-MR9" firstAttribute="leading" secondItem="ERy-c8-4cj" secondAttribute="trailing" constant="12" id="zEO-gi-cKV"/>
                 </constraints>
                 <animations/>
             </view>

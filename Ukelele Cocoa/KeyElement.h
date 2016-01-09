@@ -49,9 +49,7 @@ public:
 	
 		// Creator functions
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
-	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, KeyElement*& outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	NSXMLElement *CreateXML(void);
 	void NewOutputElement(const NString inOutputString);
 	void NewOutputElement(const UniChar *inString, const UInt32 inLength);
 	void NewActionElement(const NString inActionName);

@@ -215,83 +215,6 @@ ErrorMessage KeyMapSelect::CreateFromXMLTree(const NXMLNode& inXMLTree,
 	return errorValue;
 }
 
-ErrorMessage KeyMapSelect::CreateFromXML(NSXMLElement *inXMLTree, KeyMapSelect *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer) {
-	ErrorMessage errorValue(XMLNoError, "");
-	NString errorString;
-	NString errorFormat;
-	NSXMLNode *attributeNode = [inXMLTree attributeForName:ToNS(kMapIndexAttribute)];
-	if (attributeNode == nil) {
-		// No mapIndex attribute
-		errorString = NBundleString(kKeyMapSelectMissingMapIndexAttribute, "", kErrorTableName);
-		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
-		return errorValue;
-	}
-	NString attributeString = ToNN([attributeNode stringValue]);
-	NNumber attributeNumber(attributeString);
-	UInt32 mapIndex = attributeNumber.GetUInt32();
-	outElement = new KeyMapSelect(mapIndex);
-	if ([inXMLTree childCount] == 0) {
-		// Empty keyMapSelect element
-		errorFormat = NBundleString(kKeyMapSelectEmpty, "", kErrorTableName);
-		errorString.Format(errorFormat, mapIndex);
-		errorValue = ErrorMessage(XMLEmptyKeyMapSelectError, errorString);
-	}
-	NString childValue;
-	XMLCommentHolder *commentHolder = outElement;
-	for (NSXMLNode *childNode in [inXMLTree children]) {
-		switch ([childNode kind]) {
-			case NSXMLElementKind: {
-					// An element, which should be a modifier element
-				childValue = ToNN([childNode name]);
-				if (childValue != kModifierElement) {
-					// Not a modifier element
-					errorFormat = NBundleString(kKeyMapSelectWrongElementType, "", kErrorTableName);
-					errorString.Format(errorFormat, attributeString, childValue);
-					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
-					break;
-				}
-				ModifierElement *modifierElement;
-				errorValue = ModifierElement::CreateFromXML((NSXMLElement *)childNode, modifierElement);
-				if (errorValue == XMLNoError) {
-					// Got a valid modifier element
-					outElement->AddModifierElement(modifierElement);
-					// Deal with comments
-					if (commentHolder != NULL) {
-						commentHolder->RemoveDuplicateComments();
-					}
-					commentHolder = modifierElement;
-					ioCommentContainer->AddCommentHolder(modifierElement);
-				}
-			}
-			break;
-				
-			case NSXMLCommentKind: {
-				// A comment, so add it to the structure
-				childValue = ToNN([childNode stringValue]);
-				XMLComment *childComment = new XMLComment(childValue, commentHolder);
-				commentHolder->AddXMLComment(childComment);
-			}
-			break;
-				
-			default:
-				// Invalid node type
-				errorFormat = NBundleString(kKeyMapSelectInvalidNodeType, "", kErrorTableName);
-				errorString.Format(errorFormat, attributeString);
-				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
-			break;
-		}
-	}
-	if (errorValue == XMLNoError) {
-		commentHolder->RemoveDuplicateComments();
-	}
-	else {
-		// An error in processing, so delete the partially constructed element
-		delete outElement;
-		outElement = NULL;
-	}
-	return errorValue;
-}
-
 // Create an XML tree
 
 NXMLNode *KeyMapSelect::CreateXMLTree(void)
@@ -306,20 +229,6 @@ NXMLNode *KeyMapSelect::CreateXMLTree(void)
 		ModifierElement *modifierElement = mModifierList->GetModifierElement(i);
 		NXMLNode *modifierElementTree = modifierElement->CreateXMLTree();
 		xmlTree->AddChild(modifierElementTree);
-	}
-	return xmlTree;
-}
-
-NSXMLElement *KeyMapSelect::CreateXML(void) {
-	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kKeyMapSelectElement)];
-	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kMapIndexAttribute) stringValue:[NSString stringWithFormat:@"%d", mMapIndexNumber]];
-	[xmlTree addAttribute:attributeNode];
-	AddCommentsToXML(xmlTree);
-	SInt32 numModifiers = mModifierList->GetElementCount();
-	for (SInt32 i = 1; i <= numModifiers; i++) {
-		ModifierElement *modifierElement = mModifierList->GetModifierElement(i);
-		NSXMLElement *childTree = modifierElement->CreateXML();
-		[xmlTree addChild:childTree];
 	}
 	return xmlTree;
 }

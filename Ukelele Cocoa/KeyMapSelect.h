@@ -40,9 +40,7 @@ public:
 	
 	static KeyMapSelect *CreateBasicKeyMapSelect(const UInt32 inID, const NString inModifiers);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyMapSelect*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
-	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, KeyMapSelect*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	NSXMLElement *CreateXML(void);
 	
 	// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

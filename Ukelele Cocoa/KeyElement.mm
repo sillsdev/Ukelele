@@ -15,7 +15,8 @@
 #include "UkeleleConstantStrings.h"
 #include "NCocoa.h"
 
-	// Key strings
+	
+// Key strings
 const NString kKeyElementMissingCodeAttribute = "KeyElementMissingCodeAttribute";
 const NString kKeyElementDoubleSpecified = "KeyElementDoubleSpecified";
 const NString kKeyElementNotActionElement = "KeyElementNotActionElement";
@@ -164,100 +165,6 @@ ErrorMessage KeyElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 	return errorValue;
 }
 
-ErrorMessage KeyElement::CreateFromXML(NSXMLElement *inXMLTree, KeyElement *&outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer) {
-	ErrorMessage errorValue(XMLNoError, "");
-	NString errorString;
-	NSXMLNode *attributeNode = [inXMLTree attributeForName:ToNS(kCodeAttribute)];
-	if (attributeNode == nil) {
-			// No code attribute
-		errorString = NBundleString(kKeyElementMissingCodeAttribute, "", kErrorTableName);
-		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
-		return errorValue;
-	}
-	NString keyCodeString = ToNN([attributeNode stringValue]);
-	NNumber keyCodeNumber(keyCodeString);
-	UInt32 keyCode = keyCodeNumber.GetUInt32();
-	outElement = new KeyElement(keyCode);
-	attributeNode = [inXMLTree attributeForName:ToNS(kOutputAttribute)];
-	if (attributeNode != nil) {
-			// Have an output attribute
-		outElement->NewOutputElement(ToNN([attributeNode stringValue]));
-	}
-	attributeNode = [inXMLTree attributeForName:ToNS(kActionAttribute)];
-	if (attributeNode != nil) {
-			// Have an action attribute
-		if (outElement->mElementType != kKeyFormUndefined) {
-				// Doubly specified form
-			errorString = NBundleString(kKeyElementDoubleSpecified, "", kErrorTableName);
-			errorValue = ErrorMessage(XMLOverSpecifiedFormError, errorString);
-			delete outElement;
-			outElement = NULL;
-			return errorValue;
-		}
-		outElement->NewActionElement(ToNN([attributeNode stringValue]));
-	}
-	NString childValue;
-	XMLCommentHolder *commentHolder = outElement;
-	for (NSXMLNode *childNode in [inXMLTree children]) {
-		switch ([childNode kind]) {
-			case NSXMLElementKind: {
-					// An element node, which should be an action element
-				if (ToNN([childNode name]) != kActionElement) {
-						// Not an action element
-					NString errorFormat = NBundleString(kKeyElementNotActionElement, "", kErrorTableName);
-					errorString.Format(errorFormat, ToNN([childNode name]));
-					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
-					break;
-				}
-					// Check whether we already have a specification
-				if (outElement->mElementType != kKeyFormUndefined) {
-					errorString = NBundleString(kKeyElementOverspecified, "", kErrorTableName);
-					errorValue = ErrorMessage(XMLOverSpecifiedFormError, errorString);
-					break;
-				}
-				ActionElement *actionElement;
-				errorValue = ActionElement::CreateFromXML((NSXMLElement *)childNode, actionElement, ioCommentContainer);
-				if (errorValue == XMLNoError) {
-					outElement->NewInlineActionElement(actionElement);
-						// Deal with comments
-					if (commentHolder != NULL) {
-						commentHolder->RemoveDuplicateComments();
-					}
-					commentHolder = actionElement;
-					ioCommentContainer->AddCommentHolder(actionElement);
-				}
-			}
-			break;
-				
-			case NSXMLCommentKind: {
-					// A comment, so add it to the structure
-				childValue = ToNN([childNode stringValue]);
-				XMLComment *childComment = new XMLComment(childValue, commentHolder);
-				commentHolder->AddXMLComment(childComment);
-			}
-			break;
-				
-			default:
-					// Invalid node type
-				errorString = NBundleString(kKeyElementInvalidNodeType, "", kErrorTableName);
-				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
-			break;
-		}
-	}
-	if (errorValue == XMLNoError) {
-		commentHolder->RemoveDuplicateComments();
-		if (outElement->mElementType == kKeyFormUndefined) {
-			outElement->NewOutputElement("");
-		}
-	}
-	else {
-			// An error in processing, so delete the partially constructed element
-		delete outElement;
-		outElement = NULL;
-	}
-	return errorValue;
-}
-
 	// Create an XML tree
 
 NXMLNode *KeyElement::CreateXMLTree(void)
@@ -277,25 +184,6 @@ NXMLNode *KeyElement::CreateXMLTree(void)
 	else {
 		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput));
 		xmlTree->SetElementUnpaired(true);
-	}
-	return xmlTree;
-}
-
-NSXMLElement *KeyElement::CreateXML(void) {
-	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kKeyElement)];
-	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kCodeAttribute) stringValue:[NSString stringWithFormat:@"%d", mKeyCode]];
-	[xmlTree addAttribute:attributeNode];
-	if (mElementType == kKeyFormAction) {
-		attributeNode = [NSXMLNode attributeWithName:ToNS(kActionAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mActionName))];
-		[xmlTree addAttribute:attributeNode];
-	}
-	else if (mElementType == kKeyFormInlineAction) {
-		NSXMLElement *actionNode = mInlineAction->CreateXML();
-		[xmlTree addChild:actionNode];
-	}
-	else {
-		attributeNode = [NSXMLNode attributeWithName:ToNS(kOutputAttribute) stringValue:ToNS(XMLUtilities::ConvertToXMLString(mOutput))];
-		[xmlTree addAttribute:attributeNode];
 	}
 	return xmlTree;
 }

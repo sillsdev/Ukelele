@@ -50,8 +50,6 @@ public:
 		// Convert to and from XML
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, WhenElement*& outElement);
 	NXMLNode *CreateXMLTree(void);
-	static ErrorMessage CreateFromXMLTree(NSXMLElement *inTree, WhenElement*& outElement);
-	NSXMLElement *CreateXMLNode(void);
 	
 		// Operators
 	bool operator<(const WhenElement& inCompareTo);
@@ -99,7 +97,6 @@ public:
 	
 		// Convert to XML tree
 	void AddToXMLTree(NXMLNode& inTree);
-	void AddToXML(NSXMLElement *inTree);
 	
 		// Iterator functions
 	WhenElement *GetFirstWhenElement(void);

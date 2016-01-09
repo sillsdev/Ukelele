@@ -107,74 +107,6 @@ ErrorMessage UkeleleKeyboard::CreateKeyboardFromXMLTree(const NXMLNode& inXMLTre
 	return errorValue;
 }
 
-ErrorMessage UkeleleKeyboard::CreateKeyboardFromXML(NSXMLDocument *inXMLTree) {
-	ErrorMessage errorValue(XMLNoError, "");
-	NString errorString;
-	for (NSXMLNode *childNode in [inXMLTree children]) {
-		switch ([childNode kind]) {
-			case NSXMLProcessingInstructionKind:
-					// A processing instruction, which we ignore
-			break;
-				
-			case NSXMLDTDKind:
-				// The DTD header
-				if (!mDTDHeader.IsEmpty()) {
-					// Handle repeated DTD
-					errorString = NBundleString(kUkeleleKeyboardRepeatedDTD, "", kErrorTableName);
-					errorValue = ErrorMessage(XMLRepeatedDTDError, errorString);
-				}
-				else {
-					mDTDHeader = ToNN([(NSXMLDTD *)childNode publicID]);
-					if (mDTDHeader == "") {
-						mDTDHeader = ToNN([(NSXMLDTD *)childNode systemID]);
-					}
-				}
-				
-			case NSXMLElementKind: {
-					// An element, which should be the keyboard layout
-				NString nodeString = ToNN([childNode name]);
-				if (nodeString != kKeyboardElement) {
-					// Handle non-keyboard files
-					NString formatString = NBundleString(kUkeleleKeyboardWrongXMLType, "", kErrorTableName);
-					errorString.Format(formatString, nodeString);
-					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
-				}
-				KeyboardElement *keyboardElement;
-				errorValue = KeyboardElement::CreateFromXML((NSXMLElement *)childNode, keyboardElement, mCommentContainer);
-				if (errorValue == XMLNoError) {
-					mKeyboard.reset(keyboardElement);
-					mCommentContainer->AddCommentHolder(keyboardElement);
-				}
-			}
-			break;
-				
-			case NSXMLCommentKind: {
-					// A comment
-				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), this);
-				AddXMLComment(childComment);
-			}
-			break;
-				
-			default:
-					// Unknown type
-				errorString = NBundleString(kUkeleleKeyboardUnknownNodeType, "", kErrorTableName);
-				errorValue = ErrorMessage(XMLUnknownNodeTypeError, errorString);
-			break;
-		}
-	}
-	if (errorValue != XMLNoError) {
-		// An error occurred, so delete the partially created layout
-		mDTDHeader = "";
-		mKeyboard.reset();
-	}
-	else {
-		if (mDTDHeader.IsEmpty()) {
-			mDTDHeader = kDefaultDTD;
-		}
-	}
-	return errorValue;
-}
-
 // Create an XML tree representing the keyboard layout
 
 NXMLNode *UkeleleKeyboard::CreateXMLTree(void)
@@ -186,19 +118,6 @@ NXMLNode *UkeleleKeyboard::CreateXMLTree(void)
 	AddCommentsToXMLTree(*xmlTree);
 	childTree = mKeyboard->CreateXMLTree();
 	xmlTree->AddChild(childTree);
-	return xmlTree;
-}
-
-NSXMLDocument *UkeleleKeyboard::CreateXML(void) {
-	NSXMLDocument *xmlTree = [NSXMLDocument document];
-	[xmlTree setVersion:@"1.1"];
-	NSXMLDTDNode *dtdNode = [NSXMLNode DTDNodeWithXMLString:ToNS(mDTDHeader)];
-	NSXMLDTD *dtdTree = [[NSXMLDTD alloc] init];
-	[dtdTree addChild:dtdNode];
-	[xmlTree setDTD:dtdTree];
-	AddCommentsToXML((NSXMLElement *)xmlTree);
-	NSXMLElement *keyboardTree = mKeyboard->CreateXML();
-	[xmlTree addChild:keyboardTree];
 	return xmlTree;
 }
 

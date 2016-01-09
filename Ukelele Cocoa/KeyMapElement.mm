@@ -419,101 +419,6 @@ ErrorMessage KeyMapElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 	return errorValue;
 }
 
-ErrorMessage KeyMapElement::CreateFromXML(NSXMLElement *inXMLTree, KeyMapElement *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer) {
-	ErrorMessage errorValue(XMLNoError, "");
-	NString errorString;
-	NString errorFormat;
-	NSXMLNode *attributeNode = [inXMLTree attributeForName:ToNS(kIndexAttribute)];
-	if (attributeNode == nil) {
-		errorString = NBundleString(kKeyMapElementMissingIndexAttribute, "", kErrorTableName);
-		errorValue = ErrorMessage(XMLMissingAttributeError, errorString);
-		return errorValue;
-	}
-	NString indexString = ToNN([attributeNode stringValue]);
-	NNumber indexNumber(indexString);
-	UInt32 indexValue = indexNumber.GetUInt32();
-	NSXMLNode *baseMapSetAttribute = [inXMLTree attributeForName:ToNS(kBaseMapSetAttribute)];
-	NSXMLNode *baseIndexAttribute = [inXMLTree attributeForName:ToNS(kBaseIndexAttribute)];
-	if (baseMapSetAttribute != nil && baseIndexAttribute == nil) {
-		errorFormat = NBundleString(kKeyMapElementMissingBaseIndex, "", kErrorTableName);
-		errorString.Format(errorFormat, indexString);
-		errorValue = ErrorMessage(XMLMissingBaseIndexError, errorString);
-		return errorValue;
-	}
-	if (baseMapSetAttribute == nil && baseIndexAttribute != nil) {
-		errorFormat = NBundleString(kKeyMapElementMissingBaseMap, "", kErrorTableName);
-		errorString.Format(errorFormat, indexString);
-		errorValue = ErrorMessage(XMLMissingBaseMapError, errorString);
-		return errorValue;
-	}
-	NString baseMap = ToNN([baseMapSetAttribute stringValue]);
-	NString baseIndexString = ToNN([baseIndexAttribute stringValue]);
-	UInt32 baseIndex = 0;
-	if (!baseIndexString.IsEmpty()) {
-		NNumber baseIndexNumber(baseIndexString);
-		baseIndex = baseIndexNumber.GetUInt32();
-	}
-	outElement = new KeyMapElement(indexValue, baseMap, baseIndex, 0);
-	XMLCommentHolder *commentHolder = outElement;
-	for (NSXMLNode *childNode in [inXMLTree children]) {
-		switch ([childNode kind]) {
-			case NSXMLElementKind: {
-					// An element, which should be a key element
-				if (ToNN([childNode name]) != kKeyElement) {
-						// Not a key element
-					errorFormat = NBundleString(kKeyMapElementWrongElementType, "", kErrorTableName);
-					errorString.Format(errorFormat, indexString, ToNN([childNode name]));
-					errorValue = ErrorMessage(XMLBadElementTypeError, errorString);
-					break;
-				}
-				KeyElement *keyElement;
-				errorValue = KeyElement::CreateFromXML((NSXMLElement *)childNode, keyElement, ioCommentContainer);
-				if (errorValue == XMLNoError) {
-					UInt32 keyCode = keyElement->GetKeyCode();
-					if (outElement->GetKeyElement(keyCode) != NULL) {
-						// Repeated key element
-						errorFormat = NBundleString(kKeyMapElementRepeatedKeyElement, "", kErrorTableName);
-						errorString.Format(errorFormat, indexString, keyCode);
-						errorValue = ErrorMessage(XMLRepeatedKeyElementError, errorString);
-					}
-					else if (keyCode != kDummyKeyCode) {
-						outElement->AddKeyElement(keyCode, keyElement);
-					}
-				}
-				if (commentHolder != NULL) {
-					commentHolder->RemoveDuplicateComments();
-				}
-				commentHolder = keyElement;
-				ioCommentContainer->AddCommentHolder(keyElement);
-			}
-			break;
-				
-			case NSXMLCommentKind: {
-					// A comment, so add it to the structure
-				XMLComment *childComment = new XMLComment(ToNN([childNode stringValue]), commentHolder);
-				commentHolder->AddXMLComment(childComment);
-			}
-			break;
-				
-			default:
-				// Invalid node type
-				errorFormat = NBundleString(kKeyMapElementInvalidNodeType, "", kErrorTableName);
-				errorString.Format(errorFormat, indexString);
-				errorValue = ErrorMessage(XMLWrongXMLNodeTypeError, errorString);
-			break;
-		}
-	}
-	if (errorValue == XMLNoError) {
-		commentHolder->RemoveDuplicateComments();
-	}
-	else {
-		// An error in processing, so delete the partially constructed element
-		delete outElement;
-		outElement = NULL;
-	}
-	return errorValue;
-}
-
 // Create an XML tree representing the key map element
 
 NXMLNode *KeyMapElement::CreateXMLTree(void)
@@ -546,39 +451,6 @@ NXMLNode *KeyMapElement::CreateXMLTree(void)
 		dummyElement->NewOutputElement("");
 		NXMLNode *dummyElementTree = dummyElement->CreateXMLTree();
 		xmlTree->AddChild(dummyElementTree);
-		delete dummyElement;
-	}
-	return xmlTree;
-}
-
-NSXMLElement *KeyMapElement::CreateXML(void) {
-	NSXMLElement *xmlTree = [NSXMLElement elementWithName:ToNS(kKeyMapElement)];
-	NSXMLNode *attributeNode = [NSXMLNode attributeWithName:ToNS(kIndexAttribute) stringValue:[NSString stringWithFormat:@"%d", mIndex]];
-	[xmlTree addAttribute:attributeNode];
-	if (!mBaseMapSet.IsEmpty()) {
-		attributeNode = [NSXMLNode attributeWithName:ToNS(kBaseMapSetAttribute) stringValue:ToNS(mBaseMapSet)];
-		[xmlTree addAttribute:attributeNode];
-		attributeNode = [NSXMLNode attributeWithName:ToNS(kBaseIndexAttribute) stringValue:[NSString stringWithFormat:@"%d", mBaseIndex]];
-		[xmlTree addAttribute:attributeNode];
-	}
-	AddCommentsToXML(xmlTree);
-	UInt32 keyTableSize = mElementTable->GetTableSize();
-	bool hasElement = false;
-	for (UInt32 i = 0; i < keyTableSize; i++) {
-		KeyElement *keyElement = mElementTable->GetKeyElement(i);
-		if (keyElement != NULL) {
-			NSXMLElement *keyElementTree = keyElement->CreateXML();
-			[xmlTree addChild:keyElementTree];
-			keyElement->AddCommentsToXML(xmlTree);
-			hasElement = true;
-		}
-	}
-	if (!hasElement) {
-		// We need to add a dummy element
-		KeyElement *dummyElement = new KeyElement(kDummyKeyCode);
-		dummyElement->NewOutputElement("");
-		NSXMLElement *dummyElementTree = dummyElement->CreateXML();
-		[xmlTree addChild:dummyElementTree];
 		delete dummyElement;
 	}
 	return xmlTree;
@@ -894,16 +766,6 @@ void KeyMapElementList::AddToXMLTree(NXMLNode& inXMLTree)
 		if (keyMapElement != NULL) {
 			NXMLNode *keyMapElementTree = keyMapElement->CreateXMLTree();
 			inXMLTree.AddChild(keyMapElementTree);
-		}
-	}
-}
-
-void KeyMapElementList::AddToXML(NSXMLElement *inXMLTree) {
-	for (KeyMapElementIterator pos = mElementList.begin(); pos != mElementList.end(); ++pos) {
-		KeyMapElement *keyMapElement = *pos;
-		if (keyMapElement != NULL) {
-			NSXMLElement *keyMapElementTree = keyMapElement->CreateXML();
-			[inXMLTree addChild:keyMapElementTree];
 		}
 	}
 }

@@ -36,9 +36,7 @@ public:
 	void ImportDeadKey(NString inLocalState, WhenElement *inWhenElement);
 	
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, TerminatorsElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
-	static ErrorMessage CreateFromXML(NSXMLElement *inTree, TerminatorsElement*& outElement, boost::shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	NSXMLElement *CreateXML(void);
 	
 		// Get list of comment holders
 	void AppendToList(XMLCommentHolderList& ioList);

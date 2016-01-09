@@ -34,9 +34,7 @@ public:
 	static KeyMapSet *CreateStandardKeyMapSet(NString inID, NString inBaseMapID, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard, UInt32 inCapsLockKeyboard, ModifierMap *inModifierMap);
 	static KeyMapSet *CreateStandardJISKeyMapSet(NString inID, NString inBaseMapID, ModifierMap *inModifierMap);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyMapSet*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
-	static ErrorMessage CreateFromXML(NSXMLElement *inXMLTree, KeyMapSet*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	NSXMLElement *CreateXML(void);
 	
 	NString GetID(void) const { return mID; }
 	UInt32 GetKeyMapCount(void) const;

@@ -40,7 +40,7 @@
             <value key="minSize" type="size" width="450" height="300"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="392"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="WOb-pz-96A">
                         <rect key="frame" x="13" y="10" width="774" height="388"/>
@@ -93,8 +93,8 @@
                                                 <action selector="setScaleLevel:" target="-2" id="mp0-Ee-9L7"/>
                                             </connections>
                                         </comboBox>
-                                        <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
-                                            <rect key="frame" x="513" y="310" width="82" height="32"/>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
+                                            <rect key="frame" x="513" y="309" width="82" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
                                             </constraints>
@@ -113,7 +113,7 @@
                                                 <rect key="frame" x="1" y="1" width="743" height="300"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
+                                                    <view autoresizesSubviews="NO" misplaced="YES" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
                                                         <rect key="frame" x="0.0" y="0.0" width="743" height="300"/>
                                                         <animations/>
                                                     </view>
