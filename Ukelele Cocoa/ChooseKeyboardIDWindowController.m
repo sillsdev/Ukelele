@@ -74,14 +74,6 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 //								   [scriptInfo scriptName], minID, maxID];
 //	[rangeField setStringValue:scriptExplanation];
 	[rangeField setStringValue:[scriptInfo scriptDescription]];
-	[self generateID];
-}
-
-- (void)generateID
-{
-	NSInteger selectedScript = [scriptButton indexOfSelectedItem];
-	ScriptInfo *scriptInfo = scriptList[selectedScript];
-	self.currentID = [scriptInfo randomID];
 }
 
 - (IBAction)ok:(id)sender
