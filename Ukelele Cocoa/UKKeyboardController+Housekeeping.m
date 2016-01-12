@@ -132,7 +132,7 @@
 	NSInteger keyboardScript = [self.keyboardLayout keyboardGroup];
 	NSUInteger scriptIndex = [ScriptInfo indexForScript:keyboardScript];
 	if (nil == keyboardIDSheet) {
-		keyboardIDSheet = [ChooseKeyboardIDWindowController chooseKeyboardID];
+		keyboardIDSheet = [ChooseKeyboardNameWindowController chooseKeyboardID];
 	}
 	NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
 	infoDictionary[kKeyboardIDWindowScript] = @(scriptIndex);

@@ -403,8 +403,8 @@
         </arrayController>
         <arrayController objectClassName="NSString" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="rL6-W8-MIu" userLabel="Script Ranges Controller">
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.scriptDescriptionList" id="VmL-zj-V8i"/>
                 <binding destination="9Xd-w7-kG1" name="selectionIndexes" keyPath="selectionIndexes" id="XEJ-eY-M4T"/>
+                <binding destination="-2" name="contentArray" keyPath="self.scriptDescriptionList" id="VmL-zj-V8i"/>
             </connections>
         </arrayController>
         <objectController objectClassName="UkeleleKeyboardObject" automaticallyPreparesContent="YES" id="fOO-TO-fKw" userLabel="Keyboard Object">

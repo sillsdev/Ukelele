@@ -6,7 +6,7 @@
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ChooseKeyboardIDWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="ChooseKeyboardNameWindowController">
             <connections>
                 <outlet property="nameField" destination="juX-og-MZY" id="HM0-1d-Ga5"/>
                 <outlet property="rangeField" destination="mvt-1q-PYr" id="Fzj-aP-tMk"/>

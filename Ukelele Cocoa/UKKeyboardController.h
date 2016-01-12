@@ -17,7 +17,7 @@
 #import "AskNewKeyMap.h"
 #import "AskFromList.h"
 #import "ChooseScale.h"
-#import "ChooseKeyboardIDWindowController.h"
+#import "ChooseKeyboardNameWindowController.h"
 #import "ReplaceNameSheet.h"
 #import "KeyboardTypeSheet.h"
 #import "ModifiersSheet.h"
@@ -49,7 +49,7 @@ enum ToolbarItemTags {
 	AskNewKeyMap *askNewKeyMap;
 	AskFromList *askFromList;
 	ChooseScale *chooseScale;
-	ChooseKeyboardIDWindowController *keyboardIDSheet;
+	ChooseKeyboardNameWindowController *keyboardIDSheet;
 	KeyboardTypeSheet *keyboardTypeSheet;
 	ReplaceNameSheet *replaceNameSheet;
 	ModifiersSheet *modifiersSheet;

@@ -6,18 +6,18 @@
 //  Copyright (c) 2012 SIL. All rights reserved.
 //
 
-#import "ChooseKeyboardIDWindowController.h"
+#import "ChooseKeyboardNameWindowController.h"
 #import "ScriptInfo.h"
 
 NSString *kKeyboardIDWindowName = @"KeyboardName";
 NSString *kKeyboardIDWindowScript = @"ScriptID";
 NSString *kKeyboardIDWindowID = @"KeyboardID";
 
-@implementation ChooseKeyboardIDWindowController
+@implementation ChooseKeyboardNameWindowController
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName
 {
-	[[NSBundle mainBundle] loadNibNamed:@"ChooseKeyboardIDWindow" owner:self topLevelObjects:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"ChooseKeyboardNameWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         scriptList = [ScriptInfo standardScripts];
@@ -34,9 +34,9 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 }
 
 
-+ (ChooseKeyboardIDWindowController *)chooseKeyboardID
++ (ChooseKeyboardNameWindowController *)chooseKeyboardID
 {
-	return [[ChooseKeyboardIDWindowController alloc] initWithWindowNibName:@"ChooseKeyboardIDWindow"];
+	return [[ChooseKeyboardNameWindowController alloc] initWithWindowNibName:@"ChooseKeyboardNameWindow"];
 }
 
 - (void)windowDidLoad

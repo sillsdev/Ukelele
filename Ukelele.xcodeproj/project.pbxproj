@@ -85,7 +85,7 @@
 		523B018E191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0126191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m */; };
 		523B0190191CA18C00E06DF3 /* ChooseDeadKeyHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B012A191CA18C00E06DF3 /* ChooseDeadKeyHandling.m */; };
 		523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B012C191CA18C00E06DF3 /* ChooseFrom3Sheet.m */; };
-		523B0192191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B012E191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m */; };
+		523B0192191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B012E191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.m */; };
 		523B0194191CA18C00E06DF3 /* ChooseScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0131191CA18C00E06DF3 /* ChooseScale.m */; };
 		523B0195191CA18C00E06DF3 /* ChooseStateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0133191CA18C00E06DF3 /* ChooseStateController.m */; };
 		523B0196191CA18C00E06DF3 /* ColourThemeEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0135191CA18C00E06DF3 /* ColourThemeEditorController.m */; };
@@ -237,7 +237,7 @@
 		52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */; };
 		52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */; };
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
-		52F1914019258CA000164D48 /* ChooseKeyboardIDWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */; };
+		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
 /* End PBXBuildFile section */
@@ -451,8 +451,8 @@
 		523B012A191CA18C00E06DF3 /* ChooseDeadKeyHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseDeadKeyHandling.m; sourceTree = "<group>"; };
 		523B012B191CA18C00E06DF3 /* ChooseFrom3Sheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseFrom3Sheet.h; sourceTree = "<group>"; };
 		523B012C191CA18C00E06DF3 /* ChooseFrom3Sheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChooseFrom3Sheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		523B012D191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseKeyboardIDWindowController.h; sourceTree = "<group>"; };
-		523B012E191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChooseKeyboardIDWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		523B012D191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseKeyboardNameWindowController.h; sourceTree = "<group>"; };
+		523B012E191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChooseKeyboardNameWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		523B0130191CA18C00E06DF3 /* ChooseScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseScale.h; sourceTree = "<group>"; };
 		523B0131191CA18C00E06DF3 /* ChooseScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseScale.m; sourceTree = "<group>"; };
 		523B0132191CA18C00E06DF3 /* ChooseStateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseStateController.h; sourceTree = "<group>"; };
@@ -638,7 +638,7 @@
 		52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPrintView.h; sourceTree = "<group>"; };
 		52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPrintView.m; sourceTree = "<group>"; };
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
-		52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardIDWindow.xib; path = "Interface Files/ChooseKeyboardIDWindow.xib"; sourceTree = "<group>"; };
+		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -858,7 +858,7 @@
 				529344A01B86B20C00DF0659 /* AskTextView.xib */,
 				52BEADEF1924856F008A3314 /* AskYesNo.xib */,
 				528EB14019258B8900C97247 /* ChooseFrom3Sheet.xib */,
-				52F1913F19258CA000164D48 /* ChooseKeyboardIDWindow.xib */,
+				52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */,
 				52E2F1A619258F9E007F4280 /* ChooseScale.xib */,
 				52E8A80419259A14008281A3 /* ChooseStateSheet.xib */,
 				5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */,
@@ -1108,8 +1108,8 @@
 				523B012A191CA18C00E06DF3 /* ChooseDeadKeyHandling.m */,
 				523B012B191CA18C00E06DF3 /* ChooseFrom3Sheet.h */,
 				523B012C191CA18C00E06DF3 /* ChooseFrom3Sheet.m */,
-				523B012D191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.h */,
-				523B012E191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m */,
+				523B012D191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.h */,
+				523B012E191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.m */,
 				523B0130191CA18C00E06DF3 /* ChooseScale.h */,
 				523B0131191CA18C00E06DF3 /* ChooseScale.m */,
 				523B0132191CA18C00E06DF3 /* ChooseStateController.h */,
@@ -1368,7 +1368,7 @@
 				52A481F1192348B300D412D7 /* AddModifiersDialog.xib in Resources */,
 				5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */,
 				52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */,
-				52F1914019258CA000164D48 /* ChooseKeyboardIDWindow.xib in Resources */,
+				52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */,
 				5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */,
 				5253EC741C43928B003B7CC3 /* scripts.strings in Resources */,
 				5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */,
@@ -1552,7 +1552,7 @@
 				523B00D1191CA00A00E06DF3 /* WhenElement.mm in Sources */,
 				52AD7D97196139F800B3CD3F /* UKKeyboardController+Modifiers.m in Sources */,
 				523B018A191CA18C00E06DF3 /* AskStateAndTerminatorController.m in Sources */,
-				523B0192191CA18C00E06DF3 /* ChooseKeyboardIDWindowController.m in Sources */,
+				523B0192191CA18C00E06DF3 /* ChooseKeyboardNameWindowController.m in Sources */,
 				523B0186191CA18C00E06DF3 /* AskFromList.m in Sources */,
 				523B0084191C9CD200E06DF3 /* SelectionRing.m in Sources */,
 				523B007D191C9CA900E06DF3 /* UkeleleContainerView.m in Sources */,

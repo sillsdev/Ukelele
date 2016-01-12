@@ -12,7 +12,7 @@ extern NSString *kKeyboardIDWindowName;
 extern NSString *kKeyboardIDWindowScript;
 extern NSString *kKeyboardIDWindowID;
 
-@interface ChooseKeyboardIDWindowController : NSWindowController {
+@interface ChooseKeyboardNameWindowController : NSWindowController {
 	IBOutlet NSTextField *nameField;
 	IBOutlet NSPopUpButton *scriptButton;
 	IBOutlet NSTextField *rangeField;
@@ -26,7 +26,7 @@ extern NSString *kKeyboardIDWindowID;
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
 
-+ (ChooseKeyboardIDWindowController *)chooseKeyboardID;
++ (ChooseKeyboardNameWindowController *)chooseKeyboardID;
 
 - (void)startDialogWithInfo:(NSDictionary *)infoDictionary
 				  forWindow:(NSWindow *)parentWindow
