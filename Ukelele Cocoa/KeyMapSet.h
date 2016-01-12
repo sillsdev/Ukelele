@@ -44,6 +44,7 @@ public:
 	UInt32 GetKeyMapSize(void) const { return mKeyMapTable->GetKeyMapSize(); }
 	bool IsRelative(void) const;
 	bool HasInlineAction(void) const;
+	bool HasKeyMapSetGap(void) const;
 	
 	KeyMapElement *GetKeyMapElement(const UInt32 inIndex) const;
 	bool HasKeyMapElement(const UInt32 inIndex) const;

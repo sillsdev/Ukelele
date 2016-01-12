@@ -30,6 +30,9 @@ public:
 	bool IsMissingSpecialKeyOutput(void) const;
 	NStringList GetKeyMapSets(void) const;
 	bool HasInlineAction(void) const;
+	bool HasKeyMapSetGap(void) const;
+	bool HasInvalidBaseIndex(void) const;
+	bool HasExtraKeyMap(UInt32 inKeyMapSelectCount) const;
 	
 	void AddKeyMapSet(KeyMapSet *inKeyMapSet);
 	void CompleteSet(void);

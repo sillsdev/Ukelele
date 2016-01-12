@@ -1094,6 +1094,53 @@ SInt32 KeyboardElement::GetRandomKeyboardID(const SInt32 inScriptCode)
 	return result;
 }
 
+bool KeyboardElement::HasValidID() {
+	SInt32 minID = 0;
+	SInt32 maxID = 0;
+	switch (mGroup) {
+		case kTextEncodingMacUnicode:
+			minID = kIDMinimumUnicode;
+			maxID = kIDMaximumUnicode;
+			break;
+			
+		case kTextEncodingMacRoman:
+			minID = kIDMinimumRoman;
+			maxID = kIDMaximumRoman;
+			break;
+			
+		case kTextEncodingMacJapanese:
+			minID = kIDMinimumJapanese;
+			maxID = kIDMaximumJapanese;
+			break;
+			
+		case kTextEncodingMacChineseSimp:
+			minID = kIDMinimumSimplifiedChinese;
+			maxID = kIDMaximumSimplifiedChinese;
+			break;
+			
+		case kTextEncodingMacChineseTrad:
+			minID = kIDMinimumTraditionalChinese;
+			maxID = kIDMaximumTraditionalChinese;
+			break;
+			
+		case kTextEncodingMacKorean:
+			minID = kIDMinimumKorean;
+			maxID = kIDMaximumKorean;
+			break;
+			
+		case kTextEncodingMacCyrillic:
+			minID = kIDMinimumCyrillic;
+			maxID = kIDMaximumCyrillic;
+			break;
+			
+		case kTextEncodingMacCentralEurRoman:
+			minID = kIDMinimumCentralEuropean;
+			maxID = kIDMaximumCentralEuropean;
+			break;
+	}
+	return mID >= minID && mID <= maxID;
+}
+
 #pragma mark -
 
 	// Get all the action names
@@ -1402,6 +1449,22 @@ bool KeyboardElement::NeedsRepair() {
 		result = true;
 		mRepairsNeeded |= kRepairMissingSpecialKeyOutput;
 	}
+	if (!HasValidID()) {
+		result = true;
+		mRepairsNeeded |= kRepairInvalidKeyboardID;
+	}
+	if (mKeyMapSetList->HasKeyMapSetGap()) {
+		result = true;
+		mRepairsNeeded |= kRepairKeyMapSetGap;
+	}
+	if (mKeyMapSetList->HasInvalidBaseIndex()) {
+		result = true;
+		mRepairsNeeded |= kRepairInvalidBaseIndex;
+	}
+	if (HasExtraKeyMapSet()) {
+		result = true;
+		mRepairsNeeded |= kRepairExtraKeyMapSet;
+	}
 	return result;
 }
 
@@ -1568,6 +1631,29 @@ bool KeyboardElement::IsMissingKeyMap(NString& outModifierMapID, NString& outKey
 		}
 	}
 	return false;
+}
+
+bool KeyboardElement::HasExtraKeyMapSet(void) const {
+	bool result = false;
+	for (ModifierMapConstIterator pos = mModifierMapList.begin(); !result && pos != mModifierMapList.end(); ++pos) {
+		ModifierMap *modMap = *pos;
+		NStringList *keyMapSetIDs = mLayouts->GetKeyMapsForModifierMap(modMap->GetID());
+		UInt32 modifierCount = modMap->GetKeyMapSelectCount();
+		for (NStringListIterator keyMaps = keyMapSetIDs->begin(); keyMaps != keyMapSetIDs->end(); ++keyMaps) {
+			KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(*keyMaps);
+			if (keyMapSet == NULL) {
+					// Missing key map set
+				result = true;
+				break;
+			}
+			if (keyMapSet->GetKeyMapCount() > modifierCount) {
+					// Extra key maps
+				result = true;
+				break;
+			}
+		}
+	}
+	return result;
 }
 
 bool KeyboardElement::HasInlineAction(void) const

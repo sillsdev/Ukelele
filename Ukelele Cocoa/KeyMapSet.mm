@@ -296,6 +296,20 @@ bool KeyMapSet::HasInlineAction(void) const
 	return false;
 }
 
+bool KeyMapSet::HasKeyMapSetGap() const {
+	bool result = false;
+	UInt32 keyMapCount = mKeyMapTable->GetKeyMapCount();
+	for (UInt32 i = 0; i < keyMapCount; i++) {
+		KeyMapElement *keyMapElement = mKeyMapTable->GetKeyMapElement(i);
+			// Each key map element must have an index in the range 0..keyMapCount - 1, and be in order
+		if (keyMapElement->GetIndex() != i) {
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
+
 #pragma mark -
 
 // Get the key map element at the given index

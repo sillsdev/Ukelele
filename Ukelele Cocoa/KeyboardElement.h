@@ -87,6 +87,7 @@ public:
 	void MoveModifierMap(const UInt32 inFromIndex, const UInt32 inToIndex, const UInt32 inKeyboardID);
 	
 	static SInt32 GetRandomKeyboardID(const SInt32 inScriptCode);
+	bool HasValidID(void);
 	
 	NArray GetActionNames(void) const;
 	void ChangeActionName(const NString inOldName, const NString inNewName);
@@ -114,6 +115,7 @@ public:
 	bool HasEquivalentModifierMap(const KeyboardElement *inKeyboard) const;
 	bool IsMissingKeyMapSets(NStringList& outMissingKeyMapSets) const;
 	bool IsMissingKeyMap(NString& outModifierMapID, NString& outKeyMapSetID, UInt32& outKeyMapIndex) const;
+	bool HasExtraKeyMapSet(void) const;
 	bool HasInlineAction(void) const;
 	
 	bool RepairJIS(void);

@@ -92,6 +92,56 @@ bool KeyMapSetList::HasInlineAction(void) const
 	return false;
 }
 
+bool KeyMapSetList::HasKeyMapSetGap(void) const {
+	bool result = false;
+	for (KeyMapSetConstIterator pos = mList.begin(); pos != mList.end(); ++pos) {
+		KeyMapSet *keyMapSet = *pos;
+		if (keyMapSet->HasKeyMapSetGap()) {
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
+
+bool KeyMapSetList::HasInvalidBaseIndex(void) const {
+	bool result = false;
+	for (KeyMapSetConstIterator pos = mList.begin(); pos != mList.end(); ++pos) {
+		KeyMapSet *keyMapSet = *pos;
+		UInt32 keyMapSetSize = keyMapSet->GetKeyMapSize();
+		for (UInt32 i = 0; i < keyMapSetSize && !result; i++) {
+			KeyMapElement *keyMap = keyMapSet->GetKeyMapElement(i);
+			if (keyMap->GetBaseMapSet() != "") {
+					// Have a base map
+				KeyMapSet *baseMap = FindKeyMapSet(keyMap->GetBaseMapSet());
+				if (baseMap == NULL) {
+						// Reference to non-existent base map
+					result = true;
+					break;
+				}
+				if (baseMap->GetKeyMapElement(keyMap->GetBaseIndex()) == NULL) {
+						// Bad index
+					result = true;
+					break;
+				}
+			}
+		}
+	}
+	return result;
+}
+
+bool KeyMapSetList::HasExtraKeyMap(UInt32 inKeyMapSelectCount) const {
+	bool result = false;
+	for (KeyMapSetConstIterator pos = mList.begin(); pos != mList.end(); ++pos) {
+		KeyMapSet *keyMapSet = *pos;
+		if (keyMapSet->GetKeyMapCount() > inKeyMapSelectCount) {
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
+
 #pragma mark -
 
 // Add a key map set to the list
