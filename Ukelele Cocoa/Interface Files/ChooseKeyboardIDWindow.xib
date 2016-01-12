@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ChooseKeyboardIDWindowController">
             <connections>
-                <outlet property="idField" destination="FNk-a6-n1Q" id="5xy-tJ-8Mo"/>
                 <outlet property="nameField" destination="juX-og-MZY" id="HM0-1d-Ga5"/>
                 <outlet property="rangeField" destination="mvt-1q-PYr" id="Fzj-aP-tMk"/>
                 <outlet property="scriptButton" destination="OHK-iw-cdX" id="cTU-BA-OGv"/>
@@ -20,10 +19,10 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="390" height="244"/>
+            <rect key="contentRect" x="196" y="240" width="390" height="288"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="390" height="244"/>
+                <rect key="frame" x="0.0" y="0.0" width="390" height="288"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N6j-38-c5I">
@@ -54,14 +53,14 @@ Gw
                             <action selector="cancel:" target="-2" id="hRi-48-ZHw"/>
                         </connections>
                     </button>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Name and ID" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="DPX-BW-3Y1">
-                        <rect key="frame" x="17" y="56" width="356" height="168"/>
+                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Name and Script" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="DPX-BW-3Y1">
+                        <rect key="frame" x="17" y="57" width="356" height="211"/>
                         <view key="contentView" id="Lwh-6A-Nez">
-                            <rect key="frame" x="1" y="1" width="354" height="152"/>
+                            <rect key="frame" x="1" y="1" width="354" height="195"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bj-tz-wls">
-                                    <rect key="frame" x="16" y="122" width="49" height="17"/>
+                                    <rect key="frame" x="16" y="165" width="49" height="17"/>
                                     <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name" id="bxv-v0-CAk">
                                         <font key="font" metaFont="system"/>
@@ -70,7 +69,7 @@ Gw
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="juX-og-MZY">
-                                    <rect key="frame" x="71" y="120" width="265" height="22"/>
+                                    <rect key="frame" x="71" y="163" width="265" height="22"/>
                                     <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="HHA-hQ-mWK">
                                         <font key="font" metaFont="system"/>
@@ -79,7 +78,7 @@ Gw
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="awW-kl-Lew">
-                                    <rect key="frame" x="18" y="96" width="47" height="17"/>
+                                    <rect key="frame" x="18" y="139" width="47" height="17"/>
                                     <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Script" id="Mem-ly-mdM">
                                         <font key="font" metaFont="system"/>
@@ -88,7 +87,7 @@ Gw
                                     </textFieldCell>
                                 </textField>
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHK-iw-cdX">
-                                    <rect key="frame" x="69" y="90" width="115" height="26"/>
+                                    <rect key="frame" x="69" y="133" width="268" height="26"/>
                                     <animations/>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="h7N-dh-hS3" id="7qd-J7-HX5">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -105,30 +104,8 @@ Gw
                                         <action selector="selectScript:" target="-2" id="mYh-bU-imA"/>
                                     </connections>
                                 </popUpButton>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RMm-04-A2s">
-                                    <rect key="frame" x="208" y="94" width="26" height="17"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ID" id="nD0-0A-wk9">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNk-a6-n1Q">
-                                    <rect key="frame" x="240" y="92" width="96" height="22"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="IxE-2W-peO">
-                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" maximumFractionDigits="3" id="MEV-o7-95A">
-                                            <real key="minimum" value="-32768"/>
-                                            <real key="maximum" value="32767"/>
-                                        </numberFormatter>
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvt-1q-PYr">
-                                    <rect key="frame" x="18" y="14" width="165" height="71"/>
+                                    <rect key="frame" x="18" y="20" width="318" height="108"/>
                                     <animations/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="Fiq-aK-2fy">
                                         <font key="font" metaFont="system"/>
@@ -136,17 +113,6 @@ Gw
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W6F-jL-YIe">
-                                    <rect key="frame" x="234" y="56" width="108" height="32"/>
-                                    <animations/>
-                                    <buttonCell key="cell" type="push" title="Generate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ed1-jI-g6i">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="generateID:" target="-2" id="nTZ-NO-akq"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <animations/>
                         </view>
@@ -157,6 +123,7 @@ Gw
                 </subviews>
                 <animations/>
             </view>
+            <point key="canvasLocation" x="433" y="410"/>
         </window>
     </objects>
 </document>

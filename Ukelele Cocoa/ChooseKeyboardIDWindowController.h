@@ -16,13 +16,13 @@ extern NSString *kKeyboardIDWindowID;
 	IBOutlet NSTextField *nameField;
 	IBOutlet NSPopUpButton *scriptButton;
 	IBOutlet NSTextField *rangeField;
-	IBOutlet NSTextField *idField;
 	NSArray *scriptList;
 	void (^callBack)(NSDictionary *);
 }
 
+@property (nonatomic) NSInteger currentID;
+
 - (IBAction)selectScript:(id)sender;
-- (IBAction)generateID:(id)sender;
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
 

@@ -611,7 +611,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="ISP-0s-KNc"/>
-                            <menuItem title="Set Keyboard Name and ID…" id="naq-Ij-TRd">
+                            <menuItem title="Set Keyboard Name and Script…" id="naq-Ij-TRd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="askKeyboardIdentifiers:" target="-1" id="9P8-gb-uXc"/>

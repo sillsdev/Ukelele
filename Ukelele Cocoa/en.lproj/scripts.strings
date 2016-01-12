@@ -1,0 +1,16 @@
+/* 
+  scripts.strings
+  Ukelele
+
+  Created by John Brownie on 11/01/2016.
+  Copyright © 2016 John Brownie. All rights reserved.
+*/
+
+UnicodeDescription = "Unicode allows the full range of Unicode characters. You should use this in almost all cases.";
+RomanDescription = "Roman consists of only 256 characters, mostly those used in Western European languages and a number of symbols.";
+JapaneseDescription = "Japanese consists of the basic Roman characters defined in ASCII as well as most Japanese characters.";
+CentralEuropeanDescription = "Central European consists of 256 characters, with more diacritics and fewer symbols than Roman, for Central and Eastern European languages.";
+CyrillicDescription = "Cyrillic consists of only 256 characters, the basic Roman characters as defined in ASCII and the standard Cyrillic characters, plus some symbols.";
+TraditionalChineseDescription = "Traditional Chinese defines many characters, mostly those defined in the Big 5 standard, with a few Apple additions, as well as the standard Roman characters defined in ASCII. Note that there are some Big 5 characters which do not translate to a single, distinct Unicode character.";
+SimplifiedChineseDescription = "Simplified Chinese defines many characters, including the standard Roman characters defined in ASCII, and otherwise follows the EUC-CN, with some Apple additions.";
+KoreanDescription = "Korean mostly follows the EUC-KR standard, which includes the standard Roman characters defined in ASCII, Korean characters (Hangul and ideographs) from the KSC 5601 standard, and many Apple additions.";

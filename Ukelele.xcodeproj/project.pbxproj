@@ -133,6 +133,7 @@
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
 		5253EC711C3DC638003B7CC3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5253EC701C3DC638003B7CC3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5253EC741C43928B003B7CC3 /* scripts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5253EC761C43928B003B7CC3 /* scripts.strings */; };
 		52579AD21A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */; };
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
@@ -548,6 +549,8 @@
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
 		5253EC701C3DC638003B7CC3 /* Sparkle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Sparkle.framework; path = "/Users/john/Library/Developer/Xcode/DerivedData/Ukelele_Workspace-ejdkxiqgbpwyecfaasfmaufpjoph/Build/Products/Release/Sparkle.framework"; sourceTree = "<absolute>"; };
+		5253EC751C43928B003B7CC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/scripts.strings; sourceTree = "<group>"; };
+		5253EC771C43929A003B7CC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/scripts.strings; sourceTree = "<group>"; };
 		52579AD01A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyStrokeLookupInteractionHandler.h; sourceTree = "<group>"; };
 		52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyStrokeLookupInteractionHandler.m; sourceTree = "<group>"; };
 		5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskSwapKeyCodesWindow.xib; path = "Interface Files/AskSwapKeyCodesWindow.xib"; sourceTree = "<group>"; };
@@ -961,6 +964,7 @@
 				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				524EAE281B9FD16900B77B43 /* dialogs.strings */,
+				5253EC761C43928B003B7CC3 /* scripts.strings */,
 				524EAE2B1B9FD16F00B77B43 /* Errors.strings */,
 				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */,
@@ -1366,6 +1370,7 @@
 				52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */,
 				52F1914019258CA000164D48 /* ChooseKeyboardIDWindow.xib in Resources */,
 				5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */,
+				5253EC741C43928B003B7CC3 /* scripts.strings in Resources */,
 				5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */,
 				528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */,
 				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
@@ -1598,6 +1603,15 @@
 				524EAE2F1B9FD1A400B77B43 /* en */,
 			);
 			name = keyboards.strings;
+			sourceTree = "<group>";
+		};
+		5253EC761C43928B003B7CC3 /* scripts.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5253EC751C43928B003B7CC3 /* Base */,
+				5253EC771C43929A003B7CC3 /* en */,
+			);
+			name = scripts.strings;
 			sourceTree = "<group>";
 		};
 		52BBED0B191B4C3900E48394 /* InfoPlist.strings */ = {

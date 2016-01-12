@@ -295,7 +295,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (void)assignRandomID {
-	self.keyboard->GetKeyboard()->AssignRandomKeyboardID();
+	NSInteger newID = self.keyboard->GetKeyboard()->GetRandomKeyboardID((SInt32)self.keyboardGroup);
+	[self setKeyboardID:newID];
 }
 
 #pragma mark Accessors
@@ -313,7 +314,10 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
 	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	keyboardElement->SetKeyboardGroup((SInt32)newGroup);
+	if (keyboardElement->GetKeyboardGroup() != newGroup) {
+		keyboardElement->SetKeyboardGroup((SInt32)newGroup);
+		[self assignRandomID];
+	}
 }
 
 - (NSInteger)keyboardID

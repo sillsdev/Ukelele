@@ -26,12 +26,11 @@
 		[_modifierMatchField setStringValue:@""];
 		[_modifiersField setStringValue:@""];
 		_scriptList = [ScriptInfo standardScripts];
-		NSMutableArray *scriptRanges = [NSMutableArray arrayWithCapacity:[_scriptList count]];
+		NSMutableArray *scriptDescriptions = [NSMutableArray arrayWithCapacity:[_scriptList count]];
 		for (NSUInteger i = 0; i < [_scriptList count]; i++) {
-			NSString *rangeString = [NSString stringWithFormat:@"Keyboard ID should be between %ld and %ld", [_scriptList[i] minID], [_scriptList[i] maxID]];
-			scriptRanges[i] = rangeString;
+			scriptDescriptions[i] = [_scriptList[i] scriptDescription];
 		}
-		_scriptRangeList = scriptRanges;
+		_scriptDescriptionList = scriptDescriptions;
     }
     
     return self;
@@ -45,7 +44,7 @@
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
-	NSData *frameData =[theDefaults objectForKey:UKInspectorWindowLocation];
+	NSData *frameData = [theDefaults objectForKey:UKInspectorWindowLocation];
 	if (frameData != nil) {
 		NSRect newFrame = *(NSRect *)[frameData bytes];
 		[self.window setFrame:newFrame display:NO];
@@ -59,21 +58,6 @@
 		theInstance = [[InspectorWindowController alloc] initWithWindowNibName:@"InspectorWindow"];
 	});
 	return theInstance;
-}
-
-- (IBAction)generateID:(id)sender {
-#pragma unused(sender)
-		// Work out the script
-	NSInteger selectedScript = [self.keyboardScriptButton indexOfSelectedItem];
-	ScriptInfo *scriptInfo = self.scriptList[selectedScript];
-		// Generate a random number in the appropriate range
-	NSInteger newID = [scriptInfo randomID];
-	if (self.currentWindow == nil) {
-			// We have a bundle window
-		NSAssert(self.currentBundle, @"Must have a bundle");
-		self.currentWindow = [self.currentBundle controllerForCurrentEntry];
-	}
-	[self.currentWindow setKeyboardID:newID];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
@@ -91,22 +75,15 @@
 	[self.stateStackTable selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
 
-- (void)setScript:(NSInteger)scriptCode {
-	for (NSUInteger i = 0; i < [self.scriptList count]; i++) {
-		ScriptInfo *scriptInfo = self.scriptList[i];
-		NSInteger scriptID = [scriptInfo scriptID];
-		if (scriptID == scriptCode) {
-			[self.keyboardScriptButton selectItemAtIndex:i];
-			break;
-		}
-	}
+- (IBAction)selectScript:(id)sender {
+#pragma unused(sender)
+	
 }
 
 - (void)setKeyboardSectionEnabled:(BOOL)enabled {
 	[self.keyboardIDField setEnabled:enabled];
 	[self.keyboardNameField setEnabled:enabled];
 	[self.keyboardScriptButton setEnabled:enabled];
-	[self.generateButton setEnabled:enabled];
 }
 
 #pragma mark Delegate methods

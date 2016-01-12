@@ -87,7 +87,6 @@ public:
 	void MoveModifierMap(const UInt32 inFromIndex, const UInt32 inToIndex, const UInt32 inKeyboardID);
 	
 	static SInt32 GetRandomKeyboardID(const SInt32 inScriptCode);
-	void AssignRandomKeyboardID(void);
 	
 	NArray GetActionNames(void) const;
 	void ChangeActionName(const NString inOldName, const NString inNewName);

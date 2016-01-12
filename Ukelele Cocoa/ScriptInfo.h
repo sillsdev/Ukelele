@@ -16,8 +16,9 @@
 @property (readonly) NSInteger scriptID;
 @property (readonly) NSInteger minID;
 @property (readonly) NSInteger maxID;
+@property (strong, readonly) NSString *scriptDescription;
 
-- (instancetype)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(NSString *)theName scriptID:(NSInteger)ID minID:(NSInteger)minimumID maxID:(NSInteger)maximumID description:(NSString *)description NS_DESIGNATED_INITIALIZER;
 
 + (NSArray *)standardScripts;
 + (NSInteger)randomIDforScript:(NSInteger)scriptID;

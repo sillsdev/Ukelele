@@ -31,20 +31,19 @@
 @property (strong) IBOutlet NSTextField *keyboardNameField;
 @property (strong) IBOutlet NSPopUpButton *keyboardScriptButton;
 @property (strong) IBOutlet NSTextField *keyboardIDField;
-@property (strong) IBOutlet NSButton *generateButton;
 
 @property (nonatomic, strong) IBOutlet NSArray *stateStack;
 @property (strong) NSArray *scriptList;
-@property (strong) IBOutlet NSTextField *scriptRange;
-@property (strong) NSArray *scriptRangeList;
+@property (strong) IBOutlet NSTextField *scriptDescription;
+@property (strong) NSArray *scriptDescriptionList;
 
 @property (weak, nonatomic) UkeleleKeyboardObject *currentKeyboard;
 @property (weak, nonatomic) UKKeyboardController *currentWindow;
 @property (weak, nonatomic) UKKeyboardDocument *currentBundle;
 
+- (IBAction)selectScript:(id)sender;
+
 + (InspectorWindowController *)getInstance;
-- (IBAction)generateID:(id)sender;
-- (void)setScript:(NSInteger)scriptCode;
 - (void)setKeyboardSectionEnabled:(BOOL)enabled;
 
 @end

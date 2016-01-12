@@ -963,6 +963,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				return NO;
 			}
 			UkeleleKeyboardObject *theKeyboard = [[UkeleleKeyboardObject alloc] initWithData:keyboardData withError:&theError];
+				// Create a new keyboard ID for the copied keyboard
+			[theKeyboard assignRandomID];
 			if (theKeyboard == nil) {
 					// Failed to read the document
 				[NSApp presentError:theError];
@@ -1512,6 +1514,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				[NSApp presentError:readError];
 			}
 			else {
+					// Give it a new ID
+				[keyboardLayout assignRandomID];
 				[self addNewDocument:keyboardLayout];
 					// Autosave the document after adding the new keyboard layout
 				[self autosaveWithImplicitCancellability:YES completionHandler:^(NSError *errorOrNil) {
@@ -1663,7 +1667,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (newDocument != nil) {
 			// Got the document
 		[theController addDocument:newDocument];
-		[newDocument setupKeyboard:[keyboardObject copy]];
+			// Create a copy with a new ID
+		UkeleleKeyboardObject *newKeyboardObject = [keyboardObject copy];
+		[newKeyboardObject assignRandomID];
+		[newDocument setupKeyboard:newKeyboardObject];
 		[newDocument showWindows];
 	}
 }
@@ -1843,16 +1850,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (nil != chosenDocument) {
 			// Is it not already saved?
 		if ([chosenDocument fileURL] != nil) {
-				// It already exists on disk, so make a copy
+				// It already exists on disk, so make a copy with a new ID
 			NSURL *documentURL = [chosenDocument fileURL];
 			NSError *readError;
 			UkeleleKeyboardObject *newKeyboard = [[UkeleleKeyboardObject alloc] initWithData:[NSData dataWithContentsOfURL:documentURL] withError:&readError];
 			NSAssert(newKeyboard != nil, @"Copied keyboard should not create an error in reading");
+			[newKeyboard assignRandomID];
 			[self addNewDocument:newKeyboard];
 		}
 		else {
-				// It hasn't been saved, so just copy it
+				// It hasn't been saved, so just copy it with a new ID
 			UkeleleKeyboardObject *copiedKeyboard = [[chosenDocument keyboardLayout] copy];
+			[copiedKeyboard assignRandomID];
 			[self addNewDocument:copiedKeyboard];
 		}
 	}
