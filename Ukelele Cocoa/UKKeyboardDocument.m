@@ -1090,6 +1090,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem {
 	SEL theAction = [anItem action];
+	NSInteger selectedRowNumber;
+	KeyboardLayoutInformation *keyboardEntry;
 		// See which window is main
 	for (NSWindowController *windowController in [self windowControllers]) {
 		if ([[windowController window] isMainWindow]) {
@@ -1121,11 +1123,41 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
 			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:)) {
 			// Only active if there's a selection in the table
-		NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		}
 		return (selectedRowNumber != -1);
+	}
+	else if (theAction == @selector(removeIcon:)) {
+			// Only active if there's a selection in the table, and the selected item has an icon
+		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		if (selectedRowNumber == -1) {
+			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+		}
+		if (selectedRowNumber != -1) {
+				// Have a selected row. Does it have an icon?
+			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+			if ([keyboardEntry iconData] != nil) {
+				return YES;
+			}
+		}
+		return NO;
+	}
+	else if (theAction == @selector(removeIntendedLanguage:)) {
+			// Only active if there's a selection in the table, and the selected item has an intended language
+		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		if (selectedRowNumber == -1) {
+			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+		}
+		if (selectedRowNumber != -1) {
+				// Have a selected row. Does it have an intended language?
+			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+			if ([keyboardEntry intendedLanguage] != nil && ![[keyboardEntry intendedLanguage] isEqualToString:@""]) {
+				return YES;
+			}
+		}
+		return NO;
 	}
 	return [super validateUserInterfaceItem:anItem];
 }
