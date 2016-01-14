@@ -16,13 +16,6 @@
 
 const UInt32 kStateMaximum = 1 << 30;
 
-	// Repair constants
-const UInt32 kRepairMissingSpecialKeyOutput = 0x1;
-const UInt32 kRepairKeyMapSetGap = 0x2;
-const UInt32 kRepairInvalidBaseIndex = 0x4;
-const UInt32 kRepairExtraKeyMapSet = 0x8;
-const UInt32 kRepairInvalidKeyboardID = 0x10;
-
 	// Strings
 const NString kStateNameGenerator = "%@ %d";
 const NString kKeyboardElementMissingAttributes = "KeyboardElementMissingAttributes";

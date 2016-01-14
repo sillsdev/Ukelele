@@ -25,6 +25,14 @@
 #include "ScriptRanges.h"
 using std::tr1::shared_ptr;
 
+typedef enum : NSUInteger {
+	kRepairMissingSpecialKeyOutput = 0x1,
+	kRepairKeyMapSetGap = 0x2,
+	kRepairInvalidBaseIndex = 0x4,
+	kRepairExtraKeyMapSet = 0x8,
+	kRepairInvalidKeyboardID = 0x10
+} RepairConstants;
+
 class KeyboardElement : public XMLCommentHolder {
 public:
 	KeyboardElement(const SInt32 inGroup, const SInt32 inID, const NString inName, const UInt32 inMaxout = 0);
