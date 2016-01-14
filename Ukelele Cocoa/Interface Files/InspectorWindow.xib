@@ -346,15 +346,15 @@
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </box>
-                                        <box autoresizesSubviews="NO" misplaced="YES" title="State Stack" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="D0U-t0-GgO">
+                                        <box autoresizesSubviews="NO" title="State Stack" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="D0U-t0-GgO">
                                             <rect key="frame" x="6" y="5" width="304" height="156"/>
                                             <view key="contentView" id="AMH-EU-JDH">
                                                 <rect key="frame" x="1" y="1" width="302" height="140"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <scrollView ambiguous="YES" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ado-Z7-EBv">
+                                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ado-Z7-EBv">
                                                         <rect key="frame" x="18" y="14" width="266" height="116"/>
-                                                        <clipView key="contentView" ambiguous="YES" id="TZZ-Pq-IEN">
+                                                        <clipView key="contentView" id="TZZ-Pq-IEN">
                                                             <rect key="frame" x="1" y="1" width="264" height="114"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -417,6 +417,7 @@
                                         </box>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="D0U-t0-GgO" firstAttribute="top" secondItem="Rms-Xi-Ao6" secondAttribute="bottom" constant="26" id="Apk-FZ-bHI"/>
                                         <constraint firstItem="VOM-Ux-G20" firstAttribute="leading" secondItem="I0c-9R-xMo" secondAttribute="trailing" constant="16" id="AvO-Qa-fpc"/>
                                         <constraint firstAttribute="bottom" secondItem="D0U-t0-GgO" secondAttribute="bottom" constant="9" id="EFK-oF-lT2"/>
                                         <constraint firstItem="I0c-9R-xMo" firstAttribute="top" secondItem="9Or-ap-4i6" secondAttribute="top" id="HdN-cq-F5o"/>
