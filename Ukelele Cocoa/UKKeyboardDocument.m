@@ -319,6 +319,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	CFStringRef tempFileName = CFURLCopyLastPathComponent((CFURLRef)tempFileURL);
 	FSRef tempFileRef;
 	HFSUniStr255 forkName;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	OSStatus theErr = FSGetResourceForkName(&forkName);
 	NSAssert(theErr == noErr, @"Could not get resource fork");
 	NSAssert(CFStringGetLength(tempFileName) < 2048, @"File name is more than 2048 characters");
@@ -331,9 +333,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(theErr == noErr, @"Could not open resource file");
 	Handle theHandle = NewHandle(CFDataGetLength(uchrData));
 	memcpy(*theHandle, CFDataGetBytePtr(uchrData), CFDataGetLength(uchrData));
+#pragma clang diagnostic ignored "-Wfour-char-constants"
 	AddResource(theHandle, kResType_uchr, UniqueID(kResType_uchr), resourceName);
 	UpdateResFile(CurResFile());
 	FSCloseFork(resFile);
+#pragma clang diagnostic pop
 		// Get the conversion tool
 	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKKeyboardConverterTool];
 		// Set up and run the tool
