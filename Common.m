@@ -36,7 +36,9 @@ static NSString *kCommandKeyAuthRightDesc    = @"authRightDescription";
 {
     static dispatch_once_t sOnceToken;
     static NSDictionary *  sCommandInfo;
-    
+	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
     dispatch_once(&sOnceToken, ^{
 		sCommandInfo = @{
 			 NSStringFromSelector(@selector(installFile:authorization:withReply:)) : @{
@@ -55,6 +57,7 @@ static NSString *kCommandKeyAuthRightDesc    = @"authRightDescription";
 				}
 	   };
     });
+#pragma clang diagnostic pop
     return sCommandInfo;
 }
 

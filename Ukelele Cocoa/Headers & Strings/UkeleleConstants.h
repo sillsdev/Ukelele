@@ -26,8 +26,6 @@ enum {
 };
 
 	// Resource type
-#define kResType_KCAP 'KCAP'
-#define kResType_KCHR 'KCHR'
 #define kResType_uchr 'uchr'
 
 	// Default modifiers

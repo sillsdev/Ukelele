@@ -333,8 +333,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(theErr == noErr, @"Could not open resource file");
 	Handle theHandle = NewHandle(CFDataGetLength(uchrData));
 	memcpy(*theHandle, CFDataGetBytePtr(uchrData), CFDataGetLength(uchrData));
+#pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wfour-char-constants"
 	AddResource(theHandle, kResType_uchr, UniqueID(kResType_uchr), resourceName);
+#pragma clang diagnostic pop
 	UpdateResFile(CurResFile());
 	FSCloseFork(resFile);
 #pragma clang diagnostic pop

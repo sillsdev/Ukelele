@@ -577,6 +577,8 @@ const CGFloat kTextPaneHeight = 17.0f;
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
 - (BOOL)setsStatusForSelector:(SEL)selector {
 	if (selector == @selector(setKeyboardType:) ||
 		selector == @selector(createDeadKeyState:) ||
@@ -617,7 +619,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	return NO;
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
 	SEL action = [anItem action];
@@ -696,6 +701,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	return NO;
 }
+#pragma clang diagnostic pop
 
 #pragma mark === Inspector ===
 
