@@ -483,8 +483,10 @@ typedef struct KeyEntryRec {
 	}
 		// The data is what used to be a resource, and we'll get a pointer to it and use
 		// that as a stream of characters
-	char *resourcePtr = (char *)[resourceData bytes];
-	[self createViewWithStream:resourcePtr forID:keyboardID withScale:scaleValue];
+	char *resourceBuffer = malloc([resourceData length]);
+	[resourceData getBytes:resourceBuffer length:[resourceData length]];
+	[self createViewWithStream:resourceBuffer forID:keyboardID withScale:scaleValue];
+	free(resourceBuffer);
 	return actualID;
 }
 

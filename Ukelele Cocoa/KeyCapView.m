@@ -650,11 +650,13 @@ static CGAffineTransform kTextTransform = {
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard {
 #pragma unused(pasteboard)
-	return @[(NSString *)kUTTypeUTF8PlainText];
+	const NSString *utf8Type = (const NSString *)kUTTypeUTF8PlainText;
+	return @[utf8Type];
 }
 
 - (id)pasteboardPropertyListForType:(NSString *)type {
-	if ([type isEqualToString:(NSString *)kUTTypeUTF8PlainText]) {
+	const NSString *utf8Type = (const NSString *)kUTTypeUTF8PlainText;
+	if ([utf8Type isEqualToString:type]) {
 		return self.outputString;
 	}
 	return nil;

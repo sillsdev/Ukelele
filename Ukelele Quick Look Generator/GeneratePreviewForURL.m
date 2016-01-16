@@ -48,8 +48,10 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
 	NSString *idString = [NSString stringWithFormat:@"%d", kStandardKeyboard];
 	NSData *resourceData = resourceDict[idString];
-	char *resourcePtr = (char *)[resourceData bytes];
-	[ukeleleView createViewWithStream:resourcePtr forID:kStandardKeyboard withScale:1.25];
+	char *resourceBuffer = malloc([resourceData length]);
+	[resourceData getBytes:resourceBuffer length:[resourceData length]];
+	[ukeleleView createViewWithStream:resourceBuffer forID:kStandardKeyboard withScale:1.25];
+	free(resourceBuffer);
 	[ukeleleView setFrameOrigin:NSZeroPoint];
 	if (QLPreviewRequestIsCancelled(preview)) {
 		return noErr;
