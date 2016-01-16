@@ -321,6 +321,7 @@ XMLComment *UkeleleKeyboard::GetFirstComment(void)
 {
 	XMLComment *currentComment;
 	bool gotComment = mCommentContainer->GetFirstComment(currentComment);
+#pragma unused(gotComment)
 	NN_ASSERT(gotComment || currentComment == NULL);
 	return currentComment;
 }
@@ -329,6 +330,7 @@ XMLComment *UkeleleKeyboard::GetPreviousComment(void)
 {
 	XMLComment *currentComment;
 	bool gotComment = mCommentContainer->GetPreviousComment(currentComment);
+#pragma unused(gotComment)
 	NN_ASSERT(gotComment || currentComment == NULL);
 	return currentComment;
 }
@@ -337,6 +339,7 @@ XMLComment *UkeleleKeyboard::GetNextComment(void)
 {
 	XMLComment *currentComment;
 	bool gotComment = mCommentContainer->GetNextComment(currentComment);
+#pragma unused(gotComment)
 	NN_ASSERT(gotComment || currentComment == NULL);
 	return currentComment;
 }
@@ -345,6 +348,7 @@ XMLComment *UkeleleKeyboard::GetLastComment(void)
 {
 	XMLComment *currentComment;
 	bool gotComment = mCommentContainer->GetLastComment(currentComment);
+#pragma unused(gotComment)
 	NN_ASSERT(gotComment || currentComment == NULL);
 	return currentComment;
 }

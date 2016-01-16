@@ -42,6 +42,7 @@
 
 + (void)setup {
 	UnicodeTable *theTable = [UnicodeTable getInstance];
+#pragma unused(theTable)
 	NSAssert(theTable, @"Must get the Unicode table");
 }
 

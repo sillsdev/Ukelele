@@ -83,6 +83,7 @@
 
 - (void)interactionDidComplete:(id<UKInteractionHandler>)handler
 {
+#pragma unused(handler)
     NSAssert(handler == subsidiaryHandler, @"Wrong handler");
     subsidiaryHandler = nil;
 }

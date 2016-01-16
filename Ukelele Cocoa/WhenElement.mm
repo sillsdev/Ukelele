@@ -406,6 +406,7 @@ WhenElementSet::ReplaceStateName(NString oldStateName, NString newStateName)
 	WhenElement *element = FindWhenElement(oldStateName);
 	if (element != NULL) {
 		SInt32 numRemoved = static_cast<SInt32>(mElementSet.erase(element));
+#pragma unused(numRemoved)
 		NN_ASSERT(numRemoved == 1);
 		element->ReplaceStateName(oldStateName, newStateName);
 		mElementSet.insert(element);
@@ -432,6 +433,7 @@ WhenElementSet::RemoveStates(NSSet *inStates)
 		if ([inStates containsObject:ToNS(stateName)]) {
 			std::pair<std::set<WhenElement *, DereferenceLess>::iterator, bool> result =
 			statesToDelete.insert(whenElement);
+#pragma unused(result)
 			NN_ASSERT(result.second);
 		}
 	}

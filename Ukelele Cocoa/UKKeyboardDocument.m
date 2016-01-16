@@ -295,6 +295,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSURL *tempFileURL = [NSURL fileURLWithPath:tempFilePath];
 		// We don't need the temporary file any more, since we're going to create a resource fork
 	int result = close(tempFileDescriptor);
+#pragma unused(result)
 	NSAssert(result == 0, @"Should be able to close the file");
 		// Capture the current keyboard layout as uchr data
 	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
@@ -342,6 +343,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSTask *conversionTask = [NSTask launchedTaskWithLaunchPath:[toolURL path] arguments:@[[tempFileURL path]]];
 	[conversionTask waitUntilExit];
 	int returnStatus = [conversionTask terminationStatus];
+#pragma unused(returnStatus)
 	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 	CFRelease(tempFileName);
 	CFRelease(parentURL);

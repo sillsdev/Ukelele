@@ -518,6 +518,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)interactionDidComplete:(id<UKInteractionHandler>)handler
 {
+#pragma unused(handler)
     NSAssert(handler == interactionHandler, @"Wrong interaction handler");
 		// Deselect any selected key
 	[self setSelectedKey:kNoKeyCode];
@@ -1464,6 +1465,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UkeleleView *keyboardView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
 	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
 	int actualID = [keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
+#pragma unused(actualID)
 	NSAssert(keyboardID == actualID, @"Must have a valid keyboard ID");
 	CGFloat keyboardWidth = [keyboardView bounds].size.width;
 	CGFloat desiredScale = availableWidth / keyboardWidth;

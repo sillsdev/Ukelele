@@ -1067,6 +1067,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	XMLCommentHolder *theHolder = [commentHolder commentHolder];
 	XMLComment *theComment;
 	bool gotComment = theHolder->FindComment(ToNN(oldText), theComment);
+#pragma unused(gotComment)
 	NSAssert(gotComment, @"Must have a valid comment to change");
 	theComment->SetCommentString(ToNN(newText));
 }

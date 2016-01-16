@@ -15,7 +15,8 @@
 #import "NCocoa.h"
 #import "UnicodeTable.h"
 
-	// Strings
+	
+// Strings
 const NString kCodePointBeyondUnicode = "CodePointBeyondUnicode";
 const NString kCodePointInSurrogateRange = "CodePointInSurrogateRange";
 const NString kCodePointNotUnicodeCharacter = "CodePointNotUnicodeCharacter";
@@ -365,6 +366,7 @@ XMLUtilities::ConvertEncodedString(const NString inString, UniChar *ioBuffer, UI
 					NString hexNumber = inString.GetString(NRange(i + 3, findRange.GetSize() - 4));
 					unsigned int hexValue;
 					int scanValue = sscanf(hexNumber.GetUTF8(), "%x", &hexValue);
+#pragma unused(scanValue)
 					NN_ASSERT(scanValue == 1);
 					NString hexError;
 					if (IsValidUnicode(hexValue, hexError)) {
