@@ -18,6 +18,7 @@
 #import "XMLCocoaUtilities.h"
 #include "KeyStrokeLookupTable.h"
 #include "XMLUtilities.h"
+#include "UKXMLEncoder.h"
 
 NSString *kUnlinkParameterModifiers = @"Modifiers";
 NSString *kUnlinkParameterData = @"Data";
@@ -147,9 +148,70 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (updateComment) {
 		[self updateEditingComment];
 	}
-	NXMLEncoder xmlEncoder;
 	NXMLNode *treeRepresentation = self.keyboard->CreateXMLTree();
 	[parentDocument unblockUserInteraction];
+	UKXMLEncoder xmlEncoder;
+	static NDictionary attributeOrder;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NArray theAttributes;
+		NStringList attributeNames;
+		attributeNames.push_back(kGroupAttribute);
+		attributeNames.push_back(kIDAttribute);
+		attributeNames.push_back(kNameAttribute);
+		attributeNames.push_back(kMaxoutAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kKeyboardElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kFirstAttribute);
+		attributeNames.push_back(kLastAttribute);
+		attributeNames.push_back(kModifiersAttribute);
+		attributeNames.push_back(kMapSetAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kLayoutsElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kIDAttribute);
+		attributeNames.push_back(kDefaultIndexAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kModifierMapElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kMapIndexAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kKeyMapSelectElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kKeysAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kModifierElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kIDAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kKeyMapSetElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kIndexAttribute);
+		attributeNames.push_back(kBaseMapSetAttribute);
+		attributeNames.push_back(kBaseIndexAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kKeyMapElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kCodeAttribute);
+		attributeNames.push_back(kOutputAttribute);
+		attributeNames.push_back(kActionAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kKeyElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kIDAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kActionElement, theAttributes);
+		attributeNames.clear();
+		attributeNames.push_back(kStateAttribute);
+		attributeNames.push_back(kThroughAttribute);
+		attributeNames.push_back(kNextAttribute);
+		attributeNames.push_back(kOutputAttribute);
+		attributeNames.push_back(kMultiplierAttribute);
+		theAttributes.SetValuesString(attributeNames);
+		attributeOrder.SetValue(kWhenElement, theAttributes);
+	});
+	xmlEncoder.setAttributeOrderDictionary(attributeOrder);
 	NString xmlString = xmlEncoder.Encode(treeRepresentation);
 	NData xmlData = xmlString.GetData(kNStringEncodingUTF8);
 	return ToNS(xmlData);

@@ -198,6 +198,8 @@
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529344A01B86B20C00DF0659 /* AskTextView.xib */; };
 		529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529344A31B86B2A200DF0659 /* AskTextViewController.m */; };
+		52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; settings = {ASSET_TAGS = (); }; };
+		52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; settings = {ASSET_TAGS = (); }; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
 		5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
@@ -582,6 +584,8 @@
 		529344A01B86B20C00DF0659 /* AskTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskTextView.xib; path = "Interface Files/AskTextView.xib"; sourceTree = "<group>"; };
 		529344A21B86B2A200DF0659 /* AskTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskTextViewController.h; sourceTree = "<group>"; };
 		529344A31B86B2A200DF0659 /* AskTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskTextViewController.m; sourceTree = "<group>"; };
+		52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UKXMLEncoder.cpp; sourceTree = "<group>"; };
+		52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKXMLEncoder.h; sourceTree = "<group>"; };
 		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
 		5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptIndexTransformer.m; sourceTree = "<group>"; };
 		5294EB951A5E58F800765E94 /* StringArrayFirstTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringArrayFirstTransformer.h; sourceTree = "<group>"; };
@@ -716,6 +720,8 @@
 				523B008C191C9D2200E06DF3 /* XMLCocoaUtilities.mm */,
 				523B008D191C9D2200E06DF3 /* XMLUtilities.h */,
 				523B008E191C9D2200E06DF3 /* XMLUtilities.mm */,
+				52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */,
+				52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1407,6 +1413,7 @@
 				5277EB941AAEFE3F00C471C3 /* XMLUtilities.mm in Sources */,
 				5277EB8D1AAEFD1200C471C3 /* KeyboardEnvironment.m in Sources */,
 				5277EB7F1AAEF4A700C471C3 /* LayoutsElement.mm in Sources */,
+				52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */,
 				5277EB8A1AAEF4D800C471C3 /* UkeleleView.m in Sources */,
 				5277EB9B1AAEFF1600C471C3 /* AddMissingOutputDataBlock.mm in Sources */,
 				5277EB931AAEFE2500C471C3 /* ErrorMessage.cpp in Sources */,
@@ -1525,6 +1532,7 @@
 				523B00C7191CA00A00E06DF3 /* KeyMapSetList.mm in Sources */,
 				523B00C4191CA00A00E06DF3 /* KeyMapElement.mm in Sources */,
 				523B00CC191CA00A00E06DF3 /* ModifierList.mm in Sources */,
+				52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */,
 				523B019A191CA18C00E06DF3 /* CreateDeadKeySheet.m in Sources */,
 				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
 				523B0102191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm in Sources */,
