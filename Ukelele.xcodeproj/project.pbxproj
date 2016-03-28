@@ -122,7 +122,6 @@
 		523B01C6191D7F8500E06DF3 /* Common.strings in Resources */ = {isa = PBXBuildFile; fileRef = 523B01C4191D7F8500E06DF3 /* Common.strings */; };
 		523B0206191D8C3100E06DF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B01E8191D865100E06DF3 /* Foundation.framework */; };
 		523B0236191D917400E06DF3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
-		523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0237191D917900E06DF3 /* Sparkle.framework */; };
 		523B0239191DAC8C00E06DF3 /* KeyboardInstallerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01FD191D87E100E06DF3 /* KeyboardInstallerTool.m */; };
 		523B023A191DAC8F00E06DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01EB191D865100E06DF3 /* main.m */; };
 		523F9FC4196FB39900A896CA /* NewKeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */; };
@@ -532,7 +531,6 @@
 		523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = org.sil.Ukelele.KeyboardInstallerTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		523B020B191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "org.sil.Ukelele.KeyboardInstallerTool-Prefix.pch"; sourceTree = "<group>"; };
 		523B0235191D917400E06DF3 /* libNano.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNano.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		523B0237191D917900E06DF3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		523B51141B292ECA00E8982E /* NanoCommon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NanoCommon.xcconfig; sourceTree = "<group>"; };
 		523B51151B292ECA00E8982E /* NanoDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NanoDebug.xcconfig; sourceTree = "<group>"; };
 		523B51161B292ECA00E8982E /* NanoDebugiOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NanoDebugiOS.xcconfig; sourceTree = "<group>"; };
@@ -671,7 +669,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52A105941B2A6291002C5255 /* SystemConfiguration.framework in Frameworks */,
-				523B0238191D917900E06DF3 /* Sparkle.framework in Frameworks */,
 				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
 			);
@@ -897,7 +894,6 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
-				5253EC701C3DC638003B7CC3 /* Sparkle.framework */,
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C1191D7F5C00E06DF3 /* Common */,
@@ -925,7 +921,7 @@
 			children = (
 				52A105931B2A6291002C5255 /* SystemConfiguration.framework */,
 				5277EB9F1AAF01A500C471C3 /* Carbon.framework */,
-				523B0237191D917900E06DF3 /* Sparkle.framework */,
+				5253EC701C3DC638003B7CC3 /* Sparkle.framework */,
 				523B0235191D917400E06DF3 /* libNano.a */,
 				523B01FA191D878400E06DF3 /* Security.framework */,
 				52BBED02191B4C3900E48394 /* Cocoa.framework */,
