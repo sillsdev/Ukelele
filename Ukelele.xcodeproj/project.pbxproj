@@ -131,7 +131,6 @@
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
-		5253EC711C3DC638003B7CC3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5253EC701C3DC638003B7CC3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5253EC741C43928B003B7CC3 /* scripts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5253EC761C43928B003B7CC3 /* scripts.strings */; };
 		52579AD21A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */; };
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
@@ -240,6 +239,8 @@
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
+		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
+		52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
 /* End PBXBuildFile section */
 
@@ -270,7 +271,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5253EC711C3DC638003B7CC3 /* Sparkle.framework in CopyFiles */,
+				52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +549,6 @@
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
-		5253EC701C3DC638003B7CC3 /* Sparkle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Sparkle.framework; path = "/Users/john/Library/Developer/Xcode/DerivedData/Ukelele_Workspace-ejdkxiqgbpwyecfaasfmaufpjoph/Build/Products/Release/Sparkle.framework"; sourceTree = "<absolute>"; };
 		5253EC751C43928B003B7CC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/scripts.strings; sourceTree = "<group>"; };
 		5253EC771C43929A003B7CC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/scripts.strings; sourceTree = "<group>"; };
 		52579AD01A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyStrokeLookupInteractionHandler.h; sourceTree = "<group>"; };
@@ -642,6 +642,8 @@
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
+		52F6C47D1CAA517E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../Sparkle-1.14.0/Sparkle.framework"; sourceTree = "<group>"; };
+		52F6C47F1CAA563E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -671,6 +673,7 @@
 				52A105941B2A6291002C5255 /* SystemConfiguration.framework in Frameworks */,
 				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
+				52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,6 +897,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
+				52F6C47D1CAA517E0010C596 /* Sparkle.framework */,
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C1191D7F5C00E06DF3 /* Common */,
@@ -921,12 +925,12 @@
 			children = (
 				52A105931B2A6291002C5255 /* SystemConfiguration.framework */,
 				5277EB9F1AAF01A500C471C3 /* Carbon.framework */,
-				5253EC701C3DC638003B7CC3 /* Sparkle.framework */,
 				523B0235191D917400E06DF3 /* libNano.a */,
 				523B01FA191D878400E06DF3 /* Security.framework */,
 				52BBED02191B4C3900E48394 /* Cocoa.framework */,
 				52BBED24191B4C3900E48394 /* XCTest.framework */,
 				523B01E8191D865100E06DF3 /* Foundation.framework */,
+				52F6C47F1CAA563E0010C596 /* Sparkle.framework */,
 				52BBED04191B4C3900E48394 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -1849,6 +1853,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
@@ -1880,6 +1888,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
