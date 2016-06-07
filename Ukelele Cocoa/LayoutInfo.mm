@@ -507,7 +507,7 @@ NSDictionary *sStandardKeyMapList;
 		sKeyboardTypeTable.insert(std::make_pair<UInt32, UInt16>(gestaltUSBProF16JISKbd, kKeyboardTypeJIS));
 		sKeyboardNameIndexTable.insert(std::make_pair<SInt16, SInt16>(gestaltUSBProF16JISKbd, kKeyboardUSBProF16));
 			// Pro with F16 ANSI
-		sKeyboardLayoutTable[gestaltProF16ANSIKbd] =kANSIISOJISKeyboard ;
+		sKeyboardLayoutTable[gestaltProF16ANSIKbd] = kANSIISOJISKeyboard ;
 		sKeyboardTypeTable.insert(std::make_pair<UInt32, UInt16>(gestaltProF16ANSIKbd, kKeyboardTypeANSI));
 		sKeyboardNameIndexTable.insert(std::make_pair<SInt16, SInt16>(gestaltProF16ANSIKbd, kKeyboardProF16));
 		sKeyboardNameToIDTable[kKeyboardProF16] = gestaltProF16ANSIKbd;
@@ -997,7 +997,7 @@ NSDictionary *sStandardKeyMapList;
 			symbolStr.reset(new UniChar[2]);
 			symbolStr[0] = 0xfe56;
 			symbolStr[1] = 0x20dd;
-			symbolLength = 1;
+			symbolLength = 2;
 			break;
 			
 		case kKeyEscape:

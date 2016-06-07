@@ -1052,6 +1052,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
     }
 	KeyMapSet *keyMapSet = keyboardElement->GetKeyMapSet((UInt32)keyboardID);
     KeyMapElement *keyMap = new KeyMapElement(*keyMapSet->GetKeyMapElement((UInt32)indexToCopy));
+	keyMap->SetIndex(newIndex);
     if (unlinkMap) {
         keyMap->UnlinkKeyMapElement(keyboardElement->GetActionList());
     }

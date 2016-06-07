@@ -365,7 +365,7 @@ ErrorMessage KeyMapElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 		switch (childTree->GetType()) {
 			case kNXMLNodeElement:
 				// An element, which should be a key element
-				if (childTree->GetTextValue()  != kKeyElement) {
+				if (childTree->GetTextValue() != kKeyElement) {
 					// Not a key element
 					errorFormat = NBundleString(kKeyMapElementWrongElementType, "", kErrorTableName);
 					errorString.Format(errorFormat, indexString, childTree->GetTextValue());
