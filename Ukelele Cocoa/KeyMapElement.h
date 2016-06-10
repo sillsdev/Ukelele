@@ -94,6 +94,7 @@ public:
 	UInt32 GetMaxout(void) const;
 	UInt32 GetKeyMapSize(void) const;
 	
+	void AddKeyMapElement(KeyMapElement *inKeyMapElement);
 	void InsertKeyMapElementAtIndex(const UInt32 inIndex, KeyMapElement *inKeyMapElement);
 	void AppendKeyMapElement(KeyMapElement *inKeyMapElement);
 	KeyMapElement *GetKeyMapElement(const UInt32 inIndex) const;

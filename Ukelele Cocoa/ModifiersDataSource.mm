@@ -382,22 +382,22 @@ static NSMutableDictionary *statusDictionary = nil;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
-	NSInteger destinationSet;
 #pragma unused(tableView)
 #pragma unused(dropOperation)
-	if (row >= (NSInteger)[rowArray count]) {
-		destinationSet = [self indexForRow:[rowArray count] - 1] + 1;
-	}
-	else {
-		destinationSet = [self indexForRow:row];
-	}
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSData *pbData = [pboard dataForType:ModifiersTableDragType];
 	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:pbData];
 	NSUInteger sourceIndex = [sourceIndexes firstIndex];
 	NSInteger sourceRowSet = [self indexForRow:sourceIndex];
-	if (destinationSet > sourceRowSet) {
-		destinationSet = [indexDictionary[@(destinationSet)][MDSPrevKey] integerValue];
+	NSInteger destinationSet;
+	if (row >= (NSInteger)[rowArray count]) {
+		destinationSet = [self indexForRow:[rowArray count] - 1];
+	}
+	else {
+		destinationSet = [self indexForRow:row];
+		if (destinationSet > sourceRowSet) {
+			destinationSet = [indexDictionary[@(destinationSet)][MDSPrevKey] integerValue];
+		}
 	}
 		// Now we need to tell the document to move the source set to the destination set
 	[keyboardLayout moveModifierSetIndex:sourceRowSet toIndex:destinationSet forKeyboard:[[KeyboardEnvironment instance] currentKeyboardID]];

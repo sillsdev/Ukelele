@@ -604,6 +604,19 @@ UInt32 KeyMapElementList::GetKeyMapSize(void) const
 
 #pragma mark -
 
+// Add a key map element at the appropriate index
+
+void KeyMapElementList::AddKeyMapElement(KeyMapElement *inKeyMapElement) {
+	UInt32 theIndex = inKeyMapElement->GetIndex();
+	UInt32 numKeyMaps = static_cast<UInt32>(mElementList.size());
+	if (theIndex >= numKeyMaps) {
+			// Pad with NULL elements
+		mElementList.insert(mElementList.end(), theIndex - numKeyMaps + 1, NULL);
+	}
+	NN_ASSERT_MSG(mElementList[theIndex] == NULL, "Must not already have an entry with index %d", theIndex);
+	mElementList[theIndex] = inKeyMapElement;
+}
+
 // Insert a key map element at the given index
 
 void KeyMapElementList::InsertKeyMapElementAtIndex(UInt32 inIndex, KeyMapElement *inKeyMapElement)

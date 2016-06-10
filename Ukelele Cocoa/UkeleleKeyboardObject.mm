@@ -961,7 +961,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	for (SInt32 i = 1; i <= keyMapSetCount; i++) {
 		KeyMapSet *keyMapSet = keyMapSets->GetKeyMapSet(i);
 		KeyMapElement *keyMapElement = (*(KeyMapElementVector *)deletedKeyMapElements)[i - 1];
-		keyMapSet->InsertKeyMapAtIndex((UInt32)index, keyMapElement);
+		keyMapSet->AddKeyMap(keyMapElement);
 	}
 	ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	modifierMap->InsertKeyMapSelectAtIndex((KeyMapSelect *)keyMapSelect, (UInt32)index);

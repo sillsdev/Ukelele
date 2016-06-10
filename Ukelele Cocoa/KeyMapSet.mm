@@ -71,7 +71,7 @@ KeyMapSet *KeyMapSet::CreateBasicKeyMapSet(NString inID, NString inBaseMapID)
 	for (UInt32 i = 0; i < kNumBasicModifiers; i++) {
 		KeyMapElement *keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(
 			kStandardKeyMapEmpty, i, inBaseMapID, i);
-		keyMapSet->InsertKeyMapAtIndex(i, keyMapElement);
+		keyMapSet->AddKeyMap(keyMapElement);
 	}
 	return keyMapSet;
 }
@@ -114,7 +114,7 @@ KeyMapSet *KeyMapSet::CreateStandardKeyMapSet(NString inID, NString inBaseMapID,
 		}
 		keyMapType = (UInt32)[LayoutInfo getStandardKeyMapForKeyboard:keyMapType withModifiers:modifiers];
 		keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(keyMapType, index, inBaseMapID, index);
-		keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
+		keyMapSet->AddKeyMap(keyMapElement);
 	}
 	return keyMapSet;
 }
@@ -125,7 +125,7 @@ KeyMapSet *KeyMapSet::CreateStandardJISKeyMapSet(NString inID, NString inBaseMap
 	KeyMapElement *keyMapElement = NULL;
 	for (UInt32 index = 0; index < numModifiers; index++) {
 		keyMapElement = KeyMapElement::CreateDefaultKeyMapElement(kStandardKeyMapEmpty, index, inBaseMapID, index);
-		keyMapSet->InsertKeyMapAtIndex(index, keyMapElement);
+		keyMapSet->AddKeyMap(keyMapElement);
 	}
 	return keyMapSet;
 }
@@ -327,6 +327,12 @@ bool KeyMapSet::HasKeyMapElement(const UInt32 inIndex) const
 	return false;
 }
 
+// Add the key map element at the appropriate index
+
+void KeyMapSet::AddKeyMap(KeyMapElement *inKeyMap) {
+	mKeyMapTable->AddKeyMapElement(inKeyMap);
+}
+
 // Insert the key map element into the set at the given index
 
 void KeyMapSet::InsertKeyMapAtIndex(const UInt32 inIndex, KeyMapElement *inKeyMap)
@@ -355,7 +361,7 @@ void KeyMapSet::RenumberKeyMaps(std::vector<SInt32>& inIndexMap) {
 			if (keyMap->GetBaseMapSet() != "") {
 				newKeyMap->SetBaseIndex(inIndexMap[keyMap->GetBaseIndex()]);
 			}
-			newKeyMapList->InsertKeyMapElementAtIndex(newIndex, newKeyMap);
+			newKeyMapList->AddKeyMapElement(newKeyMap);
 		}
 	}
 	mKeyMapTable.reset(newKeyMapList);

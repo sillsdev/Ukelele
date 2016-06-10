@@ -48,6 +48,7 @@ public:
 	
 	KeyMapElement *GetKeyMapElement(const UInt32 inIndex) const;
 	bool HasKeyMapElement(const UInt32 inIndex) const;
+	void AddKeyMap(KeyMapElement *inKeyMap);
 	void InsertKeyMapAtIndex(const UInt32 inIndex, KeyMapElement *inKeyMap);
 	KeyMapElement *RemoveKeyMapElement(const UInt32 inIndex);
 	void RenumberKeyMaps(std::vector<SInt32>& inIndexMap);

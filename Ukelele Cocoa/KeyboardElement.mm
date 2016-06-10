@@ -719,7 +719,7 @@ KeyMapSelect *KeyboardElement::RemoveKeyMapSelect(const UInt32 inKeyboardID,
 			// Remove the appropriate key map element
 		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);
 		KeyMapElement *keyMap = keyMapSet->RemoveKeyMapElement(inIndex);
-		outKeyMapList->InsertKeyMapElementAtIndex(i, keyMap);
+		outKeyMapList->AddKeyMapElement(keyMap);
 	}
 	return keyMapSelect;
 }
