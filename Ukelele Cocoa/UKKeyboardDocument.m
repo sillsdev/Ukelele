@@ -129,6 +129,7 @@ NSString *kKeyboardName = @"keyboardName";
 		UKKeyboardController *keyboardController = [[UKKeyboardController alloc] initWithWindowNibName:UKKeyboardControllerNibName];
 		NSAssert(keyboardController, @"Must be able to create a keyboard controller");
 		[self addWindowController:keyboardController];
+		[keyboardController setParentDocument:self];
 		[keyboardController setKeyboardLayout:self.keyboardLayout];
 		[self setFileType:kFileTypeKeyboardLayout];
 	}
