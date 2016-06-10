@@ -330,7 +330,7 @@
                                                                 </dictionary>
                                                             </binding>
                                                             <outlet property="dataSource" destination="vyz-He-UxM" id="DKT-Lf-djV"/>
-                                                            <outlet property="delegate" destination="vyz-He-UxM" id="kwU-zA-vQA"/>
+                                                            <outlet property="delegate" destination="-2" id="ARn-Gj-3vL"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
