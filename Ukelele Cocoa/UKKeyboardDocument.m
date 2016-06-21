@@ -1144,7 +1144,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		}
-		if (selectedRowNumber != -1) {
+		if (selectedRowNumber != -1 && self.keyboardLayouts.count > 0) {
 				// Have a selected row. Does it have an icon?
 			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
 			if ([keyboardEntry iconData] != nil) {
@@ -1159,7 +1159,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		}
-		if (selectedRowNumber != -1) {
+		if (selectedRowNumber != -1 && self.keyboardLayouts.count > 0) {
 				// Have a selected row. Does it have an intended language?
 			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
 			if ([keyboardEntry intendedLanguage] != nil && ![[keyboardEntry intendedLanguage] isEqualToString:@""]) {
