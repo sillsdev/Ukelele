@@ -117,9 +117,7 @@
 		KeyboardLayoutInformation *docInfo = keyboardLayouts[0];
 		UKKeyboardController *keyboardWindow = [docInfo keyboardController];
 		if (keyboardWindow == nil) {
-			UkeleleKeyboardObject *obj = [docInfo keyboardObject];
-			keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
-			[keyboardWindow setKeyboardLayout:obj];
+			keyboardWindow = [[(UKKeyboardController *)[parentWindow windowController] parentDocument] createControllerForEntry:docInfo];
 		}
 		[self handleDocument:keyboardWindow];
 	}
@@ -129,22 +127,31 @@
 		for (KeyboardLayoutInformation *keyboardInfo in keyboardLayouts) {
 			[keyboardNames addObject:[keyboardInfo keyboardName]];
 		}
+		[keyboardNames sortUsingComparator:^NSComparisonResult(id _Nonnull obj1, id _Nonnull obj2) {
+			return [(NSString *)obj1 compare:obj2];
+		}];
 		__block AskFromList *askFromList = [AskFromList askFromList];
 		[askFromList beginAskFromListWithText:@"Choose the keyboard layout to open" withMenu:keyboardNames forWindow:parentWindow callBack:^(NSString *chosenKeyboard) {
 			if (chosenKeyboard == nil) {
 					// User cancelled
 				[self interactionCompleted];
 			}
-			NSUInteger index = [keyboardNames indexOfObject:chosenKeyboard];
+			NSUInteger index = [keyboardLayouts indexOfObjectPassingTest:^BOOL(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+#pragma unused(idx)
+				if ([(KeyboardLayoutInformation *)obj keyboardName] == chosenKeyboard) {
+					*stop = YES;
+					return YES;
+				}
+				return NO;
+			}];
 			NSAssert(index != NSNotFound, @"Must have found the keyboard name");
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
 			UKKeyboardController *keyboardWindow = [info keyboardController];
 			if (keyboardWindow == nil) {
-				UkeleleKeyboardObject *obj = [info keyboardObject];
-				keyboardWindow = [[UKKeyboardController alloc] initWithWindowNibName:@"UKKeyboardLayout"];
-				[keyboardWindow setKeyboardLayout:obj];
+				keyboardWindow = [[(UKKeyboardController *)[parentWindow windowController] parentDocument] createControllerForEntry:info];
 			}
 			[self handleDocument:keyboardWindow];
+			askFromList = nil;
 		}];
 	}
 	else {

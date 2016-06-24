@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 @class UkeleleKeyboardObject;
 @class UKKeyboardController;
+@class KeyboardLayoutInformation;
 
 @interface IconImageTransformer : NSValueTransformer
 
@@ -47,6 +48,7 @@
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;
 - (IBAction)exportKeyboardLayout:(id)sender;
+- (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;
 - (void)inspectorDidAppear;
