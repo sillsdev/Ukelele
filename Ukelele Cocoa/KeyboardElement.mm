@@ -1654,6 +1654,28 @@ bool KeyboardElement::HasInlineAction(void) const
 	return mKeyMapSetList->HasInlineAction();
 }
 
+bool KeyboardElement::IsMissingModifierMaps(NStringList& outMissingModifierMaps) const {
+	bool result = false;
+	NStringList *modifierMaps = mLayouts->GetModifierMaps();
+	for (NStringListIterator pos = modifierMaps->begin(); pos != modifierMaps->end(); ++pos) {
+		NString modifierMap = *pos;
+		bool foundMap = false;
+		for (ModifierMapConstIterator modMap = mModifierMapList.begin(); modMap != mModifierMapList.end(); ++modMap) {
+			ModifierMap *theMap = *modMap;
+			if (theMap->GetID() == modifierMap) {
+					// Found it
+				foundMap = true;
+				break;
+			}
+		}
+		if (!foundMap) {
+			result = true;
+			outMissingModifierMaps.push_back(modifierMap);
+		}
+	}
+	return result;
+}
+
 #pragma mark -
 
 	// Repair problems in the JIS mapping caused by early versions of Ukelele.

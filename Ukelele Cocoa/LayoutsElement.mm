@@ -141,6 +141,20 @@ NStringList *LayoutsElement::GetKeyMapsForModifierMap(const NString inModifierMa
 	return result;
 }
 
+NStringList *LayoutsElement::GetModifierMaps() const {
+	NStringList *result = new NStringList;
+	LayoutElementList::const_iterator pos;
+	for (pos = mLayoutList.begin(); pos != mLayoutList.end(); ++pos) {
+		LayoutElement *theLayout = *pos;
+		NString modifierMapID = theLayout->GetModifiers();
+			// Add the modifier map ID if it hasn't already been seen
+		if (std::find(result->begin(), result->end(), modifierMapID) == result->end()) {
+			result->push_back(modifierMapID);
+		}
+	}
+	return result;
+}
+
 #pragma mark -
 
 // Static method to create a basic layouts element

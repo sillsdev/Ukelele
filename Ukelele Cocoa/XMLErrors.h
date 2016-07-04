@@ -11,7 +11,7 @@
 #define _XMLERRORS_H_
 
 enum {
-	XMLNoError,
+	XMLNoError = 0,
 	XMLBadElementTypeError,
 	XMLRepeatedWhenElement,
 	XMLWrongXMLNodeTypeError,
@@ -42,6 +42,13 @@ enum {
 	XMLSelfReferentialBaseMapError,
 	XMLEmptyKeyMapSelectError,
 	XMLEmptyModifierMapError
+};
+
+enum {
+	UKNoError = 100,
+	UKMissingModifierMapError,
+	UKMissingKeyMapError,
+	UKMissingActionError
 };
 
 #endif /* _XMLERRORS_H_ */

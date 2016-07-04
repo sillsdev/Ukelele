@@ -139,8 +139,8 @@
 		525A4B71191E043C00A356F8 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B01C3191D7F8500E06DF3 /* Common.m */; };
 		525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */; };
 		526EFF8519F0838B001FB994 /* UKNewKeyboardLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */; };
-		52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52743F591BCA30B200C41310 /* ProgressWindow.xib */; settings = {ASSET_TAGS = (); }; };
-		52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52743F5C1BCA396900C41310 /* UKProgressWindow.m */; settings = {ASSET_TAGS = (); }; };
+		52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52743F591BCA30B200C41310 /* ProgressWindow.xib */; };
+		52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52743F5C1BCA396900C41310 /* UKProgressWindow.m */; };
 		5277EB681AAE844600C471C3 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB671AAE844600C471C3 /* GenerateThumbnailForURL.m */; };
 		5277EB6A1AAE844600C471C3 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB691AAE844600C471C3 /* GeneratePreviewForURL.m */; };
 		5277EB6C1AAE844600C471C3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5277EB6B1AAE844600C471C3 /* main.c */; };
@@ -196,8 +196,8 @@
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529344A01B86B20C00DF0659 /* AskTextView.xib */; };
 		529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529344A31B86B2A200DF0659 /* AskTextViewController.m */; };
-		52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; settings = {ASSET_TAGS = (); }; };
-		52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; settings = {ASSET_TAGS = (); }; };
+		52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
+		52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
 		5294EB971A5E58F800765E94 /* StringArrayFirstTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB961A5E58F800765E94 /* StringArrayFirstTransformer.m */; };
 		529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */; };
@@ -239,7 +239,7 @@
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
-		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
+		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; };
 		52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
 /* End PBXBuildFile section */

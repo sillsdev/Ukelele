@@ -125,6 +125,7 @@ public:
 	bool IsMissingKeyMap(NString& outModifierMapID, NString& outKeyMapSetID, UInt32& outKeyMapIndex) const;
 	bool HasExtraKeyMapSet(void) const;
 	bool HasInlineAction(void) const;
+	bool IsMissingModifierMaps(NStringList& outMissingModifierMaps) const;
 	
 	bool RepairJIS(void);
 	AddMissingOutputData *AddSpecialKeyOutput(void);

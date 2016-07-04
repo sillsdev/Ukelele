@@ -131,6 +131,19 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 			}
 			self = nil;
 		}
+		else {
+			// We need to check for various sanity conditions here...
+			error = [self checkSanity];
+			if (error != UKNoError) {
+				if (outError != nil) {
+					errorDictionary = @{NSLocalizedDescriptionKey: ToNS(error.GetErrorMessage())};
+					*outError = [NSError errorWithDomain:@"org.sil.ukelele"
+													code:error.GetErrorCode()
+												userInfo:errorDictionary];
+				}
+				self = nil;
+			}
+		}
 	}
 	return self;
 }
@@ -359,6 +372,38 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (void)assignRandomID {
 	NSInteger newID = self.keyboard->GetKeyboard()->GetRandomKeyboardID((SInt32)self.keyboardGroup);
 	[self setKeyboardID:newID];
+}
+
+#pragma mark Sanity checking
+
+- (ErrorMessage)checkSanity {
+		// Check for missing modifier maps
+	NStringList modifierMaps;
+	shared_ptr<KeyboardElement> theKeyboard = self.keyboard->GetKeyboard();
+	if (theKeyboard->IsMissingModifierMaps(modifierMaps)) {
+		NString missingMaps = NString::Join(modifierMaps, ", ");
+		NString errorMessage;
+		errorMessage.Format("The keyboard layout refers to modifier map(s) \"%@\", but does not include them", missingMaps);
+		return ErrorMessage(UKMissingModifierMapError, errorMessage);
+	}
+		// Check for missing key map sets
+	NStringList keyMapSets;
+	if (theKeyboard->IsMissingKeyMapSets(keyMapSets)) {
+		NString missingKeyMapSets = NString::Join(keyMapSets);
+		NString errorMessage;
+		errorMessage.Format("The keyboard refers to the key map set(s) \"%@\", but does not include them", missingKeyMapSets);
+		return ErrorMessage(UKMissingKeyMapError, errorMessage);
+	}
+		// Check for missing actions
+	NArray missingActions;
+	if (theKeyboard->HasMissingActions(&missingActions)) {
+		NString actionNames = NString::Join(missingActions.GetValuesString());
+		NString errorMessage;
+		errorMessage.Format("The keyboard refers to the action(s) \"%@\", but does not include them", actionNames);
+		return ErrorMessage(UKMissingActionError, errorMessage);
+	}
+		// Passed all tests, so OK
+	return ErrorMessage(UKNoError, "");
 }
 
 #pragma mark Accessors

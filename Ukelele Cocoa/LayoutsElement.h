@@ -30,6 +30,7 @@ public:
 	LayoutElementList *GetLayoutsForModifierMap(const NString inModifierMapID);
 	NStringList *GetKeyMapSetNames(void) const;
 	NStringList *GetKeyMapsForModifierMap(const NString inModifierMapID);
+	NStringList *GetModifierMaps(void) const;
 	
 	static LayoutsElement *CreateBasicLayoutsElement(void);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, LayoutsElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
