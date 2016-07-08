@@ -135,6 +135,8 @@
 			if (chosenKeyboard == nil) {
 					// User cancelled
 				[self interactionCompleted];
+				askFromList = nil;
+				return;
 			}
 			NSUInteger index = [keyboardLayouts indexOfObjectPassingTest:^BOOL(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 #pragma unused(idx)
