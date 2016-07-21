@@ -48,6 +48,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 	[self.makeCopyKeyMaps removeAllItems];
 	[self.makeCopyKeyMaps addItemsWithTitles:keyMaps];
 	callBack = theCallBack;
+	[self.keyMapType selectCellAtRow:0 column:0];
     [self.standardKeyMaps setEnabled:NO];
     [self.makeCopyKeyMaps setEnabled:NO];
     [unlinkedCheckBox setEnabled:NO];
