@@ -112,7 +112,7 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 #pragma unused(notification)
-	[self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0)];
+	[self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0 && [self.modifiersDataSource numberOfRowsInTableView:self.modifiersTableView] > 1)];
 }
 
 - (IBAction)addModifiers:(id)sender
