@@ -566,7 +566,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSFileWrapper *directoryEntry = nil;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
 			// Check that it's the Contents directory
-		if ([[directoryEntry preferredFilename] isEqualToString:kStringContentsName]) {
+		NSString *dirName = [directoryEntry preferredFilename];
+		if ([dirName compare:kStringContentsName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the right directory
 			break;
 		}
@@ -586,16 +587,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSFileWrapper *resourcesDirectory = nil;
 	NSFileWrapper *versionPlist = nil;
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
-		if ([[directoryEntry preferredFilename] isEqualToString:kStringInfoPlistFileName]) {
+		if ([[directoryEntry preferredFilename] compare:kStringInfoPlistFileName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Info.plist file
 			infoPlistFile = directoryEntry;
 			[self parseInfoPlist:infoPlistFile];
 		}
-		else if ([[directoryEntry preferredFilename] isEqualToString:kStringResourcesName]) {
+		else if ([[directoryEntry preferredFilename] compare:kStringResourcesName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Resources directory
 			resourcesDirectory = directoryEntry;
 		}
-		else if ([[directoryEntry preferredFilename] isEqualToString:kStringVersionPlistFileName]) {
+		else if ([[directoryEntry preferredFilename] compare:kStringVersionPlistFileName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the version.plist file
 			versionPlist = directoryEntry;
 		}
@@ -941,8 +942,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if ([[pasteBoard types] containsObject:NSURLPboardType]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
-		BOOL isKeyboardLayout = [fileExtension isEqualToString:kStringKeyboardLayoutExtension];
-		BOOL isIconFile = [fileExtension isEqualToString:kStringIcnsExtension];
+		BOOL isKeyboardLayout = [fileExtension compare:kStringKeyboardLayoutExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
+		BOOL isIconFile = [fileExtension compare:kStringIcnsExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
 		if (isIconFile && dropOperation == NSTableViewDropOn) {
 			return NSDragOperationCopy;
 		}
@@ -1004,8 +1005,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if ([[pasteBoard types] containsObject:(NSString *)kUTTypeFileURL]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
-		BOOL isKeyboardLayout = [fileExtension isEqualToString:kStringKeyboardLayoutExtension];
-		BOOL isIconFile = [fileExtension isEqualToString:kStringIcnsExtension];
+		BOOL isKeyboardLayout = [fileExtension compare:kStringKeyboardLayoutExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
+		BOOL isIconFile = [fileExtension compare:kStringIcnsExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
 		if (isKeyboardLayout) {
 				// Dropping a keyboard layout file
 			NSData *fileData = [NSData dataWithContentsOfURL:dragURL options:0 error:&theError];
