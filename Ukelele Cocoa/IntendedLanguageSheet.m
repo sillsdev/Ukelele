@@ -74,6 +74,14 @@
 	callBack(nil);
 }
 
+- (IBAction)removeLanguage:(id)sender {
+#pragma unused(sender)
+	[[self window] orderOut:self];
+	[NSApp endSheet:[self window]];
+	LanguageCode *emptyCode = [LanguageCode languageCodeFromString:@""];
+	callBack(emptyCode);
+}
+
 #pragma mark Table methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {

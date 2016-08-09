@@ -36,6 +36,7 @@
 
 - (IBAction)acceptLanguage:(id)sender;
 - (IBAction)cancelLanguage:(id)sender;
+- (IBAction)removeLanguage:(id)sender;
 - (IBAction)searchLanguage:(id)sender;
 - (IBAction)searchScript:(id)sender;
 - (IBAction)searchRegion:(id)sender;
