@@ -1965,13 +1965,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
-		// Notify the list that it's been updated
-//	[self.keyboardLayoutsTable reloadData];
 	[self.keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 
 - (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
+	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count] || index == 0, @"Index is invalid");
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:index];
 	[undoManager setActionName:@"Insert keyboard layout"];
