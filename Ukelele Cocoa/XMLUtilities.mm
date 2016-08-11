@@ -218,12 +218,15 @@ XMLUtilities::CreateCanonicalForm(const UniChar *inBuffer, const UInt32 inBuffer
 	for (UInt32 i = 0; i < inBufferLength; i++) {
 		NString codePoint;
 		UInt32 codePointValue;
+		if (canonicalForm.IsEmpty()) {
+			canonicalForm = " ";
+		}
 		if (UCIsSurrogateHighCharacter(inBuffer[i])) {
 				// Start of a surrogate pair
 			NN_ASSERT(i + 1 < inBufferLength);
 			codePointValue = UCGetUnicodeScalarValueForSurrogatePair(inBuffer[i], inBuffer[i + 1]);
 			i++;
-			codePoint.Format(" U+%05X", codePointValue);
+			codePoint.Format("U+%05X", codePointValue);
 		}
 		else {
 				// Character in BMP
@@ -237,7 +240,6 @@ XMLUtilities::CreateCanonicalForm(const UniChar *inBuffer, const UInt32 inBuffer
 			canonicalForm += codePointName;
 		}
 	}
-	canonicalForm.TrimLeft(" ");
 	return canonicalForm;
 }
 
