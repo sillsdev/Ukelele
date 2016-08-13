@@ -218,8 +218,8 @@ XMLUtilities::CreateCanonicalForm(const UniChar *inBuffer, const UInt32 inBuffer
 	for (UInt32 i = 0; i < inBufferLength; i++) {
 		NString codePoint;
 		UInt32 codePointValue;
-		if (canonicalForm.IsEmpty()) {
-			canonicalForm = " ";
+		if (!canonicalForm.IsEmpty()) {
+			canonicalForm += " ";
 		}
 		if (UCIsSurrogateHighCharacter(inBuffer[i])) {
 				// Start of a surrogate pair
