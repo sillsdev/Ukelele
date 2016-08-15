@@ -65,7 +65,8 @@ enum {
 	kStandardLayoutDvorak = 2,
 	kStandardLayoutAZERTY = 3,
 	kStandardLayoutQWERTZ = 4,
-	kStandardLayoutColemak = 5
+	kStandardLayoutColemak = 5,
+	kStandardLayoutNone = 999
 };
 
 	// Special key codes

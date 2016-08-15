@@ -32,6 +32,8 @@
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UKKeyboardController *controllerForCurrentEntry;
 
+- (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboardObject;
+
 - (IBAction)addOpenDocument:(id)sender;
 - (IBAction)showVersionInfo:(id)sender;
 - (IBAction)addKeyboardLayout:(id)sender;

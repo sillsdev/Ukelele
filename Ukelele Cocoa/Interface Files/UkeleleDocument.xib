@@ -108,7 +108,7 @@
                                                 <rect key="frame" x="1" y="1" width="758" height="315"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <view autoresizesSubviews="NO" misplaced="YES" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
+                                                    <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
                                                         <rect key="frame" x="0.0" y="15" width="743" height="300"/>
                                                     </view>
                                                 </subviews>

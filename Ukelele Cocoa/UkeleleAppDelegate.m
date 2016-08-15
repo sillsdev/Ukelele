@@ -21,6 +21,7 @@
 #import "UKKeyboardController.h"
 #import "UKKeyboardDocument.h"
 #import "ColourThemeEditorController.h"
+#import "UKNewKeyboardLayoutController.h"
 #include <ServiceManagement/ServiceManagement.h>
 
 #define UkeleleManualName	@"Ukelele Manual"
@@ -115,13 +116,34 @@ static NSDictionary *defaultValues() {
 	NSError *theError;
 	UKKeyboardDocument *theDocument = [[NSDocumentController sharedDocumentController]
 									   makeUntitledDocumentOfType:(NSString *)kUTTypeBundle error:&theError];
-	if (theDocument) {
+	if (nil != theDocument) {
 		NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 		[documentController addDocument:theDocument];
 		[theDocument makeWindowControllers];
 		[theDocument showWindows];
 		[theDocument captureInputSource:self];
 	}
+}
+
+- (IBAction)newKeyboardLayout:(id)sender {
+#pragma unused(sender)
+	__block UKNewKeyboardLayoutController *theController = [UKNewKeyboardLayoutController createController];
+	[theController runDialog:nil withCompletion:^(NSString *keyboardName, NSUInteger baseLayout, NSUInteger commandLayout, NSUInteger capsLockLayout) {
+			// Check whether we have a valid layout
+		if (baseLayout != kStandardLayoutNone) {
+				// Create a keyboard with the given layout types
+			NSAssert(commandLayout != kStandardLayoutNone, @"Must have a command layout specified");
+			NSAssert(capsLockLayout != kStandardLayoutNone, @"Must have a caps lock layout specified");
+			UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:keyboardName base:baseLayout command:commandLayout capsLock:capsLockLayout];
+			UKKeyboardDocument *theDocument = [[UKKeyboardDocument alloc] initWithKeyboardObject:keyboardObject];
+			if (nil != theDocument) {
+				[[NSDocumentController sharedDocumentController] addDocument:theDocument];
+				[theDocument makeWindowControllers];
+				[theDocument showWindows];
+			}
+		}
+		theController = nil;
+	}];
 }
 
 - (IBAction)toggleToolbox:(id)sender {

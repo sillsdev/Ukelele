@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, CapsLockLayoutTypes) {
 
 + (UKNewKeyboardLayoutController *)createController;
 
-- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout))completion;
+- (void)runDialog:(NSWindow *)parentWindow withCompletion:(void (^)(NSString *keyboardName, NSUInteger baseLayout, NSUInteger commandLayout, NSUInteger capsLockLayout))completion;
 
 - (IBAction)acceptSelection:(id)sender;
 - (IBAction)cancelSelection:(id)sender;

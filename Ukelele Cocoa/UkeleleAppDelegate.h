@@ -13,6 +13,7 @@
 - (IBAction)doPreferences:(id)sender;
 - (IBAction)newBundle:(id)sender;
 - (IBAction)newFromCurrentInput:(id)sender;
+- (IBAction)newKeyboardLayout:(id)sender;
 - (IBAction)toggleToolbox:(id)sender;
 - (IBAction)toggleStickyModifiers:(id)sender;
 - (IBAction)showHideInspector:(id)sender;

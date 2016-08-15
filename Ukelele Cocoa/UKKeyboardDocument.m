@@ -112,6 +112,16 @@ NSString *kKeyboardName = @"keyboardName";
 	return self;
 }
 
+- (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboardObject {
+	self = [self init];
+	if (self) {
+		_isBundle = NO;
+		_keyboardLayout = keyboardObject;
+		[_keyboardLayout setParentDocument:self];
+	}
+	return self;
+}
+
 - (void)dealloc {
 	if (currentObservation != nil) {
 		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
@@ -1254,122 +1264,19 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert([windowControllers count] > 0, @"Must be at least one window controller");
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
-	[theController runDialog:myWindow withCompletion:^(NSString *keyboardName, BaseLayoutTypes baseLayout, CommandLayoutTypes commandLayout, CapsLockLayoutTypes capsLockLayout) {
+	[theController runDialog:myWindow withCompletion:^(NSString *keyboardName, NSUInteger baseLayout, NSUInteger commandLayout, NSUInteger capsLockLayout) {
 		[self addNewKeyboardLayoutWithName:keyboardName base:baseLayout command:commandLayout capsLock:capsLockLayout];
 		theController = nil;
 	}];
 }
 
-- (void)addNewKeyboardLayoutWithName:(NSString *)keyboardName base:(BaseLayoutTypes)baseLayout command:(CommandLayoutTypes)commandLayout capsLock:(CapsLockLayoutTypes)capsLockLayout {
+- (void)addNewKeyboardLayoutWithName:(NSString *)keyboardName base:(NSUInteger)baseLayout command:(NSUInteger)commandLayout capsLock:(NSUInteger)capsLockLayout {
 		// Check whether we have a valid layout
-	if (baseLayout != baseLayoutNone) {
+	if (baseLayout != kStandardLayoutNone) {
 			// Create a keyboard with the given layout types
-		NSAssert(commandLayout != commandLayoutNone, @"Must have a command layout specified");
-		NSAssert(capsLockLayout != capsLockLayoutNone, @"Must have a caps lock layout specified");
-		NSUInteger base = kStandardLayoutEmpty;
-		switch (baseLayout) {
-			case baseLayoutEmpty:
-				base = kStandardLayoutEmpty;
-				break;
-				
-			case baseLayoutQWERTY:
-				base = kStandardLayoutQWERTY;
-				break;
-				
-			case baseLayoutQWERTZ:
-				base = kStandardLayoutQWERTZ;
-				break;
-				
-			case baseLayoutAZERTY:
-				base = kStandardLayoutAZERTY;
-				break;
-				
-			case baseLayoutDvorak:
-				base = kStandardLayoutDvorak;
-				break;
-				
-			case baseLayoutColemak:
-				base = kStandardLayoutColemak;
-				break;
-				
-			case baseLayoutNone:
-					// Should never come here!
-				break;
-		}
-		NSUInteger command = kStandardLayoutEmpty;
-		switch (commandLayout) {
-			case commandLayoutSame:
-				command = base;
-				break;
-				
-			case commandLayoutEmpty:
-				command = kStandardLayoutEmpty;
-				break;
-				
-			case commandLayoutQWERTY:
-				command = kStandardLayoutQWERTY;
-				break;
-				
-			case commandLayoutQWERTZ:
-				command = kStandardLayoutQWERTZ;
-				break;
-				
-			case commandLayoutAZERTY:
-				command = kStandardLayoutAZERTY;
-				break;
-				
-			case commandLayoutDvorak:
-				command = kStandardLayoutDvorak;
-				break;
-				
-			case commandLayoutColemak:
-				command = kStandardLayoutColemak;
-				break;
-				
-			case commandLayoutNone:
-					// Should never come here!
-				break;
-		}
-		NSUInteger capsLock = kStandardLayoutEmpty;
-		switch (capsLockLayout) {
-			case capsLockLayoutSame:
-				capsLock = base;
-				break;
-				
-			case capsLockLayoutEmpty:
-				capsLock = kStandardLayoutEmpty;
-				break;
-				
-			case capsLockLayoutQWERTY:
-				capsLock = kStandardLayoutQWERTY;
-				break;
-				
-			case capsLockLayoutQWERTZ:
-				capsLock = kStandardLayoutQWERTZ;
-				break;
-				
-			case capsLockLayoutAZERTY:
-				capsLock = kStandardLayoutAZERTY;
-				break;
-				
-			case capsLockLayoutDvorak:
-				capsLock = kStandardLayoutDvorak;
-				break;
-				
-			case capsLockLayoutColemak:
-				capsLock = kStandardLayoutColemak;
-				break;
-				
-			case capsLockLayoutNone:
-					// Should never get here!
-				break;
-		}
-			// Get a valid name
-		NSString *theName = keyboardName;
-		if ([theName length] == 0) {
-			theName = @"Untitled";
-		}
-		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:theName base:base command:command capsLock:capsLock];
+		NSAssert(commandLayout != kStandardLayoutNone, @"Must have a command layout specified");
+		NSAssert(capsLockLayout != kStandardLayoutNone, @"Must have a caps lock layout specified");
+		UkeleleKeyboardObject *keyboardObject = [[UkeleleKeyboardObject alloc] initWithName:keyboardName base:baseLayout command:commandLayout capsLock:capsLockLayout];
 		[self addNewDocument:keyboardObject];
 	}
 }
