@@ -51,6 +51,7 @@ public:
 	KeyMapSelect *GetKeyMapSelectElement(const SInt32 inIndex);
 	KeyMapSelect *RemoveKeyMapSelectElement(const SInt32 inIndex);
 	void RenumberKeyMapSelects(std::vector<SInt32>& inIndexMap);
+	void UpdateModifiers(void);
 	
 	void InsertModifierElementAtIndex(ModifierElement *inModifierElement, const SInt32 inIndex,
 		const SInt32 inSubIndex);

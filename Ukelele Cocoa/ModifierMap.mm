@@ -142,6 +142,12 @@ void ModifierMap::RenumberKeyMapSelects(std::vector<SInt32>& inIndexMap) {
 	CalculateModifierMap();
 }
 
+// Message that the modifiers have changed, so we need to recalculate
+
+void ModifierMap::UpdateModifiers(void) {
+	CalculateModifierMap();
+}
+
 #pragma mark -
 
 // Insert a modifier element at the given location

@@ -894,6 +894,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	UInt32 oldShift, oldOption, oldCapsLock, oldCommand, oldControl;
 	modElement->GetModifierStatus(oldShift, oldCapsLock, oldOption, oldCommand, oldControl);
 	modElement->SetModifierStatus((UInt32)newShift, (UInt32)newCapsLock, (UInt32)newOption, (UInt32)newCommand, (UInt32)newControl);
+	modMap->UpdateModifiers();
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] changeModifiersIndex:index
                                                                 subIndex:subindex
@@ -929,6 +930,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	else {
 		selectElement->AddModifierElement(modifierElement);
 	}
+	modMap->UpdateModifiers();
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeModifierElement:keyboardID
                                                                     index:index
@@ -948,6 +950,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	modifierElement->AppendToList(oldModifierElementList);
 	UInt32 oldShift, oldCapsLock, oldOption, oldCommand, oldControl;
 	modifierElement->GetModifierStatus(oldShift, oldCapsLock, oldOption, oldCommand, oldControl);
+	modMap->UpdateModifiers();
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addModifierElement:keyboardID
                                                                  index:index
@@ -1052,6 +1055,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		}
 		keyMapSet->InsertKeyMapAtIndex((UInt32)newIndex, keyMapElement);
 	}
+	modifierMap->UpdateModifiers();
 	shared_ptr<XMLCommentContainer> theCommentContainer = self.keyboard->GetCommentContainer();
 	theCommentContainer->AddCommentHolders(newKeyMapSelectList);
 	NSUndoManager *undoManager = [parentController undoManager];
