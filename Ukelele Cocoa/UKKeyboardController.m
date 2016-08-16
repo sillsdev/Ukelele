@@ -202,7 +202,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (NSRect)keyRect:(NSInteger)keyCode
 {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)keyCode];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)keyCode modifiers:[internalState[kStateCurrentModifiers] unsignedIntValue]];
 	return [keyCap frame];
 }
 
@@ -519,7 +519,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)interactionDidComplete:(id<UKInteractionHandler>)handler
 {
 #pragma unused(handler)
-    NSAssert(handler == interactionHandler, @"Wrong interaction handler");
+    NSAssert(handler == interactionHandler || interactionHandler == nil, @"Wrong interaction handler");
 		// Deselect any selected key
 	[self setSelectedKey:kNoKeyCode];
     interactionHandler = nil;
@@ -867,7 +867,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	selectedKey = keyCode;
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey modifiers:[internalState[kStateCurrentModifiers] unsignedIntValue]];
 	if (keyCap) {
 		[keyCap setSelected:YES];
 		[self updateWindow];
@@ -882,7 +882,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)clearSelectedKey {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:(int)selectedKey modifiers:[internalState[kStateCurrentModifiers] unsignedIntValue]];
 	if (keyCap) {
 		[keyCap setSelected:NO];
 		[self updateWindow];
@@ -913,7 +913,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 {
 	UkeleleView *ukeleleView = [self.keyboardView documentView];
 	NSAssert(ukeleleView, @"Must have a document view");
-	KeyCapView *keyCap = [ukeleleView findKeyWithCode:keyCode];
+	KeyCapView *keyCap = [ukeleleView findKeyWithCode:keyCode modifiers:[internalState[kStateCurrentModifiers] unsignedIntValue]];
 	NSAssert(keyCap, @"Must have a key cap");
 	NSRect editingPaneFrame = [keyCap frame];
 	NSTextField *editingPane = [[NSTextField alloc] initWithFrame:editingPaneFrame];

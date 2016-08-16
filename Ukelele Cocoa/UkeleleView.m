@@ -509,11 +509,19 @@ typedef struct KeyEntryRec {
 	}
 }
 
-- (KeyCapView *)findKeyWithCode:(int)keyCode
-{
+- (KeyCapView *)findKeyWithCode:(int)keyCode modifiers:(unsigned int)modifiers {
 	NSArray *keyList = [keyCapMap getKeysWithCode:keyCode];
 	if ([keyList count] == 0) {
 		return nil;
+	}
+	BOOL isFnKey = (modifiers & NSNumericPadKeyMask) != 0;
+	for (KeyCapView *keyCap in keyList) {
+		if (isFnKey && [keyCap fnKeyCode] == keyCode) {
+			return keyCap;
+		}
+		if (!isFnKey && [keyCap keyCode] == keyCode) {
+			return keyCap;
+		}
 	}
 	return keyList[0];
 }
@@ -622,7 +630,7 @@ typedef struct KeyEntryRec {
 - (void)keyDown:(NSEvent *)theEvent
 {
 	int keyCode = [theEvent keyCode];
-	KeyCapView *keyCap = [self findKeyWithCode:keyCode];
+	KeyCapView *keyCap = [self findKeyWithCode:keyCode modifiers:(unsigned int)[theEvent modifierFlags]];
 	[keyCap setDown:YES];
 	if ([self isFnKey:theEvent]) {
 		unsigned int flags = (unsigned int)[theEvent modifierFlags] | NSNumericPadKeyMask;
@@ -635,7 +643,7 @@ typedef struct KeyEntryRec {
 - (void)keyUp:(NSEvent *)theEvent
 {
 	int keyCode = [theEvent keyCode];
-	KeyCapView *keyCap = [self findKeyWithCode:keyCode];
+	KeyCapView *keyCap = [self findKeyWithCode:keyCode modifiers:(unsigned int)[theEvent modifierFlags]];
 	[keyCap setDown:NO];
 	if ([self isFnKey:theEvent]) {
 		unsigned int flags = (unsigned int)[theEvent modifierFlags] & ~NSNumericPadKeyMask;
