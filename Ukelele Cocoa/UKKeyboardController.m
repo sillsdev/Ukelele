@@ -37,6 +37,7 @@
 #import "UKKeyboardPrintView.h"
 #import "PrintAccessoryPanel.h"
 #import "UKStyleInfo.h"
+#import "WarningDialogController.h"
 #include <Carbon/Carbon.h>
 
 const float kWindowMinWidth = 450.0f;
@@ -1214,7 +1215,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[selectKeySheet setMajorText:@"Enter the code of the key you want to select. Codes are in the range from 0 to 511, though the usual range is 0 to 127."];
 	[selectKeySheet setMinorText:@""];
 	[selectKeySheet beginDialogWithWindow:self.window completionBlock:^(NSInteger keyCode) {
-		if (keyCode >= 0) {
+		unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
+		if (keyCode >= 0 && keyType != kProtectedKeyType) {
 				// Valid selection
 			[self setSelectedKey:keyCode];
 		}
@@ -1304,7 +1306,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[(GetKeyCodeHandler *)interactionHandler setCompletionTarget:self];
 		[self.cancelButton setEnabled:YES];
 		[(GetKeyCodeHandler *)interactionHandler beginInteractionWithCompletion:^(NSInteger enteredKeyCode) {
-			if (enteredKeyCode != kNoKeyCode) {
+			unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)enteredKeyCode];
+			if (enteredKeyCode != kNoKeyCode && keyType != kProtectedKeyType) {
 				[self doPasteKey:enteredKeyCode];
 			}
 			[self setMessageBarText:@""];
@@ -1422,6 +1425,27 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (IBAction)saveDocument:(id)sender {
 	[self.parentDocument saveDocument:sender];
+}
+
+- (BOOL)showSpecialKeyEditWarning {
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	BOOL dontShowWarning = [theDefaults boolForKey:UKDontShowWarningDialog];
+	if (dontShowWarning) {
+			// We never show the warning
+		return NO;
+	}
+	if ([WarningDialogController hasBeenShown]) {
+			// We have already shown it
+		return NO;
+	}
+		// Not shown yet, so show it
+	if (warningDialog == nil) {
+		warningDialog = [WarningDialogController warningDialog];
+	}
+	NSURL *warningFileURL = [[NSBundle mainBundle] URLForResource:@"SpecialKeyWarning" withExtension:@"rtf"];
+	[warningDialog loadWarning:warningFileURL];
+	[warningDialog runDialogForWindow:self.window];
+	return YES;
 }
 
 #pragma mark Printing
@@ -1593,6 +1617,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)messageKeyDown:(int)keyCode
 {
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
+	unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
 	if ([[infoInspector window] isVisible]) {
 		NSString *keyCodeString = [NSString stringWithFormat:@"%d", keyCode];
 		[[infoInspector keyCodeField] setStringValue:keyCodeString];
@@ -1602,7 +1627,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 											kMessageArgumentKey: @(keyCode)};
 		[interactionHandler handleMessage:messageDictionary];
 	}
-	else if (![self.keyStates containsIndex:keyCode]) {
+	else if (![self.keyStates containsIndex:keyCode] && keyType != kProtectedKeyType) {
 		[self setSelectedKey:keyCode];
 		[self.keyStates addIndex:keyCode];
 	}
@@ -1626,6 +1651,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	BOOL handleClickAsDoubleClick = [[NSUserDefaults standardUserDefaults] boolForKey:UKUsesSingleClickToEdit];
+	unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
 	if ([LayoutInfo getKeyType:keyCode] == kModifierKeyType) {
 		if (usingStickyModifiers) {
 				// Toggle the modifier key
@@ -1647,20 +1673,30 @@ const CGFloat kTextPaneHeight = 17.0f;
 	else if (handleClickAsDoubleClick) {
 		[self messageDoubleClick:keyCode];
 	}
-	else {
+	else if (keyType != kProtectedKeyType) {
 		[self setSelectedKey:keyCode];
 	}
 }
 
 - (void)messageDoubleClick:(int)keyCode
 {
+	unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
 	if (interactionHandler != nil) {
 			// We're in the midst of an interaction, so we can't start a new one
 		return;
 	}
-	else if ([LayoutInfo getKeyType:keyCode] == kModifierKeyType) {
+	else if (keyType == kModifierKeyType) {
 			// Double-clicking a modifier key should be treated as two clicks
 		[self messageClick:keyCode];
+		return;
+	}
+	else if (keyType == kProtectedKeyType) {
+			// Double-clicking a protected key doesn't do anything
+		return;
+	}
+	else if (keyType == kSpecialKeyType && [self showSpecialKeyEditWarning]) {
+			// We have given a warning about changing special keys
+		[self setSelectedKey:kNoKeyCode];
 		return;
 	}
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:self, kKeyDocument,
@@ -1846,8 +1882,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSMenu *theMenu = nil;
 	NSInteger keyCode = [dataDict[kKeyKeyCode] integerValue];
 	unsigned int keyType = [LayoutInfo getKeyType:(unsigned int)keyCode];
-	if (keyType == kModifierKeyType) {
-			// Modifier key: No menu
+	if (keyType == kModifierKeyType || keyType == kProtectedKeyType) {
+			// Modifier key or protected key: No menu
 	}
 	else if (keyType == kOrdinaryKeyType || keyType == kSpecialKeyType) {
 			// Ordinary or special key

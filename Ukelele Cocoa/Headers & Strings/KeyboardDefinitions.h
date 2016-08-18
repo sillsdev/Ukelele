@@ -10,7 +10,8 @@
 enum {
 	kModifierKeyType,
 	kSpecialKeyType,
-	kOrdinaryKeyType
+	kOrdinaryKeyType,
+	kProtectedKeyType
 };
 
 	// Constants for various key codes that we'll be needing

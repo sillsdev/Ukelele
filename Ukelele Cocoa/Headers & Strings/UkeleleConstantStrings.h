@@ -99,6 +99,7 @@ MY_EXTERN NSString *UKCodeNonAscii;
 MY_EXTERN NSString *UKUpdateEditingComment;
 MY_EXTERN NSString *UKInspectorWindowLocation;
 MY_EXTERN NSString *UKToolboxWindowLocation;
+MY_EXTERN NSString *UKDontShowWarningDialog;
 
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;

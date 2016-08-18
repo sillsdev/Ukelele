@@ -189,6 +189,9 @@
 		5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5277EB9F1AAF01A500C471C3 /* Carbon.framework */; };
 		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
+		528052881D65AEA700356D36 /* WarningDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528052871D65AEA700356D36 /* WarningDialog.xib */; };
+		5280528B1D65B1B000356D36 /* WarningDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5280528A1D65B1B000356D36 /* WarningDialogController.m */; };
+		5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
@@ -573,6 +576,10 @@
 		5277EB701AAEF43500C471C3 /* UkeleleQLResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UkeleleQLResources.plist; sourceTree = "<group>"; };
 		5277EB9F1AAF01A500C471C3 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UninstallHelperTool.sh; sourceTree = "<group>"; };
+		528052871D65AEA700356D36 /* WarningDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WarningDialog.xib; sourceTree = "<group>"; };
+		528052891D65B1B000356D36 /* WarningDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningDialogController.h; sourceTree = "<group>"; };
+		5280528A1D65B1B000356D36 /* WarningDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarningDialogController.m; sourceTree = "<group>"; };
+		5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = SpecialKeyWarning.rtf; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDiacriticDisplay.h; sourceTree = "<group>"; };
@@ -850,6 +857,7 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				528052871D65AEA700356D36 /* WarningDialog.xib */,
 				52743F591BCA30B200C41310 /* ProgressWindow.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
@@ -966,6 +974,7 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
 				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
 				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
@@ -1090,6 +1099,8 @@
 		52BBED3B191B4EC100E48394 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				528052891D65B1B000356D36 /* WarningDialogController.h */,
+				5280528A1D65B1B000356D36 /* WarningDialogController.m */,
 				525A4B70191DE68400A356F8 /* AskCommentController.h */,
 				523B0114191CA18C00E06DF3 /* AskCommentController.m */,
 				523B0115191CA18C00E06DF3 /* AskFromList.h */,
@@ -1349,6 +1360,7 @@
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
+				5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
 				52BAE0BA1AA3FA2400D761C2 /* KCAPResources.plist in Resources */,
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
@@ -1379,6 +1391,7 @@
 				5253EC741C43928B003B7CC3 /* scripts.strings in Resources */,
 				5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */,
 				528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */,
+				528052881D65AEA700356D36 /* WarningDialog.xib in Resources */,
 				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
 				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
 			);
@@ -1478,6 +1491,7 @@
 				523B010B191CA0D100E06DF3 /* LanguageRegistry.m in Sources */,
 				523B0188191CA18C00E06DF3 /* AskNewKeyMap.m in Sources */,
 				523B018E191CA18C00E06DF3 /* UkeleleBundleVersionSheet.m in Sources */,
+				5280528B1D65B1B000356D36 /* WarningDialogController.m in Sources */,
 				523B00C8191CA00A00E06DF3 /* KeyStrokeLookupTable.mm in Sources */,
 				523B00C0191CA00A00E06DF3 /* KeyboardElement.mm in Sources */,
 				523B01B2191CA18C00E06DF3 /* PrintAccessoryPanel.m in Sources */,

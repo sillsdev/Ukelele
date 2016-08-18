@@ -103,6 +103,7 @@ NSString *UKCodeNonAscii = @"CodeNonAscii";
 NSString *UKUpdateEditingComment = @"UpdateEditingComment";
 NSString *UKInspectorWindowLocation = @"InspectorWindowLocation";
 NSString *UKToolboxWindowLocation = @"ToolboxWindowLocation";
+NSString *UKDontShowWarningDialog = @"DontShowWarningDialog";
 
 	// File names
 NSString *UKKCAPListFile = @"KCAPResources";

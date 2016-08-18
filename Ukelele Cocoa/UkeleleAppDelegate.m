@@ -76,7 +76,8 @@ static NSDictionary *defaultValues() {
 				 UKCodeNonAscii:				@NO,
 				 UKColourThemes:				colourThemes,
 				 UKColourTheme:					kDefaultThemeName,
-				 UKUpdateEditingComment:		@YES};
+				 UKUpdateEditingComment:		@YES,
+				 UKDontShowWarningDialog:		@NO};
 	});
 	return dict;
 }

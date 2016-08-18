@@ -178,7 +178,7 @@ const UInt32 sKeyCodeTable[] = {
 	kModifierKeyType,	// [61]		Right option
 	kModifierKeyType,	// [62]		Right control
 	kModifierKeyType,	// [63]		Fn
-	kSpecialKeyType,	// [64]		F17
+	kProtectedKeyType,	// [64]		F17
 	kOrdinaryKeyType,	// [65]		Keypad .
 	kSpecialKeyType,	// [66]		Unknown
 	kOrdinaryKeyType,	// [67]		Keypad *
@@ -193,8 +193,8 @@ const UInt32 sKeyCodeTable[] = {
 	kSpecialKeyType,	// [76]		Enter
 	kSpecialKeyType,	// [77]		Unknown
 	kOrdinaryKeyType,	// [78]		Keypad -
-	kSpecialKeyType,	// [79]		F18
-	kSpecialKeyType,	// [80]		F19
+	kProtectedKeyType,	// [79]		F18
+	kProtectedKeyType,	// [80]		F19
 	kOrdinaryKeyType,	// [81]		Keypad =
 	kOrdinaryKeyType,	// [82]		Keypad 0
 	kOrdinaryKeyType,	// [83]		Keypad 1
@@ -210,33 +210,33 @@ const UInt32 sKeyCodeTable[] = {
 	kOrdinaryKeyType,	// [93]		Yen (on JIS keyboard)
 	kSpecialKeyType,	// [94]		Unknown
 	kSpecialKeyType,	// [95]		Unknown
-	kSpecialKeyType,	// [96]		F5
-	kSpecialKeyType,	// [97]		F6
-	kSpecialKeyType,	// [98]		F7
-	kSpecialKeyType,	// [99]		F3
-	kSpecialKeyType,	// [100]	F8
-	kSpecialKeyType,	// [101]	F9
+	kProtectedKeyType,	// [96]		F5
+	kProtectedKeyType,	// [97]		F6
+	kProtectedKeyType,	// [98]		F7
+	kProtectedKeyType,	// [99]		F3
+	kProtectedKeyType,	// [100]	F8
+	kProtectedKeyType,	// [101]	F9
 	kSpecialKeyType,	// [102]	Japanese conversion key
-	kSpecialKeyType,	// [103]	F11
+	kProtectedKeyType,	// [103]	F11
 	kSpecialKeyType,	// [104]	Japanese conversion key
-	kSpecialKeyType,	// [105]	F13
-	kSpecialKeyType,	// [106]	F16
-	kSpecialKeyType,	// [107]	F14
+	kProtectedKeyType,	// [105]	F13
+	kProtectedKeyType,	// [106]	F16
+	kProtectedKeyType,	// [107]	F14
 	kSpecialKeyType,	// [108]	Unknown
-	kSpecialKeyType,	// [109]	F10
+	kProtectedKeyType,	// [109]	F10
 	kSpecialKeyType,	// [110]	Contextual Menu (Windows keyboards)
-	kSpecialKeyType,	// [111]	F12
+	kProtectedKeyType,	// [111]	F12
 	kSpecialKeyType,	// [112]	Unknown
-	kSpecialKeyType,	// [113]	F15
+	kProtectedKeyType,	// [113]	F15
 	kSpecialKeyType,	// [114]	Help
 	kSpecialKeyType,	// [115]	Home
 	kSpecialKeyType,	// [116]	Page up
 	kSpecialKeyType,	// [117]	Forward delete
-	kSpecialKeyType,	// [118]	F4
+	kProtectedKeyType,	// [118]	F4
 	kSpecialKeyType,	// [119]	End
-	kSpecialKeyType,	// [120]	F2
+	kProtectedKeyType,	// [120]	F2
 	kSpecialKeyType,	// [121]	Page down
-	kSpecialKeyType,	// [122]	F1
+	kProtectedKeyType,	// [122]	F1
 	kSpecialKeyType,	// [123]	Left arrow
 	kSpecialKeyType,	// [124]	Right arrow
 	kSpecialKeyType,	// [125]	Down arrow

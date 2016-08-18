@@ -31,6 +31,7 @@ enum ToolbarItemTags {
 
 @class UKKeyboardDocument;
 @class UKKeyboardPrintInfo;
+@class WarningDialogController;
 
 @interface UKKeyboardController : NSWindowController<NSWindowDelegate,
 	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, UKKeyCapClick,
@@ -55,6 +56,7 @@ enum ToolbarItemTags {
 	ModifiersSheet *modifiersSheet;
 	NSPrintInfo *printInfo;
 	UKKeyboardPrintInfo *printingInfo;
+	WarningDialogController *warningDialog;
 }
 
 	// Outlets
