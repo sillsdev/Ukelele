@@ -250,6 +250,12 @@ static NSString *nibWindow = @"Preferences";
 	}
 }
 
+- (IBAction)resetWarnings:(id)sender {
+#pragma unused(sender)
+	NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
+	[sharedDefaults setBool:NO forKey:UKDontShowWarningDialog];
+}
+
 - (void)windowWillClose:(NSNotification *)notification {
 #pragma unused(notification)
 		// Note the default keyboard type
