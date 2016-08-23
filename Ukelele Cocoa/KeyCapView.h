@@ -40,6 +40,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect boundingRect;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect insideRect;
 @property (readwrite) NSInteger tag;
+@property (strong) NSTextView *textView;
 
 - (void)flipInRect:(NSRect)boundingRect;
 - (void)getInnerColour:(NSColor **)innerColour
@@ -52,5 +53,6 @@
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset;
 - (void)finishInit;
 - (void)styleDidUpdate;
+- (void)setupTextView:(NSRect)textRect;
 
 @end

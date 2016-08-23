@@ -48,6 +48,7 @@ static CGAffineTransform kTextTransform = {
 										userInfo:nil];
 		[self addTrackingArea:trackingArea];
         textStorage = nil;
+		_textView = nil;
 		_currentTextColour = [NSColor whiteColor];
 		mouseIsInside = NO;
     }
@@ -76,6 +77,13 @@ static CGAffineTransform kTextTransform = {
 
 - (BOOL)isOpaque {
 	return YES;
+}
+
+- (NSView *)hitTest:(NSPoint)aPoint {
+	if (NSPointInRect(aPoint, [self frame])) {
+		return self;
+	}
+	return [super hitTest:aPoint];
 }
 
 - (void)getInnerColour:(NSColor **)innerColour
@@ -287,7 +295,10 @@ static CGAffineTransform kTextTransform = {
 			[displayText appendAttributedString:charString];
 		}
 	}
-	[self clearFrame];
+	NSDictionary *myStyle = self.small ? self.styleInfo.smallAttributes : self.styleInfo.largeAttributes;
+	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+	[self.textView.textStorage setAttributedString:displayText];
+//	[self clearFrame];
 }
 
 - (void)flipInRect:(NSRect)boundingRect
@@ -302,6 +313,9 @@ static CGAffineTransform kTextTransform = {
 	NSRect newFrame = NSMakeRect(keyRect.origin.x * scaleValue, keyRect.origin.y * scaleValue,
 								 keyRect.size.width * scaleValue, keyRect.size.height * scaleValue);
 	[self setFrame:newFrame];
+	NSRect oldViewFrame = [self.textView frame];
+	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleValue, oldViewFrame.origin.y * scaleValue, oldViewFrame.size.width * scaleValue, oldViewFrame.size.height * scaleValue);
+	[self.textView setFrame:newViewFrame];
 }
 
 - (void)changeScaleBy:(CGFloat)scaleMultiplier
@@ -312,6 +326,9 @@ static CGAffineTransform kTextTransform = {
 								 oldFrame.size.width * scaleMultiplier,
 								 oldFrame.size.height * scaleMultiplier);
 	[self setFrame:newFrame];
+	NSRect oldViewFrame = [self.textView frame];
+	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleMultiplier, oldViewFrame.origin.y * scaleMultiplier, oldViewFrame.size.width * scaleMultiplier, oldViewFrame.size.height * scaleMultiplier);
+	[self.textView setFrame:newViewFrame];
 }
 
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset
@@ -322,6 +339,22 @@ static CGAffineTransform kTextTransform = {
 - (void)finishInit
 {
 	keyRect = [self frame];
+	NSRect textRect = NSInsetRect([self bounds], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
+	[self setupTextView:textRect];
+}
+
+- (void)setupTextView:(NSRect)textRect {
+	self.textView = [[NSTextView alloc] initWithFrame:textRect];
+	[self.textView setDrawsBackground:NO];
+	[self.textView setEditable:NO];
+	[self.textView setSelectable:NO];
+//	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+//	[paraStyle setAlignment:NSCenterTextAlignment];
+//	[self.textView setDefaultParagraphStyle:paraStyle];
+	[self.textView setVerticallyResizable:NO];
+	[self.textView setHorizontallyResizable:NO];
+	[self addSubview:self.textView];
+	[self createDisplayText];
 }
 
 #pragma mark Drawing
@@ -407,7 +440,7 @@ static CGAffineTransform kTextTransform = {
 		// Ensure that the text matrix is correct
 	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
 	CGContextSetTextMatrix(myContext, kTextTransform);
-	[self drawText:dirtyRect];
+//	[self drawText:dirtyRect];
 	if (self.fallback) {
 			// Paint over the whole rect with a transparent grey
 		NSColor *greyColour = [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:0.5 alpha:fallbackAlpha];
@@ -571,7 +604,8 @@ static CGAffineTransform kTextTransform = {
 
 - (void)styleDidUpdate {
 		// Notification that the style was updated
-	[self clearFrame];
+//	[self clearFrame];
+	[self createDisplayText];
 	[self setNeedsDisplay:YES];
 }
 

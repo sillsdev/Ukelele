@@ -15,6 +15,9 @@ static CGAffineTransform kTextTransform = {
 	1.0, 0.0, 0.0, 1.0, 0.0, 0.0
 };
 
+#define kKeyInset 2.0f
+#define kSmallKeyInset 1.0f
+
 @implementation KeyCapView2Rect {
 	NSRect keyRect1;
 	NSRect keyRect2;
@@ -232,6 +235,8 @@ static CGAffineTransform kTextTransform = {
 		// Lock the coordinates of the unscaled rectangles
 	frameRect1 = NSOffsetRect(keyRect1, frameRect.origin.x, frameRect.origin.y);
 	frameRect2 = NSOffsetRect(keyRect2, frameRect.origin.x, frameRect.origin.y);
+	NSRect textRect = NSInsetRect(interiorRect, kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
+	[self setupTextView:textRect];
 }
 
 - (void)changeScaleBy:(CGFloat)scaleMultiplier
