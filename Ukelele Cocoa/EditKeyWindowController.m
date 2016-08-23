@@ -55,7 +55,7 @@
 		[self.keyCode setIntegerValue:keyCode];
 	}
 		// Run the sheet
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 	if (keyCode != kNoKeyCode) {
 		[self getCurrentOutput:self];
 	}
@@ -123,8 +123,8 @@
 }
 
 - (IBAction)acceptKey:(id)sender {
-	if ([[self window] firstResponder] == self.keyCode) {
-		[[self window] endEditingFor:self.keyCode];
+	if ([self.window firstResponder] == self.keyCode) {
+		[self.window endEditingFor:self.keyCode];
 	}
 	if ([[self.keyCode stringValue] length] == 0) {
 			// No key code entered
@@ -161,15 +161,15 @@
 		}
 		callbackDictionary[kKeyNextState] = deadKeyState;
 	}
-	[[self window] orderOut:self];
-	[NSApp endSheet:[self window]];
+	[self.window orderOut:self];
+	[NSApp endSheet:self.window];
 	actionCallback(callbackDictionary);
 }
 
 - (IBAction)cancelOperation:(id)sender {
 #pragma unused(sender)
-	[[self window] orderOut:self];
-	[NSApp endSheet:[self window]];
+	[self.window orderOut:self];
+	[NSApp endSheet:self.window];
 	actionCallback(nil);
 }
 
