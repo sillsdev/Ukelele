@@ -71,6 +71,7 @@ typedef enum : NSUInteger {
 		_selectedDown.tag = 6;
 		_selectedDeadDown.tag = 7;
 		styleInfo = [[UKStyleInfo alloc] init];
+		[styleInfo setUpStyles];
 		NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 		NSString *defaultFontName = [theDefaults stringForKey:UKTextFont];
 		if (defaultFontName == nil || defaultFontName.length == 0) {

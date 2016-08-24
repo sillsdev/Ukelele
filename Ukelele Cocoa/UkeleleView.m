@@ -78,6 +78,7 @@ typedef struct KeyEntryRec {
 		}
 		NSFont *theFont = [NSFont fontWithName:defaultFontName size:textSize];
 		_styleInfo = [[UKStyleInfo alloc] init];
+		[_styleInfo setUpStyles];
 		[_styleInfo changeLargeFont:theFont];
 		modifiersController = [[ModifiersController alloc] init];
 		_eventState = kEventStateNone;
@@ -258,6 +259,7 @@ typedef struct KeyEntryRec {
 		newFrame.size.width = self.baseFrame.size.width * scaleValue;
 		[self setFrame:newFrame];
 	}
+	[self.styleInfo setScaleFactor:scaleValue];
 	for (KeyCapView *keyCap in [self subviews]) {
 		[keyCap setScale:scaleValue];
 	}
@@ -270,7 +272,6 @@ typedef struct KeyEntryRec {
 		newFrame.size.width = self.baseFrame.size.width * scaleValue;
 		[self setFrame:newFrame];
 	}
-	[self.styleInfo setScaleFactor:scaleValue];
 	self.scaleFactor = scaleValue;
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
 	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
@@ -557,10 +558,8 @@ typedef struct KeyEntryRec {
 
 - (void)changeLargeFont:(NSFont *)newLargeFont {
 	[self.styleInfo changeLargeFont:newLargeFont];
-	for (NSView *subView in [self subviews]) {
-		if ([subView isKindOfClass:[KeyCapView class]] || [subView isKindOfClass:[KeyCapView2Rect class]]) {
-			[(KeyCapView *)subView styleDidUpdate];
-		}
+	for (KeyCapView *subView in [self subviews]) {
+		[subView styleDidUpdate];
 	}
 }
 

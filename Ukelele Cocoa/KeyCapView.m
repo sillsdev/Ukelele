@@ -215,6 +215,9 @@ static CGAffineTransform kTextTransform = {
 	NSRect oldViewFrame = [self.textView frame];
 	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleValue / oldScale, oldViewFrame.origin.y * scaleValue / oldScale, oldViewFrame.size.width * scaleValue / oldScale, oldViewFrame.size.height * scaleValue / oldScale);
 	[self.textView setFrame:newViewFrame];
+	if (self.keyType == kModifierKeyType) {
+		[self createDisplayText];
+	}
 }
 
 - (void)changeScaleBy:(CGFloat)scaleMultiplier
@@ -228,6 +231,9 @@ static CGAffineTransform kTextTransform = {
 	NSRect oldViewFrame = [self.textView frame];
 	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleMultiplier, oldViewFrame.origin.y * scaleMultiplier, oldViewFrame.size.width * scaleMultiplier, oldViewFrame.size.height * scaleMultiplier);
 	[self.textView setFrame:newViewFrame];
+	if (self.keyType == kModifierKeyType) {
+		[self createDisplayText];
+	}
 }
 
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset
@@ -456,7 +462,6 @@ static CGAffineTransform kTextTransform = {
 
 - (void)styleDidUpdate {
 		// Notification that the style was updated
-//	[self clearFrame];
 	[self createDisplayText];
 	[self setNeedsDisplay:YES];
 }
