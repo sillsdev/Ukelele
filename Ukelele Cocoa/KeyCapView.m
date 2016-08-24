@@ -427,7 +427,7 @@ static CGAffineTransform kTextTransform = {
 
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
 #pragma unused(sender)
-	return self.keyType == kOrdinaryKeyType;
+	return (self.keyType == kOrdinaryKeyType) && ([self.outputString length] > 0);
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
