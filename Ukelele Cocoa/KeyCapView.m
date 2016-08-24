@@ -39,7 +39,6 @@ static CGAffineTransform kTextTransform = {
 		_outputString = @"";
 		_colourTheme = [[ColourTheme defaultColourTheme] copy];
 		_styleInfo = nil;
-		textFrame = nil;
 		displayText = [[NSMutableAttributedString alloc] initWithString:@""];
 		NSTrackingArea *trackingArea =
 			[[NSTrackingArea alloc] initWithRect:[self bounds]
@@ -47,28 +46,11 @@ static CGAffineTransform kTextTransform = {
 										   owner:self
 										userInfo:nil];
 		[self addTrackingArea:trackingArea];
-        textStorage = nil;
 		_textView = nil;
 		_currentTextColour = [NSColor whiteColor];
 		mouseIsInside = NO;
     }
     return self;
-}
-
-- (void)clearFrame
-{
-	if (textFrame) {
-		CFRelease(textFrame);
-		textFrame = nil;
-	}
-    if (textStorage) {
-        textStorage = nil;
-    }
-}
-
-- (void) dealloc
-{
-	[self clearFrame];
 }
 
 - (BOOL)isFlipped {
@@ -152,89 +134,6 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
-- (void)setUpFrame
-{
-	[self clearFrame];
-    if (self.styleInfo.largeAttributes) {
-        // Do it with Cocoa Text
-        NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
-        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:textRect.size];
-        [self.styleInfo.smallAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
-        [self.styleInfo.largeAttributes setValue:self.currentTextColour forKey:NSForegroundColorAttributeName];
-        textStorage = [[NSTextStorage alloc] initWithAttributedString:displayText];
-        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-        [layoutManager addTextContainer: textContainer];
-        [textStorage addLayoutManager: layoutManager];
-        if (self.small) {
-            [textStorage setAttributes:self.styleInfo.smallAttributes range:NSMakeRange(0, [textStorage length])];
-        }
-        else {
-            [textStorage setAttributes:self.styleInfo.largeAttributes range:NSMakeRange(0, [textStorage length])];
-            NSRect neededBox = NSZeroRect;
-            @try {
-                NSArray *layoutManagerList = [textStorage layoutManagers];
-                layoutManager = layoutManagerList[0];
-                NSArray *textContainerList = [layoutManager textContainers];
-                textContainer = textContainerList[0];
-                NSSize textContainerSize = [textContainer containerSize];
-                [textContainer setContainerSize:NSMakeSize(FLT_MAX, textContainerSize.height)];
-                [layoutManager glyphRangeForTextContainer:textContainer];
-                neededBox = [layoutManager usedRectForTextContainer:textContainer];
-            }
-            @catch (NSException *e) {
-                // Do nothing?
-            }
-            if (neededBox.size.width > textRect.size.width) {
-                [textStorage setAttributes:self.styleInfo.smallAttributes
-									 range:NSMakeRange(0, [textStorage length])];
-            }
-        }
-    }
-    else {
-        // Do it with Core Text
-        CFMutableDictionaryRef textAttributes =
-			CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-									  &kCFTypeDictionaryKeyCallBacks,
-									  &kCFTypeDictionaryValueCallBacks);
-        CFDictionaryAddValue(textAttributes, kCTForegroundColorAttributeName,
-							 (__bridge const void *)(self.currentTextColour));
-        CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.small ? self.styleInfo.smallFont : self.styleInfo.largeFont);
-        if (self.styleInfo.largeParagraphStyle && self.styleInfo.smallParagraphStyle) {
-            CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.small ? self.styleInfo.smallParagraphStyle : self.styleInfo.largeParagraphStyle);
-        }
-        NSMutableAttributedString *displayTextString = [displayText mutableCopy];
-        [displayTextString setAttributes:(__bridge NSMutableDictionary *)textAttributes
-                                   range:NSMakeRange(0, [displayTextString length])];
-        CTFramesetterRef theFramesetter =
-		CTFramesetterCreateWithAttributedString((__bridge CFMutableAttributedStringRef)displayTextString);
-        NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
-        textRect.size.height -= CTFontGetLeading(self.small ? self.styleInfo.smallFont : self.styleInfo.largeFont);
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddRect(path, NULL, NSRectToCGRect(textRect));
-        textFrame = CTFramesetterCreateFrame(theFramesetter, CFRangeMake(0, 0), path, NULL);
-        CFRelease(theFramesetter);
-        if (!self.small) {
-			// See if the text fits
-            CFRange stringRange = CTFrameGetStringRange(textFrame);
-            CFRange visibleRange = CTFrameGetVisibleStringRange(textFrame);
-            if (visibleRange.length < stringRange.length) {
-				// Did not fit, so we make it small
-                CFDictionaryAddValue(textAttributes, kCTFontAttributeName, self.styleInfo.smallFont);
-                CFDictionaryAddValue(textAttributes, kCTParagraphStyleAttributeName, self.styleInfo.smallParagraphStyle);
-                displayTextString = [displayText mutableCopy];
-                [displayTextString setAttributes:(__bridge NSMutableDictionary *)textAttributes
-                                           range:NSMakeRange(0, [displayTextString length])];
-                theFramesetter = CTFramesetterCreateWithAttributedString((__bridge CFMutableAttributedStringRef)displayTextString);
-                CFRelease(textFrame);
-                textFrame = CTFramesetterCreateFrame(theFramesetter, CFRangeMake(0, 0), path, NULL);
-                CFRelease(theFramesetter);
-            }
-        }
-        CFRelease(textAttributes);
-        CGPathRelease(path);
-   }
-}
-
 - (void)createDisplayText
 {
 	NSUInteger stringLength = [self.outputString length];
@@ -298,7 +197,6 @@ static CGAffineTransform kTextTransform = {
 	NSDictionary *myStyle = self.small ? self.styleInfo.smallAttributes : self.styleInfo.largeAttributes;
 	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
 	[self.textView.textStorage setAttributedString:displayText];
-//	[self clearFrame];
 }
 
 - (void)flipInRect:(NSRect)boundingRect
@@ -310,11 +208,12 @@ static CGAffineTransform kTextTransform = {
 
 - (void)setScale:(CGFloat)scaleValue
 {
+	CGFloat oldScale = [self frame].origin.x / keyRect.origin.x;
 	NSRect newFrame = NSMakeRect(keyRect.origin.x * scaleValue, keyRect.origin.y * scaleValue,
 								 keyRect.size.width * scaleValue, keyRect.size.height * scaleValue);
 	[self setFrame:newFrame];
 	NSRect oldViewFrame = [self.textView frame];
-	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleValue, oldViewFrame.origin.y * scaleValue, oldViewFrame.size.width * scaleValue, oldViewFrame.size.height * scaleValue);
+	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleValue / oldScale, oldViewFrame.origin.y * scaleValue / oldScale, oldViewFrame.size.width * scaleValue / oldScale, oldViewFrame.size.height * scaleValue / oldScale);
 	[self.textView setFrame:newViewFrame];
 }
 
@@ -348,9 +247,6 @@ static CGAffineTransform kTextTransform = {
 	[self.textView setDrawsBackground:NO];
 	[self.textView setEditable:NO];
 	[self.textView setSelectable:NO];
-//	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-//	[paraStyle setAlignment:NSCenterTextAlignment];
-//	[self.textView setDefaultParagraphStyle:paraStyle];
 	[self.textView setVerticallyResizable:NO];
 	[self.textView setHorizontallyResizable:NO];
 	[self addSubview:self.textView];
@@ -358,43 +254,6 @@ static CGAffineTransform kTextTransform = {
 }
 
 #pragma mark Drawing
-
-- (void)drawText:(NSRect)dirtyRect
-{
-#pragma unused(dirtyRect)
-	if ([displayText length] == 0) {
-		return;
-	}
-    if (self.styleInfo.largeAttributes) {
-			// Use Cocoa text
-        if (!textStorage) {
-            [self setUpFrame];
-        }
-        NSRect textRect = NSInsetRect([self insideRect], kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
-        NSPoint drawPoint = textRect.origin;
-		NSArray *layoutManagerList = [textStorage layoutManagers];
-		NSLayoutManager *layoutManager = layoutManagerList[0];
-		NSArray *textContainerList = [layoutManager textContainers];
-		NSTextContainer *textContainer = textContainerList[0];
-        NSSize textContainerSize = [textContainer containerSize];
-        [textContainer setContainerSize:NSMakeSize(FLT_MAX, textContainerSize.height)];
-        [layoutManager glyphRangeForTextContainer:textContainer];
-        NSRect neededBox = [layoutManager usedRectForTextContainer:textContainer];
-        drawPoint.x += textRect.size.width / 2.0 - neededBox.size.width / 2.0;
-		CGFloat yOffset = self.small ? 0.4 : 0.3;	// Just a value that seems to work!
-		drawPoint.y -= neededBox.size.height * yOffset;
-		NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
-		[layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawPoint];
-    }
-    else {
-			// Use CoreText
-        if (!textFrame) {
-            [self setUpFrame];
-        }
-        CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
-        CTFrameDraw(textFrame, myContext);
-    }
-}
 
 - (void)drawRect:(NSRect)dirtyRect {
 	[NSGraphicsContext saveGraphicsState];
@@ -440,7 +299,6 @@ static CGAffineTransform kTextTransform = {
 		// Ensure that the text matrix is correct
 	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
 	CGContextSetTextMatrix(myContext, kTextTransform);
-//	[self drawText:dirtyRect];
 	if (self.fallback) {
 			// Paint over the whole rect with a transparent grey
 		NSColor *greyColour = [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:0.5 alpha:fallbackAlpha];
@@ -483,7 +341,6 @@ static CGAffineTransform kTextTransform = {
 - (void)setColourTheme:(ColourTheme *)newColourTheme {
 	if (_colourTheme != newColourTheme) {
 		_colourTheme = newColourTheme;
-		[self clearFrame];
 		[self setNeedsDisplay:YES];
 	}
 }
@@ -491,7 +348,6 @@ static CGAffineTransform kTextTransform = {
 - (void)setStyleInfo:(UKStyleInfo *)styleInfo {
 	if (styleInfo != _styleInfo) {
 		_styleInfo = styleInfo;
-		[self clearFrame];
 		[self setNeedsLayout:YES];
 	}
 }
@@ -499,8 +355,6 @@ static CGAffineTransform kTextTransform = {
 - (void)setCurrentTextColour:(NSColor *)newTextColour {
 	if (_currentTextColour != newTextColour) {
 		_currentTextColour = newTextColour;
-//		[self clearFrame];
-//		[self setNeedsDisplay:YES];
 	}
 }
 
@@ -537,12 +391,10 @@ static CGAffineTransform kTextTransform = {
 
 - (void)mouseDragged:(NSEvent *)theEvent {
 		// Only drag text for ordinary keys
-	if (self.keyType == kOrdinaryKeyType) {
+	if (self.keyType == kOrdinaryKeyType && [displayText length] > 0) {
 		NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:self];
-		NSImage *dragImage = [[NSImage alloc] initWithSize:keyRect.size];
-		[dragImage lockFocus];
-		[self drawText:keyRect];
-		[dragImage unlockFocus];
+		[self.textView setSelectedRange:NSMakeRange(0, [displayText length])];
+		NSImage *dragImage = [self.textView dragImageForSelectionWithEvent:theEvent origin:nil];
 		[dragItem setDraggingFrame:NSMakeRect(0.0, 0.0, keyRect.size.width, keyRect.size.height) contents:dragImage];
 		NSArray *dragItems = [NSArray arrayWithObject:dragItem];
 		[self beginDraggingSessionWithItems:dragItems event:theEvent source:self];

@@ -114,6 +114,7 @@ static CGAffineTransform kTextTransform = {
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+#pragma unused(dirtyRect)
 		// Save state
 	[NSGraphicsContext saveGraphicsState];
 		// Clip to the two rectangles
@@ -192,7 +193,6 @@ static CGAffineTransform kTextTransform = {
 	[self.outputString drawInRect:interiorRect withAttributes:nil];
 		// Restore state
 	[NSGraphicsContext restoreGraphicsState];
-	[self drawText:dirtyRect];
 	if (self.fallback) {
 			// Draw grey
 		NSColor *greyColour = [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:0.5 alpha:fallbackAlpha];

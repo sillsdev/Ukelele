@@ -17,8 +17,6 @@
 @interface KeyCapView : NSView<NSDraggingSource, NSPasteboardWriting> {
 	NSRect keyRect;
 	NSMutableAttributedString *displayText;
-	CTFrameRef textFrame;
-    NSTextStorage *textStorage;
 	BOOL mouseIsInside;
 }
 
@@ -47,7 +45,6 @@
 		   outerColour:(NSColor **)outerColour
 			textColour:(NSColor **)textColour
 		  gradientType:(NSUInteger *)gradientType;
-- (void)drawText:(NSRect)dirtyRect;
 - (void)setScale:(CGFloat)scaleValue;
 - (void)changeScaleBy:(CGFloat)scaleMultiplier;
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset;

@@ -11,13 +11,9 @@
 @interface UKStyleInfo : NSObject
 
 @property (nonatomic) CGFloat scaleFactor;
-@property (assign, nonatomic) CTFontDescriptorRef fontDescriptor;
-@property (assign, nonatomic) CTParagraphStyleRef largeParagraphStyle;
-@property (assign, nonatomic) CTParagraphStyleRef smallParagraphStyle;
 @property (strong, nonatomic) NSDictionary *largeAttributes;
 @property (strong, nonatomic) NSDictionary *smallAttributes;
-@property (assign, nonatomic) CTFontRef largeFont;
-@property (assign, nonatomic) CTFontRef smallFont;
+@property (strong, nonatomic) NSFont *largeFont;
 
 - (void)setUpStyles;
 - (void)changeLargeFont:(NSFont *)newFont;

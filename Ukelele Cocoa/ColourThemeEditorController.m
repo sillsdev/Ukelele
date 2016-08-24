@@ -82,8 +82,8 @@ typedef enum : NSUInteger {
 				// Nothing came from the defaults
 			textSize = kDefaultFontSize;
 		}
-		CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
-		[styleInfo setFontDescriptor:fontDescriptor];
+		NSFont *theFont = [NSFont fontWithName:defaultFontName size:textSize];
+		[styleInfo changeLargeFont:theFont];
 		[self.normalUp setStyleInfo:styleInfo];
 		[self.deadKeyUp setStyleInfo:styleInfo];
 		[self.selectedUp setStyleInfo:styleInfo];

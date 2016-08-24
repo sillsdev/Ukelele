@@ -76,10 +76,9 @@ typedef struct KeyEntryRec {
 				// Nothing came from the defaults
 			textSize = kDefaultFontSize;
 		}
-		CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithNameAndSize((__bridge CFStringRef)defaultFontName, textSize);
+		NSFont *theFont = [NSFont fontWithName:defaultFontName size:textSize];
 		_styleInfo = [[UKStyleInfo alloc] init];
-		[_styleInfo setFontDescriptor:fontDescriptor];
-		CFRelease(fontDescriptor);
+		[_styleInfo changeLargeFont:theFont];
 		modifiersController = [[ModifiersController alloc] init];
 		_eventState = kEventStateNone;
     }
