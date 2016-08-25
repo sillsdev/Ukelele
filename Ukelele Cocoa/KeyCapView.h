@@ -13,6 +13,8 @@
 #import "UKStyleInfo.h"
 
 #define fallbackAlpha	0.5
+#define kKeyInset 2.0f
+#define kSmallKeyInset 1.0f
 
 @interface KeyCapView : NSView<NSDraggingSource, NSPasteboardWriting> {
 	NSRect keyRect;

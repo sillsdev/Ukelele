@@ -15,9 +15,6 @@ static CGAffineTransform kTextTransform = {
 	1.0, 0.0, 0.0, 1.0, 0.0, 0.0
 };
 
-#define kKeyInset 2.0f
-#define kSmallKeyInset 1.0f
-
 @implementation KeyCapView2Rect {
 	NSRect keyRect1;
 	NSRect keyRect2;

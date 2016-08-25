@@ -13,8 +13,6 @@
 #import "LayoutInfo.h"
 #import "UkeleleConstantStrings.h"
 
-const CGFloat kKeyInset = 2.0f;
-const CGFloat kSmallKeyInset = 1.0f;
 const unichar kFirstASCIIPrintingChar = 0x20;
 const unichar kLastASCIIPrintingChar = 0x7e;
 const unichar kLastControlChar = 0x9f;
@@ -196,6 +194,7 @@ static CGAffineTransform kTextTransform = {
 	}
 	NSDictionary *myStyle = self.styleInfo.largeAttributes;
 	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+		// Check whether it fits into the space given the padding on either side
 	NSSize frameSize = self.textView.bounds.size;
 	frameSize.width -= 2 * self.textView.textContainer.lineFragmentPadding;
 	NSSize textSize = [displayText size];
