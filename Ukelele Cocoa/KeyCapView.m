@@ -194,8 +194,15 @@ static CGAffineTransform kTextTransform = {
 			[displayText appendAttributedString:charString];
 		}
 	}
-	NSDictionary *myStyle = self.small ? self.styleInfo.smallAttributes : self.styleInfo.largeAttributes;
+	NSDictionary *myStyle = self.styleInfo.largeAttributes;
 	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+	NSSize frameSize = self.textView.bounds.size;
+	frameSize.width -= 2 * self.textView.textContainer.lineFragmentPadding;
+	NSSize textSize = [displayText size];
+	if (textSize.width > frameSize.width || textSize.height > frameSize.height) {
+		myStyle = self.styleInfo.smallAttributes;
+		[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+	}
 	[self.textView.textStorage setAttributedString:displayText];
 }
 
