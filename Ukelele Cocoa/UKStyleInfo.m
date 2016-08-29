@@ -46,8 +46,7 @@
 	self.largeAttributes = [NSMutableDictionary dictionary];
 	[self.largeAttributes setValue:defaultLargeFont forKey:NSFontAttributeName];
 	[self.largeAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-	[paraStyle setAlignment:NSCenterTextAlignment];
+	NSMutableParagraphStyle *paraStyle = [self defaultParagraphStyle];
 	[self.largeAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
 	NSFont *defaultSmallFont = [[NSFontManager sharedFontManager] convertFont:defaultLargeFont toSize:kDefaultSmallFontSize * self.scaleFactor];
 	self.smallAttributes = [NSMutableDictionary dictionary];
@@ -69,8 +68,7 @@
 	self.largeAttributes = [NSMutableDictionary dictionary];
 	[self.largeAttributes setValue:cocoaLargeFont forKey:NSFontAttributeName];
 	[self.largeAttributes setValue:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-	[paraStyle setAlignment:NSCenterTextAlignment];
+	NSMutableParagraphStyle *paraStyle = [self defaultParagraphStyle];
 	[self.largeAttributes setValue:paraStyle forKey:NSParagraphStyleAttributeName];
 	CGFloat smallFontSize = largeFontSize * kDefaultSmallFontSize / kDefaultLargeFontSize;
 	NSFont *cocoaSmallFont = [[NSFontManager sharedFontManager] convertFont:cocoaLargeFont toSize:smallFontSize];
@@ -88,6 +86,13 @@
 - (void)changeLargeFont:(NSFont *)newFont {
 	self.largeFont = newFont;
 	[self updateStyles];
+}
+
+- (NSMutableParagraphStyle *)defaultParagraphStyle {
+	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+	[paraStyle setAlignment:NSCenterTextAlignment];
+	[paraStyle setLineHeightMultiple:1.1];
+	return paraStyle;
 }
 
 @end
