@@ -132,6 +132,22 @@ static CGAffineTransform kTextTransform = {
 	}
 }
 
+- (void)assignStyle
+{
+	NSDictionary *myStyle = self.styleInfo.largeAttributes;
+	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+		// Check whether it fits into the space given the padding on either side
+	NSSize frameSize = self.textView.bounds.size;
+	frameSize.width -= 2 * self.textView.textContainer.lineFragmentPadding;
+	NSSize textSize = [displayText size];
+	if (textSize.width > frameSize.width || textSize.height > frameSize.height) {
+		myStyle = self.styleInfo.smallAttributes;
+		[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
+	}
+	[self.textView.textStorage setAttributedString:displayText];
+	[self setNeedsLayout:YES];
+}
+
 - (void)createDisplayText
 {
 	NSUInteger stringLength = [self.outputString length];
@@ -192,17 +208,7 @@ static CGAffineTransform kTextTransform = {
 			[displayText appendAttributedString:charString];
 		}
 	}
-	NSDictionary *myStyle = self.styleInfo.largeAttributes;
-	[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
-		// Check whether it fits into the space given the padding on either side
-	NSSize frameSize = self.textView.bounds.size;
-	frameSize.width -= 2 * self.textView.textContainer.lineFragmentPadding;
-	NSSize textSize = [displayText size];
-	if (textSize.width > frameSize.width || textSize.height > frameSize.height) {
-		myStyle = self.styleInfo.smallAttributes;
-		[displayText setAttributes:myStyle range:NSMakeRange(0, [displayText length])];
-	}
-	[self.textView.textStorage setAttributedString:displayText];
+	[self assignStyle];
 }
 
 - (void)flipInRect:(NSRect)boundingRect
@@ -214,32 +220,20 @@ static CGAffineTransform kTextTransform = {
 
 - (void)setScale:(CGFloat)scaleValue
 {
-	CGFloat oldScale = [self frame].origin.x / keyRect.origin.x;
 	NSRect newFrame = NSMakeRect(keyRect.origin.x * scaleValue, keyRect.origin.y * scaleValue,
 								 keyRect.size.width * scaleValue, keyRect.size.height * scaleValue);
 	[self setFrame:newFrame];
-	NSRect oldViewFrame = [self.textView frame];
-	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleValue / oldScale, oldViewFrame.origin.y * scaleValue / oldScale, oldViewFrame.size.width * scaleValue / oldScale, oldViewFrame.size.height * scaleValue / oldScale);
+	NSRect baseRect = keyRect;
+	baseRect.origin = NSZeroPoint;
+	NSRect textRect = NSInsetRect(baseRect, kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
+	NSRect newViewFrame = NSMakeRect(textRect.origin.x * scaleValue, textRect.origin.y * scaleValue, textRect.size.width * scaleValue, textRect.size.height * scaleValue);
 	[self.textView setFrame:newViewFrame];
-	if (self.keyType == kModifierKeyType) {
-		[self createDisplayText];
-	}
-}
-
-- (void)changeScaleBy:(CGFloat)scaleMultiplier
-{
-	NSRect oldFrame = [self frame];
-	NSRect newFrame = NSMakeRect(oldFrame.origin.x * scaleMultiplier,
-								 oldFrame.origin.y * scaleMultiplier,
-								 oldFrame.size.width * scaleMultiplier,
-								 oldFrame.size.height * scaleMultiplier);
-	[self setFrame:newFrame];
-	NSRect oldViewFrame = [self.textView frame];
-	NSRect newViewFrame = NSMakeRect(oldViewFrame.origin.x * scaleMultiplier, oldViewFrame.origin.y * scaleMultiplier, oldViewFrame.size.width * scaleMultiplier, oldViewFrame.size.height * scaleMultiplier);
-	[self.textView setFrame:newViewFrame];
-	if (self.keyType == kModifierKeyType) {
-		[self createDisplayText];
-	}
+	newFrame.origin = NSZeroPoint;
+	NSPoint viewFrametopRight = newViewFrame.origin;
+	viewFrametopRight.x += newViewFrame.size.width;
+	viewFrametopRight.y += newViewFrame.size.height;
+	NSAssert(NSPointInRect(viewFrametopRight, newFrame), @"View rect must be inside the frame rect");
+	[self assignStyle];
 }
 
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset
@@ -468,7 +462,7 @@ static CGAffineTransform kTextTransform = {
 
 - (void)styleDidUpdate {
 		// Notification that the style was updated
-	[self createDisplayText];
+	[self assignStyle];
 	[self setNeedsDisplay:YES];
 }
 

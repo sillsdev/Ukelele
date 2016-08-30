@@ -273,8 +273,8 @@ typedef struct KeyEntryRec {
 		[self setFrame:newFrame];
 	}
 	self.scaleFactor = scaleValue;
-	UKKeyboardController *theDocumentWindow = [[self window] windowController];
-	[theDocumentWindow messageScaleChanged:[self scaleFactor]];
+	UKKeyboardController *theDocumentWindow = [self.window windowController];
+	[theDocumentWindow messageScaleChanged:self.scaleFactor];
 }
 
 	// Scale the view by a relative figure

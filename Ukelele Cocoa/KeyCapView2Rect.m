@@ -187,7 +187,6 @@ static CGAffineTransform kTextTransform = {
 		// Draw the text
 	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
 	CGContextSetTextMatrix(myContext, kTextTransform);
-	[self.outputString drawInRect:interiorRect withAttributes:nil];
 		// Restore state
 	[NSGraphicsContext restoreGraphicsState];
 	if (self.fallback) {
@@ -227,31 +226,18 @@ static CGAffineTransform kTextTransform = {
 	[self setFrame:newFrameRect];
 }
 
+- (NSRect)rectForText {
+	NSRect textRect = NSInsetRect(interiorRect, kKeyInset * self.styleInfo.scaleFactor, (self.small ? kSmallKeyInset : kKeyInset) * self.styleInfo.scaleFactor);
+	return textRect;
+}
+
 - (void)finishInit
 {
 		// Lock the coordinates of the unscaled rectangles
 	frameRect1 = NSOffsetRect(keyRect1, frameRect.origin.x, frameRect.origin.y);
 	frameRect2 = NSOffsetRect(keyRect2, frameRect.origin.x, frameRect.origin.y);
-	NSRect textRect = NSInsetRect(interiorRect, kKeyInset, self.small ? kSmallKeyInset : kKeyInset);
+	NSRect textRect = [self rectForText];
 	[self setupTextView:textRect];
-}
-
-- (void)changeScaleBy:(CGFloat)scaleMultiplier
-{
-	frameRect.origin.x *= scaleMultiplier;
-	frameRect.origin.y *= scaleMultiplier;
-	frameRect.size.height *= scaleMultiplier;
-	frameRect.size.width *= scaleMultiplier;
-	keyRect1.origin.x *= scaleMultiplier;
-	keyRect1.origin.y *= scaleMultiplier;
-	keyRect1.size.height *= scaleMultiplier;
-	keyRect1.size.width *= scaleMultiplier;
-	keyRect2.origin.x *= scaleMultiplier;
-	keyRect2.origin.y *= scaleMultiplier;
-	keyRect2.size.height *= scaleMultiplier;
-	keyRect2.size.width *= scaleMultiplier;
-	[self setRect1:keyRect1 andRect2:keyRect2];
-	[self setFrame:frameRect];
 }
 
 - (void)setScale:(CGFloat)scaleValue
@@ -265,6 +251,8 @@ static CGAffineTransform kTextTransform = {
 	frameRect = NSUnionRect(rect1, rect2);
 	[self setRect1:rect1 andRect2:rect2];
 	[self setFrame:frameRect];
+	[self.textView setFrame:[self rectForText]];
+	[self assignStyle];
 }
 
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset

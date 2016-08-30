@@ -48,10 +48,10 @@
 			textColour:(NSColor **)textColour
 		  gradientType:(NSUInteger *)gradientType;
 - (void)setScale:(CGFloat)scaleValue;
-- (void)changeScaleBy:(CGFloat)scaleMultiplier;
 - (void)offsetFrameX:(CGFloat)xOffset Y:(CGFloat)yOffset;
 - (void)finishInit;
 - (void)styleDidUpdate;
 - (void)setupTextView:(NSRect)textRect;
+- (void)assignStyle;
 
 @end

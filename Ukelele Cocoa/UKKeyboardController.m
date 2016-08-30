@@ -1742,15 +1742,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)messageScaleCompleted
 {
-		// Tell the font panel what font we have
-	UkeleleView *ukeleleView = [self.keyboardView documentView];
-	NSDictionary *largeAttributes = [ukeleleView.styleInfo largeAttributes];
-	NSFont *largeFont = largeAttributes[NSFontAttributeName];
-	NSFontManager *fontManager = [NSFontManager sharedFontManager];
-	[fontManager setSelectedFont:largeFont isMultiple:NO];
     [self calculateSize];
-    [self setViewScaleComboBox];
-	[self updateWindow];
 }
 
 #pragma mark Action routines
