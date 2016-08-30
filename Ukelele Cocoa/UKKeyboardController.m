@@ -424,6 +424,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *nextState;
         keyDataDict[kKeyKeyCode] = @(keyCode);
 		output = [self.keyboardLayout getCharOutput:keyDataDict isDead:&deadKey nextState:&nextState];
+		[keyCapView setDeadKey:deadKey];
 		if (useFallback && [output isEqualToString:@""] && ![stateName isEqualToString:kStateNameNone]) {
 			keyDataDictStateNone[kKeyKeyCode] = @(keyCode);
 			output = [self.keyboardLayout getCharOutput:keyDataDictStateNone isDead:&deadKey nextState:&nextState];
@@ -433,7 +434,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[keyCapView setFallback:NO];
 		}
 		[keyCapView setOutputString:output];
-		[keyCapView setDeadKey:deadKey];
 	}
 	[ukeleleView updateModifiers:(unsigned)modifiers];
 }
