@@ -659,7 +659,7 @@ UInt32 KeyElement::GetMaxout(void) const
 			maxout = 0;
 		}
 		else {
-			UInt32 stringLength = mOutput.GetSize();
+			UInt32 stringLength = mOutput.GetSize() * 2;
 			UniChar *buffer = new UniChar[stringLength];
 			XMLUtilities::ConvertEncodedString(mOutput, buffer, stringLength);
 			maxout = stringLength;
