@@ -14,8 +14,8 @@
 #include "NBundle.h"
 #include "UkeleleConstantStrings.h"
 #include "NCocoa.h"
+#include "boost/scoped_array.hpp"
 
-	
 // Key strings
 const NString kKeyElementMissingCodeAttribute = "KeyElementMissingCodeAttribute";
 const NString kKeyElementDoubleSpecified = "KeyElementDoubleSpecified";
@@ -659,11 +659,10 @@ UInt32 KeyElement::GetMaxout(void) const
 			maxout = 0;
 		}
 		else {
-			UInt32 stringLength = mOutput.GetSize() * 2;
-			UniChar *buffer = new UniChar[stringLength];
-			XMLUtilities::ConvertEncodedString(mOutput, buffer, stringLength);
+			UInt32 stringLength = mOutput.GetSize();
+			boost::scoped_array<UniChar> buffer(new UniChar(2 * (UInt16)stringLength));
+			XMLUtilities::ConvertEncodedString(mOutput, buffer.get(), stringLength);
 			maxout = stringLength;
-			delete [] buffer;
 		}
 	}
 	else if (mElementType == kKeyFormInlineAction) {
