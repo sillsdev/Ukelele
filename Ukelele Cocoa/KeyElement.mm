@@ -167,22 +167,22 @@ ErrorMessage KeyElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 
 	// Create an XML tree
 
-NXMLNode *KeyElement::CreateXMLTree(void)
+NXMLNode *KeyElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kKeyElement);
 	NString keyCodeString;
 	keyCodeString.Format("%d", mKeyCode);
 	xmlTree->SetElementAttribute(kCodeAttribute, keyCodeString);
 	if (mElementType == kKeyFormAction) {
-		xmlTree->SetElementAttribute(kActionAttribute, XMLUtilities::ConvertToXMLString(mActionName));
+		xmlTree->SetElementAttribute(kActionAttribute, XMLUtilities::ConvertToXMLString(mActionName, inCodeNonAscii));
 		xmlTree->SetElementUnpaired(true);
 	}
 	else if (mElementType == kKeyFormInlineAction) {
-		NXMLNode *childTree = mInlineAction->CreateXMLTree();
+		NXMLNode *childTree = mInlineAction->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(childTree);
 	}
 	else {
-		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput));
+		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput, inCodeNonAscii));
 		xmlTree->SetElementUnpaired(true);
 	}
 	return xmlTree;

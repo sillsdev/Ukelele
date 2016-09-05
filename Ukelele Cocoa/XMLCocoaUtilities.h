@@ -16,7 +16,7 @@
 + (NSString *)createCanonicalForm:(NSString *)inputString;
 + (NSString *)makeXMLString:(NSString *)inputString codingNonAscii:(BOOL)codeNonAscii;
 + (NSString *)convertEncodedString:(NSString *)inputString;
-+ (NSString *)convertToXMLString:(NSString *)inputString;
++ (NSString *)convertToXMLString:(NSString *)inputString codingNonAscii:(BOOL)encodingNonAscii;
 + (NSString *)makeXMLName:(NSString *)inputString;
 
 @end

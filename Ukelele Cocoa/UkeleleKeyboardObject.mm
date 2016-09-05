@@ -161,7 +161,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (updateComment) {
 		[self updateEditingComment];
 	}
-	NXMLNode *treeRepresentation = self.keyboard->CreateXMLTree();
+	BOOL encodeNonAscii = [[theDefaults objectForKey:UKCodeNonAscii] boolValue];
+	NXMLNode *treeRepresentation = self.keyboard->CreateXMLTree(encodeNonAscii);
 	[parentDocument unblockUserInteraction];
 	UKXMLEncoder xmlEncoder;
 	static NDictionary attributeOrder;

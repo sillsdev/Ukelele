@@ -25,7 +25,7 @@ public:
 	
 	// Creation functions
 	ErrorMessage CreateKeyboardFromXMLTree(const NXMLNode& inXMLTree);
-	NXMLNode *CreateXMLTree(void);
+	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	void CreateBasicKeyboard(NString inName);
 	void CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout);
 	void ClearKeyboard(void);

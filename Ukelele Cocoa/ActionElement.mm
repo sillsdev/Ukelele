@@ -240,23 +240,23 @@ ErrorMessage ActionElement::CreateFromXMLTree(const NXMLNode& inTree,
 
 	// Create an XML tree to represent the action element
 
-NXMLNode *ActionElement::CreateXMLTree(void)
+NXMLNode *ActionElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kActionElement);
-	xmlTree->SetElementAttribute(kIDAttribute, XMLUtilities::ConvertToXMLString(mActionID));
+	xmlTree->SetElementAttribute(kIDAttribute, XMLUtilities::ConvertToXMLString(mActionID, inCodeNonAscii));
 	WhenElement *stateNoneElement = mWhenElementSet->FindWhenElement(kStateNone);
 	if (stateNoneElement == NULL) {
 			// No element for state none: create one
 		stateNoneElement = new WhenElement(kStateNone, "", "", "", "");
 		mWhenElementSet->AddWhenElement(stateNoneElement);
 	}
-	NXMLNode *stateNoneElementTree = stateNoneElement->CreateXMLTree();
+	NXMLNode *stateNoneElementTree = stateNoneElement->CreateXMLTree(inCodeNonAscii);
 	xmlTree->AddChild(stateNoneElementTree);
 	stateNoneElement->AddCommentsToXMLTree(*xmlTree);
 	for (WhenElement *whenElement = mWhenElementSet->GetFirstWhenElement();
 		 whenElement != NULL; whenElement = mWhenElementSet->GetNextWhenElement()) {
 		if (whenElement->GetState() != kStateNone) {
-			NXMLNode *whenElementTree = whenElement->CreateXMLTree();
+			NXMLNode *whenElementTree = whenElement->CreateXMLTree(inCodeNonAscii);
 			xmlTree->AddChild(whenElementTree);
 			whenElement->AddCommentsToXMLTree(*xmlTree);
 		}
@@ -464,7 +464,7 @@ NString ActionElementSet::MakeActionName(const NString inBaseName)
 	if (baseName.IsEmpty()) {
 		baseName = "action";
 	}
-	NString actionName = XMLUtilities::ConvertToXMLString(baseName);
+	NString actionName = XMLUtilities::ConvertToXMLString(baseName, false);
 	if (FindActionElement(actionName) != NULL) {
 			// The name was taken, so create a unique name
 		NString baseString = actionName + " ";
@@ -599,14 +599,14 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 
 	// Create an XML tree from the action element set
 
-NXMLNode *ActionElementSet::CreateXMLTree(void)
+NXMLNode *ActionElementSet::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kActionsElement);
 	AddCommentsToXMLTree(*xmlTree);
 	std::set<ActionElement *, DereferenceLess>::iterator pos;
 	for (pos = mActionElementSet.begin(); pos != mActionElementSet.end(); ++pos) {
 		ActionElement *actionElement = *pos;
-		NXMLNode *childTree = actionElement->CreateXMLTree();
+		NXMLNode *childTree = actionElement->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(childTree);
 		actionElement->AddCommentsToXMLTree(*xmlTree);
 	}

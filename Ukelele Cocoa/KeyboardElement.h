@@ -41,7 +41,7 @@ public:
 	virtual NString GetDescription(void);
 	
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, KeyboardElement *&outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
-	NXMLNode *CreateXMLTree(void);
+	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	static KeyboardElement *CreateBasicKeyboard(NString inName);
 	static KeyboardElement *CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout);
 	static KeyboardElement *CreateKeyboad(NString inName, UInt32 inScript, UInt32 inStandardKeyboard, UInt32 inCommandKeyboard);

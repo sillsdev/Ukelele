@@ -48,10 +48,10 @@
 	return ToNS(convertedString);
 }
 
-+ (NSString *)convertToXMLString:(NSString *)inputString
++ (NSString *)convertToXMLString:(NSString *)inputString codingNonAscii:(BOOL)encodingNonAscii
 {
 	NString originalString = ToNN(inputString);
-	NString convertedString = XMLUtilities::ConvertToXMLString(originalString);
+	NString convertedString = XMLUtilities::ConvertToXMLString(originalString, encodingNonAscii);
 	return ToNS(convertedString);
 }
 

@@ -218,13 +218,13 @@ ErrorMessage TerminatorsElement::CreateFromXMLTree(const NXMLNode& inTree,
 	// CreateXMLTree
 	//	Create an XML tree for the terminators element
 
-NXMLNode *TerminatorsElement::CreateXMLTree(void)
+NXMLNode *TerminatorsElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kTerminatorsElement);
 	AddCommentsToXMLTree(*xmlTree);
 	for (WhenElement *whenElement = mWhenElementList->GetFirstWhenElement();
 		 whenElement != NULL; whenElement = mWhenElementList->GetNextWhenElement()) {
-		NXMLNode *whenElementTree = whenElement->CreateXMLTree();
+		NXMLNode *whenElementTree = whenElement->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(whenElementTree);
 		whenElement->AddCommentsToXMLTree(*xmlTree);
 	}

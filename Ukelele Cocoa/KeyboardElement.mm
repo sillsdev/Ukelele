@@ -246,7 +246,7 @@ ErrorMessage KeyboardElement::CreateFromXMLTree(const NXMLNode& inTree,
 	return errorValue;
 }
 
-NXMLNode *KeyboardElement::CreateXMLTree(void)
+NXMLNode *KeyboardElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 		// Make sure that maxout is correct
 	UpdateMaxout();
@@ -277,17 +277,17 @@ NXMLNode *KeyboardElement::CreateXMLTree(void)
 	SInt32 keyMapSetCount = mKeyMapSetList->GetCount();
 	for (SInt32 i = 1; i <= keyMapSetCount; i++) {
 		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);
-		childTree = keyMapSet->CreateXMLTree();
+		childTree = keyMapSet->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(childTree);
 	}
 		// Add Actions element, if not empty
 	if (!mActionList->IsEmpty()) {
-		childTree = mActionList->CreateXMLTree();
+		childTree = mActionList->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(childTree);
 	}
 		// Add terminators element, if any
 	if (mTerminatorsElement.get() != NULL && mTerminatorsElement->GetWhenElementCount() > 0) {
-		childTree = mTerminatorsElement->CreateXMLTree();
+		childTree = mTerminatorsElement->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(childTree);
 	}
 	return xmlTree;

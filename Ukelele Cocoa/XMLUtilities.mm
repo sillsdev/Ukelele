@@ -282,17 +282,25 @@ XMLUtilities::MakeXMLString(const UniChar *inString, const UInt32 inStringLength
 	for (UInt32 i = 0; i < inStringLength; i++) {
 			// See if we have one of the characters that needs to be encoded
 			// for valid XML
-		if (NeedsEncoding(inString[i], inCodeNonAscii)) {
-			NString codeString;
-			codeString.Format("&#x%04X;", inString[i]);
-			xmlString += codeString;
-		}
-		else if (UCIsSurrogateHighCharacter(inString[i])) {
+		if (UCIsSurrogateHighCharacter(inString[i])) {
 				// We have a surrogate pair
 			assert(i < inStringLength - 1);
 			assert(UCIsSurrogateLowCharacter(inString[i + 1]));
-			xmlString += NString(&inString[i], 2 * sizeof(UniChar), kNStringEncodingUTF16);
+			if (inCodeNonAscii) {
+				UInt32 surrogateValue = UCGetUnicodeScalarValueForSurrogatePair(inString[i], inString[i + 1]);
+				NString surrogateString;
+				surrogateString.Format("&#x%04X;", surrogateValue);
+				xmlString += surrogateString;
+			}
+			else {
+				xmlString += NString(&inString[i], 2 * sizeof(UniChar), kNStringEncodingUTF16);
+			}
 			i++;
+		}
+		else if (NeedsEncoding(inString[i], inCodeNonAscii)) {
+			NString codeString;
+			codeString.Format("&#x%04X;", inString[i]);
+			xmlString += codeString;
 		}
 		else {
 			xmlString += NString(&inString[i], sizeof(UniChar), kNStringEncodingUTF16);
@@ -411,12 +419,12 @@ NString XMLUtilities::ConvertEncodedString(const NString inString)
 
 	// Create a valid XML string from the given string, which may contain encoded characters
 
-NString XMLUtilities::ConvertToXMLString(const NString inString)
+NString XMLUtilities::ConvertToXMLString(const NString inString, const bool inCodeNonAscii)
 {
 	UInt32 bufferLength = 2 * inString.GetSize();
 	boost::scoped_array<UniChar> buffer(new UniChar[bufferLength]);
 	ConvertEncodedString(inString, buffer.get(), bufferLength);
-	NString convertedString = MakeXMLString(buffer.get(), bufferLength, false);
+	NString convertedString = MakeXMLString(buffer.get(), bufferLength, inCodeNonAscii);
 	return convertedString;
 }
 

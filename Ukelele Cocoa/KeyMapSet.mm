@@ -207,12 +207,12 @@ ErrorMessage KeyMapSet::CreateFromXMLTree(const NXMLNode& inXMLTree,
 
 // Create an XML tree representing the key map set element
 
-NXMLNode *KeyMapSet::CreateXMLTree(void)
+NXMLNode *KeyMapSet::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kKeyMapSetElement);
 	xmlTree->SetElementAttribute(kIDAttribute, mID);
 	AddCommentsToXMLTree(*xmlTree);
-	mKeyMapTable->AddToXMLTree(*xmlTree);
+	mKeyMapTable->AddToXMLTree(*xmlTree, inCodeNonAscii);
 	return xmlTree;
 }
 

@@ -49,7 +49,7 @@ public:
 	
 		// Convert to and from XML
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, WhenElement*& outElement);
-	NXMLNode *CreateXMLTree(void);
+	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	
 		// Operators
 	bool operator<(const WhenElement& inCompareTo);
@@ -96,7 +96,7 @@ public:
 	void RemoveStates(NSSet *inStates);
 	
 		// Convert to XML tree
-	void AddToXMLTree(NXMLNode& inTree);
+	void AddToXMLTree(NXMLNode& inTree, const bool inCodeNonAscii);
 	
 		// Iterator functions
 	WhenElement *GetFirstWhenElement(void);

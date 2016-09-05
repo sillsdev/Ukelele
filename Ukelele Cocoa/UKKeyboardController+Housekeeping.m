@@ -62,7 +62,7 @@
 	NSAssert(rawStateNames && [rawStateNames count] > 0, @"Must have some states");
 	NSMutableArray *stateNames = [NSMutableArray arrayWithCapacity:[rawStateNames count]];
 	for (NSString *stateName in rawStateNames) {
-		[stateNames addObject:[XMLCocoaUtilities convertToXMLString:stateName]];
+		[stateNames addObject:[XMLCocoaUtilities convertToXMLString:stateName codingNonAscii:NO]];
 	}
 	NSString *infoText = @"Choose the state name to replace";
 	if (nil == replaceNameSheet) {
@@ -95,7 +95,7 @@
 	NSString *infoText = @"Choose the action name to replace";
 	NSMutableArray *actionNames = [NSMutableArray arrayWithCapacity:[rawActionNames count]];
 	for (NSString *actionName in rawActionNames) {
-		[actionNames addObject:[XMLCocoaUtilities convertToXMLString:actionName]];
+		[actionNames addObject:[XMLCocoaUtilities convertToXMLString:actionName codingNonAscii:NO]];
 	}
 	if (nil == replaceNameSheet) {
 		replaceNameSheet = [ReplaceNameSheet createReplaceNameSheet];

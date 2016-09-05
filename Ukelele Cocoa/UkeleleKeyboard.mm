@@ -109,14 +109,14 @@ ErrorMessage UkeleleKeyboard::CreateKeyboardFromXMLTree(const NXMLNode& inXMLTre
 
 // Create an XML tree representing the keyboard layout
 
-NXMLNode *UkeleleKeyboard::CreateXMLTree(void)
+NXMLNode *UkeleleKeyboard::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeDocument, "");
 	NXMLNode *childTree = new NXMLNode(kNXMLNodeDocType, kDefaultXMLName);
 	childTree->SetDocTypeSystemID(mDTDHeader);
 	xmlTree->AddChild(childTree);
 	AddCommentsToXMLTree(*xmlTree);
-	childTree = mKeyboard->CreateXMLTree();
+	childTree = mKeyboard->CreateXMLTree(inCodeNonAscii);
 	xmlTree->AddChild(childTree);
 	return xmlTree;
 }

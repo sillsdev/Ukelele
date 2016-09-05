@@ -421,7 +421,7 @@ ErrorMessage KeyMapElement::CreateFromXMLTree(const NXMLNode& inXMLTree,
 
 // Create an XML tree representing the key map element
 
-NXMLNode *KeyMapElement::CreateXMLTree(void)
+NXMLNode *KeyMapElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kKeyMapElement);
 	NString indexString;
@@ -439,7 +439,7 @@ NXMLNode *KeyMapElement::CreateXMLTree(void)
 	for (UInt32 i = 0; i < keyTableSize; i++) {
 		KeyElement *keyElement = mElementTable->GetKeyElement(i);
 		if (keyElement != NULL) {
-			NXMLNode *keyElementTree = keyElement->CreateXMLTree();
+			NXMLNode *keyElementTree = keyElement->CreateXMLTree(inCodeNonAscii);
 			xmlTree->AddChild(keyElementTree);
 			keyElement->AddCommentsToXMLTree(*xmlTree);
 			hasElement = true;
@@ -449,7 +449,7 @@ NXMLNode *KeyMapElement::CreateXMLTree(void)
 		// We need to add a dummy element
 		KeyElement *dummyElement = new KeyElement(kDummyKeyCode);
 		dummyElement->NewOutputElement("");
-		NXMLNode *dummyElementTree = dummyElement->CreateXMLTree();
+		NXMLNode *dummyElementTree = dummyElement->CreateXMLTree(inCodeNonAscii);
 		xmlTree->AddChild(dummyElementTree);
 		delete dummyElement;
 	}
@@ -772,12 +772,12 @@ void KeyMapElementList::GetUsedActions(NSMutableSet *ioActionSet) const
 
 // Add the elements of the list to an XML tree
 
-void KeyMapElementList::AddToXMLTree(NXMLNode& inXMLTree)
+void KeyMapElementList::AddToXMLTree(NXMLNode& inXMLTree, const bool inCodeNonAscii)
 {
 	for (KeyMapElementIterator pos = mElementList.begin(); pos != mElementList.end(); ++pos) {
 		KeyMapElement *keyMapElement = *pos;
 		if (keyMapElement != NULL) {
-			NXMLNode *keyMapElementTree = keyMapElement->CreateXMLTree();
+			NXMLNode *keyMapElementTree = keyMapElement->CreateXMLTree(inCodeNonAscii);
 			inXMLTree.AddChild(keyMapElementTree);
 		}
 	}

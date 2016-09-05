@@ -181,24 +181,24 @@ WhenElement::CreateFromXMLTree(const NXMLNode& inTree, WhenElement*& outElement)
 	// CreateXMLTree: Construct an XML tree encapsulating the when element
 
 NXMLNode *
-WhenElement::CreateXMLTree(void)
+WhenElement::CreateXMLTree(const bool inCodeNonAscii)
 {
 		// Create the tree
 	NXMLNode *xmlTree = new NXMLNode(kNXMLNodeElement, kWhenElement);
 	xmlTree->SetElementUnpaired(true);
 		// Set the attributes
-	xmlTree->SetElementAttribute(kStateAttribute, XMLUtilities::ConvertToXMLString(mState));
+	xmlTree->SetElementAttribute(kStateAttribute, XMLUtilities::ConvertToXMLString(mState, inCodeNonAscii));
 	if (!mOutput.IsEmpty() || mNext.IsEmpty()) {
-		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput));
+		xmlTree->SetElementAttribute(kOutputAttribute, XMLUtilities::ConvertToXMLString(mOutput, inCodeNonAscii));
 	}
 	if (!mNext.IsEmpty()) {
-		xmlTree->SetElementAttribute(kNextAttribute, XMLUtilities::ConvertToXMLString(mNext));
+		xmlTree->SetElementAttribute(kNextAttribute, XMLUtilities::ConvertToXMLString(mNext, inCodeNonAscii));
 	}
 	if (!mThrough.IsEmpty()) {
-		xmlTree->SetElementAttribute(kThroughAttribute, XMLUtilities::ConvertToXMLString(mThrough));
+		xmlTree->SetElementAttribute(kThroughAttribute, XMLUtilities::ConvertToXMLString(mThrough, inCodeNonAscii));
 	}
 	if (!mMultiplier.IsEmpty()) {
-		xmlTree->SetElementAttribute(kMultiplierAttribute, XMLUtilities::ConvertToXMLString(mMultiplier));
+		xmlTree->SetElementAttribute(kMultiplierAttribute, XMLUtilities::ConvertToXMLString(mMultiplier, inCodeNonAscii));
 	}
 	return xmlTree;
 }
@@ -450,14 +450,14 @@ WhenElementSet::RemoveStates(NSSet *inStates)
 	// Add each element to an XML tree
 
 void
-WhenElementSet::AddToXMLTree(NXMLNode& inTree)
+WhenElementSet::AddToXMLTree(NXMLNode& inTree, const bool inCodeNonAscii)
 {
 	WhenElement keyElement(kStateNone, "", "", "", "");
 	WhenElementSetIterator pos = mElementSet.find(&keyElement);
 	if (pos != mElementSet.end()) {
 		WhenElement *noneElement = *pos;
 			// Get the XML tree for the when element and add it
-		NXMLNode *noneTree = noneElement->CreateXMLTree();
+		NXMLNode *noneTree = noneElement->CreateXMLTree(inCodeNonAscii);
 		inTree.AddChild(noneTree);
 			// Add comments (deleting duplicates on the fly)
 		noneElement->RemoveDuplicateComments();
@@ -467,7 +467,7 @@ WhenElementSet::AddToXMLTree(NXMLNode& inTree)
 		WhenElement *whenElement = *pos;
 		if (whenElement->GetState() != kStateNone) {
 				// Get the XML tree for the when element and add it
-			NXMLNode *childTree = whenElement->CreateXMLTree();
+			NXMLNode *childTree = whenElement->CreateXMLTree(inCodeNonAscii);
 			inTree.AddChild(childTree);
 				// Add comments (deleting duplicates on the fly)
 			whenElement->RemoveDuplicateComments();
