@@ -251,6 +251,25 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     return YES;
 }
 
+- (NSString *)nameForCopyOf:(NSString *)baseName {
+	NSString *result = [baseName stringByAppendingString:@" copy"];
+	if ([baseName hasSuffix:@" copy"]) {
+			// Already have " copy" at the end, so add " 2"
+		result = [baseName stringByAppendingString:@" 2"];
+	}
+	else {
+		NSPredicate *matchPredicate = [NSPredicate predicateWithFormat:@"SELF matches \".* copy [0-9]+$\""];
+		if ([matchPredicate evaluateWithObject:baseName]) {
+				// Have a name that ends with " copy [number]"
+			NSRange numberRange = [baseName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSAnchoredSearch | NSBackwardsSearch];
+			NSString *numberString = [baseName substringWithRange:numberRange];
+			NSInteger numberValue = [numberString integerValue];
+			result = [baseName stringByReplacingOccurrencesOfString:numberString withString:[NSString stringWithFormat:@"%ld", numberValue + 1] options:0 range:numberRange];
+		}
+	}
+	return result;
+}
+
 #pragma mark Convert file type
 
 - (void)convertToBundle {
@@ -1610,18 +1629,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[selectedRowInfo setKeyboardObject:keyboardObject];
 		[selectedRowInfo setKeyboardName:[keyboardObject keyboardName]];
 	}
-	NSDocumentController *theController = [NSDocumentController sharedDocumentController];
-	NSError *theError;
-	UKKeyboardDocument *newDocument = [theController makeUntitledDocumentOfType:kFileTypeKeyboardLayout error:&theError];
-	if (newDocument != nil) {
-			// Got the document
-		[theController addDocument:newDocument];
-			// Create a copy with a new ID
-		UkeleleKeyboardObject *newKeyboardObject = [keyboardObject copy];
-		[newKeyboardObject assignRandomID];
-		[newDocument setupKeyboard:newKeyboardObject];
-		[newDocument showWindows];
-	}
+		// Create a copy with a new ID
+	UkeleleKeyboardObject *newKeyboardObject = [keyboardObject copy];
+	NSString *keyboardName = [newKeyboardObject keyboardName];
+	NSString *newName = [self nameForCopyOf:keyboardName];
+	[newKeyboardObject setKeyboardName:newName];
+	[newKeyboardObject assignRandomID];
+	[self addNewDocument:newKeyboardObject];
 }
 
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError {

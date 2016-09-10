@@ -277,40 +277,6 @@ void KeyElement::NewInlineActionElement(ActionElement *inActionElement)
 
 #pragma mark -
 
-	// Get the type of output in a particular state
-
-UInt32 KeyElement::GetOutputType(NString inState, shared_ptr<ActionElementSet> inActionList)
-{
-	ActionElement *actionElement = NULL;
-	bool inlineAction = false;
-	switch (mElementType) {
-		case kKeyFormUndefined:
-			return kKeyUndefined;
-			
-		case kKeyFormOutput:
-			return kKeyOutput;
-			
-		case kKeyFormAction:
-			actionElement = inActionList->FindActionElement(mActionName);
-			NN_ASSERT(actionElement != NULL);
-			break;
-			
-		case kKeyFormInlineAction:
-			inlineAction = true;
-			actionElement = mInlineAction.get();
-			break;
-	}
-		// Inspect the action
-	assert(actionElement != NULL);
-	WhenElement *whenElement = actionElement->FindWhenElement(inState);
-	if (whenElement != NULL && !whenElement->GetOutput().IsEmpty()) {
-		return inlineAction ? kKeyInlineActionOutput : kKeyActionOutput;
-	}
-	else {
-		return inlineAction ? kKeyInlineActionDeadKey : kKeyActionDeadKey;
-	}
-}
-
 	// Change the output to be the new string
 
 NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList)

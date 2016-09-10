@@ -63,7 +63,6 @@ public:
 	ActionElement *GetInlineAction(void) const { return mInlineAction.get(); }
 	
 		// Inspection and modification
-	UInt32 GetOutputType(NString inState, shared_ptr<ActionElementSet> inActionList);
 	NString ChangeOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList);
 	void ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, shared_ptr<ActionElementSet> inActionList);
 	NString ChangeDeadKeyToOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList);
