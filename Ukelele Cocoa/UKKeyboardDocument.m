@@ -261,7 +261,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		NSPredicate *matchPredicate = [NSPredicate predicateWithFormat:@"SELF matches \".* copy [0-9]+$\""];
 		if ([matchPredicate evaluateWithObject:baseName]) {
 				// Have a name that ends with " copy [number]"
-			NSRange numberRange = [baseName rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSAnchoredSearch | NSBackwardsSearch];
+			NSRange spaceRange = [baseName rangeOfString:@" " options:NSBackwardsSearch];
+				// We have the position of the last space, so the number will be
+				// the rest of the string
+			NSRange numberRange = NSMakeRange(spaceRange.location + 1, baseName.length - spaceRange.location - 1);
 			NSString *numberString = [baseName substringWithRange:numberRange];
 			NSInteger numberValue = [numberString integerValue];
 			result = [baseName stringByReplacingOccurrencesOfString:numberString withString:[NSString stringWithFormat:@"%ld", numberValue + 1] options:0 range:numberRange];
