@@ -1662,7 +1662,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *QWERTYUpperCaseKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1679,7 +1679,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *QWERTYCapsLockKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1696,7 +1696,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *DvorakLowerCaseKeyMap = @{
 			@(kKeyA) : @"a", @(kKeyB) : @"x", @(kKeyC) : @"j", @(kKeyD) : @"e",
@@ -1714,7 +1714,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *DvorakUpperCaseKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"X", @(kKeyC) : @"J", @(kKeyD) : @"E",
@@ -1732,7 +1732,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *DvorakCapsLockKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"X", @(kKeyC) : @"J", @(kKeyD) : @"E",
@@ -1750,7 +1750,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *AZERTYLowerCaseKeyMap = @{
 			@(kKeyA) : @"q", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
@@ -1768,7 +1768,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6", @(kKeyPad7) : @"7",
 			@(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+",
 			@(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/",
-			@(kKeyPadEquals) : @"="
+			@(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *AZERTYUpperCaseKeyMap = @{
 			@(kKeyA) : @"Q", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1784,7 +1784,8 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
 			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
-			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=",
+			@(kKeySpace) : @" "
 		};
 		NSDictionary *AZERTYCapsLockKeyMap = @{
 			@(kKeyA) : @"Q", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1801,7 +1802,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
 			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
-			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *QWERTZLowerCaseKeyMap = @{
 			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"d", @(kKeyE) : @"e",
@@ -1818,7 +1819,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
 			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
 			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
-			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *QWERTZUpperCaseKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1835,7 +1836,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
 			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
 			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
-			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *QWERTZCapsLockKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"D", @(kKeyE) : @"E",
@@ -1852,7 +1853,7 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5", @(kKeyPad6) : @"6",
 			@(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9", @(kKeyPad0) : @"0",
 			@(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-", @(kKeyPadStar) : @"*",
-			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=", @(kKeySpace) : @" "
 		};
 		NSDictionary *ColemakLowerCaseKeyMap = @{
 			@(kKeyA) : @"a", @(kKeyB) : @"b", @(kKeyC) : @"c", @(kKeyD) : @"s", @(kKeyE) : @"f",
@@ -1869,7 +1870,8 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
 			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
-			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=",
+			@(kKeySpace) : @" "
 		};
 		NSDictionary *ColemakUpperCaseKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"S", @(kKeyE) : @"F",
@@ -1886,7 +1888,8 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
 			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
-			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=",
+			@(kKeySpace) : @" "
 		};
 		NSDictionary *ColemakCapsLockKeyMap = @{
 			@(kKeyA) : @"A", @(kKeyB) : @"B", @(kKeyC) : @"C", @(kKeyD) : @"S", @(kKeyE) : @"F",
@@ -1903,7 +1906,8 @@ NSDictionary *sStandardKeyMapList;
 			@(kKeyPad2) : @"2", @(kKeyPad3) : @"3", @(kKeyPad4) : @"4", @(kKeyPad5) : @"5",
 			@(kKeyPad6) : @"6", @(kKeyPad7) : @"7", @(kKeyPad8) : @"8", @(kKeyPad9) : @"9",
 			@(kKeyPad0) : @"0", @(kKeyPadPlus) : @"+", @(kKeyPadMinus) : @"-",
-			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"="
+			@(kKeyPadStar) : @"*", @(kKeyPadSlash) : @"/", @(kKeyPadEquals) : @"=",
+			@(kKeySpace) : @" "
 		};
 //		NSDictionary *ColemakOptionKeyMap = @{
 //			@(kKeyA) : @"&#x00E1;", @(kKeyC) : @"&#x00E7;", @(kKeyD) : @"&#x00DF;",

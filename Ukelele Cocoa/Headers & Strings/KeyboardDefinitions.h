@@ -48,6 +48,7 @@ enum eKeyNameSymbols {
 	kKey0 = 29,
 	kKeyMinus = 27,
 	kKeyEquals = 24,
+	kKeySpace = 49,
 	kKeyA = 0,
 	kKeyB = 11,
 	kKeyC = 8,
