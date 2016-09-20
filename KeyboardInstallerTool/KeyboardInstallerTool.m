@@ -131,16 +131,4 @@
 	reply(error);
 }
 
-- (void)uninstallToolWithAuthorization:(NSData *)authData withReply:(void (^)(NSError *))reply {
-	NSError *error = [self checkAuthorization:authData command:_cmd];
-	if (error == nil) {
-			// Unload the plist
-		NSString *plistLocation = [NSString stringWithFormat:@"/Library/LaunchDaemons/%@.plist", kHelperToolMachServiceName];
-		NSString *uninstallCommand = @"/bin/launchctl";
-		NSArray *uninstallArguments = @[@"unload", plistLocation];
-		(void)[NSTask launchedTaskWithLaunchPath:uninstallCommand arguments:uninstallArguments];
-	}
-	reply(error);
-}
-
 @end

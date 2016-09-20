@@ -21,8 +21,6 @@
 
 - (void)installFile:(NSURL *)sourceFile authorization:(NSData *)authData withReply:(void (^)(NSError *error))reply;
 
-- (void)uninstallToolWithAuthorization:(NSData *)authData withReply:(void (^)(NSError *error))reply;
-
 @end
 
 @interface KeyboardInstallerTool : NSObject

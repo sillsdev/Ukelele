@@ -20,7 +20,6 @@ enum UkeleleErrors {
 	kUkeleleErrorAuthenticationFailed = -16,		// Authentication failed for install
 	kUkeleleErrorNotPlainFile = -17,				// Not a plain file for a keyboard layout
 	kUkeleleErrorInvalidFileType = -18,				// Invalid UTI given
-	kUkeleleErrorCouldNotUninstallHelper = -19,		// Could not uninstall the helper tool
 	kUkeleleErrorNoKeyboardLayoutsInBundle = -20,	// No keyboard layouts in bundle
 	kUkeleleErrorCannotConvertToUnbundled = -21,	// Could not convert a bundle to an unbundled keyboard layout
 	kUkeleleErrorCannotInstallUnsavedFile = -22		// Cannot install a file that hasn't been saved

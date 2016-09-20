@@ -262,41 +262,10 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if (action == @selector(removeHelperTool:)) {
-			// Only enabled if it is installed
-		return [self helperToolIsInstalled];
-	}
 	else if (action == @selector(colourThemes:)) {
 		return YES;
 	}
 	return YES;
-}
-
-- (IBAction)removeHelperTool:(id)sender {
-#pragma unused(sender)
-	NSAssert([self helperToolIsInstalled], @"Helper tool must be installed before removal");
-	[self connectAndExecuteCommandBlock:^(NSError *theError) {
-#pragma unused(theError)
-			// Tell the tool to uninstall itself
-		NSXPCConnection *connection = [self helperToolConnection];
-		id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-				[NSApp presentError:error];
-			}];
-		}];
-		NSData *authorization = [self authorization];
-		[proxy uninstallToolWithAuthorization:authorization withReply:^(NSError *error) {
-			if (error) {
-					// Failed to do the copy
-				NSDictionary *errDict = @{NSLocalizedDescriptionKey: @"Could not uninstall the helper tool",
-										  NSUnderlyingErrorKey: error};
-				NSError *reportedError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotUninstallHelper userInfo:errDict];
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
-					[NSApp presentError:reportedError];
-				}];
-			}
-		}];
-	}];
 }
 
 - (IBAction)openManual:(id)sender {
