@@ -1481,6 +1481,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printingInfo setViewDict:viewDict];
 		// Create the print view and get print information
 	UKKeyboardPrintView *printView = [[UKKeyboardPrintView alloc] init];
+//	[printView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	if (printInfo == nil) {
 		printInfo = [[self.parentDocument printInfo] copy];
 	}
@@ -1493,6 +1494,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printingInfo setAvailablePageHeight:(NSUInteger)availableHeight];
 		// Create the views and work out pagination
 	UkeleleView *keyboardView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
+//	[keyboardView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
 	int actualID = [keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
 #pragma unused(actualID)
@@ -1509,15 +1511,18 @@ const CGFloat kTextPaneHeight = 17.0f;
 		for (NSUInteger i = 0; i < modifierCombinations; i++) {
 			NSUInteger modifiers = [modifierSets[i] unsignedIntegerValue];
 			UkeleleView *theKeyboard = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
+//			[theKeyboard setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[theKeyboard createViewWithKeyboardID:keyboardID withScale:1.0];
 			[theKeyboard scaleViewToScale:desiredScale limited:NO];
 			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers usingFallback:NO];
 			[theKeyboard setFrameOrigin:NSMakePoint(0, kTextPaneHeight)];
 			[theKeyboard setColourTheme:[ColourTheme defaultPrintTheme]];
 			NSTextView *stateNameView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, kTextPaneHeight)];
+//			[stateNameView setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[stateNameView setAlignment:NSCenterTextAlignment];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
+//			[hostView setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[hostView addSubview:theKeyboard];
 			[hostView addSubview:stateNameView];
 			stateViews[i] = hostView;

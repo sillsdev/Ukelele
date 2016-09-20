@@ -124,7 +124,7 @@ static CGAffineTransform kTextTransform = {
 	NSColor *textColour;
 	NSUInteger gradientType;
 	[self getInnerColour:&innerColour outerColour:&outerColour textColour:&textColour gradientType:&gradientType];
-	[self setCurrentTextColour:textColour];
+	[self.textView.textStorage addAttribute:NSForegroundColorAttributeName value:textColour range:NSMakeRange(0, self.textView.textStorage.length)];
 	NSGradient *colourGradient = nil;
 	if (gradientType == gradientTypeLinear) {
 			// Linear gradient

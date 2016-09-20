@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardController">
@@ -105,11 +105,11 @@
                                         <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-Py-4Pd">
                                             <rect key="frame" x="-3" y="-3" width="760" height="317"/>
                                             <clipView key="contentView" id="UbK-L1-wwU">
-                                                <rect key="frame" x="1" y="1" width="758" height="315"/>
+                                                <rect key="frame" x="1" y="1" width="743" height="300"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="758" height="315"/>
+                                                    <view autoresizesSubviews="NO" misplaced="YES" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
+                                                        <rect key="frame" x="0.0" y="-15" width="758" height="315"/>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
@@ -120,11 +120,11 @@
                                                 </constraints>
                                             </clipView>
                                             <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="zTV-iF-eFc">
-                                                <rect key="frame" x="1" y="300" width="758" height="16"/>
+                                                <rect key="frame" x="1" y="301" width="743" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gIG-s4-UAM">
-                                                <rect key="frame" x="743" y="1" width="16" height="315"/>
+                                                <rect key="frame" x="744" y="1" width="15" height="300"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -317,7 +317,6 @@
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Cts-Eq-PVA">
                                                 <rect key="frame" x="1" y="119" width="223" height="15"/>
@@ -458,15 +457,13 @@
                                                 <rect key="frame" x="1" y="1" width="703" height="226"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Vnz-1Z-fWP">
+                                                    <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Vnz-1Z-fWP">
                                                         <rect key="frame" x="0.0" y="0.0" width="703" height="226"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <size key="minSize" width="703" height="226"/>
                                                         <size key="maxSize" width="720" height="10000000"/>
                                                         <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <size key="minSize" width="703" height="226"/>
-                                                        <size key="maxSize" width="720" height="10000000"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="-2" id="OLw-yQ-RSx"/>
                                                         </connections>
@@ -483,9 +480,9 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <box autoresizesSubviews="NO" title="Attached to" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="XfP-AF-PoW">
+                                        <box autoresizesSubviews="NO" borderType="line" title="Attached to" translatesAutoresizingMaskIntoConstraints="NO" id="XfP-AF-PoW">
                                             <rect key="frame" x="14" y="5" width="726" height="69"/>
-                                            <view key="contentView">
+                                            <view key="contentView" id="2rf-d6-dIc">
                                                 <rect key="frame" x="1" y="1" width="724" height="53"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -503,13 +500,11 @@
                                                 </subviews>
                                             </view>
                                             <constraints>
-                                                <constraint firstItem="3Oj-mq-If4" firstAttribute="top" secondItem="XfP-AF-PoW" secondAttribute="top" constant="25" id="Qko-AY-HZp"/>
-                                                <constraint firstAttribute="bottom" secondItem="3Oj-mq-If4" secondAttribute="bottom" constant="11" id="TPE-eP-x6u"/>
-                                                <constraint firstAttribute="trailing" secondItem="3Oj-mq-If4" secondAttribute="trailing" constant="16" id="obT-g4-b88"/>
-                                                <constraint firstItem="3Oj-mq-If4" firstAttribute="leading" secondItem="XfP-AF-PoW" secondAttribute="leading" constant="16" id="ogo-gp-HcU"/>
+                                                <constraint firstItem="3Oj-mq-If4" firstAttribute="top" secondItem="XfP-AF-PoW" secondAttribute="top" constant="25" id="A42-7y-2TJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="3Oj-mq-If4" secondAttribute="bottom" constant="11" id="LYZ-22-w9E"/>
+                                                <constraint firstAttribute="trailing" secondItem="3Oj-mq-If4" secondAttribute="trailing" constant="16" id="Rjp-ii-4EW"/>
+                                                <constraint firstItem="3Oj-mq-If4" firstAttribute="leading" secondItem="XfP-AF-PoW" secondAttribute="leading" constant="16" id="mKb-DK-aYk"/>
                                             </constraints>
-                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </box>
                                     </subviews>
                                     <constraints>

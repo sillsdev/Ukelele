@@ -45,7 +45,6 @@ static CGAffineTransform kTextTransform = {
 										userInfo:nil];
 		[self addTrackingArea:trackingArea];
 		_textView = nil;
-		_currentTextColour = [NSColor whiteColor];
 		mouseIsInside = NO;
     }
     return self;
@@ -270,7 +269,7 @@ static CGAffineTransform kTextTransform = {
 	NSColor *textColour;
 	NSUInteger gradientType;
 	[self getInnerColour:&innerColour outerColour:&outerColour textColour:&textColour gradientType:&gradientType];
-	[self setCurrentTextColour:textColour];
+	[self.textView.textStorage addAttribute:NSForegroundColorAttributeName value:textColour range:NSMakeRange(0, self.textView.textStorage.length)];
 		// Draw the background with the appropriate gradient type
 	NSGradient *colourGradient = nil;
 	switch (gradientType) {
@@ -355,12 +354,6 @@ static CGAffineTransform kTextTransform = {
 	if (styleInfo != _styleInfo) {
 		_styleInfo = styleInfo;
 		[self setNeedsLayout:YES];
-	}
-}
-
-- (void)setCurrentTextColour:(NSColor *)newTextColour {
-	if (_currentTextColour != newTextColour) {
-		_currentTextColour = newTextColour;
 	}
 }
 

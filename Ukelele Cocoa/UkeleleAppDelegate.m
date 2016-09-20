@@ -192,6 +192,7 @@ static NSDictionary *defaultValues() {
 #pragma unused(notification)
 		// Register defaults
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues()];
+	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues()];
 	
 		// Set up the Unicode table

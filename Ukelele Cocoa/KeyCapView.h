@@ -33,7 +33,6 @@
 @property (nonatomic) BOOL fallback;
 @property (nonatomic) BOOL small;
 @property (nonatomic) BOOL dragHighlight;
-@property (nonatomic, assign) NSColor *currentTextColour;
 @property (nonatomic, strong) UKStyleInfo *styleInfo;
 @property (nonatomic, weak) id<UKMenuDelegate> menuDelegate;
 @property (nonatomic, weak) IBOutlet id<UKKeyCapClick> clickDelegate;
