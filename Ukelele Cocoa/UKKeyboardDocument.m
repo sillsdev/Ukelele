@@ -658,7 +658,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	directoryEnumerator = [directoryContents objectEnumerator];
 	NSMutableDictionary *fileNameDictionary = [NSMutableDictionary dictionary];
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
-		NSString *fileName = [directoryEntry preferredFilename];
+		NSString *fileName = [[directoryEntry preferredFilename] decomposedStringWithCanonicalMapping];
 		BOOL isKeyboardLayout = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringKeyboardLayoutExtension]];
 		BOOL isIconFile = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringIcnsExtension]];
 		if (isKeyboardLayout || isIconFile) {
@@ -729,7 +729,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	for (NSString *plistKey in infoPlistDictionary) {
 		if ([plistKey hasPrefix:kStringInfoPlistKLInfoPrefix]) {
 				// It's a keyboard language
-			NSString *keyboardName = [plistKey substringFromIndex:[kStringInfoPlistKLInfoPrefix length]];
+			NSString *keyboardName = [[plistKey substringFromIndex:[kStringInfoPlistKLInfoPrefix length]] decomposedStringWithCanonicalMapping];
 			NSDictionary *languageDictionary = infoPlistDictionary[plistKey];
 			NSString *languageIdentifier = languageDictionary[kStringInfoPlistIntendedLanguageKey];
 			languageList[keyboardName] = languageIdentifier;
