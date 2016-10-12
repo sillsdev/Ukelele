@@ -67,6 +67,7 @@ MY_EXTERN NSString *kStringBundleExtension;
 MY_EXTERN NSString *kStringContentsName;
 MY_EXTERN NSString *kStringResourcesName;
 MY_EXTERN NSString *kStringEnglishLocalisationName;
+MY_EXTERN NSString *kStringLocalisationSuffix;
 MY_EXTERN NSString *kStringInfoPlistStringsName;
 MY_EXTERN NSString *kStringIcnsExtension;
 MY_EXTERN NSString *kStringKeyboardLayoutExtension;

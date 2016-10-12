@@ -71,6 +71,7 @@ NSString *kStringBundleExtension = @".bundle";
 NSString *kStringContentsName = @"Contents";
 NSString *kStringResourcesName = @"Resources";
 NSString *kStringEnglishLocalisationName = @"English.lproj";
+NSString *kStringLocalisationSuffix = @"lproj";
 NSString *kStringInfoPlistStringsName = @"InfoPlist.strings";
 NSString *kStringIcnsExtension = @"icns";
 NSString *kStringKeyboardLayoutExtension = @"keylayout";

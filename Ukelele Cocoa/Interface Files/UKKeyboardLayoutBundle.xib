@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKKeyboardDocument">
@@ -40,7 +40,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R44-1f-ZB9">
-                        <rect key="frame" x="20" y="273" width="474" height="17"/>
+                        <rect key="frame" x="20" y="273" width="349" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Keyboard Layouts in this collection" id="Hey-uk-03e">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -185,7 +185,6 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="4fR-iG-wbE">
                             <autoresizingMask key="autoresizingMask"/>
@@ -223,6 +222,14 @@
                             <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="v67-ni-yyF"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AW3-PD-g5B">
+                        <rect key="frame" x="379" y="266" width="119" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Localisations" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nB2-Ig-U5R">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="lsp-Sh-MR9" secondAttribute="bottom" constant="20" id="3Ty-Rf-bnW"/>
@@ -230,7 +237,7 @@
                     <constraint firstItem="90p-nh-emO" firstAttribute="leading" secondItem="eZ0-ZP-oRP" secondAttribute="leading" id="75u-0x-xns"/>
                     <constraint firstItem="mJd-Dd-4U2" firstAttribute="leading" secondItem="lsp-Sh-MR9" secondAttribute="trailing" constant="12" symbolic="YES" id="7Cg-Ll-0kZ"/>
                     <constraint firstItem="2k1-ap-Wrj" firstAttribute="leading" secondItem="90p-nh-emO" secondAttribute="trailing" constant="8" symbolic="YES" id="AjI-i2-rI7"/>
-                    <constraint firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" constant="20" symbolic="YES" id="CIc-OZ-krk"/>
+                    <constraint firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" constant="145" id="CIc-OZ-krk"/>
                     <constraint firstItem="R44-1f-ZB9" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Gz7-fT-JwM"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="top" secondItem="R44-1f-ZB9" secondAttribute="bottom" constant="8" symbolic="YES" id="Hrz-d0-0he"/>
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="JUT-YY-pQ4"/>
@@ -245,7 +252,6 @@
                     <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="mJd-Dd-4U2" secondAttribute="trailing" id="dZo-jF-SX1"/>
                     <constraint firstItem="lsp-Sh-MR9" firstAttribute="bottom" secondItem="2k1-ap-Wrj" secondAttribute="bottom" id="khx-sU-m6w"/>
                     <constraint firstAttribute="bottom" secondItem="mJd-Dd-4U2" secondAttribute="bottom" constant="20" id="nTF-aI-rd5"/>
-                    <constraint firstItem="eZ0-ZP-oRP" firstAttribute="trailing" secondItem="R44-1f-ZB9" secondAttribute="trailing" id="wfB-DR-d3l"/>
                     <constraint firstAttribute="bottom" secondItem="90p-nh-emO" secondAttribute="bottom" constant="20" symbolic="YES" id="zDG-ss-caw"/>
                     <constraint firstItem="lsp-Sh-MR9" firstAttribute="leading" secondItem="ERy-c8-4cj" secondAttribute="trailing" constant="12" id="zEO-gi-cKV"/>
                 </constraints>
@@ -287,6 +293,9 @@
                         <action selector="askKeyboardIdentifiers:" target="-2" id="gfr-aG-u2x"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Localise Keyboard Name…" id="pgE-UE-u3E">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Set Keyboard Language…" id="hEE-13-tmp">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -315,7 +324,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="LZ6-Bn-g9C"/>
             </connections>
-            <point key="canvasLocation" x="173" y="514.5"/>
+            <point key="canvasLocation" x="180" y="556"/>
         </menu>
     </objects>
     <resources>

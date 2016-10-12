@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *keyboardLayouts;
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UKKeyboardController *controllerForCurrentEntry;
+@property (nonatomic, strong) NSMutableDictionary *localisations;
 
 - (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboardObject;
 
@@ -46,6 +47,7 @@
 - (IBAction)attachIconFile:(id)sender;
 - (IBAction)removeIcon:(id)sender;
 - (IBAction)askKeyboardIdentifiers:(id)sender;
+- (IBAction)localiseKeyboardName:(id)sender;
 - (IBAction)installForCurrentUser:(id)sender;
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;

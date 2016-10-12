@@ -81,6 +81,7 @@ NSString *kKeyboardName = @"keyboardName";
 		_sourceVersion = @"";
 		_bundleName = @"";
 		_bundleIdentifier = @"";
+		_localisations = [NSMutableDictionary dictionary];
 		currentObservation = nil;
     }
     return self;
@@ -415,21 +416,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSArray *keyboardLayouts = [self.keyboardLayouts copy];
 		// Allow the user to interact while we save asynchronously
 	[self unblockUserInteraction];
-		// Start at the bottom, the InfoPlist.strings file, which contains all the names
-	NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
-	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
-		NSString *keyboardName = [keyboardEntry keyboardName];
-		if (keyboardName != nil && ![keyboardName isEqualToString:@""]) {
-			[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, keyboardName]];
-		}
-	}
-	NSData *infoPlistData = [infoPlistString dataUsingEncoding:NSUTF16StringEncoding];
-	NSFileWrapper *infoPlistStringsFile = [[NSFileWrapper alloc] initRegularFileWithContents:infoPlistData];
-	[infoPlistStringsFile setPreferredFilename:kStringInfoPlistStringsName];
-		// Put the InfoPlist.strings file into an English.lproj directory
-	NSFileWrapper *englishLprojDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
-	[englishLprojDirectory setPreferredFilename:kStringEnglishLocalisationName];
-	[englishLprojDirectory addFileWrapper:infoPlistStringsFile];
 		// Create the version.plist file
 	NSMutableDictionary *versionPlistDictionary = [NSMutableDictionary dictionary];
 	versionPlistDictionary[kStringBuildVersionKey] = self.buildVersion;
@@ -445,7 +431,28 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create the Resources directory
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[resourcesDirectory setPreferredFilename:kStringResourcesName];
-	[resourcesDirectory addFileWrapper:englishLprojDirectory];
+		// Create the InfoPlist.strings files, which contain all the names
+	for (NSString *localisationKey in [self.localisations allKeys]) {
+			// For each keyboard, look for a name localised to this language
+		NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
+		for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
+			NSString *keyboardName = [keyboardEntry keyboardName];
+			if (keyboardName != nil && ![keyboardName isEqualToString:@""]) {
+				NSString *localisedName = keyboardEntry.localisedNames[localisationKey];
+				if (localisedName != nil) {
+					[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, localisedName]];
+				}
+			}
+		}
+		NSData *infoPlistData = [infoPlistString dataUsingEncoding:NSUTF16StringEncoding];
+		NSFileWrapper *infoPlistStringsFile = [[NSFileWrapper alloc] initRegularFileWithContents:infoPlistData];
+		[infoPlistStringsFile setPreferredFilename:kStringInfoPlistStringsName];
+			// Put the InfoPlist.strings file into an English.lproj directory
+		NSFileWrapper *lprojDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
+		[lprojDirectory setPreferredFilename:[NSString stringWithFormat:@"%@.%@", localisationKey, kStringLocalisationSuffix]];
+		[lprojDirectory addFileWrapper:infoPlistStringsFile];
+		[resourcesDirectory addFileWrapper:lprojDirectory];
+	}
 		// Add all the keyboard layout and icon files
 	for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 		NSString *keyboardName = [keyboardEntry fileName];
@@ -661,6 +668,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		NSString *fileName = [[directoryEntry preferredFilename] decomposedStringWithCanonicalMapping];
 		BOOL isKeyboardLayout = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringKeyboardLayoutExtension]];
 		BOOL isIconFile = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringIcnsExtension]];
+		BOOL islprojDirectory = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringLocalisationSuffix]] && [directoryEntry isDirectory];
 		if (isKeyboardLayout || isIconFile) {
 			NSString *fileBaseName = [fileName stringByDeletingPathExtension];
 			NSMutableDictionary *baseNameDictionary = fileNameDictionary[fileBaseName];
@@ -680,6 +688,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			else if (isIconFile) {
 					// It's an icon file
 				baseNameDictionary[kIconFileKey] = directoryEntry;
+			}
+		}
+		else if (islprojDirectory) {
+			NSString *localisationName = [fileName stringByDeletingPathExtension];
+				// Change special cases to standard
+			if ([localisationName isEqualToString:@"English"]) {
+				localisationName = @"en";
+			}
+				// Get the InfoPlist.strings file
+			NSDictionary *localisationDirectory = [directoryEntry fileWrappers];
+			NSFileWrapper *localisationStrings = localisationDirectory[kStringInfoPlistStringsName];
+			if (localisationStrings != nil) {
+					// We have a valid InfoPlist.strings file
+				NSString *localisations = [[NSString alloc] initWithData:[localisationStrings regularFileContents] encoding:NSUTF16StringEncoding];
+				NSDictionary *localisationList = [self parseStringsFile:localisations];
+				self.localisations[localisationName] = localisationList;
 			}
 		}
 	}
@@ -709,9 +733,40 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (nil != keyboardFileWrapper) {
 			[keyboardInfo setKeyboardFileWrapper:keyboardFileWrapper];
 		}
+			// Get the localised names
+		for (NSString *localisationKey in [self.localisations allKeys]) {
+			NSDictionary *localisationValues = self.localisations[localisationKey];
+			if (localisationValues[keyboardName] != nil) {
+					// Have a localisation in this language
+				keyboardInfo.localisedNames[localisationKey] = localisationValues[keyboardName];
+			}
+		}
 		[self.keyboardLayouts addObject:keyboardInfo];
 	}
 	return YES;
+}
+
+- (NSDictionary *)parseStringsFile:(NSString *)fileData {
+	NSMutableDictionary *theStrings = [NSMutableDictionary dictionary];
+	NSPredicate *predicateString = [NSPredicate predicateWithFormat:@"SELF matches \"\\\".*\\\" += +\\\".*\\\";\""];
+	[fileData enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+#pragma unused(stop)
+			// Only operate on non-comment lines
+		if (![line hasPrefix:@"/*"]) {
+			if ([predicateString evaluateWithObject:line]) {
+					// Have an appropriate line, so find the quotation marks
+				NSUInteger stringLength = [line length];
+				NSRange firstRange = [line rangeOfString:@"\"" options:0 range:NSMakeRange(0, stringLength)];
+				NSRange secondRange = [line rangeOfString:@"\"" options:0 range:NSMakeRange(firstRange.location + 1, stringLength - firstRange.location - 1)];
+				NSRange thirdRange = [line rangeOfString:@"\"" options:0 range:NSMakeRange(secondRange.location + 1, stringLength - secondRange.location - 1)];
+				NSRange fourthRange = [line rangeOfString:@"\"" options:0 range:NSMakeRange(thirdRange.location + 1, stringLength - thirdRange.location - 1)];
+				NSString *lhsString = [line substringWithRange:NSMakeRange(firstRange.location + 1, secondRange.location - firstRange.location - 1)];
+				NSString *rhsString = [line substringWithRange:NSMakeRange(thirdRange.location + 1, fourthRange.location - thirdRange.location - 1)];
+				theStrings[lhsString] = rhsString;
+			}
+		}
+	}];
+	return theStrings;
 }
 
 - (void)parseInfoPlist:(NSFileWrapper *)infoPlistFile {
@@ -1555,6 +1610,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	NSAssert(docWindow, @"Must have a document window");
 	[keyboardController askKeyboardIdentifiers:docWindow];
+}
+
+	// Localise the keyboard's name
+- (IBAction)localiseKeyboardName:(id)sender {
+#pragma unused(sender)
 }
 
 	// Install the keyboard layout

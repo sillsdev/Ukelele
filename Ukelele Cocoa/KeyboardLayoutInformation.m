@@ -29,6 +29,7 @@
 	_iconData = nil;
 	_keyboardController = nil;
 	_hasBadKeyboard = NO;
+	_localisedNames = [NSMutableDictionary dictionary];
 	return self;
 }
 
