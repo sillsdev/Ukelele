@@ -295,6 +295,9 @@
                 </menuItem>
                 <menuItem title="Localise Keyboard Name…" id="pgE-UE-u3E">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="localiseKeyboardName:" target="-2" id="uMW-Gc-Nan"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Set Keyboard Language…" id="hEE-13-tmp">
                     <modifierMask key="keyEquivalentModifierMask"/>

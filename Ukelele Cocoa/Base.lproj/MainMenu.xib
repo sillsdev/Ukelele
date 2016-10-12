@@ -619,6 +619,9 @@
                             </menuItem>
                             <menuItem title="Localise Keyboard Name…" id="j7g-Ja-haK">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="localiseKeyboardName:" target="-1" id="nJI-7p-9HJ"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Set Keyboard Language…" id="qa4-gs-lP2">
                                 <modifierMask key="keyEquivalentModifierMask"/>
