@@ -194,6 +194,7 @@
 		5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */; };
 		5282DCB11DAE6C7300C43FE7 /* LocalisationsDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */; };
 		5282DCB41DAE6EA800C43FE7 /* LocalisationsDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */; };
+		5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
@@ -585,6 +586,8 @@
 		5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocalisationsDialog.xib; path = "Interface Files/LocalisationsDialog.xib"; sourceTree = "<group>"; };
 		5282DCB21DAE6EA800C43FE7 /* LocalisationsDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationsDialogController.h; sourceTree = "<group>"; };
 		5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationsDialogController.m; sourceTree = "<group>"; };
+		5282DCB51DB0CF3000C43FE7 /* LocaleCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocaleCode.h; sourceTree = "<group>"; };
+		5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocaleCode.mm; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDiacriticDisplay.h; sourceTree = "<group>"; };
@@ -862,9 +865,6 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
-				5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */,
-				528052871D65AEA700356D36 /* WarningDialog.xib */,
-				52743F591BCA30B200C41310 /* ProgressWindow.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -891,8 +891,10 @@
 				521E5EA61926228000C45A4A /* InspectorWindow.xib */,
 				52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */,
 				52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */,
+				5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */,
 				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
 				523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */,
+				52743F591BCA30B200C41310 /* ProgressWindow.xib */,
 				529B223D1927213600D9F055 /* ReplaceNameSheet.xib */,
 				529A5FCB192738C9002C14E3 /* SelectKeyByCodeSheet.xib */,
 				52EB2B261927397000712272 /* ToolboxController.xib */,
@@ -903,6 +905,7 @@
 				525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */,
 				52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */,
 				52334B3719276B4300571CBA /* UnlinkModifiersDialog.xib */,
+				528052871D65AEA700356D36 /* WarningDialog.xib */,
 				528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */,
 			);
 			name = "Interface Files";
@@ -1048,6 +1051,8 @@
 				523B00EC191CA0D100E06DF3 /* LanguageRegistry.m */,
 				523B00ED191CA0D100E06DF3 /* LayoutInfo.h */,
 				523B00EE191CA0D100E06DF3 /* LayoutInfo.mm */,
+				5282DCB51DB0CF3000C43FE7 /* LocaleCode.h */,
+				5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */,
 				523B00EF191CA0D100E06DF3 /* ModifierConstants.h */,
 				523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */,
 				523B00F1191CA0D100E06DF3 /* RandomNumberGenerator.h */,
@@ -1066,10 +1071,10 @@
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
 				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
 				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
-				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
-				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
 				52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */,
 				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
+				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
+				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
 				523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */,
 				523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
@@ -1518,6 +1523,7 @@
 				525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */,
 				523B0198191CA18C00E06DF3 /* ConfirmStateNameSheet.m in Sources */,
 				523B019D191CA18C00E06DF3 /* DragTextHandler.m in Sources */,
+				5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */,
 				523B01A9191CA18C00E06DF3 /* IntendedLanguageSheet.m in Sources */,
 				523B01B6191CA18C00E06DF3 /* ToolboxController.m in Sources */,
 				523B0108191CA0D100E06DF3 /* KeyCodeMap.mm in Sources */,

@@ -336,4 +336,44 @@ NSString *kLTRRegistryFileName = @"language-subtag-registry";
 	return normalisedCode;
 }
 
+- (NSString *)descriptionForLocaleCode:(LocaleCode *)localeCode {
+    NSString *descriptionString = @"";
+    // First, normalise the language code
+    LanguageCode *originalCode = [[LanguageCode alloc] init];
+    originalCode.languageCode = localeCode.languageCode;
+    originalCode.scriptCode = localeCode.scriptCode;
+    originalCode.regionCode = localeCode.regionCode;
+    LanguageCode *normalisedCode = [self normaliseLanguageCode:originalCode];
+    // Find the language
+    NSString *targetCode = [normalisedCode languageCode];
+	for (LanguageRegistryEntry *languageEntry in languageList) {
+		NSString *theCode = [languageEntry code];
+		if ([theCode isEqualToString:targetCode]) {
+            descriptionString = [descriptionString stringByAppendingString:[languageEntry name]];
+			break;
+		}
+	}
+    // Find the script, if any
+    NSString *targetScript = [normalisedCode scriptCode];
+    if (targetScript != nil && ![targetScript isEqualToString:@""]) {
+        for (LanguageRegistryEntry *scriptEntry in scriptList) {
+            NSString *theScript = [scriptEntry code];
+            if ([theScript isEqualToString:targetScript]) {
+                descriptionString = [descriptionString stringByAppendingString:[NSString stringWithFormat:@"-%@", [scriptEntry name]]];
+            }
+        }
+    }
+    // Find the region, if any
+    NSString *targetRegion = [normalisedCode regionCode];
+    if (targetRegion != nil && ![targetRegion isEqualToString:@""]) {
+        for (LanguageRegistryEntry *regionEntry in regionList) {
+            NSString *theRegion = [regionEntry code];
+            if ([theRegion isEqualToString:targetRegion]) {
+                descriptionString = [descriptionString stringByAppendingString:[NSString stringWithFormat:@"_%@", [regionEntry name]]];
+            }
+        }
+    }
+    return  descriptionString;
+}
+
 @end

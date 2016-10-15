@@ -36,7 +36,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="168" minWidth="40" maxWidth="1000" id="epw-SW-W70">
+                                        <tableColumn identifier="LanguageCode" editable="NO" width="168" minWidth="40" maxWidth="1000" id="epw-SW-W70">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Language Code">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +69,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="264" minWidth="40" maxWidth="1000" id="1XO-nK-Jsn">
+                                        <tableColumn identifier="LanguageName" editable="NO" width="264" minWidth="40" maxWidth="1000" id="1XO-nK-Jsn">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Language Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -144,6 +144,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="acceptLocalisations:" target="-2" id="Fdx-07-4QB"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J9L-Bx-uyM">
                         <rect key="frame" x="304" y="4" width="81" height="32"/>
@@ -155,6 +158,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancelLocalisations:" target="-2" id="4cF-jd-Nrn"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQd-Zp-DXx">
                         <rect key="frame" x="39" y="19" width="19" height="21"/>
@@ -175,9 +181,15 @@ Gw
             <items>
                 <menuItem title="Edit Language…" id="eVw-RA-FaF">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editLocalisation:" target="-2" id="XJU-IV-gYQ"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Remove Language…" id="FOw-EX-oPQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="removeLocalisation:" target="-2" id="6gJ-m7-zch"/>
+                    </connections>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="-20.5" y="410.5"/>

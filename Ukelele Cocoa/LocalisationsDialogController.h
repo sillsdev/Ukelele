@@ -8,11 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface LocalisationsDialogController : NSWindowController
+@interface LocalisationsDialogController : NSWindowController<NSTableViewDelegate, NSTableViewDataSource>
+
+@property (strong) NSMutableArray *localeList;
+@property (strong) NSMutableArray *localeDescriptionList;
 
 @property (weak) IBOutlet NSTableView *localisationsTable;
 
+- (IBAction)editLocalisation:(id)sender;
 - (IBAction)addLocalisation:(id)sender;
 - (IBAction)removeLocalisation:(id)sender;
+- (IBAction)acceptLocalisations:(id)sender;
+- (IBAction)cancelLocalisations:(id)sender;
+
++ (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations;
 
 @end

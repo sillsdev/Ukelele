@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LanguageCode.h"
+#import "LocaleCode.h"
 
 @interface LanguageRegistryEntry : NSObject
 
@@ -32,5 +33,6 @@
 - (NSArray *)searchVariant:(NSString *)searchTerm;
 
 - (LanguageCode *)normaliseLanguageCode:(LanguageCode *)originalCode;
+- (NSString *)descriptionForLocaleCode:(LocaleCode *)localeCode;
 
 @end
