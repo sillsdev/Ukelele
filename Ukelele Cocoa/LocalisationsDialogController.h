@@ -14,6 +14,7 @@
 @property (strong) NSMutableArray *localeDescriptionList;
 
 @property (weak) IBOutlet NSTableView *localisationsTable;
+@property (weak) IBOutlet NSButton *removeLocaleButton;
 
 - (IBAction)editLocalisation:(id)sender;
 - (IBAction)addLocalisation:(id)sender;

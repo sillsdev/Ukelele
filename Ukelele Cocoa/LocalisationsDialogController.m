@@ -17,6 +17,7 @@
 
 @implementation LocalisationsDialogController {
     LanguageRegistry *languageRegistry;
+    void (^callback)(NSArray *);
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName {
@@ -25,6 +26,7 @@
     if (self) {
         self.currentLocalisations = [NSMutableArray array];
         languageRegistry = [LanguageRegistry getInstance];
+        callback = nil;
     }
     return self;
 }
@@ -32,7 +34,7 @@
 + (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations {
     LocalisationsDialogController *theController = [[LocalisationsDialogController alloc] initWithWindowNibName:@"LocalisationsDialog"];
     theController.currentLocalisations = [localisations mutableCopy];
-    [theController updateLocales];
+    [theController readLocales];
     return theController;
 }
 
@@ -53,22 +55,27 @@
 
 - (IBAction)removeLocalisation:(id)sender {
 #pragma unused(sender)
-    
+    NSAssert([self.localisationsTable selectedRow] != -1, @"Must have a selected row");
+    NSInteger selectedRow = [self.localisationsTable selectedRow];
+    [self.localeList removeObjectAtIndex:selectedRow];
+    [self.localeDescriptionList removeObjectAtIndex:selectedRow];
+    [self.localisationsTable reloadData];
 }
 
 - (IBAction)acceptLocalisations:(id)sender {
 #pragma unused(sender)
-    
+    [self writeLocales];
+    callback(self.currentLocalisations);
 }
 
 - (IBAction)cancelLocalisations:(id)sender {
 #pragma unused(sender)
-    
+    callback(nil);
 }
 
 #pragma mark Manage locales
 
-- (void)updateLocales {
+- (void)readLocales {
     [self.localeList removeAllObjects];
     [self.localeDescriptionList removeAllObjects];
     for (NSUInteger i = 0; i < [self.currentLocalisations count]; i++) {
@@ -78,6 +85,13 @@
             [self.localeList addObject:[localeCode stringRepresentation]];
             [self.localeDescriptionList addObject:[languageRegistry descriptionForLocaleCode:localeCode]];
         }
+    }
+}
+
+- (void)writeLocales {
+    [self.currentLocalisations removeAllObjects];
+    for (NSUInteger i = 0; i < [self.localeList count]; i++) {
+        [self.currentLocalisations addObject:self.localeList[i]];
     }
 }
 
@@ -104,10 +118,10 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 #pragma unused(tableView)
-    if ([[tableColumn identifier] isEqualToString:@"LanguageCode"]) {
+    if ([[tableColumn identifier] isEqualToString:@"LocaleCode"]) {
         return self.localeList[row];
     }
-    else if ([[tableColumn identifier] isEqualToString:@"LanguageName"]) {
+    else if ([[tableColumn identifier] isEqualToString:@"LocaleName"]) {
         return self.localeDescriptionList[row];
     }
     else {

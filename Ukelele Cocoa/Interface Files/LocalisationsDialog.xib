@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="LocalisationsDialogController">
             <connections>
                 <outlet property="localisationsTable" destination="vBX-xO-cKc" id="wdA-Va-DTZ"/>
+                <outlet property="removeLocaleButton" destination="mQd-Zp-DXx" id="uB6-E3-mqt"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="Wed-cy-SWe"/>
             </connections>
         </customObject>
@@ -36,8 +37,8 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="LanguageCode" editable="NO" width="168" minWidth="40" maxWidth="1000" id="epw-SW-W70">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Language Code">
+                                        <tableColumn identifier="LocaleCode" editable="NO" width="168" minWidth="40" maxWidth="1000" id="epw-SW-W70">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Locale Code">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -69,8 +70,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="LanguageName" editable="NO" width="264" minWidth="40" maxWidth="1000" id="1XO-nK-Jsn">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Language Name">
+                                        <tableColumn identifier="LocaleName" editable="NO" width="264" minWidth="40" maxWidth="1000" id="1XO-nK-Jsn">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Locale Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -185,7 +186,7 @@ Gw
                         <action selector="editLocalisation:" target="-2" id="XJU-IV-gYQ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Remove Language…" id="FOw-EX-oPQ">
+                <menuItem title="Remove Locale…" id="FOw-EX-oPQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="removeLocalisation:" target="-2" id="6gJ-m7-zch"/>
@@ -194,6 +195,7 @@ Gw
             </items>
             <point key="canvasLocation" x="-20.5" y="410.5"/>
         </menu>
+        <userDefaultsController representsSharedInstance="YES" id="YRR-ky-gTG"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
