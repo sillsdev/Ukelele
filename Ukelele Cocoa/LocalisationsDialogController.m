@@ -16,6 +16,7 @@
 @end
 
 @implementation LocalisationsDialogController {
+    NSWindow *parentWindow;
     LanguageRegistry *languageRegistry;
     void (^callback)(NSArray *);
 }
@@ -25,6 +26,9 @@
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         self.currentLocalisations = [NSMutableArray array];
+        self.localeList = [NSMutableArray array];
+        self.localeDescriptionList = [NSMutableArray array];
+        parentWindow = nil;
         languageRegistry = [LanguageRegistry getInstance];
         callback = nil;
     }
@@ -42,6 +46,12 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSArray *))theCallback {
+    parentWindow = theParentWindow;
+    callback = theCallback;
+    [NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
 - (IBAction)editLocalisation:(id)sender {
@@ -65,11 +75,15 @@
 - (IBAction)acceptLocalisations:(id)sender {
 #pragma unused(sender)
     [self writeLocales];
+    [self.window orderOut:self];
+    [NSApp endSheet:self.window];
     callback(self.currentLocalisations);
 }
 
 - (IBAction)cancelLocalisations:(id)sender {
 #pragma unused(sender)
+    [self.window orderOut:self];
+    [NSApp endSheet:self.window];
     callback(nil);
 }
 

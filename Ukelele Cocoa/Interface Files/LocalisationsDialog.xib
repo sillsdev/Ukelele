@@ -105,6 +105,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <outlet property="dataSource" destination="-2" id="IxV-ji-sRz"/>
                                         <outlet property="delegate" destination="-2" id="euj-Nl-mS1"/>
                                         <outlet property="menu" destination="ARx-wl-3nl" id="v2p-eZ-3lk"/>
                                     </connections>

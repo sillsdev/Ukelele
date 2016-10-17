@@ -229,6 +229,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="editLocalisations:" target="-2" id="gqf-uM-Huf"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>

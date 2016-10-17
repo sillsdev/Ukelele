@@ -23,6 +23,7 @@
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
 #import "UKProgressWindow.h"
+#import "LocalisationsDialogController.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -1610,6 +1611,19 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	NSAssert(docWindow, @"Must have a document window");
 	[keyboardController askKeyboardIdentifiers:docWindow];
+}
+
+// Edit the localisations for this collection
+- (IBAction)editLocalisations:(id)sender {
+#pragma unused(sender)
+    NSArray *localisations = [self.localisations allKeys];
+    __block LocalisationsDialogController *theController = [LocalisationsDialogController localisationsDialogWithLocalisations:localisations];
+    [theController beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSArray *theLocales) {
+        if (theLocales != nil) {
+            NSLog(@"Got locales %@", theLocales);
+        }
+        theController = nil;
+    }];
 }
 
 	// Localise the keyboard's name

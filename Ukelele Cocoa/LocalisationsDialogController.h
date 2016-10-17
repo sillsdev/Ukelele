@@ -24,4 +24,6 @@
 
 + (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations;
 
+- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSArray *))theCallback;
+
 @end
