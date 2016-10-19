@@ -20,7 +20,6 @@
 - (IBAction)addLocalisation:(id)sender;
 - (IBAction)removeLocalisation:(id)sender;
 - (IBAction)acceptLocalisations:(id)sender;
-- (IBAction)cancelLocalisations:(id)sender;
 
 + (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations;
 

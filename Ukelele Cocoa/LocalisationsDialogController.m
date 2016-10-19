@@ -80,13 +80,6 @@
     callback(self.currentLocalisations);
 }
 
-- (IBAction)cancelLocalisations:(id)sender {
-#pragma unused(sender)
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window];
-    callback(nil);
-}
-
 #pragma mark Manage locales
 
 - (void)readLocales {
@@ -112,8 +105,13 @@
 #pragma mark Table Delegate Methods
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-#pragma unused(row)
-    return [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+    NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	if (view == nil) {
+		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
+		[view setIdentifier:[tableColumn identifier]];
+	}
+	[view.textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+	return view;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
