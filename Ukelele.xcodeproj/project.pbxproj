@@ -195,6 +195,8 @@
 		5282DCB11DAE6C7300C43FE7 /* LocalisationsDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */; };
 		5282DCB41DAE6EA800C43FE7 /* LocalisationsDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */; };
 		5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */; };
+		5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */; };
+		5282DCBC1DB8A9F500C43FE7 /* LocaleDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */; };
 		52835ADB19261B96005979E0 /* EditKeyPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52835ADA19261B96005979E0 /* EditKeyPopover.xib */; };
 		528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */; };
 		528CE3011AF867DC00D1019E /* UKDiacriticDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */; };
@@ -588,6 +590,9 @@
 		5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationsDialogController.m; sourceTree = "<group>"; };
 		5282DCB51DB0CF3000C43FE7 /* LocaleCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocaleCode.h; sourceTree = "<group>"; };
 		5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocaleCode.mm; sourceTree = "<group>"; };
+		5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocaleDialog.xib; path = "Interface Files/LocaleDialog.xib"; sourceTree = "<group>"; };
+		5282DCBA1DB8A9F500C43FE7 /* LocaleDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocaleDialogController.h; sourceTree = "<group>"; };
+		5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocaleDialogController.m; sourceTree = "<group>"; };
 		52835ADA19261B96005979E0 /* EditKeyPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyPopover.xib; path = "Interface Files/EditKeyPopover.xib"; sourceTree = "<group>"; };
 		528A278019276C44001DEAB9 /* WrongStateChosenSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WrongStateChosenSheet.xib; path = "Interface Files/WrongStateChosenSheet.xib"; sourceTree = "<group>"; };
 		528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDiacriticDisplay.h; sourceTree = "<group>"; };
@@ -865,6 +870,7 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -1170,6 +1176,8 @@
 				523B0156191CA18C00E06DF3 /* IntendedLanguageSheet.m */,
 				523B015D191CA18C00E06DF3 /* KeyboardTypeSheet.h */,
 				523B015E191CA18C00E06DF3 /* KeyboardTypeSheet.m */,
+				5282DCBA1DB8A9F500C43FE7 /* LocaleDialogController.h */,
+				5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */,
 				5282DCB21DAE6EA800C43FE7 /* LocalisationsDialogController.h */,
 				5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */,
 				523B015F191CA18C00E06DF3 /* ModifiersController.h */,
@@ -1368,6 +1376,7 @@
 				52ED0B711A91EF2A00322FFE /* UKDocumentPrintView.xib in Resources */,
 				52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */,
 				5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */,
+				5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
@@ -1542,6 +1551,7 @@
 				523B019B191CA18C00E06DF3 /* CreateSelectedDeadKeyController.m in Sources */,
 				523B01AE191CA18C00E06DF3 /* ModifiersController.mm in Sources */,
 				5282DCB41DAE6EA800C43FE7 /* LocalisationsDialogController.m in Sources */,
+				5282DCBC1DB8A9F500C43FE7 /* LocaleDialogController.m in Sources */,
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,
 				523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */,

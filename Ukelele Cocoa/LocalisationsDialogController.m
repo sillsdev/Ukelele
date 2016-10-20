@@ -18,7 +18,7 @@
 @implementation LocalisationsDialogController {
     NSWindow *parentWindow;
     LanguageRegistry *languageRegistry;
-    void (^callback)(NSArray *);
+    void (^callback)(NSString *, NSString *);
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName {
@@ -48,7 +48,7 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSArray *))theCallback {
+- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSString *, NSString *))theCallback {
     parentWindow = theParentWindow;
     callback = theCallback;
     [NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
@@ -77,7 +77,7 @@
     [self writeLocales];
     [self.window orderOut:self];
     [NSApp endSheet:self.window];
-    callback(self.currentLocalisations);
+    callback(nil, nil);
 }
 
 #pragma mark Manage locales

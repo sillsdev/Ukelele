@@ -23,6 +23,6 @@
 
 + (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations;
 
-- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSArray *))theCallback;
+- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSString *, NSString *))theCallback;
 
 @end

@@ -47,24 +47,10 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2k1-ap-Wrj">
-                        <rect key="frame" x="57" y="19" width="23" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="23" id="aQZ-ex-ulT"/>
-                        </constraints>
-                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TTY-xH-dPK">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="removeKeyboardLayout:" target="-2" id="kNW-cC-nqX"/>
-                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="cQs-4A-brX"/>
-                        </connections>
-                    </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90p-nh-emO">
-                        <rect key="frame" x="20" y="19" width="29" height="23"/>
+                        <rect key="frame" x="20" y="19" width="52" height="23"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="29" id="fge-eN-MtD"/>
+                            <constraint firstAttribute="width" constant="52" id="fge-eN-MtD"/>
                         </constraints>
                         <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="Q7e-TI-Ta7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -231,6 +217,20 @@
                         </buttonCell>
                         <connections>
                             <action selector="editLocalisations:" target="-2" id="gqf-uM-Huf"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2k1-ap-Wrj">
+                        <rect key="frame" x="80" y="19" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="aQZ-ex-ulT"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TTY-xH-dPK">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="removeKeyboardLayout:" target="-2" id="kNW-cC-nqX"/>
+                            <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="cQs-4A-brX"/>
                         </connections>
                     </button>
                 </subviews>

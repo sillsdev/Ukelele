@@ -1618,11 +1618,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma unused(sender)
     NSArray *localisations = [self.localisations allKeys];
     __block LocalisationsDialogController *theController = [LocalisationsDialogController localisationsDialogWithLocalisations:localisations];
-    [theController beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSArray *theLocales) {
-        if (theLocales != nil) {
-            NSLog(@"Got locales %@", theLocales);
+    [theController beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSString *oldLocale, NSString *newLocale) {
+        if (oldLocale != nil &&newLocale != nil) {
+			NSLog(@"Change %@ to %@", oldLocale, newLocale);
         }
-        theController = nil;
+		else if (oldLocale != nil) {
+			NSLog(@"Remove %@", oldLocale);
+		}
+		else if (newLocale != nil) {
+			NSLog(@"Add %@", newLocale);
+		}
+		else {
+			NSLog(@"Done with localisation");
+			theController = nil;
+		}
     }];
 }
 
