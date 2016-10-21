@@ -244,8 +244,8 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="Cu6-3k-bY6" firstAttribute="leading" secondItem="kaa-LA-hAb" secondAttribute="leading" constant="2" id="G7z-Xy-96p"/>
+                                                                    <constraint firstItem="Cu6-3k-bY6" firstAttribute="top" secondItem="kaa-LA-hAb" secondAttribute="top" constant="3" id="Gor-Nr-Rah"/>
                                                                     <constraint firstItem="Cu6-3k-bY6" firstAttribute="centerX" secondItem="kaa-LA-hAb" secondAttribute="centerX" id="cIt-6v-SnI"/>
-                                                                    <constraint firstItem="Cu6-3k-bY6" firstAttribute="top" secondItem="kaa-LA-hAb" secondAttribute="top" constant="3" id="pGc-Aa-vMs"/>
                                                                 </constraints>
                                                                 <connections>
                                                                     <outlet property="textField" destination="Cu6-3k-bY6" id="8ba-QT-xQG"/>
@@ -270,7 +270,7 @@
                                                                 <rect key="frame" x="312" y="1" width="88" height="17"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
-                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qo7-4Z-5k6">
+                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qo7-4Z-5k6">
                                                                         <rect key="frame" x="0.0" y="0.0" width="88" height="14"/>
                                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" enabled="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="bj0-ax-qOU">
                                                                             <font key="font" metaFont="smallSystem"/>
@@ -281,6 +281,7 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="qo7-4Z-5k6" firstAttribute="leading" secondItem="JjV-tc-giI" secondAttribute="leading" constant="2" id="4Kb-Ol-S8B"/>
+                                                                    <constraint firstItem="qo7-4Z-5k6" firstAttribute="top" secondItem="JjV-tc-giI" secondAttribute="top" constant="3" id="8vS-3P-cYm"/>
                                                                     <constraint firstItem="qo7-4Z-5k6" firstAttribute="centerX" secondItem="JjV-tc-giI" secondAttribute="centerX" id="zMI-xt-th6"/>
                                                                 </constraints>
                                                                 <connections>

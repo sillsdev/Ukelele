@@ -158,6 +158,7 @@
 		}
 		else {
 			[self.languageTable deselectAll:self];
+			[self.languageTable scrollRowToVisible:0];
 		}
 	}
 }
@@ -189,6 +190,7 @@
 		}
 		else {
 			[self.scriptTable deselectAll:self];
+			[self.scriptTable scrollRowToVisible:0];
 		}
 	}
 }
@@ -220,6 +222,7 @@
 		}
 		else {
 			[self.regionTable deselectAll:self];
+			[self.regionTable scrollRowToVisible:0];
 		}
 	}
 }

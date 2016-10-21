@@ -50,7 +50,7 @@
 }
 
 - (void)beginLocalisationsForCollection:(NSString *)collectionName withCallback:(void (^)(NSString *, NSString *))theCallback {
-	NSString *windowName = [NSString stringWithFormat:@"Localisations for %@", collectionName];
+	NSString *windowName = [NSString stringWithFormat:@"%@ Localisations", collectionName];
 	[self.window setTitle:windowName];
     callback = theCallback;
 	[self.window makeKeyAndOrderFront:self];
