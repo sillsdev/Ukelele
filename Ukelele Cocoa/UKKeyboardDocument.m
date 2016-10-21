@@ -1622,7 +1622,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (localisationsWindow == nil) {
 		localisationsWindow = [LocalisationsWindowController localisationsWindowWithLocalisations:localisations];
 	}
-    [localisationsWindow beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSString *oldLocale, NSString *newLocale) {
+	[localisationsWindow beginLocalisationsForCollection:self.bundleName withCallback:^(NSString *oldLocale, NSString *newLocale) {
         if (oldLocale != nil &&newLocale != nil) {
 			NSLog(@"Change %@ to %@", oldLocale, newLocale);
         }
@@ -1852,6 +1852,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	InspectorWindowController *inspectorController = [InspectorWindowController getInstance];
 	[inspectorController setCurrentBundle:nil];
 	[inspectorController unbind:@"currentDocument"];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+#pragma unused(notification)
+	if (localisationsWindow != nil) {
+		[localisationsWindow close];
+	}
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

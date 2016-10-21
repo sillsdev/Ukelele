@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LocalisationsDialogController">
+        <customObject id="-2" userLabel="File's Owner" customClass="LocalisationsWindowController">
             <connections>
                 <outlet property="localisationsTable" destination="vBX-xO-cKc" id="wdA-Va-DTZ"/>
                 <outlet property="removeLocaleButton" destination="mQd-Zp-DXx" id="uB6-E3-mqt"/>
@@ -105,6 +105,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action trigger="doubleAction" selector="editLocalisation:" target="-2" id="1QD-jV-Wdj"/>
                                         <outlet property="dataSource" destination="-2" id="IxV-ji-sRz"/>
                                         <outlet property="delegate" destination="-2" id="euj-Nl-mS1"/>
                                         <outlet property="menu" destination="ARx-wl-3nl" id="v2p-eZ-3lk"/>
@@ -113,7 +114,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="fw5-69-Z2J">
-                            <rect key="frame" x="1" y="187" width="438" height="15"/>
+                            <rect key="frame" x="1" y="-15" width="0.0" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="OWD-cI-m4d">

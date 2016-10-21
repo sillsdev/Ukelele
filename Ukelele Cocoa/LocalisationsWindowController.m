@@ -17,20 +17,18 @@
 @end
 
 @implementation LocalisationsWindowController {
-    NSWindow *parentWindow;
     LanguageRegistry *languageRegistry;
 	LocaleDialogController *localeDialog;
     void (^callback)(NSString *, NSString *);
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName {
-    [[NSBundle mainBundle] loadNibNamed:@"LocalisationsDialog" owner:self topLevelObjects:nil];
+    [[NSBundle mainBundle] loadNibNamed:@"LocalisationsWindow" owner:self topLevelObjects:nil];
     self = [super initWithWindowNibName:windowNibName];
     if (self) {
         self.currentLocalisations = [NSMutableArray array];
         self.localeList = [NSMutableArray array];
         self.localeDescriptionList = [NSMutableArray array];
-        parentWindow = nil;
         languageRegistry = [LanguageRegistry getInstance];
 		localeDialog = nil;
         callback = nil;
@@ -39,7 +37,7 @@
 }
 
 + (LocalisationsWindowController *)localisationsWindowWithLocalisations:(NSArray *)localisations {
-    LocalisationsWindowController *theController = [[LocalisationsWindowController alloc] initWithWindowNibName:@"LocalisationsDialog"];
+    LocalisationsWindowController *theController = [[LocalisationsWindowController alloc] initWithWindowNibName:@"LocalisationsWindow"];
     theController.currentLocalisations = [localisations mutableCopy];
     [theController readLocales];
     return theController;
@@ -51,10 +49,11 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (void)beginLocalisationsForWindow:(NSWindow *)theParentWindow withCallback:(void (^)(NSString *, NSString *))theCallback {
-    parentWindow = theParentWindow;
+- (void)beginLocalisationsForCollection:(NSString *)collectionName withCallback:(void (^)(NSString *, NSString *))theCallback {
+	NSString *windowName = [NSString stringWithFormat:@"Localisations for %@", collectionName];
+	[self.window setTitle:windowName];
     callback = theCallback;
-    [NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[self.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)editLocalisation:(id)sender {
@@ -65,7 +64,7 @@
 	NSInteger selectedRow = [self.localisationsTable clickedRow];
 	NSAssert(selectedRow != -1, @"Must have a selected row");
 	__block LocaleCode *currentLocale = [LocaleCode localeCodeFromString:self.localeList[selectedRow]];
-	[localeDialog beginLocaleDialog:currentLocale forWindow:parentWindow callBack:^(LocaleCode *theLocale) {
+	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^(LocaleCode *theLocale) {
 		if (theLocale != nil) {
 				// Got an edited locale
 			self.localeList[selectedRow] = [theLocale stringRepresentation];
@@ -93,7 +92,6 @@
 #pragma unused(sender)
     [self writeLocales];
     [self.window orderOut:self];
-    [NSApp endSheet:self.window];
     callback(nil, nil);
 }
 
