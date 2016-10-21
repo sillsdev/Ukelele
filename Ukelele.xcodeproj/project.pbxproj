@@ -192,8 +192,8 @@
 		528052881D65AEA700356D36 /* WarningDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528052871D65AEA700356D36 /* WarningDialog.xib */; };
 		5280528B1D65B1B000356D36 /* WarningDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5280528A1D65B1B000356D36 /* WarningDialogController.m */; };
 		5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */; };
-		5282DCB11DAE6C7300C43FE7 /* LocalisationsDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */; };
-		5282DCB41DAE6EA800C43FE7 /* LocalisationsDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */; };
+		5282DCB11DAE6C7300C43FE7 /* LocalisationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB01DAE6C7300C43FE7 /* LocalisationsWindow.xib */; };
+		5282DCB41DAE6EA800C43FE7 /* LocalisationsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB31DAE6EA800C43FE7 /* LocalisationsWindowController.m */; };
 		5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */; };
 		5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */; };
 		5282DCBC1DB8A9F500C43FE7 /* LocaleDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */; };
@@ -585,9 +585,9 @@
 		528052891D65B1B000356D36 /* WarningDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningDialogController.h; sourceTree = "<group>"; };
 		5280528A1D65B1B000356D36 /* WarningDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarningDialogController.m; sourceTree = "<group>"; };
 		5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = SpecialKeyWarning.rtf; sourceTree = "<group>"; };
-		5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocalisationsDialog.xib; path = "Interface Files/LocalisationsDialog.xib"; sourceTree = "<group>"; };
-		5282DCB21DAE6EA800C43FE7 /* LocalisationsDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationsDialogController.h; sourceTree = "<group>"; };
-		5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationsDialogController.m; sourceTree = "<group>"; };
+		5282DCB01DAE6C7300C43FE7 /* LocalisationsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocalisationsWindow.xib; path = "Interface Files/LocalisationsWindow.xib"; sourceTree = "<group>"; };
+		5282DCB21DAE6EA800C43FE7 /* LocalisationsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationsWindowController.h; sourceTree = "<group>"; };
+		5282DCB31DAE6EA800C43FE7 /* LocalisationsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationsWindowController.m; sourceTree = "<group>"; };
 		5282DCB51DB0CF3000C43FE7 /* LocaleCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocaleCode.h; sourceTree = "<group>"; };
 		5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocaleCode.mm; sourceTree = "<group>"; };
 		5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocaleDialog.xib; path = "Interface Files/LocaleDialog.xib"; sourceTree = "<group>"; };
@@ -897,7 +897,7 @@
 				521E5EA61926228000C45A4A /* InspectorWindow.xib */,
 				52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */,
 				52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */,
-				5282DCB01DAE6C7300C43FE7 /* LocalisationsDialog.xib */,
+				5282DCB01DAE6C7300C43FE7 /* LocalisationsWindow.xib */,
 				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
 				523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */,
 				52743F591BCA30B200C41310 /* ProgressWindow.xib */,
@@ -1178,8 +1178,8 @@
 				523B015E191CA18C00E06DF3 /* KeyboardTypeSheet.m */,
 				5282DCBA1DB8A9F500C43FE7 /* LocaleDialogController.h */,
 				5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */,
-				5282DCB21DAE6EA800C43FE7 /* LocalisationsDialogController.h */,
-				5282DCB31DAE6EA800C43FE7 /* LocalisationsDialogController.m */,
+				5282DCB21DAE6EA800C43FE7 /* LocalisationsWindowController.h */,
+				5282DCB31DAE6EA800C43FE7 /* LocalisationsWindowController.m */,
 				523B015F191CA18C00E06DF3 /* ModifiersController.h */,
 				523B0160191CA18C00E06DF3 /* ModifiersController.mm */,
 				523B0161191CA18C00E06DF3 /* ModifiersDataSource.h */,
@@ -1398,7 +1398,7 @@
 				523F9FC4196FB39900A896CA /* NewKeyboardDialog.xib in Resources */,
 				524EAE2C1B9FD17800B77B43 /* keyboards.strings in Resources */,
 				528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */,
-				5282DCB11DAE6C7300C43FE7 /* LocalisationsDialog.xib in Resources */,
+				5282DCB11DAE6C7300C43FE7 /* LocalisationsWindow.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
@@ -1550,7 +1550,7 @@
 				523B00CE191CA00A00E06DF3 /* TerminatorsElement.mm in Sources */,
 				523B019B191CA18C00E06DF3 /* CreateSelectedDeadKeyController.m in Sources */,
 				523B01AE191CA18C00E06DF3 /* ModifiersController.mm in Sources */,
-				5282DCB41DAE6EA800C43FE7 /* LocalisationsDialogController.m in Sources */,
+				5282DCB41DAE6EA800C43FE7 /* LocalisationsWindowController.m in Sources */,
 				5282DCBC1DB8A9F500C43FE7 /* LocaleDialogController.m in Sources */,
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,

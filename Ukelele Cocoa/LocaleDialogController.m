@@ -22,6 +22,7 @@
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner {
+	[[NSBundle mainBundle] loadNibNamed:@"LocaleDialog" owner:self topLevelObjects:nil];
 	self = [super initWithWindowNibName:windowNibName owner:owner];
 	if (self) {
 		languageRegistry = [LanguageRegistry getInstance];

@@ -23,7 +23,7 @@
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
 #import "UKProgressWindow.h"
-#import "LocalisationsDialogController.h"
+#import "LocalisationsWindowController.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -63,6 +63,7 @@ NSString *kKeyboardName = @"keyboardName";
 	AskFromList *askFromListSheet;
 	NSMutableDictionary *languageList;
 	UkeleleKeyboardObject *currentObservation;
+	LocalisationsWindowController *localisationsWindow;
 }
 
 - (instancetype)init
@@ -84,6 +85,7 @@ NSString *kKeyboardName = @"keyboardName";
 		_bundleIdentifier = @"";
 		_localisations = [NSMutableDictionary dictionary];
 		currentObservation = nil;
+		localisationsWindow = nil;
     }
     return self;
 }
@@ -1617,8 +1619,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (IBAction)editLocalisations:(id)sender {
 #pragma unused(sender)
     NSArray *localisations = [self.localisations allKeys];
-    __block LocalisationsDialogController *theController = [LocalisationsDialogController localisationsDialogWithLocalisations:localisations];
-    [theController beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSString *oldLocale, NSString *newLocale) {
+	if (localisationsWindow == nil) {
+		localisationsWindow = [LocalisationsWindowController localisationsWindowWithLocalisations:localisations];
+	}
+    [localisationsWindow beginLocalisationsForWindow:[self.keyboardLayoutsTable window] withCallback:^(NSString *oldLocale, NSString *newLocale) {
         if (oldLocale != nil &&newLocale != nil) {
 			NSLog(@"Change %@ to %@", oldLocale, newLocale);
         }
@@ -1630,7 +1634,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		else {
 			NSLog(@"Done with localisation");
-			theController = nil;
 		}
     }];
 }

@@ -62,7 +62,7 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                 <tableColumns>
-                                                    <tableColumn identifier="LanguageDescription" width="306" minWidth="40" maxWidth="1000" id="pML-op-w2t">
+                                                    <tableColumn identifier="name" width="306" minWidth="40" maxWidth="1000" id="pML-op-w2t">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Language">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -99,7 +99,7 @@
                                                             </tableCellView>
                                                         </prototypeCellViews>
                                                     </tableColumn>
-                                                    <tableColumn identifier="LanguageCode" width="90" minWidth="40" maxWidth="1000" id="WJ4-jV-Yfg">
+                                                    <tableColumn identifier="code" width="90" minWidth="40" maxWidth="1000" id="WJ4-jV-Yfg">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Code">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -216,7 +216,7 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                 <tableColumns>
-                                                    <tableColumn identifier="ScriptDescription" width="308" minWidth="40" maxWidth="1000" id="4tQ-uT-EnZ">
+                                                    <tableColumn identifier="name" width="308" minWidth="40" maxWidth="1000" id="4tQ-uT-EnZ">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Script">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -253,7 +253,7 @@
                                                             </tableCellView>
                                                         </prototypeCellViews>
                                                     </tableColumn>
-                                                    <tableColumn identifier="ScriptCode" width="88" minWidth="40" maxWidth="1000" id="NJy-FB-Fga">
+                                                    <tableColumn identifier="code" width="88" minWidth="40" maxWidth="1000" id="NJy-FB-Fga">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Code">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -356,7 +356,7 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                 <tableColumns>
-                                                    <tableColumn identifier="RegionDescription" width="310" minWidth="40" maxWidth="1000" id="1HM-Qv-Ctr">
+                                                    <tableColumn identifier="name" width="310" minWidth="40" maxWidth="1000" id="1HM-Qv-Ctr">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Region">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -393,7 +393,7 @@
                                                             </tableCellView>
                                                         </prototypeCellViews>
                                                     </tableColumn>
-                                                    <tableColumn identifier="RegionCode" width="86" minWidth="40" maxWidth="1000" id="IaY-xz-EVY">
+                                                    <tableColumn identifier="code" width="86" minWidth="40" maxWidth="1000" id="IaY-xz-EVY">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Code">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

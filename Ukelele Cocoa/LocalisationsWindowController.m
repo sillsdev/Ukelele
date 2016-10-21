@@ -1,23 +1,25 @@
 //
-//  LocalisationsDialogController.m
+//  LocalisationsWindowController.m
 //  Ukelele
 //
 //  Created by John Brownie on 12/10/16.
 //  Copyright © 2016 John Brownie. All rights reserved.
 //
 
-#import "LocalisationsDialogController.h"
+#import "LocalisationsWindowController.h"
 #import "LanguageRegistry.h"
+#import "LocaleDialogController.h"
 
-@interface LocalisationsDialogController ()
+@interface LocalisationsWindowController ()
 
 @property (strong) NSMutableArray *currentLocalisations;
 
 @end
 
-@implementation LocalisationsDialogController {
+@implementation LocalisationsWindowController {
     NSWindow *parentWindow;
     LanguageRegistry *languageRegistry;
+	LocaleDialogController *localeDialog;
     void (^callback)(NSString *, NSString *);
 }
 
@@ -30,13 +32,14 @@
         self.localeDescriptionList = [NSMutableArray array];
         parentWindow = nil;
         languageRegistry = [LanguageRegistry getInstance];
+		localeDialog = nil;
         callback = nil;
     }
     return self;
 }
 
-+ (LocalisationsDialogController *)localisationsDialogWithLocalisations:(NSArray *)localisations {
-    LocalisationsDialogController *theController = [[LocalisationsDialogController alloc] initWithWindowNibName:@"LocalisationsDialog"];
++ (LocalisationsWindowController *)localisationsWindowWithLocalisations:(NSArray *)localisations {
+    LocalisationsWindowController *theController = [[LocalisationsWindowController alloc] initWithWindowNibName:@"LocalisationsDialog"];
     theController.currentLocalisations = [localisations mutableCopy];
     [theController readLocales];
     return theController;
@@ -56,7 +59,21 @@
 
 - (IBAction)editLocalisation:(id)sender {
 #pragma unused(sender)
-    
+	if (localeDialog == nil) {
+		localeDialog = [LocaleDialogController localeDialog];
+	}
+	NSInteger selectedRow = [self.localisationsTable clickedRow];
+	NSAssert(selectedRow != -1, @"Must have a selected row");
+	__block LocaleCode *currentLocale = [LocaleCode localeCodeFromString:self.localeList[selectedRow]];
+	[localeDialog beginLocaleDialog:currentLocale forWindow:parentWindow callBack:^(LocaleCode *theLocale) {
+		if (theLocale != nil) {
+				// Got an edited locale
+			self.localeList[selectedRow] = [theLocale stringRepresentation];
+			self.localeDescriptionList[selectedRow] = [languageRegistry descriptionForLocaleCode:theLocale];
+			callback([currentLocale stringRepresentation], [theLocale stringRepresentation]);
+			[self.localisationsTable reloadData];
+		}
+	}];
 }
 
 - (IBAction)addLocalisation:(id)sender {
