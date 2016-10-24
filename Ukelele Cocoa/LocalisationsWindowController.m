@@ -56,6 +56,10 @@
 	[self.window makeKeyAndOrderFront:self];
 }
 
+- (void)displayWindow {
+	[self.window makeKeyAndOrderFront:self];
+}
+
 - (IBAction)editLocalisation:(id)sender {
 #pragma unused(sender)
 	if (localeDialog == nil) {
@@ -77,20 +81,34 @@
 
 - (IBAction)addLocalisation:(id)sender {
 #pragma unused(sender)
+	if (localeDialog == nil) {
+		localeDialog = [LocaleDialogController localeDialog];
+	}
+	__block LocaleCode *currentLocale = [LocaleCode localeCodeFromString:@""];
+	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^(LocaleCode *theLocale) {
+		if (theLocale != nil) {
+				// Got a new locale
+			[self.localeList addObject:[theLocale stringRepresentation]];
+			[self.localeDescriptionList addObject:[languageRegistry descriptionForLocaleCode:theLocale]];
+			callback(nil, [theLocale stringRepresentation]);
+			[self.localisationsTable reloadData];
+		}
+	}];
 }
 
 - (IBAction)removeLocalisation:(id)sender {
 #pragma unused(sender)
     NSAssert([self.localisationsTable selectedRow] != -1, @"Must have a selected row");
     NSInteger selectedRow = [self.localisationsTable selectedRow];
+	NSString *oldLocale = self.localeList[selectedRow];
     [self.localeList removeObjectAtIndex:selectedRow];
     [self.localeDescriptionList removeObjectAtIndex:selectedRow];
     [self.localisationsTable reloadData];
+	callback(oldLocale, nil);
 }
 
-- (IBAction)acceptLocalisations:(id)sender {
+- (IBAction)endLocalisations:(id)sender {
 #pragma unused(sender)
-    [self writeLocales];
     [self.window orderOut:self];
     callback(nil, nil);
 }
@@ -107,13 +125,6 @@
             [self.localeList addObject:[localeCode stringRepresentation]];
             [self.localeDescriptionList addObject:[languageRegistry descriptionForLocaleCode:localeCode]];
         }
-    }
-}
-
-- (void)writeLocales {
-    [self.currentLocalisations removeAllObjects];
-    for (NSUInteger i = 0; i < [self.localeList count]; i++) {
-        [self.currentLocalisations addObject:self.localeList[i]];
     }
 }
 

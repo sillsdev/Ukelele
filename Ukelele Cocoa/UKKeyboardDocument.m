@@ -1621,21 +1621,25 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
     NSArray *localisations = [self.localisations allKeys];
 	if (localisationsWindow == nil) {
 		localisationsWindow = [LocalisationsWindowController localisationsWindowWithLocalisations:localisations];
+		[localisationsWindow beginLocalisationsForCollection:self.bundleName withCallback:^(NSString *oldLocale, NSString *newLocale) {
+			if (oldLocale != nil &&newLocale != nil) {
+				NSLog(@"Change %@ to %@", oldLocale, newLocale);
+			}
+			else if (oldLocale != nil) {
+				NSLog(@"Remove %@", oldLocale);
+			}
+			else if (newLocale != nil) {
+				NSLog(@"Add %@", newLocale);
+			}
+			else {
+				NSLog(@"Done with localisation");
+			}
+		}];
 	}
-	[localisationsWindow beginLocalisationsForCollection:self.bundleName withCallback:^(NSString *oldLocale, NSString *newLocale) {
-        if (oldLocale != nil &&newLocale != nil) {
-			NSLog(@"Change %@ to %@", oldLocale, newLocale);
-        }
-		else if (oldLocale != nil) {
-			NSLog(@"Remove %@", oldLocale);
-		}
-		else if (newLocale != nil) {
-			NSLog(@"Add %@", newLocale);
-		}
-		else {
-			NSLog(@"Done with localisation");
-		}
-    }];
+	else {
+			// The localisations window is already created, so just show it
+		[localisationsWindow displayWindow];
+	}
 }
 
 	// Localise the keyboard's name

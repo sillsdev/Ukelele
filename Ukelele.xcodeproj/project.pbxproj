@@ -870,7 +870,6 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
-				5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -897,6 +896,7 @@
 				521E5EA61926228000C45A4A /* InspectorWindow.xib */,
 				52A84CF31926E09800DB142A /* IntendedLanguageSheet.xib */,
 				52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */,
+				5282DCB81DB8A2C500C43FE7 /* LocaleDialog.xib */,
 				5282DCB01DAE6C7300C43FE7 /* LocalisationsWindow.xib */,
 				523F9FC3196FB39900A896CA /* NewKeyboardDialog.xib */,
 				523451C61927208B00CAEB41 /* PrintAccessoryPanel.xib */,

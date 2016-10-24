@@ -272,6 +272,14 @@
 			[self.languageTable selectRowIndexes:selectionSet byExtendingSelection:NO];
 			[self.languageTable scrollRowToVisible:languageIndex];
 		}
+		else {
+			[self.languageTable scrollRowToVisible:0];
+		}
+	}
+	else {
+		languageList = [languageRegistry searchLanguage:@""];
+		[self.languageTable reloadData];
+		[self.languageTable scrollRowToVisible:0];
 	}
 	NSString *script = [languageCode scriptCode];
 	[self.scriptTable deselectAll:self];
@@ -291,6 +299,14 @@
 			[self.scriptTable selectRowIndexes:selectionSet byExtendingSelection:NO];
 			[self.scriptTable scrollRowToVisible:scriptIndex];
 		}
+		else {
+			[self.scriptTable scrollRowToVisible:0];
+		}
+	}
+	else {
+		scriptList = [languageRegistry searchScript:@""];
+		[self.scriptTable reloadData];
+		[self.scriptTable scrollRowToVisible:0];
 	}
 	NSString *region = [languageCode regionCode];
 	[self.regionTable deselectAll:self];
@@ -310,6 +326,14 @@
 			[self.regionTable selectRowIndexes:selectionSet byExtendingSelection:NO];
 			[self.regionTable scrollRowToVisible:regionIndex];
 		}
+		else {
+			[self.regionTable scrollRowToVisible:0];
+		}
+	}
+	else {
+		regionList = [languageRegistry searchRegion:@""];
+		[self.regionTable reloadData];
+		[self.regionTable scrollRowToVisible:0];
 	}
 	NSString *variant = [languageCode variantCode];
 	[self.variantTable deselectAll:self];
@@ -329,6 +353,14 @@
 			[self.variantTable selectRowIndexes:selectionSet byExtendingSelection:NO];
 			[self.variantTable scrollRowToVisible:variantIndex];
 		}
+		else {
+			[self.variantTable scrollRowToVisible:0];
+		}
+	}
+	else {
+		variantList = [languageRegistry searchVariant:@""];
+		[self.variantTable reloadData];
+		[self.variantTable scrollRowToVisible:0];
 	}
 }
 

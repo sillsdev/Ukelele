@@ -148,7 +148,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="acceptLocalisations:" target="-2" id="Fdx-07-4QB"/>
+                            <action selector="endLocalisations:" target="-2" id="2dv-XE-zEJ"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQd-Zp-DXx">

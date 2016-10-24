@@ -19,10 +19,11 @@
 - (IBAction)editLocalisation:(id)sender;
 - (IBAction)addLocalisation:(id)sender;
 - (IBAction)removeLocalisation:(id)sender;
-- (IBAction)acceptLocalisations:(id)sender;
+- (IBAction)endLocalisations:(id)sender;
 
 + (LocalisationsWindowController *)localisationsWindowWithLocalisations:(NSArray *)localisations;
 
 - (void)beginLocalisationsForCollection:(NSString *)collectionName withCallback:(void (^)(NSString *, NSString *))theCallback;
+- (void)displayWindow;
 
 @end
