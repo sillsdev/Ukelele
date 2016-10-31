@@ -40,6 +40,12 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 
 	// Key paths
 NSString *kKeyboardName = @"keyboardName";
+NSString *kIntendedLanguageName = @"intendedLanguage";
+
+	// Column identifiers
+NSString *kKeyboardColumn = @"KeyboardName";
+NSString *kIconColumn = @"Icon";
+NSString *kLanguageColumn = @"Language";
 
 @implementation IconImageTransformer
 
@@ -165,6 +171,7 @@ NSString *kKeyboardName = @"keyboardName";
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedStandardCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
@@ -980,7 +987,63 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	});
 }
 
+#pragma mark Table source methods
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+	if (tableView == self.keyboardLayoutsTable) {
+			// Number of rows in keyboard layouts table
+		return [self.keyboardLayouts count];
+	}
+	else {
+		return 0;
+	}
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	if (tableView == self.keyboardLayoutsTable) {
+			// Object for keyboard layouts table
+		KeyboardLayoutInformation *layoutInfo = [self.keyboardLayoutsController arrangedObjects][row];
+		if ([[tableColumn identifier] isEqualToString:kIconColumn]) {
+				// The icon column, so we need to get the actual icon
+			NSData *iconData = [layoutInfo iconData];
+			return [[NSImage alloc] initWithData:iconData];
+		}
+		else if ([[tableColumn identifier] isEqualToString:kKeyboardColumn]) {
+				// Keyboard name
+			return [layoutInfo keyboardName];
+		}
+		else if ([[tableColumn identifier] isEqualToString:kLanguageColumn]) {
+				// Intended language column
+			return [layoutInfo intendedLanguage];
+		}
+	}
+	return nil;
+}
+
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+#pragma unused(tableView)
+#pragma unused(oldDescriptors)
+	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+	[self.keyboardLayoutsTable reloadData];
+}
+
 #pragma mark Table delegate methods
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	if (view == nil) {
+		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
+		[view setIdentifier:[tableColumn identifier]];
+	}
+	if ([[tableColumn identifier] isEqualToString:kIconColumn]) {
+		[view.imageView setImage:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+	}
+	else {
+		[view.textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+	}
+	return view;
+}
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
 #pragma unused(notification)
@@ -1005,13 +1068,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:clickedRow] byExtendingSelection:NO];
 		}
 	}
-}
-
-- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-#pragma unused(tableView)
-#pragma unused(oldDescriptors)
-	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
-	[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 }
 
 #pragma mark Drag and Drop
@@ -1401,7 +1457,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	UKKeyboardController *keyboardController = [selectedRowInfo keyboardController];
 	if (keyboardController == nil) {
 		keyboardController = [self createControllerForEntry:selectedRowInfo];

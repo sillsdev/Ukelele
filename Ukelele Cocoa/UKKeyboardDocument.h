@@ -20,6 +20,9 @@
 @property (strong) IBOutlet NSTableView *keyboardLayoutsTable;
 @property (strong) IBOutlet NSButton *languageButton;
 @property (strong) IBOutlet NSButton *removeKeyboardButton;
+@property (strong) IBOutlet NSTabView *tabView;
+@property (strong) IBOutlet NSTableView *localisationsTable;
+@property (strong) IBOutlet NSButton *removeLocaleButton;
 
 @property (nonatomic, strong) NSString *bundleVersion;
 @property (nonatomic, strong) NSString *buildVersion;
