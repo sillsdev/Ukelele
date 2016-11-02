@@ -34,7 +34,7 @@
 @property (nonatomic, strong) NSMutableArray *keyboardLayouts;
 @property (strong) IBOutlet NSArrayController *keyboardLayoutsController;
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) UKKeyboardController *controllerForCurrentEntry;
-@property (nonatomic, strong) NSMutableDictionary *localisations;
+@property (nonatomic, strong) NSMutableArray *localisations;
 
 - (instancetype)initWithKeyboardObject:(UkeleleKeyboardObject *)keyboardObject;
 

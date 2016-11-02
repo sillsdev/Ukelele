@@ -474,12 +474,12 @@
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
+                                                            <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" id="wnn-Sx-seL"/>
                                                             <binding destination="-2" name="doubleClickTarget" keyPath="self" id="zGR-KG-7AE">
                                                                 <dictionary key="options">
                                                                     <string key="NSSelectorName">openKeyboardLayout:</string>
                                                                 </dictionary>
                                                             </binding>
-                                                            <binding destination="Wvh-L2-Xlb" name="selectionIndexes" keyPath="selectionIndexes" id="wnn-Sx-seL"/>
                                                             <outlet property="dataSource" destination="-2" id="CHA-eZ-Nte"/>
                                                             <outlet property="delegate" destination="-2" id="MH9-8K-ZgF"/>
                                                             <outlet property="menu" destination="wxf-v3-tUG" id="6ox-Ax-l9n"/>
@@ -592,11 +592,11 @@
                                     <rect key="frame" x="10" y="33" width="539" height="337"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmd-bu-ECJ">
+                                        <scrollView identifier="LocaleDescription" wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmd-bu-ECJ">
                                             <rect key="frame" x="17" y="44" width="505" height="290"/>
                                             <clipView key="contentView" id="9dm-8c-jgO">
                                                 <rect key="frame" x="1" y="0.0" width="503" height="289"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="OtW-aB-5Vr" viewBased="YES" floatsGroupRows="NO" id="EZI-kZ-OYE">
                                                         <rect key="frame" x="0.0" y="0.0" width="503" height="266"/>
@@ -605,7 +605,7 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn width="118" minWidth="40" maxWidth="1000" id="zE6-xf-C8S">
+                                                            <tableColumn identifier="Locale" width="118" minWidth="40" maxWidth="1000" id="zE6-xf-C8S">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Locale">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -618,7 +618,7 @@
                                                                 </textFieldCell>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
-                                                                    <tableCellView id="MkQ-nl-v2A">
+                                                                    <tableCellView identifier="Locale" id="MkQ-nl-v2A">
                                                                         <rect key="frame" x="1" y="1" width="118" height="17"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
@@ -638,7 +638,7 @@
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
                                                             </tableColumn>
-                                                            <tableColumn width="379" minWidth="40" maxWidth="1000" id="v0U-BN-6V7">
+                                                            <tableColumn identifier="LocaleDescription" width="379" minWidth="40" maxWidth="1000" id="v0U-BN-6V7">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Description">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

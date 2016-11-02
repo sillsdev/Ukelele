@@ -250,6 +250,7 @@
 		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; };
 		52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
+		52FFB2E91DC9CB8D00954D4F /* LocalisationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -665,6 +666,8 @@
 		52F6C47D1CAA517E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../Sparkle-1.14.0/Sparkle.framework"; sourceTree = "<group>"; };
 		52F6C47F1CAA563E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
+		52FFB2E71DC9CB8D00954D4F /* LocalisationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationData.h; sourceTree = "<group>"; };
+		52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1059,6 +1062,8 @@
 				523B00EE191CA0D100E06DF3 /* LayoutInfo.mm */,
 				5282DCB51DB0CF3000C43FE7 /* LocaleCode.h */,
 				5282DCB61DB0CF3000C43FE7 /* LocaleCode.mm */,
+				52FFB2E71DC9CB8D00954D4F /* LocalisationData.h */,
+				52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */,
 				523B00EF191CA0D100E06DF3 /* ModifierConstants.h */,
 				523B00F0191CA0D100E06DF3 /* RandomNumberGenerator.cpp */,
 				523B00F1191CA0D100E06DF3 /* RandomNumberGenerator.h */,
@@ -1527,6 +1532,7 @@
 				523B0199191CA18C00E06DF3 /* CreateDeadKeyHandler.m in Sources */,
 				523B01BA191CA18C00E06DF3 /* UkeleleKeyboardInstaller.m in Sources */,
 				52ED0B741A91F10500322FFE /* UKDocumentPrintViewController.m in Sources */,
+				52FFB2E91DC9CB8D00954D4F /* LocalisationData.m in Sources */,
 				523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */,
 				525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */,
 				525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */,

@@ -24,6 +24,7 @@
 #import "UKKeyboardPasteboardItem.h"
 #import "UKProgressWindow.h"
 #import "LocalisationsWindowController.h"
+#import "LocalisationData.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -46,6 +47,8 @@ NSString *kIntendedLanguageName = @"intendedLanguage";
 NSString *kKeyboardColumn = @"KeyboardName";
 NSString *kIconColumn = @"Icon";
 NSString *kLanguageColumn = @"Language";
+NSString *kLocaleColumn = @"Locale";
+NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 
 @implementation IconImageTransformer
 
@@ -89,7 +92,7 @@ NSString *kLanguageColumn = @"Language";
 		_sourceVersion = @"";
 		_bundleName = @"";
 		_bundleIdentifier = @"";
-		_localisations = [NSMutableDictionary dictionary];
+		_localisations = [NSMutableArray array];
 		currentObservation = nil;
 		localisationsWindow = nil;
     }
@@ -442,13 +445,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
 	[resourcesDirectory setPreferredFilename:kStringResourcesName];
 		// Create the InfoPlist.strings files, which contain all the names
-	for (NSString *localisationKey in [self.localisations allKeys]) {
+	for (LocalisationData *localisationData in self.localisations) {
 			// For each keyboard, look for a name localised to this language
 		NSMutableString *infoPlistString = [NSMutableString stringWithString:@""];
 		for (KeyboardLayoutInformation *keyboardEntry in keyboardLayouts) {
 			NSString *keyboardName = [keyboardEntry keyboardName];
 			if (keyboardName != nil && ![keyboardName isEqualToString:@""]) {
-				NSString *localisedName = keyboardEntry.localisedNames[localisationKey];
+				NSString *localisedName = keyboardEntry.localisedNames[[localisationData localeString]];
 				if (localisedName != nil) {
 					[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, localisedName]];
 				}
@@ -459,7 +462,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[infoPlistStringsFile setPreferredFilename:kStringInfoPlistStringsName];
 			// Put the InfoPlist.strings file into an English.lproj directory
 		NSFileWrapper *lprojDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
-		[lprojDirectory setPreferredFilename:[NSString stringWithFormat:@"%@.%@", localisationKey, kStringLocalisationSuffix]];
+		[lprojDirectory setPreferredFilename:[NSString stringWithFormat:@"%@.%@", [localisationData localeString], kStringLocalisationSuffix]];
 		[lprojDirectory addFileWrapper:infoPlistStringsFile];
 		[resourcesDirectory addFileWrapper:lprojDirectory];
 	}
@@ -674,6 +677,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	directoryContents = [resourcesDirectory fileWrappers];
 	directoryEnumerator = [directoryContents objectEnumerator];
 	NSMutableDictionary *fileNameDictionary = [NSMutableDictionary dictionary];
+	NSMutableDictionary *localisationDictionary = [NSMutableDictionary dictionary];
 	while ((directoryEntry = [directoryEnumerator nextObject])) {
 		NSString *fileName = [[directoryEntry preferredFilename] decomposedStringWithCanonicalMapping];
 		BOOL isKeyboardLayout = [fileName hasSuffix:[NSString stringWithFormat:@".%@", kStringKeyboardLayoutExtension]];
@@ -706,6 +710,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			if ([localisationName isEqualToString:@"English"]) {
 				localisationName = @"en";
 			}
+			else if ([localisationName isEqualToString:@"French"]) {
+				localisationName = @"fr";
+			}
+			else if ([localisationName isEqualToString:@"Spanish"]) {
+				localisationName = @"es";
+			}
+			else if ([localisationName isEqualToString:@"German"]) {
+				localisationName = @"de";
+			}
 				// Get the InfoPlist.strings file
 			NSDictionary *localisationDirectory = [directoryEntry fileWrappers];
 			NSFileWrapper *localisationStrings = localisationDirectory[kStringInfoPlistStringsName];
@@ -713,7 +726,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					// We have a valid InfoPlist.strings file
 				NSString *localisations = [[NSString alloc] initWithData:[localisationStrings regularFileContents] encoding:NSUTF16StringEncoding];
 				NSDictionary *localisationList = [self parseStringsFile:localisations];
-				self.localisations[localisationName] = localisationList;
+				localisationDictionary[localisationName] = localisationList;
 			}
 		}
 	}
@@ -744,14 +757,27 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[keyboardInfo setKeyboardFileWrapper:keyboardFileWrapper];
 		}
 			// Get the localised names
-		for (NSString *localisationKey in [self.localisations allKeys]) {
-			NSDictionary *localisationValues = self.localisations[localisationKey];
+		for (NSString *localisationKey in [localisationDictionary allKeys]) {
+			NSDictionary *localisationValues = localisationDictionary[localisationKey];
 			if (localisationValues[keyboardName] != nil) {
 					// Have a localisation in this language
 				keyboardInfo.localisedNames[localisationKey] = localisationValues[keyboardName];
 			}
 		}
 		[self.keyboardLayouts addObject:keyboardInfo];
+	}
+		// Now create the localisations data structure
+	for (NSString *localisationKey in [[localisationDictionary allKeys] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+		return [obj1 localizedStandardCompare:obj2];
+	}]) {
+		LocaleCode *theLocale = [LocaleCode localeCodeFromString:localisationKey];
+		if (theLocale != nil) {
+				// Valid locale code
+			LocalisationData *theData = [[LocalisationData alloc] init];
+			[theData setLocaleCode:theLocale];
+			[theData setLocalisationStrings:localisationDictionary[localisationKey]];
+			[self.localisations addObject:theData];
+		}
 	}
 	return YES;
 }
@@ -987,12 +1013,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	});
 }
 
-#pragma mark Table source methods
+#pragma mark Table data source methods
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
 	if (tableView == self.keyboardLayoutsTable) {
 			// Number of rows in keyboard layouts table
 		return [self.keyboardLayouts count];
+	}
+	else if (tableView == self.localisationsTable) {
+		return [self.localisations count];
 	}
 	else {
 		return 0;
@@ -1017,20 +1046,36 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			return [layoutInfo intendedLanguage];
 		}
 	}
+	else if (tableView == self.localisationsTable) {
+		LocalisationData *theData = self.localisations[row];
+		if ([[tableColumn identifier] isEqualToString:kLocaleColumn]) {
+			return [theData localeString];
+		}
+		else if ([[tableColumn identifier] isEqualToString:kLocaleDescriptionColumn]) {
+			return [theData localeDescription];
+		}
+	}
 	return nil;
 }
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
 #pragma unused(tableView)
 #pragma unused(oldDescriptors)
-	[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
-	[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
-	[self.keyboardLayoutsTable reloadData];
+	if (tableView == self.keyboardLayoutsTable) {
+		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
+		[self.keyboardLayoutsTable reloadData];
+	}
+	else if (tableView == self.localisationsTable) {
+		[self.localisationsTable setSortDescriptors:[self.localisationsTable sortDescriptors]];
+		[self.localisationsTable reloadData];
+	}
 }
 
 #pragma mark Table delegate methods
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+		// We don't need to special case this for the two tables, since they all use NSTableCellView
 	NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
 	if (view == nil) {
 		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
@@ -1046,7 +1091,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-#pragma unused(notification)
+	if ([notification object] != self.keyboardLayoutsTable) {
+		return;
+	}
 	[self inspectorSetKeyboardSection];
 	if (currentObservation != nil) {
 		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
@@ -1674,28 +1721,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 // Edit the localisations for this collection
 - (IBAction)editLocalisations:(id)sender {
 #pragma unused(sender)
-    NSArray *localisations = [self.localisations allKeys];
-	if (localisationsWindow == nil) {
-		localisationsWindow = [LocalisationsWindowController localisationsWindowWithLocalisations:localisations];
-		[localisationsWindow beginLocalisationsForCollection:self.bundleName withCallback:^(NSString *oldLocale, NSString *newLocale) {
-			if (oldLocale != nil &&newLocale != nil) {
-				NSLog(@"Change %@ to %@", oldLocale, newLocale);
-			}
-			else if (oldLocale != nil) {
-				NSLog(@"Remove %@", oldLocale);
-			}
-			else if (newLocale != nil) {
-				NSLog(@"Add %@", newLocale);
-			}
-			else {
-				NSLog(@"Done with localisation");
-			}
-		}];
-	}
-	else {
-			// The localisations window is already created, so just show it
-		[localisationsWindow displayWindow];
-	}
 }
 
 	// Localise the keyboard's name
