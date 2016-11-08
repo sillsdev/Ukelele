@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
         <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LocaleDialogController">
@@ -11,6 +12,7 @@
                 <outlet property="languageMissingWarning" destination="vic-98-Nyo" id="ryM-Op-fyP"/>
                 <outlet property="languageSearch" destination="hua-6M-hBX" id="zTK-nO-QMR"/>
                 <outlet property="languageTable" destination="nZq-U7-9Im" id="Xdl-sO-PwU"/>
+                <outlet property="localeUsedWarning" destination="Svd-8j-nrc" id="V16-T1-hIW"/>
                 <outlet property="regionSearch" destination="3Mq-S8-oGK" id="N7N-4H-hPV"/>
                 <outlet property="regionTable" destination="2N9-fp-tBi" id="o9F-zk-EaR"/>
                 <outlet property="scriptSearch" destination="tlW-H3-MwC" id="VRL-LL-21i"/>
@@ -494,6 +496,15 @@ Gw
                             <action selector="cancelLocale:" target="-2" id="VMb-ez-I20"/>
                         </connections>
                     </button>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Svd-8j-nrc">
+                        <rect key="frame" x="20" y="23" width="188" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="That locale is already in use" id="q0z-PQ-EIx">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="CUn-B6-q9W" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="2Xp-9U-wyc"/>

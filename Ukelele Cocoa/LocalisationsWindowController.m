@@ -68,7 +68,7 @@
 	NSInteger selectedRow = [self.localisationsTable clickedRow];
 	NSAssert(selectedRow != -1, @"Must have a selected row");
 	__block LocaleCode *currentLocale = [LocaleCode localeCodeFromString:self.localeList[selectedRow]];
-	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^(LocaleCode *theLocale) {
+	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^BOOL(LocaleCode *theLocale) {
 		if (theLocale != nil) {
 				// Got an edited locale
 			self.localeList[selectedRow] = [theLocale stringRepresentation];
@@ -76,6 +76,7 @@
 			callback([currentLocale stringRepresentation], [theLocale stringRepresentation]);
 			[self.localisationsTable reloadData];
 		}
+		return YES;
 	}];
 }
 
@@ -85,7 +86,7 @@
 		localeDialog = [LocaleDialogController localeDialog];
 	}
 	__block LocaleCode *currentLocale = [LocaleCode localeCodeFromString:@""];
-	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^(LocaleCode *theLocale) {
+	[localeDialog beginLocaleDialog:currentLocale forWindow:self.window callBack:^BOOL(LocaleCode *theLocale) {
 		if (theLocale != nil) {
 				// Got a new locale
 			[self.localeList addObject:[theLocale stringRepresentation]];
@@ -93,6 +94,7 @@
 			callback(nil, [theLocale stringRepresentation]);
 			[self.localisationsTable reloadData];
 		}
+		return YES;
 	}];
 }
 

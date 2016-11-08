@@ -18,7 +18,7 @@
 	NSArray *scriptList;
 	NSArray *regionList;
 	NSWindow *parentWindow;
-	void (^callBack)(LocaleCode *);
+	BOOL (^callBack)(LocaleCode *);
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName owner:(id)owner {
@@ -50,7 +50,7 @@
 
 - (void)beginLocaleDialog:(LocaleCode *)initialCode
 				forWindow:(NSWindow *)theWindow
-				 callBack:(void (^)(LocaleCode *))theCallBack {
+				 callBack:(BOOL (^)(LocaleCode *))theCallBack {
 	parentWindow = theWindow;
 	callBack = theCallBack;
 	[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
@@ -72,11 +72,20 @@
 	LocaleCode *selectedCode = [self getSelectedLocale];
 	[self.window orderOut:self];
 	[NSApp endSheet:self.window];
-	callBack(selectedCode);
+	if (callBack(selectedCode)) {
+			// All is well, so we quit the dialog
+		[self.window orderOut:self];
+		[NSApp endSheet:self.window];
+	}
+	else {
+			// The locale was in use, so show the warning
+		[self.localeUsedWarning setHidden:NO];
+	}
 }
 
 - (IBAction)cancelLocale:(id)sender {
 #pragma unused(sender)
+	[self.localeUsedWarning setHidden:YES];
 	[self.window orderOut:self];
 	[NSApp endSheet:self.window];
 	callBack(nil);

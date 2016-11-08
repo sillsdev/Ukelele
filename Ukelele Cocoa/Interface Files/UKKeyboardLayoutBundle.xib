@@ -673,6 +673,7 @@
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
+                                                            <action trigger="doubleAction" selector="editLocale:" target="-2" id="ITA-TO-OZP"/>
                                                             <outlet property="dataSource" destination="-2" id="7gf-5x-Oef"/>
                                                             <outlet property="delegate" destination="-2" id="hm7-J3-1uD"/>
                                                         </connections>
@@ -702,6 +703,9 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="addLocale:" target="-2" id="zIH-ab-sQh"/>
+                                            </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z6A-CQ-m4Y">
                                             <rect key="frame" x="46" y="16" width="21" height="21"/>
@@ -713,6 +717,9 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="removeLocale:" target="-2" id="tvj-hr-bU4"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

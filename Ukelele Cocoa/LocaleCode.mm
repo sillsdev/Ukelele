@@ -45,6 +45,13 @@
     return result;
 }
 
+- (BOOL)isEqualTo:(id)object {
+	LocaleCode *theCode = (LocaleCode *)object;
+	return [self.languageCode isEqualToString:theCode.languageCode] &&
+		[self.scriptCode isEqualToString:theCode.scriptCode] &&
+		[self.regionCode isEqualToString:theCode.regionCode];
+}
+
 - (NSString *)stringRepresentation {
     NSMutableString *result = [self.languageCode mutableCopy];
     if (![self.scriptCode isEqualToString:@""]) {

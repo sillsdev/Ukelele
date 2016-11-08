@@ -55,7 +55,9 @@
 - (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;
 - (IBAction)exportKeyboardLayout:(id)sender;
-- (IBAction)editLocalisations:(id)sender;
+- (IBAction)addLocale:(id)sender;
+- (IBAction)removeLocale:(id)sender;
+- (IBAction)editLocale:(id)sender;
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;

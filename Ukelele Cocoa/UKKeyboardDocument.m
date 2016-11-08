@@ -23,7 +23,7 @@
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
 #import "UKProgressWindow.h"
-#import "LocalisationsWindowController.h"
+#import "LocaleDialogController.h"
 #import "LocalisationData.h"
 #import <Carbon/Carbon.h>
 
@@ -50,6 +50,10 @@ NSString *kLanguageColumn = @"Language";
 NSString *kLocaleColumn = @"Locale";
 NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 
+	// Tab identifiers
+NSString *kKeyboardLayoutsTab = @"KeyboardLayouts";
+NSString *kLocalisationsTab = @"Localisations";
+
 @implementation IconImageTransformer
 
 + (Class)transformedValueClass {
@@ -72,7 +76,7 @@ NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 	AskFromList *askFromListSheet;
 	NSMutableDictionary *languageList;
 	UkeleleKeyboardObject *currentObservation;
-	LocalisationsWindowController *localisationsWindow;
+	LocaleDialogController *localeController;
 }
 
 - (instancetype)init
@@ -94,7 +98,7 @@ NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 		_bundleIdentifier = @"";
 		_localisations = [NSMutableArray array];
 		currentObservation = nil;
-		localisationsWindow = nil;
+		localeController = nil;
     }
     return self;
 }
@@ -1307,6 +1311,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	if (theAction == @selector(addOpenDocument:)) {
 			// Only active if there are open keyboard layouts which aren't in bundles
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
+			return NO;
+		}
 		NSDocumentController *theController = [NSDocumentController sharedDocumentController];
 		NSArray *theDocumentList = [theController documents];
 		for (NSDocument *theDocument in theDocumentList) {
@@ -1326,6 +1333,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
 			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:)) {
 			// Only active if there's a selection in the table
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
+			return NO;
+		}
 		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
@@ -1334,6 +1344,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(removeIcon:)) {
 			// Only active if there's a selection in the table, and the selected item has an icon
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
+			return NO;
+		}
 		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
@@ -1349,6 +1362,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(removeIntendedLanguage:)) {
 			// Only active if there's a selection in the table, and the selected item has an intended language
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
+			return NO;
+		}
 		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
@@ -1361,6 +1377,24 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			}
 		}
 		return NO;
+	}
+	else if (theAction == @selector(editLocale:) || theAction == @selector(removeLocale:)) {
+			// Only active if the current tab is localisations and there is a selected row
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
+			return NO;
+		}
+		selectedRowNumber = [self.localisationsTable selectedRow];
+		if (selectedRowNumber == -1) {
+			selectedRowNumber = [self.localisationsTable clickedRow];
+		}
+		return selectedRowNumber != -1 && [self.localisations count] > 0;
+	}
+	else if (theAction == @selector(addLocale:)) {
+			// Only active if the current tab is the localisations tab
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
+			return NO;
+		}
+		return YES;
 	}
 	return [super validateUserInterfaceItem:anItem];
 }
@@ -1718,9 +1752,69 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[keyboardController askKeyboardIdentifiers:docWindow];
 }
 
-// Edit the localisations for this collection
-- (IBAction)editLocalisations:(id)sender {
+	// Add and remove locales for this collection
+- (IBAction)addLocale:(id)sender {
 #pragma unused(sender)
+	if (localeController == nil) {
+		localeController = [LocaleDialogController localeDialog];
+	}
+	NSWindow *docWindow = [self.localisationsTable window];
+	NSAssert(docWindow, @"Must have a document window");
+	[localeController beginLocaleDialog:[[LocaleCode alloc] init] forWindow:docWindow callBack:^BOOL(LocaleCode *theLocale) {
+		if (theLocale == nil) {
+				// User cancelled
+			return YES;
+		}
+		for (NSInteger rowNumber = 0; rowNumber < (NSInteger)[self.localisations count]; rowNumber++) {
+			// Check whether we already have this locale
+			if ([[self.localisations[rowNumber] localeCode] isEqualTo:theLocale]) {
+				return NO;
+			}
+		}
+			// We have a valid new locale
+		[self addNewLocale:theLocale];
+		return YES;
+	}];
+}
+
+- (IBAction)removeLocale:(id)sender {
+#pragma unused(sender)
+	NSInteger selectedRow = [self.localisationsTable selectedRow];
+	if (selectedRow == -1) {
+		selectedRow = [self.localisationsTable clickedRow];
+	}
+	NSAssert(selectedRow != -1, @"Must have a selected row");
+	[self removeLocaleAtIndex:selectedRow];
+}
+
+	// Edit a locale
+- (IBAction)editLocale:(id)sender {
+#pragma unused(sender)
+	if (localeController == nil) {
+		localeController = [LocaleDialogController localeDialog];
+	}
+	NSInteger selectedRow = [self.localisationsTable selectedRow];
+	NSAssert(selectedRow != -1, @"Must have a selected row");
+	__block LocaleCode *currentLocale = [self.localisations[selectedRow] localeCode];
+	NSWindow *docWindow = [self.localisationsTable window];
+	NSAssert(docWindow, @"Must have a document window");
+	[localeController beginLocaleDialog:currentLocale forWindow:docWindow callBack:^BOOL(LocaleCode *theLocale) {
+		if (theLocale == nil) {
+				// User cancelled
+			return YES;
+		}
+		for (NSInteger rowNumber = 0; rowNumber < (NSInteger)[self.localisations count]; rowNumber++) {
+				// Check whether we already have this locale
+			if (rowNumber != selectedRow) {
+				if ([[self.localisations[rowNumber] localeCode] isEqualTo:theLocale]) {
+					return NO;
+				}
+			}
+		}
+			// We have a valid new locale
+		[self replaceLocaleAtIndex:selectedRow withLocale:theLocale];
+		return YES;
+	}];
 }
 
 	// Localise the keyboard's name
@@ -1939,13 +2033,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[inspectorController unbind:@"currentDocument"];
 }
 
-- (void)windowWillClose:(NSNotification *)notification {
-#pragma unused(notification)
-	if (localisationsWindow != nil) {
-		[localisationsWindow close];
-	}
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 #pragma unused(object)
 #pragma unused(context)
@@ -2010,6 +2097,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 	}
 	askFromListSheet = nil;
+}
+
+#pragma mark Localisations
+
+- (NSMutableDictionary *)defaultLocalisations {
+	NSMutableDictionary *theLocalisations = [NSMutableDictionary dictionary];
+	for (KeyboardLayoutInformation *layoutInfo in self.keyboardLayouts) {
+		NSString *keyboardName = [layoutInfo keyboardName];
+		theLocalisations[keyboardName] = keyboardName;
+	}
+	return theLocalisations;
 }
 
 #pragma mark Action routines
@@ -2139,6 +2237,45 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[undoManager setActionName:@"Capture current input source"];
 	[undoManager endUndoGrouping];
+}
+
+- (void)replaceLocaleAtIndex:(NSInteger)localeIndex withLocale:(LocaleCode *)newLocale {
+	LocalisationData *localeData = self.localisations[localeIndex];
+	LocaleCode *oldLocale = [localeData localeCode];
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] replaceLocaleAtIndex:localeIndex withLocale:oldLocale];
+	[undoManager setActionName:@"Change locale"];
+	[localeData setLocaleCode:newLocale];
+	[self.localisationsTable reloadData];
+}
+
+- (void)addNewLocale:(LocaleCode *)newLocale {
+	LocalisationData *newLocaleData = [[LocalisationData alloc] init];
+	[newLocaleData setLocaleCode:newLocale];
+	[newLocaleData setLocalisationStrings:[self defaultLocalisations]];
+	NSInteger newIndex = [self.localisations count];
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:newIndex];
+	[undoManager setActionName:@"Add locale"];
+	[self.localisations addObject:newLocaleData];
+	[self.localisationsTable reloadData];
+}
+
+- (void)insertLocale:(LocalisationData *)localisationData atIndex:(NSInteger)theIndex {
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:theIndex];
+	[undoManager setActionName:@"Remove locale"];
+	[self.localisations insertObject:localisationData atIndex:theIndex];
+	[self.localisationsTable reloadData];
+}
+
+- (void)removeLocaleAtIndex:(NSInteger)theIndex {
+	NSUndoManager *undoManager = [self undoManager];
+	LocalisationData *oldData = self.localisations[theIndex];
+	[[undoManager prepareWithInvocationTarget:self] insertLocale:oldData atIndex:theIndex];
+	[undoManager setActionName:@"Replace locale"];
+	[self.localisations removeObjectAtIndex:theIndex];
+	[self.localisationsTable reloadData];
 }
 
 @end

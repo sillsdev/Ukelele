@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -610,17 +610,11 @@
                                     <action selector="swapKeysByCode:" target="-1" id="Qdk-4w-MUM"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="ISP-0s-KNc"/>
+                            <menuItem isSeparatorItem="YES" id="ggl-u6-vFB"/>
                             <menuItem title="Set Keyboard Name and Script…" id="naq-Ij-TRd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="askKeyboardIdentifiers:" target="-1" id="9P8-gb-uXc"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Localise Keyboard Name…" id="j7g-Ja-haK">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="localiseKeyboardName:" target="-1" id="nJI-7p-9HJ"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Set Keyboard Language…" id="qa4-gs-lP2">
@@ -651,6 +645,31 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="attachComment:" target="-1" id="PrK-fC-i4n"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ISP-0s-KNc"/>
+                            <menuItem title="Add Locale…" id="Rzu-Ip-UmO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="addLocale:" target="-1" id="0YZ-dT-dWQ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Remove Locale" id="cDl-Vj-EdB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeLocale:" target="-1" id="DnY-PK-rMC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Edit Locale…" id="Fn7-He-GFk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="editLocale:" target="-1" id="LHt-Qk-pt2"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Localise Keyboard Name…" id="j7g-Ja-haK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="localiseKeyboardName:" target="-1" id="nJI-7p-9HJ"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="P4m-V6-6qk"/>

@@ -18,11 +18,12 @@
 @property (weak) IBOutlet NSTableView *scriptTable;
 @property (weak) IBOutlet NSSearchField *regionSearch;
 @property (weak) IBOutlet NSTableView *regionTable;
+@property (weak) IBOutlet NSTextField *localeUsedWarning;
 
 + (LocaleDialogController *)localeDialog;
 - (void)beginLocaleDialog:(LocaleCode *)initialCode
 				forWindow:(NSWindow *)theWindow
-				 callBack:(void (^)(LocaleCode *))theCallBack;
+				 callBack:(BOOL (^)(LocaleCode *))theCallBack;
 
 - (IBAction)acceptLocale:(id)sender;
 - (IBAction)cancelLocale:(id)sender;
