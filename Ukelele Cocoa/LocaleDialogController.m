@@ -70,8 +70,6 @@
 		return;
 	}
 	LocaleCode *selectedCode = [self getSelectedLocale];
-	[self.window orderOut:self];
-	[NSApp endSheet:self.window];
 	if (callBack(selectedCode)) {
 			// All is well, so we quit the dialog
 		[self.window orderOut:self];
