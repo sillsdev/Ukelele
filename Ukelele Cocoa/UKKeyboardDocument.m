@@ -456,9 +456,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSString *keyboardName = [keyboardEntry keyboardName];
 			if (keyboardName != nil && ![keyboardName isEqualToString:@""]) {
 				NSString *localisedName = keyboardEntry.localisedNames[[localisationData localeString]];
-				if (localisedName != nil) {
-					[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, localisedName]];
+				if (localisedName == nil) {
+						// If no localised name, use the base name
+					localisedName = keyboardName;
 				}
+				[infoPlistString appendString:[NSString stringWithFormat:@"\"%@\" = \"%@\";\n", keyboardName, localisedName]];
 			}
 		}
 		NSData *infoPlistData = [infoPlistString dataUsingEncoding:NSUTF16StringEncoding];
@@ -766,6 +768,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			if (localisationValues[keyboardName] != nil) {
 					// Have a localisation in this language
 				keyboardInfo.localisedNames[localisationKey] = localisationValues[keyboardName];
+			}
+			else {
+				keyboardInfo.localisedNames[localisationKey] = keyboardName;
 			}
 		}
 		[self.keyboardLayouts addObject:keyboardInfo];
@@ -2110,6 +2115,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return theLocalisations;
 }
 
+- (void)updateLocalisations {
+	for (KeyboardLayoutInformation *layoutInfo in self.keyboardLayouts) {
+			// Rebuild the dictionary of localised names
+		NSMutableDictionary *layoutDict = [layoutInfo localisedNames];
+		[layoutDict removeAllObjects];
+		NSString *keyboardName = [layoutInfo keyboardName];
+		for (LocalisationData *localeData in self.localisations) {
+			NSString *localisedName = localeData.localisationStrings[keyboardName];
+			if (localisedName == nil) {
+				localisedName = keyboardName;
+			}
+			layoutDict[[localeData localeString]] = localisedName;
+		}
+	}
+}
+
 #pragma mark Action routines
 
 - (void)changeBundleName:(NSString *)newBundleName
@@ -2246,6 +2267,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] replaceLocaleAtIndex:localeIndex withLocale:oldLocale];
 	[undoManager setActionName:@"Change locale"];
 	[localeData setLocaleCode:newLocale];
+	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 }
 
@@ -2258,6 +2280,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:newIndex];
 	[undoManager setActionName:@"Add locale"];
 	[self.localisations addObject:newLocaleData];
+	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 }
 
@@ -2266,6 +2289,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:theIndex];
 	[undoManager setActionName:@"Remove locale"];
 	[self.localisations insertObject:localisationData atIndex:theIndex];
+	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 }
 
@@ -2275,6 +2299,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] insertLocale:oldData atIndex:theIndex];
 	[undoManager setActionName:@"Replace locale"];
 	[self.localisations removeObjectAtIndex:theIndex];
+	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 }
 
