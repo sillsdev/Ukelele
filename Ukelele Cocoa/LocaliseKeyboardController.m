@@ -40,10 +40,10 @@
 	[self.localisationsTable reloadData];
 }
 
-- (void)beginDialogWithWindow:(NSWindow *)theWindow forLocalisations:(NSDictionary *)localisationsDictionary withCallback:(void (^)(NSDictionary *))theCallback {
+- (void)beginDialogWithWindow:(NSWindow *)theWindow forLocalisations:(NSDictionary *)initialLocalisations withCallback:(void (^)(NSDictionary *))theCallback {
 	parentWindow = theWindow;
 	callback = theCallback;
-	self.localisationsDictionary = [localisationsDictionary mutableCopy];
+	self.localisationsDictionary = [initialLocalisations mutableCopy];
 	[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
@@ -60,17 +60,5 @@
 	[NSApp endSheet:self.window];
 	callback(nil);
 }
-
-#pragma mark Table delegate methods
-
-//- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-//	NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-//	if (view == nil) {
-//		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
-//		[view setIdentifier:[tableColumn identifier]];
-//	}
-//	[view.textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
-//	return view;
-//}
 
 @end

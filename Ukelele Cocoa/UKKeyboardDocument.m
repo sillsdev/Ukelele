@@ -1839,7 +1839,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(docWindow, @"Must have a document window");
 	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[selectedRow];
 	[theController beginDialogWithWindow:docWindow forLocalisations:layoutInfo.localisedNames withCallback:^(NSDictionary *theDict) {
-		NSLog(@"Got results %@", theDict);
+		if (theDict != nil) {
+				// Got a valid dictionary
+			[self changeLocalisedNames:theDict atIndex:selectedRow];
+		}
 		theController = nil;
 	}];
 }
@@ -2316,6 +2319,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] insertLocale:oldData atIndex:theIndex];
 	[undoManager setActionName:@"Replace locale"];
 	[self.localisations removeObjectAtIndex:theIndex];
+	[self updateLocalisations];
+	[self.localisationsTable reloadData];
+}
+
+- (void)changeLocalisedNames:(NSDictionary *)localisedNames atIndex:(NSInteger)index {
+	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[index];
+	NSString *keyboardName = [layoutInfo keyboardName];
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] changeLocalisedNames:[[layoutInfo localisedNames] copy] atIndex:index];
+	[undoManager setActionName:@"Edit localised names"];
+	for (LocalisationData *localisationData	in self.localisations) {
+		NSString *localeName = [localisationData localeString];
+		NSString *localisedName = localisedNames[localeName];
+		NSAssert(localisedName != nil, @"The localised name must exist");
+		localisationData.localisationStrings[keyboardName] = localisedName;
+	}
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 }

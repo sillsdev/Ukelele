@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface LocaliseKeyboardController : NSWindowController<NSTableViewDelegate>
+@interface LocaliseKeyboardController : NSWindowController
 
 @property (strong) IBOutlet NSTableView *localisationsTable;
 @property (strong) IBOutlet NSDictionaryController *dictionaryController;
@@ -19,6 +19,6 @@
 - (IBAction)cancelLocalisations:(id)sender;
 
 + (LocaliseKeyboardController *)localiseKeyboardController;
-- (void)beginDialogWithWindow:(NSWindow *)theWindow forLocalisations:(NSDictionary *)localisationsDictionary withCallback:(void (^)(NSDictionary *))theCallback;
+- (void)beginDialogWithWindow:(NSWindow *)theWindow forLocalisations:(NSDictionary *)initialLocalisations withCallback:(void (^)(NSDictionary *))theCallback;
 
 @end

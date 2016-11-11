@@ -173,9 +173,6 @@ Gw
                                             </connections>
                                         </tableColumn>
                                     </tableColumns>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="4pd-uu-vPv"/>
-                                    </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
