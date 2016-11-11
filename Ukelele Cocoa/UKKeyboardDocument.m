@@ -25,6 +25,7 @@
 #import "UKProgressWindow.h"
 #import "LocaleDialogController.h"
 #import "LocalisationData.h"
+#import "LocaliseKeyboardController.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -1799,6 +1800,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		localeController = [LocaleDialogController localeDialog];
 	}
 	NSInteger selectedRow = [self.localisationsTable selectedRow];
+	if (selectedRow == -1) {
+		selectedRow = [self.localisationsTable clickedRow];
+	}
 	NSAssert(selectedRow != -1, @"Must have a selected row");
 	__block LocaleCode *currentLocale = [self.localisations[selectedRow] localeCode];
 	NSWindow *docWindow = [self.localisationsTable window];
@@ -1825,6 +1829,19 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	// Localise the keyboard's name
 - (IBAction)localiseKeyboardName:(id)sender {
 #pragma unused(sender)
+	__block LocaliseKeyboardController *theController = [LocaliseKeyboardController localiseKeyboardController];
+	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRow == -1) {
+		selectedRow = [self.keyboardLayoutsTable clickedRow];
+	}
+	NSAssert(selectedRow != -1, @"Must have a selected row");
+	NSWindow *docWindow = [self.keyboardLayoutsTable window];
+	NSAssert(docWindow, @"Must have a document window");
+	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[selectedRow];
+	[theController beginDialogWithWindow:docWindow forLocalisations:layoutInfo.localisedNames withCallback:^(NSDictionary *theDict) {
+		NSLog(@"Got results %@", theDict);
+		theController = nil;
+	}];
 }
 
 	// Install the keyboard layout

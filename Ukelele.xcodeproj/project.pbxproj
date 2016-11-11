@@ -189,6 +189,8 @@
 		5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5277EB9F1AAF01A500C471C3 /* Carbon.framework */; };
 		5277EBBC1AB2745A00C471C3 /* Ukelele Quick Look Generator.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 523B0235191D917400E06DF3 /* libNano.a */; };
+		527D0FFF1DD460FE006A5A16 /* LocaliseKeyboardDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527D0FFE1DD460FE006A5A16 /* LocaliseKeyboardDialog.xib */; };
+		527D10021DD46243006A5A16 /* LocaliseKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527D10011DD46243006A5A16 /* LocaliseKeyboardController.m */; };
 		528052881D65AEA700356D36 /* WarningDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528052871D65AEA700356D36 /* WarningDialog.xib */; };
 		5280528B1D65B1B000356D36 /* WarningDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5280528A1D65B1B000356D36 /* WarningDialogController.m */; };
 		5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */; };
@@ -579,6 +581,9 @@
 		5277EB6B1AAE844600C471C3 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		5277EB701AAEF43500C471C3 /* UkeleleQLResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UkeleleQLResources.plist; sourceTree = "<group>"; };
 		5277EB9F1AAF01A500C471C3 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		527D0FFE1DD460FE006A5A16 /* LocaliseKeyboardDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocaliseKeyboardDialog.xib; path = "Interface Files/LocaliseKeyboardDialog.xib"; sourceTree = "<group>"; };
+		527D10001DD46243006A5A16 /* LocaliseKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocaliseKeyboardController.h; sourceTree = "<group>"; };
+		527D10011DD46243006A5A16 /* LocaliseKeyboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocaliseKeyboardController.m; sourceTree = "<group>"; };
 		527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UninstallHelperTool.sh; sourceTree = "<group>"; };
 		528052871D65AEA700356D36 /* WarningDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WarningDialog.xib; sourceTree = "<group>"; };
 		528052891D65B1B000356D36 /* WarningDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningDialogController.h; sourceTree = "<group>"; };
@@ -868,6 +873,7 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				527D0FFE1DD460FE006A5A16 /* LocaliseKeyboardDialog.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -1177,6 +1183,8 @@
 				523B015E191CA18C00E06DF3 /* KeyboardTypeSheet.m */,
 				5282DCBA1DB8A9F500C43FE7 /* LocaleDialogController.h */,
 				5282DCBB1DB8A9F500C43FE7 /* LocaleDialogController.m */,
+				527D10001DD46243006A5A16 /* LocaliseKeyboardController.h */,
+				527D10011DD46243006A5A16 /* LocaliseKeyboardController.m */,
 				523B015F191CA18C00E06DF3 /* ModifiersController.h */,
 				523B0160191CA18C00E06DF3 /* ModifiersController.mm */,
 				523B0161191CA18C00E06DF3 /* ModifiersDataSource.h */,
@@ -1410,6 +1418,7 @@
 				5253EC741C43928B003B7CC3 /* scripts.strings in Resources */,
 				5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */,
 				528EB14119258B8900C97247 /* ChooseFrom3Sheet.xib in Resources */,
+				527D0FFF1DD460FE006A5A16 /* LocaliseKeyboardDialog.xib in Resources */,
 				528052881D65AEA700356D36 /* WarningDialog.xib in Resources */,
 				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
 				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
@@ -1530,6 +1539,7 @@
 				523B0198191CA18C00E06DF3 /* ConfirmStateNameSheet.m in Sources */,
 				523B019D191CA18C00E06DF3 /* DragTextHandler.m in Sources */,
 				5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */,
+				527D10021DD46243006A5A16 /* LocaliseKeyboardController.m in Sources */,
 				523B01A9191CA18C00E06DF3 /* IntendedLanguageSheet.m in Sources */,
 				523B01B6191CA18C00E06DF3 /* ToolboxController.m in Sources */,
 				523B0108191CA0D100E06DF3 /* KeyCodeMap.mm in Sources */,
