@@ -1384,9 +1384,23 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	else if (theAction == @selector(editLocale:) || theAction == @selector(removeLocale:)) {
+	else if (theAction == @selector(editLocale:)) {
 			// Only active if the current tab is localisations and there is a selected row
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
+			return NO;
+		}
+		selectedRowNumber = [self.localisationsTable selectedRow];
+		if (selectedRowNumber == -1) {
+			selectedRowNumber = [self.localisationsTable clickedRow];
+		}
+		return selectedRowNumber != -1 && [self.localisations count] > 0;
+	}
+	else if (theAction == @selector(removeLocale:)) {
+			// Only active if the current tab is localisations and there is a selected row which is not the last one
+		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
+			return NO;
+		}
+		if ([self.localisations count] == 1) {
 			return NO;
 		}
 		selectedRowNumber = [self.localisationsTable selectedRow];
