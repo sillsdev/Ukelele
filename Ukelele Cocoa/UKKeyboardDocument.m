@@ -1072,12 +1072,26 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma unused(tableView)
 #pragma unused(oldDescriptors)
 	if (tableView == self.keyboardLayoutsTable) {
+		NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+		NSString *selectedLayout = @"";
+		if (selectedRow != -1) {
+			selectedLayout = [self.keyboardLayouts[selectedRow] keyboardName];
+		}
 		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayoutsTable reloadData];
+		if (selectedRow != -1) {
+			for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
+				if ([selectedLayout isEqualToString:[self.keyboardLayouts[row] keyboardName]]) {
+					[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+					break;
+				}
+			}
+		}
 	}
 	else if (tableView == self.localisationsTable) {
 		[self.localisationsTable setSortDescriptors:[self.localisationsTable sortDescriptors]];
+		[self.localisations sortUsingDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisationsTable reloadData];
 	}
 }
@@ -1841,7 +1855,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRow == -1) {
 		selectedRow = [self.localisationsTable clickedRow];
 	}
-	NSAssert(selectedRow != -1, @"Must have a selected row");
+	if (selectedRow == -1) {
+			// No selected row, so do nothing
+		return;
+	}
 	__block LocaleCode *currentLocale = [self.localisations[selectedRow] localeCode];
 	NSWindow *docWindow = [self.localisationsTable window];
 	NSAssert(docWindow, @"Must have a document window");

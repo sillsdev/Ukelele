@@ -425,7 +425,11 @@
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
-                                                            <action trigger="doubleAction" selector="editLocale:" target="-2" id="ITA-TO-OZP"/>
+                                                            <binding destination="-2" name="doubleClickTarget" keyPath="self" id="FlI-bw-aJg">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">editLocale:</string>
+                                                                </dictionary>
+                                                            </binding>
                                                             <outlet property="dataSource" destination="-2" id="7gf-5x-Oef"/>
                                                             <outlet property="delegate" destination="-2" id="hm7-J3-1uD"/>
                                                         </connections>
