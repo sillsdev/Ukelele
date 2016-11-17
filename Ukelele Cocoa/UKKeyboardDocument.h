@@ -15,7 +15,7 @@
 
 @end
 
-@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface UKKeyboardDocument : NSDocument<NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, NSTabViewDelegate>
 
 @property (strong) IBOutlet NSTableView *keyboardLayoutsTable;
 @property (strong) IBOutlet NSButton *languageButton;

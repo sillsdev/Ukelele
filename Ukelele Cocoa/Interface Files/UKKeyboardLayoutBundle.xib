@@ -101,7 +101,7 @@
                         <rect key="frame" x="-8" y="-10" width="559" height="383"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Keyboard Layouts" identifier="1" id="7AK-eo-66M">
+                            <tabViewItem label="Keyboard Layouts" identifier="KeyboardLayouts" id="7AK-eo-66M">
                                 <view key="view" id="do4-bs-0YY">
                                     <rect key="frame" x="10" y="33" width="539" height="337"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -339,7 +339,7 @@
                                     </constraints>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Localisations" identifier="2" id="hnO-y1-JxK">
+                            <tabViewItem label="Localisations" identifier="Localisations" id="hnO-y1-JxK">
                                 <view key="view" id="k2C-28-mkV">
                                     <rect key="frame" x="10" y="33" width="539" height="337"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -487,6 +487,9 @@
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="Aex-sY-F87"/>
+                        </connections>
                     </tabView>
                 </subviews>
                 <constraints>

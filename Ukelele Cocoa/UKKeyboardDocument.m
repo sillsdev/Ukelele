@@ -1101,20 +1101,32 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-	if ([notification object] != self.keyboardLayoutsTable) {
-		return;
+		// Check which tab we're on
+	if ([kKeyboardLayoutsTab isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
+			// Keyboard tab
+		if ([notification object] != self.keyboardLayoutsTable) {
+			return;
+		}
+		[self inspectorSetKeyboardSection];
+		if (currentObservation != nil) {
+			[currentObservation removeObserver:self forKeyPath:kKeyboardName];
+			currentObservation = nil;
+		}
+		if ([self.keyboardLayoutsTable selectedRow] != -1) {
+			currentObservation = [[self controllerForCurrentEntry] keyboardLayout];
+			[currentObservation addObserver:self
+								 forKeyPath:kKeyboardName
+									options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+									context:nil];
+		}
 	}
-	[self inspectorSetKeyboardSection];
-	if (currentObservation != nil) {
-		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
-		currentObservation = nil;
-	}
-	if ([self.keyboardLayoutsTable selectedRow] != -1) {
-		currentObservation = [[self controllerForCurrentEntry] keyboardLayout];
-		[currentObservation addObserver:self
-							 forKeyPath:kKeyboardName
-								options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-								context:nil];
+	else if ([kLocalisationsTab isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
+			// Localisations tab
+		if ([notification object] != self.localisationsTable) {
+			return;
+		}
+			// Set the availability of the remove button
+		[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 	}
 }
 
@@ -1417,6 +1429,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return YES;
 	}
 	return [super validateUserInterfaceItem:anItem];
+}
+
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
+	NSAssert(tabView == self.tabView, @"Should only get notifications from our tab view");
+	if ([kLocalisationsTab isEqualToString:[tabViewItem identifier]]) {
+			// Set the availability of the remove button
+		[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
+	}
+}
+
+- (BOOL)removeLocaleButtonShouldBeEnabled {
+	return [self.localisationsTable selectedRow] >= 0 && [self.localisations count] > 1;
 }
 
 #pragma mark User actions
@@ -2303,6 +2327,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[localeData setLocaleCode:newLocale];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
+	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
 - (void)addNewLocale:(LocaleCode *)newLocale {
@@ -2316,6 +2341,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.localisations addObject:newLocaleData];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
+	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
 - (void)insertLocale:(LocalisationData *)localisationData atIndex:(NSInteger)theIndex {
@@ -2325,6 +2351,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.localisations insertObject:localisationData atIndex:theIndex];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
+	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
 - (void)removeLocaleAtIndex:(NSInteger)theIndex {
@@ -2335,6 +2362,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.localisations removeObjectAtIndex:theIndex];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
+	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
 - (void)changeLocalisedNames:(NSDictionary *)localisedNames atIndex:(NSInteger)index {
