@@ -11,6 +11,7 @@
                 <outlet property="keyboardLayoutsController" destination="Wvh-L2-Xlb" id="zmH-dA-zRP"/>
                 <outlet property="keyboardLayoutsTable" destination="Wxh-jT-ogI" id="BKn-wz-Sja"/>
                 <outlet property="languageButton" destination="Mrr-WY-fk4" id="7n5-oS-zMc"/>
+                <outlet property="localisationsController" destination="GBn-jR-fKH" id="lsi-bK-BBc"/>
                 <outlet property="localisationsTable" destination="EZI-kZ-OYE" id="uEM-TR-3Yo"/>
                 <outlet property="removeKeyboardButton" destination="RJB-pS-4bJ" id="Vpa-Wd-taA"/>
                 <outlet property="removeLocaleButton" destination="Z6A-CQ-m4Y" id="MZG-s9-WsC"/>
@@ -24,6 +25,11 @@
         <arrayController objectClassName="KeyboardLayoutInformation" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="Wvh-L2-Xlb" userLabel="Keyboard Layouts Controller">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="keyboardLayouts" id="RMZ-Hz-Dpz"/>
+            </connections>
+        </arrayController>
+        <arrayController objectClassName="LocalisationData" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="GBn-jR-fKH" userLabel="Localisations Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="localisations" id="OsB-F6-v1I"/>
             </connections>
         </arrayController>
         <menu id="wxf-v3-tUG">
@@ -357,7 +363,7 @@
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="Locale" width="118" minWidth="40" maxWidth="1000" id="zE6-xf-C8S">
+                                                            <tableColumn identifier="Locale" editable="NO" width="118" minWidth="40" maxWidth="1000" id="zE6-xf-C8S">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Locale">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -368,6 +374,7 @@
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
+                                                                <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="localeString"/>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="Locale" id="MkQ-nl-v2A">
@@ -390,7 +397,7 @@
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
                                                             </tableColumn>
-                                                            <tableColumn identifier="LocaleDescription" width="379" minWidth="40" maxWidth="1000" id="v0U-BN-6V7">
+                                                            <tableColumn identifier="LocaleDescription" editable="NO" width="379" minWidth="40" maxWidth="1000" id="v0U-BN-6V7">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Description">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -401,6 +408,7 @@
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
+                                                                <sortDescriptor key="sortDescriptorPrototype" selector="localizedStandardCompare:" sortKey="localeDescription"/>
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView id="KsJ-aS-Cvm">
@@ -430,6 +438,8 @@
                                                                     <string key="NSSelectorName">editLocale:</string>
                                                                 </dictionary>
                                                             </binding>
+                                                            <binding destination="GBn-jR-fKH" name="selectionIndexes" keyPath="selectionIndexes" id="U5G-bU-h0c"/>
+                                                            <binding destination="GBn-jR-fKH" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="U5G-bU-h0c" id="baz-Zm-A1R"/>
                                                             <outlet property="dataSource" destination="-2" id="7gf-5x-Oef"/>
                                                             <outlet property="delegate" destination="-2" id="hm7-J3-1uD"/>
                                                         </connections>

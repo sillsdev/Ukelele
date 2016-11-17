@@ -43,6 +43,8 @@ NSString *kKeyboardFileWrapperKey = @"KeyboardFileWrapper";
 	// Key paths
 NSString *kKeyboardName = @"keyboardName";
 NSString *kIntendedLanguageName = @"intendedLanguage";
+NSString *kLocaleString = @"localeString";
+NSString *kLocaleDescription = @"localeDescription";
 
 	// Column identifiers
 NSString *kKeyboardColumn = @"KeyboardName";
@@ -176,10 +178,15 @@ NSString *kLocalisationsTab = @"Localisations";
 	[self.keyboardLayoutsTable registerForDraggedTypes:@[UKKeyboardPasteType, (NSString *)kUTTypeFileURL]];
 		// Tell the Finder that it can copy files out
 	[self.keyboardLayoutsTable setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+		// Set the sorting for the tables
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kKeyboardName ascending:YES selector:@selector(localizedStandardCompare:)];
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
 	[self.keyboardLayoutsTable reloadData];
+	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLocaleString ascending:YES selector:@selector(localizedStandardCompare:)];
+	[self.localisationsController setSortDescriptors:@[sortDescriptor]];
+	[self.localisations sortUsingDescriptors:@[sortDescriptor]];
+	[self.localisationsTable reloadData];
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
@@ -1057,7 +1064,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 	}
 	else if (tableView == self.localisationsTable) {
-		LocalisationData *theData = self.localisations[row];
+		LocalisationData *theData = [self.localisationsController arrangedObjects][row];
 		if ([[tableColumn identifier] isEqualToString:kLocaleColumn]) {
 			return [theData localeString];
 		}
@@ -1071,8 +1078,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
 #pragma unused(tableView)
 #pragma unused(oldDescriptors)
+	NSInteger selectedRow;
 	if (tableView == self.keyboardLayoutsTable) {
-		NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+		selectedRow = [self.keyboardLayoutsTable selectedRow];
 		NSString *selectedLayout = @"";
 		if (selectedRow != -1) {
 			selectedLayout = [self.keyboardLayouts[selectedRow] keyboardName];
@@ -1090,9 +1098,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 	}
 	else if (tableView == self.localisationsTable) {
-		[self.localisationsTable setSortDescriptors:[self.localisationsTable sortDescriptors]];
+		selectedRow = [self.localisationsTable selectedRow];
+		NSString *selectedLocale = @"";
+		if (selectedRow != -1) {
+			selectedLocale = [self.localisations[selectedRow] localeString];
+		}
+		[self.localisationsController setSortDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisations sortUsingDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisationsTable reloadData];
+		if (selectedRow != -1) {
+			for (NSUInteger row = 0; row < [self.localisations count]; row++) {
+				if ([selectedLocale isEqualToString:[self.localisations[row] localeString]]) {
+					[self.localisationsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -1825,7 +1846,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		for (NSInteger rowNumber = 0; rowNumber < (NSInteger)[self.localisations count]; rowNumber++) {
 			// Check whether we already have this locale
-			if ([[self.localisations[rowNumber] localeCode] isEqualTo:theLocale]) {
+			if ([[[self.localisationsController arrangedObjects][rowNumber] localeCode] isEqualTo:theLocale]) {
 				return NO;
 			}
 		}
@@ -1859,7 +1880,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			// No selected row, so do nothing
 		return;
 	}
-	__block LocaleCode *currentLocale = [self.localisations[selectedRow] localeCode];
+	__block LocaleCode *currentLocale = [[self.localisationsController arrangedObjects][selectedRow] localeCode];
 	NSWindow *docWindow = [self.localisationsTable window];
 	NSAssert(docWindow, @"Must have a document window");
 	[localeController beginLocaleDialog:currentLocale forWindow:docWindow callBack:^BOOL(LocaleCode *theLocale) {
@@ -1870,7 +1891,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		for (NSInteger rowNumber = 0; rowNumber < (NSInteger)[self.localisations count]; rowNumber++) {
 				// Check whether we already have this locale
 			if (rowNumber != selectedRow) {
-				if ([[self.localisations[rowNumber] localeCode] isEqualTo:theLocale]) {
+				if ([[[self.localisationsController arrangedObjects][rowNumber] localeCode] isEqualTo:theLocale]) {
 					return NO;
 				}
 			}
@@ -2336,7 +2357,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceLocaleAtIndex:(NSInteger)localeIndex withLocale:(LocaleCode *)newLocale {
-	LocalisationData *localeData = self.localisations[localeIndex];
+	LocalisationData *localeData = [self.localisationsController arrangedObjects][localeIndex];
 	LocaleCode *oldLocale = [localeData localeCode];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceLocaleAtIndex:localeIndex withLocale:oldLocale];
@@ -2355,7 +2376,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:newIndex];
 	[undoManager setActionName:@"Add locale"];
-	[self.localisations addObject:newLocaleData];
+	[self.localisationsController addObject:newLocaleData];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
@@ -2365,7 +2386,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:theIndex];
 	[undoManager setActionName:@"Remove locale"];
-	[self.localisations insertObject:localisationData atIndex:theIndex];
+	[self.localisationsController insertObject:localisationData atArrangedObjectIndex:theIndex];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
@@ -2373,10 +2394,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)removeLocaleAtIndex:(NSInteger)theIndex {
 	NSUndoManager *undoManager = [self undoManager];
-	LocalisationData *oldData = self.localisations[theIndex];
+	LocalisationData *oldData = [self.localisationsController arrangedObjects][theIndex];
 	[[undoManager prepareWithInvocationTarget:self] insertLocale:oldData atIndex:theIndex];
 	[undoManager setActionName:@"Replace locale"];
-	[self.localisations removeObjectAtIndex:theIndex];
+	[self.localisationsController removeObjectAtArrangedObjectIndex:theIndex];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
