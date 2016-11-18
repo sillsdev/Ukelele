@@ -183,7 +183,7 @@ NSString *kLocalisationsTab = @"Localisations";
 	[self.keyboardLayoutsController setSortDescriptors:@[sortDescriptor]];
 	[self.keyboardLayouts sortUsingDescriptors:@[sortDescriptor]];
 	[self.keyboardLayoutsTable reloadData];
-	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLocaleString ascending:YES selector:@selector(localizedStandardCompare:)];
+	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLocaleDescription ascending:YES selector:@selector(localizedStandardCompare:)];
 	[self.localisationsController setSortDescriptors:@[sortDescriptor]];
 	[self.localisations sortUsingDescriptors:@[sortDescriptor]];
 	[self.localisationsTable reloadData];
