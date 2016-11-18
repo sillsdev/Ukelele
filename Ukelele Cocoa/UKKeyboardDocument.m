@@ -1083,7 +1083,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		selectedRow = [self.keyboardLayoutsTable selectedRow];
 		NSString *selectedLayout = @"";
 		if (selectedRow != -1) {
-			selectedLayout = [self.keyboardLayouts[selectedRow] keyboardName];
+			selectedLayout = [[self.keyboardLayoutsController arrangedObjects][selectedRow] keyboardName];
 		}
 		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
@@ -1101,7 +1101,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		selectedRow = [self.localisationsTable selectedRow];
 		NSString *selectedLocale = @"";
 		if (selectedRow != -1) {
-			selectedLocale = [self.localisations[selectedRow] localeString];
+			selectedLocale = [[self.localisationsController arrangedObjects][selectedRow] localeString];
 		}
 		[self.localisationsController setSortDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisations sortUsingDescriptors:[self.localisationsTable sortDescriptors]];
