@@ -256,6 +256,8 @@
 - (void)setSelection:(LanguageCode *)languageCode {
 	NSString *language = [languageCode languageCode];
 	[self.languageTable deselectAll:self];
+	languageList = [languageRegistry searchLanguage:@""];
+	[self.languageTable reloadData];
 	if (language && ![language isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger languageCount = [languageList count];
@@ -277,12 +279,12 @@
 		}
 	}
 	else {
-		languageList = [languageRegistry searchLanguage:@""];
-		[self.languageTable reloadData];
 		[self.languageTable scrollRowToVisible:0];
 	}
 	NSString *script = [languageCode scriptCode];
 	[self.scriptTable deselectAll:self];
+	scriptList = [languageRegistry searchScript:@""];
+	[self.scriptTable reloadData];
 	if (script && ![script isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger scriptCount = [scriptList count];
@@ -304,12 +306,12 @@
 		}
 	}
 	else {
-		scriptList = [languageRegistry searchScript:@""];
-		[self.scriptTable reloadData];
 		[self.scriptTable scrollRowToVisible:0];
 	}
 	NSString *region = [languageCode regionCode];
 	[self.regionTable deselectAll:self];
+	regionList = [languageRegistry searchRegion:@""];
+	[self.regionTable reloadData];
 	if (region && ![region isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger regionCount = [regionList count];
@@ -331,12 +333,12 @@
 		}
 	}
 	else {
-		regionList = [languageRegistry searchRegion:@""];
-		[self.regionTable reloadData];
 		[self.regionTable scrollRowToVisible:0];
 	}
 	NSString *variant = [languageCode variantCode];
 	[self.variantTable deselectAll:self];
+	variantList = [languageRegistry searchVariant:@""];
+	[self.variantTable reloadData];
 	if (variant && ![variant isEqualToString:@""]) {
 			// Find the code in the list
 		NSUInteger variantCount = [variantList count];
@@ -358,8 +360,6 @@
 		}
 	}
 	else {
-		variantList = [languageRegistry searchVariant:@""];
-		[self.variantTable reloadData];
 		[self.variantTable scrollRowToVisible:0];
 	}
 }
