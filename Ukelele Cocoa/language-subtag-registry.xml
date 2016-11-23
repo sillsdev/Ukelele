@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <registry>
-	<date>2016-02-10</date>
+	<date>2016-10-12</date>
 	<language>
 		<subtag>aa</subtag>
 		<description>Afar</description>
@@ -792,6 +792,7 @@
 	<language>
 		<subtag>or</subtag>
 		<description>Oriya (macrolanguage)</description>
+		<description>Odia (macrolanguage)</description>
 		<added>2005-10-16</added>
 		<suppress-script>Orya</suppress-script>
 		<scope>macrolanguage</scope>
@@ -823,9 +824,10 @@
 	<language>
 		<subtag>ps</subtag>
 		<description>Pushto</description>
-		<added>Pashto</added>
-		<suppress-script>2005-10-16</suppress-script>
-		<scope>Arab</scope>
+		<description>Pashto</description>
+		<added>2005-10-16</added>
+		<suppress-script>Arab</suppress-script>
+		<scope>macrolanguage</scope>
 	</language>
 	<language>
 		<subtag>pt</subtag>
@@ -1137,8 +1139,9 @@
 	<language>
 		<subtag>za</subtag>
 		<description>Zhuang</description>
-		<added>Chuang</added>
-		<scope>2005-10-16</scope>
+		<description>Chuang</description>
+		<added>2005-10-16</added>
+		<scope>macrolanguage</scope>
 	</language>
 	<language>
 		<subtag>zh</subtag>
@@ -4105,7 +4108,7 @@
 	</language>
 	<language>
 		<subtag>bcg</subtag>
-		<description>Baga Binari</description>
+		<description>Baga Pokur</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -4639,6 +4642,8 @@
 		<subtag>bgm</subtag>
 		<description>Baga Mboteni</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>bcg</preferred-value>
 	</language>
 	<language>
 		<subtag>bgn</subtag>
@@ -6279,6 +6284,7 @@
 		<subtag>btl</subtag>
 		<description>Bhatola</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>btm</subtag>
@@ -7266,6 +7272,7 @@
 		<subtag>cbe</subtag>
 		<description>Chipiajes</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>cbg</subtag>
@@ -7276,6 +7283,7 @@
 		<subtag>cbh</subtag>
 		<description>Cagua</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>cbi</subtag>
@@ -8069,6 +8077,7 @@
 	</language>
 	<language>
 		<subtag>cnh</subtag>
+		<description>Hakha Chin</description>
 		<description>Haka Chin</description>
 		<added>2009-07-29</added>
 	</language>
@@ -8228,6 +8237,8 @@
 		<subtag>coy</subtag>
 		<description>Coyaima</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>pij</preferred-value>
 	</language>
 	<language>
 		<subtag>coz</subtag>
@@ -8318,6 +8329,8 @@
 		<subtag>cqu</subtag>
 		<description>Chilean Quechua</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>quh</preferred-value>
 		<macrolanguage>qu</macrolanguage>
 	</language>
 	<language>
@@ -8698,6 +8711,7 @@
 		<subtag>cum</subtag>
 		<description>Cumeral</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>cuo</subtag>
@@ -9318,6 +9332,7 @@
 	</language>
 	<language>
 		<subtag>dhg</subtag>
+		<description>Dhangu-Djangu</description>
 		<description>Dhangu</description>
 		<description>Djangu</description>
 		<added>2009-07-29</added>
@@ -9956,7 +9971,7 @@
 	</language>
 	<language>
 		<subtag>dri</subtag>
-		<description>C'lela</description>
+		<description>C'Lela</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -10088,12 +10103,18 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>dtn</subtag>
+		<description>Daatsʼíin</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>dto</subtag>
 		<description>Tommo So Dogon</description>
 		<added>2012-08-12</added>
 	</language>
 	<language>
 		<subtag>dtp</subtag>
+		<description>Kadazan Dusun</description>
 		<description>Central Dusun</description>
 		<added>2009-07-29</added>
 	</language>
@@ -10174,6 +10195,8 @@
 		<subtag>duj</subtag>
 		<description>Dhuwal</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<comments>see dwu, dwy</comments>
 	</language>
 	<language>
 		<subtag>duk</subtag>
@@ -10248,7 +10271,7 @@
 	</language>
 	<language>
 		<subtag>duz</subtag>
-		<description>Duli</description>
+		<description>Duli-Gey</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -10279,9 +10302,19 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>dwu</subtag>
+		<description>Dhuwal</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>dww</subtag>
 		<description>Dawawa</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>dwy</subtag>
+		<description>Dhuwaya</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>dya</subtag>
@@ -10816,6 +10849,12 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>esg</subtag>
+		<description>Aheri Gondi</description>
+		<added>2016-05-30</added>
+		<macrolanguage>gon</macrolanguage>
+	</language>
+	<language>
 		<subtag>esh</subtag>
 		<description>Eshtehardi</description>
 		<added>2009-07-29</added>
@@ -11210,6 +11249,11 @@
 		<subtag>fmu</subtag>
 		<description>Far Western Muria</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>fnb</subtag>
+		<description>Fanbak</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>fng</subtag>
@@ -11896,7 +11940,7 @@
 	</language>
 	<language>
 		<subtag>gek</subtag>
-		<description>Yiwom</description>
+		<description>Ywom</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -12001,12 +12045,15 @@
 		<subtag>ggn</subtag>
 		<description>Eastern Gurung</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>gvr</preferred-value>
 	</language>
 	<language>
 		<subtag>ggo</subtag>
 		<description>Southern Gondi</description>
 		<added>2009-07-29</added>
-		<macrolanguage>gon</macrolanguage>
+		<deprecated>2016-05-30</deprecated>
+		<comments>see esg, wsg</comments>
 	</language>
 	<language>
 		<subtag>ggr</subtag>
@@ -12208,6 +12255,11 @@
 		<subtag>gjn</subtag>
 		<description>Gonja</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>gjr</subtag>
+		<description>Gurindji Kriol</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>gju</subtag>
@@ -12789,6 +12841,7 @@
 	</language>
 	<language>
 		<subtag>gsn</subtag>
+		<description>Nema</description>
 		<description>Gusan</description>
 		<added>2009-07-29</added>
 	</language>
@@ -12940,6 +12993,8 @@
 		<subtag>guv</subtag>
 		<description>Gey</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>duz</preferred-value>
 	</language>
 	<language>
 		<subtag>guw</subtag>
@@ -13009,7 +13064,7 @@
 	</language>
 	<language>
 		<subtag>gvr</subtag>
-		<description>Western Gurung</description>
+		<description>Gurung</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -13469,8 +13524,9 @@
 	<language>
 		<subtag>him</subtag>
 		<description>Himachali languages</description>
-		<added>Western Pahari languages</added>
-		<scope>2005-10-16</scope>
+		<description>Western Pahari languages</description>
+		<added>2005-10-16</added>
+		<scope>collection</scope>
 	</language>
 	<language>
 		<subtag>hio</subtag>
@@ -13642,8 +13698,9 @@
 	<language>
 		<subtag>hmn</subtag>
 		<description>Hmong</description>
-		<added>Mong</added>
-		<scope>2005-10-16</scope>
+		<description>Mong</description>
+		<added>2005-10-16</added>
+		<scope>macrolanguage</scope>
 	</language>
 	<language>
 		<subtag>hmp</subtag>
@@ -14191,6 +14248,7 @@
 		<subtag>iap</subtag>
 		<description>Iapama</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>iar</subtag>
@@ -14577,11 +14635,23 @@
 		<subtag>ill</subtag>
 		<description>Iranun</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<comments>see ilm, ilp</comments>
+	</language>
+	<language>
+		<subtag>ilm</subtag>
+		<description>Iranun (Malaysia)</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>ilo</subtag>
 		<description>Iloko</description>
 		<added>2005-10-16</added>
+	</language>
+	<language>
+		<subtag>ilp</subtag>
+		<description>Iranun (Philippines)</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>ils</subtag>
@@ -14895,6 +14965,11 @@
 		<description>Italic languages</description>
 		<added>2009-07-29</added>
 		<scope>collection</scope>
+	</language>
+	<language>
+		<subtag>itd</subtag>
+		<description>Southern Tidung</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>ite</subtag>
@@ -15412,6 +15487,11 @@
 		<added>2012-08-12</added>
 	</language>
 	<language>
+		<subtag>jka</subtag>
+		<description>Kaera</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>jkm</subtag>
 		<description>Mobwa Karen</description>
 		<added>2012-08-12</added>
@@ -15792,6 +15872,7 @@
 	</language>
 	<language>
 		<subtag>kak</subtag>
+		<description>Kalanguya</description>
 		<description>Kayapa Kallahan</description>
 		<added>2009-07-29</added>
 	</language>
@@ -16446,7 +16527,8 @@
 	</language>
 	<language>
 		<subtag>kfr</subtag>
-		<description>Kachchi</description>
+		<description>Kachhi</description>
+		<description>Kutchi</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -16503,6 +16585,8 @@
 		<subtag>kgc</subtag>
 		<description>Kasseng</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>tdf</preferred-value>
 	</language>
 	<language>
 		<subtag>kgd</subtag>
@@ -17616,6 +17700,7 @@
 		<subtag>kox</subtag>
 		<description>Coxima</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>koy</subtag>
@@ -18233,6 +18318,8 @@
 		<subtag>ktr</subtag>
 		<description>Kota Marudu Tinagas</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>dtp</preferred-value>
 	</language>
 	<language>
 		<subtag>kts</subtag>
@@ -18491,6 +18578,8 @@
 		<subtag>kvs</subtag>
 		<description>Kunggara</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>gdj</preferred-value>
 	</language>
 	<language>
 		<subtag>kvt</subtag>
@@ -18974,6 +19063,8 @@
 		<subtag>kzj</subtag>
 		<description>Coastal Kadazan</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>dtp</preferred-value>
 	</language>
 	<language>
 		<subtag>kzk</subtag>
@@ -19024,6 +19115,8 @@
 		<subtag>kzt</subtag>
 		<description>Tambunan Dusun</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>dtp</preferred-value>
 	</language>
 	<language>
 		<subtag>kzu</subtag>
@@ -19301,6 +19394,7 @@
 	<language>
 		<subtag>lce</subtag>
 		<description>Loncong</description>
+		<description>Sekak</description>
 		<added>2009-07-29</added>
 		<macrolanguage>ms</macrolanguage>
 	</language>
@@ -20315,7 +20409,7 @@
 	</language>
 	<language>
 		<subtag>lou</subtag>
-		<description>Louisiana Creole French</description>
+		<description>Louisiana Creole</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -20659,8 +20753,9 @@
 	<language>
 		<subtag>luy</subtag>
 		<description>Luyia</description>
-		<added>Oluluyia</added>
-		<scope>2009-07-29</scope>
+		<description>Oluluyia</description>
+		<added>2009-07-29</added>
+		<scope>macrolanguage</scope>
 	</language>
 	<language>
 		<subtag>luz</subtag>
@@ -20830,8 +20925,9 @@
 	<language>
 		<subtag>man</subtag>
 		<description>Mandingo</description>
-		<added>Manding</added>
-		<scope>2005-10-16</scope>
+		<description>Manding</description>
+		<added>2005-10-16</added>
+		<scope>macrolanguage</scope>
 	</language>
 	<language>
 		<subtag>map</subtag>
@@ -21917,6 +22013,11 @@
 		<description>Mahei</description>
 		<added>2009-07-29</added>
 		<deprecated>2011-08-16</deprecated>
+	</language>
+	<language>
+		<subtag>mjb</subtag>
+		<description>Makalero</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>mjc</subtag>
@@ -24086,6 +24187,8 @@
 		<subtag>nad</subtag>
 		<description>Nijadali</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>xny</preferred-value>
 	</language>
 	<language>
 		<subtag>nae</subtag>
@@ -26055,6 +26158,11 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>ntd</subtag>
+		<description>Northern Tidung</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>nte</subtag>
 		<description>Nathembo</description>
 		<added>2009-07-29</added>
@@ -26103,6 +26211,8 @@
 		<subtag>nts</subtag>
 		<description>Natagaimas</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>pij</preferred-value>
 	</language>
 	<language>
 		<subtag>ntu</subtag>
@@ -26911,6 +27021,11 @@
 		<added>2014-02-28</added>
 	</language>
 	<language>
+		<subtag>olu</subtag>
+		<description>Kuvale</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>oma</subtag>
 		<description>Omaha-Ponca</description>
 		<added>2009-07-29</added>
@@ -26929,6 +27044,7 @@
 		<subtag>ome</subtag>
 		<description>Omejes</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>omg</subtag>
@@ -27212,6 +27328,7 @@
 	</language>
 	<language>
 		<subtag>ory</subtag>
+		<description>Odia (individual language)</description>
 		<description>Oriya (individual language)</description>
 		<added>2012-08-12</added>
 		<macrolanguage>or</macrolanguage>
@@ -27389,6 +27506,12 @@
 		<added>2009-07-29</added>
 		<deprecated>2015-02-12</deprecated>
 		<preferred-value>vaj</preferred-value>
+	</language>
+	<language>
+		<subtag>ovd</subtag>
+		<description>Övdalian</description>
+		<description>Elfdalian</description>
+		<added>2016-06-16</added>
 	</language>
 	<language>
 		<subtag>owi</subtag>
@@ -27934,6 +28057,11 @@
 		<deprecated>2012-08-12</deprecated>
 	</language>
 	<language>
+		<subtag>pgz</subtag>
+		<description>Papua New Guinean Sign Language</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>pha</subtag>
 		<description>Pa-Hng</description>
 		<added>2009-07-29</added>
@@ -28336,6 +28464,8 @@
 		<subtag>pmc</subtag>
 		<description>Palumata</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>huw</preferred-value>
 	</language>
 	<language>
 		<subtag>pmd</subtag>
@@ -28572,6 +28702,7 @@
 		<subtag>pod</subtag>
 		<description>Ponares</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>poe</subtag>
@@ -28668,6 +28799,8 @@
 		<subtag>ppa</subtag>
 		<description>Pao</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>bfy</preferred-value>
 	</language>
 	<language>
 		<subtag>ppe</subtag>
@@ -28877,6 +29010,8 @@
 		<subtag>pry</subtag>
 		<description>Pray 3</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>prt</preferred-value>
 	</language>
 	<language>
 		<subtag>prz</subtag>
@@ -30091,6 +30226,7 @@
 		<subtag>rna</subtag>
 		<description>Runa</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>rnd</subtag>
@@ -30238,6 +30374,11 @@
 		<subtag>rsl</subtag>
 		<description>Russian Sign Language</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>rsm</subtag>
+		<description>Miriwoong Sign Language</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>rtc</subtag>
@@ -30391,6 +30532,11 @@
 		<subtag>ryu</subtag>
 		<description>Central Okinawan</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>rzh</subtag>
+		<description>Rāziḥī</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>saa</subtag>
@@ -32702,6 +32848,7 @@
 		<subtag>svr</subtag>
 		<description>Savara</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>svs</subtag>
@@ -33450,6 +33597,11 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>tdm</subtag>
+		<description>Taruma</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>tdn</subtag>
 		<description>Tondano</description>
 		<added>2009-07-29</added>
@@ -33483,6 +33635,8 @@
 		<subtag>tdu</subtag>
 		<description>Tempasuk Dusun</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>dtp</preferred-value>
 	</language>
 	<language>
 		<subtag>tdv</subtag>
@@ -33763,6 +33917,8 @@
 		<subtag>thc</subtag>
 		<description>Tai Hang Tong</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>tpo</preferred-value>
 	</language>
 	<language>
 		<subtag>thd</subtag>
@@ -33883,6 +34039,8 @@
 		<subtag>tid</subtag>
 		<description>Tidong</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<comments>see itd, ntd</comments>
 	</language>
 	<language>
 		<subtag>tie</subtag>
@@ -34238,6 +34396,7 @@
 	</language>
 	<language>
 		<subtag>tlt</subtag>
+		<description>Sou Nama</description>
 		<description>Teluti</description>
 		<added>2009-07-29</added>
 	</language>
@@ -34350,6 +34509,8 @@
 		<subtag>tmp</subtag>
 		<description>Tai Mène</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>tyj</preferred-value>
 	</language>
 	<language>
 		<subtag>tmq</subtag>
@@ -34421,6 +34582,8 @@
 		<subtag>tne</subtag>
 		<description>Tinoc Kallahan</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>kak</preferred-value>
 	</language>
 	<language>
 		<subtag>tnf</subtag>
@@ -34521,7 +34684,7 @@
 	</language>
 	<language>
 		<subtag>tnz</subtag>
-		<description>Tonga (Thailand)</description>
+		<description>Ten'edn</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -34543,6 +34706,7 @@
 		<subtag>toe</subtag>
 		<description>Tomedes</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>tof</subtag>
@@ -35588,6 +35752,7 @@
 	<language>
 		<subtag>tyj</subtag>
 		<description>Tai Do</description>
+		<description>Tai Yo</description>
 		<added>2009-07-29</added>
 	</language>
 	<language>
@@ -37161,6 +37326,7 @@
 	</language>
 	<language>
 		<subtag>wha</subtag>
+		<description>Sou Upaa</description>
 		<description>Manusela</description>
 		<added>2009-07-29</added>
 	</language>
@@ -37731,6 +37897,12 @@
 		<added>2009-07-29</added>
 	</language>
 	<language>
+		<subtag>wsg</subtag>
+		<description>Adilabad Gondi</description>
+		<added>2016-05-30</added>
+		<macrolanguage>gon</macrolanguage>
+	</language>
+	<language>
 		<subtag>wsi</subtag>
 		<description>Wusi</description>
 		<added>2009-07-29</added>
@@ -37963,6 +38135,11 @@
 		<added>2014-02-28</added>
 	</language>
 	<language>
+		<subtag>xak</subtag>
+		<description>Máku</description>
+		<added>2016-05-30</added>
+	</language>
+	<language>
 		<subtag>xal</subtag>
 		<description>Kalmyk</description>
 		<description>Oirat</description>
@@ -38033,6 +38210,8 @@
 		<subtag>xba</subtag>
 		<description>Kamba (Brazil)</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>cax</preferred-value>
 	</language>
 	<language>
 		<subtag>xbb</subtag>
@@ -38103,6 +38282,7 @@
 		<subtag>xbx</subtag>
 		<description>Kabixí</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>xby</subtag>
@@ -38400,6 +38580,7 @@
 		<subtag>xip</subtag>
 		<description>Xipináwa</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>xir</subtag>
@@ -38470,6 +38651,8 @@
 		<subtag>xkh</subtag>
 		<description>Karahawyana</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
+		<preferred-value>waw</preferred-value>
 	</language>
 	<language>
 		<subtag>xki</subtag>
@@ -40386,6 +40569,7 @@
 		<subtag>yri</subtag>
 		<description>Yarí</description>
 		<added>2009-07-29</added>
+		<deprecated>2016-05-30</deprecated>
 	</language>
 	<language>
 		<subtag>yrk</subtag>
@@ -40406,6 +40590,11 @@
 		<subtag>yrn</subtag>
 		<description>Yerong</description>
 		<added>2009-07-29</added>
+	</language>
+	<language>
+		<subtag>yro</subtag>
+		<description>Yaroamë</description>
+		<added>2016-05-30</added>
 	</language>
 	<language>
 		<subtag>yrs</subtag>
@@ -40732,6 +40921,7 @@
 	</language>
 	<language>
 		<subtag>zab</subtag>
+		<description>Western Tlacolula Valley Zapotec</description>
 		<description>San Juan Guelavía Zapotec</description>
 		<added>2009-07-29</added>
 		<macrolanguage>zap</macrolanguage>
@@ -41683,8 +41873,9 @@
 	<language>
 		<subtag>zxx</subtag>
 		<description>No linguistic content</description>
-		<added>Not applicable</added>
-		<scope>2006-03-08</scope>
+		<description>Not applicable</description>
+		<added>2006-03-08</added>
+		<scope>special</scope>
 	</language>
 	<language>
 		<subtag>zyb</subtag>
@@ -42624,6 +42815,7 @@
 	<extlang>
 		<subtag>lce</subtag>
 		<description>Loncong</description>
+		<description>Sekak</description>
 		<added>2009-07-29</added>
 		<preferred-value>lce</preferred-value>
 		<prefix>ms</prefix>
@@ -42944,6 +43136,13 @@
 		<macrolanguage>ar</macrolanguage>
 	</extlang>
 	<extlang>
+		<subtag>pgz</subtag>
+		<description>Papua New Guinean Sign Language</description>
+		<added>2016-05-30</added>
+		<preferred-value>pgz</preferred-value>
+		<prefix>sgn</prefix>
+	</extlang>
+	<extlang>
 		<subtag>pks</subtag>
 		<description>Pakistan Sign Language</description>
 		<added>2009-07-29</added>
@@ -43048,6 +43247,13 @@
 		<description>Russian Sign Language</description>
 		<added>2009-07-29</added>
 		<preferred-value>rsl</preferred-value>
+		<prefix>sgn</prefix>
+	</extlang>
+	<extlang>
+		<subtag>rsm</subtag>
+		<description>Miriwoong Sign Language</description>
+		<added>2016-05-30</added>
+		<preferred-value>rsm</preferred-value>
 		<prefix>sgn</prefix>
 	</extlang>
 	<extlang>
@@ -44717,6 +44923,7 @@
 	</region>
 	<region>
 		<subtag>CZ</subtag>
+		<description>Czechia</description>
 		<description>Czech Republic</description>
 		<added>2005-10-16</added>
 	</region>
@@ -44806,6 +45013,11 @@
 		<subtag>EU</subtag>
 		<description>European Union</description>
 		<added>2009-07-29</added>
+	</region>
+	<region>
+		<subtag>EZ</subtag>
+		<description>Eurozone</description>
+		<added>2016-07-14</added>
 	</region>
 	<region>
 		<subtag>FI</subtag>
@@ -45665,6 +45877,11 @@
 		<added>2005-10-16</added>
 	</region>
 	<region>
+		<subtag>UN</subtag>
+		<description>United Nations</description>
+		<added>2016-07-14</added>
+	</region>
+	<region>
 		<subtag>US</subtag>
 		<description>United States</description>
 		<added>2005-10-16</added>
@@ -45952,12 +46169,10 @@
 		<added>2005-10-16</added>
 		<prefix>de</prefix>
 	</variant>
-	<variant>
-		<subtag>1959acad</subtag>
-		<description>"Academic" ("governmental") variant of Belarusian as codified in 1959</description>
-		<added>2008-09-30</added>
-		<prefix>be</prefix>
-	</variant>
+	<variant><subtag>1959acad</subtag><description>"Academic" ("governmental") variant of Belarusian as</description> codified in 1959
+<added>2008-09-30</added>
+<prefix>be</prefix>
+</variant>
 	<variant>
 		<subtag>1994</subtag>
 		<description>Standardized Resian orthography</description>
@@ -45975,13 +46190,11 @@
 		<added>2005-10-16</added>
 		<prefix>de</prefix>
 	</variant>
-	<variant>
-		<subtag>abl1943</subtag>
-		<description>Orthographic formulation of 1943 - Official in Brazil (Formulário Ortográfico de 1943 - Oficial no Brasil)</description>
-		<added>2015-05-06</added>
-		<prefix>pt-BR</prefix>
-		<comments>Denotes conventions established by the Academia Brasileira de Letras in 1943 and generally used in Brazil until 2009</comments>
-	</variant>
+	<variant><subtag>abl1943</subtag><description>Orthographic formulation of 1943 - Official in Brazil</description> (Formulário Ortográfico de 1943 - Oficial no Brasil)
+<added>2015-05-06</added>
+<prefix>pt-BR</prefix>
+<comments>Denotes conventions established by the Academia Brasileira de Letras in 1943 and generally used in Brazil until 2009</comments>
+</variant>
 	<variant>
 		<subtag>alalc97</subtag>
 		<description>ALA-LC Romanization, 1997 edition</description>
@@ -45996,14 +46209,12 @@
 		<prefix>djk</prefix>
 		<comments>Aluku dialect of the "Busi Nenge Tongo" English-based Creole continuum in Eastern Suriname and Western French Guiana</comments>
 	</variant>
-	<variant>
-		<subtag>ao1990</subtag>
-		<description>Portuguese Language Orthographic Agreement of 1990 (Acordo Ortográfico da Língua Portuguesa de 1990)</description>
-		<added>2015-05-06</added>
-		<prefix>pt</prefix>
-		<prefix>gl</prefix>
-		<comments>Portuguese orthography conventions established in 1990 but not brought into effect until 2009</comments>
-	</variant>
+	<variant><subtag>ao1990</subtag><description>Portuguese Language Orthographic Agreement of 1990 (Acordo</description> Ortográfico da Língua Portuguesa de 1990)
+<added>2015-05-06</added>
+<prefix>pt</prefix>
+<prefix>gl</prefix>
+<comments>Portuguese orthography conventions established in 1990 but not brought into effect until 2009</comments>
+</variant>
 	<variant>
 		<subtag>arevela</subtag>
 		<description>Eastern Armenian</description>
@@ -46086,13 +46297,11 @@
 		<prefix>en</prefix>
 		<comments>Jargon embedded in American English</comments>
 	</variant>
-	<variant>
-		<subtag>colb1945</subtag>
-		<description>Portuguese-Brazilian Orthographic Convention of 1945 (Convenção Ortográfica Luso-Brasileira de 1945)</description>
-		<added>2015-05-06</added>
-		<prefix>pt</prefix>
-		<comments>Portuguese orthography conventions established in 1945, generally in effect until 2009. This reform was not ratified in Brazil.</comments>
-	</variant>
+	<variant><subtag>colb1945</subtag><description>Portuguese-Brazilian Orthographic Convention of 1945</description> (Convenção Ortográfica Luso-Brasileira de 1945)
+<added>2015-05-06</added>
+<prefix>pt</prefix>
+<comments>Portuguese orthography conventions established in 1945, generally in effect until 2009. This reform was not ratified in Brazil.</comments>
+</variant>
 	<variant>
 		<subtag>cornu</subtag>
 		<description>Cornu-English</description>
@@ -46126,6 +46335,12 @@
 		<subtag>fonipa</subtag>
 		<description>International Phonetic Alphabet</description>
 		<added>2006-12-11</added>
+	</variant>
+	<variant>
+		<subtag>fonnapa</subtag>
+		<description>North American Phonetic Alphabet</description>
+		<description>Americanist Phonetic Notation</description>
+		<added>2016-06-24</added>
 	</variant>
 	<variant>
 		<subtag>fonupa</subtag>
@@ -46414,7 +46629,7 @@
 		<description>Belarusian in Taraskievica orthography</description>
 		<added>2007-04-27</added>
 		<prefix>be</prefix>
-		<comments>The subtag represents Branislau Taraskievic's Belarusian orthography as published in "Bielaruski klasycny pravapis" by Juras Buslakou, Vincuk Viacorka, Zmicier Sanko, and Zmicier Sauka (Vilnia-Miensk 2005).</comments>
+		<comments>The subtag represents Branislau Taraskievic's Belarusian orthography as published in "Bielaruski klasycny pravapis" by Juras Buslakou, Vincuk Viacorka, Zmicier Sanko, and Zmicier Sauka (Vilnia- Miensk 2005).</comments>
 	</variant>
 	<variant>
 		<subtag>uccor</subtag>
@@ -46634,13 +46849,11 @@
 		<deprecated>2009-07-29</deprecated>
 		<comments>see cdo, cpx, czo, mnp, nan</comments>
 	</grandfathered>
-	<grandfathered>
-		<tag>zh-min-nan</tag>
-		<description>Minnan, Hokkien, Amoy, Taiwanese, Southern Min, Southern Fujian, Hoklo, Southern Fukien, Ho-lo</description>
-		<added>2001-03-26</added>
-		<deprecated>2009-07-29</deprecated>
-		<preferred-value>nan</preferred-value>
-	</grandfathered>
+	<grandfathered><tag>zh-min-nan</tag><description>Minnan, Hokkien, Amoy, Taiwanese, Southern Min, Southern</description> Fujian, Hoklo, Southern Fukien, Ho-lo
+<added>2001-03-26</added>
+<deprecated>2009-07-29</deprecated>
+<preferred-value>nan</preferred-value>
+</grandfathered>
 	<grandfathered>
 		<tag>zh-xiang</tag>
 		<description>Xiang or Hunanese</description>
