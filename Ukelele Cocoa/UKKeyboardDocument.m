@@ -1384,7 +1384,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
-			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:)) {
+			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:) ||
+			 theAction == @selector(localiseKeyboardName:)) {
 			// Only active if there's a selection in the table
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
