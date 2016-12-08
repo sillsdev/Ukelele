@@ -110,3 +110,4 @@ NSString *UKDontShowWarningDialog = @"DontShowWarningDialog";
 NSString *UKKCAPListFile = @"KCAPResources";
 NSString *UKUntitledName = @"untitled";
 NSString *kStringKeyboardLayouts = @"Keyboard Layouts";
+NSString *kStringDragToInstall = @"Drag here to install";

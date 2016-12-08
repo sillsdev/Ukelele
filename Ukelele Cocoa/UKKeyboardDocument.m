@@ -977,7 +977,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return;
 	}
 	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
-	NSURL *linkURL = [targetDirectoryURL URLByAppendingPathComponent:kStringKeyboardLayouts isDirectory:NO];
+	NSURL *linkURL = [targetDirectoryURL URLByAppendingPathComponent:kStringDragToInstall isDirectory:NO];
 	int linkError = symlink([keyboardLayoutsURL fileSystemRepresentation], [linkURL fileSystemRepresentation]);
 	if (linkError) {
 			// Failed to create the link

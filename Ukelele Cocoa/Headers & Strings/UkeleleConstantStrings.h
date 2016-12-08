@@ -106,3 +106,4 @@ MY_EXTERN NSString *UKDontShowWarningDialog;
 MY_EXTERN NSString *UKKCAPListFile;
 MY_EXTERN NSString *UKUntitledName;
 MY_EXTERN NSString *kStringKeyboardLayouts;
+MY_EXTERN NSString *kStringDragToInstall;
