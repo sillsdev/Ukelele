@@ -67,7 +67,7 @@
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.2.0.141</string>
+	<string>3.2.0.142</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -78,6 +78,8 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>org.sil.Ukelele.KeyboardInstallerTool</key>
