@@ -1046,6 +1046,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSString *resultString = @"";
 	if (tableView == self.keyboardLayoutsTable) {
 			// Object for keyboard layouts table
 		KeyboardLayoutInformation *layoutInfo = [self.keyboardLayoutsController arrangedObjects][row];
@@ -1056,23 +1057,26 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		else if ([[tableColumn identifier] isEqualToString:kKeyboardColumn]) {
 				// Keyboard name
-			return [layoutInfo keyboardName];
+			resultString = [layoutInfo keyboardName];
 		}
 		else if ([[tableColumn identifier] isEqualToString:kLanguageColumn]) {
 				// Intended language column
-			return [layoutInfo intendedLanguage];
+			resultString = [layoutInfo intendedLanguage];
 		}
 	}
 	else if (tableView == self.localisationsTable) {
 		LocalisationData *theData = [self.localisationsController arrangedObjects][row];
 		if ([[tableColumn identifier] isEqualToString:kLocaleColumn]) {
-			return [theData localeString];
+			resultString = [theData localeString];
 		}
 		else if ([[tableColumn identifier] isEqualToString:kLocaleDescriptionColumn]) {
-			return [theData localeDescription];
+			resultString = [theData localeDescription];
 		}
 	}
-	return nil;
+	if (resultString == nil) {
+		resultString = @"";
+	}
+	return resultString;
 }
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
