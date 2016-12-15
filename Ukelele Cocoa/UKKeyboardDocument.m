@@ -1468,6 +1468,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
+#pragma unused(tabView)
 	NSAssert(tabView == self.tabView, @"Should only get notifications from our tab view");
 	if ([kLocalisationsTab isEqualToString:[tabViewItem identifier]]) {
 			// Set the availability of the remove button
