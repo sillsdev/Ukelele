@@ -25,7 +25,7 @@
 		_keyboardName = fileName;
 	}
 	_keyboardFileWrapper = nil;
-	_intendedLanguage = nil;
+	_intendedLanguage = @"";
 	_iconData = nil;
 	_keyboardController = nil;
 	_hasBadKeyboard = NO;

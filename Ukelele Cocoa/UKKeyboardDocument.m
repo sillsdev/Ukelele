@@ -561,7 +561,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Get the intended languages for each keyboard layout in the bundle
 	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
 		NSString *languageIdentifier = [keyboardEntry intendedLanguage];
-		if (nil != languageIdentifier) {
+		if (nil != languageIdentifier && [languageIdentifier length] > 0) {
 				// Add this language identifier
 			NSString *keyboardName = [keyboardEntry keyboardName];
 			NSString *fileName = [keyboardEntry fileName];
@@ -2355,7 +2355,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (iconData != nil) {
 		[self addIcon:iconData atIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1];
 	}
-	if (intendedLanguage != nil) {
+	if (intendedLanguage != nil && [intendedLanguage length] > 0) {
 		[self replaceIntendedLanguageAtIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1 withLanguage:[LanguageCode languageCodeFromString:intendedLanguage]];
 	}
 	[undoManager setActionName:@"Capture current input source"];
