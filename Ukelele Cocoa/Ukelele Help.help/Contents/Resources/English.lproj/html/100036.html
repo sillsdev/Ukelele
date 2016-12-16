@@ -6,7 +6,7 @@
 "Simple Help Editor 5.0">
 <meta http-equiv="Content-Type" content=
 "text/html; charset=utf-8" />
-<title>Keyboard Name and ID</title>
+<title>Keyboard Name and Script</title>
 <link href="../styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -18,19 +18,21 @@ what appears in the Input menu and the International preference
 pane.<br />
 <br />
 You can set the keyboard layout’s name by choosing “Set Keyboard
-Name and ID...” from the Keyboard menu. Any string is valid as a
-name, but choose one that will be clear in the input menu and in
+Name and Script...” from the Keyboard menu. Any string is valid as
+a name, but choose one that will be clear in the input menu and in
 System Preferences when you want to enable it.<br />
 <br />
-Apart from the name, every keyboard layout has a numeric ID. The ID
-has to be in certain ranges, depending on the script associated
-with the keyboard layout. For most cases, the script is Unicode,
-and that means that the ID must be negative. Ideally, the ID should
-be unique amongst all the keyboard layouts on your computer, so
-Ukelele will choose a random ID in the appropriate range when you
-set the script. You can also change the ID by clicking the
-<span class="Style1">Generate</span> button or entering a number
-yourself.
+Apart from the name, every keyboard layout has an associated
+script, which is Unicode or one of a limited number of scripts
+supported by Apple. Unless you have a compelling reason, Unicode is
+the best choice, as choosing another script opens you to the
+possibility of generating output outside that script, which may
+confuse applications.<br />
+<br />
+There is also a numeric ID for every keyboard layout. Ukelele
+assigns valid, random IDs for keyboard layouts, so you should not
+need to bother about them. They are visible in the Inspector if you
+really want to know them.
 <p class="navlinks"><span class="navlinks"><a href=
 "100037.html">Next page</a></span><span class="navlinks">&nbsp;
 &nbsp; &nbsp;</span><span class="navlinks"><a href=
