@@ -1368,6 +1368,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	if (theAction == @selector(addOpenDocument:)) {
 			// Only active if there are open keyboard layouts which aren't in bundles
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
@@ -1394,6 +1397,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
+		if (![self isBundle]) {
+			return NO;
+		}
 		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		if (selectedRowNumber == -1) {
 			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
@@ -1402,6 +1408,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(removeIcon:)) {
 			// Only active if there's a selection in the table, and the selected item has an icon
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
@@ -1420,6 +1429,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(removeIntendedLanguage:)) {
 			// Only active if there's a selection in the table, and the selected item has an intended language
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
@@ -1438,6 +1450,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(editLocale:)) {
 			// Only active if the current tab is localisations and there is a selected row
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
 			return NO;
 		}
@@ -1449,6 +1464,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(removeLocale:)) {
 			// Only active if the current tab is localisations and there is a selected row which is not the last one
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
 			return NO;
 		}
@@ -1463,6 +1481,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	else if (theAction == @selector(addLocale:)) {
 			// Only active if the current tab is the localisations tab
+		if (![self isBundle]) {
+			return NO;
+		}
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
 			return NO;
 		}

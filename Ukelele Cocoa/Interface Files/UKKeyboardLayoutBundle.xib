@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -297,13 +297,27 @@
                                                 <menu key="menu" id="Om2-vN-xjv">
                                                     <items>
                                                         <menuItem state="on" image="NSAddTemplate" hidden="YES" id="ZWZ-MN-Sf8"/>
-                                                        <menuItem title="Standard Keyboard Layout…" id="CMr-vt-7R5"/>
-                                                        <menuItem title="Existing File…" id="Jui-Yw-QHV"/>
+                                                        <menuItem title="Standard Keyboard Layout…" id="CMr-vt-7R5">
+                                                            <connections>
+                                                                <action selector="addKeyboardLayout:" target="-1" id="rpL-0s-1nZ"/>
+                                                            </connections>
+                                                        </menuItem>
+                                                        <menuItem title="Existing File…" id="Jui-Yw-QHV">
+                                                            <connections>
+                                                                <action selector="openKeyboardFile:" target="-1" id="NXQ-Pr-pMi"/>
+                                                            </connections>
+                                                        </menuItem>
                                                         <menuItem title="Ukelele Window…" id="LMO-1U-3Cz">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                                            <connections>
+                                                                <action selector="addOpenDocument:" target="-1" id="VeB-Jf-wDv"/>
+                                                            </connections>
                                                         </menuItem>
                                                         <menuItem title="Capture Current Input Source" id="buD-A7-bqo">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                                            <connections>
+                                                                <action selector="captureInputSource:" target="-1" id="iOV-kx-ntQ"/>
+                                                            </connections>
                                                         </menuItem>
                                                     </items>
                                                 </menu>
@@ -433,12 +447,12 @@
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
+                                                            <binding destination="GBn-jR-fKH" name="selectionIndexes" keyPath="selectionIndexes" id="U5G-bU-h0c"/>
                                                             <binding destination="-2" name="doubleClickTarget" keyPath="self" id="FlI-bw-aJg">
                                                                 <dictionary key="options">
                                                                     <string key="NSSelectorName">editLocale:</string>
                                                                 </dictionary>
                                                             </binding>
-                                                            <binding destination="GBn-jR-fKH" name="selectionIndexes" keyPath="selectionIndexes" id="U5G-bU-h0c"/>
                                                             <binding destination="GBn-jR-fKH" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="U5G-bU-h0c" id="baz-Zm-A1R"/>
                                                             <outlet property="dataSource" destination="-2" id="7gf-5x-Oef"/>
                                                             <outlet property="delegate" destination="-2" id="hm7-J3-1uD"/>
