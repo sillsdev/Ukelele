@@ -885,7 +885,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (UKKeyboardController *)controllerForCurrentEntry {
 	NSInteger selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	NSAssert(selectedRowNumber >= 0, @"Must have a selected row");
-	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	UKKeyboardController *theController = [selectedRowInfo keyboardController];
 	if (theController == nil) {
 		theController = [self createControllerForEntry:selectedRowInfo];
@@ -1086,17 +1086,17 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
 #pragma unused(tableView)
 #pragma unused(oldDescriptors)
-	NSInteger selectedRow;
+	NSInteger selectedRowNumber;
 	if (tableView == self.keyboardLayoutsTable) {
-		selectedRow = [self.keyboardLayoutsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		NSString *selectedLayout = @"";
-		if (selectedRow != -1) {
-			selectedLayout = [[self.keyboardLayoutsController arrangedObjects][selectedRow] keyboardName];
+		if (selectedRowNumber != -1) {
+			selectedLayout = [[self.keyboardLayoutsController arrangedObjects][selectedRowNumber] keyboardName];
 		}
 		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayoutsTable reloadData];
-		if (selectedRow != -1) {
+		if (selectedRowNumber != -1) {
 			for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
 				if ([selectedLayout isEqualToString:[self.keyboardLayouts[row] keyboardName]]) {
 					[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
@@ -1106,15 +1106,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 	}
 	else if (tableView == self.localisationsTable) {
-		selectedRow = [self.localisationsTable selectedRow];
+		selectedRowNumber = [self.localisationsTable selectedRow];
 		NSString *selectedLocale = @"";
-		if (selectedRow != -1) {
-			selectedLocale = [[self.localisationsController arrangedObjects][selectedRow] localeString];
+		if (selectedRowNumber != -1) {
+			selectedLocale = [[self.localisationsController arrangedObjects][selectedRowNumber] localeString];
 		}
 		[self.localisationsController setSortDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisations sortUsingDescriptors:[self.localisationsTable sortDescriptors]];
 		[self.localisationsTable reloadData];
-		if (selectedRow != -1) {
+		if (selectedRowNumber != -1) {
 			for (NSUInteger row = 0; row < [self.localisations count]; row++) {
 				if ([selectedLocale isEqualToString:[self.localisations[row] localeString]]) {
 					[self.localisationsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
@@ -1255,7 +1255,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					// Have an intended language
 				[keyboardInfo setIntendedLanguage:[pasteBoardData languageCode]];
 			}
-			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
+			[self insertDocumentWithInfo:keyboardInfo];
 			return YES;
 		}
 		return NO;
@@ -1281,7 +1281,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			}
 			NSString *fileName = [[dragURL lastPathComponent] stringByDeletingPathExtension];
 			keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:keyboardObject fileName:fileName];
-			[self insertDocumentWithInfo:keyboardInfo atIndex:row];
+			[self insertDocumentWithInfo:keyboardInfo];
 			return YES;
 		}
 		else if (isIconFile && dropOperation == NSTableViewDropOn) {
@@ -1292,11 +1292,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
 			if ([keyboardEntry hasIcon]) {
 					// Replace an existing icon file
-				[self replaceIconAtIndex:row withIcon:iconData];
+				[self replaceIconForKeyboardInfo:keyboardEntry withIcon:iconData];
 			}
 			else {
 					// No existing icon file
-				[self addIcon:iconData atIndex:row];
+				[self addIcon:iconData toKeyboardInfo:keyboardEntry];
 			}
 			return YES;
 		}
@@ -1404,9 +1404,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (![self isBundle]) {
 			return NO;
 		}
-		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		}
 		return (selectedRowNumber != -1);
 	}
@@ -1418,13 +1418,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
-		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		}
 		if (selectedRowNumber != -1 && self.keyboardLayouts.count > 0) {
 				// Have a selected row. Does it have an icon?
-			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+			keyboardEntry = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 			if ([keyboardEntry iconData] != nil) {
 				return YES;
 			}
@@ -1439,13 +1439,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kLocalisationsTab]) {
 			return NO;
 		}
-		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		}
 		if (selectedRowNumber != -1 && self.keyboardLayouts.count > 0) {
 				// Have a selected row. Does it have an intended language?
-			keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+			keyboardEntry = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 			if ([keyboardEntry intendedLanguage] != nil && ![[keyboardEntry intendedLanguage] isEqualToString:@""]) {
 				return YES;
 			}
@@ -1460,9 +1460,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
 			return NO;
 		}
-		selectedRowNumber = [self.localisationsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [self.localisationsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		}
 		return selectedRowNumber != -1 && [self.localisations count] > 0;
 	}
@@ -1477,9 +1477,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([self.localisations count] == 1) {
 			return NO;
 		}
-		selectedRowNumber = [self.localisationsTable selectedRow];
+		selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
 		if (selectedRowNumber == -1) {
-			selectedRowNumber = [self.localisationsTable clickedRow];
+			selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		}
 		return selectedRowNumber != -1 && [self.localisations count] > 0;
 	}
@@ -1617,7 +1617,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	NSString *documentName = [selectedRowInfo keyboardName];
 	if (nil == documentName || [documentName isEqualToString:@""]) {
 		documentName = [selectedRowInfo fileName];
@@ -1673,7 +1673,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (intendedLanguageSheet == nil) {
 		intendedLanguageSheet = [IntendedLanguageSheet intendedLanguageSheet];
 	}
-	KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+	__block KeyboardLayoutInformation *keyboardEntry = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	NSString *keyboardLanguage = [keyboardEntry intendedLanguage];
 	LanguageCode *keyboardLanguageCode = [LanguageCode languageCodeFromString:keyboardLanguage];
 	NSArray *windowControllers = [self windowControllers];
@@ -1684,9 +1684,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 											forWindow:myWindow
 											 callBack:^(LanguageCode *newLanguage) {
 												 if (newLanguage != nil) {
-													 NSInteger theSelectedRow = [self.keyboardLayoutsTable selectedRow];
-													 NSAssert(theSelectedRow >= 0, @"There must be a selected row");
-													 [self replaceIntendedLanguageAtIndex:theSelectedRow withLanguage:newLanguage];
+													 [self replaceIntendedLanguageForKeyboardInfo:keyboardEntry withLanguage:newLanguage];
 												 }
 											 }];
 }
@@ -1698,9 +1696,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
+	KeyboardLayoutInformation *keyboardEntry = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 		// Create an empty language code
 	LanguageCode *emptyLanguage = [[LanguageCode alloc] init];
-	[self replaceIntendedLanguageAtIndex:selectedRowNumber withLanguage:emptyLanguage];
+	[self replaceIntendedLanguageForKeyboardInfo:keyboardEntry withLanguage:emptyLanguage];
 }
 
 	// Create a new keyboard layout from the current keyboard input source
@@ -1827,7 +1826,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSArray *selectedFiles = [openPanel URLs];
 			NSURL *selectedFile = selectedFiles[0];	// Only one file
 			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
-			[self addIcon:iconData atIndex:selectedRowNumber];
+			KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
+			[self addIcon:iconData toKeyboardInfo:keyboardInfo];
 		}
 	}];
 }
@@ -1839,7 +1839,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	[self removeIconAtIndex:selectedRowNumber];
+	KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
+	[self removeIconFromKeyboardInfo:keyboardInfo];
 }
 
 	// Set the keyboard's name, script and/or id
@@ -1850,7 +1851,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[selectedRowNumber];
+	KeyboardLayoutInformation *keyboardEntry = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	UKKeyboardController *keyboardController = [keyboardEntry keyboardController];
 	if (keyboardController == nil) {
 			// Create the controller
@@ -1889,12 +1890,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)removeLocale:(id)sender {
 #pragma unused(sender)
-	NSInteger selectedRow = [self.localisationsTable selectedRow];
-	if (selectedRow == -1) {
-		selectedRow = [self.localisationsTable clickedRow];
+	NSInteger selectedRowNumber = [self.localisationsTable clickedRow];
+	if (selectedRowNumber == -1) {
+		selectedRowNumber = [self.localisationsTable selectedRow];
 	}
-	NSAssert(selectedRow != -1, @"Must have a selected row");
-	[self removeLocaleAtIndex:selectedRow];
+	NSAssert(selectedRowNumber != -1, @"Must have a selected row");
+	LocalisationData *localeData = [self.localisationsController arrangedObjects][selectedRowNumber];
+	[self removeLocaleWithData:localeData];
 }
 
 	// Edit a locale
@@ -1903,15 +1905,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (localeController == nil) {
 		localeController = [LocaleDialogController localeDialog];
 	}
-	NSInteger selectedRow = [self.localisationsTable selectedRow];
-	if (selectedRow == -1) {
-		selectedRow = [self.localisationsTable clickedRow];
+	NSInteger selectedRowNumber = [self.localisationsTable clickedRow];
+	if (selectedRowNumber == -1) {
+		selectedRowNumber = [self.localisationsTable selectedRow];
 	}
-	if (selectedRow == -1) {
+	if (selectedRowNumber == -1) {
 			// No selected row, so do nothing
 		return;
 	}
-	__block LocaleCode *currentLocale = [[self.localisationsController arrangedObjects][selectedRow] localeCode];
+	__block LocaleCode *currentLocale = [[self.localisationsController arrangedObjects][selectedRowNumber] localeCode];
 	NSWindow *docWindow = [self.localisationsTable window];
 	NSAssert(docWindow, @"Must have a document window");
 	[localeController beginLocaleDialog:currentLocale forWindow:docWindow callBack:^BOOL(LocaleCode *theLocale) {
@@ -1921,14 +1923,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		for (NSInteger rowNumber = 0; rowNumber < (NSInteger)[self.localisations count]; rowNumber++) {
 				// Check whether we already have this locale
-			if (rowNumber != selectedRow) {
+			if (rowNumber != selectedRowNumber) {
 				if ([[[self.localisationsController arrangedObjects][rowNumber] localeCode] isEqualTo:theLocale]) {
 					return NO;
 				}
 			}
 		}
 			// We have a valid new locale
-		[self replaceLocaleAtIndex:selectedRow withLocale:theLocale];
+		LocalisationData *localeData = [self.localisationsController arrangedObjects][selectedRowNumber];
+		[self replaceLocaleForLocalisation:localeData withLocale:theLocale];
 		return YES;
 	}];
 }
@@ -1937,18 +1940,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (IBAction)localiseKeyboardName:(id)sender {
 #pragma unused(sender)
 	__block LocaliseKeyboardController *theController = [LocaliseKeyboardController localiseKeyboardController];
-	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
-	if (selectedRow == -1) {
-		selectedRow = [self.keyboardLayoutsTable clickedRow];
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable clickedRow];
+	if (selectedRowNumber == -1) {
+		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 	}
-	NSAssert(selectedRow != -1, @"Must have a selected row");
+	NSAssert(selectedRowNumber != -1, @"Must have a selected row");
 	NSWindow *docWindow = [self.keyboardLayoutsTable window];
 	NSAssert(docWindow, @"Must have a document window");
-	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[selectedRow];
+	KeyboardLayoutInformation *layoutInfo = self.keyboardLayouts[selectedRowNumber];
 	[theController beginDialogWithWindow:docWindow forLocalisations:layoutInfo.localisedNames withCallback:^(NSDictionary *theDict) {
 		if (theDict != nil) {
 				// Got a valid dictionary
-			[self changeLocalisedNames:theDict atIndex:selectedRow];
+			[self changeLocalisedNames:theDict atIndex:selectedRowNumber];
 		}
 		theController = nil;
 	}];
@@ -2013,7 +2016,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	KeyboardLayoutInformation *selectedRowInfo = self.keyboardLayouts[selectedRowNumber];
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 	UkeleleKeyboardObject *keyboardObject = [selectedRowInfo keyboardObject];
 	if (keyboardObject == nil) {
 			// Not loaded, so do so
@@ -2188,7 +2191,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return;
 	}
 	NSInteger indexToDelete = [(__bridge NSNumber *)contextInfo integerValue];
-	[self removeDocumentAtIndex:indexToDelete];
+	KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][indexToDelete];
+	[self removeDocumentWithInfo:keyboardInfo];
 }
 
 - (void)acceptChooseOpenDocument:(NSString *)chosenItem {
@@ -2277,19 +2281,19 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument {
-	NSUInteger newIndex = [self.keyboardLayoutsController.arrangedObjects count];
-	[self insertDocument:newDocument atIndex:newIndex];
+		// Create dictionary with appropriate information
+	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
+	[self insertDocumentWithInfo:keyboardInfo];
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager setActionName:@"Add keyboard layout"];
+	[self.keyboardLayoutsTable reloadData];
 }
 
-- (void)removeDocumentAtIndex:(NSUInteger)indexToRemove {
-	NSAssert(indexToRemove < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[indexToRemove];
+- (void)removeDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] replaceDocument:keyboardInfo atIndex:indexToRemove];
 	[undoManager setActionName:@"Remove keyboard layout"];
-	[self.keyboardLayoutsController removeObjectAtArrangedObjectIndex:indexToRemove];
+	[[undoManager prepareWithInvocationTarget:self] replaceDocumentWithInfo:keyboardInfo];
+	[self.keyboardLayoutsController removeObject:keyboardInfo];
 	[self.keyboardLayoutsTable deselectAll:self];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
@@ -2300,74 +2304,57 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 }
 
-- (void)insertDocument:(UkeleleKeyboardObject *)newDocument atIndex:(NSInteger)newIndex {
-	NSAssert(newIndex <= (NSInteger)[self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
-		// Create dictionary with appropriate information
-	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
-	[self insertDocumentWithInfo:keyboardInfo atIndex:newIndex];
-}
-
-- (void)insertDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSInteger)newIndex {
-	NSAssert(newIndex <= (NSInteger)[self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
+- (void)insertDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
+	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Insert keyboard layout"];
-	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
+	[self.keyboardLayoutsController addObject:keyboardInfo];
 	[self.keyboardLayoutsTable reloadData];
+	NSUInteger newIndex = [[self.keyboardLayoutsController arrangedObjects] indexOfObject:keyboardInfo];
+	NSAssert(newIndex != NSNotFound, @"Must be present after it has been added");
 	[self.keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 
-- (void)replaceDocument:(KeyboardLayoutInformation *)keyboardInfo atIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count] || index == 0, @"Index is invalid");
+- (void)replaceDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:index];
+	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Insert keyboard layout"];
-	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:index];
+	[self.keyboardLayoutsController addObject:keyboardInfo];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
 
-- (void)addIcon:(NSData *)iconData atIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
+- (void)addIcon:(NSData *)iconData toKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] removeIconAtIndex:index];
+	[[undoManager prepareWithInvocationTarget:self] removeIconFromKeyboardInfo:keyboardInfo];
 	[undoManager setActionName:@"Add icon"];
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
 
-- (void)removeIconAtIndex:(NSUInteger)index {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
-	NSData *iconData = [keyboardInfo iconData];
+- (void)removeIconFromKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] addIcon:iconData atIndex:index];
+	[[undoManager prepareWithInvocationTarget:self] addIcon:[keyboardInfo iconData] toKeyboardInfo:keyboardInfo];
 	[undoManager setActionName:@"Remove icon"];
 	[keyboardInfo setIconData:nil];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
 
-- (void)replaceIconAtIndex:(NSUInteger)index withIcon:(NSData *)iconData {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayoutsController.arrangedObjects[index];
-	NSData *oldIconData = [keyboardInfo iconData];
+- (void)replaceIconForKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo withIcon:(NSData *)iconData {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] replaceIconAtIndex:index withIcon:oldIconData];
+	[[undoManager prepareWithInvocationTarget:self] replaceIconForKeyboardInfo:keyboardInfo withIcon:[keyboardInfo iconData]];
 	[undoManager setActionName:@"Change icon"];
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
 
-- (void)replaceIntendedLanguageAtIndex:(NSUInteger)index withLanguage:(LanguageCode *)newLanguage {
-	NSAssert(index < [self.keyboardLayoutsController.arrangedObjects count], @"Index is invalid");
-	KeyboardLayoutInformation *keyboardInfo = self.keyboardLayouts[index];
+- (void)replaceIntendedLanguageForKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo withLanguage:(LanguageCode *)newLanguage {
 	LanguageCode *oldLanguage = [LanguageCode languageCodeFromString:[keyboardInfo intendedLanguage]];
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] replaceIntendedLanguageAtIndex:index withLanguage:oldLanguage];
+	[[undoManager prepareWithInvocationTarget:self] replaceIntendedLanguageForKeyboardInfo:keyboardInfo withLanguage:oldLanguage];
 	[undoManager setActionName:@"Change intended language"];
 	[keyboardInfo setIntendedLanguage:[newLanguage stringRepresentation]];
 		// Notify the list that it's been updated
@@ -2377,22 +2364,24 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument withIcon:(NSData *)iconData withLanguage:(NSString *)intendedLanguage {
 	NSUndoManager *undoManager = [self undoManager];
 	[undoManager beginUndoGrouping];
-	[self addNewDocument:newDocument];
+	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
 	if (iconData != nil) {
-		[self addIcon:iconData atIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1];
+		[keyboardInfo setIconData:iconData];
 	}
 	if (intendedLanguage != nil && [intendedLanguage length] > 0) {
-		[self replaceIntendedLanguageAtIndex:[self.keyboardLayoutsController.arrangedObjects count] - 1 withLanguage:[LanguageCode languageCodeFromString:intendedLanguage]];
+		[keyboardInfo setIntendedLanguage:intendedLanguage];
 	}
+	[self insertDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Capture current input source"];
 	[undoManager endUndoGrouping];
 }
 
-- (void)replaceLocaleAtIndex:(NSInteger)localeIndex withLocale:(LocaleCode *)newLocale {
-	LocalisationData *localeData = [self.localisationsController arrangedObjects][localeIndex];
+- (void)replaceLocaleForLocalisation:(LocalisationData *)localeData withLocale:(LocaleCode *)newLocale {
+	NSUInteger localeIndex = [[self.localisationsController arrangedObjects] indexOfObject:localeData];
+	NSAssert(localeIndex != NSNotFound, @"Locale must exist");
 	LocaleCode *oldLocale = [localeData localeCode];
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] replaceLocaleAtIndex:localeIndex withLocale:oldLocale];
+	[[undoManager prepareWithInvocationTarget:self] replaceLocaleForLocalisation:localeData withLocale:oldLocale];
 	[undoManager setActionName:@"Change locale"];
 	[localeData setLocaleCode:newLocale];
 	[self updateLocalisations];
@@ -2404,9 +2393,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	LocalisationData *newLocaleData = [[LocalisationData alloc] init];
 	[newLocaleData setLocaleCode:newLocale];
 	[newLocaleData setLocalisationStrings:[self defaultLocalisations]];
-	NSInteger newIndex = [self.localisations count];
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:newIndex];
+	[[undoManager prepareWithInvocationTarget:self] removeLocaleWithData:newLocaleData];
 	[undoManager setActionName:@"Add locale"];
 	[self.localisationsController addObject:newLocaleData];
 	[self updateLocalisations];
@@ -2414,22 +2402,21 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
-- (void)insertLocale:(LocalisationData *)localisationData atIndex:(NSInteger)theIndex {
+- (void)insertLocale:(LocalisationData *)localisationData {
 	NSUndoManager *undoManager = [self undoManager];
-	[[undoManager prepareWithInvocationTarget:self] removeLocaleAtIndex:theIndex];
+	[[undoManager prepareWithInvocationTarget:self] removeLocaleWithData:localisationData];
 	[undoManager setActionName:@"Remove locale"];
-	[self.localisationsController insertObject:localisationData atArrangedObjectIndex:theIndex];
+	[self.localisationsController addObject:localisationData];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
 
-- (void)removeLocaleAtIndex:(NSInteger)theIndex {
+- (void)removeLocaleWithData:(LocalisationData *)localisationData {
 	NSUndoManager *undoManager = [self undoManager];
-	LocalisationData *oldData = [self.localisationsController arrangedObjects][theIndex];
-	[[undoManager prepareWithInvocationTarget:self] insertLocale:oldData atIndex:theIndex];
+	[[undoManager prepareWithInvocationTarget:self] insertLocale:localisationData];
 	[undoManager setActionName:@"Replace locale"];
-	[self.localisationsController removeObjectAtArrangedObjectIndex:theIndex];
+	[self.localisationsController removeObject:localisationData];
 	[self updateLocalisations];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
