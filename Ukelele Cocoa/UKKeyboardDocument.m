@@ -119,6 +119,10 @@ NSString *kLocalisationsTab = @"Localisations";
 		else if ([typeName isEqualToString:(NSString *)kUTTypeBundle] || [typeName isEqualToString:kFileTypeGenericBundle]) {
 				// Bundle
 			_isBundle = YES;
+				// Add an English localisation so we have at least one
+			LocalisationData *data = [[LocalisationData alloc] init];
+			[data setLocaleCode:[LocaleCode localeCodeFromString:@"en"]];
+			[self.localisations addObject:data];
 		}
 		else {
 				// Unsupported type
@@ -2309,6 +2313,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentAtIndex:newIndex];
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController insertObject:keyboardInfo atArrangedObjectIndex:newIndex];
+	[self.keyboardLayoutsTable reloadData];
 	[self.keyboardLayoutsTable scrollRowToVisible:newIndex];
 }
 

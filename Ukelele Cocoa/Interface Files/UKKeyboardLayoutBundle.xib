@@ -334,6 +334,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
+                                                <action selector="removeKeyboardLayout:" target="-2" id="hGt-Ne-iw7"/>
                                                 <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="dDU-1E-VmZ"/>
                                             </connections>
                                         </button>
