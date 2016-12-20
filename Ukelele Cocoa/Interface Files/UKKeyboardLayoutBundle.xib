@@ -264,6 +264,9 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="showVersionInfo:" target="-2" id="WvH-cy-Rou"/>
+                                            </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mrr-WY-fk4">
                                             <rect key="frame" x="299" y="10" width="110" height="32"/>
@@ -272,6 +275,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
+                                                <action selector="chooseIntendedLanguage:" target="-2" id="R94-X3-GyR"/>
                                                 <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="uO0-dR-gNS"/>
                                             </connections>
                                         </button>
@@ -282,6 +286,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
+                                                <action selector="attachIconFile:" target="-2" id="KNw-ai-Ikv"/>
                                                 <binding destination="Wvh-L2-Xlb" name="enabled" keyPath="canRemove" id="P0M-Fc-8Ly"/>
                                             </connections>
                                         </button>
