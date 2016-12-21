@@ -2393,8 +2393,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceLocaleForLocalisation:(LocalisationData *)localeData withLocale:(LocaleCode *)newLocale {
-	NSUInteger localeIndex = [[self.localisationsController arrangedObjects] indexOfObject:localeData];
-	NSAssert(localeIndex != NSNotFound, @"Locale must exist");
 	LocaleCode *oldLocale = [localeData localeCode];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceLocaleForLocalisation:localeData withLocale:oldLocale];
