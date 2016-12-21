@@ -1813,7 +1813,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSUndoManager *undoManager = [self undoManager];
 	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] doRelinkKey:keyDataDict originalAction:actionName];
-	[undoManager setActionName:@"Unlink key"];
+	if (![undoManager isUndoing]) {
+		[undoManager setActionName:@"Unlink key"];
+	}
 	[self updateWindow];
 }
 
@@ -1823,7 +1825,9 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSUndoManager *undoManager = [self undoManager];
 	NSAssert(undoManager, @"Must have an undo manager");
 	[[undoManager prepareWithInvocationTarget:self] doUnlinkKey:keyDataDict];
-	[undoManager setActionName:@"Unlink key"];
+	if (![undoManager isUndoing]) {
+		[undoManager setActionName:@"Unlink key"];
+	}
 	[self updateWindow];
 }
 

@@ -867,7 +867,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUInteger oldIndex = modMap->GetDefaultIndex();
 	modMap->SetDefaultIndex((UInt32)defaultIndex);
 	[[[parentController undoManager] prepareWithInvocationTarget:self] setDefaultModifierIndex:oldIndex];
-	[[parentController undoManager] setActionName:@"Change default index"];
+	[[parentController undoManager] setActionName:@"Set default index"];
     [self.delegate modifierMapDidChange];
     [self.delegate documentDidChange];
 }
