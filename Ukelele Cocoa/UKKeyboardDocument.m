@@ -2309,6 +2309,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController addObject:keyboardInfo];
+	[self.keyboardLayoutsController rearrangeObjects];
 	[self.keyboardLayoutsTable reloadData];
 	NSUInteger newIndex = [[self.keyboardLayoutsController arrangedObjects] indexOfObject:keyboardInfo];
 	NSAssert(newIndex != NSNotFound, @"Must be present after it has been added");
@@ -2320,6 +2321,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Insert keyboard layout"];
 	[self.keyboardLayoutsController addObject:keyboardInfo];
+	[self.keyboardLayoutsController rearrangeObjects];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
@@ -2357,6 +2359,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[[undoManager prepareWithInvocationTarget:self] replaceIntendedLanguageForKeyboardInfo:keyboardInfo withLanguage:oldLanguage];
 	[undoManager setActionName:@"Change intended language"];
 	[keyboardInfo setIntendedLanguage:[newLanguage stringRepresentation]];
+	[self.keyboardLayoutsController rearrangeObjects];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
 }
@@ -2385,6 +2388,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Change locale"];
 	[localeData setLocaleCode:newLocale];
 	[self updateLocalisations];
+	[self.localisationsController rearrangeObjects];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
@@ -2398,6 +2402,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Add locale"];
 	[self.localisationsController addObject:newLocaleData];
 	[self updateLocalisations];
+	[self.localisationsController rearrangeObjects];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
@@ -2408,6 +2413,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[undoManager setActionName:@"Remove locale"];
 	[self.localisationsController addObject:localisationData];
 	[self updateLocalisations];
+	[self.localisationsController rearrangeObjects];
 	[self.localisationsTable reloadData];
 	[self.removeLocaleButton setEnabled:[self removeLocaleButtonShouldBeEnabled]];
 }
