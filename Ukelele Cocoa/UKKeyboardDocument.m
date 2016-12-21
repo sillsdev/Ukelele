@@ -2106,6 +2106,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
+	[self.keyboardLayoutsController rearrangeObjects];
 	[self.keyboardLayoutsTable reloadData];
 }
 
