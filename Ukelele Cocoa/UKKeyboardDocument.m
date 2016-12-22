@@ -2286,7 +2286,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
 	[self insertDocumentWithInfo:keyboardInfo];
 	NSUndoManager *undoManager = [self undoManager];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Add keyboard layout"];
 	}
 	[self.keyboardLayoutsTable reloadData];
@@ -2294,7 +2294,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)removeDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Remove keyboard layout"];
 	}
 	[[undoManager prepareWithInvocationTarget:self] replaceDocumentWithInfo:keyboardInfo];
@@ -2312,7 +2312,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)insertDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Insert keyboard layout"];
 	}
 	[self.keyboardLayoutsController addObject:keyboardInfo];
@@ -2326,7 +2326,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)replaceDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Insert keyboard layout"];
 	}
 	[self.keyboardLayoutsController addObject:keyboardInfo];
@@ -2338,7 +2338,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)addIcon:(NSData *)iconData toKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeIconFromKeyboardInfo:keyboardInfo];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Add icon"];
 	}
 	[keyboardInfo setIconData:iconData];
@@ -2349,7 +2349,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)removeIconFromKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addIcon:[keyboardInfo iconData] toKeyboardInfo:keyboardInfo];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Remove icon"];
 	}
 	[keyboardInfo setIconData:nil];
@@ -2410,7 +2410,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[newLocaleData setLocalisationStrings:[self defaultLocalisations]];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleWithData:newLocaleData];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Add locale"];
 	}
 	[self.localisationsController addObject:newLocaleData];
@@ -2423,7 +2423,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)insertLocale:(LocalisationData *)localisationData {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeLocaleWithData:localisationData];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Add locale"];
 	}
 	[self.localisationsController addObject:localisationData];
@@ -2436,7 +2436,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (void)removeLocaleWithData:(LocalisationData *)localisationData {
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] insertLocale:localisationData];
-	if (![undoManager isUndoing]) {
+	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Replace locale"];
 	}
 	[self.localisationsController removeObject:localisationData];
