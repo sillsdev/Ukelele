@@ -236,6 +236,7 @@
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
 		52E1EEFE196627A9007B6738 /* org.sil.Ukelele.KeyboardInstallerTool in CopyFiles */ = {isa = PBXBuildFile; fileRef = 523B0205191D8C3100E06DF3 /* org.sil.Ukelele.KeyboardInstallerTool */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		52E2506E1E1C18A000BCE6B9 /* UKFileUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2506D1E1C18A000BCE6B9 /* UKFileUtilities.m */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
@@ -650,6 +651,8 @@
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
 		52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardTypeSheet.xib; path = "Interface Files/KeyboardTypeSheet.xib"; sourceTree = "<group>"; };
+		52E2506C1E1C18A000BCE6B9 /* UKFileUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFileUtilities.h; sourceTree = "<group>"; };
+		52E2506D1E1C18A000BCE6B9 /* UKFileUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKFileUtilities.m; sourceTree = "<group>"; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
@@ -745,6 +748,8 @@
 				523B008E191C9D2200E06DF3 /* XMLUtilities.mm */,
 				52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */,
 				52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */,
+				52E2506C1E1C18A000BCE6B9 /* UKFileUtilities.h */,
+				52E2506D1E1C18A000BCE6B9 /* UKFileUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1320,7 +1325,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UK;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					5277EB621AAE844600C471C3 = {
@@ -1611,6 +1616,7 @@
 				523B0084191C9CD200E06DF3 /* SelectionRing.m in Sources */,
 				523B007D191C9CA900E06DF3 /* UkeleleContainerView.m in Sources */,
 				523B01B7191CA18C00E06DF3 /* UkeleleAppDelegate.m in Sources */,
+				52E2506E1E1C18A000BCE6B9 /* UKFileUtilities.m in Sources */,
 				523B00D2191CA00A00E06DF3 /* XMLCommentHolder.mm in Sources */,
 				523B01C5191D7F8500E06DF3 /* Common.m in Sources */,
 				523B0091191C9D2200E06DF3 /* NString_hash.cpp in Sources */,
@@ -1758,7 +1764,6 @@
 		5277EB6E1AAE844600C471C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -1786,7 +1791,6 @@
 		5277EB6F1AAE844600C471C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;

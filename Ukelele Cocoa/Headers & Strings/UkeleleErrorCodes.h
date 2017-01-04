@@ -22,7 +22,8 @@ enum UkeleleErrors {
 	kUkeleleErrorInvalidFileType = -18,				// Invalid UTI given
 	kUkeleleErrorNoKeyboardLayoutsInBundle = -20,	// No keyboard layouts in bundle
 	kUkeleleErrorCannotConvertToUnbundled = -21,	// Could not convert a bundle to an unbundled keyboard layout
-	kUkeleleErrorCannotInstallUnsavedFile = -22		// Cannot install a file that hasn't been saved
+	kUkeleleErrorCannotInstallUnsavedFile = -22,	// Cannot install a file that hasn't been saved
+	kUkeleleErrorCannotOpenInstalledFile = -23		// Cannot open a file in an installation directory
 };
 
 #endif

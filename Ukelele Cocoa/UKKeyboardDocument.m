@@ -26,6 +26,7 @@
 #import "LocaleDialogController.h"
 #import "LocalisationData.h"
 #import "LocaliseKeyboardController.h"
+#import "UKFileUtilities.h"
 #import <Carbon/Carbon.h>
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
@@ -191,6 +192,21 @@ NSString *kLocalisationsTab = @"Localisations";
 	[self.localisationsController setSortDescriptors:@[sortDescriptor]];
 	[self.localisations sortUsingDescriptors:@[sortDescriptor]];
 	[self.localisationsTable reloadData];
+}
+
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
+		// See whether we have a file that is in an installation directory
+	if ([UKFileUtilities isKeyboardLayoutsURL:url]) {
+		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Ukelele cannot open a keyboard layout or collection that has been installed. Please open a copy and then install the new version."};
+		*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotOpenInstalledFile userInfo:errorDict];
+		return NO;
+	}
+	NSFileWrapper *theWrapper = [[NSFileWrapper alloc] initWithURL:url options:0 error:outError];
+	if (theWrapper == nil) {
+			// Failed to create the file wrapper for some reason
+		return NO;
+	}
+	return [self readFromFileWrapper:theWrapper ofType:typeName error:outError];
 }
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
