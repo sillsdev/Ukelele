@@ -197,7 +197,8 @@ NSString *kLocalisationsTab = @"Localisations";
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
 		// See whether we have a file that is in an installation directory
 	if ([UKFileUtilities isKeyboardLayoutsURL:url]) {
-		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Ukelele cannot open a keyboard layout or collection that has been installed. Please open a copy and then install the new version."};
+		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Ukelele cannot open a keyboard layout or collection that has been installed",
+									NSLocalizedRecoverySuggestionErrorKey: @"Please open a copy and then install the new version"};
 		*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotOpenInstalledFile userInfo:errorDict];
 		return NO;
 	}
