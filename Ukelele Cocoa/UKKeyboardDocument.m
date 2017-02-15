@@ -910,6 +910,30 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return theController;
 }
 
+- (NSString *)currentSelectedName {
+	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRow == -1) {
+		return nil;
+	}
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRow];
+	return [selectedRowInfo keyboardName];
+}
+
+- (void)restoreSelectedName:(NSString *)selectedName {
+	if (selectedName == nil) {
+			// Nothing to do
+		return;
+	}
+	for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
+		KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][row];
+		if ([rowInfo keyboardName] == selectedName) {
+				// Found it
+			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+			break;
+		}
+	}
+}
+
 - (void)exportInstallerTo:(NSURL *)targetURL {
 		// Make a progress reporter
 	UKProgressWindow *progressWindow = [UKProgressWindow progressWindow];
@@ -1106,21 +1130,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSInteger selectedRowNumber;
 	if (tableView == self.keyboardLayoutsTable) {
 		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
-		NSString *selectedLayout = @"";
-		if (selectedRowNumber != -1) {
-			selectedLayout = [[self.keyboardLayoutsController arrangedObjects][selectedRowNumber] keyboardName];
-		}
+		NSString *selectedLayout = [self currentSelectedName];
 		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayoutsTable reloadData];
-		if (selectedRowNumber != -1) {
-			for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
-				if ([selectedLayout isEqualToString:[self.keyboardLayouts[row] keyboardName]]) {
-					[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-					break;
-				}
-			}
-		}
+		[self restoreSelectedName:selectedLayout];
 	}
 	else if (tableView == self.localisationsTable) {
 		selectedRowNumber = [self.localisationsTable selectedRow];
@@ -2123,24 +2137,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
-	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
-	UKKeyboardController *currentSelectedKeyboard = nil;
-	if (selectedRow != -1) {
-		currentSelectedKeyboard = [self controllerForCurrentEntry];
-	}
+	NSString *selectedName = [self currentSelectedName];
 	[self.keyboardLayoutsController rearrangeObjects];
 	[self.keyboardLayoutsTable reloadData];
-	if (selectedRow != -1) {
-			// Restore the selection
-		for (NSUInteger i = 0; i < [self.keyboardLayouts count]; i++) {
-			KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][i];
-			if ([rowInfo keyboardController] == currentSelectedKeyboard) {
-					// Found it
-				[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:NO];
-				break;
-			}
-		}
-	}
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
@@ -2315,6 +2315,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument {
+	NSString *selectedName = [self currentSelectedName];
 		// Create dictionary with appropriate information
 	KeyboardLayoutInformation *keyboardInfo = [[KeyboardLayoutInformation alloc] initWithObject:newDocument fileName:nil];
 	[self insertDocumentWithInfo:keyboardInfo];
@@ -2323,9 +2324,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[undoManager setActionName:@"Add keyboard layout"];
 	}
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)removeDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
+	NSString *selectedName = [self currentSelectedName];
 	NSUndoManager *undoManager = [self undoManager];
 	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
 		[undoManager setActionName:@"Remove keyboard layout"];
@@ -2335,6 +2338,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.keyboardLayoutsTable deselectAll:self];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 		// Hide the document's windows, if they are shown
 	UKKeyboardController *keyboardController = [keyboardInfo keyboardController];
 	if (keyboardController != nil) {
@@ -2357,6 +2361,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)replaceDocumentWithInfo:(KeyboardLayoutInformation *)keyboardInfo {
+	NSString *selectedName = [self currentSelectedName];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeDocumentWithInfo:keyboardInfo];
 	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
@@ -2366,9 +2371,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.keyboardLayoutsController rearrangeObjects];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)addIcon:(NSData *)iconData toKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
+	NSString *selectedName = [self currentSelectedName];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeIconFromKeyboardInfo:keyboardInfo];
 	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
@@ -2377,9 +2384,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)removeIconFromKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo {
+	NSString *selectedName = [self currentSelectedName];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] addIcon:[keyboardInfo iconData] toKeyboardInfo:keyboardInfo];
 	if (![undoManager isUndoing] && ![undoManager isRedoing]) {
@@ -2388,18 +2397,22 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[keyboardInfo setIconData:nil];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)replaceIconForKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo withIcon:(NSData *)iconData {
+	NSString *selectedName = [self currentSelectedName];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceIconForKeyboardInfo:keyboardInfo withIcon:[keyboardInfo iconData]];
 	[undoManager setActionName:@"Change icon"];
 	[keyboardInfo setIconData:iconData];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)replaceIntendedLanguageForKeyboardInfo:(KeyboardLayoutInformation *)keyboardInfo withLanguage:(LanguageCode *)newLanguage {
+	NSString *selectedName = [self currentSelectedName];
 	LanguageCode *oldLanguage = [LanguageCode languageCodeFromString:[keyboardInfo intendedLanguage]];
 	NSUndoManager *undoManager = [self undoManager];
 	[[undoManager prepareWithInvocationTarget:self] replaceIntendedLanguageForKeyboardInfo:keyboardInfo withLanguage:oldLanguage];
@@ -2408,6 +2421,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self.keyboardLayoutsController rearrangeObjects];
 		// Notify the list that it's been updated
 	[self.keyboardLayoutsTable reloadData];
+	[self restoreSelectedName:selectedName];
 }
 
 - (void)addNewDocument:(UkeleleKeyboardObject *)newDocument withIcon:(NSData *)iconData withLanguage:(NSString *)intendedLanguage {
