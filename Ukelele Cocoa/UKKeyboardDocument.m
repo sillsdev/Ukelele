@@ -2123,8 +2123,24 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
+	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+	UKKeyboardController *currentSelectedKeyboard = nil;
+	if (selectedRow != -1) {
+		currentSelectedKeyboard = [self controllerForCurrentEntry];
+	}
 	[self.keyboardLayoutsController rearrangeObjects];
 	[self.keyboardLayoutsTable reloadData];
+	if (selectedRow != -1) {
+			// Restore the selection
+		for (NSUInteger i = 0; i < [self.keyboardLayouts count]; i++) {
+			KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][i];
+			if ([rowInfo keyboardController] == currentSelectedKeyboard) {
+					// Found it
+				[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:NO];
+				break;
+			}
+		}
+	}
 }
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
