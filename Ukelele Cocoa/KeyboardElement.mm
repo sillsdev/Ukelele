@@ -1130,8 +1130,67 @@ bool KeyboardElement::HasValidID() {
 			minID = kIDMinimumCentralEuropean;
 			maxID = kIDMaximumCentralEuropean;
 			break;
+			
+		default:
+				// Invalid group code
+			return false;
 	}
 	return mID >= minID && mID <= maxID;
+}
+
+void KeyboardElement::RepairGroupAndID(void) {
+	SInt32 minID = 0;
+	SInt32 maxID = 0;
+	switch (mGroup) {
+		case kTextEncodingMacUnicode:
+			minID = kIDMinimumUnicode;
+			maxID = kIDMaximumUnicode;
+			break;
+			
+		case kTextEncodingMacRoman:
+			minID = kIDMinimumRoman;
+			maxID = kIDMaximumRoman;
+			break;
+			
+		case kTextEncodingMacJapanese:
+			minID = kIDMinimumJapanese;
+			maxID = kIDMaximumJapanese;
+			break;
+			
+		case kTextEncodingMacChineseSimp:
+			minID = kIDMinimumSimplifiedChinese;
+			maxID = kIDMaximumSimplifiedChinese;
+			break;
+			
+		case kTextEncodingMacChineseTrad:
+			minID = kIDMinimumTraditionalChinese;
+			maxID = kIDMaximumTraditionalChinese;
+			break;
+			
+		case kTextEncodingMacKorean:
+			minID = kIDMinimumKorean;
+			maxID = kIDMaximumKorean;
+			break;
+			
+		case kTextEncodingMacCyrillic:
+			minID = kIDMinimumCyrillic;
+			maxID = kIDMaximumCyrillic;
+			break;
+			
+		case kTextEncodingMacCentralEurRoman:
+			minID = kIDMinimumCentralEuropean;
+			maxID = kIDMaximumCentralEuropean;
+			break;
+			
+		default:	// Invalid group code
+			mGroup = kTextEncodingMacUnicode;
+			minID = kIDMinimumUnicode;
+			maxID = kIDMaximumUnicode;
+			break;
+	}
+	if (mID < minID || mID > maxID) {
+		mID = GetRandomKeyboardID(mGroup);
+	}
 }
 
 #pragma mark -

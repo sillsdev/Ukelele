@@ -96,6 +96,7 @@ public:
 	
 	static SInt32 GetRandomKeyboardID(const SInt32 inScriptCode);
 	bool HasValidID(void);
+	void RepairGroupAndID(void);
 	
 	NArray GetActionNames(void) const;
 	void ChangeActionName(const NString inOldName, const NString inNewName);
