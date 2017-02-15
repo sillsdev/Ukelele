@@ -63,11 +63,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.2.1</string>
+	<string>3.2.2</string>
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.2.1.161</string>
+	<string>3.2.2.162</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -83,7 +83,7 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>org.sil.Ukelele.KeyboardInstallerTool</key>
-		<string>anchor apple generic and identifier "org.sil.Ukelele.KeyboardInstallerTool" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "3V2DRMTWC4")</string>
+		<string>identifier "org.sil.Ukelele.KeyboardInstallerTool" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: John Brownie (85E2V6773Y)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 	</dict>
 	<key>SUFeedURL</key>
 	<string>https://dl.dropboxusercontent.com/u/60565698/Ukelele/Ukelele_appcast.xml</string>

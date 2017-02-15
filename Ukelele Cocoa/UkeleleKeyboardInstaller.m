@@ -149,7 +149,7 @@
 		[appDelegate connectAndExecuteCommandBlock:^(NSError *outerError) {
 #pragma unused(outerError)
 			NSXPCConnection *connection = [appDelegate helperToolConnection];
-			id proxy =[connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
+			id proxy = [connection remoteObjectProxyWithErrorHandler:^(NSError *error) {
 				[[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:YES];
 				return;
 			}];
