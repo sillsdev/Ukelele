@@ -910,30 +910,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	return theController;
 }
 
-- (NSString *)currentSelectedName {
-	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
-	if (selectedRow == -1) {
-		return nil;
-	}
-	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRow];
-	return [selectedRowInfo keyboardName];
-}
-
-- (void)restoreSelectedName:(NSString *)selectedName {
-	if (selectedName == nil) {
-			// Nothing to do
-		return;
-	}
-	for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
-		KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][row];
-		if ([rowInfo keyboardName] == selectedName) {
-				// Found it
-			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-			break;
-		}
-	}
-}
-
 - (void)exportInstallerTo:(NSURL *)targetURL {
 		// Make a progress reporter
 	UKProgressWindow *progressWindow = [UKProgressWindow progressWindow];
@@ -1073,6 +1049,56 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[progressWindow.window orderOut:self];
 		[[NSApplication sharedApplication] endSheet:progressWindow.window];
 	});
+}
+
+#pragma mark Saving and restoring selection
+
+- (NSString *)currentSelectedName {
+	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRow == -1) {
+		return nil;
+	}
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRow];
+	return [selectedRowInfo keyboardName];
+}
+
+- (void)restoreSelectedName:(NSString *)selectedName {
+	if (selectedName == nil) {
+			// Nothing to do
+		return;
+	}
+	for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
+		KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][row];
+		if ([rowInfo keyboardName] == selectedName) {
+				// Found it
+			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+			break;
+		}
+	}
+}
+
+- (UKKeyboardController *)currentSelectedController {
+	NSInteger selectedRow = [self.keyboardLayoutsTable selectedRow];
+	if (selectedRow == -1) {
+		return nil;
+	}
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][selectedRow];
+	return [selectedRowInfo keyboardController];
+}
+
+- (void)restoreSelectedController:(UKKeyboardController *)selectedController {
+	if (selectedController == nil) {
+			// Nothing to do
+		return;
+	}
+	for (NSUInteger row = 0; row < [self.keyboardLayouts count]; row++) {
+		KeyboardLayoutInformation *rowInfo = [self.keyboardLayoutsController arrangedObjects][row];
+		if ([rowInfo keyboardController] == selectedController) {
+				// Found it
+			[self.keyboardLayoutsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+			break;
+		}
+	}
 }
 
 #pragma mark Table data source methods
@@ -2137,10 +2163,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
-	NSString *selectedName = [self currentSelectedName];
+	UKKeyboardController *selectedController = [self currentSelectedController];
 	[self.keyboardLayoutsController rearrangeObjects];
 	[self.keyboardLayoutsTable reloadData];
-	[self restoreSelectedName:selectedName];
+	[self restoreSelectedController:selectedController];
 }
 
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier {
