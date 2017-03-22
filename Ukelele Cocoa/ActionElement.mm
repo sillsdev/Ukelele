@@ -563,7 +563,7 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 						if (!addOK) {
 							errorString = NBundleString(kActionSetRepeatedAction, "", kErrorTableName);
 							errorMessage.Format(errorString, actionElement->GetActionID());
-							errorValue = ErrorMessage(XMLRepeatedActionError, errorString);
+							errorValue = ErrorMessage(XMLRepeatedActionError, errorMessage);
 							break;
 						}
 						if (commentHolder != NULL) {
