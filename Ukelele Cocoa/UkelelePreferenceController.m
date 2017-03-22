@@ -236,9 +236,9 @@ static NSString *nibWindow = @"Preferences";
 		// Set the keyboard type menus
 	NSInteger keyboardType = [sharedDefaults integerForKey:UKDefaultLayoutID];
 	NSDictionary *typeIndices = [keyboardResources indicesForResourceID:keyboardType];
-	[self.keyboardType selectItemAtIndex:[[typeIndices valueForKey:kKeyNameIndex] integerValue]];
-	[self.arrayController setSelectionIndex:[[typeIndices valueForKey:kKeyNameIndex] integerValue]];
-	[self.keyboardCoding selectItemAtIndex:[[typeIndices valueForKey:kKeyCodingIndex] integerValue] - 1];
+	[self.keyboardType selectItemAtIndex:[typeIndices[kKeyNameIndex] integerValue]];
+	[self.arrayController setSelectionIndex:[typeIndices[kKeyNameIndex] integerValue]];
+	[self.keyboardCoding selectItemAtIndex:[typeIndices[kKeyCodingIndex] integerValue] - 1];
 		// Set the zoom combo button
 	float zoomLevel = [sharedDefaults floatForKey:UKScaleFactor];
 	if (zoomLevel <= 0.0) {

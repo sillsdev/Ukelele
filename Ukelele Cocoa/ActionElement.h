@@ -84,7 +84,7 @@ public:
 	virtual NString GetDescription(void);
 	
 		// Add, find and delete action elements
-	void AddActionElement(ActionElement *inActionElement);
+	Boolean AddActionElement(ActionElement *inActionElement);
 	ActionElement *FindActionElement(const NString inActionID) const;
 	ActionElement *RemoveActionElement(const NString inActionID);
 	bool ActionExists(const NString inActionID) const;

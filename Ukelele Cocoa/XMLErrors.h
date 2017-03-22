@@ -41,7 +41,8 @@ enum {
 	XMLTerminatorWhenNotOutputError,
 	XMLSelfReferentialBaseMapError,
 	XMLEmptyKeyMapSelectError,
-	XMLEmptyModifierMapError
+	XMLEmptyModifierMapError,
+	XMLRepeatedActionError
 };
 
 enum {

@@ -607,7 +607,8 @@ NString KeyboardElement::GetNextState(const UInt32 inKeyboardID,
 
 void KeyboardElement::AddAction(ActionElement *inAction)
 {
-	mActionList->AddActionElement(inAction);
+	Boolean result = mActionList->AddActionElement(inAction);
+	assert(result);
 }
 
 	// Get the action element with the name
@@ -1211,7 +1212,8 @@ void KeyboardElement::ChangeActionName(const NString inOldName, const NString in
 		// Rename the action in the action list
 	ActionElement *actionElement = mActionList->RemoveActionElement(inOldName);
 	actionElement->SetActionID(inNewName);
-	mActionList->AddActionElement(actionElement);
+	Boolean result = mActionList->AddActionElement(actionElement);
+	assert(result);
 }
 
 	// Is there an action with the given name?
@@ -1241,7 +1243,8 @@ shared_ptr<ActionElementSet> KeyboardElement::RemoveUnusedActions(void)
 	for (UInt32 u = 0; u < actionCount; u++) {
 		actionName = unusedActions.GetValueString(u);
 		ActionElement *oldElement = mActionList->RemoveActionElement(actionName);
-		removedActions->AddActionElement(oldElement);
+		Boolean result = removedActions->AddActionElement(oldElement);
+		assert(result);
 	}
 	return removedActions;
 }
@@ -1249,7 +1252,8 @@ shared_ptr<ActionElementSet> KeyboardElement::RemoveUnusedActions(void)
 void KeyboardElement::ReplaceActions(shared_ptr<ActionElementSet> inActions)
 {
 	for (ActionElement *actionElement = inActions->GetFirstElement(); actionElement != NULL; actionElement = inActions->GetNextElement()) {
-		mActionList->AddActionElement(actionElement);
+		Boolean result = mActionList->AddActionElement(actionElement);
+		assert(result);
 	}
 }
 

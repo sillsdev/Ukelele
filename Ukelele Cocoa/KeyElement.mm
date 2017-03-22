@@ -291,7 +291,7 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 			mOutput = newOutput;
 			return oldOutput;
 			
-		case kKeyFormOutput:
+		case kKeyFormOutput: {
 			oldOutput = mOutput;
 			if (oldOutput == newOutput) {
 					// No change of output
@@ -312,11 +312,13 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 				mActionName = inActionList->MakeActionName("action");
 			}
 			actionElement = new ActionElement(mActionName);
-			inActionList->AddActionElement(actionElement);
+			Boolean result = inActionList->AddActionElement(actionElement);
+			assert(result);
 			whenElement = new WhenElement(kStateNone, mOutput, "", "", "");
 			actionElement->AddWhenElement(whenElement);
 			mOutput = "";
 			break;
+		}
 			
 		case kKeyFormAction:
 			actionElement = inActionList->FindActionElement(mActionName);
@@ -354,7 +356,7 @@ void KeyElement::ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, 
 	WhenElement *whenElement = NULL;
 	NN_ASSERT(mElementType != kKeyFormUndefined);
 	switch (mElementType) {
-		case kKeyFormOutput:
+		case kKeyFormOutput: {
 				// We need to create an action
 			mElementType = kKeyFormAction;
 				// Make an action name based on the old output
@@ -366,11 +368,13 @@ void KeyElement::ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, 
 				mActionName = inActionList->MakeActionName("action");
 			}
 			actionElement = new ActionElement(mActionName);
-			inActionList->AddActionElement(actionElement);
+			Boolean result = inActionList->AddActionElement(actionElement);
+			assert(result);
 			whenElement = new WhenElement(kStateNone, "", inDeadKeyState, "", "");
 			actionElement->AddWhenElement(whenElement);
 			mOutput = "";
 			break;
+		}
 			
 		case kKeyFormAction:
 			actionElement = inActionList->FindActionElement(mActionName);
@@ -465,7 +469,8 @@ void KeyElement::MakeDeadKey(NString inState, NString inDeadKeyState, shared_ptr
 			NN_ASSERT(mActionName.IsEmpty());
 			mActionName = inActionList->MakeActionName(baseName);
 			actionElement = new ActionElement(mActionName);
-			inActionList->AddActionElement(actionElement);
+			Boolean result = inActionList->AddActionElement(actionElement);
+			assert(result);
 			if (mElementType == kKeyFormOutput) {
 					// If it is not state "none", then make the old output the output
 					// for state "none".
@@ -513,7 +518,8 @@ void KeyElement::MakeActionElement(NString inState, shared_ptr<ActionElementSet>
 		mActionName = inActionList->MakeActionName("action");
 	}
 	ActionElement *actionElement = new ActionElement(mActionName);
-	inActionList->AddActionElement(actionElement);
+	Boolean result = inActionList->AddActionElement(actionElement);
+	assert(result);
 	WhenElement *whenElement = new WhenElement(inState, mOutput, "", "", "");
 	actionElement->AddWhenElement(whenElement);
 	mOutput = "";

@@ -21,6 +21,7 @@ const NString kActionElementNotWhenElement = "ActionElementNotWhenElement";
 const NString kActionElementRepeatedWhenElement = "ActionElementRepeatedWhenElement";
 const NString kActionElementInvalidNodeType = "ActionElementInvalidNodeType";
 const NString kActionElementEmpty = "ActionElementEmpty";
+const NString kActionSetRepeatedAction = "ActionSetRepeatedAction";
 
 	// Default constructor
 
@@ -323,7 +324,8 @@ ActionElementSet::ActionElementSet(const ActionElementSet& inOriginal)
 	std::set<ActionElement *, DereferenceLess>::iterator theIterator;
 	for (theIterator = inOriginal.mActionElementSet.begin();
 		 theIterator != inOriginal.mActionElementSet.end(); ++theIterator) {
-		AddActionElement(new ActionElement(**theIterator));
+		Boolean result = AddActionElement(new ActionElement(**theIterator));
+		assert(result);
 	}
 	mIterator = mActionElementSet.end();
 }
@@ -347,12 +349,13 @@ ActionElementSet::~ActionElementSet(void)
 
 	// Add an action element to the set
 
-void ActionElementSet::AddActionElement(ActionElement *inActionElement)
+Boolean ActionElementSet::AddActionElement(ActionElement *inActionElement)
 {
 	std::pair<std::set<ActionElement *, DereferenceLess>::iterator, bool> result =
 	mActionElementSet.insert(inActionElement);
-	assert(result.second);
+//	assert(result.second);
 	mIterator = mActionElementSet.end();
+	return result.second;
 }
 
 	// Find an action with the given ID
@@ -452,7 +455,8 @@ ActionElement *ActionElementSet::CreateDuplicateActionElement(const NString inAc
 		// Make the duplicate's name the new name
 	duplicateAction->SetActionID(candidateName);
 		// Add it to the set
-	AddActionElement(duplicateAction);
+	Boolean result = AddActionElement(duplicateAction);
+	assert(result);
 	return duplicateAction;
 }
 
@@ -536,6 +540,7 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 {
 	ErrorMessage errorValue(XMLNoError, "");
 	NString errorMessage;
+	NString errorString;
 	NN_ASSERT(inTree.IsElement(kActionsElement));
 	XMLCommentHolder *commentHolder = this;
 	const NXMLNodeList *childList = inTree.GetChildren();
@@ -546,7 +551,7 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 					// An element, which should be an action element
 				if (childTree->GetTextValue() != kActionElement) {
 						// Handle non-action element
-					NString errorString = NBundleString(kActionsElementWrongElementType, "", kErrorTableName);
+					errorString = NBundleString(kActionsElementWrongElementType, "", kErrorTableName);
 					errorMessage.Format(errorString, childTree->GetTextValue());
 					errorValue = ErrorMessage(XMLBadElementTypeError, errorMessage);
 				}
@@ -554,7 +559,13 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 					ActionElement *actionElement;
 					errorValue = ActionElement::CreateFromXMLTree(*childTree, actionElement, ioCommentContainer);
 					if (errorValue == XMLNoError) {
-						AddActionElement(actionElement);
+						Boolean addOK = AddActionElement(actionElement);
+						if (!addOK) {
+							errorString = NBundleString(kActionSetRepeatedAction, "", kErrorTableName);
+							errorMessage.Format(errorString, actionElement->GetActionID());
+							errorValue = ErrorMessage(XMLRepeatedActionError, errorString);
+							break;
+						}
 						if (commentHolder != NULL) {
 							commentHolder->RemoveDuplicateComments();
 						}
@@ -656,7 +667,8 @@ void ActionElementSet::CreateHexEntryActions(void) {
 		nextState.Format("%d", 0x1001 + digit);
 		whenElement = new WhenElement(stateFirst, "", nextState, stateLast, "");
 		actionElement->AddWhenElement(whenElement);
-		AddActionElement(actionElement);
+		Boolean result = AddActionElement(actionElement);
+		assert(result);
 	}
 }
 
