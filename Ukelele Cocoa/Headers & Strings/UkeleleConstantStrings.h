@@ -101,6 +101,8 @@ MY_EXTERN NSString *UKUpdateEditingComment;
 MY_EXTERN NSString *UKInspectorWindowLocation;
 MY_EXTERN NSString *UKToolboxWindowLocation;
 MY_EXTERN NSString *UKDontShowWarningDialog;
+MY_EXTERN NSString *UKStickyModifiers;
+MY_EXTERN NSString *UKJISOnly;
 
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;

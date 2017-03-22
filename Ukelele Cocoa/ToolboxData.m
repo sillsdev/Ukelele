@@ -7,14 +7,16 @@
 //
 
 #import "ToolboxData.h"
+#import "UkeleleConstantStrings.h"
 
 @implementation ToolboxData
 
 - (instancetype)init {
 	self = [super init];
 	if (self) {
-		_stickyModifiers = NO;
-		_JISOnly = NO;
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		_stickyModifiers = [userDefaults boolForKey:UKStickyModifiers];
+		_JISOnly = [userDefaults boolForKey:UKJISOnly];
 	}
 	return self;
 }

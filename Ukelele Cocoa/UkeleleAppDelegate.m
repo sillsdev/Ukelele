@@ -77,7 +77,9 @@ static NSDictionary *defaultValues() {
 				 UKColourThemes:				colourThemes,
 				 UKColourTheme:					kDefaultThemeName,
 				 UKUpdateEditingComment:		@YES,
-				 UKDontShowWarningDialog:		@NO};
+				 UKDontShowWarningDialog:		@NO,
+				 UKStickyModifiers:				@NO,
+				 UKJISOnly:						@NO};
 	});
 	return dict;
 }
@@ -192,7 +194,9 @@ static NSDictionary *defaultValues() {
 #pragma unused(notification)
 		// Register defaults
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues()];
+#ifdef DEBUG
 	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+#endif
 	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues()];
 	
 		// Set up the Unicode table
@@ -229,6 +233,16 @@ static NSDictionary *defaultValues() {
     if (self->_authRef) {
         [Common setupAuthorizationRights:self->_authRef];
     }
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#pragma unused(notification)
+		// Save the state of Sticky Modifiers and JIS Only
+	ToolboxData *toolBoxData = [ToolboxData sharedToolboxData];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setBool:[toolBoxData stickyModifiers] forKey:UKStickyModifiers];
+	[userDefaults setBool:[toolBoxData JISOnly] forKey:UKJISOnly];
+	[userDefaults synchronize];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
