@@ -9,10 +9,9 @@
 
 #include "UkeleleKeyboard.h"
 #include "XMLErrors.h"
-//#include "CApplication.h"
 #include "NBundle.h"
 #include "boost/tuple/tuple.hpp"
-#include "KeyStrokeLookUpTable.h"
+#include "KeyStrokeLookupTable.h"
 #include "NCoreFoundation.h"
 
 // Strings
@@ -136,23 +135,6 @@ void UkeleleKeyboard::CreateStandardKeyboard(NString inName, UInt32 inBaseLayout
 	mKeyboard.reset(KeyboardElement::CreateStandardKeyboard(inName, inBaseLayout, inCommandLayout, inCapsLockLayout));
 	mCommentContainer->AddCommentHolder(mKeyboard.get());
 	AddCreationComment();
-}
-
-// Clear any current keyboard information
-
-void UkeleleKeyboard::ClearKeyboard(void)
-{
-	mDTDHeader = "";
-	mKeyboard.reset();
-	mCommentContainer->Clear();	// Clears the comment holders
-	mCommentContainer->AddCommentHolder(this);
-}
-
-// Create a new state name
-
-NString UkeleleKeyboard::CreateStateName(void)
-{
-	return mKeyboard->CreateStateName();
 }
 
 shared_ptr<KeyStrokeLookUpTable> UkeleleKeyboard::CreateKeyStrokeLookUpTable(const UInt32 inKeyboardID)

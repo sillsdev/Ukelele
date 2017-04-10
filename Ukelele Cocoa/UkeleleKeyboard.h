@@ -28,14 +28,12 @@ public:
 	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	void CreateBasicKeyboard(NString inName);
 	void CreateStandardKeyboard(NString inName, UInt32 inBaseLayout, UInt32 inCommandLayout, UInt32 inCapsLockLayout);
-	void ClearKeyboard(void);
 	
 	shared_ptr<KeyboardElement> GetKeyboard(void) { return mKeyboard; }
 	shared_ptr<XMLCommentContainer> GetCommentContainer(void) { return mCommentContainer; }
 
 	NArray GetStateNames(void) const { return mKeyboard->GetStateNames(kStateNone, kAllStates); }
 	NArray GetStateNames(NString inState) const { return mKeyboard->GetStateNames(inState, kAllStates); }
-	NString CreateStateName(void);
 	
 	shared_ptr<KeyStrokeLookUpTable> CreateKeyStrokeLookUpTable(const UInt32 inKeyboardID);
 	
