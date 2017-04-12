@@ -13,6 +13,7 @@
 #include "RandomNumberGenerator.h"
 #include "NBundle.h"
 #include "NCocoa.h"
+#include "XMLUtilities.h"
 
 const UInt32 kStateMaximum = 1 << 30;
 
@@ -63,7 +64,7 @@ ErrorMessage KeyboardElement::CreateFromXMLTree(const NXMLNode& inTree,
 	NN_ASSERT(inTree.IsElement(kKeyboardElement));
 	NString groupAttribute = inTree.GetElementAttribute(kGroupAttribute);
 	NString idAttribute = inTree.GetElementAttribute(kIDAttribute);
-	NString nameAttribute = inTree.GetElementAttribute(kNameAttribute);
+	NString nameAttribute = XMLUtilities::ConvertEncodedString(inTree.GetElementAttribute(kNameAttribute));
 	NString maxoutAttribute = inTree.GetElementAttribute(kMaxoutAttribute);
 	if (groupAttribute.IsEmpty() || idAttribute.IsEmpty() || nameAttribute.IsEmpty()) {
 			// Handle missing attributes
@@ -258,7 +259,7 @@ NXMLNode *KeyboardElement::CreateXMLTree(const bool inCodeNonAscii)
 	xmlTree->SetElementAttribute(kGroupAttribute, attributeString);
 	attributeString.Format("%d", mID);
 	xmlTree->SetElementAttribute(kIDAttribute, attributeString);
-	xmlTree->SetElementAttribute(kNameAttribute, mName);
+	xmlTree->SetElementAttribute(kNameAttribute, XMLUtilities::MakeXMLString(mName, false));
 	attributeString.Format("%d", mMaxout);
 	xmlTree->SetElementAttribute(kMaxoutAttribute, attributeString);
 		// Add comments
