@@ -649,11 +649,6 @@ KeyMapSet *KeyboardElement::GetKeyMapSet(const UInt32 inKeyboardID) const
 	return keyMapSet;
 }
 
-KeyMapSet *KeyboardElement::GetKeyMapSet(NString inID) const
-{
-	return mKeyMapSetList->FindKeyMapSet(inID);
-}
-
 	// For a given keyboard, find all the key map sets referenced by it
 
 KeyMapSetList *KeyboardElement::GetKeyMapSetsForKeyboard(const UInt32 inKeyboardID) const
@@ -708,56 +703,6 @@ KeyMapSetList *KeyboardElement::GetKeyMapSetsForKeyboard(const UInt32 inKeyboard
 	return keyMapSetList;
 }
 
-	// Remove the speficied key map select
-
-KeyMapSelect *KeyboardElement::RemoveKeyMapSelect(const UInt32 inKeyboardID,
-												  const SInt32 inIndex,
-												  KeyMapElementList *outKeyMapList)
-{
-	ModifierMap *modifierMap = GetModifierMap(inKeyboardID);
-	KeyMapSelect *keyMapSelect = modifierMap->RemoveKeyMapSelectElement(inIndex);
-	SInt32 numKeyMapSets = mKeyMapSetList->GetCount();
-	for (SInt32 i = 1; i <= numKeyMapSets; i++) {
-			// Remove the appropriate key map element
-		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);
-		KeyMapElement *keyMap = keyMapSet->RemoveKeyMapElement(inIndex);
-		outKeyMapList->AddKeyMapElement(keyMap);
-	}
-	return keyMapSelect;
-}
-
-	// Remove a modifier element
-
-ModifierElement *KeyboardElement::RemoveModifierElement(const UInt32 inKeyboardID,
-														const SInt32 inIndex,
-														const SInt32 inSubIndex)
-{
-	ModifierMap *modifierMap = GetModifierMap(inKeyboardID);
-	assert(modifierMap != NULL);
-	KeyMapSelect *keyMapSelect = modifierMap->GetKeyMapSelectElement(inIndex);
-	assert(keyMapSelect != NULL);
-	ModifierElement *modifierElement = keyMapSelect->RemoveModifierElement(inSubIndex);
-	NN_ASSERT(modifierElement != NULL);
-	return modifierElement;
-}
-
-	// Remove a key element
-void KeyboardElement::RemoveKeyElement(const UInt32 inKeyboardID,
-									   const UInt32 inKeyCode,
-									   const UInt32 inModifierCombination)
-{
-		// Find the layout corresponding to the given keyboard ID and the correct
-		// modifier map
-	LayoutElement *currentLayout;
-	ModifierMap *currentModifierMap;
-	GetLayoutAndModifierMap(inKeyboardID, currentLayout, currentModifierMap);
-		// Find appropriate key map
-	KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(currentLayout->GetMapSet());
-	UInt32 keyMapTableNumber = currentModifierMap->GetMatchingKeyMapSelect(inModifierCombination);
-	KeyMapElement *keyMapElement = keyMapSet->GetKeyMapElement(keyMapTableNumber);
-	keyMapElement->RemoveKeyElement(inKeyCode);
-}
-
 	// Create a duplicate of the action with the given name, and return its name
 
 NString KeyboardElement::CreateDuplicateAction(const NString inActionName)
@@ -790,8 +735,6 @@ void KeyboardElement::ImportDeadKey(const NString inLocalState,
 		sourceKeyMapSet = inSource->mKeyMapSetList->FindKeyMapSet(sourceKeyMapID);
 		keyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet, mActionList, inSource->mActionList);
 	}
-//	mKeyMapSetList->ImportDeadKey(inSource->mKeyMapSetList.get(), inLocalState, inSourceState,
-//								  mActionList, inSource->mActionList);
 		// Handle the terminators
 	TerminatorsElement *sourceTerminators = inSource->GetTerminatorsElement();
 	if (mTerminatorsElement.get() == NULL) {
@@ -873,24 +816,6 @@ NStringList *KeyboardElement::KeyMapsForModifierMap(NString inModifierMapID) {
 }
 
 #pragma mark -
-
-	// Change a modifier element
-
-void KeyboardElement::ChangeModifierElement(const UInt32 inKeyboardID,
-											const UInt32 inIndex,
-											const UInt32 inSubIndex,
-											const UInt32 inShift,
-											const UInt32 inCapsLock,
-											const UInt32 inOption,
-											const UInt32 inCommand,
-											const UInt32 inControl)
-{
-	ModifierMap *modifierMap = GetModifierMap(inKeyboardID);
-	KeyMapSelect *keyMapSelect = modifierMap->GetKeyMapSelectElement(inIndex);
-	assert(keyMapSelect != NULL);
-	ModifierElement *modifierElement = keyMapSelect->GetModifierElement(inSubIndex);
-	modifierElement->SetModifierStatus(inShift, inCapsLock, inOption, inCommand, inControl);
-}
 
 void KeyboardElement::ChangeDeadKeyNextState(const UInt32 inKeyboardID,
 											 const UInt32 inKeyCode,
@@ -1270,23 +1195,6 @@ bool KeyboardElement::StateExists(const NString inStateName)
 
 	// Create a new state name
 
-NString KeyboardElement::CreateStateName(void)
-{
-	NString baseStateName = "State";
-//	NCFPreferences *thePrefs = NCFPreferences::GetPrefs();
-//	if (thePrefs->HasKey(kPrefBaseStateName)) {
-//		baseStateName = thePrefs->GetValueString(kPrefBaseStateName);
-//	}
-//	else {
-//		NApplication *theApp = NApplication::GetApp();
-//		NN_ASSERT(theApp != NULL);
-//		NDictionary *theProperties = theApp->GetProperties();
-//		NN_ASSERT(theProperties != NULL);
-//		baseStateName = theProperties->GetValueString(kPrefBaseStateName);
-//	}
-	return CreateStateName(baseStateName);
-}
-
 NString KeyboardElement::CreateStateName(NString inBaseName)
 {
 	NSSet *stateNames = GetStateNameSet(kAllStates);
@@ -1309,64 +1217,6 @@ void KeyboardElement::CreateState(const NString inStateName, const NString inTer
 		AddTerminatorsElement(new TerminatorsElement);
 	}
 	mTerminatorsElement->AddWhenElement(whenElement);
-}
-
-	// Get the next state
-
-NString KeyboardElement::GetNextState(const UInt32 inKeyboardID,
-									  const UInt32 inKeyCode,
-									  const UInt32 inModifierCombination,
-									  const NString inState,
-									  bool& outDeadKey) const
-{
-	outDeadKey = false;
-	KeyElement *keyElement = GetKeyElement(inKeyboardID, inKeyCode, inModifierCombination, true);
-	if (keyElement == NULL) {
-			// There is no entry for this key combination, so we simply return
-			// the current state.
-		return inState;
-	}
-	NString resultState;
-	switch (keyElement->GetElementType()) {
-		case kKeyFormOutput:
-			resultState = inState;
-			break;
-			
-		case kKeyFormAction:
-		case kKeyFormInlineAction: {
-			ActionElement *actionElement;
-			if (keyElement->GetElementType() == kKeyFormAction) {
-				NString actionName = keyElement->GetActionName();
-				actionElement = mActionList->FindActionElement(actionName);
-			}
-			else {
-				actionElement = keyElement->GetInlineAction();
-			}
-			UInt16 keyType = actionElement->GetActionType(inState);
-			WhenElement *whenElement = NULL;
-			switch (keyType) {
-				case kOutputType:
-					whenElement = actionElement->FindWhenElement(inState);
-					resultState = whenElement->GetNext();
-					if (resultState.IsEmpty()) {
-						resultState = inState;
-					}
-					break;
-					
-				case kTerminatorType:
-					resultState = inState;
-					break;
-					
-				case kStateType:
-					whenElement = actionElement->FindWhenElement(inState);
-					resultState = whenElement->GetNext();
-					outDeadKey = true;
-					break;
-			}
-		}
-			break;
-	}
-	return resultState;
 }
 
 	// Get all the state names

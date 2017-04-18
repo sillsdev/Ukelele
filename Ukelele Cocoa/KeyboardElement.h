@@ -72,11 +72,7 @@ public:
 	ActionElement *GetActionElement(const NString inActionName) const;
 	KeyMapElement *GetKeyMapElement(const UInt32 inKeyboardID, const UInt32 inModifierCombination) const;
 	KeyMapSet *GetKeyMapSet(const UInt32 inKeyboardID) const;
-	KeyMapSet *GetKeyMapSet(NString inID) const;
 	KeyMapSetList *GetKeyMapSetsForKeyboard(const UInt32 inKeyboardID) const;
-	KeyMapSelect *RemoveKeyMapSelect(const UInt32 inKeyboardID, const SInt32 inIndex, KeyMapElementList *outKeyMapList);
-	ModifierElement *RemoveModifierElement(const UInt32 inKeyboardID, const SInt32 inIndex, const SInt32 inSubIndex);
-	void RemoveKeyElement(const UInt32 inKeyboardID, const UInt32 inKeyCode, const UInt32 inModifierCombination);
 	NString CreateDuplicateAction(const NString inActionName);
 	void ImportDeadKey(const NString inLocalState, const NString inSourceState, const KeyboardElement *inSource);
 	NString GetTerminator(const NString inState) const;
@@ -85,8 +81,6 @@ public:
     bool HasSimplifiedModifierMaps(void);
 	NStringList *KeyMapsForModifierMap(NString inModifierMapID);
 	
-	void ChangeModifierElement(const UInt32 inKeyboardID, const UInt32 inIndex, const UInt32 inSubIndex,
-		const UInt32 inShift, const UInt32 inCapsLock, const UInt32 inOption, const UInt32 inCommand, const UInt32 inControl);
 	void ChangeDeadKeyNextState(const UInt32 inKeyboardID, const UInt32 inKeyCode, const UInt32 inModifierCombination,
 		const NString inState, const NString inNewState);
 	void MakeKeyDeadKey(const UInt32 inKeyboardID, const UInt32 inKeyCode, const UInt32 inModifierCombination, const NString inState, const NString inNewState);
@@ -105,10 +99,8 @@ public:
 	void ReplaceActions(shared_ptr<ActionElementSet> inActions);
 	
 	bool StateExists(const NString inStateName);
-	NString CreateStateName(void);
 	NString CreateStateName(NString inBaseName);
 	void CreateState(const NString inStateName, const NString inTerminatorString);
-	NString GetNextState(const UInt32 inKeyboardID, const UInt32 inKeyCode, const UInt32 inModifierCombination, const NString inState, bool& outDeadKey) const;
 	NArray GetStateNames(const NString inOmitName, const UInt32 inReachable);
 	NArray GetStateNames(const NArray inOmitStates, const UInt32 inReachable);
 	void ReplaceStateName(const NString inOldName, const NString inNewName);
