@@ -51,7 +51,6 @@ public:
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, KeyElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	void NewOutputElement(const NString inOutputString);
-	void NewOutputElement(const UniChar *inString, const UInt32 inLength);
 	void NewActionElement(const NString inActionName);
 	void NewInlineActionElement(ActionElement *inActionElement);
 	
@@ -64,7 +63,6 @@ public:
 	
 		// Inspection and modification
 	NString ChangeOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList);
-	void ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, shared_ptr<ActionElementSet> inActionList);
 	NString ChangeDeadKeyToOutput(NString inState, NString inNewOutput, shared_ptr<ActionElementSet> inActionList);
 	void MakeDeadKey(NString inState, NString inDeadKeyState, shared_ptr<ActionElementSet> inActionList);
 	void MakeActionElement(NString inState, shared_ptr<ActionElementSet> inActionList);

@@ -217,18 +217,6 @@ void KeyMapElement::GetUsedActions(NSMutableSet *ioActionSet) const
 
 #pragma mark -
 
-// Get the special key output for the given key code
-
-NString KeyMapElement::GetSpecialKeyOutput(const UInt32 inKeyCode)
-{
-	for (UInt32 i = 0; i < kSpecialKeyCount; i++) {
-		if (inKeyCode == sSpecialKeyList[i].first) {
-			return sSpecialKeyList[i].second;
-		}
-	}
-	return NString("");
-}
-
 // Add standard special key output
 
 void KeyMapElement::AddSpecialKeyOutput(void)
@@ -509,25 +497,6 @@ KeyMapElement *KeyMapElement::CreateDefaultKeyMapElement(const UInt32 inSourceTy
 	return keyMapElement;
 }
 
-// Create a basic key map element, with just the special keys
-
-KeyMapElement *KeyMapElement::CreateBasicKeyMapElement(void)
-{
-	return CreateDefaultKeyMapElement(0, NString(""), 0);
-}
-
-// Get the standard output for a special key
-
-NString KeyMapElement::GetStandardSpecialOutput(const UInt32 inKeyCode)
-{
-	for (UInt32 i = 0; i < kSpecialKeyCount; i++) {
-		if (inKeyCode == sSpecialKeyList[i].first) {
-			return sSpecialKeyList[i].second;
-		}
-	}
-	return NString("");
-}
-
 #pragma mark -
 
 // Constructor
@@ -682,13 +651,6 @@ KeyMapElement *KeyMapElementList::RemoveKeyMapElement(const UInt32 inIndex)
 		}
 	}
 	return keyMap;
-}
-
-// Clear out the list without deleting the elements
-
-void KeyMapElementList::Clear(void)
-{
-	mElementList.clear();
 }
 
 // Turn the key map elements into relative maps

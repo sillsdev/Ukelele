@@ -104,9 +104,6 @@ public:
 	ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	
-		// Create hex-entry keyboard actions
-	void CreateHexEntryActions(void);
-	
 		// Iterator functions
 	ActionElement *GetFirstElement(void);
 	ActionElement *GetNextElement(void);

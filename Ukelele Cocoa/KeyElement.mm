@@ -228,13 +228,6 @@ void KeyElement::NewOutputElement(const NString inOutputString)
 	}
 }
 
-void KeyElement::NewOutputElement(const UniChar *inString, const UInt32 inLength)
-{
-	BOOL codeNonAscii = [[NSUserDefaults standardUserDefaults] boolForKey:UKCodeNonAscii];
-	NString outputString = XMLUtilities::MakeXMLString(inString, inLength, codeNonAscii);
-	NewOutputElement(outputString);
-}
-
 	// Make the element an action element
 
 void KeyElement::NewActionElement(const NString inActionName)
@@ -346,55 +339,6 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 		actionElement->AddWhenElement(whenElement);
 	}
 	return oldOutput;
-}
-
-	// Convert an output element to a dead key
-
-void KeyElement::ChangeOutputToDeadKey(NString inState, NString inDeadKeyState, shared_ptr<ActionElementSet> inActionList)
-{
-	ActionElement *actionElement = NULL;
-	WhenElement *whenElement = NULL;
-	NN_ASSERT(mElementType != kKeyFormUndefined);
-	switch (mElementType) {
-		case kKeyFormOutput: {
-				// We need to create an action
-			mElementType = kKeyFormAction;
-				// Make an action name based on the old output
-			NN_ASSERT(mActionName.IsEmpty());
-			if (!mOutput.IsEmpty()) {
-				mActionName = inActionList->MakeActionName(mOutput);
-			}
-			else {
-				mActionName = inActionList->MakeActionName("action");
-			}
-			actionElement = new ActionElement(mActionName);
-			Boolean result = inActionList->AddActionElement(actionElement);
-			assert(result);
-			whenElement = new WhenElement(kStateNone, "", inDeadKeyState, "", "");
-			actionElement->AddWhenElement(whenElement);
-			mOutput = "";
-			break;
-		}
-			
-		case kKeyFormAction:
-			actionElement = inActionList->FindActionElement(mActionName);
-			NN_ASSERT(actionElement != NULL);
-			break;
-			
-		case kKeyFormInlineAction:
-			actionElement = mInlineAction.get();
-			break;
-	}
-	assert(actionElement != NULL);
-	whenElement = actionElement->FindWhenElement(inState);
-	if (whenElement == NULL) {
-		whenElement = new WhenElement(inState, "", inDeadKeyState, "", "");
-		actionElement->AddWhenElement(whenElement);
-	}
-	else {
-		whenElement->SetOutput("");
-		whenElement->SetNext(inDeadKeyState);
-	}
 }
 
 	// Convert a dead key to output

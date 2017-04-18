@@ -631,49 +631,6 @@ NString ActionElementSet::GetDescription(void)
 
 #pragma mark -
 
-	// Create hex-entry keyboard actions
-
-void ActionElementSet::CreateHexEntryActions(void) {
-	for (UInt32 digit = 0; digit < 16; digit++) {
-		NString actionName;
-		actionName.Format("Hex entry %x", digit);
-		ActionElement *actionElement = new ActionElement(actionName);
-		const UInt32 firstDigitBase = 0x1101;
-		NString nextState;
-		nextState.Format("%d", firstDigitBase + digit);
-		WhenElement *whenElement = new WhenElement(kStateNone, "", nextState, "", "");
-		actionElement->AddWhenElement(whenElement);
-		const UInt32 stateBlockSize = 0x100;
-		for (UInt32 stateBlockIndex = 0; stateBlockIndex < 16; stateBlockIndex++) {
-			NString stateBlockFirst;
-			stateBlockFirst.Format("%d", stateBlockIndex * stateBlockSize + 1);
-			NString stateBlockLast;
-			stateBlockLast.Format("%d", (stateBlockIndex + 1) * stateBlockSize);
-			NString outputString;
-			outputString.Format("&#x%x00%x;", stateBlockIndex, digit);
-			whenElement = new WhenElement(stateBlockFirst, outputString, "", stateBlockLast, "16");
-			actionElement->AddWhenElement(whenElement);
-		}
-		const UInt32 secondDigitBase = 0x1001;
-		NString stateFirst;
-		NString stateLast;
-		stateFirst.Format("%d", secondDigitBase);
-		stateLast.Format("%d", secondDigitBase + 0x100 - 1);
-		nextState.Format("%d", digit + 1);
-		whenElement = new WhenElement(stateFirst, "", nextState, stateLast, "");
-		actionElement->AddWhenElement(whenElement);
-		stateFirst.Format("%d", firstDigitBase);
-		stateLast.Format("%d", firstDigitBase + 15);
-		nextState.Format("%d", 0x1001 + digit);
-		whenElement = new WhenElement(stateFirst, "", nextState, stateLast, "");
-		actionElement->AddWhenElement(whenElement);
-		Boolean result = AddActionElement(actionElement);
-		assert(result);
-	}
-}
-
-#pragma mark -
-
 	// Get the first element
 
 ActionElement *ActionElementSet::GetFirstElement(void)

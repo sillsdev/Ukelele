@@ -47,7 +47,6 @@ public:
 	void ChangeActionName(const NString inOldName, const NString inNewName);
 	void GetUsedActions(NSMutableSet *ioActionSet) const;
 	
-	NString GetSpecialKeyOutput(const UInt32 inKeyCode);
 	void AddSpecialKeyOutput(void);
 	
 	void ImportDeadKey(const KeyMapElement *inSource, const NString inLocalState,
@@ -66,8 +65,6 @@ public:
 		const NString inBaseMapSet, const UInt32 inBaseIndex);
 	static KeyMapElement *CreateDefaultKeyMapElement(const UInt32 inSourceType,
 		const UInt32 inIndex, const NString inBaseMapSet, const UInt32 inBaseIndex);
-	static KeyMapElement *CreateBasicKeyMapElement(void);
-	static NString GetStandardSpecialOutput(const UInt32 inKeyCode);
 
 private:
 	UInt32 mIndex;
@@ -99,7 +96,6 @@ public:
 	void AppendKeyMapElement(KeyMapElement *inKeyMapElement);
 	KeyMapElement *GetKeyMapElement(const UInt32 inIndex) const;
 	KeyMapElement *RemoveKeyMapElement(const UInt32 inIndex);
-	void Clear(void);
 	void MakeRelative(const NString inBaseMapSet);
 	
 	void GetStateNames(NSMutableSet *ioStates, const UInt32 inReachable) const;
