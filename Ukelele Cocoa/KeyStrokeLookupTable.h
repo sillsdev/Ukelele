@@ -57,9 +57,7 @@ public:
 	bool operator<(const KeyStroke& inCompareTo) const;
 	bool operator==(const KeyStroke& inCompareTo) const;
 	
-	static CFComparisonResult CompareModifiers(const UInt32 inModifiers1, const UInt32 inModifiers2);
 	static CFComparisonResult CompareKeyStrokeLists(KeyStrokeList inFirst, KeyStrokeList inSecond);
-	static NString GetString(KeyStrokeList inKeyStrokeList);
 
 private:
 	SInt16 mKeyCode;
@@ -73,9 +71,7 @@ public:
 	virtual ~StateTransitionTable();
 	
 	void AddTransition(NString inFromState, NString inToState, const SInt16 inKeyCode, const UInt32 inModifiers);
-	void AddTransition(NString inFromState, NString inToState, KeyStroke inKeyStroke);
 	bool HasTransition(NString inFromState, NString inToState);
-	KeyStroke FindTransition(NString inFromState, NString inToState);
 	KeyStroke FindTransition(StateTransition inTransition);
 	
 	StateTransition GetFirstTransition(void);

@@ -38,8 +38,6 @@ public:
 		// Set values
 	void SetOutput(NString inNewOutput);
 	void SetNext(NString inNewNext);
-	void SetThrough(NString inNewThrough);
-	void SetMultiplier(NString inNewMultiplier);
 	
 		// Get the maximum output length
 	UInt32 GetMaxout(void) const;
@@ -94,9 +92,6 @@ public:
 	
 		// Remove elements with given states
 	void RemoveStates(NSSet *inStates);
-	
-		// Convert to XML tree
-	void AddToXMLTree(NXMLNode& inTree, const bool inCodeNonAscii);
 	
 		// Iterator functions
 	WhenElement *GetFirstWhenElement(void);

@@ -35,9 +35,6 @@ public:
 	static LayoutsElement *CreateBasicLayoutsElement(void);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, LayoutsElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	
-	// Get list of comment holders
-	void AppendToList(XMLCommentHolderList& ioList);
 
 private:
 	LayoutElementList mLayoutList;

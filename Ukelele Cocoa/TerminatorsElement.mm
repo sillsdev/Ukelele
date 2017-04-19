@@ -235,11 +235,3 @@ NString TerminatorsElement::GetDescription(void)
 {
 	return NString("terminators element");
 }
-
-	// Append to list of comment holders
-
-void TerminatorsElement::AppendToList(XMLCommentHolderList& ioList)
-{
-	ioList.push_back(this);
-	mWhenElementList->AppendToList(ioList);
-}

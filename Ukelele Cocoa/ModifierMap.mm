@@ -150,28 +150,6 @@ void ModifierMap::UpdateModifiers(void) {
 
 #pragma mark -
 
-// Insert a modifier element at the given location
-
-void ModifierMap::InsertModifierElementAtIndex(ModifierElement *inModifierElement,
-	const SInt32 inIndex, const SInt32 inSubIndex)
-{
-	KeyMapSelect *keyMapSelect = GetKeyMapSelectElement(inIndex);
-	keyMapSelect->InsertModifierElementAtIndex(inModifierElement, inSubIndex);
-	CalculateModifierMap();
-}
-
-// Remove and return the modifier element at the given location
-
-ModifierElement *ModifierMap::RemoveModifierElement(const SInt32 inIndex, const SInt32 inSubIndex)
-{
-	KeyMapSelect *keyMapSelect = GetKeyMapSelectElement(inIndex);
-	ModifierElement *modifierElement = keyMapSelect->RemoveModifierElement(inSubIndex);
-	CalculateModifierMap();
-	return modifierElement;
-}
-
-#pragma mark -
-
 // Get a matching keyMapSelect.
 
 UInt32
@@ -482,19 +460,6 @@ NString ModifierMap::GetDescription(void)
 	NString descriptionString;
 	descriptionString.Format("modifierMap id=%@, default index=%d", mID, mDefaultIndex);
 	return descriptionString;
-}
-
-// Append to a list of comment holders
-
-void ModifierMap::AppendToList(XMLCommentHolderList& ioList)
-{
-	ioList.push_back(this);
-	KeyMapSelectIterator pos;
-	for (pos = mKeyMapSelectList.begin(); pos != mKeyMapSelectList.end(); ++pos) {
-		if (*pos != NULL) {
-			(*pos)->AppendToList(ioList);
-		}
-	}
 }
 
 #pragma mark -

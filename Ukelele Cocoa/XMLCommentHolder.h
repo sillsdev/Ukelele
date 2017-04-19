@@ -69,7 +69,6 @@ public:
 	virtual ~XMLCommentHolder();
 	
 		// Type
-	void SetType(UInt32 inType);
 	UInt32 GetType(void) const { return mHolderType; }
 	
 	virtual NString GetDescription(void);
@@ -80,7 +79,6 @@ public:
 	bool RemoveComment(NString inCommentString);
 	void RemoveDuplicateComments(void);
 	void AddCommentsToXMLTree(NXMLNode& ioTree);
-	void AddCommentsToXML(NSXMLElement *xmlTree);
 	UInt32 GetCommentCount(void) { return static_cast<UInt32>(mCommentList.size()); }
 	bool HasComments(void) { return !mCommentList.empty(); }
 	
@@ -126,11 +124,7 @@ public:
 	bool GetPreviousComment(XMLComment*& outComment);
 	bool IsFirstComment(void);
 	bool IsLastComment(void);
-	void SetCurrentComment(XMLComment *inComment);
 	bool GetCurrentComment(XMLComment*& outComment);
-	bool GetCurrentCommentHolder(XMLCommentHolder*& outCommentHolder);
-	void DeleteCurrentComment(void);
-	void JumpToCommentHolder(XMLCommentHolder *inCommentHolder);
 	
 	void AddCommentHolders(XMLCommentHolderList& inList);
 	void RemoveCommentHolders(XMLCommentHolderList& inList);

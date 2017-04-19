@@ -53,10 +53,6 @@ public:
 	void RenumberKeyMapSelects(std::vector<SInt32>& inIndexMap);
 	void UpdateModifiers(void);
 	
-	void InsertModifierElementAtIndex(ModifierElement *inModifierElement, const SInt32 inIndex,
-		const SInt32 inSubIndex);
-	ModifierElement *RemoveModifierElement(const SInt32 inIndex, const SInt32 inSubIndex);
-	
 	UInt32 GetMatchingKeyMapSelect(const UInt32 inModifiers);
 	UInt32 GetMatchingModifiers(const UInt32 inKeyMapSelectIndex);
 	bool IsEquivalent(const ModifierMap *inMap) const;
@@ -70,9 +66,6 @@ public:
 	static ModifierMap *CreateStandardModifierMap(bool inCapsLockLayout, bool inCommandLayout);
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inXMLTree, ModifierMap*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(void);
-	
-	// Get list of comment holders
-	void AppendToList(XMLCommentHolderList& ioList);
 	
 protected:
 	void CalculateModifierMap(void);

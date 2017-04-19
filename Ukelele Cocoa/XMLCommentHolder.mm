@@ -111,13 +111,6 @@ XMLCommentHolder::~XMLCommentHolder()
 {
 }
 
-	// Set the type
-
-void XMLCommentHolder::SetType(UInt32 inType)
-{
-	mHolderType = inType;
-}
-
 	// Get a description. Subclasses should override
 
 NString XMLCommentHolder::GetDescription(void)
@@ -211,13 +204,6 @@ XMLCommentHolder::AddCommentsToXMLTree(NXMLNode& ioTree)
 		(*mIterator)->AddCommentToXMLTree(ioTree);
 	}
 	
-}
-
-void
-XMLCommentHolder::AddCommentsToXML(NSXMLElement *xmlTree) {
-	for (mIterator = mCommentList.begin(); mIterator != mCommentList.end(); ++mIterator) {
-		(*mIterator)->AddCommentToXML(xmlTree);
-	}
 }
 
 	// Find a comment
@@ -391,15 +377,6 @@ XMLCommentHolder::DeleteCurrentComment(void)
 
 	// Operators
 
-/*
- XMLCommentHolder& XMLCommentHolder::operator=(const XMLCommentHolder& inOriginal)
- {
- mHolderType = inOriginal.mHolderType;
- mCommentList = inOriginal.mCommentList;
- return *this;
- }
- */
-
 bool XMLCommentHolder::operator==(const XMLCommentHolder& inOriginal) const
 {
 	return (mHolderType == inOriginal.mHolderType) && (mCommentList == inOriginal.mCommentList);
@@ -541,16 +518,6 @@ bool XMLCommentContainer::IsLastComment(void)
 	return false;
 }
 
-void XMLCommentContainer::SetCurrentComment(XMLComment *inComment)
-{
-	if (mList.empty() || mIterator == mList.end()) {
-			// What do we do now?
-	}
-	else {
-		(*mIterator)->SetCurrentComment(inComment);
-	}
-}
-
 bool XMLCommentContainer::GetCurrentComment(XMLComment*& outComment)
 {
 	if (mList.empty() || mIterator == mList.end()) {
@@ -564,27 +531,6 @@ bool XMLCommentContainer::GetCurrentComment(XMLComment*& outComment)
 			// Case of having removed the last comment in a list
 		return GetNextComment(outComment);
 	}
-}
-
-bool XMLCommentContainer::GetCurrentCommentHolder(XMLCommentHolder*& outCommentHolder)
-{
-	if (mList.empty() || mIterator == mList.end()) {
-		return false;
-	}
-	outCommentHolder = *mIterator;
-	return true;
-}
-
-void XMLCommentContainer::DeleteCurrentComment(void)
-{
-	NN_ASSERT(!mList.empty());
-	NN_ASSERT(mIterator != mList.end());
-	(*mIterator)->DeleteCurrentComment();
-}
-
-void XMLCommentContainer::JumpToCommentHolder(XMLCommentHolder *inCommentHolder)
-{
-	mIterator = find(mList.begin(), mList.end(), inCommentHolder);
 }
 
 void XMLCommentContainer::AddCommentHolders(XMLCommentHolderList& inList)

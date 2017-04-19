@@ -32,16 +32,11 @@ public:
 	bool HasInlineAction(void) const;
 	bool HasKeyMapSetGap(void) const;
 	bool HasInvalidBaseIndex(void) const;
-	bool HasExtraKeyMap(UInt32 inKeyMapSelectCount) const;
 	
 	void AddKeyMapSet(KeyMapSet *inKeyMapSet);
 	void CompleteSet(void);
 	KeyMapSet *GetKeyMapSet(const UInt32 inIndex) const;
 	KeyMapSet *FindKeyMapSet(NString inID) const;
-	void Clear(void);
-	void ImportDeadKey(KeyMapSetList *inSource, const NString inLocalState,
-		const NString inSourceState, shared_ptr<ActionElementSet> inLocalActionList,
-		const shared_ptr<ActionElementSet> inSourceActionList);
 	
 	void GetStateNames(NSMutableSet *ioStateNames, const UInt32 inReachable) const;
 	void ReplaceStateName(const NString inOldName, const NString inNewName);
@@ -50,9 +45,6 @@ public:
 	NSSet *GetUsedActions(void) const;
 	
 	void AddSpecialKeyOutput(void);
-	
-	// Get list of comment holders
-	void AppendToList(XMLCommentHolderList& ioList);
 
 private:
 	KeyMapSetVector mList;

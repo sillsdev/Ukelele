@@ -136,7 +136,6 @@ typedef void * UkeleleKeyboard;
 - (NSUInteger)modifierSetCountForKeyboard:(NSUInteger)keyboardID;
 - (NSUInteger)modifierSetIndexForModifiers:(NSUInteger)modifiers forKeyboard:(NSUInteger)keyboardID;
 - (void)moveModifierSetIndex:(NSInteger)sourceSet toIndex:(NSInteger)destinationSet forKeyboard:(NSUInteger)keyboardID;
-- (BOOL)hasModifierSetWithIndex:(NSInteger)setIndex;
 
 	// Comments
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) XMLCommentHolderObject *currentCommentHolder;
@@ -159,9 +158,6 @@ typedef void * UkeleleKeyboard;
 - (XMLCommentHolderObject *)commentHolderForKey:(NSDictionary *)keyDataDict;
 - (BOOL)isFirstComment;
 - (BOOL)isLastComment;
-
-- (void)addComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
-- (void)removeComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict;
 
 	// Housekeeping: Removing unused elements
 - (RemoveStateData *)removeUnusedStates;

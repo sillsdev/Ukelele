@@ -95,26 +95,6 @@ WhenElement::SetNext(NString inNewNext)
 	mNextInteger = nextNumber.GetUInt32();
 }
 
-	// Set Through string
-
-void
-WhenElement::SetThrough(NString inNewThrough)
-{
-	mThrough = inNewThrough;
-	NNumber throughNumber(mThrough);
-	mThroughInteger = throughNumber.GetUInt32();
-}
-
-	// Set Multiplier string
-
-void
-WhenElement::SetMultiplier(NString inNewMultiplier)
-{
-	mMultiplier = inNewMultiplier;
-	NNumber multiplierNumber(mMultiplier);
-	mMultiplierInteger = multiplierNumber.GetUInt32();
-}
-
 #pragma mark -
 
 	// Get maximum output length
@@ -442,37 +422,6 @@ WhenElementSet::RemoveStates(NSSet *inStates)
 		whenElement = *pos;
 		mElementSet.erase(whenElement);
 		delete whenElement;
-	}
-}
-
-#pragma mark -
-
-	// Add each element to an XML tree
-
-void
-WhenElementSet::AddToXMLTree(NXMLNode& inTree, const bool inCodeNonAscii)
-{
-	WhenElement keyElement(kStateNone, "", "", "", "");
-	WhenElementSetIterator pos = mElementSet.find(&keyElement);
-	if (pos != mElementSet.end()) {
-		WhenElement *noneElement = *pos;
-			// Get the XML tree for the when element and add it
-		NXMLNode *noneTree = noneElement->CreateXMLTree(inCodeNonAscii);
-		inTree.AddChild(noneTree);
-			// Add comments (deleting duplicates on the fly)
-		noneElement->RemoveDuplicateComments();
-		noneElement->AddCommentsToXMLTree(inTree);
-	}
-	for (pos = mElementSet.begin(); pos != mElementSet.end(); ++pos) {
-		WhenElement *whenElement = *pos;
-		if (whenElement->GetState() != kStateNone) {
-				// Get the XML tree for the when element and add it
-			NXMLNode *childTree = whenElement->CreateXMLTree(inCodeNonAscii);
-			inTree.AddChild(childTree);
-				// Add comments (deleting duplicates on the fly)
-			whenElement->RemoveDuplicateComments();
-			whenElement->AddCommentsToXMLTree(inTree);
-		}
 	}
 }
 

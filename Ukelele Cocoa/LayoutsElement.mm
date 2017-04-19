@@ -271,14 +271,3 @@ NString LayoutsElement::GetDescription(void)
 {
 	return NString("layouts element");
 }
-
-// Append to a list of comment holders
-
-void LayoutsElement::AppendToList(XMLCommentHolderList& ioList)
-{
-	ioList.push_back(this);
-	LayoutElementList::iterator pos;
-	for (pos = mLayoutList.begin(); pos != mLayoutList.end(); ++pos) {
-		(*pos)->AppendToList(ioList);
-	}
-}

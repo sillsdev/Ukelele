@@ -52,7 +52,6 @@ public:
 	
 	virtual NString GetDescription(void);
 	
-	ErrorMessage AddModifierKey(const UInt32 inModifier, const UInt32 inStatus);
 	ErrorMessage AddModifierKey(NString inModifierName);
 	ErrorMessage AddModifierKeyList(NString inModifierList);
 	UInt32 GetModifierStatus(const UInt32 inModifier);

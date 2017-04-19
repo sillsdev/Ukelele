@@ -130,18 +130,6 @@ bool KeyMapSetList::HasInvalidBaseIndex(void) const {
 	return result;
 }
 
-bool KeyMapSetList::HasExtraKeyMap(UInt32 inKeyMapSelectCount) const {
-	bool result = false;
-	for (KeyMapSetConstIterator pos = mList.begin(); pos != mList.end(); ++pos) {
-		KeyMapSet *keyMapSet = *pos;
-		if (keyMapSet->GetKeyMapCount() > inKeyMapSelectCount) {
-			result = true;
-			break;
-		}
-	}
-	return result;
-}
-
 #pragma mark -
 
 // Add a key map set to the list
@@ -189,31 +177,6 @@ KeyMapSet *KeyMapSetList::FindKeyMapSet(NString inID) const
 		}
 	}
 	return NULL;
-}
-
-// Remove all the key map sets without deleting them
-
-void KeyMapSetList::Clear(void)
-{
-	mList.clear();
-}
-
-// Import a dead key from another keyboard layout
-
-void KeyMapSetList::ImportDeadKey(KeyMapSetList *inSource,
-								  const NString inLocalState,
-								  const NString inSourceState,
-								  shared_ptr<ActionElementSet> inLocalActionList,
-								  const shared_ptr<ActionElementSet> inSourceActionList)
-{
-	KeyMapSetIterator localPos;
-	KeyMapSetIterator sourcePos = inSource->mList.begin();
-	for (localPos = mList.begin(); localPos != mList.end() && sourcePos != inSource->mList.end(); ++localPos, ++sourcePos) {
-		KeyMapSet *localKeyMapSet = *localPos;
-		KeyMapSet *sourceKeyMapSet = *sourcePos;
-		localKeyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet,
-			inLocalActionList, inSourceActionList);
-	}
 }
 
 #pragma mark -
@@ -279,14 +242,5 @@ void KeyMapSetList::AddSpecialKeyOutput(void)
 	for (KeyMapSetIterator pos = mList.begin(); pos != mList.end(); ++pos) {
 		KeyMapSet *keyMapSet = *pos;
 		keyMapSet->AddSpecialKeyOutput();
-	}
-}
-
-// Append to a list of comment holders
-
-void KeyMapSetList::AppendToList(XMLCommentHolderList& ioList)
-{
-	for (KeyMapSetIterator pos = mList.begin(); pos != mList.end(); ++pos) {
-		(*pos)->AppendToList(ioList);
 	}
 }

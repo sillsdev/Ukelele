@@ -116,28 +116,6 @@ bool KeyStroke::operator==(const KeyStroke& inCompareTo) const
 		mModifiers == inCompareTo.mModifiers;
 }
 
-CFComparisonResult KeyStroke::CompareModifiers(const UInt32 inModifiers1, const UInt32 inModifiers2)
-{
-	if (inModifiers1 == inModifiers2) {
-		return kCFCompareEqualTo;
-	}
-	UInt32 mod1Bits = NMathUtilities::CountBits(inModifiers1);
-	UInt32 mod2Bits = NMathUtilities::CountBits(inModifiers2);
-	if (mod1Bits < mod2Bits) {
-		return kCFCompareLessThan;
-	}
-	else if (mod1Bits > mod2Bits) {
-		return kCFCompareGreaterThan;
-	}
-	// Same number of set bits
-	if (inModifiers1 < inModifiers2) {
-		return kCFCompareLessThan;
-	}
-	else {
-		return kCFCompareGreaterThan;
-	}
-}
-
 CFComparisonResult KeyStroke::CompareKeyStrokeLists(KeyStrokeList inFirst, KeyStrokeList inSecond)
 {
 	SInt32 firstSize = static_cast<SInt32>(inFirst.size());
@@ -167,21 +145,6 @@ CFComparisonResult KeyStroke::CompareKeyStrokeLists(KeyStrokeList inFirst, KeySt
 	return kCFCompareEqualTo;
 }
 
-NString KeyStroke::GetString(KeyStrokeList inKeyStrokeList)
-{
-	NString result = "";
-	for (KeyStrokeIterator pos = inKeyStrokeList.begin(); pos != inKeyStrokeList.end(); ++pos) {
-		if (result != "") {
-			result += " ";
-		}
-		result += pos->GetModifierString();
-		NString tempString;
-		tempString.Format("%d ", pos->GetKeyCode());
-		result += tempString;
-	}
-	return result;
-}
-
 #pragma mark === StateTransitionTable ===
 
 StateTransitionTable::StateTransitionTable(void)
@@ -199,23 +162,11 @@ void StateTransitionTable::AddTransition(NString inFromState, NString inToState,
 	mTable.insert(std::make_pair(theTransition, theKeyStroke));
 }
 
-void StateTransitionTable::AddTransition(NString inFromState, NString inToState, KeyStroke inKeyStroke)
-{
-	StateTransition theTransition(inFromState, inToState);
-	mTable.insert(std::make_pair(theTransition, inKeyStroke));
-}
-
 bool StateTransitionTable::HasTransition(NString inFromState, NString inToState)
 {
 	StateTransition theTransition(inFromState, inToState);
 	std::map<StateTransition, KeyStroke>::iterator pos = mTable.find(theTransition);
 	return pos != mTable.end();
-}
-
-KeyStroke StateTransitionTable::FindTransition(NString inFromState, NString inToState)
-{
-	StateTransition theTransition(inFromState, inToState);
-	return FindTransition(theTransition);
 }
 
 KeyStroke StateTransitionTable::FindTransition(StateTransition inTransition)

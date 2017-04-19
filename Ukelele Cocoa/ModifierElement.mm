@@ -44,15 +44,6 @@ ModifierElement::~ModifierElement(void)
 
 #pragma mark -
 
-// Add a modifier key with its status
-
-ErrorMessage ModifierElement::AddModifierKey(const UInt32 inModifier, const UInt32 inStatus)
-{
-	AddModifier(inModifier, 0, inStatus);
-	mModifierString = CreateModifierString();
-	return ErrorMessage(XMLNoError, "");
-}
-
 // Add a modifier key by name
 
 ErrorMessage ModifierElement::AddModifierKey(NString inModifierName)

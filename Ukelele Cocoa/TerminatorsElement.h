@@ -38,9 +38,6 @@ public:
 	static ErrorMessage CreateFromXMLTree(const NXMLNode& inTree, TerminatorsElement*& outElement, shared_ptr<XMLCommentContainer> ioCommentContainer);
 	NXMLNode *CreateXMLTree(const bool inCodeNonAscii);
 	
-		// Get list of comment holders
-	void AppendToList(XMLCommentHolderList& ioList);
-	
 private:
 	shared_ptr<WhenElementSet> mWhenElementList;
 };

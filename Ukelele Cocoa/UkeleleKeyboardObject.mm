@@ -1157,11 +1157,6 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
     [self.delegate documentDidChange];
 }
 
-- (BOOL)hasModifierSetWithIndex:(NSInteger)setIndex {
-#pragma unused(setIndex)
-	return YES;
-}
-
 #pragma mark Comments
 
 - (void)addComment:(NSString *)commentText toHolder:(XMLCommentHolderObject *)commentHolder {
@@ -1262,24 +1257,6 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSAssert(theComment, @"Last comment cannot be nil");
 	NString commentString = theComment->GetCommentString();
 	return ToNS(commentString);
-}
-
-- (void)addComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
-                                                            [keyDataDict[kKeyKeyCode] intValue],
-															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
-															YES);
-	keyElement->AddXMLComment(ToNN(commentText));
-}
-
-- (void)removeComment:(NSString *)commentText keyData:(NSDictionary *)keyDataDict {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
-                                                            [keyDataDict[kKeyKeyCode] intValue],
-															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
-															YES);
-	keyElement->RemoveComment(ToNN(commentText));
 }
 
 - (NSString *)currentComment {
