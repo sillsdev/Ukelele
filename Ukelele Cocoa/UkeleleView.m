@@ -207,21 +207,6 @@ typedef struct KeyEntryRec {
 	*rect2 = keyRect2;
 }
 
-- (NSRect)get2RectBounds:(NSPoint)originPoint
-			  withPoint1:(Point)point1
-			  withPoint2:(Point)point2
-		 withScaleFactor:(float)scaleValue
-{
-	NSRect keyRect1, keyRect2;
-	[self calculate2RectKey:originPoint
-				 withPoint1:point1
-				 withPoint2:point2
-			withScaleFactor:scaleValue
-					toRect1:&keyRect1
-					toRect2:&keyRect2];
-	return NSRectFromCGRect(CGRectUnion(NSRectToCGRect(keyRect1), NSRectToCGRect(keyRect2)));
-}
-
 - (KeyCapView2Rect *)read2RectKey:(NSPoint)originPoint
 					   withPoint1:(Point)point1
 					   withPoint2:(Point)point2
@@ -492,22 +477,6 @@ typedef struct KeyEntryRec {
 }
 
 #pragma mark Access routines
-
-- (KeyCapView *)getKeyWithIndex:(int)keyIndex
-{
-	return keyCapList[keyIndex];
-}
-
-- (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text
-{
-#pragma unused(modifiers)
-	NSArray *keyList = [keyCapMap getKeysWithCode:keyCode];
-	NSUInteger keyCount = [keyList count];
-	for (NSUInteger i = 0; i < keyCount; i++) {
-		KeyCapView *keyCap = (KeyCapView *)keyList[i];
-		[keyCap setOutputString:text];
-	}
-}
 
 - (KeyCapView *)findKeyWithCode:(int)keyCode modifiers:(unsigned int)modifiers {
 	NSArray *keyList = [keyCapMap getKeysWithCode:keyCode];

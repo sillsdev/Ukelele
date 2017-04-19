@@ -31,8 +31,6 @@ public:
 	static NString ConvertEncodedString(const NString inString);
 		// Convert a possibly encoded string into the equivalent XML string
 	static NString ConvertToXMLString(const NString inString, const bool inCodeNonAscii);
-		// Create a name to represent a string
-	static NString MakeXMLName(const NString inString);
 };
 
 #endif /* _XMLUTILITIES_H_ */

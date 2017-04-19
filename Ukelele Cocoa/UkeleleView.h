@@ -24,8 +24,6 @@
 
 - (int)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue;
-- (KeyCapView *)getKeyWithIndex:(int)keyIndex;
-- (void)setKeyText:(int)keyCode withModifiers:(unsigned int)modifiers withString:(NSString *)text;
 - (KeyCapView *)findKeyWithCode:(int)keyCode modifiers:(unsigned int)modifiers;
 - (void)updateModifiers:(unsigned int)modifierCombination;
 - (void)scaleViewToScale:(CGFloat)scaleValue limited:(BOOL)limited;

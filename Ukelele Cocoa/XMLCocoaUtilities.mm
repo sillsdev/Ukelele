@@ -12,16 +12,6 @@
 
 @implementation XMLCocoaUtilities
 
-+ (BOOL)isValidUnicode:(unsigned int)codePoint withError:(NSString **)errorMessage
-{
-	NString theError;
-	bool isValid = XMLUtilities::IsValidUnicode(codePoint, theError);
-	if (!isValid) {
-		*errorMessage = ToNS(theError);
-	}
-	return isValid;
-}
-
 + (BOOL)isCombiningDiacritic:(unsigned int)codePoint
 {
 	return XMLUtilities::IsCombiningDiacritic(codePoint);
@@ -53,13 +43,6 @@
 	NString originalString = ToNN(inputString);
 	NString convertedString = XMLUtilities::ConvertToXMLString(originalString, encodingNonAscii);
 	return ToNS(convertedString);
-}
-
-+ (NSString *)makeXMLName:(NSString *)inputString
-{
-	NString originalString = ToNN(inputString);
-	NString xmlName = XMLUtilities::MakeXMLName(originalString);
-	return ToNS(xmlName);
 }
 
 @end

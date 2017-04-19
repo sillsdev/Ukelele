@@ -31,7 +31,6 @@
 		523B007E191C9CA900E06DF3 /* UkeleleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0079191C9CA900E06DF3 /* UkeleleView.m */; };
 		523B0084191C9CD200E06DF3 /* SelectionRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0082191C9CD200E06DF3 /* SelectionRing.m */; };
 		523B008F191C9D2200E06DF3 /* FontNameTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0086191C9D2200E06DF3 /* FontNameTransformer.m */; };
-		523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B0088191C9D2200E06DF3 /* MathsUtilities.mm */; };
 		523B0091191C9D2200E06DF3 /* NString_hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B0089191C9D2200E06DF3 /* NString_hash.cpp */; };
 		523B0092191C9D2200E06DF3 /* XMLCocoaUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B008C191C9D2200E06DF3 /* XMLCocoaUtilities.mm */; };
 		523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B008E191C9D2200E06DF3 /* XMLUtilities.mm */; };
@@ -352,8 +351,6 @@
 		523B0082191C9CD200E06DF3 /* SelectionRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionRing.m; sourceTree = "<group>"; };
 		523B0085191C9D2200E06DF3 /* FontNameTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontNameTransformer.h; sourceTree = "<group>"; };
 		523B0086191C9D2200E06DF3 /* FontNameTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontNameTransformer.m; sourceTree = "<group>"; };
-		523B0087191C9D2200E06DF3 /* MathsUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathsUtilities.h; sourceTree = "<group>"; };
-		523B0088191C9D2200E06DF3 /* MathsUtilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MathsUtilities.mm; sourceTree = "<group>"; };
 		523B0089191C9D2200E06DF3 /* NString_hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NString_hash.cpp; sourceTree = "<group>"; };
 		523B008A191C9D2200E06DF3 /* NString_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NString_hash.h; sourceTree = "<group>"; };
 		523B008B191C9D2200E06DF3 /* XMLCocoaUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLCocoaUtilities.h; sourceTree = "<group>"; };
@@ -737,8 +734,6 @@
 				523B0094191C9D3700E06DF3 /* DereferenceLess.h */,
 				523B0085191C9D2200E06DF3 /* FontNameTransformer.h */,
 				523B0086191C9D2200E06DF3 /* FontNameTransformer.m */,
-				523B0087191C9D2200E06DF3 /* MathsUtilities.h */,
-				523B0088191C9D2200E06DF3 /* MathsUtilities.mm */,
 				523B0089191C9D2200E06DF3 /* NString_hash.cpp */,
 				523B008A191C9D2200E06DF3 /* NString_hash.h */,
 				523B008B191C9D2200E06DF3 /* XMLCocoaUtilities.h */,
@@ -1583,7 +1578,6 @@
 				523B00CC191CA00A00E06DF3 /* ModifierList.mm in Sources */,
 				52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */,
 				523B019A191CA18C00E06DF3 /* CreateDeadKeySheet.m in Sources */,
-				523B0090191C9D2200E06DF3 /* MathsUtilities.mm in Sources */,
 				523B0102191CA0D100E06DF3 /* AddMissingOutputDataBlock.mm in Sources */,
 				52BBED0F191B4C3900E48394 /* main.m in Sources */,
 				5235CAD919481A6E009F8B42 /* UKKeyboardController.m in Sources */,
