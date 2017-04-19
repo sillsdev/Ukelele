@@ -303,27 +303,4 @@ NSString *kKeyCodingIndex = @"codingIndex";
 	return theIndices;
 }
 
-- (NSArray *)namesList
-{
-	NSMutableArray *theNames = [NSMutableArray arrayWithCapacity:[self.keyboardTypeTable count]];
-	for (KeyboardType *element in self.keyboardTypeTable) {
-		[theNames addObject:[element keyboardName]];
-	}
-	return theNames;
-}
-
-- (NSArray *)descriptionsList
-{
-	NSMutableArray *theDescriptions = [NSMutableArray arrayWithCapacity:[self.keyboardTypeTable count]];
-	for (KeyboardType *element in self.keyboardTypeTable) {
-		[theDescriptions addObject:[element keyboardDescription]];
-	}
-	return theDescriptions;
-}
-
-- (NSArray *)codingsForType:(NSInteger)typeIndex
-{
-	return [self.keyboardTypeTable[typeIndex] keyboardCodings];
-}
-
 @end

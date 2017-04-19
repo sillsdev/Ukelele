@@ -13,7 +13,6 @@
 
 @property int layoutID;
 @property unsigned int flags;
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasFnKey;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasSeparateRightKeys;
 
 + (unsigned int)getKeyType:(unsigned int)keyCode;
@@ -30,12 +29,8 @@
 + (NSString *)getKeyboardName:(int)keyboardID;
 + (NSString *)getKeyboardDescription:(int)keyboardID;
 + (NSUInteger)getModifierFromKeyCode:(NSUInteger)keyCode;
-+ (NSString *)stringForModifiers:(NSUInteger)modifiers;
 
 - (instancetype)initWithLayoutID:(int)layout NS_DESIGNATED_INITIALIZER;
 - (unsigned int)getFnKeyCodeForKey:(unsigned int)keyCode;
-- (unsigned int)getLeftModifierKey:(unsigned int)rightModifierKey;
-- (unsigned int)getRightModifierKey:(unsigned int)leftModifierKey;
-- (unsigned int)getCarbonModifierFromKeyCode:(unsigned int)keyCode;
 
 @end

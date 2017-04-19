@@ -71,7 +71,6 @@
 		523B010E191CA0D100E06DF3 /* RemoveStateDataBlock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F3191CA0D100E06DF3 /* RemoveStateDataBlock.mm */; };
 		523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 523B00F5191CA0D100E06DF3 /* ScriptInfo.mm */; };
 		523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FA191CA0D100E06DF3 /* ToolboxData.m */; };
-		523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */; };
 		523B0113191CA0D100E06DF3 /* UnicodeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B00FE191CA0D100E06DF3 /* UnicodeTable.m */; };
 		523B0185191CA18C00E06DF3 /* AskCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0114191CA18C00E06DF3 /* AskCommentController.m */; };
 		523B0186191CA18C00E06DF3 /* AskFromList.m in Sources */ = {isa = PBXBuildFile; fileRef = 523B0116191CA18C00E06DF3 /* AskFromList.m */; };
@@ -437,8 +436,6 @@
 		523B00F8191CA0D100E06DF3 /* ScriptRanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptRanges.h; sourceTree = "<group>"; };
 		523B00F9191CA0D100E06DF3 /* ToolboxData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolboxData.h; sourceTree = "<group>"; };
 		523B00FA191CA0D100E06DF3 /* ToolboxData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolboxData.m; sourceTree = "<group>"; };
-		523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnicodeInfo.cpp; sourceTree = "<group>"; };
-		523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnicodeInfo.h; sourceTree = "<group>"; };
 		523B00FD191CA0D100E06DF3 /* UnicodeTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnicodeTable.h; sourceTree = "<group>"; };
 		523B00FE191CA0D100E06DF3 /* UnicodeTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnicodeTable.m; sourceTree = "<group>"; };
 		523B0114191CA18C00E06DF3 /* AskCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AskCommentController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1094,8 +1091,6 @@
 				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
 				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
 				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
-				523B00FB191CA0D100E06DF3 /* UnicodeInfo.cpp */,
-				523B00FC191CA0D100E06DF3 /* UnicodeInfo.h */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
 				523B00FE191CA0D100E06DF3 /* UnicodeTable.m */,
 				527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */,
@@ -1561,7 +1556,6 @@
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
 				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
-				523B0112191CA0D100E06DF3 /* UnicodeInfo.cpp in Sources */,
 				529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */,
 				523B00CE191CA00A00E06DF3 /* TerminatorsElement.mm in Sources */,
 				523B019B191CA18C00E06DF3 /* CreateSelectedDeadKeyController.m in Sources */,

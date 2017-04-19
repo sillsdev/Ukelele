@@ -21,7 +21,6 @@ public:
 	
 	static RandomNumberGenerator *GetInstance(void);
 	
-	SInt32 GetRandomSInt32(void);
 	SInt32 GetRandomSInt32(const SInt32 inMinimum, const SInt32 inMaximum);
 
 private:

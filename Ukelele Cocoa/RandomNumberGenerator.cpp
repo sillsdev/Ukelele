@@ -35,17 +35,6 @@ RandomNumberGenerator::GetInstance(void)
 // Random signed 32 bit integer
 
 SInt32
-RandomNumberGenerator::GetRandomSInt32(void)
-{
-	if (!mSInt32GeneratorInitialised) {
-		time_t currentTime = time(NULL);
-		sRandomSInt32Generator.seed(static_cast<int>(currentTime));
-		mSInt32GeneratorInitialised = true;
-	}
-	return sRandomSInt32Generator();
-}
-
-SInt32
 RandomNumberGenerator::GetRandomSInt32(const SInt32 inMinimum, const SInt32 inMaximum)
 {
 	if (!mSInt32GeneratorInitialised) {

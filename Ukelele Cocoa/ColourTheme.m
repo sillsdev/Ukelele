@@ -330,16 +330,6 @@ NSString *kPrintThemeName = @"Print";
 	return nil;
 }
 
-+ (ColourTheme *)createColourThemeNamed:(NSString *)themeName {
-	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
-	NSAssert([themeDict objectForKey:themeName] == nil, @"Cannot create a theme that already exists");
-	ColourTheme *newTheme = [[ColourTheme defaultColourTheme] copy];
-	[newTheme setThemeName:themeName];
-	themeDict[themeName] = [NSKeyedArchiver archivedDataWithRootObject:newTheme];
-	[ColourTheme saveColourThemes:themeDict];
-	return newTheme;
-}
-
 + (void)addTheme:(ColourTheme *)colourTheme {
 	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
 	themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
