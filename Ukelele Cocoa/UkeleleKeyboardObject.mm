@@ -403,6 +403,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		errorMessage.Format("The keyboard refers to the action(s) \"%@\", but does not include them", actionNames);
 		return ErrorMessage(UKMissingActionError, errorMessage);
 	}
+		// Repair JIS if necessary
+	theKeyboard->RepairJIS();
 		// Fix script code and id if necessary
 	theKeyboard->RepairGroupAndID();
 		// Passed all tests, so OK

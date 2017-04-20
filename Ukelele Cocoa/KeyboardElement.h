@@ -108,15 +108,9 @@ public:
 	RemoveStateData *RemoveUnusedStates(void);
 	void ReplaceRemovedStates(RemoveStateData *inStateData);
 	
-	bool NeedsRepair(void);
-	bool HasIndirectBaseMapReference(void) const;
-	bool HasMultiplierAction(void) const;
 	bool HasMissingActions(NArray *outActions) const;
-	bool IsMissingSpecialKeyOutput(void) const;
 	bool HasEquivalentModifierMap(const KeyboardElement *inKeyboard) const;
 	bool IsMissingKeyMapSets(NStringList& outMissingKeyMapSets) const;
-	bool IsMissingKeyMap(NString& outModifierMapID, NString& outKeyMapSetID, UInt32& outKeyMapIndex) const;
-	bool HasExtraKeyMapSet(void) const;
 	bool HasInlineAction(void) const;
 	bool IsMissingModifierMaps(NStringList& outMissingModifierMaps) const;
 	

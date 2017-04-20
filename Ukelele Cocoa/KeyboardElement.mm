@@ -1350,86 +1350,6 @@ void KeyboardElement::ReplaceRemovedStates(RemoveStateData *inStateData)
 
 #pragma mark -
 
-bool KeyboardElement::NeedsRepair() {
-	bool result = false;
-	if (IsMissingSpecialKeyOutput()) {
-		result = true;
-		mRepairsNeeded |= kRepairMissingSpecialKeyOutput;
-	}
-	if (!HasValidID()) {
-		result = true;
-		mRepairsNeeded |= kRepairInvalidKeyboardID;
-	}
-	if (mKeyMapSetList->HasKeyMapSetGap()) {
-		result = true;
-		mRepairsNeeded |= kRepairKeyMapSetGap;
-	}
-	if (mKeyMapSetList->HasInvalidBaseIndex()) {
-		result = true;
-		mRepairsNeeded |= kRepairInvalidBaseIndex;
-	}
-	if (HasExtraKeyMapSet()) {
-		result = true;
-		mRepairsNeeded |= kRepairExtraKeyMapSet;
-	}
-	return result;
-}
-
-	// Does any key map have an indirect base map reference, i.e. a key map refers
-	// to a base map with an index other than its own?
-
-bool KeyboardElement::HasIndirectBaseMapReference(void) const
-{
-	bool result = false;
-	UInt32 numKeyMapSets = mKeyMapSetList->GetCount();
-	for (UInt32 keyMapSetIndex = 1; keyMapSetIndex <= numKeyMapSets && !result; keyMapSetIndex++) {
-		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(keyMapSetIndex);
-		UInt32 numKeyMaps = keyMapSet->GetKeyMapCount();
-		for (UInt32 keyMapIndex = 0; keyMapIndex < numKeyMaps && !result; keyMapIndex++) {
-			KeyMapElement *keyMap = keyMapSet->GetKeyMapElement(keyMapIndex);
-			if (keyMap != NULL && !keyMap->GetBaseMapSet().IsEmpty()) {
-				result = keyMap->GetBaseIndex() != keyMapIndex;
-			}
-		}
-	}
-	return result;
-}
-
-	// Does any action use a multiplier?
-
-bool KeyboardElement::HasMultiplierAction(void) const
-{
-	bool result = false;
-		// First, look through the action list
-	if (mActionList->HasMultiplierAction()) {
-		return true;
-	}
-		// Now go through all the key elements to find any inline actions
-	SInt32 numKeyMapSets = mKeyMapSetList->GetCount();
-	for (SInt32 keyMapSetIndex = 1; keyMapSetIndex <= numKeyMapSets && !result; keyMapSetIndex++) {
-		KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(keyMapSetIndex);
-		SInt32 numKeyMaps = keyMapSet->GetKeyMapCount();
-		for (SInt32 keyMapIndex = 0; keyMapIndex < numKeyMaps && !result; keyMapIndex++) {
-			KeyMapElement *keyMapElement = keyMapSet->GetKeyMapElement(keyMapIndex);
-			SInt32 numKeyElements = keyMapElement == NULL ? 0 : keyMapElement->GetKeyElementCount();
-			for (SInt32 keyIndex = 0; keyIndex < numKeyElements && !result; keyIndex++) {
-				KeyElement *keyElement = keyMapElement->GetKeyElement(keyIndex);
-				if (keyElement != NULL && keyElement->GetElementType() == kKeyFormInlineAction) {
-					result = keyElement->GetInlineAction()->HasMultiplierElement();
-				}
-			}
-		}
-	}
-	if (result) {
-		return result;
-	}
-		// Finally, go through the terminators
-	if (mTerminatorsElement.get() != NULL) {
-		result = mTerminatorsElement->HasMultiplier();
-	}
-	return result;
-}
-
 	// Are any actions named but not defined?
 
 bool KeyboardElement::HasMissingActions(NArray *outActions) const
@@ -1465,13 +1385,6 @@ bool KeyboardElement::HasMissingActions(NArray *outActions) const
 		outActions->Sort();
 	}
 	return result;
-}
-
-	// Is any special key output missing?
-
-bool KeyboardElement::IsMissingSpecialKeyOutput(void) const
-{
-	return mKeyMapSetList->IsMissingSpecialKeyOutput();
 }
 
 	// Does the given keyboard layout have an equivalent modifier map, i.e. all
@@ -1511,53 +1424,6 @@ bool KeyboardElement::IsMissingKeyMapSets(NStringList& outMissingKeyMapSets) con
 				// This keyMapSet is missing
 			result = true;
 			outMissingKeyMapSets.push_back(*pos);
-		}
-	}
-	return result;
-}
-
-	// Is any referenced keyMap missing?
-
-bool KeyboardElement::IsMissingKeyMap(NString& outModifierMapID, NString& outKeyMapSetID, UInt32& outKeyMapIndex) const
-{
-	for (ModifierMapConstIterator pos = mModifierMapList.begin(); pos != mModifierMapList.end(); ++pos) {
-		ModifierMap *modifierMap = *pos;
-		std::vector<UInt32> indexReferences = modifierMap->GetReferencedIndices();
-		UInt32 indexListSize = static_cast<UInt32>(indexReferences.size());
-		UInt32 keyMapSetCount = mKeyMapSetList->GetCount();
-		for (UInt32 i = 1; i <= keyMapSetCount; i++) {
-			KeyMapSet *keyMapSet = mKeyMapSetList->GetKeyMapSet(i);
-			for (UInt32 j = 0; j < indexListSize; j++) {
-				if (j >= keyMapSet->GetKeyMapCount() || keyMapSet->GetKeyMapElement(indexReferences[j]) == NULL) {
-					outModifierMapID = modifierMap->GetID();
-					outKeyMapSetID = keyMapSet->GetID();
-					outKeyMapIndex = indexReferences[j];
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
-
-bool KeyboardElement::HasExtraKeyMapSet(void) const {
-	bool result = false;
-	for (ModifierMapConstIterator pos = mModifierMapList.begin(); !result && pos != mModifierMapList.end(); ++pos) {
-		ModifierMap *modMap = *pos;
-		NStringList *keyMapSetIDs = mLayouts->GetKeyMapsForModifierMap(modMap->GetID());
-		UInt32 modifierCount = modMap->GetKeyMapSelectCount();
-		for (NStringListIterator keyMaps = keyMapSetIDs->begin(); keyMaps != keyMapSetIDs->end(); ++keyMaps) {
-			KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(*keyMaps);
-			if (keyMapSet == NULL) {
-					// Missing key map set
-				result = true;
-				break;
-			}
-			if (keyMapSet->GetKeyMapCount() > modifierCount) {
-					// Extra key maps
-				result = true;
-				break;
-			}
 		}
 	}
 	return result;

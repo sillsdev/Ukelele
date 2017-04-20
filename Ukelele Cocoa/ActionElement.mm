@@ -108,13 +108,6 @@ UInt16 ActionElement::GetActionType(const NString inStateID) const
 	return kActionTypeOutput;
 }
 
-	// Does any of the when elements have a multiplier attribute?
-
-bool ActionElement::HasMultiplierElement(void) const
-{
-	return mWhenElementSet->HasMultiplier();
-}
-
 	// Return the maximum length of an output string
 
 UInt32 ActionElement::GetMaxout(void) const
@@ -497,23 +490,6 @@ UInt32 ActionElementSet::GetMaxout(void) const
 		}
 	}
 	return maxout;
-}
-
-	// Return true if any of the action elements has a multiplier element
-
-bool ActionElementSet::HasMultiplierAction(void) const
-{
-	if (!mActionElementSet.empty()) {
-		std::set<ActionElement *, DereferenceLess>::iterator elementIter;
-		for (elementIter = mActionElementSet.begin();
-			 elementIter != mActionElementSet.end(); ++elementIter) {
-			ActionElement *actionElement = *elementIter;
-			if (actionElement->HasMultiplierElement()) {
-				return true;
-			}
-		}
-	}
-	return false;
 }
 
 	// Return an array containing the names of all actions in the set

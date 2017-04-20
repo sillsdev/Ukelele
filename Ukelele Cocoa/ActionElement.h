@@ -49,7 +49,6 @@ public:
 	
 		// Get various attributes
 	UInt16 GetActionType(const NString inStateID) const;
-	bool HasMultiplierElement(void) const;
 	UInt32 GetMaxout(void) const;
 	SInt32 GetWhenElementCount(void) const;
 	
@@ -97,7 +96,6 @@ public:
 	
 		// Access various attributes
 	UInt32 GetMaxout(void) const;
-	bool HasMultiplierAction(void) const;
 	NArray GetActionNames(void) const;
 	
 		// XML tree creation and construction
