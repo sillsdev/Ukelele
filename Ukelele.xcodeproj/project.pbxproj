@@ -662,7 +662,7 @@
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
-		52F6C47D1CAA517E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../Sparkle-1.14.0/Sparkle.framework"; sourceTree = "<group>"; };
+		52F6C47D1CAA517E0010C596 /* Sparkle-1.18.1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sparkle-1.18.1"; path = "../Sparkle-1.18.1"; sourceTree = "<group>"; };
 		52F6C47F1CAA563E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52FFB2E71DC9CB8D00954D4F /* LocalisationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationData.h; sourceTree = "<group>"; };
@@ -922,7 +922,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
-				52F6C47D1CAA517E0010C596 /* Sparkle.framework */,
+				52F6C47D1CAA517E0010C596 /* Sparkle-1.18.1 */,
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C1191D7F5C00E06DF3 /* Common */,
