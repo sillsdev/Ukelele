@@ -11,7 +11,6 @@
 
 NSString *kKeyboardIDWindowName = @"KeyboardName";
 NSString *kKeyboardIDWindowScript = @"ScriptID";
-NSString *kKeyboardIDWindowID = @"KeyboardID";
 
 @implementation ChooseKeyboardNameWindowController
 
@@ -27,7 +26,6 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 			[scriptButton addItemWithTitle:scriptName];
 		}
 		callBack = nil;
-		_currentID = 0;
     }
     
     return self;
@@ -54,7 +52,6 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 	NSInteger scriptIndex = [infoDictionary[kKeyboardIDWindowScript] integerValue];
 	[scriptButton selectItemAtIndex:scriptIndex];
 	[self selectScript:self];
-	self.currentID = [infoDictionary[kKeyboardIDWindowID] intValue];
 	callBack = theCallBack;
 	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
@@ -84,7 +81,6 @@ NSString *kKeyboardIDWindowID = @"KeyboardID";
 	NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionary];
 	infoDictionary[kKeyboardIDWindowName] = [nameField stringValue];
 	infoDictionary[kKeyboardIDWindowScript] = @([scriptButton indexOfSelectedItem]);
-	infoDictionary[kKeyboardIDWindowID] = @(self.currentID);
 	callBack(infoDictionary);
 }
 

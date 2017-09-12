@@ -137,7 +137,6 @@
 	NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
 	infoDictionary[kKeyboardIDWindowScript] = @(scriptIndex);
 	infoDictionary[kKeyboardIDWindowName] = [self.keyboardLayout keyboardName];
-	infoDictionary[kKeyboardIDWindowID] = @([self.keyboardLayout keyboardID]);
 	NSWindow *targetWindow;
 	if ([sender isKindOfClass:[NSWindow class]]) {
 		targetWindow = sender;
@@ -166,12 +165,6 @@
 									if (scriptID != existingScript) {
 											// New script code
 										[self changeKeyboardScript:scriptID];
-									}
-									NSInteger keyboardID = [infoDict[kKeyboardIDWindowID] integerValue];
-									NSInteger oldID = [self.keyboardLayout keyboardID];
-									if (keyboardID != oldID) {
-											// New keyboard ID
-										[self changeKeyboardID:keyboardID];
 									}
 								}];
 }

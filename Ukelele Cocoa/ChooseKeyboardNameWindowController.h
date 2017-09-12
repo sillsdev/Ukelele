@@ -10,7 +10,6 @@
 
 extern NSString *kKeyboardIDWindowName;
 extern NSString *kKeyboardIDWindowScript;
-extern NSString *kKeyboardIDWindowID;
 
 @interface ChooseKeyboardNameWindowController : NSWindowController {
 	IBOutlet NSTextField *nameField;
@@ -19,8 +18,6 @@ extern NSString *kKeyboardIDWindowID;
 	NSArray *scriptList;
 	void (^callBack)(NSDictionary *);
 }
-
-@property (nonatomic) NSInteger currentID;
 
 - (IBAction)selectScript:(id)sender;
 - (IBAction)ok:(id)sender;
