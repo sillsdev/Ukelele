@@ -79,7 +79,6 @@ NSString *kLocalisationsTab = @"Localisations";
 	IntendedLanguageSheet *intendedLanguageSheet;
 	AskFromList *askFromListSheet;
 	NSMutableDictionary *languageList;
-	UkeleleKeyboardObject *currentObservation;
 	LocaleDialogController *localeController;
 }
 
@@ -101,7 +100,6 @@ NSString *kLocalisationsTab = @"Localisations";
 		_bundleName = @"";
 		_bundleIdentifier = @"";
 		_localisations = [NSMutableArray array];
-		currentObservation = nil;
 		localeController = nil;
     }
     return self;
@@ -145,12 +143,6 @@ NSString *kLocalisationsTab = @"Localisations";
 		[_keyboardLayout setParentDocument:self];
 	}
 	return self;
-}
-
-- (void)dealloc {
-	if (currentObservation != nil) {
-		[currentObservation removeObserver:self forKeyPath:kKeyboardName];
-	}
 }
 
 - (void)makeWindowControllers {
@@ -1208,17 +1200,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			return;
 		}
 		[self inspectorSetKeyboardSection];
-		if (currentObservation != nil) {
-			[currentObservation removeObserver:self forKeyPath:kKeyboardName];
-			currentObservation = nil;
-		}
-		if ([self.keyboardLayoutsTable selectedRow] != -1) {
-			currentObservation = [[self controllerForCurrentEntry] keyboardLayout];
-			[currentObservation addObserver:self
-								 forKeyPath:kKeyboardName
-									options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-									context:nil];
-		}
 	}
 	else if ([kLocalisationsTab isEqualToString:[[self.tabView selectedTabViewItem] identifier]]) {
 			// Localisations tab
@@ -2151,8 +2132,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self updateChangeCount:NSChangeDone];
 }
 
-- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument {
+- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName {
 #pragma unused(newName)
+#pragma unused(oldName)
 	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardController class]], @"Document must be a Ukelele document");
 		// Find the document in the list
 	for (KeyboardLayoutInformation *keyboardInfo in self.keyboardLayouts) {
@@ -2161,6 +2143,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			break;
 		}
 	}
+		// Change the localised names, too...
+	[self updateLocalisationForKeyboard:keyboardDocument oldName:oldName newName:newName];
 	[self keyboardLayoutDidChange:[(UKKeyboardController *)keyboardDocument keyboardLayout]];
 		// Notify the list that it's been updated
 	UKKeyboardController *selectedController = [self currentSelectedController];
@@ -2320,6 +2304,26 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			layoutDict[[localeData localeString]] = localisedName;
 		}
 	}
+}
+
+- (void)updateLocalisationForKeyboard:(UKKeyboardController *)keyboard oldName:(NSString *)oldName newName:(NSString *)newName {
+	for (KeyboardLayoutInformation *layoutInfo in self.keyboardLayouts) {
+		if ([layoutInfo keyboardController] == keyboard) {
+				// Update the localisations for this keyboard
+			for (LocalisationData *localeData in self.localisations) {
+				NSString *localisedName = localeData.localisationStrings[oldName];
+				if (localisedName != nil && [localisedName isEqualToString:oldName]) {
+					localeData.localisationStrings[newName] = newName;
+				}
+				else {
+					localeData.localisationStrings[newName] = localisedName;
+				}
+				[localeData.localisationStrings removeObjectForKey:oldName];
+			}
+			break;
+		}
+	}
+	[self updateLocalisations];
 }
 
 #pragma mark Action routines

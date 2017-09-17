@@ -259,7 +259,7 @@
 	[[undoManager prepareWithInvocationTarget:self] changeKeyboardName:oldName];
 	[undoManager setActionName:@"Set keyboard name"];
 	[self.keyboardLayout setKeyboardName:newName];
-	[self.parentDocument notifyNewName:newName forDocument:self];
+	[self.parentDocument notifyNewName:newName forDocument:self withOldName:oldName];
 	[self.window setTitle:newName];
 }
 

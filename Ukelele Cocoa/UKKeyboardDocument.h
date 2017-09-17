@@ -61,7 +61,7 @@
 - (IBAction)editLocale:(id)sender;
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry;
 
-- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument;
+- (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName;
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
