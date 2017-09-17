@@ -160,7 +160,8 @@ NSString *kKeyCodingIndex = @"codingIndex";
 {
 	KeyboardType *keyboardList = self.keyboardTypeTable[typeIndex];
 	NSArray *idList = [keyboardList keyboardResourceIDs];
-	NSNumber *keyboardID = idList[codeIndex];
+	NSInteger theIndex = codeIndex == -1 ? 0 : codeIndex;
+	NSNumber *keyboardID = idList[theIndex];
 	return [keyboardID integerValue];
 }
 
