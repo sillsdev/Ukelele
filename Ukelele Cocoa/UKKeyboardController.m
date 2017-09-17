@@ -983,18 +983,15 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (IBAction)enterDeadKeyState:(id)sender
 {
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-			// Coming from a menu. Is it a contextual menu?
-		if ([[(NSMenuItem *)sender menu] supermenu] == nil && selectedKey != kNoKeyCode) {
-				// Coming from a contextual menu with a selected key
-			NSDictionary *keyData = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
-									  kKeyState: internalState[kStateCurrentState],
-									  kKeyKeyCode: @(selectedKey),
-									  kKeyModifiers: internalState[kStateCurrentModifiers]};
-			NSString *nextState = [self.keyboardLayout getNextState:keyData];
-			[self enterDeadKeyStateWithName:nextState];
-			return;
-		}
+	if ([sender isKindOfClass:[KeyCapView class]]) {
+			// Coming from a contextual menu
+		NSDictionary *keyData = @{kKeyKeyboardID: internalState[kStateCurrentKeyboard],
+								  kKeyState: internalState[kStateCurrentState],
+								  kKeyKeyCode: @([(KeyCapView *)sender keyCode]),
+								  kKeyModifiers: internalState[kStateCurrentModifiers]};
+		NSString *nextState = [self.keyboardLayout getNextState:keyData];
+		[self enterDeadKeyStateWithName:nextState];
+		return;
 	}
 		// Ask for a dead key state to enter
 	if (!askFromList) {
