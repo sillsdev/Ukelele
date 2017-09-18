@@ -1177,11 +1177,15 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (IBAction)editKey:(id)sender {
 #pragma unused(sender)
+	NSInteger targetKey = selectedKey;
+	if ([sender isKindOfClass:[KeyCapView class]]) {
+		targetKey = [(KeyCapView *)sender keyCode];
+	}
 	__block EditKeyWindowController *editKeyWindow = [EditKeyWindowController editKeyWindowController];
 	NSDictionary *editKeyData = @{kKeyKeyboardObject: self.keyboardLayout,
 								  kKeyKeyboardID: @(self.currentKeyboard),
 								  kKeyState: self.currentState,
-								  kKeyKeyCode: @(selectedKey),
+								  kKeyKeyCode: @(targetKey),
 								  kKeyModifiers: @(self.currentModifiers)};
 	[editKeyWindow beginInteractionForWindow:self.window withData:editKeyData action:^(NSDictionary *callbackData) {
 		if ([callbackData[kKeyKeyType] isEqualToString:kKeyTypeOutput]) {

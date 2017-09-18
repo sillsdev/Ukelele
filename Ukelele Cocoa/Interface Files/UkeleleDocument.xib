@@ -651,6 +651,12 @@
                         <action selector="makeDeadKey:" target="-1" id="uJr-0H-AGq"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Edit Key…" id="eK4-FN-viv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editKey:" target="-1" id="5fB-nZ-Mzw"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="FTb-kK-eEG"/>
                 <menuItem title="Cut Key" id="oeO-eE-msh">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -678,6 +684,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="363" y="992"/>
         </menu>
         <menu title="Dead key contextual menu" autoenablesItems="NO" id="i6v-9N-pDp">
             <items>
@@ -710,6 +717,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="changeNextState:" target="-1" id="TVr-bL-ZjK"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit Key…" id="Dpl-0g-Sdq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editKey:" target="-1" id="eXS-qh-WUB"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="bSc-GG-phD"/>

@@ -516,6 +516,11 @@ static CGAffineTransform kTextTransform = {
 	[[self nextResponder] tryToPerform:@selector(enterDeadKeyState:) with:self];
 }
 
+- (IBAction)editKey:(id)sender {
+#pragma unused(sender)
+	[[self nextResponder] tryToPerform:@selector(editKey:) with:self];
+}
+
 #pragma mark Drag and Drop
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
