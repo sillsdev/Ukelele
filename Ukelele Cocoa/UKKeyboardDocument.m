@@ -1751,6 +1751,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		[NSApp presentError:createError];
 		return;
 	}
+		// Create a new name for the keyboard layout
+	NSString *newName = [self nameForCopyOf:[newKeyboard keyboardName]];
+	[newKeyboard setKeyboardName:newName];
+		// Look for an icon
 	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
 	CFURLRef keyboardIconURL = TISGetInputSourceProperty(currentInputSource, kTISPropertyIconImageURL);
 	NSMutableData *iconData = nil;
