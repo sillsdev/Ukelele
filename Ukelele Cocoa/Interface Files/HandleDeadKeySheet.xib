@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="HandleDeadKeyController">
@@ -29,7 +30,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="295"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3rm-e1-5oM">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3rm-e1-5oM">
                         <rect key="frame" x="18" y="258" width="414" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This key is a dead key. Please choose what you wish to do with it." id="3cc-ke-hxR">
                             <font key="font" metaFont="system"/>
@@ -37,16 +38,16 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P5r-wT-Vae">
-                        <rect key="frame" x="18" y="196" width="444" height="54"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5r-wT-Vae">
+                        <rect key="frame" x="18" y="233" width="444" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Currently it goes to state &quot;%@&quot;, which has terminator &quot;%@&quot;." id="pEI-6M-S9S">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCy-Qr-LNW">
-                        <rect key="frame" x="384" y="13" width="82" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xCy-Qr-LNW">
+                        <rect key="frame" x="407" y="13" width="59" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SV5-rS-zoA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -58,30 +59,17 @@ DQ
                             <action selector="acceptChoice:" target="-2" id="Ebo-VX-P80"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCf-c8-YTA">
-                        <rect key="frame" x="302" y="13" width="83" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cg1-Zl-cge">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancelChoice:" target="-2" id="oLV-tl-kqv"/>
-                        </connections>
-                    </button>
-                    <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qw0-XM-Ftb">
-                        <rect key="frame" x="13" y="41" width="454" height="153"/>
+                    <tabView translatesAutoresizingMaskIntoConstraints="NO" id="qw0-XM-Ftb">
+                        <rect key="frame" x="13" y="41" width="454" height="178"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Enter State" identifier="Enter State" id="Tkc-ae-BCM">
                                 <view key="view" id="8Wq-i0-RGb">
-                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
-                                            <rect key="frame" x="15" y="17" width="404" height="34"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
+                                            <rect key="frame" x="15" y="84" width="404" height="28"/>
                                             <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="iJU-5x-5iR">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <string key="title">This will make the keyboard layout enter the dead key state for which this key is a trigger. This enables you to add output for the dead key state.</string>
@@ -90,31 +78,36 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="L6W-Vm-Ry6" firstAttribute="top" secondItem="8Wq-i0-RGb" secondAttribute="top" constant="20" symbolic="YES" id="2aJ-wV-1zm"/>
+                                        <constraint firstAttribute="trailing" secondItem="L6W-Vm-Ry6" secondAttribute="trailing" constant="17" id="bco-pa-cuH"/>
+                                        <constraint firstItem="L6W-Vm-Ry6" firstAttribute="leading" secondItem="8Wq-i0-RGb" secondAttribute="leading" constant="17" id="iBa-Zb-uoz"/>
+                                    </constraints>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Terminator" identifier="Terminator" id="hlq-Tq-jfL">
                                 <view key="view" id="3cg-Te-Y8U">
-                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wof-FS-7vT">
-                                            <rect key="frame" x="15" y="84" width="160" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wof-FS-7vT">
+                                            <rect key="frame" x="15" y="109" width="158" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the new terminator:" id="jp8-5G-ya2">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AER-6c-F9x">
-                                            <rect key="frame" x="181" y="82" width="96" height="22"/>
+                                        <textField verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AER-6c-F9x">
+                                            <rect key="frame" x="181" y="107" width="96" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7lB-4g-5iH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hzj-Fl-9ZG">
-                                            <rect key="frame" x="15" y="17" width="404" height="42"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzj-Fl-9ZG">
+                                            <rect key="frame" x="15" y="57" width="404" height="42"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="lbQ-k1-QM1">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <string key="title">The terminator is the character (or characters) produced by the dead key when no output is specified for the next key pressed. It can be the empty string.</string>
@@ -123,31 +116,40 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Hzj-Fl-9ZG" secondAttribute="trailing" constant="17" id="A4w-yn-MdF"/>
+                                        <constraint firstItem="AER-6c-F9x" firstAttribute="leading" secondItem="wof-FS-7vT" secondAttribute="trailing" constant="10" id="Pwu-ru-pne"/>
+                                        <constraint firstItem="Hzj-Fl-9ZG" firstAttribute="top" secondItem="AER-6c-F9x" secondAttribute="bottom" constant="8" symbolic="YES" id="Uyd-I6-hOW"/>
+                                        <constraint firstItem="AER-6c-F9x" firstAttribute="top" secondItem="3cg-Te-Y8U" secondAttribute="top" constant="3" id="XDP-OD-jTz"/>
+                                        <constraint firstItem="Hzj-Fl-9ZG" firstAttribute="leading" secondItem="3cg-Te-Y8U" secondAttribute="leading" constant="17" id="k56-zP-M2U"/>
+                                        <constraint firstItem="wof-FS-7vT" firstAttribute="top" secondItem="3cg-Te-Y8U" secondAttribute="top" constant="6" id="mfG-YT-8ub"/>
+                                        <constraint firstItem="wof-FS-7vT" firstAttribute="leading" secondItem="3cg-Te-Y8U" secondAttribute="leading" constant="17" id="owy-GI-sga"/>
+                                    </constraints>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Change State" identifier="Change State" id="WVu-5A-TPo">
                                 <view key="view" id="1Yh-e7-bQe">
-                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDi-9N-4Kc">
-                                            <rect key="frame" x="15" y="17" width="404" height="34"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDi-9N-4Kc">
+                                            <rect key="frame" x="15" y="87" width="404" height="14"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The state is the dead key state triggered by pressing the dead key." id="gXA-6L-eZc">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SYN-Qs-8oy">
-                                            <rect key="frame" x="15" y="85" width="143" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYN-Qs-8oy">
+                                            <rect key="frame" x="15" y="110" width="140" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Choose the new state:" id="MF0-02-qaf">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Lf-Y2P">
-                                            <rect key="frame" x="169" y="80" width="177" height="26"/>
+                                        <comboBox verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Lf-Y2P">
+                                            <rect key="frame" x="169" y="105" width="177" height="26"/>
                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="hM0-yr-cba">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -160,31 +162,40 @@ Gw
                                             </comboBoxCell>
                                         </comboBox>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="SYN-Qs-8oy" firstAttribute="top" secondItem="1Yh-e7-bQe" secondAttribute="top" constant="5" id="NBI-Hg-93F"/>
+                                        <constraint firstItem="SYN-Qs-8oy" firstAttribute="leading" secondItem="1Yh-e7-bQe" secondAttribute="leading" constant="17" id="Qfi-f4-JQV"/>
+                                        <constraint firstItem="qDi-9N-4Kc" firstAttribute="leading" secondItem="1Yh-e7-bQe" secondAttribute="leading" constant="17" id="RYl-aJ-D9A"/>
+                                        <constraint firstAttribute="trailing" secondItem="qDi-9N-4Kc" secondAttribute="trailing" constant="17" id="e4N-Sc-ywJ"/>
+                                        <constraint firstItem="D2B-Lf-Y2P" firstAttribute="leading" secondItem="SYN-Qs-8oy" secondAttribute="trailing" constant="16" id="nqN-gW-FVu"/>
+                                        <constraint firstItem="qDi-9N-4Kc" firstAttribute="top" secondItem="D2B-Lf-Y2P" secondAttribute="bottom" constant="8" symbolic="YES" id="tOr-x1-rkr"/>
+                                        <constraint firstItem="D2B-Lf-Y2P" firstAttribute="top" secondItem="1Yh-e7-bQe" secondAttribute="top" constant="3" id="vks-pF-VkJ"/>
+                                    </constraints>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Make Output" identifier="Make Output" id="8Mg-W3-coa">
                                 <view key="view" id="lwN-1b-waj">
-                                    <rect key="frame" x="10" y="33" width="434" height="107"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-SY-UuW">
-                                            <rect key="frame" x="15" y="84" width="137" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-SY-UuW">
+                                            <rect key="frame" x="15" y="109" width="135" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the new output:" id="Rl1-Uu-lqB">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-7i-phD">
-                                            <rect key="frame" x="158" y="82" width="96" height="22"/>
+                                        <textField verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-7i-phD">
+                                            <rect key="frame" x="158" y="107" width="96" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Xcb-C0-Oh7">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pL8-5V-6Vy">
-                                            <rect key="frame" x="15" y="17" width="404" height="34"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pL8-5V-6Vy">
+                                            <rect key="frame" x="15" y="71" width="404" height="28"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Converting the dead key to an output key does not delete the dead key state, but stops this key entering the dead key state." id="cbu-XZ-jH1">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -192,14 +203,49 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="pL8-5V-6Vy" secondAttribute="trailing" constant="17" id="9PI-vu-M7m"/>
+                                        <constraint firstItem="pL8-5V-6Vy" firstAttribute="top" secondItem="8iE-7i-phD" secondAttribute="bottom" constant="8" symbolic="YES" id="DeS-se-BEX"/>
+                                        <constraint firstItem="8iE-7i-phD" firstAttribute="top" secondItem="lwN-1b-waj" secondAttribute="top" constant="3" id="O1m-Re-R3m"/>
+                                        <constraint firstItem="8iE-7i-phD" firstAttribute="leading" secondItem="2eB-SY-UuW" secondAttribute="trailing" constant="10" id="aEu-0y-0XY"/>
+                                        <constraint firstItem="pL8-5V-6Vy" firstAttribute="leading" secondItem="lwN-1b-waj" secondAttribute="leading" constant="17" id="heH-Zc-gtg"/>
+                                        <constraint firstItem="2eB-SY-UuW" firstAttribute="top" secondItem="lwN-1b-waj" secondAttribute="top" constant="6" id="n17-Xx-JHH"/>
+                                        <constraint firstItem="2eB-SY-UuW" firstAttribute="leading" secondItem="lwN-1b-waj" secondAttribute="leading" constant="17" id="sir-fU-emb"/>
+                                    </constraints>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
                     </tabView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FCf-c8-YTA">
+                        <rect key="frame" x="325" y="13" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cg1-Zl-cge">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelChoice:" target="-2" id="oLV-tl-kqv"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="xCy-Qr-LNW" firstAttribute="top" secondItem="qw0-XM-Ftb" secondAttribute="bottom" constant="10" id="1nv-iL-t8X"/>
+                    <constraint firstAttribute="trailing" secondItem="xCy-Qr-LNW" secondAttribute="trailing" constant="20" id="2v4-gW-K0B"/>
+                    <constraint firstItem="xCy-Qr-LNW" firstAttribute="leading" secondItem="FCf-c8-YTA" secondAttribute="trailing" constant="12" id="6jG-fN-EmZ"/>
+                    <constraint firstItem="FCf-c8-YTA" firstAttribute="top" secondItem="qw0-XM-Ftb" secondAttribute="bottom" constant="10" id="7ci-fr-d0u"/>
+                    <constraint firstAttribute="trailing" secondItem="P5r-wT-Vae" secondAttribute="trailing" constant="20" id="8qo-XE-nKr"/>
+                    <constraint firstItem="3rm-e1-5oM" firstAttribute="top" secondItem="hMF-kb-zZe" secondAttribute="top" constant="20" id="B5a-LL-3jY"/>
+                    <constraint firstAttribute="trailing" secondItem="qw0-XM-Ftb" secondAttribute="trailing" constant="20" id="V7m-Ji-egJ"/>
+                    <constraint firstItem="P5r-wT-Vae" firstAttribute="top" secondItem="3rm-e1-5oM" secondAttribute="bottom" constant="8" id="Z0d-PU-VRY"/>
                     <constraint firstAttribute="bottom" secondItem="FCf-c8-YTA" secondAttribute="bottom" constant="20" id="dXG-fe-QN6"/>
+                    <constraint firstItem="P5r-wT-Vae" firstAttribute="leading" secondItem="hMF-kb-zZe" secondAttribute="leading" constant="20" id="exk-oN-5v7"/>
+                    <constraint firstItem="3rm-e1-5oM" firstAttribute="leading" secondItem="hMF-kb-zZe" secondAttribute="leading" constant="20" id="iIB-9n-iwa"/>
+                    <constraint firstItem="qw0-XM-Ftb" firstAttribute="leading" secondItem="hMF-kb-zZe" secondAttribute="leading" constant="20" id="kdU-yO-Xbx"/>
+                    <constraint firstItem="qw0-XM-Ftb" firstAttribute="top" secondItem="P5r-wT-Vae" secondAttribute="bottom" constant="20" id="tBJ-Ob-8VL"/>
                     <constraint firstAttribute="bottom" secondItem="xCy-Qr-LNW" secondAttribute="bottom" constant="20" id="yFh-5u-t9H"/>
+                    <constraint firstAttribute="trailing" secondItem="3rm-e1-5oM" secondAttribute="trailing" constant="50" id="z2r-ll-i9Z"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="425" y="566.5"/>
