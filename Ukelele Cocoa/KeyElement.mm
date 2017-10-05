@@ -286,11 +286,11 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 			
 		case kKeyFormOutput: {
 			oldOutput = mOutput;
-			if (oldOutput == newOutput) {
-					// No change of output
-				return oldOutput;
-			}
 			if (inState == kStateNone) {
+				if (oldOutput == newOutput) {
+						// No change of output
+					return oldOutput;
+				}
 					// Simple case: just switch to the new output
 				mOutput = newOutput;
 				return oldOutput;
@@ -310,6 +310,7 @@ NString KeyElement::ChangeOutput(NString inState, NString inNewOutput, shared_pt
 			whenElement = new WhenElement(kStateNone, mOutput, "", "", "");
 			actionElement->AddWhenElement(whenElement);
 			mOutput = "";
+			oldOutput = "";
 			break;
 		}
 			
