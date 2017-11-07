@@ -23,10 +23,6 @@
 - (IBAction)colourThemes:(id)sender;
 - (IBAction)chooseColourTheme:(id)sender;
 
-- (void)connectAndExecuteCommandBlock:(void(^)(NSError *))commandBlock;
-- (BOOL)installHelperTool;
-- (BOOL)helperToolIsInstalled;
-
 @property (atomic, copy,   readwrite) NSData *authorization;
 @property (atomic, strong, readwrite) NSXPCConnection *helperToolConnection;
 

@@ -126,8 +126,6 @@ enum ToolbarItemTags {
 - (IBAction)attachComment:(id)sender;
 	// Other actions
 - (IBAction)setKeyboardType:(id)sender;
-- (IBAction)installForCurrentUser:(id)sender;
-- (IBAction)installForAllUsers:(id)sender;
 - (IBAction)findKeyStroke:(id)sender;
 - (IBAction)chooseColourTheme:(id)sender;
 

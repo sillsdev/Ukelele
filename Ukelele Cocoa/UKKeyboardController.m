@@ -1399,18 +1399,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}];
 }
 
-	// Install the keyboard layout
-
-- (IBAction)installForCurrentUser:(id)sender {
-#pragma unused(sender)
-	[self.parentDocument installForCurrentUser:self];
-}
-
-- (IBAction)installForAllUsers:(id)sender {
-#pragma unused(sender)
-	[self.parentDocument installForAllUsers:self];
-}
-
 	// Look up a key stroke
 
 - (IBAction)findKeyStroke:(id)sender {

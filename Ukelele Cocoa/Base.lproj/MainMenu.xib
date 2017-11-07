@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16G1036" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
@@ -139,30 +139,11 @@
                                     <action selector="duplicateKeyboardLayout:" target="-1" id="ebG-Lq-ti8"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Install" id="xua-o4-5nW">
+                            <menuItem title="Export Installer Disk Image…" id="cqf-1f-tk9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Install" id="I8L-oj-g5B">
-                                    <items>
-                                        <menuItem title="Install For Current User" id="dGJ-5J-8Vh">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="installForCurrentUser:" target="-1" id="NrQ-7g-bH8"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Install For All Users" id="rcK-RO-I30">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="installForAllUsers:" target="-1" id="oMS-aI-7ed"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Export Installer Disk Image…" id="ghN-Vq-Uk2">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportKeyboardLayout:" target="-1" id="nPb-Pl-QBs"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
+                                <connections>
+                                    <action selector="exportKeyboardLayout:" target="-1" id="p0y-CM-DCj"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Revert to Saved" id="KaW-ft-85H">
                                 <modifierMask key="keyEquivalentModifierMask"/>

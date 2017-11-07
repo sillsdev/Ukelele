@@ -18,7 +18,6 @@
 #import "UkeleleErrorCodes.h"
 #import "ScriptInfo.h"
 #import "InspectorWindowController.h"
-#import "UkeleleKeyboardInstaller.h"
 #import "UKNewKeyboardLayoutController.h"
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
@@ -1426,8 +1425,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	else if (theAction == @selector(captureInputSource:) ||
-			 theAction == @selector(installForCurrentUser:) || theAction == @selector(installForAllUsers:)) {
+	else if (theAction == @selector(captureInputSource:)) {
 			// Always active
 		return YES;
 	}
@@ -1999,57 +1997,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}];
 }
 
-	// Install the keyboard layout
-
-- (IBAction)installForAllUsers:(id)sender {
-	if (![self canInstall]) {
-		return;
-	}
-	NSWindow *targetWindow;
-	if ([sender isKindOfClass:[UKKeyboardController class]]) {
-		targetWindow = [(UKKeyboardController *)sender window];
-	}
-	else {
-		targetWindow = [self.keyboardLayoutsTable window];
-	}
-	NSAssert(targetWindow, @"Must have a valid window");
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForAllUsers:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-- (IBAction)installForCurrentUser:(id)sender {
-	if (![self canInstall]) {
-		return;
-	}
-	NSWindow *targetWindow;
-	if ([sender isKindOfClass:[UKKeyboardController class]]) {
-		targetWindow = [(UKKeyboardController *)sender window];
-	}
-	else {
-		targetWindow = [self.keyboardLayoutsTable window];
-	}
-	NSAssert(targetWindow, @"Must have a valid window");
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForCurrentUser:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-- (BOOL)canInstall {
-	if ([self fileURL] == nil) {
-		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"This keyboard layout has not yet been saved. Please save it first, and then install it."};
-		NSError *myError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotInstallUnsavedFile userInfo:errorDict];
-		[self presentError:myError];
-		return NO;
-	}
-	return YES;
-}
 
 - (IBAction)duplicateKeyboardLayout:(id)sender {
 #pragma unused(sender)

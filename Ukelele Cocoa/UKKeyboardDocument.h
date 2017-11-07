@@ -52,8 +52,6 @@
 - (IBAction)removeIcon:(id)sender;
 - (IBAction)askKeyboardIdentifiers:(id)sender;
 - (IBAction)localiseKeyboardName:(id)sender;
-- (IBAction)installForCurrentUser:(id)sender;
-- (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;
 - (IBAction)exportKeyboardLayout:(id)sender;
 - (IBAction)addLocale:(id)sender;
