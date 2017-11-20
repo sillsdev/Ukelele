@@ -11,7 +11,7 @@
 #define _XMLCommentHolder_h_
 
 #include <list>
-#include "boost/tr1/memory.hpp"
+#include <tr1/memory>
 #include "NString.h"
 #include "NXMLNode.h"
 

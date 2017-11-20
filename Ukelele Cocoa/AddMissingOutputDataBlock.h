@@ -10,7 +10,7 @@
 #define Ukelele_3_AddMissingOutputDataBlock_h
 
 #include "KeyMapSetList.h"
-#import "boost/tr1/memory.hpp"
+#include <tr1/memory>
 using std::tr1::shared_ptr;
 
 class AddMissingOutputDataBlock {

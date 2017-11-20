@@ -1649,6 +1649,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 523B51171B292ECA00E8982E /* NanoDebugMac.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1680,7 +1681,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/boost_1_65_1/boost,
+					/usr/local/boost_1_65_1,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
@@ -1697,6 +1698,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1724,7 +1726,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/boost_1_65_1/boost,
+					/usr/local/boost_1_65_1,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";

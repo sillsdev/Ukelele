@@ -30,10 +30,10 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	// Helper class to wrap a key element bundle
 
 @interface KeyElementBundleObject : NSObject {
-	boost::shared_ptr<KeyElementBundle> keyElementBundle;
+	shared_ptr<KeyElementBundle> keyElementBundle;
 }
 
-@property (nonatomic) boost::shared_ptr<KeyElementBundle> keyElementBundle;
+@property (nonatomic) shared_ptr<KeyElementBundle> keyElementBundle;
 
 @end
 
@@ -65,7 +65,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 @implementation UkeleleKeyboardObject {
 	NSDocument *parentDocument;
-	std::vector<boost::shared_ptr<KeyElementBundle> > pasteKeyBundleStack;
+	std::vector<shared_ptr<KeyElementBundle> > pasteKeyBundleStack;
 }
 
 @synthesize parentController = parentController;
@@ -238,7 +238,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSArray *)modifierIndices
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap(static_cast<UInt32>([[KeyboardEnvironment instance] currentKeyboardID]));
 	int keyMapSelectCount = modMap->GetKeyMapSelectCount();
 	NSMutableArray *modifierIndices = [NSMutableArray arrayWithCapacity:keyMapSelectCount];
@@ -255,7 +255,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSUInteger)defaultModifierIndex
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap(static_cast<UInt32>([[KeyboardEnvironment instance] currentKeyboardID]));
 	return modMap->GetDefaultIndex();
 }
@@ -313,7 +313,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
 	NString nextState;
 	bool isDeadKey;
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NString outputString = keyboardElement->GetCharOutput([keyDataDict[kKeyKeyboardID] intValue],
 														  [keyDataDict[kKeyKeyCode] intValue],
 														  [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -332,7 +332,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (BOOL)isDeadKey:(NSDictionary *)keyDataDict
 {
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->IsDeadKey([keyDataDict[kKeyKeyboardID] intValue],
 									  [keyDataDict[kKeyKeyCode] intValue],
 									  [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -342,7 +342,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (NSString *)getNextState:(NSDictionary *)keyDataDict
 {
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetNextState([keyDataDict[kKeyKeyboardID] intValue],
 											  [keyDataDict[kKeyKeyCode] intValue],
 											  [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -418,14 +418,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (self.keyboard == nil) {
 		return 0;
 	}
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->GetKeyboardGroup();
 }
 
 - (void)setKeyboardGroup:(NSInteger)newGroup
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	if (keyboardElement->GetKeyboardGroup() != newGroup) {
 		keyboardElement->SetKeyboardGroup((SInt32)newGroup);
 		[self assignRandomID];
@@ -437,14 +437,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (self.keyboard == nil) {
 		return 0;
 	}
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->GetKeyboardID();
 }
 
 - (void)setKeyboardID:(NSInteger)newID
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardID((SInt32)newID);
 }
 
@@ -453,21 +453,21 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	if (self.keyboard == nil) {
 		return @"";
 	}
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetKeyboardName());
 }
 
 - (void)setKeyboardName:(NSString *)newName
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyboardName(ToNN(newName));
 }
 
 - (NSArray *)stateNamesExcept:(NSString *)stateToOmit
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray stateNames = keyboardElement->GetStateNames(ToNN(stateToOmit), kAllStates);
 	return ToNS(stateNames);
 }
@@ -479,7 +479,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		omitStateArray.AppendValue(ToNN(stateName));
 	}
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray result = keyboardElement->GetStateNames(omitStateArray, kAllStates);
 	return ToNS(result);
 }
@@ -487,7 +487,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (NSUInteger)stateCount
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NArray stateNames = keyboardElement->GetStateNames(kStateNone, kAllStates);
 	return stateNames.GetSize();
 }
@@ -495,14 +495,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (BOOL)hasStateWithName:(NSString *)stateName
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->StateExists(ToNN(stateName));
 }
 
 - (NSString *)uniqueStateName
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NString baseName = ToNN([[NSUserDefaults standardUserDefaults] stringForKey:UKStateNameBase]);
 	return ToNS(keyboardElement->CreateStateName(baseName));
 }
@@ -510,26 +510,26 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (NSArray *)actionNames
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetActionNames());
 }
 
 - (BOOL)hasActionWithName:(NSString *)actionName
 {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return keyboardElement->ActionExists(ToNN(actionName));
 }
 
 - (NSString *)terminatorForState:(NSString *)stateName {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	return ToNS(keyboardElement->GetTerminator(ToNN(stateName)));
 }
 
 - (NSDictionary *)getKeyStrokeForOutput:(NSString *)outputString forKeyboard:(NSUInteger)keyboardID {
 	NSAssert(self.keyboard != nil, @"Must have a keyboard");
-	boost::shared_ptr<KeyStrokeLookUpTable> lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
+	shared_ptr<KeyStrokeLookUpTable> lookupTable = (self.keyboard)->CreateKeyStrokeLookUpTable((UInt32)keyboardID);
 	std::pair<KeyStrokeList, NString> result = lookupTable->GetKeyStrokes(ToNN(outputString));
 	KeyStrokeList theList = result.first;
 	KeyStrokeIterator theIterator;
@@ -570,8 +570,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 #pragma mark Importing a dead key state
 
 - (BOOL)hasEquivalentModifierMap:(UkeleleKeyboardObject *)otherKeyboard {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyboardElement> sourceKeyboardElement = [otherKeyboard keyboard]->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> sourceKeyboardElement = [otherKeyboard keyboard]->GetKeyboard();
 	return keyboardElement->HasEquivalentModifierMap(sourceKeyboardElement.get());
 }
 
@@ -579,14 +579,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] undoImportDeadKeyState:localState];
 	[undoManager setActionName:@"Import dead key state"];
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyboardElement> sourceKeyboardElement = [sourceKeyboard keyboard]->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> sourceKeyboardElement = [sourceKeyboard keyboard]->GetKeyboard();
 	keyboardElement->ImportDeadKey(ToNN(localState), ToNN(sourceState), sourceKeyboardElement.get());
 	[self.delegate documentDidChange];
 }
 
 - (void)undoImportDeadKeyState:(NSString *)importedState {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	RemoveStateData *removeData = keyboardElement->RemoveState(ToNN(importedState));
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] redoImportDeadKeyState:importedState data:removeData];
@@ -594,7 +594,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (void)redoImportDeadKeyState:(NSString *)importedState data:(RemoveStateData *)removeStateData {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceRemovedStates(removeStateData);
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] undoImportDeadKeyState:importedState];
@@ -607,7 +607,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
 	NString nextState;
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
                                                             [keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -623,7 +623,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (NSString *)getTerminatorForState:(NSString *)stateName
 {
 	NString theState = ToNN(stateName);
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NString theTerminator = keyboardElement->GetTerminator(theState);
 	return ToNS(theTerminator);
 }
@@ -633,7 +633,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString targetState = ToNN(stateName);
 	NString newString = ToNN(newTerminator);
 	NSString *oldTerminator = [self getTerminatorForState:stateName];
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceTerminator(targetState, newString);
 	[[[parentController undoManager] prepareWithInvocationTarget:parentController] changeTerminatorForState:stateName
 																									 to:oldTerminator];
@@ -646,7 +646,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
 	NString targetState = ToNN(nextState);
 	NSString *currentOutput = [self getCharOutput:keyDataDict isDead:nil nextState:nil];
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MakeKeyDeadKey([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
                                     [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]], currentState, targetState);
 	NSUndoManager *undoManager = [parentController undoManager];
@@ -661,7 +661,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString outputString = ToNN(newOutput);
 	NSString *nextState = nil;
 	[self getCharOutput:keyDataDict isDead:nil nextState:&nextState];
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MakeDeadKeyOutput([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
                                        [self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 									   currentState, outputString);
@@ -676,7 +676,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NString currentState = ToNN((NSString *)keyDataDict[kKeyState]);
 	NSString *nextState = [self getNextState:keyDataDict];
 	NString newNextState = ToNN(newState);
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ChangeDeadKeyNextState([keyDataDict[kKeyKeyboardID] intValue], [keyDataDict[kKeyKeyCode] intValue],
 											[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
 											currentState, newNextState);
@@ -688,7 +688,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)createState:(NSString *)stateName withTerminator:(NSString *)terminator
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->CreateState(ToNN(stateName), ToNN(terminator));
 }
 
@@ -696,7 +696,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (BOOL)isActionElement:(NSDictionary *)keyDataDict
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
 															[keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -709,7 +709,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSString *)actionNameForKey:(NSDictionary *)keyDataDict
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
 															[keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -722,7 +722,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)relinkKey:(NSDictionary *)keyDataDict actionName:(NSString *)originalAction
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
 															[keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -733,7 +733,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)unlinkKey:(NSDictionary *)keyDataDict
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
 															[keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -746,7 +746,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)swapModifierSet:(NSDictionary *)parameters inReverse:(BOOL)reverse
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] swapModifierSet:parameters inReverse:!reverse];
 	[undoManager setActionName:@"Unlink Modifiers"];
@@ -771,7 +771,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)unlinkModifierSet:(NSUInteger)modifierCombination forKeyboard:(NSInteger)keyboardID
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyMapElement *keyMap = keyboardElement->GetKeyMapElement((unsigned int)keyboardID, [self getUkeleleModifiers:(unsigned int)modifierCombination]);
 	NSAssert(keyMap != NULL, @"Key map should not be null");
 	NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
@@ -800,7 +800,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (NSUInteger)modifiersForIndex:(NSUInteger)theIndex forKeyboard:(NSInteger)keyboardID
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	return [self getCocoaModifiers:modifierMap->GetMatchingModifiers((UInt32)theIndex)];
 }
@@ -808,7 +808,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 #pragma mark Swap keys
 
 - (void)swapKeyCode:(NSInteger)keyCode1 withKeyCode:(NSInteger)keyCode2 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SwapKeys((UInt32)keyCode1, (UInt32)keyCode2);
     [self.delegate documentDidChange];
 }
@@ -816,24 +816,24 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 #pragma mark Cut, copy & paste keys
 
 - (void)cutKeyCode:(NSInteger)keyCode {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyElementBundle> keyBundle(new KeyElementBundle);
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyElementBundle> keyBundle(new KeyElementBundle);
 	keyboardElement->CutKeyBundle((UInt32)keyCode, keyBundle);
 	pasteKeyBundleStack.push_back(keyBundle);
     [self.delegate documentDidChange];
 }
 
 - (void)undoCutKeyCode:(NSInteger)keyCode {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyElementBundle> keyBundle = pasteKeyBundleStack.back();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyElementBundle> keyBundle = pasteKeyBundleStack.back();
 	keyboardElement->SetKeyBundle((UInt32)keyCode, keyBundle);
 	pasteKeyBundleStack.pop_back();
     [self.delegate documentDidChange];
 }
 
 - (void)copyKeyCode:(NSInteger)keyCode {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyElementBundle> keyBundle = keyboardElement->BuildKeyBundle((UInt32)keyCode);
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyElementBundle> keyBundle = keyboardElement->BuildKeyBundle((UInt32)keyCode);
 	pasteKeyBundleStack.push_back(keyBundle);
 }
 
@@ -842,8 +842,8 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (void)pasteKeyCode:(NSInteger)keyCode {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
-	boost::shared_ptr<KeyElementBundle> keyBundle = keyboardElement->BuildKeyBundle((UInt32)keyCode);
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyElementBundle> keyBundle = keyboardElement->BuildKeyBundle((UInt32)keyCode);
 	keyboardElement->SetKeyBundle((UInt32)keyCode, pasteKeyBundleStack.back());
 	KeyElementBundleObject *keyElementBundle = [[KeyElementBundleObject alloc] init];
 	[keyElementBundle setKeyElementBundle:keyBundle];
@@ -854,7 +854,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (void)undoPasteKeyCode:(NSInteger)keyCode bundle:(KeyElementBundleObject *)keyBundle {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->SetKeyBundle((UInt32)keyCode, [keyBundle keyElementBundle]);
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] pasteKeyCode:keyCode];
@@ -866,7 +866,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)setDefaultModifierIndex:(NSUInteger)defaultIndex
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	NSUInteger oldIndex = modMap->GetDefaultIndex();
 	modMap->SetDefaultIndex((UInt32)defaultIndex);
@@ -878,7 +878,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (BOOL)keyMapSelectHasOneModifierCombination:(NSInteger)modifierIndex
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((SInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	KeyMapSelect *keyMapSelect = modMap->GetKeyMapSelectElement((SInt32)modifierIndex);
 	return keyMapSelect->GetModifierElementCount() == 1;
@@ -892,7 +892,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 					 command:(NSInteger)newCommand
 					 control:(NSInteger)newControl
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((SInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	KeyMapSelect *selectElement = modMap->GetKeyMapSelectElement((SInt32)index);
 	ModifierElement *modElement = selectElement->GetModifierElement((SInt32)subindex);
@@ -922,7 +922,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 				   command:(NSInteger)commandValue
 				   control:(NSInteger)controlValue
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	KeyMapSelect *selectElement = modMap->GetKeyMapSelectElement((SInt32)index);
 	ModifierElement *modifierElement = new ModifierElement;
@@ -947,7 +947,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)removeModifierElement:(NSInteger)keyboardID index:(NSInteger)index subindex:(NSInteger)subindex
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	KeyMapSelect *selectElement = modMap->GetKeyMapSelectElement((SInt32)index);
 	ModifierElement *modifierElement = selectElement->RemoveModifierElement((SInt32)subindex);
@@ -974,7 +974,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)removeKeyMap:(NSInteger)index forKeyboard:(NSInteger)keyboardID newDefaultIndex:(NSInteger)newDefaultIndex
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)[[KeyboardEnvironment instance] currentKeyboardID]);
 	KeyMapSetList *keyMapSets = keyboardElement->GetKeyMapSetsForKeyboard((UInt32)keyboardID);
 	SInt32 keyMapSetCount = keyMapSets->GetCount();
@@ -1008,7 +1008,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 		 keyMapSelect:(void *)keyMapSelect
 	   keyMapElements:(void *)deletedKeyMapElements
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyMapSetList *keyMapSets = keyboardElement->GetKeyMapSetsForKeyboard((UInt32)keyboardID);
 	SInt32 keyMapSetCount = keyMapSets->GetCount();
 	for (SInt32 i = 1; i <= keyMapSetCount; i++) {
@@ -1030,7 +1030,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)addKeyMap:(KeyMapElement *)keyMap atIndex:(NSInteger)newIndex forKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
     NSInteger oldDefaultIndex = modifierMap->GetDefaultIndex();
     KeyMapSelect *keyMapSelect = new KeyMapSelect((UInt32)newIndex);
@@ -1074,7 +1074,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)addEmptyKeyMapForKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
     SInt32 newIndex = (SInt32)[modifierInfo keyMapIndex];
     if (newIndex == -1) {
@@ -1086,7 +1086,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)addStandardKeyMap:(NSInteger)standardType forKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
     SInt32 newIndex = (SInt32)[modifierInfo keyMapIndex];
     if (newIndex == -1) {
@@ -1098,7 +1098,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)addCopyKeyMap:(NSInteger)indexToCopy unlink:(BOOL)unlinkMap forKeyboard:(NSInteger)keyboardID withModifiers:(ModifiersInfo *)modifierInfo
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMap *modifierMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
     SInt32 newIndex = (SInt32)[modifierInfo keyMapIndex];
     if (newIndex == -1) {
@@ -1115,7 +1115,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)replaceModifierMaps:(ModifierMapList *)newModifierMaps
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMapList *oldModifiers = keyboardElement->ReplaceModifierMaps(newModifierMaps);
 	NSUndoManager *undoManager = [parentController undoManager];
     [[undoManager prepareWithInvocationTarget:self] replaceModifierMaps:oldModifiers];
@@ -1126,31 +1126,31 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)simplifyModifiers
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     ModifierMapList *simplifiedModifierList = keyboardElement->SimplifiedModifierMaps();
     [self replaceModifierMaps:simplifiedModifierList];
 }
 
 - (BOOL)hasSimplifiedModifiers
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
     return keyboardElement->HasSimplifiedModifierMaps();
 }
 
 - (NSUInteger)modifierSetCountForKeyboard:(NSUInteger)keyboardID {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	return modMap->GetKeyMapSelectCount();
 }
 
 - (NSUInteger)modifierSetIndexForModifiers:(NSUInteger)modifiers forKeyboard:(NSUInteger)keyboardID {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	ModifierMap *modMap = keyboardElement->GetModifierMap((UInt32)keyboardID);
 	return modMap->GetMatchingKeyMapSelect([self getUkeleleModifiers:(unsigned int)modifiers]);
 }
 
 - (void)moveModifierSetIndex:(NSInteger)sourceSet toIndex:(NSInteger)destinationSet forKeyboard:(NSUInteger)keyboardID {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->MoveModifierMap((UInt32)sourceSet, (UInt32)destinationSet, (UInt32)keyboardID);
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] moveModifierSetIndex:destinationSet toIndex:sourceSet forKeyboard:keyboardID];
@@ -1195,7 +1195,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (XMLCommentHolderObject *)commentHolderForKey:(NSDictionary *)keyDataDict {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	KeyElement *keyElement = keyboardElement->GetKeyElement([keyDataDict[kKeyKeyboardID] intValue],
                                                             [keyDataDict[kKeyKeyCode] intValue],
 															[self getUkeleleModifiers:[keyDataDict[kKeyModifiers] unsignedIntValue]],
@@ -1206,19 +1206,19 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (XMLCommentHolderObject *)documentCommentHolder {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	XMLCommentHolderObject *commentHolder = [[XMLCommentHolderObject alloc] init];
 	[commentHolder setCommentHolder:keyboardElement.get()];
 	return commentHolder;
 }
 
 - (BOOL)isFirstComment {
-	boost::shared_ptr<XMLCommentContainer> commentContainer = self.keyboard->GetCommentContainer();
+	shared_ptr<XMLCommentContainer> commentContainer = self.keyboard->GetCommentContainer();
 	return commentContainer->IsFirstComment();
 }
 
 - (BOOL)isLastComment {
-	boost::shared_ptr<XMLCommentContainer> commentContainer = self.keyboard->GetCommentContainer();
+	shared_ptr<XMLCommentContainer> commentContainer = self.keyboard->GetCommentContainer();
 	return commentContainer->IsLastComment();
 }
 
@@ -1262,7 +1262,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (NSString *)currentComment {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	XMLComment *theComment = self.keyboard->GetCurrentComment();
 	if (theComment) {
 		return ToNS(theComment->GetCommentString());
@@ -1278,7 +1278,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 }
 
 - (NSString *)currentHolderText {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	XMLComment *theComment = self.keyboard->GetCurrentComment();
 	if (theComment) {
 		return ToNS(theComment->GetHolder()->GetDescription());
@@ -1297,7 +1297,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (RemoveStateData *)removeUnusedStates
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	RemoveStateData *result = keyboardElement->RemoveUnusedStates();
     [self.delegate documentDidChange];
 	return result;
@@ -1305,14 +1305,14 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)undoRemoveUnusedStates:(RemoveStateData *)removeStateData
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceRemovedStates(removeStateData);
     [self.delegate documentDidChange];
 }
 
 - (ActionElementSetWrapper *)removeUnusedActions
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	shared_ptr<ActionElementSet> removedActions = keyboardElement->RemoveUnusedActions();
 	ActionElementSetWrapper *result = nil;
 	if (!removedActions->IsEmpty()) {
@@ -1327,28 +1327,28 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)undoRemoveUnusedActions:(ActionElementSetWrapper *)removedActions
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceActions([removedActions actionElements]->GetActionElementSet());
     [self.delegate documentDidChange];
 }
 
 - (void)changeStateName:(NSString *)oldStateName toName:(NSString *)newStateName
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceStateName(ToNN(oldStateName), ToNN(newStateName));
     [self.delegate documentDidChange];
 }
 
 - (void)changeActionName:(NSString *)oldActionName toName:(NSString *)newActionName
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ChangeActionName(ToNN(oldActionName), ToNN(newActionName));
     [self.delegate documentDidChange];
 }
 
 - (AddMissingOutputData *)addSpecialKeyOutput
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	AddMissingOutputData *data = keyboardElement->AddSpecialKeyOutput();
     [self.delegate documentDidChange];
 	return data;
@@ -1356,7 +1356,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 
 - (void)undoAddSpecialKeyOutput:(AddMissingOutputData *)addMissingOutputData
 {
-	boost::shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
+	shared_ptr<KeyboardElement> keyboardElement = self.keyboard->GetKeyboard();
 	keyboardElement->ReplaceOldOutput(addMissingOutputData);
     [self.delegate documentDidChange];
 }
