@@ -1613,16 +1613,11 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/boost_1_60_0,
-				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = debugging;
-				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Debug;
@@ -1640,17 +1635,12 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/boost_1_60_0,
-				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = debugging;
-				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
@@ -1674,7 +1664,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj tools";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1690,13 +1679,12 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(NANO_HEADER_SEARCH_PATHS)",
-					"/usr/local/boost_1_60_0/**",
+					"$(inherited)",
+					/usr/local/boost_1_65_1/boost,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-fvisibility=hidden",
@@ -1725,7 +1713,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj tools";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1736,12 +1723,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(NANO_HEADER_SEARCH_PATHS)",
-					"/usr/local/boost_1_60_0/**",
+					"$(inherited)",
+					/usr/local/boost_1_65_1/boost,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
-				OTHER_CODE_SIGN_FLAGS = "";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
@@ -1765,12 +1751,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
-					/usr/local/boost_1_60_0,
-				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1784,7 +1764,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1807,12 +1786,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"/Xcode3/Nano/nano-master/Library/Source\"/**",
-					/usr/local/boost_1_60_0,
-				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1825,7 +1798,6 @@
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
