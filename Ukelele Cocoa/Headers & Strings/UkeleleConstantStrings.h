@@ -109,3 +109,4 @@ MY_EXTERN NSString *UKKCAPListFile;
 MY_EXTERN NSString *UKUntitledName;
 MY_EXTERN NSString *kStringKeyboardLayouts;
 MY_EXTERN NSString *kStringDragToInstall;
+MY_EXTERN NSString *kStringInstallerDroplet;

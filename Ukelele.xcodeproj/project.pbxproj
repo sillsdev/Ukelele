@@ -223,6 +223,10 @@
 		52C2D85F1B577FB6001DD5F6 /* AskImportState.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C2D85E1B577FB6001DD5F6 /* AskImportState.xib */; };
 		52C2D8621B57815F001DD5F6 /* AskImportState.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C2D8611B57815F001DD5F6 /* AskImportState.m */; };
 		52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */; };
+		52CB81701FC23FBB00AF32E7 /* UKKeyboardCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */; };
+		52CB81721FC246F200AF32E7 /* UKKeyboardStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */; };
+		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
+		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -230,6 +234,7 @@
 		52E250701E1E8D9800BCE6B9 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
+		52E7EB8D1FBFFB1800195793 /* Organiser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E7EB8C1FBFFB1800195793 /* Organiser.xib */; };
 		52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E8A80419259A14008281A3 /* ChooseStateSheet.xib */; };
 		52EB2B271927397000712272 /* ToolboxController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EB2B261927397000712272 /* ToolboxController.xib */; };
 		52ED0B711A91EF2A00322FFE /* UKDocumentPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */; };
@@ -263,15 +268,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5227A40E196520E6004F35EA /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +607,11 @@
 		52C2D8601B57815F001DD5F6 /* AskImportState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskImportState.h; sourceTree = "<group>"; };
 		52C2D8611B57815F001DD5F6 /* AskImportState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskImportState.m; sourceTree = "<group>"; };
 		52C6B2E119246F1500E0C915 /* AskNewKeyMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskNewKeyMap.xib; path = "Interface Files/AskNewKeyMap.xib"; sourceTree = "<group>"; };
+		52CB816E1FC23FBB00AF32E7 /* Ukelele-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Ukelele-Bridging-Header.h"; path = "../Ukelele-Bridging-Header.h"; sourceTree = "<group>"; };
+		52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKKeyboardCollection.swift; sourceTree = "<group>"; };
+		52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKKeyboardStorage.swift; sourceTree = "<group>"; };
+		52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKFileOperations.swift; sourceTree = "<group>"; };
+		52CB81751FC249F200AF32E7 /* UKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKErrors.swift; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
@@ -620,6 +621,7 @@
 		52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		52E2F1A619258F9E007F4280 /* ChooseScale.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseScale.xib; path = "Interface Files/ChooseScale.xib"; sourceTree = "<group>"; };
 		52E347C9192457200046ABA7 /* AskKeyCode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskKeyCode.xib; path = "Interface Files/AskKeyCode.xib"; sourceTree = "<group>"; };
+		52E7EB8C1FBFFB1800195793 /* Organiser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Organiser.xib; path = "Interface Files/Organiser.xib"; sourceTree = "<group>"; };
 		52E8A80419259A14008281A3 /* ChooseStateSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseStateSheet.xib; path = "Interface Files/ChooseStateSheet.xib"; sourceTree = "<group>"; };
 		52EB2B261927397000712272 /* ToolboxController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ToolboxController.xib; path = "Interface Files/ToolboxController.xib"; sourceTree = "<group>"; };
 		52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKDocumentPrintView.xib; path = "Interface Files/UKDocumentPrintView.xib"; sourceTree = "<group>"; };
@@ -666,12 +668,14 @@
 		523B003F191C973400E06DF3 /* Headers & Strings */ = {
 			isa = PBXGroup;
 			children = (
+				52CB816E1FC23FBB00AF32E7 /* Ukelele-Bridging-Header.h */,
 				523B006A191C9BEC00E06DF3 /* UkeleleDeadKeyConstants.h */,
 				523B0063191C9BCF00E06DF3 /* KeyboardDefinitions.h */,
 				523B0064191C9BCF00E06DF3 /* UkeleleConstants.h */,
 				523B0065191C9BCF00E06DF3 /* UkeleleConstantStrings.h */,
 				523B0066191C9BCF00E06DF3 /* UkeleleConstantStrings.m */,
 				523B0067191C9BCF00E06DF3 /* UkeleleErrorCodes.h */,
+				52CB81751FC249F200AF32E7 /* UKErrors.swift */,
 				523B0068191C9BCF00E06DF3 /* UkeleleStrings.h */,
 			);
 			path = "Headers & Strings";
@@ -705,6 +709,7 @@
 				52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */,
 				52E2506C1E1C18A000BCE6B9 /* UKFileUtilities.h */,
 				52E2506D1E1C18A000BCE6B9 /* UKFileUtilities.m */,
+				52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -839,6 +844,7 @@
 				52ED0B701A91EF2A00322FFE /* UKDocumentPrintView.xib */,
 				5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */,
 				5252055C19273D7500CDE5BD /* UkeleleDocument.xib */,
+				52E7EB8C1FBFFB1800195793 /* Organiser.xib */,
 				52C2B5CF192743C20052D418 /* UkelelePreferences.xib */,
 				525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */,
 				52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */,
@@ -1018,6 +1024,8 @@
 				527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */,
 				525A4B6D191DE60700A356F8 /* ViewScale.h */,
 				525A4B6E191DE60700A356F8 /* ViewScale.m */,
+				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
+				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1206,7 +1214,6 @@
 				52BBECFC191B4C3900E48394 /* Frameworks */,
 				52BBECFD191B4C3900E48394 /* Resources */,
 				5209B7301935632100B195E9 /* CopyFiles */,
-				5227A40E196520E6004F35EA /* CopyFiles */,
 				5277EBBB1AB2744100C471C3 /* CopyFiles */,
 				5224CCFF1B37C376004AB2B6 /* CopyFiles */,
 			);
@@ -1226,7 +1233,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UK;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					5277EB621AAE844600C471C3 = {
@@ -1234,6 +1241,7 @@
 					};
 					52BBECFE191B4C3900E48394 = {
 						DevelopmentTeam = 3V2DRMTWC4;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -1293,6 +1301,7 @@
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
 				5280528D1D65D20F00356D36 /* SpecialKeyWarning.rtf in Resources */,
+				52E7EB8D1FBFFB1800195793 /* Organiser.xib in Resources */,
 				52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */,
 				52BAE0BA1AA3FA2400D761C2 /* KCAPResources.plist in Resources */,
 				52334B3819276B4300571CBA /* UnlinkModifiersDialog.xib in Resources */,
@@ -1432,6 +1441,7 @@
 				525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */,
 				523B0198191CA18C00E06DF3 /* ConfirmStateNameSheet.m in Sources */,
 				523B019D191CA18C00E06DF3 /* DragTextHandler.m in Sources */,
+				52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */,
 				5282DCB71DB0CF3000C43FE7 /* LocaleCode.mm in Sources */,
 				527D10021DD46243006A5A16 /* LocaliseKeyboardController.m in Sources */,
 				523B01A9191CA18C00E06DF3 /* IntendedLanguageSheet.m in Sources */,
@@ -1446,9 +1456,11 @@
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
 				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
+				52CB81721FC246F200AF32E7 /* UKKeyboardStorage.swift in Sources */,
 				529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */,
 				523B00CE191CA00A00E06DF3 /* TerminatorsElement.mm in Sources */,
 				523B019B191CA18C00E06DF3 /* CreateSelectedDeadKeyController.m in Sources */,
+				52CB81701FC23FBB00AF32E7 /* UKKeyboardCollection.swift in Sources */,
 				523B01AE191CA18C00E06DF3 /* ModifiersController.mm in Sources */,
 				5282DCBC1DB8A9F500C43FE7 /* LocaleDialogController.m in Sources */,
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
@@ -1469,6 +1481,7 @@
 				523B01A5191CA18C00E06DF3 /* HandleDeadKeyController.m in Sources */,
 				523B00C6191CA00A00E06DF3 /* KeyMapSet.mm in Sources */,
 				523B00C7191CA00A00E06DF3 /* KeyMapSetList.mm in Sources */,
+				52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */,
 				523B00C4191CA00A00E06DF3 /* KeyMapElement.mm in Sources */,
 				523B00CC191CA00A00E06DF3 /* ModifierList.mm in Sources */,
 				52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */,
@@ -1661,6 +1674,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj tools";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1677,9 +1691,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(NANO_HEADER_SEARCH_PATHS)",
-					"/usr/local/lib/boost_1_42/**",
+					"/usr/local/boost_1_60_0/**",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1711,6 +1725,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj tools";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1722,12 +1737,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(NANO_HEADER_SEARCH_PATHS)",
-					"/usr/local/lib/boost_1_42/**",
+					"/usr/local/boost_1_60_0/**",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_CODE_SIGN_FLAGS = "";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -1736,6 +1752,7 @@
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1756,12 +1773,17 @@
 				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Ukelele;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1772,6 +1794,7 @@
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1792,12 +1815,16 @@
 				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Ukelele;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Catch\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Cocoa\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreFoundation\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/CoreGraphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Qt\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/Skia\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nanites/UIKit\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Application\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Core\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Database\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Events\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Files\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Graphics\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Internal/Targets\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Network\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/System\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Threads\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Types\" \"/Users/john/Documents/Programming/Cocoa\\ Projects/nano-master/Library/Source/Nano/Utilities\"";
 				WRAPPER_EXTENSION = app;
 			};

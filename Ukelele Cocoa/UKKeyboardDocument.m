@@ -382,6 +382,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	CFStringGetPascalString(keyboardName, resourceName, 256, kCFStringEncodingUTF8);
 	CFURLRef parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, (CFURLRef)tempFileURL);
 	FSRef parentRef;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	Boolean gotFSRef = CFURLGetFSRef(parentURL, &parentRef);
 	if (!gotFSRef) {
 		CFRelease(parentURL);
@@ -390,8 +392,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	CFStringRef tempFileName = CFURLCopyLastPathComponent((CFURLRef)tempFileURL);
 	FSRef tempFileRef;
 	HFSUniStr255 forkName;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	OSStatus theErr = FSGetResourceForkName(&forkName);
 	NSAssert(theErr == noErr, @"Could not get resource fork");
 	NSAssert(CFStringGetLength(tempFileName) < 2048, @"File name is more than 2048 characters");
@@ -977,28 +977,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		});
 		return;
 	}
-		// Create the link to Keyboard Layouts
-	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
-	if (libraryURL == nil) {
-			// Failed to create the URL for the Library directory
+		// Copy the installer droplet
+	NSURL *resourcesURL = [[NSBundle mainBundle] URLForResource:kStringInstallerDroplet withExtension:@"app"];
+	NSURL *dropletURL = [[targetDirectoryURL URLByAppendingPathComponent:kStringInstallerDroplet] URLByAppendingPathExtension:@"app"];
+	NSError *dropletError;
+	if (![fileManager copyItemAtURL:resourcesURL toURL:dropletURL error:&dropletError]) {
+			// Could not create the droplet
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[progressWindow.window orderOut:self];
 			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:theError];
-		});
-		return;
-	}
-	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
-	NSURL *linkURL = [targetDirectoryURL URLByAppendingPathComponent:kStringDragToInstall isDirectory:NO];
-	int linkError = symlink([keyboardLayoutsURL fileSystemRepresentation], [linkURL fileSystemRepresentation]);
-	if (linkError) {
-			// Failed to create the link
-		NSDictionary *errDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Creating alias failed with error code %d", linkError]};
-		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:linkError userInfo:errDict];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[progressWindow.window orderOut:self];
-			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:theError];
+			[self presentError:dropletError];
 		});
 		return;
 	}

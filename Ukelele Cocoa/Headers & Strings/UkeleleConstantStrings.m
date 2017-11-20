@@ -113,3 +113,4 @@ NSString *UKKCAPListFile = @"KCAPResources";
 NSString *UKUntitledName = @"untitled";
 NSString *kStringKeyboardLayouts = @"Keyboard Layouts";
 NSString *kStringDragToInstall = @"Drag here to install";
+NSString *kStringInstallerDroplet = @"Drop keyboard layout here to install";
