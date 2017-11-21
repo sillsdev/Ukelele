@@ -227,6 +227,7 @@
 		52CB81721FC246F200AF32E7 /* UKKeyboardStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */; };
 		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
 		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
+		52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -612,6 +613,7 @@
 		52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKKeyboardStorage.swift; sourceTree = "<group>"; };
 		52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKFileOperations.swift; sourceTree = "<group>"; };
 		52CB81751FC249F200AF32E7 /* UKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKErrors.swift; sourceTree = "<group>"; };
+		52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKOrganiserController.swift; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
@@ -1170,6 +1172,7 @@
 				5280528A1D65B1B000356D36 /* WarningDialogController.m */,
 				523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */,
 				523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */,
+				52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1466,6 +1469,7 @@
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,
 				523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */,
+				52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */,
 				523B01B5191CA18C00E06DF3 /* SwapKeysController.m in Sources */,
 				523B01A3191CA18C00E06DF3 /* EditKeyWindowController.m in Sources */,
 				523B008F191C9D2200E06DF3 /* FontNameTransformer.m in Sources */,
