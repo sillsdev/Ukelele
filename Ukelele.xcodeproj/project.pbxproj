@@ -195,6 +195,8 @@
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529344A01B86B20C00DF0659 /* AskTextView.xib */; };
 		529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529344A31B86B2A200DF0659 /* AskTextViewController.m */; };
+		5293D5931FC6369D00422005 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293D5921FC6369D00422005 /* main.swift */; };
+		5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5293D5901FC6369D00422005 /* UKFileCopier */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
 		52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
@@ -259,6 +261,7 @@
 			dstSubfolderSpec = 6;
 			files = (
 				5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */,
+				5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +568,8 @@
 		529344A01B86B20C00DF0659 /* AskTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskTextView.xib; path = "Interface Files/AskTextView.xib"; sourceTree = "<group>"; };
 		529344A21B86B2A200DF0659 /* AskTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskTextViewController.h; sourceTree = "<group>"; };
 		529344A31B86B2A200DF0659 /* AskTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskTextViewController.m; sourceTree = "<group>"; };
+		5293D5901FC6369D00422005 /* UKFileCopier */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UKFileCopier; sourceTree = BUILT_PRODUCTS_DIR; };
+		5293D5921FC6369D00422005 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UKXMLEncoder.cpp; sourceTree = "<group>"; };
 		52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKXMLEncoder.h; sourceTree = "<group>"; };
 		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
@@ -650,6 +655,13 @@
 				52A105951B2A629A002C5255 /* SystemConfiguration.framework in Frameworks */,
 				5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */,
 				5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5293D58D1FC6369D00422005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +818,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5293D5911FC6369D00422005 /* UKFileCopier */ = {
+			isa = PBXGroup;
+			children = (
+				5293D5921FC6369D00422005 /* main.swift */,
+			);
+			path = UKFileCopier;
+			sourceTree = "<group>";
+		};
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,6 +886,7 @@
 				523B01C7191D7F9300E06DF3 /* Dependencies */,
 				52BBED29191B4C3900E48394 /* Ukelele CocoaTests */,
 				5277EB641AAE844600C471C3 /* Ukelele Quick Look Generator */,
+				5293D5911FC6369D00422005 /* UKFileCopier */,
 				52BBED01191B4C3900E48394 /* Frameworks */,
 				52BBED00191B4C3900E48394 /* Products */,
 			);
@@ -876,6 +897,7 @@
 			children = (
 				52BBECFF191B4C3900E48394 /* Ukelele.app */,
 				5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */,
+				5293D5901FC6369D00422005 /* UKFileCopier */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1209,6 +1231,22 @@
 			productReference = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */;
 			productType = "com.apple.product-type.bundle";
 		};
+		5293D58F1FC6369D00422005 /* UKFileCopier */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5293D5961FC6369D00422005 /* Build configuration list for PBXNativeTarget "UKFileCopier" */;
+			buildPhases = (
+				5293D58C1FC6369D00422005 /* Sources */,
+				5293D58D1FC6369D00422005 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UKFileCopier;
+			productName = UKFileCopier;
+			productReference = 5293D5901FC6369D00422005 /* UKFileCopier */;
+			productType = "com.apple.product-type.tool";
+		};
 		52BBECFE191B4C3900E48394 /* Ukelele */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele" */;
@@ -1236,11 +1274,17 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UK;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					5277EB621AAE844600C471C3 = {
 						CreatedOnToolsVersion = 6.1.1;
+					};
+					5293D58F1FC6369D00422005 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 3V2DRMTWC4;
+						ProvisioningStyle = Automatic;
 					};
 					52BBECFE191B4C3900E48394 = {
 						DevelopmentTeam = 3V2DRMTWC4;
@@ -1263,6 +1307,7 @@
 			targets = (
 				52BBECFE191B4C3900E48394 /* Ukelele */,
 				5277EB621AAE844600C471C3 /* Ukelele Quick Look Generator */,
+				5293D58F1FC6369D00422005 /* UKFileCopier */,
 			);
 		};
 /* End PBXProject section */
@@ -1395,6 +1440,14 @@
 				5277EB731AAEF46100C471C3 /* ColourTheme.m in Sources */,
 				5277EB7C1AAEF49A00C471C3 /* KeyMapSet.mm in Sources */,
 				5277EB991AAEFEF900C471C3 /* RandomNumberGenerator.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5293D58C1FC6369D00422005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5293D5931FC6369D00422005 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1649,6 +1702,62 @@
 			};
 			name = Release;
 		};
+		5293D5941FC6369D00422005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3V2DRMTWC4;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		5293D5951FC6369D00422005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3V2DRMTWC4;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		52BBED31191B4C3900E48394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 523B51171B292ECA00E8982E /* NanoDebugMac.xcconfig */;
@@ -1819,6 +1928,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5293D5961FC6369D00422005 /* Build configuration list for PBXNativeTarget "UKFileCopier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5293D5941FC6369D00422005 /* Debug */,
+				5293D5951FC6369D00422005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele" */ = {
 			isa = XCConfigurationList;

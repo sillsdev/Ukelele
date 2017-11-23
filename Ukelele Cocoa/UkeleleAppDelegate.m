@@ -21,6 +21,7 @@
 #import "ColourThemeEditorController.h"
 #import "UKNewKeyboardLayoutController.h"
 #include <ServiceManagement/ServiceManagement.h>
+#import "Ukelele-Swift.h"
 
 #define UkeleleManualName	@"Ukelele Manual"
 #define UkeleleWebSite		@"http://scripts.sil.org/ukelele"
@@ -186,6 +187,14 @@ static NSDictionary *defaultValues() {
 			[theDocument inspectorDidAppear];
 		}
 	}
+}
+
+- (IBAction)showHideOrganiser:(id)sender {
+#pragma unused(sender)
+}
+
+- (IBAction)resetUninstalledFolder:(id)sender {
+#pragma unused(sender)
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {

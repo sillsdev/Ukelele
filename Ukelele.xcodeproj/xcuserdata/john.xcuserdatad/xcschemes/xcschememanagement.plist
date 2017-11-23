@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>UKFileCopier.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>Ukelele Cocoa.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -45,6 +50,11 @@
 			<true/>
 		</dict>
 		<key>5277EB621AAE844600C471C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5293D58F1FC6369D00422005</key>
 		<dict>
 			<key>primary</key>
 			<true/>
