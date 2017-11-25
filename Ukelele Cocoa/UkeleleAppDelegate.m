@@ -29,6 +29,7 @@
 
 @interface UkeleleAppDelegate () {
 	AuthorizationRef _authRef;
+	UKOrganiserController *organiserController;
 }
 
 @end
@@ -38,9 +39,10 @@
 - (instancetype)init
 {
     self = [super init];
-//    if (self) {
-//        // Initialization code here.
-//    }
+    if (self) {
+        // Initialization code here.
+		organiserController = nil;
+    }
 //	[NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask handler:^(NSEvent *inEvent){
 //		NSString *characters = [inEvent characters];
 //		NSString *charsWithoutModifiers = [inEvent charactersIgnoringModifiers];
@@ -190,7 +192,15 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)showHideOrganiser:(id)sender {
-#pragma unused(sender)
+	if (organiserController == nil) {
+		organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
+	}
+	if ([[organiserController window] isVisible]) {
+		[[organiserController window] orderOut:sender];
+	}
+	else {
+		[[organiserController window] makeKeyAndOrderFront:sender];
+	}
 }
 
 - (IBAction)resetUninstalledFolder:(id)sender {

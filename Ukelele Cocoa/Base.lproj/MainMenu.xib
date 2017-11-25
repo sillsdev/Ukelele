@@ -139,16 +139,35 @@
                                     <action selector="duplicateKeyboardLayout:" target="-1" id="ebG-Lq-ti8"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Revert to Saved" id="KaW-ft-85H">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="0aC-zU-mqf"/>
                             <menuItem title="Export Installer Disk Image…" id="cqf-1f-tk9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportKeyboardLayout:" target="-1" id="p0y-CM-DCj"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Revert to Saved" id="KaW-ft-85H">
+                            <menuItem title="Install for All Users" id="MAw-M8-42D">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
+                                    <action selector="installForAllUsersWithSender:" target="-1" id="23S-QG-Tt4"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Install for Current User" id="Pwc-Y5-Zjh">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="installForCurrentUserWithSender:" target="-1" id="4x4-8j-S80"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Uninstall" id="Sc5-E5-Nze">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="uninstallKeyboardLayoutWithSender:" target="-1" id="chY-vE-MqV"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Reset Uninstalled Folder" id="AL8-sq-CHd">

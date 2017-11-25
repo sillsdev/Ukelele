@@ -29,7 +29,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 	@IBOutlet var currentUserTable: NSTableView!
 	
 	var eventStream: FSEventStreamRef? = nil
-
+	
 	override func windowDidLoad() {
         super.windowDidLoad()
 		
@@ -93,6 +93,67 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 			if index != nil {
 				table.selectRowIndexes(IndexSet.init(integer: index!), byExtendingSelection: false)
 			}
+		}
+	}
+	
+	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+		switch menuItem.tag {
+		case MenuItems.Uninstall.rawValue:
+			// Uninstall
+			if allUsersTable.clickedRow != -1 || currentUserTable.clickedRow != -1 {
+				return true
+			}
+			if self.window?.firstResponder == uninstalledTable {
+				// Uninstalled table
+				return false
+			}
+			else if self.window?.firstResponder == allUsersTable {
+				return allUsersTable.selectedRow != -1
+			}
+			else if self.window?.firstResponder == currentUserTable {
+				return currentUserTable.selectedRow != -1
+			}
+			return false
+			
+		case MenuItems.InstallForAllUsers.rawValue:
+			// Install for all users
+			if uninstalledTable.clickedRow != -1 || currentUserTable.clickedRow != -1 {
+				return true
+			}
+			if self.window?.firstResponder == uninstalledTable {
+				// Uninstalled table
+				return uninstalledTable.selectedRow != -1
+			}
+			else if self.window?.firstResponder == allUsersTable {
+				return false
+			}
+			else if self.window?.firstResponder == currentUserTable {
+				return currentUserTable.selectedRow != -1
+			}
+			return false
+			
+		case MenuItems.InstallForCurrentUser.rawValue:
+			// Install for current user
+			if uninstalledTable.clickedRow != -1 || allUsersTable.clickedRow != -1 {
+				return true
+			}
+			if self.window?.firstResponder == uninstalledTable {
+				// Uninstalled table
+				return uninstalledTable.selectedRow != -1
+			}
+			else if self.window?.firstResponder == allUsersTable {
+				return allUsersTable.selectedRow != -1
+			}
+			else if self.window?.firstResponder == currentUserTable {
+				return false
+			}
+			return false
+			
+		case MenuItems.SetUninstalledFolder.rawValue:
+			return true
+			
+		default:
+			return false
 		}
 	}
 	
