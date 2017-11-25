@@ -45,4 +45,10 @@ class UKKeyboardStorage {
 		let theDefaults = UserDefaults.standard
 		theDefaults.set(newFolder.path, forKey: uninstalledFolderDefaultKey)
 	}
+	
+	func resetUninstalledFolder() {
+		let theFolderPath = (uninstalledFolderDefault as NSString).expandingTildeInPath
+		let theFolder = URL.init(fileURLWithPath: theFolderPath, isDirectory: true)
+		changeUninstalledFolder(to: theFolder)
+	}
 }

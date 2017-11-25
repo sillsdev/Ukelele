@@ -182,6 +182,11 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 	}
 	
+	@IBAction func resetUninstalledFolder(sender: Any) {
+		let theStorage = UKKeyboardStorage.sharedInstance
+		theStorage.resetUninstalledFolder()
+	}
+	
 	@IBAction func uninstallKeyboardLayout(sender: Any) {
 		// Need to find what is selected
 		if let menuItem = sender as? NSMenuItem {

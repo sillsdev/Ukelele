@@ -203,10 +203,6 @@ static NSDictionary *defaultValues() {
 	}
 }
 
-- (IBAction)resetUninstalledFolder:(id)sender {
-#pragma unused(sender)
-}
-
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
 #pragma unused(notification)
 		// Register defaults
@@ -287,6 +283,15 @@ static NSDictionary *defaultValues() {
 		}
 		else {
 			[menuItem setTitle:@"Show Inspector"];
+		}
+		return YES;
+	}
+	else if (action == @selector(showHideOrganiser:)) {
+		if (organiserController == nil || ![[organiserController window] isVisible]) {
+			[menuItem setTitle:@"Show Organiser"];
+		}
+		else {
+			[menuItem setTitle:@"Hide Organiser"];
 		}
 		return YES;
 	}
