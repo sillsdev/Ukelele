@@ -245,6 +245,7 @@
 		52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */; };
 		52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */; };
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
+		52EE9F951FCD2DF6004C0B88 /* Keyboard Installer.app in Resources */ = {isa = PBXBuildFile; fileRef = 52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
 		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; };
@@ -638,6 +639,7 @@
 		52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPrintView.h; sourceTree = "<group>"; };
 		52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPrintView.m; sourceTree = "<group>"; };
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
+		52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = "Keyboard Installer.app"; path = "../../Ukelele Other Data/Keyboard Installer 2017-11-28 15-25-48/Keyboard Installer.app"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
 		52F6C47D1CAA517E0010C596 /* Sparkle-1.18.1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sparkle-1.18.1"; path = "../Sparkle-1.18.1"; sourceTree = "<group>"; };
@@ -948,6 +950,7 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */,
 				52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */,
 				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
 				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
@@ -1345,6 +1348,7 @@
 				5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
+				52EE9F951FCD2DF6004C0B88 /* Keyboard Installer.app in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
@@ -1936,6 +1940,7 @@
 				5293D5951FC6369D00422005 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52BBECFA191B4C3900E48394 /* Build configuration list for PBXProject "Ukelele" */ = {
 			isa = XCConfigurationList;

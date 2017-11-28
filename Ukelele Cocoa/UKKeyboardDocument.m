@@ -977,16 +977,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		});
 		return;
 	}
-		// Copy the installer droplet
-	NSURL *resourcesURL = [[NSBundle mainBundle] URLForResource:kStringInstallerDroplet withExtension:@"app"];
-	NSURL *dropletURL = [[targetDirectoryURL URLByAppendingPathComponent:kStringInstallerDroplet] URLByAppendingPathExtension:@"app"];
-	NSError *dropletError;
-	if (![fileManager copyItemAtURL:resourcesURL toURL:dropletURL error:&dropletError]) {
-			// Could not create the droplet
+		// Copy the installer application
+	NSURL *resourcesURL = [[NSBundle mainBundle] URLForResource:kStringInstallerApplication withExtension:@"app"];
+	NSURL *dropletURL = [[targetDirectoryURL URLByAppendingPathComponent:kStringInstallerApplication] URLByAppendingPathExtension:@"app"];
+	NSError *installerAppError;
+	if (![fileManager copyItemAtURL:resourcesURL toURL:dropletURL error:&installerAppError]) {
+			// Could not create the application
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[progressWindow.window orderOut:self];
 			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:dropletError];
+			[self presentError:installerAppError];
 		});
 		return;
 	}
