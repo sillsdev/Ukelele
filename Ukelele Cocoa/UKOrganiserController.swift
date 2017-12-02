@@ -34,9 +34,9 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
         super.windowDidLoad()
 		
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		uninstalledTable.register(forDraggedTypes: [kUTTypeURL as String])
-		allUsersTable.register(forDraggedTypes: [kUTTypeURL as String])
-		currentUserTable.register(forDraggedTypes: [kUTTypeURL as String])
+		uninstalledTable.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String as String)])
+		allUsersTable.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String as String)])
+		currentUserTable.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String as String)])
 		uninstalledTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
 		allUsersTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
 		currentUserTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
@@ -55,7 +55,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 		let theStorage = UKKeyboardStorage.sharedInstance
 		let scanTarget = [theStorage.uninstalledKeyboards.folderURL.path, theStorage.systemKeyboards.folderURL.path, theStorage.userKeyboards.folderURL.path]
-		let scanCallback: FSEventStreamCallback = { (streamRef: ConstFSEventStreamRef, context: UnsafeMutableRawPointer?, count: Int, streamPtrs: UnsafeMutableRawPointer, flags: UnsafePointer<FSEventStreamEventFlags>?, eventIDs: UnsafePointer<FSEventStreamEventId>?) in
+		let scanCallback: FSEventStreamCallback = { (streamRef: ConstFSEventStreamRef, context: UnsafeMutableRawPointer?, count: Int, streamPtrs: UnsafeMutableRawPointer, flags: UnsafePointer<FSEventStreamEventFlags>, eventIDs: UnsafePointer<FSEventStreamEventId>) in
 			// Here we will force a scan
 			let theController = Unmanaged<UKOrganiserController>.fromOpaque(context!).takeUnretainedValue()
 			// Could limit this to only the folder changed, if necessary
@@ -172,8 +172,8 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		thePanel.canCreateDirectories = true
 		let theURL = UKKeyboardStorage.sharedInstance.uninstalledKeyboards.folderURL
 		thePanel.directoryURL = theURL
-		thePanel.beginSheetModal(for: self.window!) { (result: Int) in
-			if result == NSFileHandlingPanelOKButton {
+		thePanel.beginSheetModal(for: self.window!) { (result: NSApplication.ModalResponse) in
+			if result == NSApplication.ModalResponse.OK {
 				// Got the folder
 				UKKeyboardStorage.sharedInstance.changeUninstalledFolder(to: thePanel.directoryURL!)
 				self.setupMonitor()
@@ -194,12 +194,12 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				let theStorage = UKKeyboardStorage.sharedInstance
 				var sourceBase: URL? = nil
 				var fileName: String? = nil
-				if menu.identifier == allUsersContextMenu {
+				if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: allUsersContextMenu) {
 					// We're coming from the contextual menu in the all users table
 					sourceBase = theStorage.systemKeyboards.folderURL
 					fileName = theStorage.systemKeyboards.collection[allUsersTable.clickedRow].fileName
 				}
-				else if menu.identifier == currentUserContextMenu {
+				else if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: currentUserContextMenu) {
 					// We're coming from the contextual menu in the current user table
 					sourceBase = theStorage.userKeyboards.folderURL
 					fileName = theStorage.userKeyboards.collection[currentUserTable.clickedRow].fileName
@@ -237,12 +237,12 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				let theStorage = UKKeyboardStorage.sharedInstance
 				var sourceBase: URL? = nil
 				var fileName: String? = nil
-				if menu.identifier == uninstalledContextMenu {
+				if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: uninstalledContextMenu) {
 					// We're coming from the contextual menu in the uninstalled table
 					sourceBase = theStorage.uninstalledKeyboards.folderURL
 					fileName = theStorage.uninstalledKeyboards.collection[uninstalledTable.clickedRow].fileName
 				}
-				else if menu.identifier == currentUserContextMenu {
+				else if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: currentUserContextMenu) {
 					// We're coming from the contextual menu in the current user table
 					sourceBase = theStorage.userKeyboards.folderURL
 					fileName = theStorage.userKeyboards.collection[currentUserTable.clickedRow].fileName
@@ -280,12 +280,12 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				let theStorage = UKKeyboardStorage.sharedInstance
 				var sourceBase: URL? = nil
 				var fileName: String? = nil
-				if menu.identifier == uninstalledContextMenu {
+				if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: uninstalledContextMenu) {
 					// We're coming from the contextual menu in the uninstalled table
 					sourceBase = theStorage.uninstalledKeyboards.folderURL
 					fileName = theStorage.uninstalledKeyboards.collection[uninstalledTable.clickedRow].fileName
 				}
-				else if menu.identifier == allUsersContextMenu {
+				else if menu.identifier == NSUserInterfaceItemIdentifier(rawValue: allUsersContextMenu) {
 					// We're coming from the contextual menu in the all users table
 					sourceBase = theStorage.systemKeyboards.folderURL
 					fileName = theStorage.systemKeyboards.collection[allUsersTable.clickedRow].fileName
@@ -317,7 +317,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 	}
 	
-	func moveFile(from source: URL, to destination: URL, undoName: String, completion: (Bool, NSError?) -> Void) {
+	@objc func moveFile(from source: URL, to destination: URL, undoName: String, completion: (Bool, NSError?) -> Void) {
 		(undoManager?.prepare(withInvocationTarget: self) as AnyObject).moveFile(from: destination, to: source, undoName: undoName, completion: completion)
 		if !(undoManager?.isUndoing)! && !(undoManager?.isRedoing)! {
 			undoManager?.setActionName(undoName)
@@ -370,7 +370,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		return true
 	}
 	
-	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
 		if (info.draggingSource() as? NSTableView) == tableView {
 			// Cannot drag within a table
 			return []
@@ -391,7 +391,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		return validFile ? .move : []
 	}
 	
-	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
 		let theStorage = UKKeyboardStorage.sharedInstance
 		let baseURL = tableView == uninstalledTable ? theStorage.uninstalledKeyboards.folderURL : tableView == allUsersTable ? theStorage.systemKeyboards.folderURL : theStorage.userKeyboards.folderURL
 		var fileMoved = false
@@ -424,22 +424,22 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		if tableView == uninstalledTable || tableView == allUsersTable || tableView == currentUserTable {
 			let theStorage = UKKeyboardStorage.sharedInstance
 			let theCollection = tableView == uninstalledTable ? theStorage.uninstalledKeyboards : tableView == allUsersTable ? theStorage.systemKeyboards : theStorage.userKeyboards
-			if tableColumn?.identifier == keyboardLayoutColumnID {
-				var myView = tableView.make(withIdentifier: keyboardLayoutColumnID, owner: self)
+			if tableColumn?.identifier.rawValue == keyboardLayoutColumnID {
+				var myView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: keyboardLayoutColumnID), owner: self)
 				if myView == nil {
 					myView = NSTableCellView.init(frame: NSMakeRect(0.0, 0.0, tableColumn!.width, 20.0))
-					myView?.identifier = keyboardLayoutColumnID
+					myView?.identifier = NSUserInterfaceItemIdentifier(rawValue: keyboardLayoutColumnID)
 				}
 				(myView as! NSTableCellView).textField?.stringValue = theCollection.collection[row].keyboardLayoutName
 				return myView
 			}
-			else if tableColumn?.identifier == kindColumnID {
-				var imageView = tableView.make(withIdentifier: kindColumnID, owner: self)
+			else if tableColumn?.identifier.rawValue == kindColumnID {
+				var imageView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: kindColumnID), owner: self)
 				if imageView == nil {
 					imageView = NSTableCellView.init(frame: NSMakeRect(0.0, 0.0, tableColumn!.width, 20.0))
-					imageView?.identifier = kindColumnID
+					imageView?.identifier = NSUserInterfaceItemIdentifier(rawValue: kindColumnID)
 				}
-				let theImage = NSImage.init(named: theCollection.collection[row].isCollection ? NSImageNameFolder : keyboardIconName)
+				let theImage = NSImage.init(named: theCollection.collection[row].isCollection ? NSImage.Name.folder : NSImage.Name(keyboardIconName))
 				(imageView as! NSTableCellView).imageView?.image = theImage
 				return imageView
 			}
