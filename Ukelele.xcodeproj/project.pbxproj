@@ -123,6 +123,9 @@
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
+		5253C5691FE9C937004D7C66 /* UkeleleStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5253C5671FE9C937004D7C66 /* UkeleleStatus.h */; };
+		5253C56A1FE9C937004D7C66 /* UkeleleStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5253C5681FE9C937004D7C66 /* UkeleleStatus.m */; };
+		5253C56B1FE9C937004D7C66 /* UkeleleStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5253C5681FE9C937004D7C66 /* UkeleleStatus.m */; };
 		5253EC741C43928B003B7CC3 /* scripts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5253EC761C43928B003B7CC3 /* scripts.strings */; };
 		52579AD21A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */; };
 		5258BE581924839800525D63 /* AskSwapKeyCodesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5258BE571924839800525D63 /* AskSwapKeyCodesWindow.xib */; };
@@ -524,6 +527,8 @@
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
+		5253C5671FE9C937004D7C66 /* UkeleleStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UkeleleStatus.h; sourceTree = "<group>"; };
+		5253C5681FE9C937004D7C66 /* UkeleleStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UkeleleStatus.m; sourceTree = "<group>"; };
 		5253EC751C43928B003B7CC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/scripts.strings; sourceTree = "<group>"; };
 		5253EC771C43929A003B7CC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/scripts.strings; sourceTree = "<group>"; };
 		52579AD01A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyStrokeLookupInteractionHandler.h; sourceTree = "<group>"; };
@@ -1053,6 +1058,8 @@
 				525A4B6E191DE60700A356F8 /* ViewScale.m */,
 				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
 				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
+				5253C5671FE9C937004D7C66 /* UkeleleStatus.h */,
+				5253C5681FE9C937004D7C66 /* UkeleleStatus.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1209,6 +1216,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5253C5691FE9C937004D7C66 /* UkeleleStatus.h in Headers */,
 				522A481D1B75EF6B00DA40ED /* UKStyleInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1278,7 +1286,7 @@
 			attributes = {
 				CLASSPREFIX = UK;
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "John Brownie";
 				TargetAttributes = {
 					5277EB621AAE844600C471C3 = {
@@ -1405,6 +1413,7 @@
 				5277EB791AAEF48D00C471C3 /* KeyElementTable.mm in Sources */,
 				5277EB8F1AAEFD3300C471C3 /* RemoveStateData.mm in Sources */,
 				5277EB771AAEF48700C471C3 /* KeyElement.mm in Sources */,
+				5253C56B1FE9C937004D7C66 /* UkeleleStatus.m in Sources */,
 				5277EB681AAE844600C471C3 /* GenerateThumbnailForURL.m in Sources */,
 				5277EB881AAEF4D800C471C3 /* KeyCapView.m in Sources */,
 				5277EB8E1AAEFD2700C471C3 /* KeyCodeMap.mm in Sources */,
@@ -1559,6 +1568,7 @@
 				523B0189191CA18C00E06DF3 /* AskReplaceDeadKeySheet.m in Sources */,
 				523B01B4191CA18C00E06DF3 /* SelectKeyByCodeController.m in Sources */,
 				523B018B191CA18C00E06DF3 /* AskSwapKeysWindowController.m in Sources */,
+				5253C56A1FE9C937004D7C66 /* UkeleleStatus.m in Sources */,
 				523B01BD191CA18C00E06DF3 /* UnlinkKeyHandler.m in Sources */,
 				523B0195191CA18C00E06DF3 /* ChooseStateController.m in Sources */,
 				523B007A191C9CA900E06DF3 /* KeyCapView.m in Sources */,
@@ -1680,6 +1690,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = debugging;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Debug;
@@ -1703,6 +1714,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = debugging;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
@@ -1817,6 +1829,7 @@
 					"-fvisibility=hidden",
 				);
 				SDKROOT = macosx;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1862,6 +1875,7 @@
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1896,7 +1910,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1931,7 +1944,6 @@
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Ukelele Cocoa/Ukelele-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

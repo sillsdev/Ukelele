@@ -39,6 +39,7 @@
 #import "UKStyleInfo.h"
 #import "WarningDialogController.h"
 #include <Carbon/Carbon.h>
+#import "UkeleleStatus.h"
 
 const float kWindowMinWidth = 450.0f;
 const float kWindowMinHeight = 300.0f;
@@ -51,6 +52,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 @implementation UKKeyboardController {
 	NSUInteger lastModifiers;
+	UkeleleStatus *currentStatus;
 }
 
 @synthesize keyboardLayout = _keyboardLayout;
@@ -94,6 +96,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		printingInfo = nil;
 		lastModifiers = 0;
 		_keyStates = [NSMutableIndexSet indexSet];
+		currentStatus = [[UkeleleStatus alloc] init];
     }
     return self;
 }
@@ -1523,7 +1526,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[stateNameView setAlignment:NSCenterTextAlignment];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
-//			[hostView setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[hostView addSubview:theKeyboard];
 			[hostView addSubview:stateNameView];
 			stateViews[i] = hostView;
