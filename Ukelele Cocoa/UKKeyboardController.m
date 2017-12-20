@@ -40,6 +40,7 @@
 #import "WarningDialogController.h"
 #include <Carbon/Carbon.h>
 #import "UkeleleStatus.h"
+#import "KeyboardResourceList.h"
 
 const float kWindowMinWidth = 450.0f;
 const float kWindowMinHeight = 300.0f;
@@ -53,6 +54,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 @implementation UKKeyboardController {
 	NSUInteger lastModifiers;
 	UkeleleStatus *currentStatus;
+	KeyboardResourceList *keyboardResources;
+	BOOL isDisplayingMessage;
 }
 
 @synthesize keyboardLayout = _keyboardLayout;
@@ -97,6 +100,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		lastModifiers = 0;
 		_keyStates = [NSMutableIndexSet indexSet];
 		currentStatus = [[UkeleleStatus alloc] init];
+		keyboardResources = [KeyboardResourceList getInstance];
+		isDisplayingMessage = NO;
     }
     return self;
 }
@@ -135,6 +140,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[self assignClickTargets];
     [self setupDataSource];
 	[self calculateSize];
+	[self setKeyboardNameAndCoding];
+	[self updateStatus];
 	[self updateWindow];
 	if ([internalState[kStateCurrentScale] doubleValue] <= 0) {
 			// This is fit width
@@ -362,6 +369,26 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 #pragma mark Window updating
+
+- (void)updateStatus {
+	currentStatus.stateName = self.currentState;
+	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];
+	NSUInteger matchingSet = [self.keyboardLayout modifierSetIndexForModifiers:currentModifiers forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
+	currentStatus.modifierIndex = matchingSet;
+	[self setMessageBarText:@""];
+}
+
+- (void)setKeyboardNameAndCoding {
+	NSInteger keyboardID = [internalState[kStateCurrentKeyboard] integerValue];
+	NSDictionary *indexDictionary = [keyboardResources indicesForResourceID:keyboardID];
+	NSInteger nameIndex = [indexDictionary[kKeyNameIndex] integerValue];
+	NSInteger codingIndex = [indexDictionary[kKeyCodingIndex] integerValue];
+	if (nameIndex != -1 && codingIndex != -1) {
+		KeyboardType *keyboardType = keyboardResources.keyboardTypeTable[nameIndex];
+		currentStatus.keyboardType = keyboardType.keyboardName;
+		currentStatus.keyboardCoding = keyboardType.keyboardCodings[codingIndex - 1];
+	}
+}
 
 - (void)setViewScaleComboBox
 {
@@ -834,6 +861,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert([self.keyboardLayout hasStateWithName:stateName], @"Can only go to an existing state");
 	[stateStack addObject:stateName];
     internalState[kStateCurrentState] = stateName;
+	[self updateStatus];
 	[self updateWindow];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[infoInspector setStateStack:stateStack];
@@ -847,6 +875,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	[stateStack removeLastObject];
     internalState[kStateCurrentState] = [stateStack lastObject];
+	[self updateStatus];
 	[self updateWindow];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[infoInspector setStateStack:stateStack];
@@ -854,6 +883,23 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)setMessageBarText:(NSString *)message
 {
+	if (isDisplayingMessage) {
+		if (!message || [message length] == 0) {
+			// We revert from the message to the status info
+			message = [currentStatus statusString];
+			isDisplayingMessage = NO;
+		}
+	}
+	else {
+		if (message && [message length] > 0) {
+			// Start displaying the message
+			isDisplayingMessage = YES;
+		}
+		else {
+			// No content, no current message, so set status info
+			message = [currentStatus statusString];
+		}
+	}
 	[self.messageBar setStringValue:message];
 	[self.messageBar setNeedsDisplay:YES];
 }
@@ -1595,6 +1641,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	lastModifiers = modifiers;
 	[self inspectorSetModifiers];
 	[self inspectorSetModifierMatch];
+	[self updateStatus];
 	[self updateWindow];
 }
 
@@ -1669,6 +1716,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 			internalState[kStateCurrentModifiers] = @(currentModifiers);
 			[self inspectorSetModifiers];
 			[self inspectorSetModifierMatch];
+			[self updateStatus];
 			[self updateWindow];
 		}
 	}
