@@ -1314,6 +1314,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			NSFileWrapper *iconFile = [[NSFileWrapper alloc] initWithURL:dragURL options:NSFileWrapperReadingImmediate error:&readError];
 			NSData *iconData = [iconFile regularFileContents];
+			NSImage *iconImage = [[NSImage alloc] initWithData:iconData];
+			if (iconImage == nil) {
+				// Bad icon file
+				return NO;
+			}
 			KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
 			if ([keyboardEntry hasIcon]) {
 					// Replace an existing icon file
@@ -1740,6 +1745,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create a new name for the keyboard layout
 	NSString *newName = [self nameForCopyOf:[newKeyboard keyboardName]];
 	[newKeyboard setKeyboardName:newName];
+		// Get a new ID for the keyboard layout
+	[newKeyboard assignRandomID];
 		// Look for an icon
 	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
 	CFURLRef keyboardIconURL = TISGetInputSourceProperty(currentInputSource, kTISPropertyIconImageURL);
