@@ -46,6 +46,7 @@ static CGAffineTransform kTextTransform = {
 		[self addTrackingArea:trackingArea];
 		_textView = nil;
 		mouseIsInside = NO;
+		_showRawText = YES;
     }
     return self;
 }
@@ -164,7 +165,7 @@ static CGAffineTransform kTextTransform = {
 						(firstChar >= kFirstSeparatorChar && firstChar <= kLastSeparatorChar);
 		BOOL isControlCharacter = [self.outputString length] == 1 &&
 								  ((!isLowASCII && !isAboveControlRange) || isInvisibleCharacter);
-		if (isControlCharacter) {
+		if (!self.showRawText && isControlCharacter) {
 				// A control character - see if we have a symbol for it
 			displayText = [LayoutInfo getKeySymbolString:(unsigned int)self.keyCode
 											  withString:self.outputString];
@@ -196,7 +197,7 @@ static CGAffineTransform kTextTransform = {
 			BOOL isControlCharacter = !isLowASCII && !isAboveControlRange;
 			NSAttributedString *charString;
 			NSString *formatString;
-			if (isControlCharacter) {
+			if (!self.showRawText && isControlCharacter) {
 					// Create a hex representation
 				formatString = @"U+%X";
 			}
