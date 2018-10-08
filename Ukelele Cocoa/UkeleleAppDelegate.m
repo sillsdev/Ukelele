@@ -80,7 +80,9 @@ static NSDictionary *defaultValues() {
 				 UKUpdateEditingComment:		@YES,
 				 UKDontShowWarningDialog:		@NO,
 				 UKStickyModifiers:				@NO,
-				 UKJISOnly:						@NO};
+				 UKJISOnly:						@NO,
+				 UKShowCodePoints:				@YES
+				 };
 	});
 	return dict;
 }
@@ -201,6 +203,14 @@ static NSDictionary *defaultValues() {
 	else {
 		[[organiserController window] makeKeyAndOrderFront:sender];
 	}
+}
+
+- (IBAction)toggleShowCodePoints:(id)sender {
+#pragma unused(sender)
+	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	NSAssert(toolboxData, @"Toolbox data cannot be nil");
+	[toolboxData setShowCodePoints:![toolboxData showCodePoints]];
+	// Tell the current windows to update the show code points value
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {

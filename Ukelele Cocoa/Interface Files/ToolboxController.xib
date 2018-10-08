@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ToolboxController">
@@ -17,16 +18,16 @@
         <window title="Toolbox" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="292" height="85"/>
+            <rect key="contentRect" x="196" y="240" width="292" height="111"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="200" height="85"/>
             <value key="maxSize" type="size" width="300" height="85"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="292" height="85"/>
+                <rect key="frame" x="0.0" y="0.0" width="292" height="111"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Mni-wx-I6O">
-                        <rect key="frame" x="18" y="49" width="256" height="18"/>
+                        <rect key="frame" x="18" y="75" width="256" height="18"/>
                         <buttonCell key="cell" type="check" title="Sticky Modifiers" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CWI-dU-RVM">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -36,7 +37,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="OuG-Z5-auH">
-                        <rect key="frame" x="18" y="18" width="256" height="18"/>
+                        <rect key="frame" x="18" y="44" width="256" height="18"/>
                         <buttonCell key="cell" type="check" title="JIS Only" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uOP-LF-Gyy">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -44,6 +45,14 @@
                         <connections>
                             <binding destination="-2" name="value" keyPath="toolboxData.JISOnly" id="dCj-gs-ED8"/>
                         </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tbr-VR-llr">
+                        <rect key="frame" x="18" y="18" width="132" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Show Code Points" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Idp-Ca-44O">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
                     </button>
                 </subviews>
                 <constraints>
@@ -58,6 +67,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="DIP-gZ-KuH"/>
             </connections>
+            <point key="canvasLocation" x="131" y="177.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="3Bt-k1-vVx"/>
     </objects>

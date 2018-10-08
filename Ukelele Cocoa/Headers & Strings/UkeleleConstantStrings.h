@@ -103,6 +103,7 @@ MY_EXTERN NSString *UKToolboxWindowLocation;
 MY_EXTERN NSString *UKDontShowWarningDialog;
 MY_EXTERN NSString *UKStickyModifiers;
 MY_EXTERN NSString *UKJISOnly;
+MY_EXTERN NSString *UKShowCodePoints;
 
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;

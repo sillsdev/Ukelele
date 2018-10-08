@@ -12,6 +12,7 @@
 
 @property (nonatomic) BOOL stickyModifiers;
 @property (nonatomic) BOOL JISOnly;
+@property (nonatomic) BOOL showCodePoints;
 
 + (ToolboxData *)sharedToolboxData;
 

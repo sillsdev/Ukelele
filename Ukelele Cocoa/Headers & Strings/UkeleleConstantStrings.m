@@ -107,6 +107,7 @@ NSString *UKToolboxWindowLocation = @"ToolboxWindowLocation";
 NSString *UKDontShowWarningDialog = @"DontShowWarningDialog";
 NSString *UKStickyModifiers = @"StickyModifiers";
 NSString *UKJISOnly = @"JISOnly";
+NSString *UKShowCodePoints = @"ShowCodePoints";
 
 	// File names
 NSString *UKKCAPListFile = @"KCAPResources";
