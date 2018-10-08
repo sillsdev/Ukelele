@@ -165,7 +165,7 @@ static CGAffineTransform kTextTransform = {
 						(firstChar >= kFirstSeparatorChar && firstChar <= kLastSeparatorChar);
 		BOOL isControlCharacter = [self.outputString length] == 1 &&
 								  ((!isLowASCII && !isAboveControlRange) || isInvisibleCharacter);
-		if (!self.showRawText && isControlCharacter) {
+		if ((!self.showRawText || self.keyType != kOrdinaryKeyType) && isControlCharacter) {
 				// A control character - see if we have a symbol for it
 			displayText = [LayoutInfo getKeySymbolString:(unsigned int)self.keyCode
 											  withString:self.outputString];
@@ -197,7 +197,7 @@ static CGAffineTransform kTextTransform = {
 			BOOL isControlCharacter = !isLowASCII && !isAboveControlRange;
 			NSAttributedString *charString;
 			NSString *formatString;
-			if (!self.showRawText && isControlCharacter) {
+			if ((!self.showRawText || self.keyType != kOrdinaryKeyType) && isControlCharacter) {
 					// Create a hex representation
 				formatString = @"U+%X";
 			}
