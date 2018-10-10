@@ -273,6 +273,12 @@ static NSDictionary *defaultValues() {
 		[menuItem setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
 		return YES;
 	}
+	else if (action == @selector(toggleShowCodePoints:)) {
+		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+		NSAssert(toolboxData, @"Toolbox data must not be nil");
+		[menuItem setState:[toolboxData showCodePoints] ? NSOnState : NSOffState];
+		return YES;
+	}
 	else if (action == @selector(toggleToolbox:)) {
 		ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 		NSWindow *toolboxWindow = [toolboxController window];
