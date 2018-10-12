@@ -153,12 +153,11 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)toggleToolbox:(id)sender {
-#pragma unused(sender)
 	ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 	NSWindow *toolboxWindow = [toolboxController window];
 	NSAssert(toolboxWindow, @"Window should not be nil");
 	if ([toolboxWindow isVisible]) {
-		[toolboxWindow close];
+		[toolboxWindow orderOut:sender];
 	}
 	else {
 		[toolboxController showWindow:self];
@@ -210,7 +209,14 @@ static NSDictionary *defaultValues() {
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	NSAssert(toolboxData, @"Toolbox data cannot be nil");
 	[toolboxData setShowCodePoints:![toolboxData showCodePoints]];
+	BOOL show = [toolboxData showCodePoints];
 	// Tell the current windows to update the show code points value
+	for (NSWindow *window in [[NSApplication sharedApplication] windows]) {
+		NSWindowController *controller = [window windowController];
+		if ([controller isKindOfClass:[UKKeyboardController class]]) {
+			[(UKKeyboardController *)controller setShowCodePoints:show];
+		}
+	}
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -257,11 +263,12 @@ static NSDictionary *defaultValues() {
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
 #pragma unused(notification)
-		// Save the state of Sticky Modifiers and JIS Only
+		// Save the state of toolbox data
 	ToolboxData *toolBoxData = [ToolboxData sharedToolboxData];
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults setBool:[toolBoxData stickyModifiers] forKey:UKStickyModifiers];
 	[userDefaults setBool:[toolBoxData JISOnly] forKey:UKJISOnly];
+	[userDefaults setBool:[toolBoxData showCodePoints] forKey:UKShowCodePoints];
 	[userDefaults synchronize];
 }
 

@@ -46,7 +46,7 @@ static CGAffineTransform kTextTransform = {
 		[self addTrackingArea:trackingArea];
 		_textView = nil;
 		mouseIsInside = NO;
-		_showCodePoints = NO;
+		_showCodePoints = YES;
     }
     return self;
 }
@@ -356,6 +356,12 @@ static CGAffineTransform kTextTransform = {
 		_styleInfo = styleInfo;
 		[self setNeedsLayout:YES];
 	}
+}
+
+- (void)setShowCodePoints:(BOOL)showCodePoints {
+	_showCodePoints = showCodePoints;
+	[self createDisplayText];
+	[self setNeedsDisplay:YES];
 }
 
 #pragma mark Events

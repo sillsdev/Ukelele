@@ -476,6 +476,12 @@ typedef struct KeyEntryRec {
 	return actualID;
 }
 
+- (void)setShowCodePoints:(BOOL)showCodePoints {
+	for (KeyCapView *subView in self.keyCapViews) {
+		[subView setShowCodePoints:showCodePoints];
+	}
+}
+
 #pragma mark Access routines
 
 - (KeyCapView *)findKeyWithCode:(int)keyCode modifiers:(unsigned int)modifiers {

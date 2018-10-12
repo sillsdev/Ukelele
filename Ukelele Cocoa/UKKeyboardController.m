@@ -370,6 +370,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 #pragma mark Window updating
 
+- (void)setShowCodePoints:(BOOL)showCodePoints {
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	[ukeleleView setShowCodePoints:showCodePoints];
+}
+
 - (void)updateStatus {
 	currentStatus.stateName = self.currentState;
 	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];

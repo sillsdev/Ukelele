@@ -30,5 +30,6 @@
 - (void)scaleViewBy:(CGFloat)scaleValue limited:(BOOL)limited;
 - (void)setMenuDelegate:(id<UKMenuDelegate>)theDelegate;
 - (void)changeLargeFont:(NSFont *)newLargeFont;
+- (void)setShowCodePoints:(BOOL)showCodePoints;
 
 @end
