@@ -318,11 +318,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 	}
 	
 	@objc func moveFile(from source: URL, to destination: URL, undoName: String, completion: (Bool, NSError?) -> Void) {
-		(undoManager?.prepare(withInvocationTarget: self) as AnyObject).moveFile(from: destination, to: source, undoName: undoName, completion: completion)
-		if !(undoManager?.isUndoing)! && !(undoManager?.isRedoing)! {
-			undoManager?.setActionName(undoName)
-		}
-		UKFileOperations.copy(from: source, to: destination, completion: completion)
+		UKFileOperations.move(from: source, to: destination, completion: completion)
 	}
 	
 	// MARK: Data source methods

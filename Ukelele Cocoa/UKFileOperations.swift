@@ -11,7 +11,7 @@ import Foundation
 let toolName = "UKFileCopier"
 
 struct UKFileOperations {
-	static func copy(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
+	static func move(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
 		let fileManager = FileManager.default
 		do {
 			try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
@@ -19,21 +19,21 @@ struct UKFileOperations {
 			if fileManager.fileExists(atPath: destination.path) {
 				try fileManager.removeItem(at: destination)
 			}
-			try fileManager.copyItem(at: source, to: destination)
+			try fileManager.moveItem(at: source, to: destination)
 			/// DANGER WILL ROBINSON -- the above call can fail to return an
 			/// error when the file is not copied.  radar filed and
 			/// closed as a DUPLICATE OF 30350792 which is still open.
 			/// As a result I must verify that the copied file exists
 			if !fileManager.fileExists(atPath: destination.path) {
 				// Copy failed
-				authenticatedCopy(from: source, to: destination, completion: handler)
+				authenticatedMove(from: source, to: destination, completion: handler)
 			}
 			handler(true, nil)
 		}
 		catch let theError as NSError {
 			if theError.code == NSFileWriteNoPermissionError {
 				// No permission, so we try authenticated
-				authenticatedCopy(from: source, to: destination, completion: handler)
+				authenticatedMove(from: source, to: destination, completion: handler)
 			}
 			else {
 				handler(false, theError)
@@ -44,7 +44,7 @@ struct UKFileOperations {
 		}
 	}
 	
-	static func authenticatedCopy(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
+	static func authenticatedMove(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
 		if let toolPath = Bundle.main.url(forAuxiliaryExecutable: toolName)?.path {
 			let sourcePath = source.path
 			let destPath = destination.path
