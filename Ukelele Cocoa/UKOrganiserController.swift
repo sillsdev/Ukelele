@@ -218,7 +218,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					let destinationURL = theStorage.uninstalledKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, undoName: "Uninstall", completion: { (success, theError) in
+					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
 						if success {
 							reloadTableData()
 						}
@@ -261,7 +261,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					let destinationURL = theStorage.systemKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, undoName: "Install for All Users", completion: { (success, theError) in
+					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
 						if success {
 							reloadTableData()
 						}
@@ -304,7 +304,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					let destinationURL = theStorage.userKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, undoName: "Install for Current User", completion: { (success, theError) in
+					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
 						if success {
 							reloadTableData()
 						}
@@ -317,7 +317,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 	}
 	
-	@objc func moveFile(from source: URL, to destination: URL, undoName: String, completion: (Bool, NSError?) -> Void) {
+	@objc func moveFile(from source: URL, to destination: URL, completion: (Bool, NSError?) -> Void) {
 		UKFileOperations.move(from: source, to: destination, completion: completion)
 	}
 	
@@ -393,10 +393,30 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		var fileMoved = false
 		info.enumerateDraggingItems(options: [], for: self.window?.contentView, classes: [NSURL.self], searchOptions: [:]) { (theItem, _, _) in
 			if let sourceURL = theItem.item as? NSURL {
+				// If the source is the working folder, we need to check whether the file is open in Ukelele, and close it if so
+				if (tableView == self.uninstalledTable) {
+					let docController = NSDocumentController.shared
+					for document in docController.documents {
+						if (document as NSDocument).fileURL?.absoluteString == sourceURL.absoluteString {
+							// Close the document
+							let errorString = "The keyboard layout \(String(describing: (document as NSDocument).fileURL?.lastPathComponent)) is open. Do you want to close it or cancel?"
+							let theError = NSError(domain: "org.sil.Ukelele", code: -30, userInfo: [NSLocalizedDescriptionKey: errorString])
+							let theAlert = NSAlert.init(error: theError)
+							switch(theAlert.runModal()) {
+							case NSApplication.ModalResponse.alertFirstButtonReturn:
+								document.close()
+							case NSApplication.ModalResponse.cancel:
+								return
+							default:
+								return
+							}
+						}
+					}
+				}
 				if sourceURL.pathExtension == bundleExtension || sourceURL.pathExtension == keyboardLayoutExtension {
 					fileMoved = true
 					let destURL = baseURL.appendingPathComponent(sourceURL.lastPathComponent!)
-					self.moveFile(from: sourceURL as URL, to: destURL, undoName: "Drag and Drop", completion: { (success, theError) in
+					self.moveFile(from: sourceURL as URL, to: destURL, completion: { (success, theError) in
 						if success {
 							self.reloadTableData()
 						}
