@@ -404,6 +404,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 							let theAlert = NSAlert.init(error: theError)
 							theAlert.addButton(withTitle: "Close")
 							theAlert.addButton(withTitle: "Cancel")
+							theAlert.informativeText = "A keyboard layout that has been installed must not be edited, as it may cause the system to crash"
 							switch(theAlert.runModal()) {
 							case NSApplication.ModalResponse.alertFirstButtonReturn:
 								document.close()
