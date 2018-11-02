@@ -394,7 +394,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		info.enumerateDraggingItems(options: [], for: self.window?.contentView, classes: [NSURL.self], searchOptions: [:]) { (theItem, _, _) in
 			if let sourceURL = theItem.item as? NSURL {
 				// If the source is the working folder, we need to check whether the file is open in Ukelele, and close it if so
-				if (tableView == self.uninstalledTable) {
+				if (tableView != self.uninstalledTable) {
 					let docController = NSDocumentController.shared
 					for document in docController.documents {
 						if (document as NSDocument).fileURL?.absoluteString == sourceURL.absoluteString {
@@ -402,6 +402,8 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 							let errorString = "The keyboard layout \(String(describing: (document as NSDocument).fileURL?.lastPathComponent)) is open. Do you want to close it or cancel?"
 							let theError = NSError(domain: "org.sil.Ukelele", code: -30, userInfo: [NSLocalizedDescriptionKey: errorString])
 							let theAlert = NSAlert.init(error: theError)
+							theAlert.addButton(withTitle: "Close")
+							theAlert.addButton(withTitle: "Cancel")
 							switch(theAlert.runModal()) {
 							case NSApplication.ModalResponse.alertFirstButtonReturn:
 								document.close()
