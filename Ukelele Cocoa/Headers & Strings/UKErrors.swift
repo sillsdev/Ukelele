@@ -33,3 +33,4 @@ public struct UKErrorCode: ExplanatoryErrorType {
 }
 
 let errorFileOperationError = UKErrorCode(reason: "File operation error", code: 1)
+let errorInstallOpenKeyboardError = UKErrorCode(reason: "Cannot install open key code", code: -30)

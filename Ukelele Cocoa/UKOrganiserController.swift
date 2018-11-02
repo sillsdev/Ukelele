@@ -400,7 +400,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 						if (document as NSDocument).fileURL?.absoluteString == sourceURL.absoluteString {
 							// Close the document
 							let errorString = "The keyboard layout \(String(describing: (document as NSDocument).fileURL?.lastPathComponent)) is open. Do you want to close it or cancel?"
-							let theError = NSError(domain: "org.sil.Ukelele", code: -30, userInfo: [NSLocalizedDescriptionKey: errorString])
+							let theError = NSError(domain: "org.sil.Ukelele", code: errorInstallOpenKeyboardError.code, userInfo: [NSLocalizedDescriptionKey: errorString])
 							let theAlert = NSAlert.init(error: theError)
 							theAlert.addButton(withTitle: "Close")
 							theAlert.addButton(withTitle: "Cancel")
