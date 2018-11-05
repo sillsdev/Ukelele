@@ -260,15 +260,17 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				}
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
-					let destinationURL = theStorage.systemKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
-						if success {
-							reloadTableData()
-						}
-						else {
-							NSApp.presentError(theError!)
-						}
-					})
+					if closeFileIfNecessary(theFile: sourceURL as NSURL) {
+						let destinationURL = theStorage.systemKeyboards.folderURL.appendingPathComponent(fileName)
+						moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
+							if success {
+								reloadTableData()
+							}
+							else {
+								NSApp.presentError(theError!)
+							}
+						})
+					}
 				}
 			}
 		}
@@ -303,15 +305,17 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				}
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
-					let destinationURL = theStorage.userKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
-						if success {
-							reloadTableData()
-						}
-						else {
-							NSApp.presentError(theError!)
-						}
-					})
+					if closeFileIfNecessary(theFile: sourceURL as NSURL) {
+						let destinationURL = theStorage.userKeyboards.folderURL.appendingPathComponent(fileName)
+						moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
+							if success {
+								reloadTableData()
+							}
+							else {
+								NSApp.presentError(theError!)
+							}
+						})
+					}
 				}
 			}
 		}
@@ -319,6 +323,29 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 	
 	@objc func moveFile(from source: URL, to destination: URL, completion: (Bool, NSError?) -> Void) {
 		UKFileOperations.move(from: source, to: destination, completion: completion)
+	}
+	
+	func closeFileIfNecessary(theFile: NSURL) -> Bool {
+		let docController = NSDocumentController.shared
+		for document in docController.documents {
+			if (document as NSDocument).fileURL?.absoluteString == theFile.absoluteString {
+				// Close the document
+				let errorString = "The keyboard layout \(String(describing: (document as NSDocument).fileURL?.lastPathComponent)) is open. Do you want to close it or cancel?"
+				let theError = NSError(domain: "org.sil.Ukelele", code: errorInstallOpenKeyboardError.code, userInfo: [NSLocalizedDescriptionKey: errorString])
+				let theAlert = NSAlert.init(error: theError)
+				theAlert.addButton(withTitle: "Close")
+				theAlert.addButton(withTitle: "Cancel")
+				theAlert.informativeText = "A keyboard layout that has been installed must not be edited, as it may cause the system to crash"
+				switch(theAlert.runModal()) {
+				case NSApplication.ModalResponse.alertFirstButtonReturn:
+					document.close()
+					return true
+				default:
+					return false
+				}
+			}
+		}
+		return true
 	}
 	
 	// MARK: Data source methods
@@ -395,25 +422,9 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 			if let sourceURL = theItem.item as? NSURL {
 				// If the source is the working folder, we need to check whether the file is open in Ukelele, and close it if so
 				if (tableView != self.uninstalledTable) {
-					let docController = NSDocumentController.shared
-					for document in docController.documents {
-						if (document as NSDocument).fileURL?.absoluteString == sourceURL.absoluteString {
-							// Close the document
-							let errorString = "The keyboard layout \(String(describing: (document as NSDocument).fileURL?.lastPathComponent)) is open. Do you want to close it or cancel?"
-							let theError = NSError(domain: "org.sil.Ukelele", code: errorInstallOpenKeyboardError.code, userInfo: [NSLocalizedDescriptionKey: errorString])
-							let theAlert = NSAlert.init(error: theError)
-							theAlert.addButton(withTitle: "Close")
-							theAlert.addButton(withTitle: "Cancel")
-							theAlert.informativeText = "A keyboard layout that has been installed must not be edited, as it may cause the system to crash"
-							switch(theAlert.runModal()) {
-							case NSApplication.ModalResponse.alertFirstButtonReturn:
-								document.close()
-							case NSApplication.ModalResponse.cancel:
-								return
-							default:
-								return
-							}
-						}
+					if (!self.closeFileIfNecessary(theFile: sourceURL)) {
+						// Cancel
+						return
 					}
 				}
 				if sourceURL.pathExtension == bundleExtension || sourceURL.pathExtension == keyboardLayoutExtension {
