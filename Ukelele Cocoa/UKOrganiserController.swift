@@ -19,7 +19,7 @@ enum MenuItems: Int {
 	case Uninstall = 1
 	case InstallForAllUsers = 2
 	case InstallForCurrentUser = 3
-	case SetUninstalledFolder = 4
+	case ResetUninstalledFolder = 4
 }
 
 class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableViewDelegate {
@@ -149,7 +149,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 			}
 			return false
 			
-		case MenuItems.SetUninstalledFolder.rawValue:
+		case MenuItems.ResetUninstalledFolder.rawValue:
 			return true
 			
 		default:

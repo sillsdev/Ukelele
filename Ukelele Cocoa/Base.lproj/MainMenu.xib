@@ -152,28 +152,22 @@
                                     <action selector="exportKeyboardLayout:" target="-1" id="p0y-CM-DCj"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Install for All Users" id="MAw-M8-42D">
+                            <menuItem title="Install for All Users" tag="2" id="MAw-M8-42D">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="installForAllUsersWithSender:" target="-1" id="23S-QG-Tt4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Install for Current User" id="Pwc-Y5-Zjh">
+                            <menuItem title="Install for Current User" tag="3" id="Pwc-Y5-Zjh">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="installForCurrentUserWithSender:" target="-1" id="4x4-8j-S80"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Uninstall" id="Sc5-E5-Nze">
+                            <menuItem title="Uninstall" tag="1" id="Sc5-E5-Nze">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="uninstallKeyboardLayoutWithSender:" target="-1" id="chY-vE-MqV"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Reset Uninstalled Folder" id="AL8-sq-CHd">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="resetUninstalledFolder:" target="-1" id="s3S-ng-w52"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
