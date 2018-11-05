@@ -14,6 +14,7 @@ let keyboardIconName = "Keyboard"
 let uninstalledContextMenu = "Uninstall"
 let allUsersContextMenu = "AllUsers"
 let currentUserContextMenu = "CurrentUser"
+let organiserDefaultKey = "OrganiserWindowLocation"
 
 enum MenuItems: Int {
 	case Uninstall = 1
@@ -22,7 +23,7 @@ enum MenuItems: Int {
 	case ResetUninstalledFolder = 4
 }
 
-class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableViewDelegate {
+class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableViewDelegate, NSWindowDelegate {
 
 	@IBOutlet var uninstalledTable: NSTableView!
 	@IBOutlet var allUsersTable: NSTableView!
@@ -43,6 +44,13 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		
 		// Create the monitor
 		setupMonitor()
+		
+		// Restore the position if possible
+		let theDefaults = UserDefaults.standard
+		if let frameData = theDefaults.array(forKey: organiserDefaultKey) as? [Double] {
+			let theFrame = NSRect(x: frameData[0], y: frameData[1], width: frameData[2], height: frameData[3])
+			self.window?.setFrame(theFrame, display: false)
+		}
     }
 
 	func setupMonitor() {
@@ -479,6 +487,14 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 		else {
 			return nil
+		}
+	}
+	
+	func windowDidMove(_ notification: Notification) {
+		if let theWindow = self.window {
+			let newFrame = theWindow.frame
+			let theDefaults = UserDefaults.standard
+			theDefaults.set([newFrame.origin.x, newFrame.origin.y, newFrame.size.width, newFrame.size.height], forKey: organiserDefaultKey)
 		}
 	}
 }
