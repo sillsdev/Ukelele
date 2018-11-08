@@ -677,9 +677,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
 	}
-	else if (action == @selector(askKeyboardIdentifiers:) ||
-			 action == @selector(installForAllUsers:) ||
-			 action == @selector(installForCurrentUser:)) {
+	else if (action == @selector(askKeyboardIdentifiers:)) {
 			// These can only be selected if there is no interaction in progress
 		return (interactionHandler == nil);
 	}

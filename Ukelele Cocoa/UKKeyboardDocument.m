@@ -1419,8 +1419,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return NO;
 	}
 	else if (theAction == @selector(captureInputSource:)) {
-			// Always active
-		return YES;
+			// Always active on systems up to 10.13
+		return [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion <= 13;
 	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||

@@ -87,7 +87,7 @@
                                     <action selector="newKeyboardLayout:" target="-1" id="w3Z-ZM-LVp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New From Current Input Source" id="dFz-eE-MKz">
+                            <menuItem title="New From Current Input Source" enabled="NO" id="dFz-eE-MKz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="newFromCurrentInput:" target="-1" id="Vzy-kM-8NZ"/>
