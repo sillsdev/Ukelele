@@ -1300,6 +1300,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					[NSApp presentError:theError];
 					return NO;
 				}
+				if (![self dataIsicns:iconData]) {
+					// Not a valid icon file
+					return NO;
+				}
 				[keyboardInfo setIconData:iconData];
 			}
 			if ([pasteBoardData languageCode] != nil) {
