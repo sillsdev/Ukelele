@@ -1522,6 +1522,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return YES;
 	}
+	else if (theAction == @selector(exportKeyboardLayout:)) {
+		// These are always active
+		return YES;
+	}
 	return [super validateUserInterfaceItem:anItem];
 }
 
