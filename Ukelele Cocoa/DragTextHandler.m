@@ -57,11 +57,11 @@
 					break;
 					
 				case 0:		// Change terminator
-					[[keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:nextState to:dragText];
+					[[self->keyDataDict valueForKey:kKeyDocument] changeTerminatorForState:self->nextState to:self->dragText];
 					break;
 					
 				case 1:		// Convert to output
-					[[keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:keyDataDict output:dragText];
+					[[self->keyDataDict valueForKey:kKeyDocument] makeDeadKeyOutput:self->keyDataDict output:self->dragText];
 					break;
 			}
 			[self interactionCompleted];

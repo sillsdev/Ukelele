@@ -1043,6 +1043,32 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	});
 }
 
+#pragma mark Validate files
+
+- (BOOL)dataIsicns:(NSData *)iconData {
+	UInt32 icnsHeader;
+	UInt32 icnsDataLength;
+	[iconData getBytes:&icnsHeader range:NSMakeRange(0, sizeof(UInt32))];
+	[iconData getBytes:&icnsDataLength range:NSMakeRange(sizeof(UInt32), sizeof(UInt32))];
+		// Need to swap bytes on the data
+	icnsHeader = ((icnsHeader & 0x000000ff) << 24) |
+	((icnsHeader & 0x0000ff00) << 8) |
+	((icnsHeader & 0x00ff0000) >> 8) |
+	((icnsHeader & 0xff000000) >> 24);
+	icnsDataLength = ((icnsDataLength & 0x000000ff) << 24) |
+	((icnsDataLength & 0x0000ff00) << 8) |
+	((icnsDataLength & 0x00ff0000) >> 8) |
+	((icnsDataLength & 0xff000000) >> 24);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfour-char-constants"
+	if (icnsHeader != 'icns' || icnsDataLength != [iconData length]) {
+			// Bad icon data
+		return NO;
+	}
+#pragma clang diagnostic pop
+	return YES;
+}
+
 #pragma mark Saving and restoring selection
 
 - (NSString *)currentSelectedName {
@@ -1287,6 +1313,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					[NSApp presentError:theError];
 					return NO;
 				}
+				if (![self dataIsicns:iconData]) {
+						// Not valid icon data
+					return NO;
+				}
 				[keyboardInfo setIconData:iconData];
 			}
 			if ([pasteBoardData languageCode] != nil) {
@@ -1327,6 +1357,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			NSFileWrapper *iconFile = [[NSFileWrapper alloc] initWithURL:dragURL options:NSFileWrapperReadingImmediate error:&readError];
 			NSData *iconData = [iconFile regularFileContents];
+			if (![self dataIsicns:iconData]) {
+					// Not valid icon data
+				return NO;
+			}
 			KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
 			if ([keyboardEntry hasIcon]) {
 					// Replace an existing icon file
@@ -1427,7 +1461,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		return NO;
 	}
 	else if (theAction == @selector(captureInputSource:) ||
-			 theAction == @selector(installForCurrentUser:) || theAction == @selector(installForAllUsers:)) {
+			 theAction == @selector(installForCurrentUser:) ||
+			 theAction == @selector(installForAllUsers:) ||
+			 theAction == @selector(exportKeyboardLayout:)) {
 			// Always active
 		return YES;
 	}
@@ -1607,14 +1643,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 										callBack:^(UkeleleBundleVersionSheet *sheet) {
 											if (nil == sheet) {
 													// User cancelled
-												bundleVersionSheet = nil;
+												self->bundleVersionSheet = nil;
 												return;
 											}
 											[self changeBundleName:[[sheet bundleNameField] stringValue]
 													 bundleVersion:[[sheet bundleVersionField] stringValue]
 													  buildVersion:[[sheet buildVersionField] stringValue]
 													 sourceVersion:[[sheet sourceVersionField] stringValue]];
-											bundleVersionSheet = nil;
+											self->bundleVersionSheet = nil;
 										}];
 }
 
@@ -1754,6 +1790,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// Create a new name for the keyboard layout
 	NSString *newName = [self nameForCopyOf:[newKeyboard keyboardName]];
 	[newKeyboard setKeyboardName:newName];
+		// Get a new ID for the keyboard layout
+	[newKeyboard assignRandomID];
 		// Look for an icon
 	TISInputSourceRef currentInputSource = TISCopyCurrentKeyboardLayoutInputSource();
 	CFURLRef keyboardIconURL = TISGetInputSourceProperty(currentInputSource, kTISPropertyIconImageURL);
@@ -1868,8 +1906,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSArray *selectedFiles = [openPanel URLs];
 			NSURL *selectedFile = selectedFiles[0];	// Only one file
 			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
-			KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
-			[self addIcon:iconData toKeyboardInfo:keyboardInfo];
+			if ([self dataIsicns:iconData]) {
+				KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
+				[self addIcon:iconData toKeyboardInfo:keyboardInfo];
+			}
 		}
 	}];
 }

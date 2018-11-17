@@ -49,7 +49,7 @@
 		askKeyCodeSheet = [AskSwapKeysWindowController askSwapKeysWindowController];
 		[askKeyCodeSheet beginInteractionWithWindow:parentWindow initialSelection:selectedKey callback:^(NSArray *resultArray) {
 			if (resultArray != nil) {
-				[parentDocumentController swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
+				[self->parentDocumentController swapKeyWithCode:[resultArray[0] integerValue] andKeyWithCode:[resultArray[1] integerValue]];
 			}
 			[self interactionCompleted];
 		}];

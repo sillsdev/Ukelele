@@ -10,7 +10,7 @@
 #ifndef _UkeleleKeyboard_h_
 #define _UkeleleKeyboard_h_
 
-#include "boost/tr1/memory.hpp"
+#include <tr1/memory>
 #include "XMLCommentHolder.h"
 #include "NXMLNode.h"
 #include "KeyboardElement.h"

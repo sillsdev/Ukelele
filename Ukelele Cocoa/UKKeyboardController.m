@@ -788,7 +788,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 										 // Change the scale of the window
 									 [self changeViewScale:myScaleValue / kScalePercentageFactor];
 								 }
-								 chooseScale = nil;
+								 self->chooseScale = nil;
 							 }];
     }
 	else if (fabs(scaleValue - currentScale) >= 0.01) {
@@ -1010,7 +1010,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 									 } else {
 										 [self enterDeadKeyStateWithName:stateName];
 									 }
-									 askFromList = nil;
+									 self->askFromList = nil;
 								 }];
 }
 
@@ -1080,7 +1080,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[theHandler beginInteractionWithCallback:^(NSInteger modifierSet) {
 		if (modifierSet >= 0) {
 				// Unlink the set
-			NSInteger keyboardID = [internalState[kStateCurrentKeyboard] integerValue];
+			NSInteger keyboardID = [self->internalState[kStateCurrentKeyboard] integerValue];
 			[self.keyboardLayout unlinkModifierSet:modifierSet forKeyboard:keyboardID];
 		}
 	}];
@@ -1116,7 +1116,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 													  NSInteger theKeyboard = [keyboardID intValue];
 													  [self changeKeyboardType:theKeyboard];
 												  }
-												  keyboardTypeSheet = nil;
+												  self->keyboardTypeSheet = nil;
 											  }];
 }
 
@@ -1207,14 +1207,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 		else if ([callbackData[kKeyKeyType] isEqualToString:kKeyTypeDead]) {
 				// Dead key
 			CreateDeadKeyHandler *theHandler = [[CreateDeadKeyHandler alloc]
-												initWithCurrentState:internalState[kStateCurrentState]
-												modifiers:[internalState[kStateCurrentModifiers] unsignedIntegerValue]
-												keyboardID:[internalState[kStateCurrentKeyboard] integerValue]
+												initWithCurrentState:self->internalState[kStateCurrentState]
+												modifiers:[self->internalState[kStateCurrentModifiers] unsignedIntegerValue]
+												keyboardID:[self->internalState[kStateCurrentKeyboard] integerValue]
 												keyboardWindow:self
 												keyCode:[callbackData[kKeyKeyCode] integerValue]
 												nextState:callbackData[kKeyNextState]
 												terminator:callbackData[kKeyTerminator]];
-			interactionHandler = theHandler;
+			self->interactionHandler = theHandler;
 			[theHandler setCompletionTarget:self];
 			[theHandler startHandling];
 		}
@@ -1388,10 +1388,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 		if (commentText != nil && [commentText length] > 0) {
 				// Got a non-empty comment
 			NSDictionary *dataDict = @{kKeyDocument: self,
-									   kKeyKeyboardID: internalState[kStateCurrentKeyboard],
+									   kKeyKeyboardID: self->internalState[kStateCurrentKeyboard],
 									   kKeyKeyCode: @(keyCode),
-									   kKeyModifiers: internalState[kStateCurrentModifiers],
-									   kKeyState: internalState[kStateCurrentState]};
+									   kKeyModifiers: self->internalState[kStateCurrentModifiers],
+									   kKeyState: self->internalState[kStateCurrentState]};
 			XMLCommentHolderObject *commentHolder = [self.keyboardLayout commentHolderForKey:dataDict];
 			[self addComment:commentText toHolder:commentHolder];
 		}

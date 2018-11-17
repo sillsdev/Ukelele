@@ -12,7 +12,7 @@
 #import "KeyMapSetList.h"
 #import "ActionElement.h"
 #import "TerminatorsElement.h"
-#import "boost/tr1/memory.hpp"
+#import <tr1/memory>
 using std::tr1::shared_ptr;
 
 class RemoveStateDataBlock {

@@ -55,7 +55,7 @@
 		[askKeyCodeSheet setMajorText:majorText];
 		[askKeyCodeSheet setMinorText:minorText];
 		[askKeyCodeSheet beginDialogForWindow:parentWindow callBack:^(NSNumber *keyCode) {
-			[self performUnlink:[keyCode integerValue] withModifiers:[parentDocumentWindow currentModifiers]];
+			[self performUnlink:[keyCode integerValue] withModifiers:[self->parentDocumentWindow currentModifiers]];
 		}];
 	}
 	else if (keyCodeType == kUnlinkKeyTypeAskKey) {
