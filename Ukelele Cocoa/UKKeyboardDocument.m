@@ -1814,6 +1814,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					iconCount++;
 				}
 			}
+			// Work around different versions of a hard limit
+			NSInteger maxReps = 15;
+			if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion > 13) {
+				maxReps = 10;
+			}
+			if (iconCount > maxReps) {
+				iconCount = maxReps;
+			}
 			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconCount, nil);
 			for (NSImageRep *imageRep in iconImageReps) {
 				NSInteger imageHeight = (NSInteger)[imageRep size].height;
