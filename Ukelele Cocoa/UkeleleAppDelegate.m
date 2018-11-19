@@ -318,7 +318,7 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if (action == @selector(colourThemes:)) {
+	else if (action == @selector(colourThemes:) || (action == @selector(newFromCurrentInput:))) {
 		return YES;
 	}
 	return YES;

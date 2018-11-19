@@ -30,7 +30,7 @@
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
 #define UKKeyboardConverterTool	@"kluchrtoxml"
-
+#define UKIconutilTool @"iconutil"
 	
 // Dictionary keys
 NSString *kIconFileKey = @"IconFile";
@@ -1447,10 +1447,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	else if (theAction == @selector(captureInputSource:)) {
-			// Always active on systems up to 10.13
-		return [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion <= 13;
-	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
 			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:) ||
@@ -1793,30 +1789,49 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (keyboardIcon != NULL) {
 			NSImage *iconImage = [[NSImage alloc] initWithIconRef:keyboardIcon];
 			NSArray *iconImageReps = [iconImage representations];
-				// Create data to write with ImageIO
-			iconData = [NSMutableData data];
-			NSInteger iconCount = 0;
-			for (NSImageRep *theIconImage in iconImageReps) {
-					// Work around a bug
-				if ([theIconImage size].height < 128) {
-					iconCount++;
+			// Create a folder to store the various icon files
+			NSString *folderName = [NSString stringWithFormat:@"%@.iconset", newName];
+			NSFileManager *fileManager = [NSFileManager defaultManager];
+			NSURL *tempDirectory = [fileManager temporaryDirectory];
+			NSURL *iconFolder = [tempDirectory URLByAppendingPathComponent:folderName isDirectory:YES];
+			[[NSFileManager defaultManager] createDirectoryAtURL:iconFolder withIntermediateDirectories:YES attributes:nil error:nil];
+			// Create the icon files
+			for (NSImageRep *iconImageRep in iconImageReps) {
+				NSInteger imageHeight = (NSInteger)[iconImageRep size].height;
+				NSInteger pixelHeight = [iconImageRep pixelsHigh];
+				NSString *nameTemplate;
+				if (imageHeight == pixelHeight) {
+					nameTemplate = @"icon_%ldx%ld.png";
 				}
-			}
-			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconCount, nil);
-			for (NSImageRep *imageRep in iconImageReps) {
-				NSInteger imageHeight = (NSInteger)[imageRep size].height;
-					// Write only small sizes to avoid a hard limit
-				if (imageHeight < 128) {
+				else {
+					nameTemplate = @"icon_%ldx%ld@2x.png";
+				}
+				NSString *fileName = [NSString stringWithFormat:nameTemplate, imageHeight, imageHeight];
+				NSURL *fileURL = [iconFolder URLByAppendingPathComponent:fileName];
+				if (![[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
+					CGImageDestinationRef destination = CGImageDestinationCreateWithURL((CFURLRef)fileURL, kUTTypePNG, 1, nil);
 					NSRect imageRect = NSMakeRect(0, 0, imageHeight, imageHeight);
-					CGImageRef imageRef = [imageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
-					CGImageDestinationAddImage(imageDestination, imageRef, nil);
+					CGImageRef imageRef = [iconImageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
+					CGImageDestinationAddImage(destination, imageRef, nil);
+					CGImageDestinationFinalize(destination);
 				}
 			}
-			CGImageDestinationFinalize(imageDestination);
-			if ([iconData length] == 0) {
-				iconData = NULL;
-			}
-			CFRelease(imageDestination);
+				// Get the conversion tool
+			NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKIconutilTool];
+				// Set up and run the tool
+			NSString *currentDirectory = [fileManager currentDirectoryPath];
+			[fileManager changeCurrentDirectoryPath:[tempDirectory path]];
+			NSTask *conversionTask = [NSTask launchedTaskWithLaunchPath:[toolURL path] arguments:@[@"-c", @"icns", folderName]];
+			[conversionTask waitUntilExit];
+			int returnStatus = [conversionTask terminationStatus];
+#pragma unused(returnStatus)
+			NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
+			[fileManager removeItemAtURL:iconFolder error:nil];
+			[fileManager changeCurrentDirectoryPath:currentDirectory];
+				// Finally, read the resulting file
+			NSURL *icnsFileURL = [tempDirectory URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.icns", newName]];
+			iconData = [NSMutableData dataWithContentsOfURL:icnsFileURL];
+			[fileManager removeItemAtURL:icnsFileURL error:nil];
 		}
 	}
 	CFArrayRef keyboardLanguages = TISGetInputSourceProperty(currentInputSource, kTISPropertyInputSourceLanguages);
