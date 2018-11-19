@@ -233,6 +233,7 @@
 		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
 		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
 		52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */; };
+		52D2C48921A2D5170032E670 /* iconutil in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D2C48721A2D4E20032E670 /* iconutil */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -264,6 +265,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				52D2C48921A2D5170032E670 /* iconutil in CopyFiles */,
 				5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */,
 				5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */,
 			);
@@ -625,6 +627,7 @@
 		52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKFileOperations.swift; sourceTree = "<group>"; };
 		52CB81751FC249F200AF32E7 /* UKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKErrors.swift; sourceTree = "<group>"; };
 		52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKOrganiserController.swift; sourceTree = "<group>"; };
+		52D2C48721A2D4E20032E670 /* iconutil */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iconutil; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
@@ -955,22 +958,23 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */,
-				52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */,
-				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
-				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
-				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				524EAE281B9FD16900B77B43 /* dialogs.strings */,
-				5253EC761C43928B003B7CC3 /* scripts.strings */,
+				52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */,
 				524EAE2B1B9FD16F00B77B43 /* Errors.strings */,
+				52D2C48721A2D4E20032E670 /* iconutil */,
 				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */,
+				52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */,
 				524EAE2E1B9FD17800B77B43 /* keyboards.strings */,
 				5209B731193563C000B195E9 /* kluchrtoxml */,
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
 				52BBED0E191B4C3900E48394 /* main.m */,
+				5253EC761C43928B003B7CC3 /* scripts.strings */,
+				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
 				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
+				521B78F11B32BB0100946529 /* Ukelele Help.help */,
+				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
 				52BBED0A191B4C3900E48394 /* Ukelele-Info.plist */,
 				52BBED10191B4C3900E48394 /* Ukelele-Prefix.pch */,
 			);
