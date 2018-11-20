@@ -12,6 +12,8 @@
 		521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 521270E4194AD6E3003103CA /* UKKeyboardDocument.m */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
 		521B78F21B32BB0100946529 /* Ukelele Help.help in Resources */ = {isa = PBXBuildFile; fileRef = 521B78F11B32BB0100946529 /* Ukelele Help.help */; };
+		521D6DF321A40F6A0025207B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521D6DF221A40F6A0025207B /* Sparkle.framework */; };
+		521D6DF421A40F750025207B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 521D6DF221A40F6A0025207B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
 		5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
@@ -252,8 +254,6 @@
 		52EE9F951FCD2DF6004C0B88 /* Keyboard Installer.app in Resources */ = {isa = PBXBuildFile; fileRef = 52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
-		52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; };
-		52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52F6C47F1CAA563E0010C596 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
 		52FFB2E91DC9CB8D00954D4F /* LocalisationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */; };
 /* End PBXBuildFile section */
@@ -277,7 +277,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				52F6C4811CAA56550010C596 /* Sparkle.framework in CopyFiles */,
+				521D6DF421A40F750025207B /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +301,7 @@
 		52142DDF1921D4F500B04334 /* KeyboardLayoutInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayoutInformation.h; sourceTree = "<group>"; };
 		52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLayoutInformation.m; sourceTree = "<group>"; };
 		521B78F11B32BB0100946529 /* Ukelele Help.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Ukelele Help.help"; sourceTree = "<group>"; };
+		521D6DF221A40F6A0025207B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../Sparkle-1.20.0/Sparkle.framework"; sourceTree = "<group>"; };
 		521E5EA61926228000C45A4A /* InspectorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectorWindow.xib; path = "Interface Files/InspectorWindow.xib"; sourceTree = "<group>"; };
 		5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Ukelele Manual.pdf"; sourceTree = "<group>"; };
 		5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColourThemeEditor.xib; path = "Interface Files/ColourThemeEditor.xib"; sourceTree = "<group>"; };
@@ -650,8 +651,6 @@
 		52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = "Keyboard Installer.app"; path = "../../Ukelele Other Data/Keyboard Installer 2017-11-28 15-25-48/Keyboard Installer.app"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
-		52F6C47D1CAA517E0010C596 /* Sparkle-1.18.1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sparkle-1.18.1"; path = "../Sparkle-1.18.1"; sourceTree = "<group>"; };
-		52F6C47F1CAA563E0010C596 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
 		52FFB2E71DC9CB8D00954D4F /* LocalisationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalisationData.h; sourceTree = "<group>"; };
 		52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalisationData.m; sourceTree = "<group>"; };
@@ -682,7 +681,7 @@
 				52A105941B2A6291002C5255 /* SystemConfiguration.framework in Frameworks */,
 				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
-				52F6C4801CAA563E0010C596 /* Sparkle.framework in Frameworks */,
+				521D6DF321A40F6A0025207B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,7 +889,6 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
-				52F6C47D1CAA517E0010C596 /* Sparkle-1.18.1 */,
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C7191D7F9300E06DF3 /* Dependencies */,
@@ -921,8 +919,8 @@
 				523B01FA191D878400E06DF3 /* Security.framework */,
 				52BBED02191B4C3900E48394 /* Cocoa.framework */,
 				52BBED24191B4C3900E48394 /* XCTest.framework */,
+				521D6DF221A40F6A0025207B /* Sparkle.framework */,
 				523B01E8191D865100E06DF3 /* Foundation.framework */,
-				52F6C47F1CAA563E0010C596 /* Sparkle.framework */,
 				52BBED04191B4C3900E48394 /* Other Frameworks */,
 			);
 			name = Frameworks;

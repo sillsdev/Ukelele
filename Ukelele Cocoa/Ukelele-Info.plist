@@ -63,11 +63,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.3.0</string>
+	<string>3.3b1</string>
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.3.0.228</string>
+	<string>3.3.0.229</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -84,6 +84,43 @@
 	<string>https://www.dropbox.com/s/vi51g5jig3etaum/Ukelele_appcast.xml?dl=1</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
+	<key>SUPublicEDKey</key>
+	<string>-----BEGIN PUBLIC KEY-----
+MIIGRzCCBDkGByqGSM44BAEwggQsAoICAQCm+UsyNiDV+FXfik0R09efuiNDgTb/
+y8zKX60OxKnKvXD50/WTcYOl88sSxmJ0pvw1bamM0G44fBvnsBGcFEMx6J+KiXMI
+NsdtJunq77XIEXjuXp+I2FA9zlYck+DXDQ/NDb2/26XjtjBL63GrrWFWg/qxkXlg
+HlxRaH9mX5K4aIZABQ06vlQsUG8FzILcR9TwLpHcWoiB9xuNjaskOfmbq9USvakl
+TSD22x6J83UJbeyfD8NyACbvtyidatcdU3Bi8DLoNtIPojqPQh4O9XtD2x41Ace4
+OQNnWDem7PvAeC3s0pAfN7Unw+TpS2077P39dkPdwFz+gCLRYffHM2NmF1V8rvUs
+pG7oWtSYN/W8+85BxK5SsNoaHM2lA2GVcjUifL7fH+UbZJxtfn0jK1p1tS2K092W
+mmnh8O8U23x913vwIhLhh6OOIfrwFHvpDvCkqn3VFTAohLJ1TaLPKszkBf1E7cPH
+Bwuu1b+qrwQSU4yUqChgTRDmiZ9ycqsAib2lv3fEQtDVb4HSrssV8z9+lmN071pp
+mnXdZ/0972pvhtmg3p32K7pcheIsvSB+YtrdpC0DWfG6ogkF07GGLphEEnkNbnyp
+wnjptw4A2T8wHV1ocPDiGlNnpeiDIrY2jbVN3Lzzpn15VroiA7grBNQZ1SJxEzap
+hPga5xcQR1WVTwIhAM/i5arjoGn6Q0wDvRBdIDpQ3XU9x/AZN9eY0Z9X97xjAoIC
+ACFEEwlNnAcPIXGfE/TpbXxHBOGZ0TRcaCz7Ycv0wE5LRbzRKc+r1riYiD0gg6AY
+LQmKB7pUtkdbTpgNRo5MKfps1Y3mjbE5duND3bJYyar9Ii1jwlwKKlPmrOTuL2ZY
+o8MP0zEX+lPlYrIddW3vb3s0DPqyqsjVdDLnst2fdoAeO4kxASN40h0/lQZ99wn0
+New58g+t5kXhSnHhpFHxkg6/W4Lq5rlb0XfMAwQCkbdv9GKZpoLSC5D7I7+Hsp53
+bJcWNw+XQlgFPSTK+FzoCy60rXztXBYYhfZR+hMd9Ry1HlJZJlVkNL9PWzbmF0x8
+ggdCpiBrK0r6zs3+v5NZk56jGkQZNib0SBdPQgubXUEOKeWxFFsVsHa/9SBp8hVR
+dmJb9PyUI19mOBwO3FqonRD5LdZSmWI4lMFeL+ykx1mkec3OYzc7NAaxpNzB0p60
+ZuzUh460jADi7BNEMMWL5fNTqMQ3TkxCbee1SpozJ0vrU/P0NVchsqcMayHvxTjh
+dBuExT0Ebi8UrQ+Vp2sdN55E67hIOI/HSq0b9tXptjAGsVeFSCE9gIvcii8ylxKJ
+tHeMuZVnDjEh4mXyLxc83szW5PdDCaQri3qIWrr+Gd08mMgoy2G/5S8q6azvyncS
+Xb00TrA2A7fOjpUye/LCZFcpZpBrvFN2LgKSaGbeH1k4A4ICBgACggIBAKNFqhum
+lSEG5U93ZQj7oB79jEJZtHw7mAOoiatqCP9JR2H3PEBM+AY19Fjymsfc7VDGcPE1
+++601zvCOXnBguGrzEOJqhuAmBtvsyEazQ2H9ITnoMK3ycy1lxlCnQ+mXIFIWX7U
+jrSWVkxJUihtTCXTm/9QM5Me7pr1f6SIij7JGKy9yvBAGExEAZlb3CNpfPBwvCoc
+gGanOS4oQX27hl4blxcSwTAr8FSHM7E+ToA2VjDi8ZQXeP9heAcAs6rgyj473Pht
+AyYmEXfOspRBuraVXqcz3r9IMIPyXpC7o5qzAUJtU7+wSPoGDiTo7x0eU596pOlg
+wLfw6FljFc/JIeZlQjzFXg8GI1mRBlxmmxifw8yA5XhEwE8O8sp0z+t8YxTO+Bb+
+/CJhMrRF+LIsiPaSDXApJCWwOHD5QHHbZ2OuGbuc0wM1ATSMRZde+v++3YXOFGBC
+YA9iMeAkZedSqn+SkC9eKoyWMEIWnGsv9uaC8W3lNU2I1dnf6IX1mXbmswXmr0/j
++JP/ndU1m4m5g9Gt/5TTCwG3kBpiQwBCHi4LDBY3+/RXUak7jqmryAZ3IMIAYkz0
+0kMOJzspQesfWSofMR+pzbM1okUGc0Vy9zTuOahdL9Q9mXInEyZdsySItKGGfCV+
+B/ZuBBrR+ka/48jNBcBRxutkmTRc8ta11g8L
+-----END PUBLIC KEY-----</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
