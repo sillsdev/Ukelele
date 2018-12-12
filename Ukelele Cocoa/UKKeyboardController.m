@@ -672,7 +672,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		action == @selector(findKeyStroke:) || action == @selector(runPageLayout:) ||
 		action == @selector(printDocument:) || action == @selector(changeOutput:) ||
 		action == @selector(makeDeadKey:) || action == @selector(makeOutput:) ||
-		action == @selector(changeNextState:)) {
+		action == @selector(changeNextState:) || action == @selector(attachIconFile:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];

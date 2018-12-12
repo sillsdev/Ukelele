@@ -226,14 +226,28 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				if let sourceBase = sourceBase, let fileName = fileName {
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					let destinationURL = theStorage.uninstalledKeyboards.folderURL.appendingPathComponent(fileName)
-					moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
+					moveFile(from: sourceURL, to: destinationURL) { (success, theError) in
 						if success {
 							reloadTableData()
 						}
 						else {
 							NSApp.presentError(theError!)
 						}
-					})
+					}
+					if fileName.hasSuffix(keyboardLayoutExtension) {
+						// Look for an icon file
+						let iconFileName = fileName.replacingOccurrences(of: ".\(keyboardLayoutExtension)", with: ".\(iconExtension)")
+						let iconSource = sourceBase.appendingPathComponent(iconFileName)
+						let iconDestination = theStorage.uninstalledKeyboards.folderURL.appendingPathComponent(iconFileName)
+						moveFile(from: iconSource, to: iconDestination) { (success, theError) in
+							if success {
+								reloadTableData()
+							}
+							else {
+								NSApp.presentError(theError!)
+							}
+						}
+					}
 				}
 			}
 		}
@@ -270,14 +284,28 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					if closeFileIfNecessary(theFile: sourceURL as NSURL) {
 						let destinationURL = theStorage.systemKeyboards.folderURL.appendingPathComponent(fileName)
-						moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
+						moveFile(from: sourceURL, to: destinationURL) { (success, theError) in
 							if success {
 								reloadTableData()
 							}
 							else {
 								NSApp.presentError(theError!)
 							}
-						})
+						}
+						if fileName.hasSuffix(keyboardLayoutExtension) {
+							// Look for an icon file
+							let iconFileName = fileName.replacingOccurrences(of: ".\(keyboardLayoutExtension)", with: ".\(iconExtension)")
+							let iconSource = sourceBase.appendingPathComponent(iconFileName)
+							let iconDestination = theStorage.systemKeyboards.folderURL.appendingPathComponent(iconFileName)
+							moveFile(from: iconSource, to: iconDestination) { (success, theError) in
+								if success {
+									reloadTableData()
+								}
+								else {
+									NSApp.presentError(theError!)
+								}
+							}
+						}
 					}
 				}
 			}
@@ -315,14 +343,28 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 					let sourceURL = sourceBase.appendingPathComponent(fileName)
 					if closeFileIfNecessary(theFile: sourceURL as NSURL) {
 						let destinationURL = theStorage.userKeyboards.folderURL.appendingPathComponent(fileName)
-						moveFile(from: sourceURL, to: destinationURL, completion: { (success, theError) in
+						moveFile(from: sourceURL, to: destinationURL) { (success, theError) in
 							if success {
 								reloadTableData()
 							}
 							else {
 								NSApp.presentError(theError!)
 							}
-						})
+						}
+						if fileName.hasSuffix(keyboardLayoutExtension) {
+							// Look for an icon file
+							let iconFileName = fileName.replacingOccurrences(of: ".\(keyboardLayoutExtension)", with: ".\(iconExtension)")
+							let iconSource = sourceBase.appendingPathComponent(iconFileName)
+							let iconDestination = theStorage.userKeyboards.folderURL.appendingPathComponent(iconFileName)
+							moveFile(from: iconSource, to: iconDestination) { (success, theError) in
+								if success {
+									reloadTableData()
+								}
+								else {
+									NSApp.presentError(theError!)
+								}
+							}
+						}
 					}
 				}
 			}

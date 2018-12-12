@@ -11,5 +11,6 @@
 @interface UKFileUtilities : NSObject
 
 + (BOOL)isKeyboardLayoutsURL:(NSURL *)fileURL;
++ (BOOL)dataIsicns:(NSData *)icnsData;
 
 @end

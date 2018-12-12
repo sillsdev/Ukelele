@@ -63,5 +63,6 @@
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
+- (void)addIconData:(NSData *)iconData forKeyboard:(UkeleleKeyboardObject *)keyboard;
 
 @end

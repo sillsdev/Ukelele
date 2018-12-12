@@ -445,7 +445,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (BOOL)saveKeyboardLayoutToURL:(NSURL *)fileURL error:(NSError **)outError {
 	NSAssert(!self.isBundle, @"Attempt to save a bundle as a plain file");
 	NSData *keyboardData = [self.keyboardLayout convertToData];
-	return [keyboardData writeToURL:fileURL options:0 error:outError];
+	BOOL saveResult = [keyboardData writeToURL:fileURL options:0 error:outError];
+	// Get the window controller
+	NSArray *windowControllers = [self windowControllers];
+	UKKeyboardController *keyboardController = (UKKeyboardController *)windowControllers[0];
+	if (saveResult && keyboardController.iconFile != nil) {
+		// Save the icns file too
+		NSURL *parentDirectory = [fileURL URLByDeletingLastPathComponent];
+		NSString *fileName = [self.fileURL lastPathComponent];
+		NSString *iconFileName = [fileName stringByReplacingOccurrencesOfString:kStringKeyboardLayoutExtension withString:kStringIcnsExtension];
+		NSURL *iconFileURL = [parentDirectory URLByAppendingPathComponent:iconFileName];
+		NSData *iconData = [NSData dataWithContentsOfURL:keyboardController.iconFile];
+		saveResult = [iconData writeToURL:iconFileURL options:0 error:outError];
+	}
+	return saveResult;
 }
 
 - (NSFileWrapper *)createFileWrapper {
@@ -1030,30 +1043,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	});
 }
 
-#pragma mark Validate files
-
-- (BOOL)dataIsicns:(NSData *)iconData {
-	UInt32 icnsHeader;
-	UInt32 icnsDataLength;
-	[iconData getBytes:&icnsHeader range:NSMakeRange(0, sizeof(UInt32))];
-	[iconData getBytes:&icnsDataLength range:NSMakeRange(sizeof(UInt32), sizeof(UInt32))];
-	// Need to swap bytes on the data
-	icnsHeader = ((icnsHeader & 0x000000ff) << 24) |
-				 ((icnsHeader & 0x0000ff00) << 8) |
-				 ((icnsHeader & 0x00ff0000) >> 8) |
-				 ((icnsHeader & 0xff000000) >> 24);
-	icnsDataLength = ((icnsDataLength & 0x000000ff) << 24) |
-					 ((icnsDataLength & 0x0000ff00) << 8) |
-					 ((icnsDataLength & 0x00ff0000) >> 8) |
-					 ((icnsDataLength & 0xff000000) >> 24);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wfour-char-constants"
-	if (icnsHeader != 'icns' || icnsDataLength != [iconData length]) {
-			// Bad icon data
-		return NO;
+- (void)addIconData:(NSData *)iconData forKeyboard:(UkeleleKeyboardObject *)keyboard {
+	for (KeyboardLayoutInformation *info in [self.keyboardLayoutsController arrangedObjects]) {
+		if ([info keyboardObject] == keyboard) {
+			if (iconData != NULL) {
+				[self addIcon:iconData toKeyboardInfo:info];
+			}
+			else {
+				[self removeIconFromKeyboardInfo:info];
+			}
+			break;
+		}
 	}
-#pragma clang diagnostic pop
-	return YES;
 }
 
 #pragma mark Saving and restoring selection
@@ -1300,7 +1301,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					[NSApp presentError:theError];
 					return NO;
 				}
-				if (![self dataIsicns:iconData]) {
+				if (![UKFileUtilities dataIsicns:iconData]) {
 					// Not a valid icon file
 					return NO;
 				}
@@ -1344,7 +1345,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			NSFileWrapper *iconFile = [[NSFileWrapper alloc] initWithURL:dragURL options:NSFileWrapperReadingImmediate error:&readError];
 			NSData *iconData = [iconFile regularFileContents];
-			if (![self dataIsicns:iconData]) {
+			if (![UKFileUtilities dataIsicns:iconData]) {
 				// Not valid icon data
 				return NO;
 			}
@@ -1909,9 +1910,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSArray *selectedFiles = [openPanel URLs];
 			NSURL *selectedFile = selectedFiles[0];	// Only one file
 			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
-			if ([self dataIsicns:iconData]) {
+			if ([UKFileUtilities dataIsicns:iconData]) {
 				KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
-				[self addIcon:iconData toKeyboardInfo:keyboardInfo];
+				[self addIconData:iconData forKeyboard:[keyboardInfo keyboardObject]];
 			}
 		}
 	}];

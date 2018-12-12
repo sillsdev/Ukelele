@@ -15,6 +15,7 @@
 #import "UkeleleConstantStrings.h"
 #import "UKKeyboardDocument.h"
 #import "XMLCocoaUtilities.h"
+#import "UKFileUtilities.h"
 
 @implementation UKKeyboardController (Housekeeping)
 
@@ -182,6 +183,29 @@
 	}];
 }
 
+- (IBAction)attachIconFile:(id)sender {
+#pragma unused(sender)
+	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+		// These next four lines aren't necessary, it seems, but better to be safe...
+	[openPanel setAllowsMultipleSelection:NO];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setResolvesAliases:YES];
+	[openPanel setAllowedFileTypes:@[(NSString *)kUTTypeAppleICNS]];
+	NSWindow *docWindow = self.window;
+	[openPanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse response) {
+		if (response == NSModalResponseOK) {
+				// User selected a file
+			NSArray *selectedFiles = [openPanel URLs];
+			NSURL *selectedFile = selectedFiles[0];	// Only one file
+			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
+			if ([UKFileUtilities dataIsicns:iconData]) {
+				[self changeIconFile:selectedFile oldFile:self.iconFile];
+			}
+		}
+	}];
+}
+
 #pragma mark Action routines
 
 - (void)undoRemoveUnusedStates:(RemoveStateData *)removeStateData
@@ -261,6 +285,19 @@
 	[self.keyboardLayout setKeyboardName:newName];
 	[self.parentDocument notifyNewName:newName forDocument:self withOldName:oldName];
 	[self.window setTitle:newName];
+}
+
+- (void)changeIconFile:(NSURL *)iconFile oldFile:(NSURL *)oldIconFile {
+	if ([self.parentDocument isBundle]) {
+		[self.parentDocument addIconData:[NSData dataWithContentsOfURL:iconFile] forKeyboard:self.keyboardLayout];
+	}
+	else {
+		NSUndoManager *undoManager = [self undoManager];
+		NSAssert(undoManager, @"Must have an undo manager");
+		[[undoManager prepareWithInvocationTarget:self] changeIconFile:oldIconFile oldFile:iconFile];
+		[undoManager setActionName:@"Add icon"];
+		self.iconFile = iconFile;
+	}
 }
 
 #pragma mark Parameter checking

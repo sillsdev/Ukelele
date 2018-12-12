@@ -9,6 +9,7 @@
 import Foundation
 
 let keyboardLayoutExtension = "keylayout"
+let iconExtension = "icns"
 let bundleExtension = "bundle"
 
 struct KeyboardLayoutInformation {
