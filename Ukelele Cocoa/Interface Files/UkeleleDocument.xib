@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -54,9 +54,6 @@
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-Mo-ulK">
                                             <rect key="frame" x="15" y="322" width="470" height="17"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="466" id="7xZ-eB-1IL"/>
-                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="2z3-D3-1ig">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -90,19 +87,6 @@
                                                 <action selector="setScaleLevel:" target="-2" id="mp0-Ee-9L7"/>
                                             </connections>
                                         </comboBox>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
-                                            <rect key="frame" x="513" y="309" width="82" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="cancel:" target="-1" id="ieO-Sz-9QB"/>
-                                            </connections>
-                                        </button>
                                         <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-Py-4Pd">
                                             <rect key="frame" x="-3" y="-3" width="760" height="317"/>
                                             <clipView key="contentView" id="UbK-L1-wwU">
@@ -110,7 +94,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
-                                                        <rect key="frame" x="0.0" y="-15" width="773" height="330"/>
+                                                        <rect key="frame" x="0.0" y="-15" width="758" height="315"/>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
@@ -124,19 +108,33 @@
                                                 <rect key="frame" x="1" y="301" width="743" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.93333333333333335" horizontal="NO" id="gIG-s4-UAM">
+                                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gIG-s4-UAM">
                                                 <rect key="frame" x="744" y="1" width="15" height="300"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-JZ-Y6L">
+                                            <rect key="frame" x="513" y="311" width="82" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="cvV-4C-1ic"/>
+                                            </constraints>
+                                            <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vnx-wk-wqk">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="cancel:" target="-1" id="ieO-Sz-9QB"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="VD4-cu-A5u" firstAttribute="leading" secondItem="xdz-JZ-Y6L" secondAttribute="trailing" constant="8" symbolic="YES" id="3gq-Bp-X5F"/>
                                         <constraint firstItem="pxh-Py-4Pd" firstAttribute="leading" secondItem="M6q-7f-oxV" secondAttribute="leading" constant="-3" id="EzE-Tw-31m"/>
                                         <constraint firstItem="GcK-Mo-ulK" firstAttribute="leading" secondItem="M6q-7f-oxV" secondAttribute="leading" constant="17" id="Hiz-9o-mWH"/>
                                         <constraint firstItem="GcK-Mo-ulK" firstAttribute="baseline" secondItem="VD4-cu-A5u" secondAttribute="baseline" id="K7T-Vs-rV9"/>
-                                        <constraint firstItem="xdz-JZ-Y6L" firstAttribute="baseline" secondItem="7DR-6A-223" secondAttribute="baseline" id="OkK-yZ-b3T"/>
+                                        <constraint firstItem="xdz-JZ-Y6L" firstAttribute="baseline" secondItem="7DR-6A-223" secondAttribute="baseline" constant="-2" id="OkK-yZ-b3T"/>
                                         <constraint firstAttribute="bottom" secondItem="pxh-Py-4Pd" secondAttribute="bottom" constant="-3" id="Q1W-N0-P9q"/>
+                                        <constraint firstItem="xdz-JZ-Y6L" firstAttribute="leading" secondItem="GcK-Mo-ulK" secondAttribute="trailing" constant="36" id="SoI-Lh-ePT"/>
                                         <constraint firstItem="pxh-Py-4Pd" firstAttribute="top" secondItem="7DR-6A-223" secondAttribute="bottom" constant="5" id="YT3-0N-dfW"/>
                                         <constraint firstAttribute="trailing" secondItem="pxh-Py-4Pd" secondAttribute="trailing" constant="-3" id="aLY-0B-f9l"/>
                                         <constraint firstAttribute="trailing" secondItem="7DR-6A-223" secondAttribute="trailing" constant="17" id="dru-lA-iWk"/>
@@ -152,7 +150,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e98-hd-75Q">
-                                            <rect key="frame" x="665" y="14" width="75" height="26"/>
+                                            <rect key="frame" x="665" y="14" width="75" height="25"/>
                                             <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="UmJ-WT-HPu">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
@@ -171,7 +169,7 @@
                                             </connections>
                                         </popUpButton>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v0P-Wj-ijT">
-                                            <rect key="frame" x="17" y="17" width="23" height="23"/>
+                                            <rect key="frame" x="17" y="15" width="23" height="25"/>
                                             <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GrD-eG-BSy">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -181,7 +179,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sjL-cW-z8G">
-                                            <rect key="frame" x="39" y="17" width="23" height="23"/>
+                                            <rect key="frame" x="39" y="15" width="23" height="25"/>
                                             <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xfd-Fl-p62">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -222,7 +220,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="WpE-oc-P0J" id="4ZJ-ZQ-BVi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="718" height="268"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="718" height="266"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -328,7 +326,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <tableHeaderView key="headerView" id="WpE-oc-P0J">
-                                                <rect key="frame" x="0.0" y="0.0" width="718" height="23"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="718" height="25"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
@@ -347,7 +345,7 @@
                                         <constraint firstItem="Daf-pa-gyc" firstAttribute="leading" secondItem="g1L-XA-Ana" secondAttribute="leading" constant="70" id="inf-J1-zcx"/>
                                         <constraint firstItem="Daf-pa-gyc" firstAttribute="leading" secondItem="sjL-cW-z8G" secondAttribute="trailing" constant="8" symbolic="YES" id="lUI-So-Gul"/>
                                         <constraint firstItem="e98-hd-75Q" firstAttribute="leading" secondItem="KJs-3A-5K3" secondAttribute="trailing" constant="8" symbolic="YES" id="mJs-re-mKV"/>
-                                        <constraint firstItem="v0P-Wj-ijT" firstAttribute="baseline" secondItem="e98-hd-75Q" secondAttribute="baseline" id="pne-Eg-VI9"/>
+                                        <constraint firstItem="v0P-Wj-ijT" firstAttribute="baseline" secondItem="e98-hd-75Q" secondAttribute="baseline" constant="1" id="pne-Eg-VI9"/>
                                         <constraint firstAttribute="trailing" secondItem="e98-hd-75Q" secondAttribute="trailing" constant="17" id="rsH-Ef-irs"/>
                                         <constraint firstAttribute="trailing" secondItem="KJs-3A-5K3" secondAttribute="trailing" constant="95" id="tBv-dS-zCi"/>
                                         <constraint firstItem="KJs-3A-5K3" firstAttribute="centerY" secondItem="e98-hd-75Q" secondAttribute="centerY" id="uGp-SW-Tn8"/>
@@ -484,11 +482,11 @@
                                         <box autoresizesSubviews="NO" borderType="line" title="Attached to" translatesAutoresizingMaskIntoConstraints="NO" id="XfP-AF-PoW">
                                             <rect key="frame" x="14" y="5" width="726" height="69"/>
                                             <view key="contentView" id="2rf-d6-dIc">
-                                                <rect key="frame" x="1" y="1" width="724" height="53"/>
+                                                <rect key="frame" x="3" y="3" width="720" height="51"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Oj-mq-If4">
-                                                        <rect key="frame" x="16" y="14" width="692" height="29"/>
+                                                        <rect key="frame" x="14" y="12" width="692" height="29"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="29" id="Uj9-v4-Ohj"/>
                                                         </constraints>
