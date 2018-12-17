@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -93,12 +94,12 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
-                                                        <rect key="frame" x="0.0" y="-15" width="758" height="315"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="743" height="300"/>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="dIX-ad-5L2" secondAttribute="trailing" constant="-15" id="4Zb-0d-srT"/>
-                                                    <constraint firstAttribute="bottom" secondItem="dIX-ad-5L2" secondAttribute="bottom" constant="-15" id="Z0v-eg-5ME"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dIX-ad-5L2" secondAttribute="trailing" id="4Zb-0d-srT"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dIX-ad-5L2" secondAttribute="bottom" id="Z0v-eg-5ME"/>
                                                     <constraint firstItem="dIX-ad-5L2" firstAttribute="top" secondItem="UbK-L1-wwU" secondAttribute="top" id="tKZ-xM-uyL"/>
                                                     <constraint firstItem="dIX-ad-5L2" firstAttribute="leading" secondItem="UbK-L1-wwU" secondAttribute="leading" id="uzZ-wa-zUN"/>
                                                 </constraints>
@@ -749,6 +750,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="254" y="-78"/>
         </menu>
         <userDefaultsController representsSharedInstance="YES" id="bHm-bL-zBT"/>
     </objects>

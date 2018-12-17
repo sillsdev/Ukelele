@@ -1793,9 +1793,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			// Create a folder to store the various icon files
 			NSString *folderName = [NSString stringWithFormat:@"%@.iconset", newName];
 			NSFileManager *fileManager = [NSFileManager defaultManager];
-			NSURL *tempDirectory = [fileManager temporaryDirectory];
+			NSString *tempDirectoryPath = NSTemporaryDirectory();
+			NSURL *tempDirectory = [NSURL fileURLWithPath:tempDirectoryPath];
 			NSURL *iconFolder = [tempDirectory URLByAppendingPathComponent:folderName isDirectory:YES];
-			[[NSFileManager defaultManager] createDirectoryAtURL:iconFolder withIntermediateDirectories:YES attributes:nil error:nil];
+			[fileManager createDirectoryAtURL:iconFolder withIntermediateDirectories:YES attributes:nil error:nil];
 			// Create the icon files
 			for (NSImageRep *iconImageRep in iconImageReps) {
 				NSInteger imageHeight = (NSInteger)[iconImageRep size].height;
@@ -1809,7 +1810,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				}
 				NSString *fileName = [NSString stringWithFormat:nameTemplate, imageHeight, imageHeight];
 				NSURL *fileURL = [iconFolder URLByAppendingPathComponent:fileName];
-				if (![[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
+				if (![fileManager fileExistsAtPath:[fileURL path]]) {
 					CGImageDestinationRef destination = CGImageDestinationCreateWithURL((CFURLRef)fileURL, kUTTypePNG, 1, nil);
 					NSRect imageRect = NSMakeRect(0, 0, imageHeight, imageHeight);
 					CGImageRef imageRef = [iconImageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
