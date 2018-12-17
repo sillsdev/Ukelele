@@ -146,6 +146,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="0aC-zU-mqf"/>
+                            <menuItem title="Show Organiser" id="Lfr-S5-m9e">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showHideOrganiser:" target="-1" id="jze-Uq-YsH"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Export Installer Disk Image…" id="cqf-1f-tk9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
