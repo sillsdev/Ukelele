@@ -1021,7 +1021,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 	NSUndoManager *undoManager = [parentController undoManager];
 	[[undoManager prepareWithInvocationTarget:self] removeKeyMap:index
                                                      forKeyboard:keyboardID
-                                                 newDefaultIndex:defaultIndex];
+                                                 newDefaultIndex:modifierMap->GetDefaultIndex()];
 	[undoManager setActionName:@"Replace key map"];
 	modifierMap->SetDefaultIndex((UInt32)defaultIndex);
     [self.delegate modifierMapDidChange];
