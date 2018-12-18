@@ -204,6 +204,13 @@ static NSDictionary *defaultValues() {
 	}
 }
 
+- (IBAction)install:(id)sender {
+	if (organiserController == nil) {
+		organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
+	}
+	[[organiserController window] makeKeyAndOrderFront:sender];
+}
+
 - (IBAction)toggleShowCodePoints:(id)sender {
 #pragma unused(sender)
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
@@ -318,7 +325,8 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if (action == @selector(colourThemes:) || (action == @selector(newFromCurrentInput:))) {
+	else if (action == @selector(colourThemes:) || (action == @selector(newFromCurrentInput:)) ||
+			 (action == @selector(install:))) {
 		return YES;
 	}
 	return YES;
