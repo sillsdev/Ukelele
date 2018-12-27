@@ -1820,12 +1820,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			}
 				// Get the conversion tool
 			NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKIconutilTool];
+			NSLog(@"Tool is at path %@", [toolURL path]);
 				// Set up and run the tool
 			NSString *currentDirectory = [fileManager currentDirectoryPath];
 			[fileManager changeCurrentDirectoryPath:[tempDirectory path]];
 			NSTask *conversionTask = [NSTask launchedTaskWithLaunchPath:[toolURL path] arguments:@[@"-c", @"icns", folderName]];
 			[conversionTask waitUntilExit];
 			int returnStatus = [conversionTask terminationStatus];
+			NSLog(@"Return status %d", returnStatus);
 #pragma unused(returnStatus)
 			NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 			[fileManager removeItemAtURL:iconFolder error:nil];
@@ -1833,6 +1835,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				// Finally, read the resulting file
 			NSURL *icnsFileURL = [tempDirectory URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.icns", newName]];
 			iconData = [NSMutableData dataWithContentsOfURL:icnsFileURL];
+			NSLog(@"Icon data size is %lu", (unsigned long)(iconData == nil ? 0 : [iconData length]));
 			[fileManager removeItemAtURL:icnsFileURL error:nil];
 		}
 	}
