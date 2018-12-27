@@ -317,13 +317,15 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 			// Look for an icon file
 			let iconFileName = fileName.replacingOccurrences(of: ".\(keyboardLayoutExtension)", with: ".\(iconExtension)")
 			let iconSource = source.deletingLastPathComponent().appendingPathComponent(iconFileName)
-			let iconDestination = destination.deletingLastPathComponent().appendingPathComponent(iconFileName)
-			moveFile(from: iconSource, to: iconDestination) { (success, theError) in
-				if success {
-					reloadTableData()
-				}
-				else {
-					NSApp.presentError(theError!)
+			if FileManager.default.fileExists(atPath: iconSource.path) {
+				let iconDestination = destination.deletingLastPathComponent().appendingPathComponent(iconFileName)
+				moveFile(from: iconSource, to: iconDestination) { (success, theError) in
+					if success {
+						reloadTableData()
+					}
+					else {
+						NSApp.presentError(theError!)
+					}
 				}
 			}
 		}
