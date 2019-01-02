@@ -146,34 +146,41 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="0aC-zU-mqf"/>
-                            <menuItem title="Install…" id="Lfr-S5-m9e">
+                            <menuItem title="Install" id="YIG-H3-upl">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="install:" target="-1" id="jCG-lF-3hp"/>
-                                </connections>
+                                <menu key="submenu" title="Install" id="Xsk-bH-g2z">
+                                    <items>
+                                        <menuItem title="Show Organiser" id="pqj-IA-xMB">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showHideOrganiser:" target="-1" id="3Ur-U2-ovA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Install for All Users" tag="2" id="13Z-Zo-t22">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="installForAllUsersWithSender:" target="-1" id="CWi-U5-gAv"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Install for Current User" tag="3" id="aZd-QM-N1C">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="installForCurrentUserWithSender:" target="-1" id="Pjw-Rc-ObN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Uninstall" tag="1" id="tYF-RY-UZP">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="uninstallKeyboardLayoutWithSender:" target="-1" id="DSN-9M-c95"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
                             </menuItem>
                             <menuItem title="Export Installer Disk Image…" id="cqf-1f-tk9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportKeyboardLayout:" target="-1" id="p0y-CM-DCj"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Install for All Users" tag="2" id="MAw-M8-42D">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="installForAllUsersWithSender:" target="-1" id="23S-QG-Tt4"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Install for Current User" tag="3" id="Pwc-Y5-Zjh">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="installForCurrentUserWithSender:" target="-1" id="4x4-8j-S80"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Uninstall" tag="1" id="Sc5-E5-Nze">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="uninstallKeyboardLayoutWithSender:" target="-1" id="chY-vE-MqV"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
