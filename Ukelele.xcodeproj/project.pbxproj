@@ -250,7 +250,7 @@
 		52ED0B761A93133000322FFE /* UKKeyboardLayoutPrintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52ED0B751A93133000322FFE /* UKKeyboardLayoutPrintView.xib */; };
 		52ED0B7C1A9826BA00322FFE /* UKKeyboardPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */; };
 		52EDF031192474A0000B66B6 /* AskReplaceDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */; };
-		52EE9F951FCD2DF6004C0B88 /* Keyboard Installer.app in Resources */ = {isa = PBXBuildFile; fileRef = 52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */; };
+		52EFEAF721DE311D00574BC3 /* Keyboard Installer.app in Resources */ = {isa = PBXBuildFile; fileRef = 52EFEAF621DE311C00574BC3 /* Keyboard Installer.app */; };
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
@@ -646,7 +646,7 @@
 		52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPrintView.h; sourceTree = "<group>"; };
 		52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPrintView.m; sourceTree = "<group>"; };
 		52EDF030192474A0000B66B6 /* AskReplaceDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskReplaceDeadKeySheet.xib; path = "Interface Files/AskReplaceDeadKeySheet.xib"; sourceTree = "<group>"; };
-		52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = "Keyboard Installer.app"; path = "../../Ukelele Other Data/Keyboard Installer 2017-11-28 15-25-48/Keyboard Installer.app"; sourceTree = "<group>"; };
+		52EFEAF621DE311C00574BC3 /* Keyboard Installer.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "Keyboard Installer.app"; sourceTree = "<group>"; };
 		52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseKeyboardNameWindow.xib; path = "Interface Files/ChooseKeyboardNameWindow.xib"; sourceTree = "<group>"; };
 		52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfirmStateName.xib; path = "Interface Files/ConfirmStateName.xib"; sourceTree = "<group>"; };
 		52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateDeadKeySheet.xib; path = "Interface Files/CreateDeadKeySheet.xib"; sourceTree = "<group>"; };
@@ -954,6 +954,7 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52EFEAF621DE311C00574BC3 /* Keyboard Installer.app */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				524EAE281B9FD16900B77B43 /* dialogs.strings */,
 				52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */,
@@ -961,7 +962,6 @@
 				52D2C48721A2D4E20032E670 /* iconutil */,
 				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */,
-				52EE9F941FCD2DF6004C0B88 /* Keyboard Installer.app */,
 				524EAE2E1B9FD17800B77B43 /* keyboards.strings */,
 				5209B731193563C000B195E9 /* kluchrtoxml */,
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
@@ -1357,7 +1357,7 @@
 				5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
-				52EE9F951FCD2DF6004C0B88 /* Keyboard Installer.app in Resources */,
+				52EFEAF721DE311D00574BC3 /* Keyboard Installer.app in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
