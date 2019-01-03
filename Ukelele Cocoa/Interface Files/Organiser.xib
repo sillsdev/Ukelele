@@ -218,8 +218,9 @@
                                                     <rect key="frame" x="39" y="1" width="140" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dKg-Vo-1fg">
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dKg-Vo-1fg">
                                                             <rect key="frame" x="0.0" y="3" width="140" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="aze-t7-cxz">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -227,9 +228,6 @@
                                                             </textFieldCell>
                                                         </textField>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="dKg-Vo-1fg" secondAttribute="trailing" constant="2" id="Y9u-8M-hlS"/>
-                                                    </constraints>
                                                     <connections>
                                                         <outlet property="textField" destination="dKg-Vo-1fg" id="0Vb-WU-8wS"/>
                                                     </connections>

@@ -235,7 +235,6 @@
 		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
 		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
 		52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */; };
-		52D2C48921A2D5170032E670 /* iconutil in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D2C48721A2D4E20032E670 /* iconutil */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -265,7 +264,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				52D2C48921A2D5170032E670 /* iconutil in CopyFiles */,
 				5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */,
 				5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */,
 			);
