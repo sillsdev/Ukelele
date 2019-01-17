@@ -380,6 +380,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];
 	NSUInteger matchingSet = [self.keyboardLayout modifierSetIndexForModifiers:currentModifiers forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
 	currentStatus.modifierIndex = matchingSet;
+	[self setKeyboardNameAndCoding];
 	[self setMessageBarText:@""];
 }
 
@@ -498,6 +499,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[self assignClickTargets];
     [self calculateSize];
     [self setViewScaleComboBox];
+	[self updateStatus];
     [self updateWindow];
 }
 
