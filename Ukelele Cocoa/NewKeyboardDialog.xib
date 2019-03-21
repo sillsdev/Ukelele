@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKNewKeyboardLayoutController">
@@ -22,11 +23,11 @@
             <rect key="contentRect" x="196" y="240" width="413" height="278"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="413" height="278"/>
+                <rect key="frame" x="0.0" y="0.0" width="413" height="272"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-ro-Kwa">
-                        <rect key="frame" x="18" y="134" width="377" height="94"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-ro-Kwa">
+                        <rect key="frame" x="18" y="134" width="377" height="85"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="I9d-Nz-uWF">
                             <font key="font" metaFont="system"/>
                             <string key="title">To create a new keyboard layout, you need to choose what the base keyboard layout will be, that is, the output when no modifier keys are pressed. You can optionally have another keyboard layout when the caps lock key or the command key is pressed.</string>
@@ -34,24 +35,16 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yed-Df-Y1F">
-                        <rect key="frame" x="18" y="238" width="45" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="W2w-Or-oCC">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tNB-Vc-yVM">
-                        <rect key="frame" x="69" y="236" width="324" height="22"/>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tNB-Vc-yVM">
+                        <rect key="frame" x="68" y="227" width="325" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Keyboard Layout Name" drawsBackground="YES" id="enJ-NH-Fr0">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wEY-Ho-83n">
-                        <rect key="frame" x="317" y="13" width="82" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wEY-Ho-83n">
+                        <rect key="frame" x="340" y="13" width="59" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QAz-oe-m4X">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -63,8 +56,8 @@ DQ
                             <action selector="acceptSelection:" target="-2" id="Q7Z-by-cZY"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spj-JA-CqC">
-                        <rect key="frame" x="240" y="13" width="82" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Spj-JA-CqC">
+                        <rect key="frame" x="258" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FAr-X5-Igg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -76,8 +69,8 @@ Gw
                             <action selector="cancelSelection:" target="-2" id="Ha0-XU-F2l"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fd2-rl-xgR">
-                        <rect key="frame" x="18" y="108" width="197" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fd2-rl-xgR">
+                        <rect key="frame" x="18" y="107" width="138" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Base keyboard layout:" id="lfQ-6a-auG">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -85,7 +78,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MXT-Xl-Ojp">
-                        <rect key="frame" x="226" y="102" width="170" height="26"/>
+                        <rect key="frame" x="226" y="102" width="170" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="165" id="FbW-Jw-RpB"/>
                         </constraints>
@@ -110,8 +103,8 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyF-b7-Dst">
-                        <rect key="frame" x="18" y="56" width="197" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lyF-b7-Dst">
+                        <rect key="frame" x="18" y="55" width="163" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Layout with caps lock key:" id="CWS-9Z-0bU">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -119,7 +112,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yVn-Hs-ZfJ">
-                        <rect key="frame" x="226" y="50" width="170" height="26"/>
+                        <rect key="frame" x="226" y="50" width="170" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="165" id="MBn-dd-hRv"/>
                         </constraints>
@@ -148,7 +141,7 @@ Gw
                         </popUpButtonCell>
                     </popUpButton>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gu8-zk-Jtl">
-                        <rect key="frame" x="226" y="76" width="170" height="26"/>
+                        <rect key="frame" x="226" y="76" width="170" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="165" id="I7z-9W-hKC"/>
                         </constraints>
@@ -178,9 +171,17 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jj8-GP-Eun">
-                        <rect key="frame" x="18" y="82" width="197" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jj8-GP-Eun">
+                        <rect key="frame" x="18" y="81" width="166" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Layout with command key:" id="PmO-L1-kai">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yed-Df-Y1F">
+                        <rect key="frame" x="18" y="230" width="44" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="W2w-Or-oCC">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -188,22 +189,33 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="wEY-Ho-83n" secondAttribute="bottom" constant="20" id="3qd-wn-9zs"/>
+                    <constraint firstItem="tNB-Vc-yVM" firstAttribute="leading" secondItem="Yed-Df-Y1F" secondAttribute="trailing" constant="8" id="1g1-TR-v1D"/>
+                    <constraint firstAttribute="trailing" secondItem="1pd-ro-Kwa" secondAttribute="trailing" constant="20" id="2eB-lY-ftu"/>
+                    <constraint firstItem="wEY-Ho-83n" firstAttribute="leading" secondItem="Spj-JA-CqC" secondAttribute="trailing" constant="12" id="4vc-yu-pqb"/>
                     <constraint firstItem="MXT-Xl-Ojp" firstAttribute="top" secondItem="1pd-ro-Kwa" secondAttribute="bottom" constant="8" id="6Hw-gl-yam"/>
-                    <constraint firstItem="wEY-Ho-83n" firstAttribute="leading" secondItem="Spj-JA-CqC" secondAttribute="trailing" constant="7" id="6uT-VS-WCd"/>
+                    <constraint firstItem="1pd-ro-Kwa" firstAttribute="top" secondItem="tNB-Vc-yVM" secondAttribute="bottom" constant="8" id="7Vh-me-6SW"/>
+                    <constraint firstItem="Yed-Df-Y1F" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="AYJ-mY-APO"/>
                     <constraint firstItem="Gu8-zk-Jtl" firstAttribute="baseline" secondItem="Jj8-GP-Eun" secondAttribute="baseline" id="BFd-LX-SSz"/>
+                    <constraint firstItem="1pd-ro-Kwa" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="BJi-7C-Bgb"/>
                     <constraint firstItem="MXT-Xl-Ojp" firstAttribute="baseline" secondItem="fd2-rl-xgR" secondAttribute="baseline" id="FBH-y4-GUU"/>
+                    <constraint firstItem="tNB-Vc-yVM" firstAttribute="baseline" secondItem="Yed-Df-Y1F" secondAttribute="baseline" id="Fmk-fS-aVf"/>
                     <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="baseline" secondItem="lyF-b7-Dst" secondAttribute="baseline" id="Gwd-fS-XE3"/>
-                    <constraint firstAttribute="trailing" secondItem="wEY-Ho-83n" secondAttribute="trailing" constant="20" id="IDb-mr-IHL"/>
+                    <constraint firstItem="Jj8-GP-Eun" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="Ib3-Rj-cty"/>
+                    <constraint firstItem="fd2-rl-xgR" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="JO0-cq-I1j"/>
                     <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="top" secondItem="Gu8-zk-Jtl" secondAttribute="bottom" constant="5" id="M4v-BK-vzK"/>
+                    <constraint firstItem="tNB-Vc-yVM" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="23" id="WbO-Ga-vqP"/>
                     <constraint firstItem="Gu8-zk-Jtl" firstAttribute="top" secondItem="MXT-Xl-Ojp" secondAttribute="bottom" constant="5" id="X8K-9F-D4W"/>
                     <constraint firstAttribute="bottom" secondItem="Spj-JA-CqC" secondAttribute="bottom" constant="20" id="btM-0S-I18"/>
                     <constraint firstAttribute="trailing" secondItem="yVn-Hs-ZfJ" secondAttribute="trailing" constant="20" id="d0C-dI-1Ch"/>
+                    <constraint firstItem="lyF-b7-Dst" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="f89-zR-Aau"/>
+                    <constraint firstAttribute="bottom" secondItem="wEY-Ho-83n" secondAttribute="bottom" constant="20" id="gQp-Ub-M12"/>
                     <constraint firstItem="Gu8-zk-Jtl" firstAttribute="top" secondItem="MXT-Xl-Ojp" secondAttribute="bottom" constant="5" id="gwQ-Ip-TcK"/>
                     <constraint firstItem="yVn-Hs-ZfJ" firstAttribute="top" secondItem="Gu8-zk-Jtl" secondAttribute="bottom" constant="5" id="h9k-xF-RCq"/>
                     <constraint firstAttribute="trailing" secondItem="MXT-Xl-Ojp" secondAttribute="trailing" constant="20" id="jw6-kY-j6l"/>
                     <constraint firstAttribute="trailing" secondItem="Gu8-zk-Jtl" secondAttribute="trailing" constant="20" id="myf-pA-jjt"/>
+                    <constraint firstAttribute="trailing" secondItem="tNB-Vc-yVM" secondAttribute="trailing" constant="20" id="qNo-9s-tJe"/>
                     <constraint firstItem="Spj-JA-CqC" firstAttribute="top" secondItem="yVn-Hs-ZfJ" secondAttribute="bottom" constant="12" id="uOC-OK-4b0"/>
+                    <constraint firstAttribute="trailing" secondItem="wEY-Ho-83n" secondAttribute="trailing" constant="20" id="wY5-8G-48f"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="460.5" y="438"/>

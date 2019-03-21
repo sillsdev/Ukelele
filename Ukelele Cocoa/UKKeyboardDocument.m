@@ -2132,8 +2132,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName {
-#pragma unused(newName)
-#pragma unused(oldName)
 	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardController class]], @"Document must be a Ukelele document");
 		// Find the document in the list
 	for (KeyboardLayoutInformation *keyboardInfo in self.keyboardLayouts) {
