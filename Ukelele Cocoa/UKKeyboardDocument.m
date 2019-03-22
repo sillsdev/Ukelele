@@ -1302,6 +1302,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					return NO;
 				}
 				if (![UKFileUtilities dataIsicns:iconData]) {
+					NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"The icon file is invalid"};
+					NSError *error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidIconFile userInfo:errorDict];
+					[NSApp presentError:error];
 					// Not a valid icon file
 					return NO;
 				}
@@ -1915,6 +1918,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			if ([UKFileUtilities dataIsicns:iconData]) {
 				KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
 				[self addIconData:iconData forKeyboard:[keyboardInfo keyboardObject]];
+			}
+			else {
+				NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"The icon file is invalid"};
+				NSError *error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidIconFile userInfo:errorDict];
+				[NSApp presentError:error];
 			}
 		}
 	}];
