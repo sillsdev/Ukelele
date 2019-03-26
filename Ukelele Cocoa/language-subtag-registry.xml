@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <registry>
-	<date>2018-10-31</date>
+	<date>2019-02-20</date>
 	<language>
 		<subtag>aa</subtag>
 		<description>Afar</description>
@@ -593,6 +593,7 @@
 	<language>
 		<subtag>lg</subtag>
 		<description>Ganda</description>
+		<description>Luganda</description>
 		<added>2005-10-16</added>
 	</language>
 	<language>
@@ -43005,6 +43006,7 @@
 		<description>Lyons Sign Language</description>
 		<added>2009-07-29</added>
 		<deprecated>2018-03-08</deprecated>
+		<preferred-value>lsg</preferred-value>
 		<prefix>sgn</prefix>
 	</extlang>
 	<extlang>
@@ -43403,6 +43405,7 @@
 		<description>Rennellese Sign Language</description>
 		<added>2009-07-29</added>
 		<deprecated>2017-02-23</deprecated>
+		<preferred-value>rsi</preferred-value>
 		<prefix>sgn</prefix>
 	</extlang>
 	<extlang>
@@ -43757,6 +43760,7 @@
 		<description>Yiddish Sign Language</description>
 		<added>2009-07-29</added>
 		<deprecated>2015-02-12</deprecated>
+		<preferred-value>yds</preferred-value>
 		<prefix>sgn</prefix>
 	</extlang>
 	<extlang>
@@ -46518,16 +46522,16 @@
 		<description>Eastern Armenian</description>
 		<added>2006-09-18</added>
 		<deprecated>2018-03-24</deprecated>
-		<preferred-value>hy</preferred-value>
 		<prefix>hy</prefix>
+		<comments>Preferred tag is hy</comments>
 	</variant>
 	<variant>
 		<subtag>arevmda</subtag>
 		<description>Western Armenian</description>
 		<added>2006-09-18</added>
 		<deprecated>2018-03-24</deprecated>
-		<preferred-value>hyw</preferred-value>
 		<prefix>hy</prefix>
+		<comments>Preferred tag is hyw</comments>
 	</variant>
 	<variant>
 		<subtag>asante</subtag>
