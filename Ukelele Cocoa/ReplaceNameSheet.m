@@ -55,7 +55,7 @@
 - (IBAction)acceptChoice:(id)sender
 {
 #pragma unused(sender)
-	NSString *replacementString = [XMLCocoaUtilities makeXMLString:[replacementNameField stringValue] codingNonAscii:NO];
+	NSString *replacementString = [XMLCocoaUtilities convertToXMLString:[replacementNameField stringValue] codingNonAscii:NO];
 	if (!verifyCallBack(replacementString)) {
 			// Doesn't work!
 		[errorField setHidden:NO];
