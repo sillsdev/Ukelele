@@ -95,7 +95,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 	
 	private func resetSelection(_ table: NSTableView!, collection collectionName: UKKeyboardCollection, selection: String?) {
 		if let selectedText = selection {
-			let index = collectionName.collection.index(where: { (info: KeyboardLayoutInformation) -> Bool in
+			let index = collectionName.collection.firstIndex(where: { (info: KeyboardLayoutInformation) -> Bool in
 				return info.keyboardLayoutName == selectedText
 			})
 			if index != nil {
@@ -104,7 +104,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 	}
 	
-	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+	func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		switch menuItem.tag {
 		case MenuItems.Uninstall.rawValue:
 			// Uninstall
@@ -427,7 +427,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 	}
 	
 	func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-		if (info.draggingSource() as? NSTableView) == tableView {
+		if (info.draggingSource as? NSTableView) == tableView {
 			// Cannot drag within a table
 			return []
 		}
@@ -495,7 +495,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 					imageView = NSTableCellView.init(frame: NSMakeRect(0.0, 0.0, tableColumn!.width, 20.0))
 					imageView?.identifier = NSUserInterfaceItemIdentifier(rawValue: kindColumnID)
 				}
-				let theImage = NSImage.init(named: theCollection.collection[row].isCollection ? NSImage.Name.folder : NSImage.Name(keyboardIconName))
+				let theImage = NSImage.init(named: theCollection.collection[row].isCollection ? NSImage.folderName : keyboardIconName)
 				(imageView as! NSTableCellView).imageView?.image = theImage
 				return imageView
 			}
