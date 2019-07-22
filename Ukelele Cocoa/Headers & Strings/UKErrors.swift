@@ -17,7 +17,7 @@ public protocol ExplanatoryErrorType: Error, CustomDebugStringConvertible {
 }
 
 public extension ExplanatoryErrorType {
-	public var debugDescription: String {
+	var debugDescription: String {
 		// Adjust for however you want the error to print
 		return "\(type(of: self)): \(reason)"
 	}

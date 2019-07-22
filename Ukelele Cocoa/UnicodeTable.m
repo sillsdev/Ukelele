@@ -77,7 +77,7 @@
 		NSScanner *scanner = [NSScanner scannerWithString:[sourceString substringWithRange:[result rangeAtIndex:1]]];
 		unsigned int codePoint;
 		if ([scanner scanHexInt:&codePoint]) {
-			unicodeTable[@(codePoint)] = [sourceString substringWithRange:[result rangeAtIndex:2]];
+			self->unicodeTable[@(codePoint)] = [sourceString substringWithRange:[result rangeAtIndex:2]];
 		}
 	}];
 }

@@ -179,17 +179,17 @@ enum ProcessingStates {
 			if (theText == nil) {
 					// User pressed cancel
 			}
-			else if (deadKeyProcessingType == kDoubleClickDeadKeyChangeToOutput) {
+			else if (self->deadKeyProcessingType == kDoubleClickDeadKeyChangeToOutput) {
 					// User provided text, but it was a dead key
-				[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict output:theText];
+				[self->keyDataDict[kKeyDocument] makeDeadKeyOutput:self->keyDataDict output:theText];
 			}
 			else {
 					// User provided text
-				[keyDataDict[kKeyDocument] changeOutputForKey:keyDataDict
+				[self->keyDataDict[kKeyDocument] changeOutputForKey:self->keyDataDict
 														   to:theText
 												 usingBaseMap:![[ToolboxData sharedToolboxData] JISOnly]];
 			}
-			processingState = kProcessingCompleted;
+			self->processingState = kProcessingCompleted;
 			[self interactionCompleted];
 		}];
 	}
@@ -219,25 +219,25 @@ enum ProcessingStates {
 			switch (theType) {
 				case kHandleDeadKeyChangeState:
 						// Change the state the dead key triggers
-					[keyDataDict[kKeyDocument] changeDeadKeyNextState:keyDataDict
+					[self->keyDataDict[kKeyDocument] changeDeadKeyNextState:self->keyDataDict
 															 newState:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyChangeTerminator:
 						// Change the terminator
-					[keyDataDict[kKeyDocument] changeTerminatorForState:nextState
+					[self->keyDataDict[kKeyDocument] changeTerminatorForState:self->nextState
 																	 to:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyChangeToOutput:
 						// Change the dead key to output
-					[keyDataDict[kKeyDocument] makeDeadKeyOutput:keyDataDict
+					[self->keyDataDict[kKeyDocument] makeDeadKeyOutput:self->keyDataDict
 														  output:dataDict[kHandleDeadKeyString]];
 					break;
 					
 				case kHandleDeadKeyEnterState:
 						// Enter the dead key state
-					[keyDataDict[kKeyDocument] enterDeadKeyStateWithName:nextState];
+					[self->keyDataDict[kKeyDocument] enterDeadKeyStateWithName:self->nextState];
 					break;
 			}
 			[self interactionCompleted];
@@ -255,9 +255,9 @@ enum ProcessingStates {
 	[theController setStateNames:stateNames];
 	[theController askStateForWindow:parentWindow completionBlock:^(NSString *newState) {
 		if (newState != nil) {
-			[keyDataDict[kKeyDocument] changeDeadKeyNextState:keyDataDict newState:newState];
+			[self->keyDataDict[kKeyDocument] changeDeadKeyNextState:self->keyDataDict newState:newState];
 		}
-		processingState = kProcessingCompleted;
+		self->processingState = kProcessingCompleted;
 		[self interactionCompleted];
 		theController = nil;
 	}];

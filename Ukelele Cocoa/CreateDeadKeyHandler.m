@@ -109,7 +109,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 											[self interactionCompleted];
 											return;
 										}
-										deadKeyData = [createDeadKeyData mutableCopy];
+										self->deadKeyData = [createDeadKeyData mutableCopy];
 										[self checkDeadKeyParameters];
 									}];
 	}
@@ -135,12 +135,12 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 										   [self interactionCompleted];
 										   return;
 									   }
-									   deadKeyData = [NSMutableDictionary dictionaryWithObject:keyData[kCreateSelectedDeadKeyState] forKey:kDeadKeyDataStateName];
-									   deadKeyData[kCreateDeadKeySelectedKeyCode] = @(selectedKeyCode);
-									   deadKeyData[kDeadKeyDataKeyCode] = @(selectedKeyCode);
-									   deadKeyData[kDeadKeyDataModifiers] = @(currentModifiers);
+									   self->deadKeyData = [NSMutableDictionary dictionaryWithObject:keyData[kCreateSelectedDeadKeyState] forKey:kDeadKeyDataStateName];
+									   self->deadKeyData[kCreateDeadKeySelectedKeyCode] = @(self->selectedKeyCode);
+									   self->deadKeyData[kDeadKeyDataKeyCode] = @(self->selectedKeyCode);
+									   self->deadKeyData[kDeadKeyDataModifiers] = @(self->currentModifiers);
 									   if (keyData[kCreateSelectedDeadKeyTerminator] != nil) {
-										   deadKeyData[kDeadKeyDataTerminator] = keyData[kCreateSelectedDeadKeyTerminator];
+										   self->deadKeyData[kDeadKeyDataTerminator] = keyData[kCreateSelectedDeadKeyTerminator];
 									   }
 									   [self checkDeadKeyParameters];
 								   }];
@@ -190,7 +190,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 								  [self interactionCompleted];
 								  return;
 							  }
-							  deadKeyData[kDeadKeyDataStateName] = stateName;
+							  self->deadKeyData[kDeadKeyDataStateName] = stateName;
 							  [self checkDeadKeyParameters];
 						  }];
 		return;
@@ -208,7 +208,7 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 								  [self interactionCompleted];
 								  return;
 							  }
-							  deadKeyData[kDeadKeyDataStateName] = stateName;
+							  self->deadKeyData[kDeadKeyDataStateName] = stateName;
 							  [self checkDeadKeyParameters];
 						  }];
 		return;
@@ -289,17 +289,17 @@ NSString *kDeadKeyDataUseExistingStateOK = @"UseExistingStateOK";
 				}
 				if ([kAskReplaceDeadKeyAccept isEqualToString:replaceData]) {
 						// We accept the replacement of the dead key
-					deadKeyData[kDeadKeyDataReplaceDeadKeyOK] = @YES;
+					self->deadKeyData[kDeadKeyDataReplaceDeadKeyOK] = @YES;
 					[self checkDeadKeyParameters];
 				}
-				else if (typeCode != kCreateDeadKeyHandlerNoParams) {
+				else if (self->typeCode != kCreateDeadKeyHandlerNoParams) {
 						// Rejected replacement, and we had a selected key, so cancel
 					[self interactionCompleted];
 					return;
 				}
 				else if ([kAskReplaceDeadKeyReject isEqualToString:replaceData]) {
 						// We reject the replacement, so we need to ask for a new state
-					deadKeyData[kDeadKeyDataKeyCode] = @(kNoKeyCode);
+					self->deadKeyData[kDeadKeyDataKeyCode] = @(kNoKeyCode);
 				}
 			}
 										  forWindow:parentWindow];

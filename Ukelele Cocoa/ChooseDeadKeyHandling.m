@@ -52,7 +52,7 @@
 							 window:parentWindow
 						   callBack:^(int choice) {
 							   [self interactionCompleted];
-							   callBack(choice);
+							   self->callBack(choice);
 						   }];
 }
 

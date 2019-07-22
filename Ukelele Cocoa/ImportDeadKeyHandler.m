@@ -150,7 +150,7 @@
 			KeyboardLayoutInformation *info = keyboardLayouts[index];
 			UKKeyboardController *keyboardWindow = [info keyboardController];
 			if (keyboardWindow == nil) {
-				keyboardWindow = [[(UKKeyboardController *)[parentWindow windowController] parentDocument] createControllerForEntry:info];
+				keyboardWindow = [[(UKKeyboardController *)[self->parentWindow windowController] parentDocument] createControllerForEntry:info];
 			}
 			[self handleDocument:keyboardWindow];
 			askFromList = nil;
@@ -213,7 +213,7 @@
 				  completionBlock:^(NSString *importState, NSString *destinationState) {
 		if (importState != nil) {
 				// Have valid states
-			[[targetDocumentWindow keyboardLayout] importDeadKeyState:importState
+			[[self->targetDocumentWindow keyboardLayout] importDeadKeyState:importState
 															  toState:destinationState
 														 fromKeyboard:sourceObject];
 		}
@@ -233,7 +233,7 @@
 		NSString *chosenState = result;
 		if (chosenState != nil) {
 				// Valid state supplied
-			[[targetDocumentWindow keyboardLayout] importDeadKeyState:stateName
+			[[self->targetDocumentWindow keyboardLayout] importDeadKeyState:stateName
 														toState:chosenState
 												   fromKeyboard:[sourceDocumentWindow keyboardLayout]];
 		}

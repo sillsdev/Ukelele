@@ -1631,14 +1631,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 										callBack:^(UkeleleBundleVersionSheet *sheet) {
 											if (nil == sheet) {
 													// User cancelled
-												bundleVersionSheet = nil;
+												self->bundleVersionSheet = nil;
 												return;
 											}
 											[self changeBundleName:[[sheet bundleNameField] stringValue]
 													 bundleVersion:[[sheet bundleVersionField] stringValue]
 													  buildVersion:[[sheet buildVersionField] stringValue]
 													 sourceVersion:[[sheet sourceVersionField] stringValue]];
-											bundleVersionSheet = nil;
+											self->bundleVersionSheet = nil;
 										}];
 }
 
