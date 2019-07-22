@@ -19,7 +19,7 @@
 #include "DereferenceLess.h"
 #include "NArray.h"
 #include "ErrorMessage.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 enum {
 	kActionTypeTerminator,

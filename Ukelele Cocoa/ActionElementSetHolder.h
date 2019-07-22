@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include "ActionElement.h"
-using std::tr1::shared_ptr;
+//using std::shared_ptr;
 
 class ActionElementSetHolder {
 	shared_ptr<ActionElementSet> mActionElementSet;

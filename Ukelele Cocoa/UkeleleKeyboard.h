@@ -10,11 +10,11 @@
 #ifndef _UkeleleKeyboard_h_
 #define _UkeleleKeyboard_h_
 
-#include <tr1/memory>
+#include <memory>
 #include "XMLCommentHolder.h"
 #include "NXMLNode.h"
 #include "KeyboardElement.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 class KeyStrokeLookUpTable;
 

@@ -15,7 +15,7 @@
 #include <vector>
 #include "NXMLNode.h"
 #include "ErrorMessage.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 class LayoutsElement : public XMLCommentHolder {
 public:

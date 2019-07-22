@@ -17,7 +17,7 @@
 #include "ActionElement.h"
 #include "NXMLNode.h"
 #include "ModifierMap.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 class KeyMapSet : public XMLCommentHolder {
 public:

@@ -11,7 +11,7 @@
 #define _XMLCommentHolder_h_
 
 #include <list>
-#include <tr1/memory>
+#include <memory>
 #include "NString.h"
 #include "NXMLNode.h"
 

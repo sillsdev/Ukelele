@@ -15,7 +15,7 @@
 #include "KeyMapSelect.h"
 #include <vector>
 #include "NXMLNode.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 const UInt32 kModifierKeyCount = 8;
 const UInt32 kModifierMapLength = 1 << kModifierKeyCount;

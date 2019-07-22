@@ -14,7 +14,7 @@
 #include "KeyElementTable.h"
 #include "NXMLNode.h"
 #include <vector>
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 class KeyMapElement : public XMLCommentHolder {
 public:

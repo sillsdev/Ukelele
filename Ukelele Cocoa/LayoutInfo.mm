@@ -11,7 +11,7 @@
 #import "NString.h"
 #include "boost/unordered_map.hpp"
 #include "boost/scoped_array.hpp"
-#include <tr1/array>
+#include <array>
 #include <map>
 #include <vector>
 #import "NCocoa.h"
