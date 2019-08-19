@@ -431,6 +431,25 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSError *theError = nil;
 	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
 	[fileManager removeItemAtURL:outputFileURL error:nil];
+	outputFileURL = nil;
+	if (myData == nil || [myData length] == 0) {
+		// First work out whether it's the bug in kluchrtoxml that appends a character to the name
+		NSURL *tempDirectoryURL = [NSURL URLWithString:tempDirectory];
+		NSArray *directoryContents = [fileManager contentsOfDirectoryAtURL:tempDirectoryURL includingPropertiesForKeys:nil options:0 error:nil];
+		for (NSURL *fileURL in directoryContents) {
+			NSString *fileName = [fileURL lastPathComponent];
+			NSString *fileExtension = [fileURL pathExtension];
+			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:@"keylayout"]) {
+				outputFileURL = fileURL;
+				break;
+			}
+		}
+		if (outputFileURL != nil) {
+			// Try again
+			myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
+			[fileManager removeItemAtURL:outputFileURL error:nil];
+		}
+	}
 	if (myData == nil || [myData length] == 0) {
 		if (outError != nil) {
 			*outError = theError;
