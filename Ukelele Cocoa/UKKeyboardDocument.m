@@ -424,6 +424,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 	CFRelease(tempFileName);
 	CFRelease(parentURL);
+	NSDate *tempFileDate;
+	if (![tempFileURL getResourceValue:&tempFileDate forKey:NSURLContentModificationDateKey error:nil]) {
+		tempFileDate = [NSDate dateWithTimeIntervalSinceNow:0.0];
+	}
 	[fileManager removeItemAtURL:tempFileURL error:nil];
 	[fileManager changeCurrentDirectoryPath:currentDirectory];
 		// Finally, read the resulting file
@@ -435,13 +439,24 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (myData == nil || [myData length] == 0) {
 		// First work out whether it's the bug in kluchrtoxml that appends a character to the name
 		NSURL *tempDirectoryURL = [NSURL URLWithString:tempDirectory];
-		NSArray *directoryContents = [fileManager contentsOfDirectoryAtURL:tempDirectoryURL includingPropertiesForKeys:nil options:0 error:nil];
+		NSArray *directoryContents = [fileManager contentsOfDirectoryAtURL:tempDirectoryURL includingPropertiesForKeys:@[NSURLContentModificationDateKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
 		for (NSURL *fileURL in directoryContents) {
 			NSString *fileName = [fileURL lastPathComponent];
 			NSString *fileExtension = [fileURL pathExtension];
 			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:@"keylayout"]) {
-				outputFileURL = fileURL;
-				break;
+				NSDate *modificationDate;
+				if ([fileURL getResourceValue:&modificationDate forKey:NSURLContentModificationDateKey error:nil]) {
+					if ([modificationDate compare:tempFileDate] != NSOrderedAscending) {
+						// This is the likely file
+						outputFileURL = fileURL;
+						break;
+					}
+				}
+				else {
+					// We couldn't get the modification date, so just assume that there's only one such file...
+					outputFileURL = fileURL;
+					break;
+				}
 			}
 		}
 		if (outputFileURL != nil) {
