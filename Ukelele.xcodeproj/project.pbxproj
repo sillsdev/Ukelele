@@ -15,7 +15,6 @@
 		521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521E5EA61926228000C45A4A /* InspectorWindow.xib */; };
 		5224CD031B37DEA0004AB2B6 /* Ukelele Manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */; };
 		5225863C22E5FE3500F21926 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5225863B22E5FE3500F21926 /* Sparkle.framework */; };
-		5225863D22E5FE3B00F21926 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5225863B22E5FE3500F21926 /* Sparkle.framework */; };
 		5225863E22E5FE3B00F21926 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5225863B22E5FE3500F21926 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227AD3A19259AE40014ECD7 /* ColourThemeEditor.xib */; };
 		5227DA3319258A8700192B1B /* UkeleleBundleVersionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5227DA3219258A8700192B1B /* UkeleleBundleVersionSheet.xib */; };
@@ -680,7 +679,6 @@
 			files = (
 				52A105941B2A6291002C5255 /* SystemConfiguration.framework in Frameworks */,
 				523B0236191D917400E06DF3 /* libNano.a in Frameworks */,
-				5225863D22E5FE3B00F21926 /* Sparkle.framework in Frameworks */,
 				52BBED03191B4C3900E48394 /* Cocoa.framework in Frameworks */,
 				5225863C22E5FE3500F21926 /* Sparkle.framework in Frameworks */,
 			);
