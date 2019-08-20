@@ -85,6 +85,7 @@ NSString *kStringSourceVersionKey = @"SourceVersion";
 NSString *kStringInfoPlistKLInfoPrefix = @"KLInfo_";
 NSString *kStringInfoPlistInputSourceID = @"TISInputSourceID";
 NSString *kStringInfoPlistIntendedLanguageKey = @"TISIntendedLanguage";
+NSString *kStringInfoPlistCapsLockSwitchableKey = @"TICapsLockLanguageSwitchCapable";
 
 	// Preference keys
 NSString *UKScaleFactor = @"ScaleFactor";

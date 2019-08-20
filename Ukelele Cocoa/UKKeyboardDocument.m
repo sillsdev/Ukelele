@@ -50,6 +50,7 @@ NSString *kLocaleDescription = @"localeDescription";
 NSString *kKeyboardColumn = @"KeyboardName";
 NSString *kIconColumn = @"Icon";
 NSString *kLanguageColumn = @"Language";
+NSString *kCapsLockSwitchColumn = @"CapsLock";
 NSString *kLocaleColumn = @"Locale";
 NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 
@@ -617,7 +618,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	infoPlist[(NSString *)kCFBundleNameKey] = self.bundleName;
 		// Set the version number
 	infoPlist[(NSString *)kCFBundleVersionKey] = self.bundleVersion;
-		// Get the intended languages for each keyboard layout in the bundle
+		// Get the intended languages and caps lock switchable status for each keyboard layout in the bundle
 	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
 		NSString *languageIdentifier = [keyboardEntry intendedLanguage];
 		if (nil != languageIdentifier && [languageIdentifier length] > 0) {
@@ -627,10 +628,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			if (fileName == nil) {
 				fileName = keyboardName;
 			}
+			BOOL capsLockSwitchable = [keyboardEntry doesCapsLockSwitching];
 			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, fileName];
 			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[fileName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
 			NSDictionary *languageDictionary = @{kStringInfoPlistInputSourceID: keyboardIdentifier,
-												 kStringInfoPlistIntendedLanguageKey: languageIdentifier};
+												 kStringInfoPlistIntendedLanguageKey: languageIdentifier,
+												 kStringInfoPlistCapsLockSwitchableKey: @(capsLockSwitchable)
+												 };
 			infoPlist[KLInfoIdentifier] = languageDictionary;
 		}
 	}
@@ -715,7 +719,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[directoryEntry preferredFilename] compare:kStringInfoPlistFileName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Info.plist file
 			infoPlistFile = directoryEntry;
-			[self parseInfoPlist:infoPlistFile];
 		}
 		else if ([[directoryEntry preferredFilename] compare:kStringResourcesName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Resources directory
@@ -855,6 +858,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[self.localisations addObject:theData];
 		}
 	}
+	[self parseInfoPlist:infoPlistFile];
 	return YES;
 }
 
@@ -895,11 +899,26 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	for (NSString *plistKey in infoPlistDictionary) {
 		if ([plistKey hasPrefix:kStringInfoPlistKLInfoPrefix]) {
-				// It's a keyboard language
+				// It's a keyboard language or a caps lock switchable key
 			NSString *keyboardName = [[plistKey substringFromIndex:[kStringInfoPlistKLInfoPrefix length]] decomposedStringWithCanonicalMapping];
 			NSDictionary *languageDictionary = infoPlistDictionary[plistKey];
-			NSString *languageIdentifier = languageDictionary[kStringInfoPlistIntendedLanguageKey];
-			languageList[keyboardName] = languageIdentifier;
+			NSUInteger index = [self.keyboardLayouts indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+#pragma unused(idx)
+#pragma unused(stop)
+				return [[(KeyboardLayoutInformation *)obj keyboardName] isEqualToString:keyboardName];
+			}];
+			if (languageDictionary[kStringInfoPlistIntendedLanguageKey] != nil) {
+				NSString *languageIdentifier = languageDictionary[kStringInfoPlistIntendedLanguageKey];
+				languageList[keyboardName] = languageIdentifier;
+				if (index != NSNotFound) {
+					[self.keyboardLayouts[index] setIntendedLanguage:languageIdentifier];
+				}
+			}
+			if (languageDictionary[kStringInfoPlistCapsLockSwitchableKey] != nil) {
+				if (index != NSNotFound) {
+					[self.keyboardLayouts[index] setDoesCapsLockSwitching:[[languageDictionary valueForKey:kStringInfoPlistCapsLockSwitchableKey] boolValue]];
+				}
+			}
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleIdentifierKey]) {
 			self.bundleIdentifier = infoPlistDictionary[plistKey];
@@ -1174,6 +1193,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				// Intended language column
 			resultString = [layoutInfo intendedLanguage];
 		}
+		else if ([[tableColumn identifier] isEqualToString:kCapsLockSwitchColumn]) {
+			return @([layoutInfo doesCapsLockSwitching]);
+		}
 	}
 	else if (tableView == self.localisationsTable) {
 		LocalisationData *theData = [self.localisationsController arrangedObjects][row];
@@ -1225,17 +1247,40 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma mark Table delegate methods
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-		// We don't need to special case this for the two tables, since they all use NSTableCellView
-	NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	NSView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	// Special case for the caps lock switch column
+	if ([[tableColumn identifier] isEqualToString:kCapsLockSwitchColumn]) {
+			// This does not use standard NSTableCellViews
+		if (view == nil) {
+			view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 17)];
+			for (NSView *subview in [view subviews]) {
+				[subview removeFromSuperview];
+			}
+			NSButton *checkBox;
+			if (@available(macOS 12, *)) {
+				checkBox = [NSButton checkboxWithTitle:@"" target:self action:nil];
+			}
+			else {
+				checkBox = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
+				[checkBox setButtonType:NSButtonTypePushOnPushOff];
+			}
+			[view addSubview:checkBox];
+			[view addConstraint:[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+			[view addConstraint:[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+		}
+		[((NSButton *)[view subviews][0]) setState:[[self tableView:tableView objectValueForTableColumn:tableColumn row:row] boolValue] ? NSOnState : NSOffState];
+		return view;
+	}
+	// All other columns for each table come through here
 	if (view == nil) {
 		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
 		[view setIdentifier:[tableColumn identifier]];
 	}
 	if ([[tableColumn identifier] isEqualToString:kIconColumn]) {
-		[view.imageView setImage:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+		[((NSTableCellView *) view).imageView setImage:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
 	}
 	else {
-		[view.textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+		[((NSTableCellView *) view).textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
 	}
 	return view;
 }
@@ -2155,6 +2200,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}];
 }
 
+- (IBAction)toggleCapsLockSwitch:(id)sender {
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable rowForView:sender];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	[self setCapsLockSwitchingAtIndex:selectedRowNumber toValue:[(NSButton *)sender state] == NSOnState];
+}
+
 #pragma mark Notifications
 
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject {
@@ -2506,6 +2559,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self insertDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Capture current input source"];
 	[undoManager endUndoGrouping];
+}
+
+- (void)setCapsLockSwitchingAtIndex:(NSInteger)index toValue:(BOOL)newValue {
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][index];
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] setCapsLockSwitchingAtIndex:index toValue:[selectedRowInfo doesCapsLockSwitching]];
+	[undoManager setActionName:@"Set caps lock switching"];
+	[selectedRowInfo setDoesCapsLockSwitching:newValue];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)replaceLocaleForLocalisation:(LocalisationData *)localeData withLocale:(LocaleCode *)newLocale {

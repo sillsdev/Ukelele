@@ -58,6 +58,7 @@
 - (IBAction)removeLocale:(id)sender;
 - (IBAction)editLocale:(id)sender;
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry;
+- (IBAction)toggleCapsLockSwitch:(id)sender;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName;
 - (void)inspectorDidAppear;

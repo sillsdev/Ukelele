@@ -27,6 +27,7 @@
 	_keyboardFileWrapper = nil;
 	_intendedLanguage = @"";
 	_iconData = nil;
+	_doesCapsLockSwitching = NO;
 	_keyboardController = nil;
 	_hasBadKeyboard = NO;
 	_localisedNames = [NSMutableDictionary dictionary];

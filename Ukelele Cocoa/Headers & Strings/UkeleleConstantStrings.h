@@ -81,6 +81,7 @@ MY_EXTERN NSString *kStringSourceVersionKey;
 MY_EXTERN NSString *kStringInfoPlistKLInfoPrefix;
 MY_EXTERN NSString *kStringInfoPlistInputSourceID;
 MY_EXTERN NSString *kStringInfoPlistIntendedLanguageKey;
+MY_EXTERN NSString *kStringInfoPlistCapsLockSwitchableKey;
 
 	// Preference keys
 MY_EXTERN NSString *UKScaleFactor;
