@@ -1265,8 +1265,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				[checkBox setButtonType:NSButtonTypePushOnPushOff];
 			}
 			[view addSubview:checkBox];
-			[view addConstraint:[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-			[view addConstraint:[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+			[view addConstraints:
+  @[[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0],
+	[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]]];
 		}
 		[((NSButton *)[view subviews][0]) setState:[[self tableView:tableView objectValueForTableColumn:tableColumn row:row] boolValue] ? NSOnState : NSOffState];
 		return view;
