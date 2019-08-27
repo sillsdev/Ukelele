@@ -30,6 +30,8 @@
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
 #define UKKeyboardConverterTool	@"kluchrtoxml"
+#define UKKeyboardConverterTool32	@"kluchrtoxml_32"
+#define UKKeyboardConverterTool64	@"kluchrtoxml_64"
 #define UKIconutilTool @"iconutil"
 	
 // Dictionary keys
@@ -412,8 +414,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	UpdateResFile(CurResFile());
 	FSCloseFork(resFile);
 #pragma clang diagnostic pop
-		// Get the conversion tool
-	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKKeyboardConverterTool];
+		// Get the conversion tool in the appropriate version
+	NSString *toolName;
+	if (@available(macOS 10.14, *)) {
+		toolName = UKKeyboardConverterTool64;
+	}
+	else {
+		toolName = UKKeyboardConverterTool32;
+	}
+	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:toolName];
 		// Set up and run the tool
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *currentDirectory = [fileManager currentDirectoryPath];
@@ -1257,7 +1266,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				[subview removeFromSuperview];
 			}
 			NSButton *checkBox;
-			if (@available(macOS 12, *)) {
+			if (@available(macOS 10.12, *)) {
 				checkBox = [NSButton checkboxWithTitle:@"" target:self action:nil];
 			}
 			else {

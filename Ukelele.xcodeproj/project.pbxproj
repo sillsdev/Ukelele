@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5209B731193563C000B195E9 /* kluchrtoxml */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5209F18219236083001F9923 /* AskCommentSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5209F18119236083001F9923 /* AskCommentSheet.xib */; };
 		521270E5194AD6E3003103CA /* UKKeyboardDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 521270E4194AD6E3003103CA /* UKKeyboardDocument.m */; };
 		52142DE11921D4F500B04334 /* KeyboardLayoutInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 52142DE01921D4F500B04334 /* KeyboardLayoutInformation.m */; };
@@ -122,6 +121,10 @@
 		524EAE261B9FD16900B77B43 /* dialogs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE281B9FD16900B77B43 /* dialogs.strings */; };
 		524EAE291B9FD16F00B77B43 /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE2B1B9FD16F00B77B43 /* Errors.strings */; };
 		524EAE2C1B9FD17800B77B43 /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE2E1B9FD17800B77B43 /* keyboards.strings */; };
+		524F68A8230E5F9000593EEA /* kluchrtoxml_32 in Resources */ = {isa = PBXBuildFile; fileRef = 524F68A6230E5F9000593EEA /* kluchrtoxml_32 */; };
+		524F68A9230E5F9000593EEA /* kluchrtoxml_64 in Resources */ = {isa = PBXBuildFile; fileRef = 524F68A7230E5F9000593EEA /* kluchrtoxml_64 */; };
+		524F68AA230E5FEF00593EEA /* kluchrtoxml_32 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 524F68A6230E5F9000593EEA /* kluchrtoxml_32 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		524F68AB230E5FEF00593EEA /* kluchrtoxml_64 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 524F68A7230E5F9000593EEA /* kluchrtoxml_64 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
 		524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F61929D2C3004A8A72 /* UCDNamesList.txt */; };
 		5252055D19273D7500CDE5BD /* UkeleleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252055C19273D7500CDE5BD /* UkeleleDocument.xib */; };
@@ -264,7 +267,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				5209B733193563D600B195E9 /* kluchrtoxml in CopyFiles */,
+				524F68AA230E5FEF00593EEA /* kluchrtoxml_32 in CopyFiles */,
+				524F68AB230E5FEF00593EEA /* kluchrtoxml_64 in CopyFiles */,
 				5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,7 +297,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5209B731193563C000B195E9 /* kluchrtoxml */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kluchrtoxml; sourceTree = "<group>"; };
 		5209F18119236083001F9923 /* AskCommentSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskCommentSheet.xib; path = "Interface Files/AskCommentSheet.xib"; sourceTree = "<group>"; };
 		521270E3194AD6E3003103CA /* UKKeyboardDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardDocument.h; sourceTree = "<group>"; };
 		521270E4194AD6E3003103CA /* UKKeyboardDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UKKeyboardDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -526,6 +529,8 @@
 		524EAE2F1B9FD1A400B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/keyboards.strings; sourceTree = "<group>"; };
 		524EAE301B9FD1AB00B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/dialogs.strings; sourceTree = "<group>"; };
 		524EAE311B9FD1B100B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Errors.strings; sourceTree = "<group>"; };
+		524F68A6230E5F9000593EEA /* kluchrtoxml_32 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_32; path = ../../kluchrtoxml_32; sourceTree = "<group>"; };
+		524F68A7230E5F9000593EEA /* kluchrtoxml_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_64; path = ../../kluchrtoxml_64; sourceTree = "<group>"; };
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
@@ -955,7 +960,6 @@
 		52BBED09191B4C3900E48394 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				52EFEAF621DE311C00574BC3 /* Keyboard Installer.app */,
 				52BBED11191B4C3900E48394 /* Credits.rtf */,
 				524EAE281B9FD16900B77B43 /* dialogs.strings */,
 				52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */,
@@ -963,8 +967,10 @@
 				52D2C48721A2D4E20032E670 /* iconutil */,
 				52BBED0B191B4C3900E48394 /* InfoPlist.strings */,
 				52BAE0B91AA3FA2400D761C2 /* KCAPResources.plist */,
+				52EFEAF621DE311C00574BC3 /* Keyboard Installer.app */,
 				524EAE2E1B9FD17800B77B43 /* keyboards.strings */,
-				5209B731193563C000B195E9 /* kluchrtoxml */,
+				524F68A6230E5F9000593EEA /* kluchrtoxml_32 */,
+				524F68A7230E5F9000593EEA /* kluchrtoxml_64 */,
 				524F76F41929D29B004A8A72 /* language-subtag-registry.xml */,
 				52BBED0E191B4C3900E48394 /* main.m */,
 				5253EC761C43928B003B7CC3 /* scripts.strings */,
@@ -1356,9 +1362,11 @@
 				52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */,
 				5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */,
 				5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */,
+				524F68A9230E5F9000593EEA /* kluchrtoxml_64 in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
 				52EFEAF721DE311D00574BC3 /* Keyboard Installer.app in Resources */,
+				524F68A8230E5F9000593EEA /* kluchrtoxml_32 in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
