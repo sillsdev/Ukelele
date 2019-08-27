@@ -586,7 +586,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma mark Tab handling
 
 - (void)tabView:(NSTabView *)theTabView willSelectTabViewItem:(NSTabViewItem *)tabViewItem {
-#pragma unused(tabViewItem)
+	if ([kTabNameKeyboard isEqualToString:[[theTabView selectedTabViewItem] identifier]] &&
+		![kTabNameKeyboard isEqualToString:[tabViewItem identifier]]) {
+		// We are about to leave the keyboard tab
+		if (isInQuickEntryMode) {
+			// We need to leave quick entry mode
+			[self toggleQuickEntryMode:self];
+		}
+	}
 	if ([kTabNameComments isEqualToString:[[theTabView selectedTabViewItem] identifier]]) {
 			// We are about to leave the comment tab
 		if (commentChanged) {
@@ -644,7 +651,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(runPageLayout:) ||
 		selector == @selector(printDocument:) ||
 		selector == @selector(findKeyStroke:) ||
-//		selector == @selector(askKeyboardIdentifiers:) ||
 		selector == @selector(installForAllUsers:) ||
 		selector == @selector(installForCurrentUser:) ||
 		selector == @selector(removeUnusedStates:) ||
@@ -656,7 +662,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(makeDeadKey:) ||
 		selector == @selector(makeOutput:) ||
 		selector == @selector(changeNextState:) ||
-		selector == @selector(chooseColourTheme:)) {
+		selector == @selector(chooseColourTheme:) ||
+		selector == @selector(toggleQuickEntryMode:)) {
 		return YES;
 	}
 	return NO;
@@ -681,28 +688,29 @@ const CGFloat kTextPaneHeight = 17.0f;
 		action == @selector(changeNextState:) || action == @selector(attachIconFile:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
+		return (interactionHandler == nil) && !isInQuickEntryMode
+		&& [kTabNameKeyboard isEqualToString:currentTabName];
 	}
 	else if (action == @selector(askKeyboardIdentifiers:)) {
 			// These can only be selected if there is no interaction in progress
-		return (interactionHandler == nil);
+		return (interactionHandler == nil) && !isInQuickEntryMode;
 	}
 	else if (action == @selector(attachComment:)) {
 			// These can only be selected if there is no interaction in progress, we are on the
 			/// keyboard tab, and a key is selected
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && (selectedKey != kNoKeyCode);
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && (selectedKey != kNoKeyCode);
 	}
 	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeTerminator:)) {
 			// These can only be selected if there are any states other than "none",
 			// there is no interaction in progress, and we are on the keyboard tab
 		NSUInteger stateCount = [self.keyboardLayout stateCount];
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
 	}
 	else if (action == @selector(changeStateName:) || action == @selector(removeUnusedStates:)) {
 			// These can only be selected if there is no interaction in progress and
 			// there are states other than "none"
 		NSUInteger stateCount = [self.keyboardLayout stateCount];
-		return (interactionHandler == nil) && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+		return (interactionHandler == nil) && !isInQuickEntryMode && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
 	}
 	else if (action == @selector(changeActionName:) || action == @selector(removeUnusedActions:)) {
 			// These can only be selected if there are any actions
@@ -712,12 +720,12 @@ const CGFloat kTextPaneHeight = 17.0f;
 	else if (action == @selector(leaveDeadKeyState:)) {
 			// These can only selected if we are in a dead key state,
 			// we are on the keyboard tab, and no interaction is in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && [stateStack count] > 1;
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && [stateStack count] > 1;
 	}
 	else if (action == @selector(unlinkKey:)) {
 			// This can come up either on the keyboard or modifiers tab
 		if ([kTabNameKeyboard isEqualToString:currentTabName]) {
-			return interactionHandler == nil;
+			return interactionHandler == nil && !isInQuickEntryMode;
 		}
 		else if ([kTabNameModifiers isEqualToString:currentTabName]) {
 			return (interactionHandler == nil) && ([self.modifiersTableView selectedRow] >= 0);
@@ -728,7 +736,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	else if (action == @selector(pasteKey:)) {
 			// This can only be selected if there is a key to paste, and no interaction is in progress
-		return (interactionHandler == nil) && [self.keyboardLayout hasKeyOnPasteboard];
+		return (interactionHandler == nil) && !isInQuickEntryMode && [self.keyboardLayout hasKeyOnPasteboard];
 	}
 	else if (action == @selector(setDefaultIndex:)) {
 			// This can only be selected if we are on the modifiers tab
@@ -1674,6 +1682,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma mark Messages
 
 - (void)handleKeyCapClick:(KeyCapView *)keyCapView clickCount:(NSInteger)clickCount {
+	if (isInQuickEntryMode) {
+			// We don't change things if in quick entry mode
+		return;
+	}
 	if (clickCount == 1) {
 		[self messageClick:(int)[keyCapView keyCode]];
 	}
@@ -1685,6 +1697,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)messageModifiersChanged:(int)modifiers
 {
 		// Modifiers have changed, so make note of changes
+	if (isInQuickEntryMode) {
+		// We don't change things if in quick entry mode
+		return;
+	}
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	NSUInteger newCurrentModifiers;
 	if (usingStickyModifiers) {
