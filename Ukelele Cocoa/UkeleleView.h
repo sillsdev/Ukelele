@@ -21,6 +21,7 @@
 @property (strong, nonatomic) ColourTheme *colourTheme;
 @property (strong, nonatomic) UKStyleInfo *styleInfo;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *keyCapViews;
+@property (readonly, copy) NSArray *ordinaryKeys;
 
 - (int)createViewWithKeyboardID:(int)keyboardID withScale:(float)scaleValue;
 - (void)createViewWithStream:(char *)theStream forID:(int)keyboardID withScale:(float)scaleValue;

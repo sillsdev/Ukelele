@@ -43,6 +43,7 @@ typedef struct KeyEntryRec {
 @implementation UkeleleView {
 	KeyCodeMap *keyCapMap;
 	NSMutableArray *keyCapList;
+	NSArray *ordinaryKeyList;
 	CGFloat baseFontSize;
 	ModifiersController *modifiersController;
 }
@@ -82,6 +83,7 @@ typedef struct KeyEntryRec {
 		[_styleInfo changeLargeFont:theFont];
 		modifiersController = [[ModifiersController alloc] init];
 		_eventState = kEventStateNone;
+		ordinaryKeyList = [NSArray array];
     }
     return self;
 }
@@ -447,6 +449,33 @@ typedef struct KeyEntryRec {
 		// Now scale to the appropriate value
 	[self setScaleFactor:0.5];
 	[self scaleViewToScale:scaleValue limited:YES];
+	
+	// Calculate the ordinary keys
+	NSMutableArray *keyArray = [NSMutableArray arrayWithCapacity:[keyCapList count]];
+	for (KeyCapView *keyCap in keyCapList) {
+		if ([keyCap keyType] == kOrdinaryKeyType) {
+			[keyArray addObject:keyCap];
+		}
+	}
+	ordinaryKeyList = [keyArray sortedArrayUsingComparator:^NSComparisonResult(KeyCapView * _Nonnull keyCap1, KeyCapView * _Nonnull keyCap2) {
+		if (fabs(keyCap1.frame.origin.y - keyCap2.frame.origin.y) < 0.25) {
+			if (fabs(keyCap1.frame.origin.x - keyCap2.frame.origin.x) < 0.25) {
+				return NSOrderedSame;
+			}
+			else if (keyCap1.frame.origin.x < keyCap2.frame.origin.x) {
+				return NSOrderedAscending;
+			}
+			else {
+				return NSOrderedDescending;
+			}
+		}
+		else if (keyCap1.frame.origin.y > keyCap2.frame.origin.y) {
+			return NSOrderedAscending;
+		}
+		else {
+			return NSOrderedDescending;
+		}
+	}];
 	[self setNeedsDisplay:YES];
 }
 
@@ -504,6 +533,10 @@ typedef struct KeyEntryRec {
 - (NSArray *)keyCapViews
 {
 	return keyCapList;
+}
+
+- (NSArray *)ordinaryKeys {
+	return ordinaryKeyList;
 }
 
 - (void)updateModifiers:(unsigned int)modifierCombination

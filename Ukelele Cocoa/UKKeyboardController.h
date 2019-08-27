@@ -34,7 +34,7 @@ enum ToolbarItemTags {
 @class WarningDialogController;
 
 @interface UKKeyboardController : NSWindowController<NSWindowDelegate,
-	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, UKKeyCapClick,
+	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, NSTextFieldDelegate, UKKeyCapClick,
 	UKMenuDelegate, UKInteractionCompletion, UkeleleDocumentDelegate>
 {
 	NSMutableDictionary *internalState;
@@ -128,6 +128,8 @@ enum ToolbarItemTags {
 - (IBAction)setKeyboardType:(id)sender;
 - (IBAction)findKeyStroke:(id)sender;
 - (IBAction)chooseColourTheme:(id)sender;
+- (IBAction)textFieldAction:(id)sender;
+- (IBAction)toggleQuickEntryMode:(id)sender;
 
 	// Printing
 - (IBAction)runPageLayout:(id)sender;

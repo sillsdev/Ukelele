@@ -56,6 +56,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	UkeleleStatus *currentStatus;
 	KeyboardResourceList *keyboardResources;
 	BOOL isDisplayingMessage;
+	BOOL isInQuickEntryMode;
+	NSInteger quickEntryIndex;
 }
 
 @synthesize keyboardLayout = _keyboardLayout;
@@ -102,6 +104,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		currentStatus = [[UkeleleStatus alloc] init];
 		keyboardResources = [KeyboardResourceList getInstance];
 		isDisplayingMessage = NO;
+		isInQuickEntryMode = NO;
+		quickEntryIndex = -1;
     }
     return self;
 }
@@ -735,6 +739,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 			// These are always enabled
 		return YES;
 	}
+	else if (action == @selector(toggleQuickEntryMode:)) {
+		// Enabled when the keyboard tab is visible and no interaction in progress
+		[(NSMenuItem *)anItem setState:isInQuickEntryMode ? NSOnState : NSOffState];
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
+	}
 	return NO;
 }
 #pragma clang diagnostic pop
@@ -960,6 +969,27 @@ const CGFloat kTextPaneHeight = 17.0f;
 		theTheme = [ColourTheme defaultColourTheme];
 	}
 	[ukeleleView setColourTheme:theTheme];
+}
+
+- (NSTextField *)createTextFieldForKeyCap:(KeyCapView *)keyCap {
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	NSRect textFieldFrame = [keyCap frame];
+	NSTextField *textField = [[NSTextField alloc] initWithFrame:textFieldFrame];
+	[ukeleleView addSubview:textField];
+	[textField setEditable:YES];
+	[textField setSelectable:YES];
+	[textField setBordered:YES];
+	[textField setStringValue:[keyCap outputString]];
+	[textField setFont:[[keyCap styleInfo] largeFont]];
+	[textField setTextColor:[NSColor whiteColor]];
+	[textField setBackgroundColor:[NSColor blackColor]];
+	[textField setAlignment:NSTextAlignmentCenter];
+	[textField selectText:self];
+	[textField setDelegate:self];
+	[textField setTarget:self];
+	[textField setAction:@selector(textFieldAction:)];
+	return textField;
 }
 
 #pragma mark Callbacks
@@ -1472,8 +1502,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)cancel:(id)sender {
-#pragma unused(sender)
-	NSAssert(interactionHandler != nil, @"Can only have cancel when an interaction is in progress");
+	NSAssert(interactionHandler != nil || isInQuickEntryMode, @"Can only have cancel when an interaction is in progress or in quick entry mode");
+	if (isInQuickEntryMode) {
+		[self toggleQuickEntryMode:sender];
+		return;
+	}
 	[interactionHandler cancelInteraction];
 	[self.cancelButton setEnabled:NO];
 }
@@ -1501,6 +1534,36 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[warningDialog loadWarning:warningFileURL];
 	[warningDialog runDialogForWindow:self.window];
 	return YES;
+}
+
+- (IBAction)textFieldAction:(id)sender {
+	[self controlTextDidChange:[NSNotification notificationWithName:@"Text Changed" object:sender userInfo:nil]];
+}
+
+- (IBAction)toggleQuickEntryMode:(id)sender {
+#pragma unused(sender)
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	if (isInQuickEntryMode) {
+		NSUInteger index = [[ukeleleView subviews] indexOfObjectPassingTest:^BOOL(__kindof NSView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+#pragma unused(idx)
+#pragma unused(stop)
+			return [obj isKindOfClass:[NSTextField class]];
+		}];
+		if (index != NSNotFound) {
+			[[ukeleleView subviews][index] removeFromSuperview];
+			quickEntryIndex = -1;
+			isInQuickEntryMode = NO;
+			[[ukeleleView window] makeFirstResponder:ukeleleView];
+		}
+	}
+	else {
+		quickEntryIndex = 0;
+		isInQuickEntryMode = YES;
+		KeyCapView *keyCap = [ukeleleView ordinaryKeys][0];
+		NSTextField *editField = [self createTextFieldForKeyCap:keyCap];
+		[editField setHidden:NO];
+	}
 }
 
 #pragma mark Printing
@@ -1972,6 +2035,34 @@ const CGFloat kTextPaneHeight = 17.0f;
 {
 		// Delegate method to indicate that the modifier map has changed
     [self modifierMapDidChangeImplementation];
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj {
+	// Delegate method for the text in a quick entry field changing
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	NSAssert(isInQuickEntryMode, @"Must be in quick entry mode");
+	NSArray *keyCapList = [ukeleleView ordinaryKeys];
+	NSAssert(quickEntryIndex >= 0 && quickEntryIndex < (NSInteger)[keyCapList count], @"Must have a valid index");
+	NSTextField *textPane = (NSTextField *)[obj object];
+	NSString *newText = [textPane stringValue];
+	NSInteger keyCode = [(KeyCapView *)keyCapList[quickEntryIndex] keyCode];
+	NSDictionary *keyData = @{kKeyKeyboardID: @(self.keyboardID),
+							  kKeyKeyCode: @(keyCode),
+							  kKeyModifiers: @(self.currentModifiers),
+							  kKeyState: self.currentState
+							  };
+	[self changeOutputForKey:keyData to:newText usingBaseMap:YES];
+	[textPane removeFromSuperview];
+	quickEntryIndex += 1;
+	if (quickEntryIndex < (NSInteger)[keyCapList count]) {
+		// Bring up the next key
+		[self createTextFieldForKeyCap:keyCapList[quickEntryIndex]];
+	}
+	else {
+		isInQuickEntryMode = false;
+		[[ukeleleView window] makeFirstResponder:ukeleleView];
+	}
 }
 
 #pragma mark Notifications
