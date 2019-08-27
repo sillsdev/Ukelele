@@ -416,7 +416,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma clang diagnostic pop
 		// Get the conversion tool in the appropriate version
 	NSString *toolName;
-	if (@available(macOS 10.14, *)) {
+	if (@available(macOS 10.15, *)) {
 		toolName = UKKeyboardConverterTool64;
 	}
 	else {
