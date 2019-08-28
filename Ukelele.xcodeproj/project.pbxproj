@@ -121,8 +121,6 @@
 		524EAE261B9FD16900B77B43 /* dialogs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE281B9FD16900B77B43 /* dialogs.strings */; };
 		524EAE291B9FD16F00B77B43 /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE2B1B9FD16F00B77B43 /* Errors.strings */; };
 		524EAE2C1B9FD17800B77B43 /* keyboards.strings in Resources */ = {isa = PBXBuildFile; fileRef = 524EAE2E1B9FD17800B77B43 /* keyboards.strings */; };
-		524F68A8230E5F9000593EEA /* kluchrtoxml_32 in Resources */ = {isa = PBXBuildFile; fileRef = 524F68A6230E5F9000593EEA /* kluchrtoxml_32 */; };
-		524F68A9230E5F9000593EEA /* kluchrtoxml_64 in Resources */ = {isa = PBXBuildFile; fileRef = 524F68A7230E5F9000593EEA /* kluchrtoxml_64 */; };
 		524F68AA230E5FEF00593EEA /* kluchrtoxml_32 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 524F68A6230E5F9000593EEA /* kluchrtoxml_32 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		524F68AB230E5FEF00593EEA /* kluchrtoxml_64 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 524F68A7230E5F9000593EEA /* kluchrtoxml_64 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */ = {isa = PBXBuildFile; fileRef = 524F76F41929D29B004A8A72 /* language-subtag-registry.xml */; };
@@ -1370,11 +1368,9 @@
 				52B2E9D01925D4CA00093F5C /* CreateSelectedDeadKeySheet.xib in Resources */,
 				5227AD3B19259AE40014ECD7 /* ColourThemeEditor.xib in Resources */,
 				5282DCB91DB8A2C500C43FE7 /* LocaleDialog.xib in Resources */,
-				524F68A9230E5F9000593EEA /* kluchrtoxml_64 in Resources */,
 				52E8A80519259A14008281A3 /* ChooseStateSheet.xib in Resources */,
 				529A5FCC192738C9002C14E3 /* SelectKeyByCodeSheet.xib in Resources */,
 				52EFEAF721DE311D00574BC3 /* Keyboard Installer.app in Resources */,
-				524F68A8230E5F9000593EEA /* kluchrtoxml_32 in Resources */,
 				52C2B5D0192743C20052D418 /* UkelelePreferences.xib in Resources */,
 				529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */,
 				524F76F51929D29B004A8A72 /* language-subtag-registry.xml in Resources */,
