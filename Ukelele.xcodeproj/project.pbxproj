@@ -531,6 +531,7 @@
 		524EAE311B9FD1B100B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Errors.strings; sourceTree = "<group>"; };
 		524F68A6230E5F9000593EEA /* kluchrtoxml_32 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_32; path = ../../kluchrtoxml_32; sourceTree = "<group>"; };
 		524F68A7230E5F9000593EEA /* kluchrtoxml_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_64; path = ../../kluchrtoxml_64; sourceTree = "<group>"; };
+		524F68AC2315855500593EEA /* Ukelele.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ukelele.entitlements; sourceTree = "<group>"; };
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
 		5252055C19273D7500CDE5BD /* UkeleleDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UkeleleDocument.xib; path = "Interface Files/UkeleleDocument.xib"; sourceTree = "<group>"; };
@@ -893,6 +894,7 @@
 		52BBECF6191B4C3900E48394 = {
 			isa = PBXGroup;
 			children = (
+				524F68AC2315855500593EEA /* Ukelele.entitlements */,
 				523B511B1B292ECA00E8982E /* Configuration */,
 				52BBED08191B4C3900E48394 /* Ukelele Cocoa */,
 				523B01C7191D7F9300E06DF3 /* Dependencies */,
@@ -1308,6 +1310,11 @@
 					52BBECFE191B4C3900E48394 = {
 						DevelopmentTeam = 3V2DRMTWC4;
 						LastSwiftMigration = 1020;
+						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1834,6 +1841,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CODE_SIGN_FLAGS = "--options=runtime";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-fvisibility=hidden",
@@ -1886,6 +1894,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
+				OTHER_CODE_SIGN_FLAGS = "--options=runtime";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1904,6 +1913,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3V2DRMTWC4;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1942,6 +1952,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3V2DRMTWC4;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
