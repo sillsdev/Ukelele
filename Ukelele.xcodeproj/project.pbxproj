@@ -240,7 +240,6 @@
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
 		52E2506E1E1C18A000BCE6B9 /* UKFileUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E2506D1E1C18A000BCE6B9 /* UKFileUtilities.m */; };
-		52E250701E1E8D9800BCE6B9 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */; };
 		52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E2F1A619258F9E007F4280 /* ChooseScale.xib */; };
 		52E347CA192457200046ABA7 /* AskKeyCode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E347C9192457200046ABA7 /* AskKeyCode.xib */; };
 		52E7EB8D1FBFFB1800195793 /* Organiser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E7EB8C1FBFFB1800195793 /* Organiser.xib */; };
@@ -1409,7 +1408,6 @@
 				528052881D65AEA700356D36 /* WarningDialog.xib in Resources */,
 				521E5EA71926228000C45A4A /* InspectorWindow.xib in Resources */,
 				52C6B2E219246F1500E0C915 /* AskNewKeyMap.xib in Resources */,
-				52E250701E1E8D9800BCE6B9 /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
