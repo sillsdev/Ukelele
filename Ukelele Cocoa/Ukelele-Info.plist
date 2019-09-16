@@ -67,7 +67,7 @@
 	<key>CFBundleSignature</key>
 	<string>Ukle</string>
 	<key>CFBundleVersion</key>
-	<string>3.4.0.287</string>
+	<string>3.4.0.288</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -82,6 +82,8 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://www.dropbox.com/s/vi51g5jig3etaum/Ukelele_appcast.xml?dl=1</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
 	<string>akGj2v0tJZhSIxt8IgV4Xx5lr7paN6sIshhWKJLPkVw=</string>
 	<key>UTExportedTypeDeclarations</key>

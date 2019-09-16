@@ -254,6 +254,7 @@
 		52F1914019258CA000164D48 /* ChooseKeyboardNameWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F1913F19258CA000164D48 /* ChooseKeyboardNameWindow.xib */; };
 		52F449801925CE6B009E9F58 /* ConfirmStateName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F4497F1925CE6B009E9F58 /* ConfirmStateName.xib */; };
 		52F73C111925CF9C009B00DF /* CreateDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F73C101925CF9C009B00DF /* CreateDeadKeySheet.xib */; };
+		52FBDA57232FA93D0073B686 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 52E2506F1E1E8D9800BCE6B9 /* dsa_pub.pem */; };
 		52FFB2E91DC9CB8D00954D4F /* LocalisationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FFB2E81DC9CB8D00954D4F /* LocalisationData.m */; };
 /* End PBXBuildFile section */
 
@@ -1349,6 +1350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FBDA57232FA93D0073B686 /* dsa_pub.pem in Resources */,
 				52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */,
 				52EB2B271927397000712272 /* ToolboxController.xib in Resources */,
 				52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */,
