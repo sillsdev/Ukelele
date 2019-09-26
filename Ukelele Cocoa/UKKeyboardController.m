@@ -2095,7 +2095,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	if (object == toolboxData && [keyPath isEqualToString:@"stickyModifiers"]) {
 			// Sticky modifiers has changed
-		[self messageModifiersChanged:[NSEvent modifierFlags]];
+		[self messageModifiersChanged:(int)[NSEvent modifierFlags]];
 	}
 }
 
