@@ -23,7 +23,7 @@
 #include "RemoveStateData.h"
 #include "AddMissingOutputData.h"
 #include "ScriptRanges.h"
-using std::tr1::shared_ptr;
+using std::shared_ptr;
 
 typedef enum : NSUInteger {
 	kRepairMissingSpecialKeyOutput = 0x1,

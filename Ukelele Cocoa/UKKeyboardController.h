@@ -34,7 +34,7 @@ enum ToolbarItemTags {
 @class WarningDialogController;
 
 @interface UKKeyboardController : NSWindowController<NSWindowDelegate,
-	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, UKKeyCapClick,
+	NSTableViewDelegate, NSTabViewDelegate, NSTextDelegate, NSTextFieldDelegate, UKKeyCapClick,
 	UKMenuDelegate, UKInteractionCompletion, UkeleleDocumentDelegate>
 {
 	NSMutableDictionary *internalState;
@@ -88,7 +88,7 @@ enum ToolbarItemTags {
 @property (nonatomic) NSInteger keyboardID;
 @property (nonatomic) NSInteger keyboardScript;
 @property (strong) NSString *keyboardName;
-@property (weak, readonly) NSURL *iconFile;
+@property (strong) NSURL *iconFile;
 	// Current state
 @property (nonatomic) NSUInteger currentModifiers;
 @property (nonatomic, readonly) NSInteger currentSelectedKey;
@@ -126,10 +126,10 @@ enum ToolbarItemTags {
 - (IBAction)attachComment:(id)sender;
 	// Other actions
 - (IBAction)setKeyboardType:(id)sender;
-- (IBAction)installForCurrentUser:(id)sender;
-- (IBAction)installForAllUsers:(id)sender;
 - (IBAction)findKeyStroke:(id)sender;
 - (IBAction)chooseColourTheme:(id)sender;
+- (IBAction)textFieldAction:(id)sender;
+- (IBAction)toggleQuickEntryMode:(id)sender;
 
 	// Printing
 - (IBAction)runPageLayout:(id)sender;
@@ -172,6 +172,7 @@ enum ToolbarItemTags {
 - (void)setSelectedKey:(NSInteger)keyCode;
 - (void)clearSelectedKey;
 - (void)updateColourThemes;
+- (void)setShowCodePoints:(BOOL)showCodePoints;
 
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;

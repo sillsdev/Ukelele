@@ -224,7 +224,7 @@ bool ModifierMap::IsSimplified(void)
 {
     KeyMapSelectIterator pos;
     for (pos = mKeyMapSelectList.begin(); pos != mKeyMapSelectList.end(); ++pos) {
-        if (!(*pos)->IsSimplified()) {
+        if (*pos != NULL && !(*pos)->IsSimplified()) {
             return false;
         }
     }

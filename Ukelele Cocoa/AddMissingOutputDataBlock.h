@@ -10,8 +10,8 @@
 #define Ukelele_3_AddMissingOutputDataBlock_h
 
 #include "KeyMapSetList.h"
-#import <tr1/memory>
-using std::tr1::shared_ptr;
+#include <memory>
+using std::shared_ptr;
 
 class AddMissingOutputDataBlock {
 	shared_ptr<KeyMapSetList> mKeyMapSetList;

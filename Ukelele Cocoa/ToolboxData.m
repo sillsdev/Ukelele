@@ -17,6 +17,7 @@
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 		_stickyModifiers = [userDefaults boolForKey:UKStickyModifiers];
 		_JISOnly = [userDefaults boolForKey:UKJISOnly];
+		_showCodePoints = [userDefaults boolForKey:UKShowCodePoints];
 	}
 	return self;
 }

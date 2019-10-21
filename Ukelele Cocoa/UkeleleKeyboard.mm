@@ -44,10 +44,10 @@ ErrorMessage UkeleleKeyboard::CreateKeyboardFromXMLTree(const NXMLNode& inXMLTre
 	for (NXMLNodeListConstIterator pos = childList->begin(); pos != childList->end() && errorValue == XMLNoError; ++pos) {
 		const NXMLNode *childTree = *pos;
 		switch (childTree->GetType()) {
-			case kCFXMLNodeTypeProcessingInstruction:
-				// A processing instruction, which we ignore
-			break;
-			
+//			case kCFXMLNodeTypeProcessingInstruction:
+//				// A processing instruction, which we ignore
+//			break;
+//			
 			case kNXMLNodeDocType:
 				// The DTD header
 				if (!mDTDHeader.IsEmpty()) {

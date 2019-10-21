@@ -14,8 +14,8 @@
 #include <map>
 #include "boost/unordered_map.hpp"
 #include "NString_hash.h"
-#include <tr1/memory>
-using std::tr1::shared_ptr;
+#include <memory>
+using std::shared_ptr;
 
 class StateTransition {
 public:

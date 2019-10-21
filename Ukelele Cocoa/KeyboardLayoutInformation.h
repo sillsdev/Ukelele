@@ -19,6 +19,7 @@
 @property (readonly) BOOL hasIcon;
 @property (copy) NSString *intendedLanguage;
 @property (strong) NSData *iconData;
+@property (nonatomic) BOOL doesCapsLockSwitching;
 @property (strong) UKKeyboardController *keyboardController;
 @property (strong) NSFileWrapper *keyboardFileWrapper;
 @property (assign) BOOL hasBadKeyboard;

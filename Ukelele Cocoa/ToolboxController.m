@@ -32,6 +32,7 @@
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
 	[_JISOnly setState:[toolboxData JISOnly] ? NSOnState : NSOffState];
+	[_showCodePoints setState:[toolboxData showCodePoints] ? NSOnState : NSOffState];
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSData *frameData =[theDefaults objectForKey:UKToolboxWindowLocation];
 	if (frameData != nil) {
@@ -51,6 +52,14 @@
 #pragma mark Delegate methods
 
 - (void)windowDidMove:(NSNotification *)notification {
+#pragma unused(notification)
+	NSRect newFrame = [self.window frame];
+	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];
+	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
+	[theDefaults setObject:frameData forKey:UKToolboxWindowLocation];
+}
+
+- (void)windowDidResize:(NSNotification *)notification {
 #pragma unused(notification)
 	NSRect newFrame = [self.window frame];
 	NSData *frameData = [NSData dataWithBytes:&newFrame length:sizeof(NSRect)];

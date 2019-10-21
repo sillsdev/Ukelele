@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +28,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ra7-Hp-9jD">
                         <rect key="frame" x="379" y="13" width="82" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="8gm-lm-Rib"/>
+                            <constraint firstAttribute="width" constant="70" id="CaM-c3-Obw"/>
                         </constraints>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oDG-fm-qgU">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -43,6 +43,9 @@ DQ
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h5t-Cg-VL4">
                         <rect key="frame" x="297" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="chn-HD-IrW"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Il-5W-taG">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -81,10 +84,7 @@ Gw
                         </cells>
                     </matrix>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ube-Kn-vbi">
-                        <rect key="frame" x="18" y="127" width="439" height="45"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="45" id="qQQ-Zj-Mo9"/>
-                        </constraints>
+                        <rect key="frame" x="18" y="155" width="439" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="DUs-iu-dv3">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -93,16 +93,17 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="h5t-Cg-VL4" firstAttribute="baseline" secondItem="ra7-Hp-9jD" secondAttribute="baseline" id="CFH-5z-2hq"/>
-                    <constraint firstItem="6vm-XV-mK5" firstAttribute="trailing" secondItem="ra7-Hp-9jD" secondAttribute="trailing" id="Ind-jQ-ETw"/>
-                    <constraint firstItem="ra7-Hp-9jD" firstAttribute="leading" secondItem="h5t-Cg-VL4" secondAttribute="trailing" constant="12" symbolic="YES" id="Kmt-SM-peD"/>
-                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="trailing" secondItem="6vm-XV-mK5" secondAttribute="trailing" id="Ohd-zH-Hbe"/>
-                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="leading" secondItem="6vm-XV-mK5" secondAttribute="leading" id="RSH-CU-uzZ"/>
-                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Rvz-D2-BWO"/>
-                    <constraint firstItem="h5t-Cg-VL4" firstAttribute="top" secondItem="6vm-XV-mK5" secondAttribute="bottom" constant="20" symbolic="YES" id="S1a-lg-WSG"/>
-                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="SPG-Sj-ZpE"/>
-                    <constraint firstAttribute="trailing" secondItem="Ube-Kn-vbi" secondAttribute="trailing" constant="20" symbolic="YES" id="Y8G-XW-sk1"/>
-                    <constraint firstItem="6vm-XV-mK5" firstAttribute="top" secondItem="Ube-Kn-vbi" secondAttribute="bottom" constant="8" symbolic="YES" id="pU4-KB-xyk"/>
+                    <constraint firstAttribute="bottom" secondItem="h5t-Cg-VL4" secondAttribute="bottom" constant="20" id="3nQ-cw-bjC"/>
+                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="4qn-nz-O9Q"/>
+                    <constraint firstItem="6vm-XV-mK5" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="9Dd-73-wLl"/>
+                    <constraint firstItem="ra7-Hp-9jD" firstAttribute="leading" secondItem="h5t-Cg-VL4" secondAttribute="trailing" constant="12" id="9Uj-yR-ncX"/>
+                    <constraint firstItem="Ube-Kn-vbi" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="Aij-bk-yzS"/>
+                    <constraint firstItem="ra7-Hp-9jD" firstAttribute="top" secondItem="6vm-XV-mK5" secondAttribute="bottom" constant="20" id="LNQ-kI-gJb"/>
+                    <constraint firstAttribute="trailing" secondItem="6vm-XV-mK5" secondAttribute="trailing" constant="20" id="euv-De-U2V"/>
+                    <constraint firstAttribute="trailing" secondItem="Ube-Kn-vbi" secondAttribute="trailing" constant="20" id="iDi-8l-3P1"/>
+                    <constraint firstAttribute="trailing" secondItem="ra7-Hp-9jD" secondAttribute="trailing" constant="20" id="oMY-0y-KsM"/>
+                    <constraint firstItem="6vm-XV-mK5" firstAttribute="top" secondItem="Ube-Kn-vbi" secondAttribute="bottom" constant="36" id="pdf-6l-Uw7"/>
+                    <constraint firstAttribute="bottom" secondItem="ra7-Hp-9jD" secondAttribute="bottom" constant="20" id="upI-ra-5MO"/>
                 </constraints>
             </view>
         </window>

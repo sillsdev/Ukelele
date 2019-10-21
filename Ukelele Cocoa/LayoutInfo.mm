@@ -11,7 +11,7 @@
 #import "NString.h"
 #include "boost/unordered_map.hpp"
 #include "boost/scoped_array.hpp"
-#include <tr1/array>
+#include <array>
 #include <map>
 #include <vector>
 #import "NCocoa.h"
@@ -166,9 +166,9 @@ const UInt32 sKeyCodeTable[] = {
 	kOrdinaryKeyType,	// [49]		Space
 	kOrdinaryKeyType,	// [50]		`
 	kSpecialKeyType,	// [51]		Delete
-	kSpecialKeyType,	// [52]		Unknown
+	kOrdinaryKeyType,	// [52]		Unknown
 	kSpecialKeyType,	// [53]		Escape
-	kSpecialKeyType,	// [54]		Unknown
+	kOrdinaryKeyType,	// [54]		Unknown
 	kModifierKeyType,	// [55]		Command
 	kModifierKeyType,	// [56]		Shift
 	kModifierKeyType,	// [57]		Caps lock
@@ -180,18 +180,18 @@ const UInt32 sKeyCodeTable[] = {
 	kModifierKeyType,	// [63]		Fn
 	kProtectedKeyType,	// [64]		F17
 	kOrdinaryKeyType,	// [65]		Keypad .
-	kSpecialKeyType,	// [66]		Unknown
+	kOrdinaryKeyType,	// [66]		Unknown
 	kOrdinaryKeyType,	// [67]		Keypad *
-	kSpecialKeyType,	// [68]		Unknown
+	kOrdinaryKeyType,	// [68]		Unknown
 	kOrdinaryKeyType,	// [69]		Keypad +
-	kSpecialKeyType,	// [70]		Unknown
+	kOrdinaryKeyType,	// [70]		Unknown
 	kOrdinaryKeyType,	// [71]		Clear
-	kSpecialKeyType,	// [72]		Unknown
-	kSpecialKeyType,	// [73]		Unknown
-	kSpecialKeyType,	// [74]		Unknown
+	kOrdinaryKeyType,	// [72]		Unknown
+	kOrdinaryKeyType,	// [73]		Unknown
+	kOrdinaryKeyType,	// [74]		Unknown
 	kOrdinaryKeyType,	// [75]		Keypad /
 	kSpecialKeyType,	// [76]		Enter
-	kSpecialKeyType,	// [77]		Unknown
+	kOrdinaryKeyType,	// [77]		Unknown
 	kOrdinaryKeyType,	// [78]		Keypad -
 	kProtectedKeyType,	// [79]		F18
 	kProtectedKeyType,	// [80]		F19
@@ -204,12 +204,12 @@ const UInt32 sKeyCodeTable[] = {
 	kOrdinaryKeyType,	// [87]		Keypad 5
 	kOrdinaryKeyType,	// [88]		Keypad 6
 	kOrdinaryKeyType,	// [89]		Keypad 7
-	kSpecialKeyType,	// [90]		Unknown
+	kOrdinaryKeyType,	// [90]		Unknown
 	kOrdinaryKeyType,	// [91]		Keypad 8
 	kOrdinaryKeyType,	// [92]		Keypad 9
 	kOrdinaryKeyType,	// [93]		Yen (on JIS keyboard)
-	kSpecialKeyType,	// [94]		Unknown
-	kSpecialKeyType,	// [95]		Unknown
+	kOrdinaryKeyType,	// [94]		Unknown
+	kOrdinaryKeyType,	// [95]		Unknown
 	kProtectedKeyType,	// [96]		F5
 	kProtectedKeyType,	// [97]		F6
 	kProtectedKeyType,	// [98]		F7
@@ -222,11 +222,11 @@ const UInt32 sKeyCodeTable[] = {
 	kProtectedKeyType,	// [105]	F13
 	kProtectedKeyType,	// [106]	F16
 	kProtectedKeyType,	// [107]	F14
-	kSpecialKeyType,	// [108]	Unknown
+	kOrdinaryKeyType,	// [108]	Unknown
 	kProtectedKeyType,	// [109]	F10
 	kSpecialKeyType,	// [110]	Contextual Menu (Windows keyboards)
 	kProtectedKeyType,	// [111]	F12
-	kSpecialKeyType,	// [112]	Unknown
+	kOrdinaryKeyType,	// [112]	Unknown
 	kProtectedKeyType,	// [113]	F15
 	kSpecialKeyType,	// [114]	Help
 	kSpecialKeyType,	// [115]	Home
@@ -241,7 +241,7 @@ const UInt32 sKeyCodeTable[] = {
 	kSpecialKeyType,	// [124]	Right arrow
 	kSpecialKeyType,	// [125]	Down arrow
 	kSpecialKeyType,	// [126]	Up arrow
-	kSpecialKeyType		// [127]	Unknown
+	kOrdinaryKeyType		// [127]	Unknown
 };
 
 const UInt32 kDefaultMapSize = 0;

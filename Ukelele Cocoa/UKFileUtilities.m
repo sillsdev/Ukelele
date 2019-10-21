@@ -43,4 +43,28 @@
 	return NO;
 }
 
++ (BOOL)dataIsicns:(NSData *)icnsData {
+	UInt32 icnsHeader;
+	UInt32 icnsDataLength;
+	[icnsData getBytes:&icnsHeader range:NSMakeRange(0, sizeof(UInt32))];
+	[icnsData getBytes:&icnsDataLength range:NSMakeRange(sizeof(UInt32), sizeof(UInt32))];
+		// Need to swap bytes on the data
+	icnsHeader = ((icnsHeader & 0x000000ff) << 24) |
+	((icnsHeader & 0x0000ff00) << 8) |
+	((icnsHeader & 0x00ff0000) >> 8) |
+	((icnsHeader & 0xff000000) >> 24);
+	icnsDataLength = ((icnsDataLength & 0x000000ff) << 24) |
+	((icnsDataLength & 0x0000ff00) << 8) |
+	((icnsDataLength & 0x00ff0000) >> 8) |
+	((icnsDataLength & 0xff000000) >> 24);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfour-char-constants"
+	if (icnsHeader != 'icns' || icnsDataLength != [icnsData length]) {
+			// Bad icon data
+		return NO;
+	}
+#pragma clang diagnostic pop
+	return YES;
+}
+
 @end

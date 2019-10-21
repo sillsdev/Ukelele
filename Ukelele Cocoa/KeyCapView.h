@@ -40,6 +40,7 @@
 @property (NS_NONATOMIC_IOSONLY, readonly) NSRect insideRect;
 @property (readwrite) NSInteger tag;
 @property (strong) NSTextView *textView;
+@property (nonatomic) BOOL showCodePoints;
 
 - (void)flipInRect:(NSRect)boundingRect;
 - (void)getInnerColour:(NSColor **)innerColour

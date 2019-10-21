@@ -37,7 +37,7 @@ NString UKXMLEncoder::EncodeElement(const NXMLNode *theNode, const NString &theI
 	textName      = theNode->GetTextValue();
 	
 	hasChildElements = ContainsElements(theChildren);
-	childIndent      = theIndent + "\t";
+	childIndent      = theIndent + "    ";
 	theKeys          = theAttributes.GetKeys(true);
 	
 		// Collect the attributes

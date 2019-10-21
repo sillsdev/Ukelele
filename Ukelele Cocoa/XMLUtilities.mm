@@ -17,6 +17,7 @@
 
 	
 // Strings
+const NString kCodePointNull = "CodePointNull";
 const NString kCodePointBeyondUnicode = "CodePointBeyondUnicode";
 const NString kCodePointInSurrogateRange = "CodePointInSurrogateRange";
 const NString kCodePointNotUnicodeCharacter = "CodePointNotUnicodeCharacter";
@@ -88,7 +89,13 @@ XMLUtilities::IsValidUnicode(const UInt32 inCodePoint, NString& outErrorString)
 	bool isValid = true;
 	NString errorString("");
 	NString formatString;
-	if (inCodePoint > 0x10ffff) {
+	if (inCodePoint == 0) {
+		// Cannot represent null in XML
+		isValid = false;
+		formatString = NBundleString(kCodePointNull, "", kErrorTableName);
+		errorString.Format(formatString);
+	}
+	else if (inCodePoint > 0x10ffff) {
 			// Value is greater than the Unicode range
 		isValid = false;
 		formatString = NBundleString(kCodePointBeyondUnicode, "", kErrorTableName);

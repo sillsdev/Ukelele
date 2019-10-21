@@ -12,8 +12,8 @@
 #import "KeyMapSetList.h"
 #import "ActionElement.h"
 #import "TerminatorsElement.h"
-#import <tr1/memory>
-using std::tr1::shared_ptr;
+#include <memory>
+using std::shared_ptr;
 
 class RemoveStateDataBlock {
 public:

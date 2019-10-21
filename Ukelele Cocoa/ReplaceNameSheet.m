@@ -7,6 +7,7 @@
 //
 
 #import "ReplaceNameSheet.h"
+#import "XMLCocoaUtilities.h"
 
 @implementation ReplaceNameSheet
 
@@ -54,14 +55,15 @@
 - (IBAction)acceptChoice:(id)sender
 {
 #pragma unused(sender)
-	if (!verifyCallBack([replacementNameField stringValue])) {
+	NSString *replacementString = [XMLCocoaUtilities convertToXMLString:[replacementNameField stringValue] codingNonAscii:NO];
+	if (!verifyCallBack(replacementString)) {
 			// Doesn't work!
 		[errorField setHidden:NO];
 		return;
 	}
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window]];
-	acceptCallBack([[nameButton selectedItem] title], [replacementNameField stringValue]);
+	acceptCallBack([[nameButton selectedItem] title], replacementString);
 }
 
 - (IBAction)cancelChoice:(id)sender

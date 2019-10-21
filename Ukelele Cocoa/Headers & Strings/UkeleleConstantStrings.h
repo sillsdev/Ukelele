@@ -81,6 +81,7 @@ MY_EXTERN NSString *kStringSourceVersionKey;
 MY_EXTERN NSString *kStringInfoPlistKLInfoPrefix;
 MY_EXTERN NSString *kStringInfoPlistInputSourceID;
 MY_EXTERN NSString *kStringInfoPlistIntendedLanguageKey;
+MY_EXTERN NSString *kStringInfoPlistCapsLockSwitchableKey;
 
 	// Preference keys
 MY_EXTERN NSString *UKScaleFactor;
@@ -103,9 +104,11 @@ MY_EXTERN NSString *UKToolboxWindowLocation;
 MY_EXTERN NSString *UKDontShowWarningDialog;
 MY_EXTERN NSString *UKStickyModifiers;
 MY_EXTERN NSString *UKJISOnly;
+MY_EXTERN NSString *UKShowCodePoints;
 
 	// File names
 MY_EXTERN NSString *UKKCAPListFile;
 MY_EXTERN NSString *UKUntitledName;
 MY_EXTERN NSString *kStringKeyboardLayouts;
 MY_EXTERN NSString *kStringDragToInstall;
+MY_EXTERN NSString *kStringInstallerApplication;

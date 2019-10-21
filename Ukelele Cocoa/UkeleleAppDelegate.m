@@ -16,13 +16,12 @@
 #import "InspectorWindowController.h"
 #import "UnicodeTable.h"
 #import "UkelelePreferenceController.h"
-#import "KeyboardInstallerTool.h"
-#import "Common.h"
 #import "UKKeyboardController.h"
 #import "UKKeyboardDocument.h"
 #import "ColourThemeEditorController.h"
 #import "UKNewKeyboardLayoutController.h"
 #include <ServiceManagement/ServiceManagement.h>
+#import "Ukelele-Swift.h"
 
 #define UkeleleManualName	@"Ukelele Manual"
 #define UkeleleWebSite		@"http://scripts.sil.org/ukelele"
@@ -30,6 +29,7 @@
 
 @interface UkeleleAppDelegate () {
 	AuthorizationRef _authRef;
+	UKOrganiserController *organiserController;
 }
 
 @end
@@ -39,9 +39,10 @@
 - (instancetype)init
 {
     self = [super init];
-//    if (self) {
-//        // Initialization code here.
-//    }
+    if (self) {
+        // Initialization code here.
+		organiserController = nil;
+    }
 //	[NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask handler:^(NSEvent *inEvent){
 //		NSString *characters = [inEvent characters];
 //		NSString *charsWithoutModifiers = [inEvent charactersIgnoringModifiers];
@@ -79,7 +80,9 @@ static NSDictionary *defaultValues() {
 				 UKUpdateEditingComment:		@YES,
 				 UKDontShowWarningDialog:		@NO,
 				 UKStickyModifiers:				@NO,
-				 UKJISOnly:						@NO};
+				 UKJISOnly:						@NO,
+				 UKShowCodePoints:				@YES
+				 };
 	});
 	return dict;
 }
@@ -150,12 +153,11 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)toggleToolbox:(id)sender {
-#pragma unused(sender)
 	ToolboxController *toolboxController = [ToolboxController sharedToolboxController];
 	NSWindow *toolboxWindow = [toolboxController window];
 	NSAssert(toolboxWindow, @"Window should not be nil");
 	if ([toolboxWindow isVisible]) {
-		[toolboxWindow close];
+		[toolboxWindow orderOut:sender];
 	}
 	else {
 		[toolboxController showWindow:self];
@@ -186,6 +188,40 @@ static NSDictionary *defaultValues() {
 		else if ([[mainController windowNibName] isEqualToString:@"UKKeyboardLayoutBundle"]) {
 			UKKeyboardDocument *theDocument = [mainController document];
 			[theDocument inspectorDidAppear];
+		}
+	}
+}
+
+- (IBAction)showHideOrganiser:(id)sender {
+	if (organiserController == nil) {
+		organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
+	}
+	if ([[organiserController window] isVisible]) {
+		[[organiserController window] orderOut:sender];
+	}
+	else {
+		[[organiserController window] makeKeyAndOrderFront:sender];
+	}
+}
+
+- (IBAction)install:(id)sender {
+	if (organiserController == nil) {
+		organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
+	}
+	[[organiserController window] makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)toggleShowCodePoints:(id)sender {
+#pragma unused(sender)
+	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+	NSAssert(toolboxData, @"Toolbox data cannot be nil");
+	[toolboxData setShowCodePoints:![toolboxData showCodePoints]];
+	BOOL show = [toolboxData showCodePoints];
+	// Tell the current windows to update the show code points value
+	for (NSWindow *window in [[NSApplication sharedApplication] windows]) {
+		NSWindowController *controller = [window windowController];
+		if ([controller isKindOfClass:[UKKeyboardController class]]) {
+			[(UKKeyboardController *)controller setShowCodePoints:show];
 		}
 	}
 }
@@ -230,18 +266,16 @@ static NSDictionary *defaultValues() {
 		// If we successfully connected to Authorization Services, add definitions for our default
 		// rights (unless they're already in the database).
     
-    if (self->_authRef) {
-        [Common setupAuthorizationRights:self->_authRef];
-    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
 #pragma unused(notification)
-		// Save the state of Sticky Modifiers and JIS Only
+		// Save the state of toolbox data
 	ToolboxData *toolBoxData = [ToolboxData sharedToolboxData];
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults setBool:[toolBoxData stickyModifiers] forKey:UKStickyModifiers];
 	[userDefaults setBool:[toolBoxData JISOnly] forKey:UKJISOnly];
+	[userDefaults setBool:[toolBoxData showCodePoints] forKey:UKShowCodePoints];
 	[userDefaults synchronize];
 }
 
@@ -251,6 +285,12 @@ static NSDictionary *defaultValues() {
 		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 		NSAssert(toolboxData, @"Toolbox data must not be nil");
 		[menuItem setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
+		return YES;
+	}
+	else if (action == @selector(toggleShowCodePoints:)) {
+		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
+		NSAssert(toolboxData, @"Toolbox data must not be nil");
+		[menuItem setState:[toolboxData showCodePoints] ? NSOnState : NSOffState];
 		return YES;
 	}
 	else if (action == @selector(toggleToolbox:)) {
@@ -276,7 +316,17 @@ static NSDictionary *defaultValues() {
 		}
 		return YES;
 	}
-	else if (action == @selector(colourThemes:)) {
+	else if (action == @selector(showHideOrganiser:)) {
+		if (organiserController == nil || ![[organiserController window] isVisible]) {
+			[menuItem setTitle:@"Show Organiser"];
+		}
+		else {
+			[menuItem setTitle:@"Hide Organiser"];
+		}
+		return YES;
+	}
+	else if (action == @selector(colourThemes:) || (action == @selector(newFromCurrentInput:)) ||
+			 (action == @selector(install:))) {
 		return YES;
 	}
 	return YES;
@@ -349,70 +399,6 @@ static NSDictionary *defaultValues() {
 
 - (IBAction)chooseColourTheme:(id)sender {
 	[ColourTheme setCurrentColourTheme:[sender title]];
-}
-
-- (BOOL)installHelperTool {
-	CFErrorRef error;
-	Boolean success = SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName, self->_authRef, &error);
-	if (!success) {
-			// Log the error
-		[NSApp presentError:(__bridge NSError *)(error)];
-	}
-	return success;
-}
-
-- (BOOL)helperToolIsInstalled {
-	CFDictionaryRef toolDict = SMJobCopyDictionary(kSMDomainSystemLaunchd, (__bridge CFStringRef)kHelperToolMachServiceName);
-	BOOL result = toolDict != NULL;
-	if (toolDict != NULL) {
-		CFRelease(toolDict);
-	}
-	return result;
-}
-
-- (void)connectToHelperTool
-// Ensures that we're connected to our helper tool.
-{
-    assert([NSThread isMainThread]);
-    if (self.helperToolConnection == nil) {
-        self.helperToolConnection = [[NSXPCConnection alloc] initWithMachServiceName:kHelperToolMachServiceName options:NSXPCConnectionPrivileged];
-        self.helperToolConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(KeyboardInstallerProtocol)];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-retain-cycles"
-			// We can ignore the retain cycle warning because a) the retain taken by the
-			// invalidation handler block is released by us setting it to nil when the block
-			// actually runs, and b) the retain taken by the block passed to -addOperationWithBlock:
-			// will be released when that operation completes and the operation itself is deallocated
-			// (notably self does not have a reference to the NSBlockOperation).
-        self.helperToolConnection.invalidationHandler = ^{
-				// If the connection gets invalidated then, on the main thread, nil out our
-				// reference to it.  This ensures that we attempt to rebuild it the next time around.
-            self.helperToolConnection.invalidationHandler = nil;
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                self.helperToolConnection = nil;
-            }];
-        };
-#pragma clang diagnostic pop
-        [self.helperToolConnection resume];
-    }
-}
-
-- (void)connectAndExecuteCommandBlock:(void(^)(NSError *))commandBlock
-// Connects to the helper tool and then executes the supplied command block on the
-// main thread, passing it an error indicating if the connection was successful.
-{
-    assert([NSThread isMainThread]);
-    
-		// Ensure that there's a helper tool connection in place.
-    
-    [self connectToHelperTool];
-	
-		// Run the command block.  Note that we never error in this case because, if there is
-		// an error connecting to the helper tool, it will be delivered to the error handler
-		// passed to -remoteObjectProxyWithErrorHandler:.  However, I maintain the possibility
-		// of an error here to allow for future expansion.
-	
-    commandBlock(nil);
 }
 
 @end

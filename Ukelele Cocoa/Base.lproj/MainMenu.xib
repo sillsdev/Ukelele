@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -87,7 +87,7 @@
                                     <action selector="newKeyboardLayout:" target="-1" id="w3Z-ZM-LVp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New From Current Input Source" id="dFz-eE-MKz">
+                            <menuItem title="New From Current Input Source" enabled="NO" id="dFz-eE-MKz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="newFromCurrentInput:" target="-1" id="Vzy-kM-8NZ"/>
@@ -139,35 +139,48 @@
                                     <action selector="duplicateKeyboardLayout:" target="-1" id="ebG-Lq-ti8"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Install" id="xua-o4-5nW">
+                            <menuItem title="Revert to Saved" id="KaW-ft-85H">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Install" id="I8L-oj-g5B">
+                                <connections>
+                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="0aC-zU-mqf"/>
+                            <menuItem title="Install" id="YIG-H3-upl">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Install" id="Xsk-bH-g2z">
                                     <items>
-                                        <menuItem title="Install For Current User" id="dGJ-5J-8Vh">
+                                        <menuItem title="Show Organiser" id="pqj-IA-xMB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="installForCurrentUser:" target="-1" id="NrQ-7g-bH8"/>
+                                                <action selector="showHideOrganiser:" target="-1" id="3Ur-U2-ovA"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Install For All Users" id="rcK-RO-I30">
+                                        <menuItem title="Install for All Users" tag="2" id="13Z-Zo-t22">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="installForAllUsers:" target="-1" id="oMS-aI-7ed"/>
+                                                <action selector="installForAllUsersWithSender:" target="-1" id="CWi-U5-gAv"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Export Installer Disk Image…" id="ghN-Vq-Uk2">
+                                        <menuItem title="Install for Current User" tag="3" id="aZd-QM-N1C">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="exportKeyboardLayout:" target="-1" id="nPb-Pl-QBs"/>
+                                                <action selector="installForCurrentUserWithSender:" target="-1" id="Pjw-Rc-ObN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Uninstall" tag="1" id="tYF-RY-UZP">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="uninstallKeyboardLayoutWithSender:" target="-1" id="DSN-9M-c95"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Revert to Saved" id="KaW-ft-85H">
+                            <menuItem title="Export Installer Disk Image…" id="cqf-1f-tk9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
+                                    <action selector="exportKeyboardLayout:" target="-1" id="p0y-CM-DCj"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
@@ -539,6 +552,13 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Keyboard" id="5Mb-2v-cmp">
                         <items>
+                            <menuItem title="Quick Entry Mode" enabled="NO" id="LDZ-Ib-nLv">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleQuickEntryMode:" target="-1" id="3tD-a6-5jG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="gKa-sh-zkL"/>
                             <menuItem title="Create Dead Key…" keyEquivalent="d" id="Sao-xo-pk0">
                                 <connections>
                                     <action selector="createDeadKeyState:" target="-1" id="SvR-Wy-nzw"/>
@@ -733,6 +753,12 @@
                                     <action selector="toggleToolbox:" target="-1" id="nTA-r1-4S8"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Show Organiser" id="tXR-zS-ban">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showHideOrganiser:" target="-1" id="mUw-aZ-6Gt"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Keyboard Type…" keyEquivalent="k" id="766-QL-hTD">
                                 <connections>
                                     <action selector="setKeyboardType:" target="-1" id="Y7T-Ty-lPF"/>
@@ -742,6 +768,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="toggleStickyModifiers:" target="-1" id="uhZ-tS-pGo"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Code Points" id="r5L-yb-9aD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleShowCodePoints:" target="-1" id="F97-RI-MsG"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Colour Themes" id="qws-GI-AX7">

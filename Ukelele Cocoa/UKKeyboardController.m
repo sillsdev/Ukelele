@@ -39,6 +39,8 @@
 #import "UKStyleInfo.h"
 #import "WarningDialogController.h"
 #include <Carbon/Carbon.h>
+#import "UkeleleStatus.h"
+#import "KeyboardResourceList.h"
 
 const float kWindowMinWidth = 450.0f;
 const float kWindowMinHeight = 300.0f;
@@ -51,6 +53,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 @implementation UKKeyboardController {
 	NSUInteger lastModifiers;
+	UkeleleStatus *currentStatus;
+	KeyboardResourceList *keyboardResources;
+	BOOL isDisplayingMessage;
+	BOOL isInQuickEntryMode;
+	NSInteger quickEntryIndex;
 }
 
 @synthesize keyboardLayout = _keyboardLayout;
@@ -94,6 +101,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 		printingInfo = nil;
 		lastModifiers = 0;
 		_keyStates = [NSMutableIndexSet indexSet];
+		currentStatus = [[UkeleleStatus alloc] init];
+		keyboardResources = [KeyboardResourceList getInstance];
+		isDisplayingMessage = NO;
+		isInQuickEntryMode = NO;
+		quickEntryIndex = -1;
     }
     return self;
 }
@@ -132,6 +144,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[self assignClickTargets];
     [self setupDataSource];
 	[self calculateSize];
+	[self setKeyboardNameAndCoding];
+	[self updateStatus];
 	[self updateWindow];
 	if ([internalState[kStateCurrentScale] doubleValue] <= 0) {
 			// This is fit width
@@ -360,6 +374,32 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 #pragma mark Window updating
 
+- (void)setShowCodePoints:(BOOL)showCodePoints {
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	[ukeleleView setShowCodePoints:showCodePoints];
+}
+
+- (void)updateStatus {
+	currentStatus.stateName = self.currentState;
+	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];
+	NSUInteger matchingSet = [self.keyboardLayout modifierSetIndexForModifiers:currentModifiers forKeyboard:[internalState[kStateCurrentKeyboard] unsignedIntegerValue]];
+	currentStatus.modifierIndex = matchingSet;
+	[self setKeyboardNameAndCoding];
+	[self setMessageBarText:@""];
+}
+
+- (void)setKeyboardNameAndCoding {
+	NSInteger keyboardID = [internalState[kStateCurrentKeyboard] integerValue];
+	NSDictionary *indexDictionary = [keyboardResources indicesForResourceID:keyboardID];
+	NSInteger nameIndex = [indexDictionary[kKeyNameIndex] integerValue];
+	NSInteger codingIndex = [indexDictionary[kKeyCodingIndex] integerValue];
+	if (nameIndex != -1 && codingIndex != -1) {
+		KeyboardType *keyboardType = keyboardResources.keyboardTypeTable[nameIndex];
+		currentStatus.keyboardType = keyboardType.keyboardName;
+		currentStatus.keyboardCoding = keyboardType.keyboardCodings[codingIndex - 1];
+	}
+}
+
 - (void)setViewScaleComboBox
 {
     NSNumber *scaleFactor = internalState[kStateCurrentScale];
@@ -463,6 +503,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[self assignClickTargets];
     [self calculateSize];
     [self setViewScaleComboBox];
+	[self updateStatus];
     [self updateWindow];
 }
 
@@ -545,7 +586,14 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma mark Tab handling
 
 - (void)tabView:(NSTabView *)theTabView willSelectTabViewItem:(NSTabViewItem *)tabViewItem {
-#pragma unused(tabViewItem)
+	if ([kTabNameKeyboard isEqualToString:[[theTabView selectedTabViewItem] identifier]] &&
+		![kTabNameKeyboard isEqualToString:[tabViewItem identifier]]) {
+		// We are about to leave the keyboard tab
+		if (isInQuickEntryMode) {
+			// We need to leave quick entry mode
+			[self toggleQuickEntryMode:self];
+		}
+	}
 	if ([kTabNameComments isEqualToString:[[theTabView selectedTabViewItem] identifier]]) {
 			// We are about to leave the comment tab
 		if (commentChanged) {
@@ -603,7 +651,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(runPageLayout:) ||
 		selector == @selector(printDocument:) ||
 		selector == @selector(findKeyStroke:) ||
-//		selector == @selector(askKeyboardIdentifiers:) ||
 		selector == @selector(installForAllUsers:) ||
 		selector == @selector(installForCurrentUser:) ||
 		selector == @selector(removeUnusedStates:) ||
@@ -615,7 +662,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(makeDeadKey:) ||
 		selector == @selector(makeOutput:) ||
 		selector == @selector(changeNextState:) ||
-		selector == @selector(chooseColourTheme:)) {
+		selector == @selector(chooseColourTheme:) ||
+		selector == @selector(toggleQuickEntryMode:)) {
 		return YES;
 	}
 	return NO;
@@ -637,33 +685,32 @@ const CGFloat kTextPaneHeight = 17.0f;
 		action == @selector(findKeyStroke:) || action == @selector(runPageLayout:) ||
 		action == @selector(printDocument:) || action == @selector(changeOutput:) ||
 		action == @selector(makeDeadKey:) || action == @selector(makeOutput:) ||
-		action == @selector(changeNextState:)) {
+		action == @selector(changeNextState:) || action == @selector(attachIconFile:)) {
 			// All of these can only be selected if we are on the keyboard tab and
 			// there is no interaction in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
+		return (interactionHandler == nil) && !isInQuickEntryMode
+		&& [kTabNameKeyboard isEqualToString:currentTabName];
 	}
-	else if (action == @selector(askKeyboardIdentifiers:) ||
-			 action == @selector(installForAllUsers:) ||
-			 action == @selector(installForCurrentUser:)) {
+	else if (action == @selector(askKeyboardIdentifiers:)) {
 			// These can only be selected if there is no interaction in progress
-		return (interactionHandler == nil);
+		return (interactionHandler == nil) && !isInQuickEntryMode;
 	}
 	else if (action == @selector(attachComment:)) {
 			// These can only be selected if there is no interaction in progress, we are on the
 			/// keyboard tab, and a key is selected
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && (selectedKey != kNoKeyCode);
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && (selectedKey != kNoKeyCode);
 	}
 	else if (action == @selector(enterDeadKeyState:) || action == @selector(changeTerminator:)) {
 			// These can only be selected if there are any states other than "none",
 			// there is no interaction in progress, and we are on the keyboard tab
 		NSUInteger stateCount = [self.keyboardLayout stateCount];
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
 	}
 	else if (action == @selector(changeStateName:) || action == @selector(removeUnusedStates:)) {
 			// These can only be selected if there is no interaction in progress and
 			// there are states other than "none"
 		NSUInteger stateCount = [self.keyboardLayout stateCount];
-		return (interactionHandler == nil) && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
+		return (interactionHandler == nil) && !isInQuickEntryMode && ([stateStack count] > 1 ? stateCount > 1 : stateCount > 0);
 	}
 	else if (action == @selector(changeActionName:) || action == @selector(removeUnusedActions:)) {
 			// These can only be selected if there are any actions
@@ -673,12 +720,12 @@ const CGFloat kTextPaneHeight = 17.0f;
 	else if (action == @selector(leaveDeadKeyState:)) {
 			// These can only selected if we are in a dead key state,
 			// we are on the keyboard tab, and no interaction is in progress
-		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName] && [stateStack count] > 1;
+		return (interactionHandler == nil) && !isInQuickEntryMode && [kTabNameKeyboard isEqualToString:currentTabName] && [stateStack count] > 1;
 	}
 	else if (action == @selector(unlinkKey:)) {
 			// This can come up either on the keyboard or modifiers tab
 		if ([kTabNameKeyboard isEqualToString:currentTabName]) {
-			return interactionHandler == nil;
+			return interactionHandler == nil && !isInQuickEntryMode;
 		}
 		else if ([kTabNameModifiers isEqualToString:currentTabName]) {
 			return (interactionHandler == nil) && ([self.modifiersTableView selectedRow] >= 0);
@@ -689,7 +736,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	else if (action == @selector(pasteKey:)) {
 			// This can only be selected if there is a key to paste, and no interaction is in progress
-		return (interactionHandler == nil) && [self.keyboardLayout hasKeyOnPasteboard];
+		return (interactionHandler == nil) && !isInQuickEntryMode && [self.keyboardLayout hasKeyOnPasteboard];
 	}
 	else if (action == @selector(setDefaultIndex:)) {
 			// This can only be selected if we are on the modifiers tab
@@ -699,6 +746,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 			 action == @selector(saveDocument:)) {
 			// These are always enabled
 		return YES;
+	}
+	else if (action == @selector(toggleQuickEntryMode:)) {
+		// Enabled when the keyboard tab is visible and no interaction in progress
+		[(NSMenuItem *)anItem setState:isInQuickEntryMode ? NSOnState : NSOffState];
+		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
 	}
 	return NO;
 }
@@ -831,6 +883,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSAssert([self.keyboardLayout hasStateWithName:stateName], @"Can only go to an existing state");
 	[stateStack addObject:stateName];
     internalState[kStateCurrentState] = stateName;
+	[self updateStatus];
 	[self updateWindow];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[infoInspector setStateStack:stateStack];
@@ -844,6 +897,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	[stateStack removeLastObject];
     internalState[kStateCurrentState] = [stateStack lastObject];
+	[self updateStatus];
 	[self updateWindow];
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
 	[infoInspector setStateStack:stateStack];
@@ -851,6 +905,23 @@ const CGFloat kTextPaneHeight = 17.0f;
 
 - (void)setMessageBarText:(NSString *)message
 {
+	if (isDisplayingMessage) {
+		if (!message || [message length] == 0) {
+			// We revert from the message to the status info
+			message = [currentStatus statusString];
+			isDisplayingMessage = NO;
+		}
+	}
+	else {
+		if (message && [message length] > 0) {
+			// Start displaying the message
+			isDisplayingMessage = YES;
+		}
+		else {
+			// No content, no current message, so set status info
+			message = [currentStatus statusString];
+		}
+	}
 	[self.messageBar setStringValue:message];
 	[self.messageBar setNeedsDisplay:YES];
 }
@@ -906,6 +977,27 @@ const CGFloat kTextPaneHeight = 17.0f;
 		theTheme = [ColourTheme defaultColourTheme];
 	}
 	[ukeleleView setColourTheme:theTheme];
+}
+
+- (NSTextField *)createTextFieldForKeyCap:(KeyCapView *)keyCap {
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	NSRect textFieldFrame = [keyCap frame];
+	NSTextField *textField = [[NSTextField alloc] initWithFrame:textFieldFrame];
+	[ukeleleView addSubview:textField];
+	[textField setEditable:YES];
+	[textField setSelectable:YES];
+	[textField setBordered:YES];
+	[textField setStringValue:[keyCap outputString]];
+	[textField setFont:[[keyCap styleInfo] largeFont]];
+	[textField setTextColor:[NSColor whiteColor]];
+	[textField setBackgroundColor:[NSColor blackColor]];
+	[textField setAlignment:NSTextAlignmentCenter];
+	[textField selectText:self];
+	[textField setDelegate:self];
+	[textField setTarget:self];
+	[textField setAction:@selector(textFieldAction:)];
+	return textField;
 }
 
 #pragma mark Callbacks
@@ -1399,18 +1491,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}];
 }
 
-	// Install the keyboard layout
-
-- (IBAction)installForCurrentUser:(id)sender {
-#pragma unused(sender)
-	[self.parentDocument installForCurrentUser:self];
-}
-
-- (IBAction)installForAllUsers:(id)sender {
-#pragma unused(sender)
-	[self.parentDocument installForAllUsers:self];
-}
-
 	// Look up a key stroke
 
 - (IBAction)findKeyStroke:(id)sender {
@@ -1430,8 +1510,11 @@ const CGFloat kTextPaneHeight = 17.0f;
 }
 
 - (IBAction)cancel:(id)sender {
-#pragma unused(sender)
-	NSAssert(interactionHandler != nil, @"Can only have cancel when an interaction is in progress");
+	NSAssert(interactionHandler != nil || isInQuickEntryMode, @"Can only have cancel when an interaction is in progress or in quick entry mode");
+	if (isInQuickEntryMode) {
+		[self toggleQuickEntryMode:sender];
+		return;
+	}
 	[interactionHandler cancelInteraction];
 	[self.cancelButton setEnabled:NO];
 }
@@ -1459,6 +1542,36 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[warningDialog loadWarning:warningFileURL];
 	[warningDialog runDialogForWindow:self.window];
 	return YES;
+}
+
+- (IBAction)textFieldAction:(id)sender {
+	[self controlTextDidChange:[NSNotification notificationWithName:@"Text Changed" object:sender userInfo:nil]];
+}
+
+- (IBAction)toggleQuickEntryMode:(id)sender {
+#pragma unused(sender)
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	if (isInQuickEntryMode) {
+		NSUInteger index = [[ukeleleView subviews] indexOfObjectPassingTest:^BOOL(__kindof NSView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+#pragma unused(idx)
+#pragma unused(stop)
+			return [obj isKindOfClass:[NSTextField class]];
+		}];
+		if (index != NSNotFound) {
+			[[ukeleleView subviews][index] removeFromSuperview];
+			quickEntryIndex = -1;
+			isInQuickEntryMode = NO;
+			[[ukeleleView window] makeFirstResponder:ukeleleView];
+		}
+	}
+	else {
+		quickEntryIndex = 0;
+		isInQuickEntryMode = YES;
+		KeyCapView *keyCap = [ukeleleView ordinaryKeys][0];
+		NSTextField *editField = [self createTextFieldForKeyCap:keyCap];
+		[editField setHidden:NO];
+	}
 }
 
 #pragma mark Printing
@@ -1535,7 +1648,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[stateNameView setAlignment:NSCenterTextAlignment];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
-//			[hostView setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[hostView addSubview:theKeyboard];
 			[hostView addSubview:stateNameView];
 			stateViews[i] = hostView;
@@ -1570,6 +1682,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 #pragma mark Messages
 
 - (void)handleKeyCapClick:(KeyCapView *)keyCapView clickCount:(NSInteger)clickCount {
+	if (isInQuickEntryMode) {
+			// We don't change things if in quick entry mode
+		return;
+	}
 	if (clickCount == 1) {
 		[self messageClick:(int)[keyCapView keyCode]];
 	}
@@ -1581,6 +1697,10 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)messageModifiersChanged:(int)modifiers
 {
 		// Modifiers have changed, so make note of changes
+	if (isInQuickEntryMode) {
+		// We don't change things if in quick entry mode
+		return;
+	}
 	BOOL usingStickyModifiers = [[ToolboxData sharedToolboxData] stickyModifiers];
 	NSUInteger newCurrentModifiers;
 	if (usingStickyModifiers) {
@@ -1605,6 +1725,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	lastModifiers = modifiers;
 	[self inspectorSetModifiers];
 	[self inspectorSetModifierMatch];
+	[self updateStatus];
 	[self updateWindow];
 }
 
@@ -1679,6 +1800,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 			internalState[kStateCurrentModifiers] = @(currentModifiers);
 			[self inspectorSetModifiers];
 			[self inspectorSetModifierMatch];
+			[self updateStatus];
 			[self updateWindow];
 		}
 	}
@@ -1931,6 +2053,34 @@ const CGFloat kTextPaneHeight = 17.0f;
     [self modifierMapDidChangeImplementation];
 }
 
+- (void)controlTextDidChange:(NSNotification *)obj {
+	// Delegate method for the text in a quick entry field changing
+	UkeleleView *ukeleleView = [self.keyboardView documentView];
+	NSAssert(ukeleleView, @"Must have a document view");
+	NSAssert(isInQuickEntryMode, @"Must be in quick entry mode");
+	NSArray *keyCapList = [ukeleleView ordinaryKeys];
+	NSAssert(quickEntryIndex >= 0 && quickEntryIndex < (NSInteger)[keyCapList count], @"Must have a valid index");
+	NSTextField *textPane = (NSTextField *)[obj object];
+	NSString *newText = [textPane stringValue];
+	NSInteger keyCode = [(KeyCapView *)keyCapList[quickEntryIndex] keyCode];
+	NSDictionary *keyData = @{kKeyKeyboardID: @(self.keyboardID),
+							  kKeyKeyCode: @(keyCode),
+							  kKeyModifiers: @(self.currentModifiers),
+							  kKeyState: self.currentState
+							  };
+	[self changeOutputForKey:keyData to:newText usingBaseMap:YES];
+	[textPane removeFromSuperview];
+	quickEntryIndex += 1;
+	if (quickEntryIndex < (NSInteger)[keyCapList count]) {
+		// Bring up the next key
+		[self createTextFieldForKeyCap:keyCapList[quickEntryIndex]];
+	}
+	else {
+		isInQuickEntryMode = false;
+		[[ukeleleView window] makeFirstResponder:ukeleleView];
+	}
+}
+
 #pragma mark Notifications
 
 - (void)noteUndoAction:(NSNotification *)theNotification {
@@ -1945,7 +2095,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 	if (object == toolboxData && [keyPath isEqualToString:@"stickyModifiers"]) {
 			// Sticky modifiers has changed
-		[self messageModifiersChanged:[NSEvent modifierFlags]];
+		[self messageModifiersChanged:(int)[NSEvent modifierFlags]];
 	}
 }
 

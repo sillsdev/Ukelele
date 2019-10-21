@@ -52,18 +52,18 @@
 - (IBAction)removeIcon:(id)sender;
 - (IBAction)askKeyboardIdentifiers:(id)sender;
 - (IBAction)localiseKeyboardName:(id)sender;
-- (IBAction)installForCurrentUser:(id)sender;
-- (IBAction)installForAllUsers:(id)sender;
 - (IBAction)duplicateKeyboardLayout:(id)sender;
 - (IBAction)exportKeyboardLayout:(id)sender;
 - (IBAction)addLocale:(id)sender;
 - (IBAction)removeLocale:(id)sender;
 - (IBAction)editLocale:(id)sender;
 - (UKKeyboardController *)createControllerForEntry:(KeyboardLayoutInformation *)keyboardEntry;
+- (IBAction)toggleCapsLockSwitch:(id)sender;
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName;
 - (void)inspectorDidAppear;
 - (void)inspectorDidActivateTab:(NSString *)tabIdentifier;
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject;
+- (void)addIconData:(NSData *)iconData forKeyboard:(UkeleleKeyboardObject *)keyboard;
 
 @end

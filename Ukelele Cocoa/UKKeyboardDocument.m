@@ -18,7 +18,6 @@
 #import "UkeleleErrorCodes.h"
 #import "ScriptInfo.h"
 #import "InspectorWindowController.h"
-#import "UkeleleKeyboardInstaller.h"
 #import "UKNewKeyboardLayoutController.h"
 #import "UKDocumentPrintViewController.h"
 #import "UKKeyboardPasteboardItem.h"
@@ -31,7 +30,9 @@
 
 #define UKKeyboardControllerNibName @"UkeleleDocument"
 #define UKKeyboardConverterTool	@"kluchrtoxml"
-
+#define UKKeyboardConverterTool32	@"kluchrtoxml_32"
+#define UKKeyboardConverterTool64	@"kluchrtoxml_64"
+#define UKIconutilTool @"iconutil"
 	
 // Dictionary keys
 NSString *kIconFileKey = @"IconFile";
@@ -51,6 +52,7 @@ NSString *kLocaleDescription = @"localeDescription";
 NSString *kKeyboardColumn = @"KeyboardName";
 NSString *kIconColumn = @"Icon";
 NSString *kLanguageColumn = @"Language";
+NSString *kCapsLockSwitchColumn = @"CapsLock";
 NSString *kLocaleColumn = @"Locale";
 NSString *kLocaleDescriptionColumn = @"LocaleDescription";
 
@@ -383,6 +385,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	CFStringGetPascalString(keyboardName, resourceName, 256, kCFStringEncodingUTF8);
 	CFURLRef parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, (CFURLRef)tempFileURL);
 	FSRef parentRef;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	Boolean gotFSRef = CFURLGetFSRef(parentURL, &parentRef);
 	if (!gotFSRef) {
 		CFRelease(parentURL);
@@ -391,8 +395,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	CFStringRef tempFileName = CFURLCopyLastPathComponent((CFURLRef)tempFileURL);
 	FSRef tempFileRef;
 	HFSUniStr255 forkName;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	OSStatus theErr = FSGetResourceForkName(&forkName);
 	NSAssert(theErr == noErr, @"Could not get resource fork");
 	NSAssert(CFStringGetLength(tempFileName) < 2048, @"File name is more than 2048 characters");
@@ -412,8 +414,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	UpdateResFile(CurResFile());
 	FSCloseFork(resFile);
 #pragma clang diagnostic pop
-		// Get the conversion tool
-	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKKeyboardConverterTool];
+		// Get the conversion tool in the appropriate version
+	NSString *toolName;
+	if (@available(macOS 10.15, *)) {
+		toolName = UKKeyboardConverterTool64;
+	}
+	else {
+		toolName = UKKeyboardConverterTool32;
+	}
+	NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:toolName];
 		// Set up and run the tool
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *currentDirectory = [fileManager currentDirectoryPath];
@@ -425,6 +434,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
 	CFRelease(tempFileName);
 	CFRelease(parentURL);
+	NSDate *tempFileDate;
+	if (![tempFileURL getResourceValue:&tempFileDate forKey:NSURLContentModificationDateKey error:nil]) {
+		tempFileDate = [NSDate dateWithTimeIntervalSinceNow:0.0];
+	}
 	[fileManager removeItemAtURL:tempFileURL error:nil];
 	[fileManager changeCurrentDirectoryPath:currentDirectory];
 		// Finally, read the resulting file
@@ -432,6 +445,36 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSError *theError = nil;
 	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
 	[fileManager removeItemAtURL:outputFileURL error:nil];
+	outputFileURL = nil;
+	if (myData == nil || [myData length] == 0) {
+		// First work out whether it's the bug in kluchrtoxml that appends a character to the name
+		NSURL *tempDirectoryURL = [NSURL URLWithString:tempDirectory];
+		NSArray *directoryContents = [fileManager contentsOfDirectoryAtURL:tempDirectoryURL includingPropertiesForKeys:@[NSURLContentModificationDateKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+		for (NSURL *fileURL in directoryContents) {
+			NSString *fileName = [fileURL lastPathComponent];
+			NSString *fileExtension = [fileURL pathExtension];
+			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:@"keylayout"]) {
+				NSDate *modificationDate;
+				if ([fileURL getResourceValue:&modificationDate forKey:NSURLContentModificationDateKey error:nil]) {
+					if ([modificationDate compare:tempFileDate] != NSOrderedAscending) {
+						// This is the likely file
+						outputFileURL = fileURL;
+						break;
+					}
+				}
+				else {
+					// We couldn't get the modification date, so just assume that there's only one such file...
+					outputFileURL = fileURL;
+					break;
+				}
+			}
+		}
+		if (outputFileURL != nil) {
+			// Try again
+			myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
+			[fileManager removeItemAtURL:outputFileURL error:nil];
+		}
+	}
 	if (myData == nil || [myData length] == 0) {
 		if (outError != nil) {
 			*outError = theError;
@@ -446,7 +489,20 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 - (BOOL)saveKeyboardLayoutToURL:(NSURL *)fileURL error:(NSError **)outError {
 	NSAssert(!self.isBundle, @"Attempt to save a bundle as a plain file");
 	NSData *keyboardData = [self.keyboardLayout convertToData];
-	return [keyboardData writeToURL:fileURL options:0 error:outError];
+	BOOL saveResult = [keyboardData writeToURL:fileURL options:0 error:outError];
+	// Get the window controller
+	NSArray *windowControllers = [self windowControllers];
+	UKKeyboardController *keyboardController = (UKKeyboardController *)windowControllers[0];
+	if (saveResult && keyboardController.iconFile != nil) {
+		// Save the icns file too
+		NSURL *parentDirectory = [fileURL URLByDeletingLastPathComponent];
+		NSString *fileName = [self.fileURL lastPathComponent];
+		NSString *iconFileName = [fileName stringByReplacingOccurrencesOfString:kStringKeyboardLayoutExtension withString:kStringIcnsExtension];
+		NSURL *iconFileURL = [parentDirectory URLByAppendingPathComponent:iconFileName];
+		NSData *iconData = [NSData dataWithContentsOfURL:keyboardController.iconFile];
+		saveResult = [iconData writeToURL:iconFileURL options:0 error:outError];
+	}
+	return saveResult;
 }
 
 - (NSFileWrapper *)createFileWrapper {
@@ -571,7 +627,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	infoPlist[(NSString *)kCFBundleNameKey] = self.bundleName;
 		// Set the version number
 	infoPlist[(NSString *)kCFBundleVersionKey] = self.bundleVersion;
-		// Get the intended languages for each keyboard layout in the bundle
+		// Get the intended languages and caps lock switchable status for each keyboard layout in the bundle
 	for (KeyboardLayoutInformation *keyboardEntry in self.keyboardLayouts) {
 		NSString *languageIdentifier = [keyboardEntry intendedLanguage];
 		if (nil != languageIdentifier && [languageIdentifier length] > 0) {
@@ -581,10 +637,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			if (fileName == nil) {
 				fileName = keyboardName;
 			}
+			BOOL capsLockSwitchable = [keyboardEntry doesCapsLockSwitching];
 			NSString *KLInfoIdentifier = [NSString stringWithFormat:@"%@%@", kStringInfoPlistKLInfoPrefix, fileName];
 			NSString *keyboardIdentifier = [NSString stringWithFormat:@"%@.%@", self.bundleIdentifier, [[fileName lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""]];
 			NSDictionary *languageDictionary = @{kStringInfoPlistInputSourceID: keyboardIdentifier,
-												 kStringInfoPlistIntendedLanguageKey: languageIdentifier};
+												 kStringInfoPlistIntendedLanguageKey: languageIdentifier,
+												 kStringInfoPlistCapsLockSwitchableKey: @(capsLockSwitchable)
+												 };
 			infoPlist[KLInfoIdentifier] = languageDictionary;
 		}
 	}
@@ -669,7 +728,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[directoryEntry preferredFilename] compare:kStringInfoPlistFileName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Info.plist file
 			infoPlistFile = directoryEntry;
-			[self parseInfoPlist:infoPlistFile];
 		}
 		else if ([[directoryEntry preferredFilename] compare:kStringResourcesName options:NSCaseInsensitiveSearch] == NSEqualToComparison) {
 				// Got the Resources directory
@@ -809,6 +867,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			[self.localisations addObject:theData];
 		}
 	}
+	[self parseInfoPlist:infoPlistFile];
 	return YES;
 }
 
@@ -849,11 +908,26 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	for (NSString *plistKey in infoPlistDictionary) {
 		if ([plistKey hasPrefix:kStringInfoPlistKLInfoPrefix]) {
-				// It's a keyboard language
+				// It's a keyboard language or a caps lock switchable key
 			NSString *keyboardName = [[plistKey substringFromIndex:[kStringInfoPlistKLInfoPrefix length]] decomposedStringWithCanonicalMapping];
 			NSDictionary *languageDictionary = infoPlistDictionary[plistKey];
-			NSString *languageIdentifier = languageDictionary[kStringInfoPlistIntendedLanguageKey];
-			languageList[keyboardName] = languageIdentifier;
+			NSUInteger index = [self.keyboardLayouts indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+#pragma unused(idx)
+#pragma unused(stop)
+				return [[(KeyboardLayoutInformation *)obj keyboardName] isEqualToString:keyboardName];
+			}];
+			if (languageDictionary[kStringInfoPlistIntendedLanguageKey] != nil) {
+				NSString *languageIdentifier = languageDictionary[kStringInfoPlistIntendedLanguageKey];
+				languageList[keyboardName] = languageIdentifier;
+				if (index != NSNotFound) {
+					[self.keyboardLayouts[index] setIntendedLanguage:languageIdentifier];
+				}
+			}
+			if (languageDictionary[kStringInfoPlistCapsLockSwitchableKey] != nil) {
+				if (index != NSNotFound) {
+					[self.keyboardLayouts[index] setDoesCapsLockSwitching:[[languageDictionary valueForKey:kStringInfoPlistCapsLockSwitchableKey] boolValue]];
+				}
+			}
 		}
 		else if ([plistKey isEqualToString:(NSString *)kCFBundleIdentifierKey]) {
 			self.bundleIdentifier = infoPlistDictionary[plistKey];
@@ -978,28 +1052,16 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		});
 		return;
 	}
-		// Create the link to Keyboard Layouts
-	NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:&theError];
-	if (libraryURL == nil) {
-			// Failed to create the URL for the Library directory
+		// Copy the installer application
+	NSURL *resourcesURL = [[NSBundle mainBundle] URLForResource:kStringInstallerApplication withExtension:@"app"];
+	NSURL *dropletURL = [[targetDirectoryURL URLByAppendingPathComponent:kStringInstallerApplication] URLByAppendingPathExtension:@"app"];
+	NSError *installerAppError;
+	if (![fileManager copyItemAtURL:resourcesURL toURL:dropletURL error:&installerAppError]) {
+			// Could not create the application
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[progressWindow.window orderOut:self];
 			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:theError];
-		});
-		return;
-	}
-	NSURL *keyboardLayoutsURL = [libraryURL URLByAppendingPathComponent:kStringKeyboardLayouts];
-	NSURL *linkURL = [targetDirectoryURL URLByAppendingPathComponent:kStringDragToInstall isDirectory:NO];
-	int linkError = symlink([keyboardLayoutsURL fileSystemRepresentation], [linkURL fileSystemRepresentation]);
-	if (linkError) {
-			// Failed to create the link
-		NSDictionary *errDict = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Creating alias failed with error code %d", linkError]};
-		theError = [NSError errorWithDomain:NSPOSIXErrorDomain code:linkError userInfo:errDict];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[progressWindow.window orderOut:self];
-			[[NSApplication sharedApplication] endSheet:progressWindow.window];
-			[self presentError:theError];
+			[self presentError:installerAppError];
 		});
 		return;
 	}
@@ -1043,30 +1105,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	});
 }
 
-#pragma mark Validate files
-
-- (BOOL)dataIsicns:(NSData *)iconData {
-	UInt32 icnsHeader;
-	UInt32 icnsDataLength;
-	[iconData getBytes:&icnsHeader range:NSMakeRange(0, sizeof(UInt32))];
-	[iconData getBytes:&icnsDataLength range:NSMakeRange(sizeof(UInt32), sizeof(UInt32))];
-		// Need to swap bytes on the data
-	icnsHeader = ((icnsHeader & 0x000000ff) << 24) |
-	((icnsHeader & 0x0000ff00) << 8) |
-	((icnsHeader & 0x00ff0000) >> 8) |
-	((icnsHeader & 0xff000000) >> 24);
-	icnsDataLength = ((icnsDataLength & 0x000000ff) << 24) |
-	((icnsDataLength & 0x0000ff00) << 8) |
-	((icnsDataLength & 0x00ff0000) >> 8) |
-	((icnsDataLength & 0xff000000) >> 24);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wfour-char-constants"
-	if (icnsHeader != 'icns' || icnsDataLength != [iconData length]) {
-			// Bad icon data
-		return NO;
+- (void)addIconData:(NSData *)iconData forKeyboard:(UkeleleKeyboardObject *)keyboard {
+	for (KeyboardLayoutInformation *info in [self.keyboardLayoutsController arrangedObjects]) {
+		if ([info keyboardObject] == keyboard) {
+			if (iconData != NULL) {
+				[self addIcon:iconData toKeyboardInfo:info];
+			}
+			else {
+				[self removeIconFromKeyboardInfo:info];
+			}
+			break;
+		}
 	}
-#pragma clang diagnostic pop
-	return YES;
 }
 
 #pragma mark Saving and restoring selection
@@ -1152,6 +1202,9 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 				// Intended language column
 			resultString = [layoutInfo intendedLanguage];
 		}
+		else if ([[tableColumn identifier] isEqualToString:kCapsLockSwitchColumn]) {
+			return @([layoutInfo doesCapsLockSwitching]);
+		}
 	}
 	else if (tableView == self.localisationsTable) {
 		LocalisationData *theData = [self.localisationsController arrangedObjects][row];
@@ -1203,17 +1256,41 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma mark Table delegate methods
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-		// We don't need to special case this for the two tables, since they all use NSTableCellView
-	NSTableCellView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	NSView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	// Special case for the caps lock switch column
+	if ([[tableColumn identifier] isEqualToString:kCapsLockSwitchColumn]) {
+			// This does not use standard NSTableCellViews
+		if (view == nil) {
+			view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 17)];
+			for (NSView *subview in [view subviews]) {
+				[subview removeFromSuperview];
+			}
+			NSButton *checkBox;
+			if (@available(macOS 10.12, *)) {
+				checkBox = [NSButton checkboxWithTitle:@"" target:self action:nil];
+			}
+			else {
+				checkBox = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
+				[checkBox setButtonType:NSButtonTypePushOnPushOff];
+			}
+			[view addSubview:checkBox];
+			[view addConstraints:
+  @[[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0],
+	[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]]];
+		}
+		[((NSButton *)[view subviews][0]) setState:[[self tableView:tableView objectValueForTableColumn:tableColumn row:row] boolValue] ? NSOnState : NSOffState];
+		return view;
+	}
+	// All other columns for each table come through here
 	if (view == nil) {
 		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
 		[view setIdentifier:[tableColumn identifier]];
 	}
 	if ([[tableColumn identifier] isEqualToString:kIconColumn]) {
-		[view.imageView setImage:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+		[((NSTableCellView *) view).imageView setImage:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
 	}
 	else {
-		[view.textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+		[((NSTableCellView *) view).textField setStringValue:[self tableView:tableView objectValueForTableColumn:tableColumn row:row]];
 	}
 	return view;
 }
@@ -1313,8 +1390,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 					[NSApp presentError:theError];
 					return NO;
 				}
-				if (![self dataIsicns:iconData]) {
-						// Not valid icon data
+				if (![UKFileUtilities dataIsicns:iconData]) {
+					NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"The icon file is invalid"};
+					NSError *error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidIconFile userInfo:errorDict];
+					[NSApp presentError:error];
+					// Not a valid icon file
 					return NO;
 				}
 				[keyboardInfo setIconData:iconData];
@@ -1357,8 +1437,8 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSError *readError;
 			NSFileWrapper *iconFile = [[NSFileWrapper alloc] initWithURL:dragURL options:NSFileWrapperReadingImmediate error:&readError];
 			NSData *iconData = [iconFile regularFileContents];
-			if (![self dataIsicns:iconData]) {
-					// Not valid icon data
+			if (![UKFileUtilities dataIsicns:iconData]) {
+				// Not valid icon data
 				return NO;
 			}
 			KeyboardLayoutInformation *keyboardEntry = self.keyboardLayouts[row];
@@ -1460,13 +1540,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	else if (theAction == @selector(captureInputSource:) ||
-			 theAction == @selector(installForCurrentUser:) ||
-			 theAction == @selector(installForAllUsers:) ||
-			 theAction == @selector(exportKeyboardLayout:)) {
-			// Always active
-		return YES;
-	}
 	else if (theAction == @selector(chooseIntendedLanguage:) || theAction == @selector(attachIconFile:) ||
 			 theAction == @selector(askKeyboardIdentifiers:) || theAction == @selector(removeKeyboardLayout:) ||
 			 theAction == @selector(openKeyboardLayout:) || theAction == @selector(duplicateKeyboardLayout:) ||
@@ -1565,6 +1638,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if ([[[self.tabView selectedTabViewItem] identifier] isEqualToString:kKeyboardLayoutsTab]) {
 			return NO;
 		}
+		return YES;
+	}
+	else if (theAction == @selector(exportKeyboardLayout:)) {
+		// These are always active
 		return YES;
 	}
 	return [super validateUserInterfaceItem:anItem];
@@ -1805,38 +1882,51 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		if (keyboardIcon != NULL) {
 			NSImage *iconImage = [[NSImage alloc] initWithIconRef:keyboardIcon];
 			NSArray *iconImageReps = [iconImage representations];
-				// Create data to write with ImageIO
-			iconData = [NSMutableData data];
-			NSInteger iconCount = 0;
-			for (NSImageRep *theIconImage in iconImageReps) {
-					// Work around a bug
-				if ([theIconImage size].height < 128) {
-					iconCount++;
+			// Create a folder to store the various icon files
+			NSString *folderName = [NSString stringWithFormat:@"%@.iconset", newName];
+			NSFileManager *fileManager = [NSFileManager defaultManager];
+			NSString *tempDirectoryPath = NSTemporaryDirectory();
+			NSURL *tempDirectory = [NSURL fileURLWithPath:tempDirectoryPath];
+			NSURL *iconFolder = [tempDirectory URLByAppendingPathComponent:folderName isDirectory:YES];
+			[fileManager createDirectoryAtURL:iconFolder withIntermediateDirectories:YES attributes:nil error:nil];
+			// Create the icon files
+			for (NSImageRep *iconImageRep in iconImageReps) {
+				NSInteger imageHeight = (NSInteger)[iconImageRep size].height;
+				NSInteger pixelHeight = [iconImageRep pixelsHigh];
+				NSString *nameTemplate;
+				if (imageHeight == pixelHeight) {
+					nameTemplate = @"icon_%ldx%ld.png";
 				}
-			}
-			// Work around different versions of a hard limit
-			NSInteger maxReps = 15;
-			if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion > 13) {
-				maxReps = 10;
-			}
-			if (iconCount > maxReps) {
-				iconCount = maxReps;
-			}
-			CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)iconData, kUTTypeAppleICNS, iconCount, nil);
-			for (NSImageRep *imageRep in iconImageReps) {
-				NSInteger imageHeight = (NSInteger)[imageRep size].height;
-					// Write only small sizes to avoid a hard limit
-				if (imageHeight < 128) {
+				else {
+					nameTemplate = @"icon_%ldx%ld@2x.png";
+				}
+				NSString *fileName = [NSString stringWithFormat:nameTemplate, imageHeight, imageHeight];
+				NSURL *fileURL = [iconFolder URLByAppendingPathComponent:fileName];
+				if (![fileManager fileExistsAtPath:[fileURL path]]) {
+					CGImageDestinationRef destination = CGImageDestinationCreateWithURL((CFURLRef)fileURL, kUTTypePNG, 1, nil);
 					NSRect imageRect = NSMakeRect(0, 0, imageHeight, imageHeight);
-					CGImageRef imageRef = [imageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
-					CGImageDestinationAddImage(imageDestination, imageRef, nil);
+					CGImageRef imageRef = [iconImageRep CGImageForProposedRect:&imageRect context:nil hints:nil];
+					CGImageDestinationAddImage(destination, imageRef, nil);
+					CGImageDestinationFinalize(destination);
 				}
 			}
-			CGImageDestinationFinalize(imageDestination);
-			if ([iconData length] == 0) {
-				iconData = NULL;
-			}
-			CFRelease(imageDestination);
+				// Get the conversion tool
+//			NSURL *toolURL = [[NSBundle mainBundle] URLForAuxiliaryExecutable:UKIconutilTool];
+			NSURL *toolURL = [NSURL fileURLWithPath:@"/usr/bin/iconutil"];
+				// Set up and run the tool
+			NSString *currentDirectory = [fileManager currentDirectoryPath];
+			[fileManager changeCurrentDirectoryPath:[tempDirectory path]];
+			NSTask *conversionTask = [NSTask launchedTaskWithLaunchPath:[toolURL path] arguments:@[@"-c", @"icns", folderName]];
+			[conversionTask waitUntilExit];
+			int returnStatus = [conversionTask terminationStatus];
+#pragma unused(returnStatus)
+			NSAssert(returnStatus == 0 || returnStatus == EINTR, @"Could not run conversion tool");
+			[fileManager removeItemAtURL:iconFolder error:nil];
+			[fileManager changeCurrentDirectoryPath:currentDirectory];
+				// Finally, read the resulting file
+			NSURL *icnsFileURL = [tempDirectory URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.icns", newName]];
+			iconData = [NSMutableData dataWithContentsOfURL:icnsFileURL];
+			[fileManager removeItemAtURL:icnsFileURL error:nil];
 		}
 	}
 	CFArrayRef keyboardLanguages = TISGetInputSourceProperty(currentInputSource, kTISPropertyInputSourceLanguages);
@@ -1914,9 +2004,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			NSArray *selectedFiles = [openPanel URLs];
 			NSURL *selectedFile = selectedFiles[0];	// Only one file
 			NSData *iconData = [NSData dataWithContentsOfURL:selectedFile];
-			if ([self dataIsicns:iconData]) {
+			if ([UKFileUtilities dataIsicns:iconData]) {
 				KeyboardLayoutInformation *keyboardInfo = [self.keyboardLayoutsController arrangedObjects][selectedRowNumber];
-				[self addIcon:iconData toKeyboardInfo:keyboardInfo];
+				[self addIconData:iconData forKeyboard:[keyboardInfo keyboardObject]];
+			}
+			else {
+				NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"The icon file is invalid"};
+				NSError *error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorInvalidIconFile userInfo:errorDict];
+				[NSApp presentError:error];
 			}
 		}
 	}];
@@ -2047,57 +2142,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}];
 }
 
-	// Install the keyboard layout
-
-- (IBAction)installForAllUsers:(id)sender {
-	if (![self canInstall]) {
-		return;
-	}
-	NSWindow *targetWindow;
-	if ([sender isKindOfClass:[UKKeyboardController class]]) {
-		targetWindow = [(UKKeyboardController *)sender window];
-	}
-	else {
-		targetWindow = [self.keyboardLayoutsTable window];
-	}
-	NSAssert(targetWindow, @"Must have a valid window");
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForAllUsers:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-- (IBAction)installForCurrentUser:(id)sender {
-	if (![self canInstall]) {
-		return;
-	}
-	NSWindow *targetWindow;
-	if ([sender isKindOfClass:[UKKeyboardController class]]) {
-		targetWindow = [(UKKeyboardController *)sender window];
-	}
-	else {
-		targetWindow = [self.keyboardLayoutsTable window];
-	}
-	NSAssert(targetWindow, @"Must have a valid window");
-	UkeleleKeyboardInstaller *theInstaller = [UkeleleKeyboardInstaller defaultInstaller];
-	NSError *theError;
-	BOOL installOK = [theInstaller installForCurrentUser:[self fileURL] error:&theError];
-	if (!installOK) {
-		[self presentError:theError modalForWindow:targetWindow delegate:nil didPresentSelector:nil contextInfo:nil];
-	}
-}
-
-- (BOOL)canInstall {
-	if ([self fileURL] == nil) {
-		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"This keyboard layout has not yet been saved. Please save it first, and then install it."};
-		NSError *myError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotInstallUnsavedFile userInfo:errorDict];
-		[self presentError:myError];
-		return NO;
-	}
-	return YES;
-}
 
 - (IBAction)duplicateKeyboardLayout:(id)sender {
 #pragma unused(sender)
@@ -2166,6 +2210,14 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}];
 }
 
+- (IBAction)toggleCapsLockSwitch:(id)sender {
+	NSInteger selectedRowNumber = [self.keyboardLayoutsTable rowForView:sender];
+	if (selectedRowNumber < 0) {
+		return;
+	}
+	[self setCapsLockSwitchingAtIndex:selectedRowNumber toValue:[(NSButton *)sender state] == NSOnState];
+}
+
 #pragma mark Notifications
 
 - (void)keyboardLayoutDidChange:(UkeleleKeyboardObject *)keyboardObject {
@@ -2185,8 +2237,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 }
 
 - (void)notifyNewName:(NSString *)newName forDocument:(id)keyboardDocument withOldName:(NSString *)oldName {
-#pragma unused(newName)
-#pragma unused(oldName)
 	NSAssert([keyboardDocument isKindOfClass:[UKKeyboardController class]], @"Document must be a Ukelele document");
 		// Find the document in the list
 	for (KeyboardLayoutInformation *keyboardInfo in self.keyboardLayouts) {
@@ -2519,6 +2569,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[self insertDocumentWithInfo:keyboardInfo];
 	[undoManager setActionName:@"Capture current input source"];
 	[undoManager endUndoGrouping];
+}
+
+- (void)setCapsLockSwitchingAtIndex:(NSInteger)index toValue:(BOOL)newValue {
+	KeyboardLayoutInformation *selectedRowInfo = [self.keyboardLayoutsController arrangedObjects][index];
+	NSUndoManager *undoManager = [self undoManager];
+	[[undoManager prepareWithInvocationTarget:self] setCapsLockSwitchingAtIndex:index toValue:[selectedRowInfo doesCapsLockSwitching]];
+	[undoManager setActionName:@"Set caps lock switching"];
+	[selectedRowInfo setDoesCapsLockSwitching:newValue];
+	[self.keyboardLayoutsTable reloadData];
 }
 
 - (void)replaceLocaleForLocalisation:(LocalisationData *)localeData withLocale:(LocaleCode *)newLocale {

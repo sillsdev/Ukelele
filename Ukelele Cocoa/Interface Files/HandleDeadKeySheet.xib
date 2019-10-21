@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="HandleDeadKey" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ZVV-OG-l4N">
+        <window title="HandleDeadKey" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="ZVV-OG-l4N">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="131" y="158" width="480" height="295"/>
@@ -30,16 +30,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="295"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3rm-e1-5oM">
-                        <rect key="frame" x="18" y="258" width="414" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3rm-e1-5oM">
+                        <rect key="frame" x="18" y="259" width="414" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This key is a dead key. Please choose what you wish to do with it." id="3cc-ke-hxR">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5r-wT-Vae">
-                        <rect key="frame" x="18" y="233" width="444" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5r-wT-Vae">
+                        <rect key="frame" x="18" y="235" width="444" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Currently it goes to state &quot;%@&quot;, which has terminator &quot;%@&quot;." id="pEI-6M-S9S">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -60,16 +60,16 @@ DQ
                         </connections>
                     </button>
                     <tabView translatesAutoresizingMaskIntoConstraints="NO" id="qw0-XM-Ftb">
-                        <rect key="frame" x="13" y="41" width="454" height="178"/>
+                        <rect key="frame" x="13" y="41" width="454" height="180"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Enter State" identifier="Enter State" id="Tkc-ae-BCM">
                                 <view key="view" id="8Wq-i0-RGb">
-                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
-                                            <rect key="frame" x="15" y="84" width="404" height="28"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6W-Vm-Ry6">
+                                            <rect key="frame" x="15" y="86" width="404" height="28"/>
                                             <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="iJU-5x-5iR">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <string key="title">This will make the keyboard layout enter the dead key state for which this key is a trigger. This enables you to add output for the dead key state.</string>
@@ -87,27 +87,33 @@ DQ
                             </tabViewItem>
                             <tabViewItem label="Terminator" identifier="Terminator" id="hlq-Tq-jfL">
                                 <view key="view" id="3cg-Te-Y8U">
-                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wof-FS-7vT">
-                                            <rect key="frame" x="15" y="109" width="158" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wof-FS-7vT">
+                                            <rect key="frame" x="15" y="112" width="158" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="e7c-cR-7Uo"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the new terminator:" id="jp8-5G-ya2">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AER-6c-F9x">
-                                            <rect key="frame" x="181" y="107" width="96" height="22"/>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AER-6c-F9x">
+                                            <rect key="frame" x="181" y="109" width="96" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="96" id="zbi-Tf-sY1"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7lB-4g-5iH">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzj-Fl-9ZG">
-                                            <rect key="frame" x="15" y="57" width="404" height="42"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hzj-Fl-9ZG">
+                                            <rect key="frame" x="15" y="59" width="404" height="42"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="lbQ-k1-QM1">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <string key="title">The terminator is the character (or characters) produced by the dead key when no output is specified for the next key pressed. It can be the empty string.</string>
@@ -117,6 +123,7 @@ DQ
                                         </textField>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="wof-FS-7vT" firstAttribute="centerY" secondItem="AER-6c-F9x" secondAttribute="centerY" id="1Pg-0Y-ecS"/>
                                         <constraint firstAttribute="trailing" secondItem="Hzj-Fl-9ZG" secondAttribute="trailing" constant="17" id="A4w-yn-MdF"/>
                                         <constraint firstItem="AER-6c-F9x" firstAttribute="leading" secondItem="wof-FS-7vT" secondAttribute="trailing" constant="10" id="Pwu-ru-pne"/>
                                         <constraint firstItem="Hzj-Fl-9ZG" firstAttribute="top" secondItem="AER-6c-F9x" secondAttribute="bottom" constant="8" symbolic="YES" id="Uyd-I6-hOW"/>
@@ -129,27 +136,30 @@ DQ
                             </tabViewItem>
                             <tabViewItem label="Change State" identifier="Change State" id="WVu-5A-TPo">
                                 <view key="view" id="1Yh-e7-bQe">
-                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDi-9N-4Kc">
-                                            <rect key="frame" x="15" y="87" width="404" height="14"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDi-9N-4Kc">
+                                            <rect key="frame" x="15" y="93" width="404" height="14"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The state is the dead key state triggered by pressing the dead key." id="gXA-6L-eZc">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYN-Qs-8oy">
-                                            <rect key="frame" x="15" y="110" width="140" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SYN-Qs-8oy">
+                                            <rect key="frame" x="15" y="114" width="140" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Choose the new state:" id="MF0-02-qaf">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <comboBox verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Lf-Y2P">
-                                            <rect key="frame" x="169" y="105" width="177" height="26"/>
+                                        <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Lf-Y2P">
+                                            <rect key="frame" x="169" y="111" width="248" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="19" id="Bv7-ot-Wwi"/>
+                                            </constraints>
                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="hM0-yr-cba">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -163,39 +173,46 @@ DQ
                                         </comboBox>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SYN-Qs-8oy" firstAttribute="top" secondItem="1Yh-e7-bQe" secondAttribute="top" constant="5" id="NBI-Hg-93F"/>
+                                        <constraint firstItem="D2B-Lf-Y2P" firstAttribute="firstBaseline" secondItem="SYN-Qs-8oy" secondAttribute="firstBaseline" id="IUo-cJ-Bar"/>
+                                        <constraint firstItem="SYN-Qs-8oy" firstAttribute="top" secondItem="1Yh-e7-bQe" secondAttribute="top" constant="4" id="NBI-Hg-93F"/>
                                         <constraint firstItem="SYN-Qs-8oy" firstAttribute="leading" secondItem="1Yh-e7-bQe" secondAttribute="leading" constant="17" id="Qfi-f4-JQV"/>
                                         <constraint firstItem="qDi-9N-4Kc" firstAttribute="leading" secondItem="1Yh-e7-bQe" secondAttribute="leading" constant="17" id="RYl-aJ-D9A"/>
                                         <constraint firstAttribute="trailing" secondItem="qDi-9N-4Kc" secondAttribute="trailing" constant="17" id="e4N-Sc-ywJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="D2B-Lf-Y2P" secondAttribute="trailing" constant="20" symbolic="YES" id="lvu-Mo-QLX"/>
                                         <constraint firstItem="D2B-Lf-Y2P" firstAttribute="leading" secondItem="SYN-Qs-8oy" secondAttribute="trailing" constant="16" id="nqN-gW-FVu"/>
                                         <constraint firstItem="qDi-9N-4Kc" firstAttribute="top" secondItem="D2B-Lf-Y2P" secondAttribute="bottom" constant="8" symbolic="YES" id="tOr-x1-rkr"/>
-                                        <constraint firstItem="D2B-Lf-Y2P" firstAttribute="top" secondItem="1Yh-e7-bQe" secondAttribute="top" constant="3" id="vks-pF-VkJ"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Make Output" identifier="Make Output" id="8Mg-W3-coa">
                                 <view key="view" id="lwN-1b-waj">
-                                    <rect key="frame" x="10" y="33" width="434" height="132"/>
+                                    <rect key="frame" x="10" y="33" width="434" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-SY-UuW">
-                                            <rect key="frame" x="15" y="109" width="135" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-SY-UuW">
+                                            <rect key="frame" x="15" y="112" width="135" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="MdU-ib-yJ8"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the new output:" id="Rl1-Uu-lqB">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-7i-phD">
-                                            <rect key="frame" x="158" y="107" width="96" height="22"/>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-7i-phD">
+                                            <rect key="frame" x="158" y="109" width="96" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="96" id="oXj-nA-bcs"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Xcb-C0-Oh7">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pL8-5V-6Vy">
-                                            <rect key="frame" x="15" y="71" width="404" height="28"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pL8-5V-6Vy">
+                                            <rect key="frame" x="15" y="73" width="404" height="28"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Converting the dead key to an output key does not delete the dead key state, but stops this key entering the dead key state." id="cbu-XZ-jH1">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -205,6 +222,7 @@ DQ
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="pL8-5V-6Vy" secondAttribute="trailing" constant="17" id="9PI-vu-M7m"/>
+                                        <constraint firstItem="2eB-SY-UuW" firstAttribute="centerY" secondItem="8iE-7i-phD" secondAttribute="centerY" id="ASL-qY-hZg"/>
                                         <constraint firstItem="pL8-5V-6Vy" firstAttribute="top" secondItem="8iE-7i-phD" secondAttribute="bottom" constant="8" symbolic="YES" id="DeS-se-BEX"/>
                                         <constraint firstItem="8iE-7i-phD" firstAttribute="top" secondItem="lwN-1b-waj" secondAttribute="top" constant="3" id="O1m-Re-R3m"/>
                                         <constraint firstItem="8iE-7i-phD" firstAttribute="leading" secondItem="2eB-SY-UuW" secondAttribute="trailing" constant="10" id="aEu-0y-0XY"/>

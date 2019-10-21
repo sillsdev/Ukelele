@@ -85,6 +85,7 @@ NSString *kStringSourceVersionKey = @"SourceVersion";
 NSString *kStringInfoPlistKLInfoPrefix = @"KLInfo_";
 NSString *kStringInfoPlistInputSourceID = @"TISInputSourceID";
 NSString *kStringInfoPlistIntendedLanguageKey = @"TISIntendedLanguage";
+NSString *kStringInfoPlistCapsLockSwitchableKey = @"TICapsLockLanguageSwitchCapable";
 
 	// Preference keys
 NSString *UKScaleFactor = @"ScaleFactor";
@@ -107,9 +108,11 @@ NSString *UKToolboxWindowLocation = @"ToolboxWindowLocation";
 NSString *UKDontShowWarningDialog = @"DontShowWarningDialog";
 NSString *UKStickyModifiers = @"StickyModifiers";
 NSString *UKJISOnly = @"JISOnly";
+NSString *UKShowCodePoints = @"ShowCodePoints";
 
 	// File names
 NSString *UKKCAPListFile = @"KCAPResources";
 NSString *UKUntitledName = @"untitled";
 NSString *kStringKeyboardLayouts = @"Keyboard Layouts";
 NSString *kStringDragToInstall = @"Drag here to install";
+NSString *kStringInstallerApplication = @"Keyboard Installer";

@@ -1272,10 +1272,10 @@ RemoveStateData *KeyboardElement::RemoveState(const NString inState) {
 	RemoveStateData *stateData = [[RemoveStateData alloc] init];
 	RemoveStateDataBlock *dataBlock;
 	if (HasInlineAction()) {
-		dataBlock = new RemoveStateDataBlock(shared_ptr<KeyMapSetList>(), mActionList, mTerminatorsElement);
+		dataBlock = new RemoveStateDataBlock(mKeyMapSetList, mActionList, mTerminatorsElement);
 	}
 	else {
-		dataBlock = new RemoveStateDataBlock(mKeyMapSetList, mActionList, mTerminatorsElement);
+		dataBlock = new RemoveStateDataBlock(shared_ptr<KeyMapSetList>(), mActionList, mTerminatorsElement);
 	}
 	[stateData setDataBlock:dataBlock];
 	NSSet *statesToRemove = [NSSet setWithObject:ToNS(inState)];
@@ -1315,10 +1315,10 @@ RemoveStateData *KeyboardElement::RemoveUnusedStates(void)
 		stateData = [[RemoveStateData alloc] init];
 		RemoveStateDataBlock *dataBlock;
 		if (HasInlineAction()) {
-			dataBlock = new RemoveStateDataBlock(shared_ptr<KeyMapSetList>(), mActionList, mTerminatorsElement);
+			dataBlock = new RemoveStateDataBlock(mKeyMapSetList, mActionList, mTerminatorsElement);
 		}
 		else {
-			dataBlock = new RemoveStateDataBlock(mKeyMapSetList, mActionList, mTerminatorsElement);
+			dataBlock = new RemoveStateDataBlock(shared_ptr<KeyMapSetList>(), mActionList, mTerminatorsElement);
 		}
 		[stateData setDataBlock:dataBlock];
 		ActionElement *actionElement;
