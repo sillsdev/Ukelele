@@ -185,7 +185,7 @@
 
 - (IBAction)attachIconFile:(id)sender {
 #pragma unused(sender)
-	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];

@@ -1981,7 +1981,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (IBAction)openKeyboardFile:(id)sender {
 #pragma unused(sender)
-	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];
@@ -2024,7 +2024,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	__weak NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		// These next four lines aren't necessary, it seems, but better to be safe...
 	[openPanel setAllowsMultipleSelection:NO];
 	[openPanel setCanChooseDirectories:NO];
