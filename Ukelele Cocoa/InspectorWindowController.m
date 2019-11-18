@@ -28,7 +28,8 @@
 		_scriptList = [ScriptInfo standardScripts];
 		NSMutableArray *scriptDescriptions = [NSMutableArray arrayWithCapacity:[_scriptList count]];
 		for (NSUInteger i = 0; i < [_scriptList count]; i++) {
-			scriptDescriptions[i] = [_scriptList[i] scriptDescription];
+			ScriptInfo *theInfo = _scriptList[i];
+			scriptDescriptions[i] = [theInfo scriptDescription];
 		}
 		_scriptDescriptionList = scriptDescriptions;
     }

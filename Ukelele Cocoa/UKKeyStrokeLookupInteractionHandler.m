@@ -40,7 +40,7 @@
 	if (askTextSheet == nil) {
 		askTextSheet = [AskTextSheet askTextSheet];
 	}
-	[askTextSheet beginAskText:@"Enter the output string for which you want the key strokes" minorText:@"Ukelele will determine the key stroke sequence to produce this string" initialText:@"" forWindow:parentWindow callBack:^(id result) {
+	[askTextSheet beginAskText:@"Enter the output string for which you want the key strokes" minorText:@"Ukelele will determine the key stroke sequence to produce this string" initialText:@"" forWindow:parentWindow callBack:^(NSString *result) {
 		NSDictionary *keyStrokeData = nil;
 		if (result != nil && [result length] > 0) {
 			keyStrokeData = [self->keyboardObject getKeyStrokeForOutput:result forKeyboard:self->keyboardID];
