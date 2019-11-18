@@ -450,9 +450,13 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		// First work out whether it's the bug in kluchrtoxml that appends a character to the name
 		NSURL *tempDirectoryURL = [NSURL URLWithString:tempDirectory];
 		NSArray *directoryContents = [fileManager contentsOfDirectoryAtURL:tempDirectoryURL includingPropertiesForKeys:@[NSURLContentModificationDateKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+		NSMutableArray *candidateURLs = [NSMutableArray arrayWithCapacity:[directoryContents count]];
 		for (NSURL *fileURL in directoryContents) {
 			NSString *fileName = [fileURL lastPathComponent];
 			NSString *fileExtension = [fileURL pathExtension];
+			if ([fileExtension isEqualToString:@"keylayou"]) {
+				[candidateURLs addObject:fileURL];
+			}
 			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:@"keylayout"]) {
 				NSDate *modificationDate;
 				if ([fileURL getResourceValue:&modificationDate forKey:NSURLContentModificationDateKey error:nil]) {
@@ -473,6 +477,33 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 			// Try again
 			myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
 			[fileManager removeItemAtURL:outputFileURL error:nil];
+		}
+		else if ([candidateURLs count] > 0) {
+			// There is something else going on, so see what possible files we have
+			if ([candidateURLs count] == 1) {
+				// Only one keylayout file, so we will just go with that one
+				outputFileURL = candidateURLs[0];
+			}
+			else {
+				// More than one possibility. For now, just look for any file modified later than tempFileDate
+				for (NSURL *fileURL in candidateURLs) {
+					NSDate *modificationDate;
+					if ([fileURL getResourceValue:&modificationDate forKey:NSURLContentModificationDateKey error:nil] && [modificationDate compare:tempFileDate] != NSOrderedAscending) {
+						outputFileURL = fileURL;
+						break;
+					}
+				}
+			}
+			if (outputFileURL != nil) {
+				// Try again
+				myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
+				[fileManager removeItemAtURL:outputFileURL error:nil];
+			}
+			else {
+				// All attempts to find the output file have failed
+				NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Could not convert the current input source"};
+				theError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCouldNotConvertInputSource userInfo:errorDict];
+			}
 		}
 	}
 	if (myData == nil || [myData length] == 0) {

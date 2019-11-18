@@ -24,7 +24,8 @@ enum UkeleleErrors {
 	kUkeleleErrorCannotConvertToUnbundled = -21,	// Could not convert a bundle to an unbundled keyboard layout
 	kUkeleleErrorCannotInstallUnsavedFile = -22,	// Cannot install a file that hasn't been saved
 	kUkeleleErrorCannotOpenInstalledFile = -23,		// Cannot open a file in an installation directory
-	kUkeleleErrorInvalidIconFile = -24				// Icon file is not a valid icns file
+	kUkeleleErrorInvalidIconFile = -24,				// Icon file is not a valid icns file
+	kUkeleleErrorCouldNotConvertInputSource = -25	// Failed to create an XML file from a keyboard input source
 };
 
 #endif
