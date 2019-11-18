@@ -191,9 +191,11 @@ NSString *kLocalisationsTab = @"Localisations";
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
 		// See whether we have a file that is in an installation directory
 	if ([UKFileUtilities isKeyboardLayoutsURL:url]) {
-		NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Ukelele cannot open a keyboard layout or collection that has been installed",
-									NSLocalizedRecoverySuggestionErrorKey: @"Please open a copy and then install the new version"};
-		*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotOpenInstalledFile userInfo:errorDict];
+		if (outError != nil) {
+			NSDictionary *errorDict = @{NSLocalizedDescriptionKey: @"Ukelele cannot open a keyboard layout or collection that has been installed",
+										NSLocalizedRecoverySuggestionErrorKey: @"Please open a copy and then install the new version"};
+			*outError = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorCannotOpenInstalledFile userInfo:errorDict];
+		}
 		return NO;
 	}
 	NSFileWrapper *theWrapper = [[NSFileWrapper alloc] initWithURL:url options:0 error:outError];
@@ -723,8 +725,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSDictionary *errorDictionary = nil;
 		// Check that it is actually a directory
 	if (![theFileWrapper isDirectory]) {
-		errorDictionary = @{NSLocalizedDescriptionKey: @"The selected bundle is not a valid bundle"};
-		*error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorNotKeyboardLayoutBundle userInfo:errorDictionary];
+		if (error != NULL) {
+			errorDictionary = @{NSLocalizedDescriptionKey: @"The selected bundle is not a valid bundle"};
+			*error = [NSError errorWithDomain:kDomainUkelele code:kUkeleleErrorNotKeyboardLayoutBundle userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	self.bundleName = [[theFileWrapper filename] stringByDeletingPathExtension];
@@ -1257,7 +1261,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 #pragma unused(oldDescriptors)
 	NSInteger selectedRowNumber;
 	if (tableView == self.keyboardLayoutsTable) {
-		selectedRowNumber = [self.keyboardLayoutsTable selectedRow];
 		NSString *selectedLayout = [self currentSelectedName];
 		[self.keyboardLayoutsController setSortDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
 		[self.keyboardLayouts sortUsingDescriptors:[self.keyboardLayoutsTable sortDescriptors]];
