@@ -651,8 +651,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		selector == @selector(runPageLayout:) ||
 		selector == @selector(printDocument:) ||
 		selector == @selector(findKeyStroke:) ||
-		selector == @selector(installForAllUsers:) ||
-		selector == @selector(installForCurrentUser:) ||
+//		selector == @selector(installForAllUsers:) ||
+//		selector == @selector(installForCurrentUser:) ||
 		selector == @selector(removeUnusedStates:) ||
 		selector == @selector(changeStateName:) ||
 		selector == @selector(changeActionName:) ||

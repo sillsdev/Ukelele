@@ -527,8 +527,8 @@
 		524EAE2F1B9FD1A400B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/keyboards.strings; sourceTree = "<group>"; };
 		524EAE301B9FD1AB00B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/dialogs.strings; sourceTree = "<group>"; };
 		524EAE311B9FD1B100B77B43 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Errors.strings; sourceTree = "<group>"; };
-		524F68A6230E5F9000593EEA /* kluchrtoxml_32 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_32; path = ../../kluchrtoxml_32; sourceTree = "<group>"; };
-		524F68A7230E5F9000593EEA /* kluchrtoxml_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = kluchrtoxml_64; path = ../../kluchrtoxml_64; sourceTree = "<group>"; };
+		524F68A6230E5F9000593EEA /* kluchrtoxml_32 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kluchrtoxml_32; sourceTree = "<group>"; };
+		524F68A7230E5F9000593EEA /* kluchrtoxml_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kluchrtoxml_64; sourceTree = "<group>"; };
 		524F68AC2315855500593EEA /* Ukelele.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ukelele.entitlements; sourceTree = "<group>"; };
 		524F76F41929D29B004A8A72 /* language-subtag-registry.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "language-subtag-registry.xml"; sourceTree = "<group>"; };
 		524F76F61929D2C3004A8A72 /* UCDNamesList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UCDNamesList.txt; sourceTree = "<group>"; };
@@ -1703,10 +1703,13 @@
 /* Begin XCBuildConfiguration section */
 		5277EB6E1AAE844600C471C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B51171B292ECA00E8982E /* NanoDebugMac.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1717,8 +1720,14 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/boost_1_70_0,
+					"$(NANO_HEADER_SEARCH_PATHS)",
+				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1730,10 +1739,13 @@
 		};
 		5277EB6F1AAE844600C471C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1744,8 +1756,14 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/boost_1_70_0,
+					"$(NANO_HEADER_SEARCH_PATHS)",
+				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1757,6 +1775,7 @@
 		};
 		5293D5941FC6369D00422005 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
@@ -1767,6 +1786,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
@@ -1788,6 +1808,7 @@
 		};
 		5293D5951FC6369D00422005 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
@@ -1798,6 +1819,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
@@ -1841,7 +1863,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1902,7 +1924,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1928,12 +1950,15 @@
 		};
 		52BBED34191B4C3900E48394 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B51171B292ECA00E8982E /* NanoDebugMac.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 3.4.0.296;
@@ -1946,6 +1971,11 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(NANO_HEADER_SEARCH_PATHS)",
+					"$(inherited)",
+					/usr/local/boost_1_70_0,
+				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1968,12 +1998,15 @@
 		};
 		52BBED35191B4C3900E48394 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1987,6 +2020,11 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREFIX_HEADER = "Ukelele Cocoa/Ukelele-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(NANO_HEADER_SEARCH_PATHS)",
+					"$(inherited)",
+					/usr/local/boost_1_70_0,
+				);
 				INFOPLIST_FILE = "Ukelele Cocoa/Ukelele-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
