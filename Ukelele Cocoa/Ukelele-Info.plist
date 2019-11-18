@@ -81,7 +81,7 @@
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://www.dropbox.com/s/vi51g5jig3etaum/Ukelele_appcast.xml?dl=1</string>
+	<string>https://software.sil.org/downloads/r/ukelele/Ukelele_appcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
