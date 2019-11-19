@@ -109,7 +109,7 @@ WhenElement::GetMaxout(void) const
 	else {
 			// Convert string from possibly encoded value
 		UInt32 stringLength = mOutput.GetSize();
-		boost::scoped_array<UniChar> buffer(new UniChar(2 * (UInt16)stringLength));
+		boost::scoped_array<UniChar> buffer(new UniChar[2 * (UInt16)stringLength]);
 		XMLUtilities::ConvertEncodedString(mOutput, buffer.get(), stringLength);
 		maxout = stringLength;
 	}

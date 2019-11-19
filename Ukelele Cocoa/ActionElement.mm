@@ -532,9 +532,10 @@ ErrorMessage ActionElementSet::CreateFromXMLTree(const NXMLNode& inTree,
 					errorValue = ErrorMessage(XMLBadElementTypeError, errorMessage);
 				}
 				else {
-					ActionElement *actionElement;
+					ActionElement *actionElement = NULL;
 					errorValue = ActionElement::CreateFromXMLTree(*childTree, actionElement, ioCommentContainer);
 					if (errorValue == XMLNoError) {
+						NN_ASSERT(actionElement != NULL);
 						Boolean addOK = AddActionElement(actionElement);
 						if (!addOK) {
 							errorString = NBundleString(kActionSetRepeatedAction, "", kErrorTableName);
