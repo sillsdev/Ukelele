@@ -1961,7 +1961,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.4.0.296;
+				CURRENT_PROJECT_VERSION = 3.4.0.300;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1983,7 +1983,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.4b3;
+				MARKETING_VERSION = 3.4.0;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
@@ -2010,7 +2010,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.4.0.296;
+				CURRENT_PROJECT_VERSION = 3.4.0.300;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2032,7 +2032,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MARKETING_VERSION = 3.4b3;
+				MARKETING_VERSION = 3.4.0;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
