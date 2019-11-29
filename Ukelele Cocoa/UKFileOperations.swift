@@ -49,9 +49,9 @@ struct UKFileOperations {
 			let sourcePath = source.path
 			let destPath = destination.path
 			let scriptString = "do shell script quoted form of \"\(toolPath)\" & \" \" & quoted form of \"\(sourcePath)\" & \" \" & quoted form of \"\(destPath)\" with administrator privileges"
-			let appleScript = NSAppleScript.init(source: scriptString)
-			var errorDict: NSDictionary? = NSDictionary.init()
-			appleScript?.executeAndReturnError(&errorDict)
+			let appleScript = NSAppleScript(source: scriptString)
+			var errorDict: NSDictionary? = NSDictionary()
+			_ = appleScript?.executeAndReturnError(&errorDict)
 			handler(true, nil)
 		}
 		else {

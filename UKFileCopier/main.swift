@@ -13,10 +13,10 @@ let argumentList = CommandLine.arguments
 assert(argumentCount == 3, "Usage: \(argumentList[0]) <source file> <destination folder>")
 
 let sourcePath = argumentList[1]
-let sourceURL = URL.init(fileURLWithPath: sourcePath)
+let sourceURL = URL(fileURLWithPath: sourcePath)
 
 let destinationPath = argumentList[2]
-let destinationURL = URL.init(fileURLWithPath: destinationPath)
+let destinationURL = URL(fileURLWithPath: destinationPath)
 
 let fileManager = FileManager.default
 do {
