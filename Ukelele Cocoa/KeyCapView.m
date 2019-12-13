@@ -47,6 +47,7 @@ static CGAffineTransform kTextTransform = {
 		_textView = nil;
 		mouseIsInside = NO;
 		_showCodePoints = YES;
+		self.accessibilityElement = YES;
     }
     return self;
 }
@@ -209,6 +210,23 @@ static CGAffineTransform kTextTransform = {
 		}
 	}
 	[self assignStyle];
+	[self setAccessibilityText];
+}
+
+- (void)setAccessibilityText {
+	NSMutableString *accessibilityText = [NSMutableString string];
+	if (self.selected) {
+		[accessibilityText appendString:@"Selected, "];
+	}
+	if (self.deadKey) {
+		[accessibilityText appendString:@"Dead key, "];
+	}
+	if (self.down) {
+		[accessibilityText appendString:@"Down, "];
+	}
+	[accessibilityText appendString:@"Output: "];
+	[accessibilityText appendString:[displayText string]];
+	self.accessibilityLabel = accessibilityText;
 }
 
 - (void)flipInRect:(NSRect)boundingRect
@@ -319,6 +337,13 @@ static CGAffineTransform kTextTransform = {
 - (void)setDown:(BOOL)value
 {
 	_down = value;
+	[self setAccessibilityText];
+	[self setNeedsDisplay:YES];
+}
+
+- (void)setSelected:(BOOL)value {
+	_selected = value;
+	[self setAccessibilityText];
 	[self setNeedsDisplay:YES];
 }
 

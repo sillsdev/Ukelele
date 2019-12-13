@@ -63,12 +63,12 @@
                                             <buttonCell type="radio" title="Same" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="x6I-tA-n0e">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="shift same"/>
+                                                <accessibility description="Shift same"/>
                                             </buttonCell>
                                             <buttonCell type="radio" title="Separate" imagePosition="left" alignment="left" inset="2" id="jQd-Wq-jMJ">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="shift separate"/>
+                                                <accessibility description="Shift separate"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -92,20 +92,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="QJt-M3-jQV">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left shift up"/>
+                                                <accessibility description="Left shift up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="07L-T0-mER">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left shift either"/>
+                                                <accessibility description="Left shift down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="daN-bG-K1L">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <accessibility description="Left shift either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -126,21 +127,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="KnD-WX-bah">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right shift up"/>
+                                                <accessibility description="Right shift up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="A9s-JY-6qF">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right shift down"/>
+                                                <accessibility description="Right shift down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="zPa-Fx-tJe">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right shift either"/>
+                                                <accessibility description="Right shift either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -182,21 +183,21 @@
                                 <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="E5m-gd-XC4">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="caps lock up"/>
+                                    <accessibility description="Caps lock up"/>
                                 </buttonCell>
                             </column>
                             <column>
                                 <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="yCm-PG-ZYy">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="caps lock down"/>
+                                    <accessibility description="Caps lock down"/>
                                 </buttonCell>
                             </column>
                             <column>
                                 <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="KdJ-q5-S5e">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="caps lock either"/>
+                                    <accessibility description="Caps lock either"/>
                                 </buttonCell>
                             </column>
                         </cells>
@@ -233,12 +234,12 @@
                                             <buttonCell type="radio" title="Same" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="jPa-Lb-Hdz">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="option same"/>
+                                                <accessibility description="Option same"/>
                                             </buttonCell>
                                             <buttonCell type="radio" title="Separate" imagePosition="left" alignment="left" inset="2" id="uwc-ZX-g3d">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="option separate"/>
+                                                <accessibility description="Option separate"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -262,21 +263,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="IW2-sn-Gp7">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left option up"/>
+                                                <accessibility description="Left option up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="jrQ-4r-e4v">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left option down"/>
+                                                <accessibility description="Left option down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="7sg-a3-ZYb">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left option either"/>
+                                                <accessibility description="Left option either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -297,21 +298,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="mfv-Py-CIt">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right option up"/>
+                                                <accessibility description="Right option up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="Vg3-C2-gtY">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right option down"/>
+                                                <accessibility description="Right option down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="JlK-ZH-GtY">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right option either"/>
+                                                <accessibility description="Right option either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -360,12 +361,12 @@
                                             <buttonCell type="radio" title="Same" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="kaY-rn-ce4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="control same"/>
+                                                <accessibility description="Control same"/>
                                             </buttonCell>
                                             <buttonCell type="radio" title="Separate" imagePosition="left" alignment="left" inset="2" id="rBJ-4l-L1M">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="control separate"/>
+                                                <accessibility description="Control separate"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -389,21 +390,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="U11-OR-5dX">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left control up"/>
+                                                <accessibility description="Left control up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="gY4-tw-IVM">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left control down"/>
+                                                <accessibility description="Left control down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="LzY-r5-08q">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="left control either"/>
+                                                <accessibility description="Left control either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -424,21 +425,21 @@
                                             <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="x8D-Ue-yDB">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right control up"/>
+                                                <accessibility description="Right control up"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="DKM-Yr-aBi">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right control down"/>
+                                                <accessibility description="Right control down"/>
                                             </buttonCell>
                                         </column>
                                         <column>
                                             <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="yWu-Xf-YL5">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <accessibility description="right control either"/>
+                                                <accessibility description="Right control either"/>
                                             </buttonCell>
                                         </column>
                                     </cells>
@@ -480,21 +481,21 @@
                                 <buttonCell type="radio" title="Up" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="FF4-51-dHi">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="command up"/>
+                                    <accessibility description="Command up"/>
                                 </buttonCell>
                             </column>
                             <column>
                                 <buttonCell type="radio" title="Down" imagePosition="left" alignment="left" inset="2" id="GAw-Iv-2sG">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="command down"/>
+                                    <accessibility description="Command down"/>
                                 </buttonCell>
                             </column>
                             <column>
                                 <buttonCell type="radio" title="Either" imagePosition="left" alignment="left" inset="2" id="Uga-Ux-Idq">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <accessibility description="command either"/>
+                                    <accessibility description="Command either"/>
                                 </buttonCell>
                             </column>
                         </cells>
@@ -746,6 +747,7 @@ Gw
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="129" y="-316"/>
         </window>
     </objects>
 </document>
