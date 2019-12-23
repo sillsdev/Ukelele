@@ -46,7 +46,10 @@
 	if (selectedKey != kNoKeyCode) {
 		[self.keyCode1 setIntegerValue:selectedKey];
 	}
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptCodes:(id)sender {

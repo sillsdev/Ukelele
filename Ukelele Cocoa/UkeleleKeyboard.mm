@@ -233,17 +233,13 @@ void UkeleleKeyboard::AddCreationComment(void)
 	// Get the application version
 	NString versionString = ToNN((CFStringRef)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey));
 	// Get the current time stamp
-	CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent();
-	CFTimeZoneRef timeZone = CFTimeZoneCopySystem();
-	CFGregorianDate dateNow = CFAbsoluteTimeGetGregorianDate(absTime, timeZone);
-	CFStringRef timeZoneAbb = CFTimeZoneCopyAbbreviation(timeZone, absTime);
-	NString timeZoneAbbreviation = ToNN(timeZoneAbb);
-	CFRelease(timeZoneAbb);
-	CFRelease(timeZone);
-	timeZone = NULL;
+	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.0];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	NSString *dateFormat = @" 'on' yyyy-MM-dd 'at' HH:mm (zzz)";
+	[dateFormatter setDateFormat:dateFormat];
+	NSString *dateStampString = [dateFormatter stringFromDate:date];
 	NString dateStamp;
-	dateStamp.Format(kDateStamp, dateNow.year, dateNow.month, dateNow.day,
-		dateNow.hour, dateNow.minute, timeZoneAbbreviation);
+	dateStamp = ToNN(dateStampString);
 	// Build the comment
 	NString commentString = kCreationComment;
 	commentString += versionString;
@@ -265,17 +261,13 @@ void UkeleleKeyboard::UpdateEditingComment(void)
 	// Get the application version
 	NString versionString = ToNN((CFStringRef)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey));
 	// Get the current time stamp
-	CFAbsoluteTime absTime = CFAbsoluteTimeGetCurrent();
-	CFTimeZoneRef timeZone = CFTimeZoneCopySystem();
-	CFGregorianDate dateNow = CFAbsoluteTimeGetGregorianDate(absTime, timeZone);
-	CFStringRef timeZoneAbb = CFTimeZoneCopyAbbreviation(timeZone, absTime);
-	NString timeZoneAbbreviation = ToNN(timeZoneAbb);
-	CFRelease(timeZoneAbb);
-	CFRelease(timeZone);
-	timeZone = NULL;
+	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.0];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	NSString *dateFormat = @" 'on' yyyy-MM-dd 'at' HH:mm (zzz)";
+	[dateFormatter setDateFormat:dateFormat];
+	NSString *dateStampString = [dateFormatter stringFromDate:date];
 	NString dateStamp;
-	dateStamp.Format(kDateStamp, dateNow.year, dateNow.month, dateNow.day,
-		dateNow.hour, dateNow.minute, timeZoneAbbreviation);
+	dateStamp = ToNN(dateStampString);
 	// Build the comment
 	NString commentString = kEditComment;
 	commentString += versionString;

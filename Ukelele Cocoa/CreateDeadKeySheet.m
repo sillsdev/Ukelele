@@ -59,7 +59,10 @@ static NSString *windowName = @"CreateDeadKey";
 	[self.badKeyCodeMessage setStringValue:@""];
 	NSString *baseStateName = [keyboardObject uniqueStateName];
 	[self.deadKeyState setStringValue:baseStateName];
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)cancelChoice:(id)sender

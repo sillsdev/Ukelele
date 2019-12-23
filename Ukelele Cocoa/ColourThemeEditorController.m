@@ -129,7 +129,10 @@ typedef enum : NSUInteger {
 	completionBlock = theBlock;
 	if (parentWindow) {
 			// Run as a sheet
-		[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+			return;
+		}];
 	}
 	else {
 			// Run as a window

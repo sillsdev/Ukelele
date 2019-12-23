@@ -44,7 +44,10 @@ static NSString *windowName = @"ChooseFrom3Sheet";
 		[cellArray[2] setTitle:option3];
 	}
 	callBack = theCallBack;
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)acceptChoice:(id)sender

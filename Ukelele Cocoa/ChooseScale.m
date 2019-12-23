@@ -44,7 +44,10 @@ static const double kMaxValidValue = 500.0;
 {
     [self setValue:initialValue];
     callBack = theCallBack;
-    [NSApp beginSheet:[self window] modalForWindow:theWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[theWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)setValue:(double)newValue

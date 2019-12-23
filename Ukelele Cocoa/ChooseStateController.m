@@ -33,11 +33,10 @@
 	completionBlock = callBack;
 	[self.stateList removeAllItems];
 	[self.stateList addItemsWithObjectValues:self.stateNames];
-	[NSApp beginSheet:[self window]
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptState:(id)sender {

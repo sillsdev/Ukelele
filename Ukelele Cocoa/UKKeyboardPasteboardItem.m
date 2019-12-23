@@ -55,7 +55,7 @@
 			}
 		}
 	}
-	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSPasteboardTypeURL]) {
 			// Just a URL, so a keyboard layout file
 		theKeyboard = [NSURL URLWithString:propertyList];
 		if (theKeyboard) {
@@ -80,7 +80,7 @@
 	if ([type isEqualToString:UKKeyboardPasteType]) {
 		return NSPasteboardReadingAsPropertyList;
 	}
-	if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSPasteboardTypeURL]) {
 		return NSPasteboardReadingAsString;
 	}
 	return NSPasteboardReadingAsData;
@@ -105,7 +105,7 @@
 		}
 		return @[dataDictionary];
 	}
-	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSPasteboardTypeURL]) {
 			// Return the URL of the keyboard layout file as a string
 		return [self.keyboardLayoutFile absoluteString];
 	}

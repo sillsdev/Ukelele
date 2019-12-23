@@ -44,7 +44,10 @@
 	parentWindow = theWindow;
 	callback = theCallback;
 	self.localisationsDictionary = [initialLocalisations mutableCopy];
-	[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptLocalisations:(id)sender {

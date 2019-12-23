@@ -29,8 +29,11 @@
 		[alert setMessageText:@"No states removed"];
 		[alert setInformativeText:@"All states are currently used, so there were no unused states to remove"];
 		[alert addButtonWithTitle:@"OK"];
-		[alert setAlertStyle:NSInformationalAlertStyle];
-		[alert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[alert setAlertStyle:NSAlertStyleInformational];
+		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+			return;
+		}];
 		return;
 	}
 	NSUndoManager *undoManager = [self undoManager];
@@ -47,8 +50,11 @@
 		[alert setMessageText:@"No actions removed"];
 		[alert setInformativeText:@"All actions are currently used, so there were no unused actions to remove"];
 		[alert addButtonWithTitle:@"OK"];
-		[alert setAlertStyle:NSInformationalAlertStyle];
-		[alert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+		[alert setAlertStyle:NSAlertStyleInformational];
+		[alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+			return;
+		}];
 		return;
 	}
 	NSUndoManager *undoManager = [self undoManager];

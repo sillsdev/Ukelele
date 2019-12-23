@@ -57,7 +57,10 @@
 	}
 	[self.missingStateWarning setHidden:YES];
 	[self.invalidStateNameWarning setHidden:YES];
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptDeadKey:(id)sender {

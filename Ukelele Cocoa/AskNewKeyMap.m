@@ -52,11 +52,10 @@ static NSString *nibWindowName = @"AskNewKeyMap";
     [self.standardKeyMaps setEnabled:NO];
     [self.makeCopyKeyMaps setEnabled:NO];
     [unlinkedCheckBox setEnabled:NO];
-	[NSApp beginSheet:[self window]
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)selectKeyMapType:(id)sender
@@ -95,7 +94,7 @@ static NSString *nibWindowName = @"AskNewKeyMap";
 			
 		case kNewKeyMapCopy:
 			[infoBlock setCopyKeyMapSelection:[[self.makeCopyKeyMaps titleOfSelectedItem] integerValue]];
-			[infoBlock setIsUnlinked:[unlinkedCheckBox state] == NSOnState];
+			[infoBlock setIsUnlinked:[unlinkedCheckBox state] == NSControlStateValueOn];
 			break;
 	}
 	[[self window] orderOut:self];

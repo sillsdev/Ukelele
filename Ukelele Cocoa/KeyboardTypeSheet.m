@@ -71,7 +71,10 @@ static NSString *nibWindowName = @"Keyboard Type";
 		[keyboardTypeTable scrollRowToVisible:[keyboardTypeTable selectedRow]];
 		[codingButton selectItemAtIndex:[indexDictionary[kKeyCodingIndex] integerValue] - 1];
 	}
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 @end

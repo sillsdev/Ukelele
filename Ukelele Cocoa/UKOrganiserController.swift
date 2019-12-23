@@ -321,7 +321,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				let iconDestination = destination.deletingLastPathComponent().appendingPathComponent(iconFileName)
 				moveFile(from: iconSource, to: iconDestination) { (success, theError) in
 					if success {
-						reloadTableData()
+						self.reloadTableData()
 					}
 					else {
 						NSApp.presentError(theError!)
@@ -331,9 +331,9 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 		moveFile(from: source, to: destination) { (success, error) in
 			if success {
-				reloadTableData()
+				self.reloadTableData()
 				if installing {
-					recommendLogout()
+					self.recommendLogout()
 				}
 			}
 			else {
@@ -342,7 +342,7 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		}
 	}
 	
-	@objc func moveFile(from source: URL, to destination: URL, completion: (Bool, NSError?) -> Void) {
+	@objc func moveFile(from source: URL, to destination: URL, completion: @escaping (Bool, NSError?) -> Void) {
 		UKFileOperations.move(from: source, to: destination, completion: completion)
 	}
 	

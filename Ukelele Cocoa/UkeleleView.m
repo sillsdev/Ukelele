@@ -518,7 +518,7 @@ typedef struct KeyEntryRec {
 	if ([keyList count] == 0) {
 		return nil;
 	}
-	BOOL isFnKey = (modifiers & NSNumericPadKeyMask) != 0;
+	BOOL isFnKey = (modifiers & NSEventModifierFlagNumericPad) != 0;
 	for (KeyCapView *keyCap in keyList) {
 		if (isFnKey && [keyCap fnKeyCode] == keyCode) {
 			return keyCap;
@@ -639,7 +639,7 @@ typedef struct KeyEntryRec {
 	KeyCapView *keyCap = [self findKeyWithCode:keyCode modifiers:(unsigned int)[theEvent modifierFlags]];
 	[keyCap setDown:YES];
 	if ([self isFnKey:theEvent]) {
-		unsigned int flags = (unsigned int)[theEvent modifierFlags] | NSNumericPadKeyMask;
+		unsigned int flags = (unsigned int)[theEvent modifierFlags] | NSEventModifierFlagNumericPad;
 		[self passOnModifiers:flags];
 	}
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
@@ -652,7 +652,7 @@ typedef struct KeyEntryRec {
 	KeyCapView *keyCap = [self findKeyWithCode:keyCode modifiers:(unsigned int)[theEvent modifierFlags]];
 	[keyCap setDown:NO];
 	if ([self isFnKey:theEvent]) {
-		unsigned int flags = (unsigned int)[theEvent modifierFlags] & ~NSNumericPadKeyMask;
+		unsigned int flags = (unsigned int)[theEvent modifierFlags] & ~NSEventModifierFlagNumericPad;
 		[self passOnModifiers:flags];
 	}
 	UKKeyboardController *theDocumentWindow = [[self window] windowController];
@@ -661,7 +661,7 @@ typedef struct KeyEntryRec {
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	int flags = [theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+	int flags = [theEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask;
 	[self passOnModifiers:flags];
 	[super flagsChanged:theEvent];
 }

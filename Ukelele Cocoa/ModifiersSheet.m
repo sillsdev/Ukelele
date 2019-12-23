@@ -389,11 +389,10 @@ enum {
 		[existingOrNewIndex setEnabled:canBeSame];
 	}
 	callBack = theCallback;
-	[NSApp beginSheet:[self window]
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)beginSimplifiedModifiersSheetWithCallback:(void (^)(ModifiersInfo *))theCallback
@@ -406,11 +405,10 @@ enum {
 		[existingOrNewIndexSimplified setEnabled:canBeSame];
 	}
 	callBack = theCallback;
-	[NSApp beginSheet:[self simplifiedWindow]
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self simplifiedWindow] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 #pragma mark Actions

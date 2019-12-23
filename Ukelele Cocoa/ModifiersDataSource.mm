@@ -328,7 +328,7 @@ static NSMutableDictionary *statusDictionary = nil;
 			// Only drag single rows
 		return NO;
 	}
-	NSData *pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+	NSData *pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes requiringSecureCoding:NO error:nil];
 	[pboard declareTypes:@[ModifiersTableDragType] owner:self];
 	[pboard setData:pasteboardData forType:ModifiersTableDragType];
 	return YES;
@@ -350,7 +350,7 @@ static NSMutableDictionary *statusDictionary = nil;
 	}
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSData *pbData = [pboard dataForType:ModifiersTableDragType];
-	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:pbData];
+	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
 	NSUInteger sourceIndex = [sourceIndexes firstIndex];
 	NSInteger sourceRowSet = [self indexForRow:sourceIndex];
 	NSInteger nextSet = sourceRowSet;
@@ -386,7 +386,7 @@ static NSMutableDictionary *statusDictionary = nil;
 #pragma unused(dropOperation)
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSData *pbData = [pboard dataForType:ModifiersTableDragType];
-	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:pbData];
+	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
 	NSUInteger sourceIndex = [sourceIndexes firstIndex];
 	NSInteger sourceRowSet = [self indexForRow:sourceIndex];
 	NSInteger destinationSet;

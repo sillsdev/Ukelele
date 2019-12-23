@@ -270,7 +270,7 @@ const CGFloat kTextPaneHeight = 17.0f;
                                  horizontalScrollerClass:[NSScroller class]
                                    verticalScrollerClass:[NSScroller class]
                                               borderType:NSLineBorder
-                                             controlSize:NSRegularControlSize
+											 controlSize:NSControlSizeRegular
                                            scrollerStyle:NSScrollerStyleOverlay];
     keyboardSize.height += 1;
     keyboardSize.width += 1;
@@ -286,7 +286,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSSize minimumSize = NSMakeSize(kWindowMinWidth, kWindowMinHeight);
 	[self.window setContentMaxSize:maximumSize];
 	[self.window setContentMinSize:minimumSize];
-    NSDisableScreenUpdates();
+//    NSDisableScreenUpdates();
 	[self.window setContentSize:maximumSize];
 	NSRect winBounds = [self.window frame];
 	NSRect availableRect = [[NSScreen mainScreen] visibleFrame];
@@ -344,7 +344,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		}
 		[self.window setFrame:newBounds display:YES];
 	}
-    NSEnableScreenUpdates();
+//    NSEnableScreenUpdates();
 }
 
 - (NSRect)windowWillUseStandardFrame:(NSWindow *)window defaultFrame:(NSRect)newFrame
@@ -456,7 +456,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	keyDataDictStateNone[kKeyState] = kStateNameNone;
 	for (KeyCapView *keyCapView in subViews) {
 		NSInteger keyCode = [keyCapView keyCode];
-		if (modifiers & NSNumericPadKeyMask) {
+		if (modifiers & NSEventModifierFlagNumericPad) {
 			keyCode = [keyCapView fnKeyCode];
 		}
 		NSString *output;
@@ -749,7 +749,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	}
 	else if (action == @selector(toggleQuickEntryMode:)) {
 		// Enabled when the keyboard tab is visible and no interaction in progress
-		[(NSMenuItem *)anItem setState:isInQuickEntryMode ? NSOnState : NSOffState];
+		[(NSMenuItem *)anItem setState:isInQuickEntryMode ? NSControlStateValueOn : NSControlStateValueOff];
 		return (interactionHandler == nil) && [kTabNameKeyboard isEqualToString:currentTabName];
 	}
 	return NO;
@@ -787,19 +787,19 @@ const CGFloat kTextPaneHeight = 17.0f;
 - (void)inspectorSetModifiers {
 	NSInteger currentModifiers = [internalState[kStateCurrentModifiers] integerValue];
 	NSMutableString *modifierString = [NSMutableString string];
-	if (currentModifiers & NSAlphaShiftKeyMask) {
+	if (currentModifiers & NSEventModifierFlagCapsLock) {
 		[modifierString appendFormat:@"%C", (unichar)kCapsLockUnicode];
 	}
-	if (currentModifiers & NSCommandKeyMask) {
+	if (currentModifiers & NSEventModifierFlagCommand) {
 		[modifierString appendFormat:@"%C", (unichar)kCommandUnicode];
 	}
-	if (currentModifiers & NSShiftKeyMask) {
+	if (currentModifiers & NSEventModifierFlagShift) {
 		[modifierString appendFormat:@"%C", (unichar)kShiftUnicode];
 	}
-	if (currentModifiers & NSControlKeyMask) {
+	if (currentModifiers & NSEventModifierFlagControl) {
 		[modifierString appendFormat:@"%C", (unichar)kControlUnicode];
 	}
-	if (currentModifiers & NSAlternateKeyMask) {
+	if (currentModifiers & NSEventModifierFlagOption) {
 		[modifierString appendFormat:@"%C", (unichar)kOptionUnicode];
 	}
 	InspectorWindowController *infoInspector = [InspectorWindowController getInstance];
@@ -1645,7 +1645,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[theKeyboard setColourTheme:[ColourTheme defaultPrintTheme]];
 			NSTextView *stateNameView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, kTextPaneHeight)];
 //			[stateNameView setTranslatesAutoresizingMaskIntoConstraints:NO];
-			[stateNameView setAlignment:NSCenterTextAlignment];
+			[stateNameView setAlignment:NSTextAlignmentCenter];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
 			[hostView addSubview:theKeyboard];
@@ -1706,7 +1706,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	if (usingStickyModifiers) {
 		newCurrentModifiers = [internalState[kStateCurrentModifiers] unsignedIntegerValue];
 		NSUInteger changedModifiers = lastModifiers ^ modifiers;
-		static NSUInteger modifierKeys[] = { NSShiftKeyMask, NSCommandKeyMask, NSControlKeyMask, NSAlternateKeyMask };
+		static NSUInteger modifierKeys[] = { NSEventModifierFlagShift, NSEventModifierFlagCommand, NSEventModifierFlagControl, NSEventModifierFlagOption };
 		static NSUInteger numModifierKeys = sizeof(modifierKeys) / sizeof(NSUInteger);
 		for (NSUInteger i = 0; i < numModifierKeys; i++) {
 				// If it is a key down event, then update the modifiers
@@ -1715,8 +1715,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 				newCurrentModifiers ^= modKey;
 			}
 		}
-		newCurrentModifiers &= ~NSAlphaShiftKeyMask;
-		newCurrentModifiers |= NSAlphaShiftKeyMask & modifiers;
+		newCurrentModifiers &= ~NSEventModifierFlagCapsLock;
+		newCurrentModifiers |= NSEventModifierFlagCapsLock & modifiers;
 	}
 	else {
 		newCurrentModifiers = modifiers;
@@ -1929,13 +1929,12 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *infoText = NSLocalizedStringFromTable(@"A key may be not be linked because it only ever produces one output (e.g. the space bar), or because it never produces any output (e.g. in an empty keyboard layout)", @"dialogs", @"Explain what may produce a key not linked");
 		NSAssert(documentAlert == nil, @"Starting an alert when one already exists");
 		documentAlert = [[NSAlert alloc] init];
-		[documentAlert setAlertStyle:NSInformationalAlertStyle];
+		[documentAlert setAlertStyle:NSAlertStyleInformational];
 		[documentAlert setMessageText:messageText];
 		[documentAlert setInformativeText:infoText];
-		[documentAlert beginSheetModalForWindow:self.window
-								  modalDelegate:self
-								 didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
-									contextInfo:nil];
+		[documentAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+			[self alertDidEnd:self->documentAlert returnCode:returnCode contextInfo:nil];
+		}];
 		return;
 	}
 	[self doUnlinkKey:keyDataDict];

@@ -321,7 +321,7 @@ static CGAffineTransform kTextTransform = {
 		[NSBezierPath fillRect:boundingRect];
 	}
 		// Ensure that the text matrix is correct
-	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef myContext = [[NSGraphicsContext currentContext] CGContext];
 	CGContextSetTextMatrix(myContext, kTextTransform);
 	if (self.fallback) {
 			// Paint over the whole rect with a transparent grey

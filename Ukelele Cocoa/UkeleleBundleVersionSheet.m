@@ -44,7 +44,10 @@
 	[self.buildVersionField setStringValue:theBuildVersion];
 	[self.sourceVersionField setStringValue:theSourceVersion];
 	callBack = theCallBack;
-	[NSApp beginSheet:[self window] modalForWindow:theWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[theWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptEdit:(id)sender {

@@ -90,7 +90,7 @@
 
 - (NSMutableParagraphStyle *)defaultParagraphStyle {
 	NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-	[paraStyle setAlignment:NSCenterTextAlignment];
+	[paraStyle setAlignment:NSTextAlignmentCenter];
 	[paraStyle setLineHeightMultiple:1.1];
 	return paraStyle;
 }

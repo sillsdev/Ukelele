@@ -24,12 +24,7 @@ class UKKeyboardStorage {
 	init() {
 		let fileManager = FileManager.default
 		var userHome: URL
-		if #available(OSX 10.12, *) {
-			userHome = fileManager.homeDirectoryForCurrentUser
-		} else {
-			// Fallback on earlier versions
-			userHome = URL(fileURLWithPath: NSHomeDirectory())
-		}
+		userHome = fileManager.homeDirectoryForCurrentUser
 		let userKeyboardsURL = userHome.appendingPathComponent(libraryName).appendingPathComponent(keyboardLayoutsName)
 		userKeyboards = UKKeyboardCollection(folder: userKeyboardsURL)
 		// Get the default location for the uninstalled keyboard layouts folder

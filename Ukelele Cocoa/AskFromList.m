@@ -35,11 +35,10 @@
 	[listButton removeAllItems];
 	[listButton addItemsWithTitles:menuItems];
 	[informationText setStringValue:infoText];
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
-//	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
-//#pragma unused(returnCode)
-//		return;
-//	}];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptChoice:(id)sender

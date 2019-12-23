@@ -43,7 +43,10 @@
 
 - (void)beginDialogWithWindow:(NSWindow *)parentWindow completionBlock:(void (^)(NSInteger))callback {
 	completionBlock = callback;
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)setMajorText:(NSString *)majorText {

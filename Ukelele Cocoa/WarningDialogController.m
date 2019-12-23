@@ -49,14 +49,18 @@ static BOOL dialogHasBeenShown = NO;
 }
 
 - (void)loadWarning:(NSURL *)warningFile {
-	NSAttributedString *warningString = [[NSAttributedString alloc] initWithURL:warningFile documentAttributes:nil];
+	NSDictionary<NSAttributedStringDocumentAttributeKey, id> *options = @{};
+	NSAttributedString *warningString = [[NSAttributedString alloc] initWithURL:warningFile options:options documentAttributes:nil error:nil];
 	[[self.warningField textStorage] setAttributedString:warningString];
 }
 
 - (void)runDialogForWindow:(NSWindow *)theWindow {
 	[WarningDialogController setHasBeenShown:YES];
 	self.parentWindow = theWindow;
-	[NSApp beginSheet:self.window modalForWindow:self.parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[self.parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)closeDialog:(id)sender {

@@ -6,12 +6,10 @@
 //  Copyright © 2017 John Brownie. All rights reserved.
 //
 
-import Foundation
-
-let toolName = "UKFileCopier"
+import Cocoa
 
 struct UKFileOperations {
-	static func move(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
+	static func move(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
 		let fileManager = FileManager.default
 		do {
 			try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
@@ -44,18 +42,23 @@ struct UKFileOperations {
 		}
 	}
 	
-	static func authenticatedMove(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
-		if let toolPath = Bundle.main.url(forAuxiliaryExecutable: toolName)?.path {
-			let sourcePath = source.path
-			let destPath = destination.path
-			let scriptString = "do shell script quoted form of \"\(toolPath)\" & \" \" & quoted form of \"\(sourcePath)\" & \" \" & quoted form of \"\(destPath)\" with administrator privileges"
-			let appleScript = NSAppleScript(source: scriptString)
-			var errorDict: NSDictionary? = NSDictionary()
-			_ = appleScript?.executeAndReturnError(&errorDict)
-			handler(true, nil)
-		}
-		else {
-			handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
+	static func authenticatedMove(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
+		let workspace = NSWorkspace.shared
+		workspace.requestAuthorization(to: .replaceFile) { (authorisation, error) in
+			if let authorisation = authorisation {
+				let fileManager = FileManager(authorization: authorisation)
+				do {
+					try fileManager.moveItem(at: source, to: destination)
+					handler(true, nil)
+				}
+				catch {
+					handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
+				}
+			}
+			else {
+				// Failure to get authorisation
+				handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
+			}
 		}
 	}
 }
