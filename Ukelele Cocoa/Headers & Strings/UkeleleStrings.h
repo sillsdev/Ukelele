@@ -129,8 +129,6 @@ const NString kDefaultKeyboardName("untitled");
 	// Date stamp comments in XML file
 const NString kCreationComment("Created by Ukelele version ");
 const NString kEditComment("Last edited by Ukelele version ");
-const NString kDateStamp(" on %4d-%02d-%02d at %02d:%02d (%@)");
-const NString kDateStampFormat(" 'on' yyyy-MM-dd 'at' HH:mm (zzz)");
 
 	// Bundle strings
 const NString kBundleExtension(".bundle");

@@ -19,6 +19,7 @@ const NString kUkeleleKeyboardWrongXMLType = "UkeleleKeyboardWrongXMLType";
 const NString kUkeleleKeyboardUnknownNodeType = "UkeleleKeyboardUnknownNodeType";
 const NString kUkeleleKeyboardRepeatedXMLHeader = "UkeleleKeyboardRepeatedXMLHeader";
 const NString kUkeleleKeyboardRepeatedDTD = "UkeleleKeyboardRepeatedDTD";
+NSString *dateFormat = @" 'on' yyyy-MM-dd 'at' HH:mm (zzz)";
 
 // Constructor
 
@@ -235,7 +236,6 @@ void UkeleleKeyboard::AddCreationComment(void)
 	// Get the current time stamp
 	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.0];
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	NSString *dateFormat = @" 'on' yyyy-MM-dd 'at' HH:mm (zzz)";
 	[dateFormatter setDateFormat:dateFormat];
 	NSString *dateStampString = [dateFormatter stringFromDate:date];
 	NString dateStamp;
@@ -263,7 +263,6 @@ void UkeleleKeyboard::UpdateEditingComment(void)
 	// Get the current time stamp
 	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0.0];
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	NSString *dateFormat = @" 'on' yyyy-MM-dd 'at' HH:mm (zzz)";
 	[dateFormatter setDateFormat:dateFormat];
 	NSString *dateStampString = [dateFormatter stringFromDate:date];
 	NString dateStamp;
