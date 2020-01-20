@@ -93,7 +93,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <view autoresizesSubviews="NO" placeholderIntrinsicWidth="743" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="dIX-ad-5L2" customClass="UkeleleView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="758" height="315"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="743" height="300"/>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
@@ -103,11 +103,11 @@
                                                     <constraint firstItem="dIX-ad-5L2" firstAttribute="leading" secondItem="UbK-L1-wwU" secondAttribute="leading" id="uzZ-wa-zUN"/>
                                                 </constraints>
                                             </clipView>
-                                            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="zTV-iF-eFc">
+                                            <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="zTV-iF-eFc">
                                                 <rect key="frame" x="1" y="300" width="758" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="gIG-s4-UAM">
+                                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gIG-s4-UAM">
                                                 <rect key="frame" x="743" y="1" width="16" height="315"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
@@ -316,11 +316,11 @@
                                                     </tableView>
                                                 </subviews>
                                             </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Cts-Eq-PVA">
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Cts-Eq-PVA">
                                                 <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wGU-YL-gdg">
+                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="wGU-YL-gdg">
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
