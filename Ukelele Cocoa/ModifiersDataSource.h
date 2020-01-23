@@ -21,5 +21,6 @@
 - (NSInteger)modifierValueForRow:(NSInteger)rowNumber column:(NSString *)columnLabel;
 - (NSInteger)indexForRow:(NSInteger)rowNumber;
 - (NSInteger)subindexForRow:(NSInteger)rowNumber;
+- (NSString *)tableView:(NSTableView *)tableView accessibilityTextForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
 
 @end

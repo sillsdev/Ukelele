@@ -46,8 +46,6 @@ static NSMutableDictionary *statusDictionary = nil;
 	static NSString *leftControlKeyString;
 	static NSString *rightControlKeyString;
 	static NSString *capsLockKeyString;
-	static NSString *upArrowString;
-	static NSString *downArrowString;
 	static NSDictionary *upAttributeDictionary;
 	static NSDictionary *downAttributeDictionary;
 	static dispatch_once_t onceToken;
@@ -63,8 +61,6 @@ static NSMutableDictionary *statusDictionary = nil;
 		leftControlKeyString = [NSString stringWithFormat:@"L %@", controlKeyString];
 		rightControlKeyString = [NSString stringWithFormat:@"R %@", controlKeyString];
 		capsLockKeyString = [NSString stringWithFormat:@"%C", (unsigned short)kCapsLockUnicode];
-		upArrowString = [NSString stringWithFormat:@"%C", (unichar)0x2191];
-		downArrowString = [NSString stringWithFormat:@"%C", (unichar)0x2193];
 		upAttributeDictionary = @{NSForegroundColorAttributeName : [NSColor redColor],
 			NSStrikethroughStyleAttributeName : @(NSUnderlineStyleThick)};
 		downAttributeDictionary = @{NSForegroundColorAttributeName : [NSColor blueColor]};
@@ -172,25 +168,146 @@ static NSMutableDictionary *statusDictionary = nil;
 	return result;
 }
 
-- (NSString *)getModifierString:(unsigned int)modifierStatus
-{
-	if (statusDictionary == nil) {
-		statusDictionary = [NSMutableDictionary dictionaryWithCapacity:13];
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierPressed]] = @"Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierNotPressed]] = @"Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierEither]] = @"Either Up or Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierNone]] = @"Both Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierLeft]] = @"Left Down, Right Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierRight]] = @"Left Up, Right Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierLeftRight]] = @"Both Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierLeftOpt]] = @"Left Down or Up, Right Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierRightOpt]] = @"Left Up, Right Down or Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierLeftOptRight]] = @"Left Down or Up, Right Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierLeftRightOpt]] = @"Left Down, Right Down or Up";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierAny]] = @"Either Down";
-		statusDictionary[[NSString stringWithFormat:@"%d", kModifierAnyOpt]] = @"Either Down or Up";
+- (NSString *)getDescriptionForModifier:(NSInteger)modifier withStatus:(NSUInteger)modifierStatus {
+	static NSString *optionKeyString = @"option";
+	static NSString *leftOptionKeyString = @"left option";
+	static NSString *rightOptionKeyString = @"right option";
+	static NSString *shiftKeyString = @"shift";
+	static NSString *leftShiftKeyString = @"left shift";
+	static NSString *rightShiftKeyString = @"right shift";
+	static NSString *commandKeyString = @"commmand";
+	static NSString *controlKeyString = @"control";
+	static NSString *leftControlKeyString = @"left control";
+	static NSString *rightControlKeyString = @"right control";
+	static NSString *capsLockKeyString = @"caps lock";
+	static NSString *upString = @" up";
+	static NSString *downString = @" down";
+	static NSString *eitherString = @" either";
+	NSString *result = nil;
+	if (modifierStatus == kModifierEither || modifierStatus == kModifierAnyOpt) {
+			// No modifiers to show, so it's the modifier name and "either"
+		NSString *modifierName;
+		switch (modifier) {
+			case shiftIndex:
+				modifierName = shiftKeyString;
+				break;
+				
+			case optionIndex:
+				modifierName = optionKeyString;
+				break;
+				
+			case controlIndex:
+				modifierName = controlKeyString;
+				break;
+				
+			case capsLockIndex:
+				modifierName = capsLockKeyString;
+				break;
+				
+			case commandIndex:
+				modifierName = commandKeyString;
+				break;
+				
+			default:
+				modifierName = @"";
+				break;
+		}
+		result = [modifierName stringByAppendingString:eitherString];
 	}
-	return statusDictionary[[NSString stringWithFormat:@"%d", modifierStatus]];
+	else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight ||
+			 modifierStatus == kModifierRight || modifierStatus == kModifierLeftOpt ||
+			 modifierStatus == kModifierLeftOptRight || modifierStatus == kModifierLeftRightOpt ||
+			 modifierStatus == kModifierRightOpt) {
+			// Need to show both a left and a right
+		NSMutableString *leftString = nil;
+		NSMutableString *rightString = nil;
+		NSAssert((modifier == shiftIndex || modifier == optionIndex || modifier == controlIndex), @"Must be a paired modifier");
+		switch (modifier) {
+			case shiftIndex:
+				leftString = [leftShiftKeyString mutableCopy];
+				rightString = [rightShiftKeyString mutableCopy];
+				break;
+				
+			case optionIndex:
+				leftString = [leftOptionKeyString mutableCopy];
+				rightString = [rightOptionKeyString mutableCopy];
+				break;
+				
+			case controlIndex:
+				leftString = [leftControlKeyString mutableCopy];
+				rightString = [rightControlKeyString mutableCopy];
+				break;
+		}
+		NSMutableString *partialString = leftString;
+		if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftRightOpt) {
+			[partialString appendString:downString];
+		}
+		else if (modifierStatus == kModifierRight || modifierStatus == kModifierRightOpt) {
+			[partialString appendString:upString];
+		}
+		else {
+			[partialString appendString:eitherString];
+		}
+		[partialString appendString:@", "];
+		[partialString appendString:rightString];
+		if (modifierStatus == kModifierRight || modifierStatus == kModifierLeftRight || modifierStatus == kModifierLeftOptRight) {
+			[partialString appendString:downString];
+		}
+		else if (modifierStatus == kModifierLeft || modifierStatus == kModifierLeftOpt) {
+			[partialString appendString:upString];
+		}
+		else {
+			[partialString appendString:eitherString];
+		}
+		result = partialString;
+	}
+	else {
+			// One modifier
+		NSMutableString *modifierString = nil;
+		switch (modifier) {
+			case shiftIndex:
+				modifierString = [shiftKeyString mutableCopy];
+				break;
+				
+			case optionIndex:
+				modifierString = [optionKeyString mutableCopy];
+				break;
+				
+			case commandIndex:
+				modifierString = [commandKeyString mutableCopy];
+				break;
+				
+			case controlIndex:
+				modifierString = [controlKeyString mutableCopy];
+				break;
+				
+			case capsLockIndex:
+				modifierString = [capsLockKeyString mutableCopy];
+				break;
+		}
+		switch (modifierStatus) {
+			case kModifierNone:
+			case kModifierNotPressed:
+			case kModifierLeftOpt:
+			case kModifierRightOpt:
+				[modifierString appendString:@" up"];
+				break;
+				
+			case kModifierPressed:
+			case kModifierAny:
+			case kModifierEither:
+			case kModifierLeftOptRight:
+			case kModifierLeftRightOpt:
+				[modifierString appendString:@" down"];
+				break;
+				
+			default:
+				[modifierString appendString:@" either"];
+				break;
+		}
+		result = modifierString;
+	}
+	return result;
 }
 
 - (void)setupArray
@@ -212,15 +329,15 @@ static NSMutableDictionary *statusDictionary = nil;
 			rowEntry[kLabelIndex] = @{kLabelIntegerRepresentation: @(selectID), kLabelStringRepresentation: [NSString stringWithFormat:@"%d", selectID]};
 			rowEntry[kLabelSubindex] = @{kLabelIntegerRepresentation: @(mapIndex), kLabelStringRepresentation: [NSString stringWithFormat:@"%d", mapIndex]};
 			UInt32 modifierStatus = modifierElement->GetModifierPairStatus(shiftKey, rightShiftKey);
-			rowEntry[kLabelShift] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:shiftIndex withStatus:modifierStatus]};
+			rowEntry[kLabelShift] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:shiftIndex withStatus:modifierStatus], kLabelAccessibilityText: [self getDescriptionForModifier:shiftIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierStatus(alphaLock);
-			rowEntry[kLabelCapsLock] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:capsLockIndex withStatus:modifierStatus]};
+			rowEntry[kLabelCapsLock] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:capsLockIndex withStatus:modifierStatus], kLabelAccessibilityText: [self getDescriptionForModifier:capsLockIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierPairStatus(optionKey, rightOptionKey);
-			rowEntry[kLabelOption] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:optionIndex withStatus:modifierStatus]};
+			rowEntry[kLabelOption] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:optionIndex withStatus:modifierStatus], kLabelAccessibilityText: [self getDescriptionForModifier:optionIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierStatus(cmdKey);
-			rowEntry[kLabelCommand] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:commandIndex withStatus:modifierStatus]};
+			rowEntry[kLabelCommand] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:commandIndex withStatus:modifierStatus], kLabelAccessibilityText: [self getDescriptionForModifier:commandIndex withStatus:modifierStatus]};
 			modifierStatus = modifierElement->GetModifierPairStatus(controlKey, rightControlKey);
-			rowEntry[kLabelControl] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:controlIndex withStatus:modifierStatus]};
+			rowEntry[kLabelControl] = @{kLabelIntegerRepresentation: @(modifierStatus), kLabelStringRepresentation: [self getStringForModifier:controlIndex withStatus:modifierStatus], kLabelAccessibilityText: [self getDescriptionForModifier:controlIndex withStatus:modifierStatus]};
 			[rowArray insertObject:rowEntry atIndex:rowCount];
 			rowCount++;
 		}
@@ -318,6 +435,13 @@ static NSMutableDictionary *statusDictionary = nil;
 	NSDictionary *rowData = rowArray[row];
 	NSDictionary *statusData = rowData[[tableColumn identifier]];
 	return statusData[kLabelStringRepresentation];
+}
+
+- (NSString *)tableView:(NSTableView *)tableView accessibilityTextForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+#pragma unused(tableView)
+	NSDictionary *rowData = rowArray[row];
+	NSDictionary *statusData = rowData[[tableColumn identifier]];
+	return statusData[kLabelAccessibilityText];
 }
 
 #pragma mark Drag and drop

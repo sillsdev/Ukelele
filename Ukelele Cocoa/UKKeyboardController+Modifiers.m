@@ -115,6 +115,18 @@
 	[self.removeModifiersButton setEnabled:([self.modifiersTableView selectedRow] >= 0 && [self.modifiersDataSource numberOfRowsInTableView:self.modifiersTableView] > 1)];
 }
 
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSView *view = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	if (view == nil) {
+		view = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, [tableColumn width], 10)];
+		[view setIdentifier:[tableColumn identifier]];
+	}
+	ModifiersDataSource *dataSource = (ModifiersDataSource *)tableView.dataSource;
+	[((NSTableCellView *) view).textField setStringValue:[dataSource tableView:tableView objectValueForTableColumn:tableColumn row:row]];
+	[((NSTableCellView *) view).textField setAccessibilityValueDescription:[dataSource tableView:tableView accessibilityTextForTableColumn:tableColumn row:row]];
+	return view;
+}
+
 - (IBAction)addModifiers:(id)sender
 {
 #pragma unused(sender)
