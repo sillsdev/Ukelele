@@ -16,7 +16,7 @@
 #define kKeyInset 2.0f
 #define kSmallKeyInset 1.0f
 
-@interface KeyCapView : NSView<NSDraggingSource, NSPasteboardWriting> {
+@interface KeyCapView : NSView<NSDraggingSource, NSPasteboardWriting, NSAccessibilityStaticText> {
 	NSRect keyRect;
 	NSMutableAttributedString *displayText;
 	BOOL mouseIsInside;
