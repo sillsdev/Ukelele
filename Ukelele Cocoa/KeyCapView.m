@@ -224,7 +224,19 @@ static CGAffineTransform kTextTransform = {
 	if (self.down) {
 		[accessibilityText appendString:@"Down, "];
 	}
-	[accessibilityText appendString:@"Output: "];
+	switch (self.keyType) {
+		case kModifierKeyType:
+			[accessibilityText appendString:@"Modifier: "];
+			break;
+			
+		case kOrdinaryKeyType:
+		case kSpecialKeyType:
+			[accessibilityText appendString:@"Output: "];
+			break;
+			
+		default:
+			break;
+	}
 	[accessibilityText appendString:[displayText string]];
 	self.accessibilityValueDescription = accessibilityText;
 }
