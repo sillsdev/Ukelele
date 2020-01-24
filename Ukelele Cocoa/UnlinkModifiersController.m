@@ -38,7 +38,10 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 - (void)beginDialogWithWindow:(NSWindow *)window callback:(void (^)(NSNumber *))theCallback {
 	parentWindow = window;
 	callback = theCallback;
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)beginDialogWithWindow:(NSWindow *)window isSimplified:(BOOL)isSimplified callback:(void (^)(NSNumber *))theCallback {
@@ -79,28 +82,28 @@ static NSString *nibWindowName = @"UnlinkModifiersDialog";
 - (IBAction)acceptModifiers:(id)sender {
 #pragma unused(sender)
 	NSInteger result = 0;
-	if ([self.leftShift integerValue] == NSOnState) {
+	if ([self.leftShift integerValue] == NSControlStateValueOn) {
 		result |= UKShiftKey;
 	}
-	if ([self.rightShift integerValue] == NSOnState) {
+	if ([self.rightShift integerValue] == NSControlStateValueOn) {
 		result |= UKRightShiftKey;
 	}
-	if ([self.leftOption integerValue] == NSOnState) {
+	if ([self.leftOption integerValue] == NSControlStateValueOn) {
 		result |= UKOptionKey;
 	}
-	if ([self.rightOption integerValue] == NSOnState) {
+	if ([self.rightOption integerValue] == NSControlStateValueOn) {
 		result |= UKRightOptionKey;
 	}
-	if ([self.leftControl integerValue] == NSOnState) {
+	if ([self.leftControl integerValue] == NSControlStateValueOn) {
 		result |= UKControlKey;
 	}
-	if ([self.rightControl integerValue] == NSOnState) {
+	if ([self.rightControl integerValue] == NSControlStateValueOn) {
 		result |= UKRightControlKey;
 	}
-	if ([self.capsLock integerValue] == NSOnState) {
+	if ([self.capsLock integerValue] == NSControlStateValueOn) {
 		result |= UKAlphaLock;
 	}
-	if ([self.command integerValue] == NSOnState) {
+	if ([self.command integerValue] == NSControlStateValueOn) {
 		result |= UKCmdKey;
 	}
 	[[self window] orderOut:self];

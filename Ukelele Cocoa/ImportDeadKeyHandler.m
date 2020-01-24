@@ -54,7 +54,7 @@
 	}
 	[openPanel setAllowedFileTypes:documentUTIs];
 	[openPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger result) {
-		if (result == NSFileHandlingPanelOKButton) {
+		if (result == NSModalResponseOK) {
 				// Got the file
 			NSArray *panelURLs = [openPanel URLs];
 			NSAssert([panelURLs count] == 1, @"Must have only one file");
@@ -70,7 +70,8 @@
 	NSDictionary *documentProperties = [documentURL resourceValuesForKeys:@[NSURLIsRegularFileKey, NSURLIsPackageKey] error:&theError];
 	if (documentProperties == nil) {
 			// Couldn't get properties!
-		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not get the properties of the chosen file" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:@"Could not get the properties of the chosen file"];
 		[alert runModal];
 		[self interactionCompleted];
 		return;
@@ -88,7 +89,8 @@
 		}
 		else {
 				// Not a valid bundle
-			NSAlert *alert = [NSAlert alertWithMessageText:@"The document chosen was not a keyboard layout bundle" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+			NSAlert *alert = [[NSAlert alloc] init];
+			[alert setMessageText:@"The document chosen was not a keyboard layout bundle"];
 			[alert runModal];
 			[self interactionCompleted];
 		}
@@ -158,7 +160,8 @@
 	}
 	else {
 			// No keyboard layouts
-		NSAlert *alert = [NSAlert alertWithMessageText:@"There are no keyboard layouts in this document" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:@"There are no keyboard layouts in this document"];
 		[alert runModal];
 		[self interactionCompleted];
 	}
@@ -189,7 +192,8 @@
 	UkeleleKeyboardObject *targetObject = [targetDocumentWindow keyboardLayout];
 	if (![targetObject hasEquivalentModifierMap:sourceObject]) {
 			// Not compatible
-		NSAlert *alert = [NSAlert alertWithMessageText:@"The two keyboard layouts have different modifier maps, so cannot import the dead key state" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:@"The two keyboard layouts have different modifier maps, so cannot import the dead key state"];
 		[alert runModal];
 		[self interactionCompleted];
 		return;
@@ -197,7 +201,8 @@
 	NSArray *stateNames = [[theDocumentWindow keyboardLayout] stateNamesExcept:kStateNameNone];
 	if ([stateNames count] == 0) {
 			// No states to import
-		NSAlert *alert = [NSAlert alertWithMessageText:@"This keyboard layout has no dead key states" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:@"This keyboard layout has no dead key states"];
 		[alert runModal];
 		[self interactionCompleted];
 		return;

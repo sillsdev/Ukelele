@@ -59,9 +59,21 @@ static NSDictionary *defaultValues() {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		ColourTheme *defaultTheme = [ColourTheme defaultColourTheme];
-		NSData *defaultThemeData = [NSKeyedArchiver archivedDataWithRootObject:defaultTheme];
+		NSData *defaultThemeData;
+		if (@available(macOS 10.13, *)) {
+			defaultThemeData = [NSKeyedArchiver archivedDataWithRootObject:defaultTheme requiringSecureCoding:NO error:nil];
+		} else {
+				// Fallback on earlier versions
+			defaultThemeData = [NSKeyedArchiver archivedDataWithRootObject:defaultTheme];
+		}
 		ColourTheme *printTheme = [ColourTheme defaultPrintTheme];
-		NSData *printThemeData = [NSKeyedArchiver archivedDataWithRootObject:printTheme];
+		NSData *printThemeData;
+		if (@available(macOS 10.13, *)) {
+			printThemeData = [NSKeyedArchiver archivedDataWithRootObject:printTheme requiringSecureCoding:NO error:nil];
+		} else {
+				// Fallback on earlier versions
+			printThemeData = [NSKeyedArchiver archivedDataWithRootObject:printTheme];
+		}
 		NSDictionary *colourThemes = @{kDefaultThemeName: defaultThemeData,
 								 kPrintThemeName: printThemeData};
 		dict = @{UKScaleFactor:					@1.25f,
@@ -284,13 +296,13 @@ static NSDictionary *defaultValues() {
 	if (action == @selector(toggleStickyModifiers:)) {
 		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 		NSAssert(toolboxData, @"Toolbox data must not be nil");
-		[menuItem setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
+		[menuItem setState:[toolboxData stickyModifiers] ? NSControlStateValueOn : NSControlStateValueOff];
 		return YES;
 	}
 	else if (action == @selector(toggleShowCodePoints:)) {
 		ToolboxData *toolboxData = [ToolboxData sharedToolboxData];
 		NSAssert(toolboxData, @"Toolbox data must not be nil");
-		[menuItem setState:[toolboxData showCodePoints] ? NSOnState : NSOffState];
+		[menuItem setState:[toolboxData showCodePoints] ? NSControlStateValueOn : NSControlStateValueOff];
 		return YES;
 	}
 	else if (action == @selector(toggleToolbox:)) {
@@ -388,7 +400,7 @@ static NSDictionary *defaultValues() {
 		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:themeName action:@selector(chooseColourTheme:) keyEquivalent:@""];
 		if ([currentThemeName isEqualTo:themeName]) {
 				// The current theme, so mark it
-			[menuItem setState:NSOnState];
+			[menuItem setState:NSControlStateValueOn];
 		}
 		[menu addItem:menuItem];
 	}

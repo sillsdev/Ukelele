@@ -18,6 +18,7 @@ NSString *kLabelControl = @"Control";
 NSString *kLabelSubindex = @"Subindex";
 NSString *kLabelStringRepresentation = @"StringRepresentation";
 NSString *kLabelIntegerRepresentation = @"IntegerRepresentation";
+NSString *kLabelAccessibilityText = @"AccessibilityTest";
 
 NSString *kStateNameNone = @"none";
 

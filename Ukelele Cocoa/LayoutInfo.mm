@@ -2353,27 +2353,27 @@ NSDictionary *sStandardKeyMapList;
 	NSUInteger result = 0;
 	switch (keyCode) {
 		case kKeyCapsLock:
-			result = NSAlphaShiftKeyMask;
+			result = NSEventModifierFlagCapsLock;
 			break;
 			
 		case kKeyShift:
 		case kKeyRightShift:
-			result = NSShiftKeyMask;
+			result = NSEventModifierFlagShift;
 			break;
 			
 		case kKeyOption:
 		case kKeyRightOption:
-			result = NSAlternateKeyMask;
+			result = NSEventModifierFlagOption;
 			break;
 			
 		case kKeyCommand:
 		case kKeyRightCommand:
-			result = NSCommandKeyMask;
+			result = NSEventModifierFlagCommand;
 			break;
 		
 		case kKeyControl:
 		case kKeyRightControl:
-			result = NSControlKeyMask;
+			result = NSEventModifierFlagControl;
 			break;
 	}
 	return result;

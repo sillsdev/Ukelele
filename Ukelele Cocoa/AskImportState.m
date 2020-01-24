@@ -44,11 +44,10 @@
 	completionBlock = callback;
 	[self.ChooseStateText setStringValue:self.importPrompt];
 	[self.AskStateNameText setStringValue:self.destinationStatePrompt];
-	[[NSApplication sharedApplication] beginSheet:self.window
-								   modalForWindow:parentWindow
-									modalDelegate:nil
-								   didEndSelector:nil
-									  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptState:(id)sender {

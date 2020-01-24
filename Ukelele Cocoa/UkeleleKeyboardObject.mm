@@ -263,22 +263,22 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 - (unsigned int)getUkeleleModifiers:(unsigned int)systemModifiers
 {
 	unsigned int modifiers = 0;
-	if (systemModifiers & NSShiftKeyMask) {
+	if (systemModifiers & NSEventModifierFlagShift) {
 		modifiers |= shiftKey;
 	}
-	if (systemModifiers & NSControlKeyMask) {
+	if (systemModifiers & NSEventModifierFlagControl) {
 		modifiers |= controlKey;
 	}
-	if (systemModifiers & NSAlternateKeyMask) {
+	if (systemModifiers & NSEventModifierFlagOption) {
 		modifiers |= optionKey;
 	}
-	if (systemModifiers & NSCommandKeyMask) {
+	if (systemModifiers & NSEventModifierFlagCommand) {
 		modifiers |= cmdKey;
 	}
-	if (systemModifiers & NSAlphaShiftKeyMask) {
+	if (systemModifiers & NSEventModifierFlagCapsLock) {
 		modifiers |= alphaLock;
 	}
-	if (systemModifiers & NSNumericPadKeyMask) {
+	if (systemModifiers & NSEventModifierFlagNumericPad) {
 		modifiers |= kEventKeyModifierFnMask;
 	}
 	return modifiers;
@@ -288,22 +288,22 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
 {
 	unsigned int modifiers = 0;
 	if (ukeleleModifiers & shiftKey) {
-		modifiers |= NSShiftKeyMask;
+		modifiers |= NSEventModifierFlagShift;
 	}
 	if (ukeleleModifiers & controlKey) {
-		modifiers |= NSControlKeyMask;
+		modifiers |= NSEventModifierFlagControl;
 	}
 	if (ukeleleModifiers & optionKey) {
-		modifiers |= NSAlternateKeyMask;
+		modifiers |= NSEventModifierFlagOption;
 	}
 	if (ukeleleModifiers & cmdKey) {
-		modifiers |= NSCommandKeyMask;
+		modifiers |= NSEventModifierFlagCommand;
 	}
 	if (ukeleleModifiers & alphaLock) {
-		modifiers |= NSAlphaShiftKeyMask;
+		modifiers |= NSEventModifierFlagCapsLock;
 	}
 	if (ukeleleModifiers & kEventKeyModifierFnMask) {
-		modifiers |= NSNumericPadKeyMask;
+		modifiers |= NSEventModifierFlagNumericPad;
 	}
 	return modifiers;
 }

@@ -25,7 +25,7 @@
 - (void)flagsChanged:(NSEvent *)theEvent {
 	if (self.passEvents) {
 		UKKeyboardController *theDocumentWindow = [[self window] windowController];
-		[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask];
+		[theDocumentWindow messageModifiersChanged:[theEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask];
 	}
 }
 

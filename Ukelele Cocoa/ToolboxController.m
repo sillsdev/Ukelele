@@ -30,9 +30,9 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
-	[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSOnState : NSOffState];
-	[_JISOnly setState:[toolboxData JISOnly] ? NSOnState : NSOffState];
-	[_showCodePoints setState:[toolboxData showCodePoints] ? NSOnState : NSOffState];
+	[_stickyModifiers setState:[toolboxData stickyModifiers] ? NSControlStateValueOn : NSControlStateValueOff];
+	[_JISOnly setState:[toolboxData JISOnly] ? NSControlStateValueOn : NSControlStateValueOff];
+	[_showCodePoints setState:[toolboxData showCodePoints] ? NSControlStateValueOn : NSControlStateValueOff];
 	NSUserDefaults *theDefaults = [NSUserDefaults standardUserDefaults];
 	NSData *frameData =[theDefaults objectForKey:UKToolboxWindowLocation];
 	if (frameData != nil) {

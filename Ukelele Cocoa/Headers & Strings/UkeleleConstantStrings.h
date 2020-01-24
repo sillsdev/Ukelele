@@ -17,6 +17,7 @@ MY_EXTERN NSString *kLabelControl;
 MY_EXTERN NSString *kLabelSubindex;
 MY_EXTERN NSString *kLabelStringRepresentation;
 MY_EXTERN NSString *kLabelIntegerRepresentation;
+MY_EXTERN NSString *kLabelAccessibilityText;
 
 	// State name for no current state
 MY_EXTERN NSString *kStateNameNone;

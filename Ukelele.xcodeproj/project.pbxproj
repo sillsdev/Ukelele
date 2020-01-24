@@ -1052,8 +1052,12 @@
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
 				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
 				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
+				5253C5671FE9C937004D7C66 /* UkeleleStatus.h */,
+				5253C5681FE9C937004D7C66 /* UkeleleStatus.m */,
+				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
 				52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */,
 				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
+				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
 				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
 				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
@@ -1061,10 +1065,6 @@
 				527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */,
 				525A4B6D191DE60700A356F8 /* ViewScale.h */,
 				525A4B6E191DE60700A356F8 /* ViewScale.m */,
-				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
-				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
-				5253C5671FE9C937004D7C66 /* UkeleleStatus.h */,
-				5253C5681FE9C937004D7C66 /* UkeleleStatus.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1197,6 +1197,7 @@
 				52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */,
 				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
 				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
+				52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */,
 				52743F5B1BCA396900C41310 /* UKProgressWindow.h */,
 				52743F5C1BCA396900C41310 /* UKProgressWindow.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
@@ -1209,7 +1210,6 @@
 				5280528A1D65B1B000356D36 /* WarningDialogController.m */,
 				523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */,
 				523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */,
-				52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1961,7 +1961,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.4.1.303;
+				CURRENT_PROJECT_VERSION = 3.4.1.305;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2010,7 +2010,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.4.1.303;
+				CURRENT_PROJECT_VERSION = 3.4.1.305;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

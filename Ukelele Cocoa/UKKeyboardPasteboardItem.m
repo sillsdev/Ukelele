@@ -35,6 +35,14 @@
 - (instancetype)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type {
 	self = [self init];
 	NSURL *theKeyboard;
+	NSPasteboardType urlType;
+	if (@available(macOS 10.13, *)) {
+		urlType = NSPasteboardTypeURL;
+	}
+	else {
+			// Fallback on earlier versions
+		urlType = NSURLPboardType;
+	}
 	if ([type isEqualToString:UKKeyboardPasteType]) {
 			// Has all the items
 		NSDictionary *theDict = propertyList[0];
@@ -55,7 +63,7 @@
 			}
 		}
 	}
-	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:urlType]) {
 			// Just a URL, so a keyboard layout file
 		theKeyboard = [NSURL URLWithString:propertyList];
 		if (theKeyboard) {
@@ -80,7 +88,15 @@
 	if ([type isEqualToString:UKKeyboardPasteType]) {
 		return NSPasteboardReadingAsPropertyList;
 	}
-	if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	NSPasteboardType urlType;
+	if (@available(macOS 10.13, *)) {
+		urlType = NSPasteboardTypeURL;
+	}
+	else {
+			// Fallback on earlier versions
+		urlType = NSURLPboardType;
+	}
+	if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:urlType]) {
 		return NSPasteboardReadingAsString;
 	}
 	return NSPasteboardReadingAsData;
@@ -93,6 +109,14 @@
 }
 
 - (id)pasteboardPropertyListForType:(NSString *)type {
+	NSPasteboardType urlType;
+	if (@available(macOS 10.13, *)) {
+		urlType = NSPasteboardTypeURL;
+	}
+	else {
+			// Fallback on earlier versions
+		urlType = NSURLPboardType;
+	}
 	if ([type isEqualToString:UKKeyboardPasteType]) {
 			// Create a property list
 		NSMutableDictionary *dataDictionary = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -105,7 +129,7 @@
 		}
 		return @[dataDictionary];
 	}
-	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:NSURLPboardType]) {
+	else if ([type isEqualToString:(NSString *)kUTTypeFileURL] || [type isEqualToString:urlType]) {
 			// Return the URL of the keyboard layout file as a string
 		return [self.keyboardLayoutFile absoluteString];
 	}

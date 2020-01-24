@@ -548,12 +548,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	versionPlistDictionary[kStringBuildVersionKey] = self.buildVersion;
 	versionPlistDictionary[kStringSourceVersionKey] = self.sourceVersion;
 	versionPlistDictionary[kStringProjectNameKey] = self.bundleName;
-	NSString *error;
+	NSError *error;
 	NSFileWrapper *versionPlistFile =
 		[[NSFileWrapper alloc] initRegularFileWithContents:
-		 [NSPropertyListSerialization dataFromPropertyList:versionPlistDictionary
-													format:NSPropertyListXMLFormat_v1_0
-										  errorDescription:&error]];
+		 [NSPropertyListSerialization dataWithPropertyList:versionPlistDictionary format:NSPropertyListXMLFormat_v1_0 options:0 error:&error]];
 	[versionPlistFile setPreferredFilename:kStringVersionPlistFileName];
 		// Create the Resources directory
 	NSFileWrapper *resourcesDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
@@ -624,9 +622,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSDictionary *infoPlist = [self createInfoPlist];
 	NSFileWrapper *infoPlistFile =
 		[[NSFileWrapper alloc] initRegularFileWithContents:
-		 [NSPropertyListSerialization dataFromPropertyList:infoPlist
-													format:NSPropertyListXMLFormat_v1_0
-										  errorDescription:&error]];
+		 [NSPropertyListSerialization dataWithPropertyList:infoPlist format:NSPropertyListXMLFormat_v1_0 options:0 error:&error]];
 	[infoPlistFile setPreferredFilename:kStringInfoPlistFileName];
 		// Create the Contents directory
 	NSFileWrapper *contentsDirectory = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
@@ -1024,7 +1020,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[progressWindow.mainText setStringValue:messageText];
 	[progressWindow.secondaryText setStringValue:@"Assembling data"];
 	NSWindow *myWindow = self.windowControllers[0].window;
-	[[NSApplication sharedApplication] beginSheet:progressWindow.window modalForWindow:myWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[myWindow beginSheet:progressWindow.window completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 	[progressWindow showWindow:self];
 	[progressWindow.progressIndicator startAnimation:nil];
 	dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -1312,7 +1311,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
   @[[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0],
 	[NSLayoutConstraint constraintWithItem:checkBox attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]]];
 		}
-		[((NSButton *)[view subviews][0]) setState:[[self tableView:tableView objectValueForTableColumn:tableColumn row:row] boolValue] ? NSOnState : NSOffState];
+		[((NSButton *)[view subviews][0]) setState:[[self tableView:tableView objectValueForTableColumn:tableColumn row:row] boolValue] ? NSControlStateValueOn : NSControlStateValueOff];
 		return view;
 	}
 	// All other columns for each table come through here
@@ -1372,7 +1371,15 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-	if ([[pasteBoard types] containsObject:NSURLPboardType]) {
+	NSPasteboardType urlType;
+	if (@available(macOS 10.13, *)) {
+		urlType = NSPasteboardTypeURL;
+	}
+	else {
+			// Fallback on earlier versions
+		urlType = NSURLPboardType;
+	}
+	if ([[pasteBoard types] containsObject:urlType]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
 		BOOL isKeyboardLayout = [fileExtension compare:kStringKeyboardLayoutExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
@@ -1809,19 +1816,18 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 		// Ask confirmation of deletion
 	NSString *confirmationMessage = [NSString stringWithFormat:@"Are you sure you want to delete the keyboard layout \"%@?\"", documentName];
-	NSAlert *confirmationDialog = [NSAlert alertWithMessageText:confirmationMessage
-												  defaultButton:@"Delete"
-												alternateButton:@"Cancel"
-													otherButton:nil
-									  informativeTextWithFormat:@"The keyboard layout will be permanently removed from the keyboard layout bundle."];
-	[confirmationDialog setAlertStyle:NSWarningAlertStyle];
+	NSAlert *confirmationDialog = [[NSAlert alloc] init];
+	[confirmationDialog setMessageText:confirmationMessage];
+	[confirmationDialog addButtonWithTitle:@"Delete"];
+	[confirmationDialog addButtonWithTitle:@"Cancel"];
+	[confirmationDialog setInformativeText:@"The keyboard layout will be permanently removed from the keyboard layout bundle."];
+	[confirmationDialog setAlertStyle:NSAlertStyleWarning];
 	NSArray *windowControllers = [self windowControllers];
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
-	[confirmationDialog beginSheetModalForWindow:myWindow
-								   modalDelegate:self
-								  didEndSelector:@selector(confirmDelete:returnCode:contextInfo:)
-									 contextInfo:(__bridge void *)(@(selectedRowNumber))];
+	[confirmationDialog beginSheetModalForWindow:myWindow completionHandler:^(NSModalResponse returnCode) {
+		[self confirmDelete:confirmationDialog returnCode:returnCode contextInfo:(__bridge void *)(@(selectedRowNumber))];
+	}];
 }
 
 	// Open the selected keyboard layout's window
@@ -2235,7 +2241,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	NSWindowController *windowController = windowControllers[0];
 	NSWindow *myWindow = [windowController window];
 	[savePanel beginSheetModalForWindow:myWindow completionHandler:^(NSInteger result) {
-		if (result == NSFileHandlingPanelOKButton) {
+		if (result == NSModalResponseOK) {
 				// Save it
 			NSURL *saveURL = [savePanel URL];
 			[savePanel orderOut:nil];
@@ -2249,7 +2255,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	if (selectedRowNumber < 0) {
 		return;
 	}
-	[self setCapsLockSwitchingAtIndex:selectedRowNumber toValue:[(NSButton *)sender state] == NSOnState];
+	[self setCapsLockSwitchingAtIndex:selectedRowNumber toValue:[(NSButton *)sender state] == NSControlStateValueOn];
 }
 
 #pragma mark Notifications
@@ -2366,7 +2372,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 
 - (void)confirmDelete:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 #pragma unused(alert)
-	if (returnCode == NSAlertAlternateReturn) {
+	if (returnCode == NSAlertSecondButtonReturn) {
 			// User cancelled
 		return;
 	}

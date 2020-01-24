@@ -53,7 +53,10 @@
 				 callBack:(BOOL (^)(LocaleCode *))theCallBack {
 	parentWindow = theWindow;
 	callBack = theCallBack;
-	[NSApp beginSheet:self.window modalForWindow:parentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 	[self.languageSearch setStringValue:@""];
 	[self.scriptSearch setStringValue:@""];
 	[self.regionSearch setStringValue:@""];

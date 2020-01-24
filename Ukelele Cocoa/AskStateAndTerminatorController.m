@@ -43,7 +43,10 @@
 	[self.statePopup removeAllItems];
 	[self.statePopup addItemsWithTitles:stateNames];
 	[self.statePopup selectItemAtIndex:-1];
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)selectState:(id)sender {

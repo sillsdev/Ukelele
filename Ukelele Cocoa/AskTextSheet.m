@@ -43,11 +43,10 @@ static NSString *windowName = @"AskTextSheet";
 	[askTextField setStringValue:theInitialText];
 	unacceptableStrings = [NSSet set];
 	askTextCallBack = theCallBack;
-	[NSApp beginSheet:askTextSheet
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (void)beginAskValidatedText:(NSString *)theMajorText
@@ -62,11 +61,10 @@ static NSString *windowName = @"AskTextSheet";
 	unacceptableStrings = stopList;
 	askTextCallBack = theCallBack;
 	[askTextField setStringValue:theInitialText];
-	[NSApp beginSheet:askTextSheet
-	   modalForWindow:parentWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)acceptAskText:(id)sender

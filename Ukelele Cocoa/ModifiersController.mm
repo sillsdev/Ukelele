@@ -46,37 +46,37 @@
 	std::vector<KeyCapView *>::iterator pos;
 	KeyCapView *keyCap;
 		// Shift
-	keyState = (modifierCombination & NSShiftKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagShift) != 0;
 	for (pos = shiftKeys.begin(); pos != shiftKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];
 	}
 		// Option
-	keyState = (modifierCombination & NSAlternateKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagOption) != 0;
 	for (pos = optionKeys.begin(); pos != optionKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];
 	}
 		// Control
-	keyState = (modifierCombination & NSControlKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagControl) != 0;
 	for (pos = controlKeys.begin(); pos != controlKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];
 	}
 		// Caps lock
-	keyState = (modifierCombination & NSAlphaShiftKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagCapsLock) != 0;
 	for (pos = capsLockKeys.begin(); pos != capsLockKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];
 	}
 		// Command
-	keyState = (modifierCombination & NSCommandKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagCommand) != 0;
 	for (pos = commandKeys.begin(); pos != commandKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];
 	}
 		// Fn
-	keyState = (modifierCombination & NSNumericPadKeyMask) != 0;
+	keyState = (modifierCombination & NSEventModifierFlagNumericPad) != 0;
 	for (pos = fnKeys.begin(); pos != fnKeys.end(); ++pos) {
 		keyCap = *pos;
 		[keyCap setDown:keyState];

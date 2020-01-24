@@ -315,7 +315,14 @@ NSString *kPrintThemeName = @"Print";
 	NSDictionary *colourThemes = [ColourTheme colourThemeDictionary];
 	NSData *themeData = colourThemes[themeName];
 	if (themeData != nil) {
-		ColourTheme *theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:themeData];
+		ColourTheme *theTheme;
+		if (@available(macOS 10.13, *)) {
+			theTheme = [NSKeyedUnarchiver unarchivedObjectOfClass:[ColourTheme class] fromData:themeData error:nil];
+		}
+		else {
+				// Fallback on earlier versions
+			theTheme = [NSKeyedUnarchiver unarchiveObjectWithData:themeData];
+		}
 		if (theTheme != nil) {
 			return theTheme;
 		}
@@ -332,7 +339,13 @@ NSString *kPrintThemeName = @"Print";
 
 + (void)addTheme:(ColourTheme *)colourTheme {
 	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
-	themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
+	if (@available(macOS 10.13, *)) {
+		themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme requiringSecureCoding:NO error:nil];
+	}
+	else {
+			// Fallback on earlier versions
+		themeDict[[colourTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:colourTheme];
+	}
 	[ColourTheme saveColourThemes:themeDict];
 }
 
@@ -344,7 +357,13 @@ NSString *kPrintThemeName = @"Print";
 
 + (void)saveTheme:(ColourTheme *)updatedTheme {
 	NSMutableDictionary *theThemes = [ColourTheme colourThemeDictionary];
-	theThemes[[updatedTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:updatedTheme];
+	if (@available(macOS 10.13, *)) {
+		theThemes[[updatedTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:updatedTheme requiringSecureCoding:NO error:nil];
+	}
+	else {
+			// Fallback on earlier versions
+		theThemes[[updatedTheme themeName]] = [NSKeyedArchiver archivedDataWithRootObject:updatedTheme];
+	}
 	[ColourTheme saveColourThemes:theThemes];
 }
 
@@ -394,7 +413,13 @@ NSString *kPrintThemeName = @"Print";
 	[self setThemeName:newName];
 	NSMutableDictionary *themeDict = [ColourTheme colourThemeDictionary];
 	[themeDict removeObjectForKey:oldName];
-	themeDict[newName] = [NSKeyedArchiver archivedDataWithRootObject:self];
+	if (@available(macOS 10.13, *)) {
+		themeDict[newName] = [NSKeyedArchiver archivedDataWithRootObject:self requiringSecureCoding:NO error:nil];
+	}
+	else {
+			// Fallback on earlier versions
+		themeDict[newName] = [NSKeyedArchiver archivedDataWithRootObject:self];
+	}
 	[ColourTheme saveColourThemes:themeDict];
 }
 

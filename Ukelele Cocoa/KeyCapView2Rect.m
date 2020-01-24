@@ -185,7 +185,13 @@ static CGAffineTransform kTextTransform = {
 		[NSBezierPath fillRect:boundingRect];
 	}
 		// Draw the text
-	CGContextRef myContext = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef myContext;
+	if (@available(macOS 10.13, *)) {
+		myContext = [[NSGraphicsContext currentContext] CGContext];
+	}
+	else {
+		myContext = [[NSGraphicsContext currentContext] graphicsPort];
+	}
 	CGContextSetTextMatrix(myContext, kTextTransform);
 		// Restore state
 	[NSGraphicsContext restoreGraphicsState];

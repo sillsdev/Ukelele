@@ -41,11 +41,10 @@
 - (void)askQuestion:(NSString *)theQuestion forWindow:(NSWindow *)theWindow completion:(void (^)(BOOL))theBlock {
 	[self.questionField setStringValue:theQuestion];
 	completionBlock = theBlock;
-	[NSApp beginSheet:[self window]
-	   modalForWindow:theWindow
-		modalDelegate:nil
-	   didEndSelector:nil
-		  contextInfo:nil];
+	[theWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+#pragma unused(returnCode)
+		return;
+	}];
 }
 
 - (IBAction)handleYes:(id)sender {
