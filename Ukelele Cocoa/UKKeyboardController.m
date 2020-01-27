@@ -464,6 +464,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		NSString *nextState;
         keyDataDict[kKeyKeyCode] = @(keyCode);
 		output = [self.keyboardLayout getCharOutput:keyDataDict isDead:&deadKey nextState:&nextState];
+		NSString *keyInformation = [self.keyboardLayout getOutputInfoForKey:keyDataDict];
+		[keyCapView setAccessibilityHelp:keyInformation];
 		[keyCapView setDeadKey:deadKey];
 		if (useFallback && [output isEqualToString:@""] && ![stateName isEqualToString:kStateNameNone]) {
 			keyDataDictStateNone[kKeyKeyCode] = @(keyCode);
@@ -1644,7 +1646,6 @@ const CGFloat kTextPaneHeight = 17.0f;
 			[theKeyboard setFrameOrigin:NSMakePoint(0, kTextPaneHeight)];
 			[theKeyboard setColourTheme:[ColourTheme defaultPrintTheme]];
 			NSTextView *stateNameView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, kTextPaneHeight)];
-//			[stateNameView setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[stateNameView setAlignment:NSTextAlignmentCenter];
 			[stateNameView setString:[NSString stringWithFormat:@"State: %@", stateName]];
 			NSView *hostView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, availableWidth, iterationSize)];
