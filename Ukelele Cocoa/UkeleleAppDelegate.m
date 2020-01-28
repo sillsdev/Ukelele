@@ -198,7 +198,7 @@ static NSDictionary *defaultValues() {
 		UKUserLibrary *library = [[UKUserLibrary alloc] init];
 		[library userLibraryWithCompletion:^(NSURL * _Nullable theLibrary) {
 			if (theLibrary != nil) {
-				self->organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organise"];
+				self->organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
 				[[self->organiserController window] makeKeyAndOrderFront:sender];
 			}
 		}];

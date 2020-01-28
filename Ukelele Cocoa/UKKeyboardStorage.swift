@@ -15,55 +15,14 @@ let uninstalledFolderDefault = "~/Documents"
 let uninstalledFolderDefaultKey = "UninstalledKeyboardLayoutsFolder"
 
 class UKUserLibrary: NSObject {
-	var bookmarkData: Data?
 	
-	@objc func userLibrary(completion:@escaping (URL?) -> Void) {
-		if let bookmarkData = bookmarkData {
-			var isStale = false
-			do {
-				let bookmarkURL = try URL(resolvingBookmarkData: bookmarkData, options: [.withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &isStale)
-				if !isStale {
-					// Success, we have a valid bookmark URL
-					completion(bookmarkURL)
-					return
-				}
-			} catch {
-				// Fall through
-			}
+	@objc func userLibrary(completion:(URL?) -> Void) {
+		if let libraryURL: URL = UKFileUtilities.userLibrary() {
+			let keyboardLayoutsURL = libraryURL.appendingPathComponent(keyboardLayoutsName)
+			completion(keyboardLayoutsURL)
 		}
-		let baseURL = URL(fileURLWithPath: "~/Library/Keyboard Layouts")
-		let theURL = baseURL.standardizedFileURL
-		let openPanel = NSOpenPanel()
-		openPanel.canChooseDirectories = true
-		openPanel.canChooseFiles = false
-		openPanel.directoryURL = theURL
-		openPanel.message = "Please locate the Keyboard Layouts folder in the Library folder of your home folder"
-		openPanel.begin { (response) in
-			if response == .OK {
-				// Got the URL, so save it as well
-				if let libraryURL = openPanel.directoryURL {
-					do {
-						let testFile = libraryURL.appendingPathComponent("testFile.keylayout")
-						let fileManager = FileManager.default
-						let result = fileManager.createFile(atPath: testFile.path, contents: nil, attributes: nil)
-						if !result {
-							return
-						}
-						self.bookmarkData = try libraryURL.bookmarkData(options: [.withSecurityScope], includingResourceValuesForKeys: nil, relativeTo: nil)
-						if self.bookmarkData != nil {
-							completion(libraryURL)
-						}
-					} catch {
-						NSApp.presentError(error)
-					}
-				}
-				// Failure somewhere
-				completion(nil)
-			}
-			else {
-				// User cancelled
-				completion(nil)
-			}
+		else {
+			completion(nil)
 		}
 	}
 }
@@ -76,11 +35,15 @@ class UKKeyboardStorage {
 	static let sharedInstance = UKKeyboardStorage()
 	
 	init() {
-		let fileManager = FileManager.default
-		var userHome: URL
-		userHome = fileManager.homeDirectoryForCurrentUser
-		let userKeyboardsURL = userHome.appendingPathComponent(libraryName).appendingPathComponent(keyboardLayoutsName)
-		userKeyboards = UKKeyboardCollection(folder: userKeyboardsURL)
+		if let userLibrary = UKFileUtilities.userLibrary() {
+			let userKeyboardsURL = userLibrary.appendingPathComponent(keyboardLayoutsName)
+			userKeyboards = UKKeyboardCollection(folder: userKeyboardsURL)
+		}
+		else {
+			// Really should not get here...
+			let fileManager = FileManager.default
+			userKeyboards = UKKeyboardCollection(folder: fileManager.homeDirectoryForCurrentUser)
+		}
 		// Get the default location for the uninstalled keyboard layouts folder
 		let theDefaults = UserDefaults.standard
 		let theFolderPath = ((theDefaults.string(forKey: uninstalledFolderDefaultKey) ?? uninstalledFolderDefault) as NSString).expandingTildeInPath

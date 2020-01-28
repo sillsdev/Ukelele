@@ -12,5 +12,6 @@
 
 + (BOOL)isKeyboardLayoutsURL:(NSURL *)fileURL;
 + (BOOL)dataIsicns:(NSData *)icnsData;
++ (NSURL *)userLibrary;
 
 @end
