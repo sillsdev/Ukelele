@@ -195,14 +195,7 @@ static NSDictionary *defaultValues() {
 - (IBAction)showHideOrganiser:(id)sender {
 	if (organiserController == nil) {
 		// Create the organiser
-		UKUserLibrary *library = [[UKUserLibrary alloc] init];
-		[library userLibraryWithCompletion:^(NSURL * _Nullable theLibrary) {
-			if (theLibrary != nil) {
-				self->organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
-				[[self->organiserController window] makeKeyAndOrderFront:sender];
-			}
-		}];
-		return;
+		organiserController = [[UKOrganiserController alloc] initWithWindowNibName:@"Organiser"];
 	}
 	if ([[organiserController window] isVisible]) {
 		[[organiserController window] orderOut:sender];

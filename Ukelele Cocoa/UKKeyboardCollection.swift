@@ -6,7 +6,7 @@
 //  Copyright © 2017 John Brownie. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 let keyboardLayoutExtension = "keylayout"
 let iconExtension = "icns"
@@ -27,13 +27,21 @@ class UKKeyboardCollection {
 	var collection: [KeyboardLayoutInformation]
 	var collectionSize: Int { get { return collection.count } }
 	var requiresAuthentication: Bool
+	var isSecurityScoped: Bool
 	
-	init(folder: URL) {
+	init(folder: URL, isSecurityScoped scoped: Bool) {
 		folderURL = folder
 		collection = []
 		requiresAuthentication = folderURL.absoluteString.hasPrefix("file:///Library/")
+		isSecurityScoped = scoped
 		
 		enumerateFolder()
+	}
+	
+	deinit {
+		if isSecurityScoped {
+			folderURL.stopAccessingSecurityScopedResource()
+		}
 	}
 	
 	func scanFolder() {
@@ -53,8 +61,9 @@ class UKKeyboardCollection {
 			}
 			// Get them in alphabetical order
 			collection.sort(by: { $0.keyboardLayoutName.compare($1.keyboardLayoutName, options: .caseInsensitive) == .orderedAscending })
-		} catch {
+		} catch let error {
 			// Failed to get contents
+			NSApp.presentError(error)
 			collection = []
 		}
 	}

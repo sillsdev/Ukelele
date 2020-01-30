@@ -15,6 +15,7 @@ let uninstalledContextMenu = "Uninstall"
 let allUsersContextMenu = "AllUsers"
 let currentUserContextMenu = "CurrentUser"
 let organiserDefaultKey = "OrganiserWindowLocation"
+let organiserUninstalledFolderKey = "OrganiserUninstalledFolder"
 
 enum MenuItems: Int {
 	case Uninstall = 1
@@ -41,16 +42,16 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		uninstalledTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
 		allUsersTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
 		currentUserTable.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: false)
-		
-		// Create the monitor
-		setupMonitor()
-		
+
 		// Restore the position if possible
 		let theDefaults = UserDefaults.standard
 		if let frameData = theDefaults.array(forKey: organiserDefaultKey) as? [Double] {
 			let theFrame = NSRect(x: frameData[0], y: frameData[1], width: frameData[2], height: frameData[3])
 			self.window?.setFrame(theFrame, display: false)
 		}
+		
+		// Create the monitor
+		setupMonitor()
     }
 
 	func setupMonitor() {
@@ -183,7 +184,8 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 		thePanel.beginSheetModal(for: self.window!) { (result: NSApplication.ModalResponse) in
 			if result == NSApplication.ModalResponse.OK {
 				// Got the folder
-				UKKeyboardStorage.sharedInstance.changeUninstalledFolder(to: thePanel.directoryURL!)
+				guard let theFolder = thePanel.url else { return }
+				UKKeyboardStorage.sharedInstance.changeUninstalledFolder(to: theFolder)
 				self.setupMonitor()
 				self.reloadTableData()
 			}
