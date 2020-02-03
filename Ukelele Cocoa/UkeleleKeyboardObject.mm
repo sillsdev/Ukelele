@@ -357,7 +357,7 @@ NSString *kUnlinkParameterNewActionName = @"NewActionName";
     NSString *normalisedOutput = [XMLCocoaUtilities convertEncodedString:output];
     NSString *displayText = [XMLCocoaUtilities createCanonicalForm:normalisedOutput];
     if (deadKey) {
-        displayText = [NSString stringWithFormat:@"Dead key, next state: %@\nTerminator: %@", nextState, displayText];
+        displayText = [NSString stringWithFormat:@"Dead key, next state: %@.\nTerminator: %@", nextState, displayText];
     }
 	return displayText;
 }

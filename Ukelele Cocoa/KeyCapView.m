@@ -224,9 +224,21 @@ static CGAffineTransform kTextTransform = {
 	if (self.down) {
 		[accessibilityText appendString:@"Down, "];
 	}
-	[accessibilityText appendString:@"Output: "];
+	switch (self.keyType) {
+		case kModifierKeyType:
+			[accessibilityText appendString:@"Modifier: "];
+			break;
+			
+		case kOrdinaryKeyType:
+		case kSpecialKeyType:
+			[accessibilityText appendString:@"Output: "];
+			break;
+			
+		default:
+			break;
+	}
 	[accessibilityText appendString:[displayText string]];
-	self.accessibilityLabel = accessibilityText;
+	self.accessibilityValueDescription = accessibilityText;
 }
 
 - (void)flipInRect:(NSRect)boundingRect
@@ -586,6 +598,36 @@ static CGAffineTransform kTextTransform = {
 		return self.outputString;
 	}
 	return nil;
+}
+
+#pragma mark Accessibility needs
+
+- (NSRect)accessibilityFrame {
+	return [self.window convertRectToScreen:[self.superview convertRect:self.frame toView:nil]];
+}
+
+- (nullable id)accessibilityParent {
+	return self.superview;
+}
+
+- (nullable NSString *)accessibilityValue {
+	return [displayText string];
+}
+
+- (nullable id)animationForKey:(nonnull NSAnimatablePropertyKey)key {
+	return [super animationForKey:key];
+}
+
+- (nonnull instancetype)animator {
+	return [super animator];
+}
+
++ (nullable id)defaultAnimationForKey:(nonnull NSAnimatablePropertyKey)key {
+	return [super defaultAnimationForKey:key];
+}
+
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+	[super encodeWithCoder:coder];
 }
 
 @end
