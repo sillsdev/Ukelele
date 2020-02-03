@@ -71,17 +71,20 @@ class UKKeyboardStorage {
 	
 	private func setUninstalledFolder(to newFolder: URL, isSecurityScoped: Bool) {
 		uninstalledIsSecurityScoped = isSecurityScoped
+		// Update the defaults
+		let theDefaults = UserDefaults.standard
 		if isSecurityScoped {
-			// Update the defaults
 			do {
 				uninstalledFolderBookmark = try newFolder.bookmarkData(options: [.withSecurityScope], includingResourceValuesForKeys: nil, relativeTo: nil)
-				let theDefaults = UserDefaults.standard
 				theDefaults.set(uninstalledFolderBookmark, forKey: uninstalledFolderDefaultKey)
 			} catch let error {
 				// Nothing to do if we can't create the bookmark
 				NSLog("%@", error.localizedDescription)
 				return
 			}
+		}
+		else {
+			theDefaults.removeObject(forKey: uninstalledFolderDefaultKey)
 		}
 		uninstalledKeyboards = UKKeyboardCollection(folder: newFolder, isSecurityScoped: uninstalledIsSecurityScoped)
 	}
