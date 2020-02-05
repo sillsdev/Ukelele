@@ -180,6 +180,10 @@ static NSString *nibWindow = @"Preferences";
 		for (ViewScale *scale in _scalesList) {
 			[_defaultZoom addItemWithObjectValue:[scale scaleLabel]];
 		}
+		NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
+		BOOL showCodePoints = [sharedDefaults boolForKey:UKShowCodePoints];
+		[_xmlHasCharacters setState:showCodePoints ? NSControlStateValueOff : NSControlStateValueOn];
+		[_xmlHasCodePoints setState:showCodePoints ? NSControlStateValueOn : NSControlStateValueOff];
     }
     
     return self;
@@ -254,6 +258,16 @@ static NSString *nibWindow = @"Preferences";
 #pragma unused(sender)
 	NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
 	[sharedDefaults setBool:NO forKey:UKDontShowWarningDialog];
+}
+
+- (IBAction)toggleCodePoints:(id)sender {
+	NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
+	if (sender == self.xmlHasCharacters) {
+		[sharedDefaults setBool:NO forKey:UKShowCodePoints];
+	}
+	else {
+		[sharedDefaults setBool:YES forKey:UKShowCodePoints];
+	}
 }
 
 - (void)windowWillClose:(NSNotification *)notification {

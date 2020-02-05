@@ -22,12 +22,15 @@
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (strong) IBOutlet NSTextField *fontDisplay;
 @property (strong) IBOutlet NSFont *currentFont;
+@property (strong) IBOutlet NSButton *xmlHasCharacters;
+@property (strong) IBOutlet NSButton *xmlHasCodePoints;
 
 + (UkelelePreferenceController *)getInstance;
 
 - (IBAction)returnToDefaults:(id)sender;
 - (IBAction)changeDefaultFont:(id)sender;
 - (IBAction)resetWarnings:(id)sender;
+- (IBAction)toggleCodePoints:(id)sender;
 
 - (void)runPreferences;
 - (void)changeFont:(id)fontManager;		// Sent by font panel
