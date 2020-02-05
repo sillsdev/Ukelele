@@ -40,7 +40,7 @@
 	[self.commandLayoutPopup selectItemAtIndex:commandLayoutSame];
 	[self.capsLockLayoutPopup selectItemAtIndex:capsLockLayoutSame];
 	if (theParentWindow != nil) {
-		[theParentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+		[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
 #pragma unused(returnCode)
 			return;
 		}];

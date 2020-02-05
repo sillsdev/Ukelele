@@ -452,7 +452,13 @@ static NSMutableDictionary *statusDictionary = nil;
 			// Only drag single rows
 		return NO;
 	}
-	NSData *pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes requiringSecureCoding:NO error:nil];
+	NSData *pasteboardData;
+	if (@available(macOS 10.13, *)) {
+		pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes requiringSecureCoding:NO error:nil];
+	} else {
+			// Fallback on earlier versions
+		pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+	}
 	[pboard declareTypes:@[ModifiersTableDragType] owner:self];
 	[pboard setData:pasteboardData forType:ModifiersTableDragType];
 	return YES;
@@ -474,7 +480,13 @@ static NSMutableDictionary *statusDictionary = nil;
 	}
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSData *pbData = [pboard dataForType:ModifiersTableDragType];
-	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
+	NSIndexSet *sourceIndexes;
+	if (@available(macOS 10.13, *)) {
+		sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
+	} else {
+			// Fallback on earlier versions
+		sourceIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:pbData];
+	}
 	NSUInteger sourceIndex = [sourceIndexes firstIndex];
 	NSInteger sourceRowSet = [self indexForRow:sourceIndex];
 	NSInteger nextSet = sourceRowSet;
@@ -510,7 +522,13 @@ static NSMutableDictionary *statusDictionary = nil;
 #pragma unused(dropOperation)
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSData *pbData = [pboard dataForType:ModifiersTableDragType];
-	NSIndexSet *sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
+	NSIndexSet *sourceIndexes;
+	if (@available(macOS 10.13, *)) {
+		sourceIndexes = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSIndexSet class] fromData:pbData error:nil];
+	} else {
+			// Fallback on earlier versions
+		sourceIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:pbData];
+	}
 	NSUInteger sourceIndex = [sourceIndexes firstIndex];
 	NSInteger sourceRowSet = [self indexForRow:sourceIndex];
 	NSInteger destinationSet;

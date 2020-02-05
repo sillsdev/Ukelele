@@ -57,7 +57,7 @@ static BOOL dialogHasBeenShown = NO;
 - (void)runDialogForWindow:(NSWindow *)theWindow {
 	[WarningDialogController setHasBeenShown:YES];
 	self.parentWindow = theWindow;
-	[self.parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+	[theWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
 #pragma unused(returnCode)
 		return;
 	}];

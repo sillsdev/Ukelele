@@ -270,7 +270,7 @@ const CGFloat kTextPaneHeight = 17.0f;
                                  horizontalScrollerClass:[NSScroller class]
                                    verticalScrollerClass:[NSScroller class]
                                               borderType:NSLineBorder
-											 controlSize:NSControlSizeRegular
+                                             controlSize:NSControlSizeRegular
                                            scrollerStyle:NSScrollerStyleOverlay];
     keyboardSize.height += 1;
     keyboardSize.width += 1;
@@ -286,6 +286,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	NSSize minimumSize = NSMakeSize(kWindowMinWidth, kWindowMinHeight);
 	[self.window setContentMaxSize:maximumSize];
 	[self.window setContentMinSize:minimumSize];
+//    NSDisableScreenUpdates();
 	[self.window setContentSize:maximumSize];
 	NSRect winBounds = [self.window frame];
 	NSRect availableRect = [[NSScreen mainScreen] visibleFrame];
@@ -343,6 +344,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		}
 		[self.window setFrame:newBounds display:YES];
 	}
+//    NSEnableScreenUpdates();
 }
 
 - (NSRect)windowWillUseStandardFrame:(NSWindow *)window defaultFrame:(NSRect)newFrame
@@ -1607,6 +1609,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printingInfo setViewDict:viewDict];
 		// Create the print view and get print information
 	UKKeyboardPrintView *printView = [[UKKeyboardPrintView alloc] init];
+//	[printView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	if (printInfo == nil) {
 		printInfo = [[self.parentDocument printInfo] copy];
 	}
@@ -1619,6 +1622,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 	[printingInfo setAvailablePageHeight:(NSUInteger)availableHeight];
 		// Create the views and work out pagination
 	UkeleleView *keyboardView = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
+//	[keyboardView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	int keyboardID = [internalState[kStateCurrentKeyboard] intValue];
 	int actualID = [keyboardView createViewWithKeyboardID:keyboardID withScale:1.0];
 #pragma unused(actualID)
@@ -1635,6 +1639,7 @@ const CGFloat kTextPaneHeight = 17.0f;
 		for (NSUInteger i = 0; i < modifierCombinations; i++) {
 			NSUInteger modifiers = [modifierSets[i] unsignedIntegerValue];
 			UkeleleView *theKeyboard = [[UkeleleView alloc] initWithFrame:NSMakeRect(0, 0, kWindowMinWidth, kWindowMinHeight)];
+//			[theKeyboard setTranslatesAutoresizingMaskIntoConstraints:NO];
 			[theKeyboard createViewWithKeyboardID:keyboardID withScale:1.0];
 			[theKeyboard scaleViewToScale:desiredScale limited:NO];
 			[self updateUkeleleView:theKeyboard state:stateName modifiers:modifiers usingFallback:NO];
@@ -1929,7 +1934,8 @@ const CGFloat kTextPaneHeight = 17.0f;
 		[documentAlert setMessageText:messageText];
 		[documentAlert setInformativeText:infoText];
 		[documentAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-			[self alertDidEnd:self->documentAlert returnCode:returnCode contextInfo:nil];
+#pragma unused(returnCode)
+			return;
 		}];
 		return;
 	}

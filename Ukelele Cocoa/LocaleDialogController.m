@@ -53,7 +53,7 @@
 				 callBack:(BOOL (^)(LocaleCode *))theCallBack {
 	parentWindow = theWindow;
 	callBack = theCallBack;
-	[parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
 #pragma unused(returnCode)
 		return;
 	}];
