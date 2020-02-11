@@ -135,6 +135,8 @@
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */; };
+		526BD0F023EC34EC00C8FDD6 /* TroubleshootingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */; };
+		526BD0F423EC394500C8FDD6 /* Troubleshooting.html in Resources */ = {isa = PBXBuildFile; fileRef = 526BD0F323EC394500C8FDD6 /* Troubleshooting.html */; };
 		526EFF8519F0838B001FB994 /* UKNewKeyboardLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */; };
 		52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52743F591BCA30B200C41310 /* ProgressWindow.xib */; };
 		52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52743F5C1BCA396900C41310 /* UKProgressWindow.m */; };
@@ -236,6 +238,8 @@
 		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
 		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
 		52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */; };
+		52D727DD23F1399D00C0440F /* UKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D727DC23F1399D00C0440F /* UKWebView.swift */; };
+		52D727DF23F14D1500C0440F /* UKTroubleShootingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -546,6 +550,8 @@
 		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
 		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
 		525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKKeyboardLayoutBundle.xib; path = "Interface Files/UKKeyboardLayoutBundle.xib"; sourceTree = "<group>"; };
+		526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TroubleshootingWindow.xib; path = "Interface Files/TroubleshootingWindow.xib"; sourceTree = "<group>"; };
+		526BD0F323EC394500C8FDD6 /* Troubleshooting.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Troubleshooting.html; sourceTree = "<group>"; };
 		526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKNewKeyboardLayoutController.h; sourceTree = "<group>"; };
 		526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKNewKeyboardLayoutController.m; sourceTree = "<group>"; };
 		52743F591BCA30B200C41310 /* ProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressWindow.xib; path = "Interface Files/ProgressWindow.xib"; sourceTree = "<group>"; };
@@ -631,6 +637,8 @@
 		52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKFileOperations.swift; sourceTree = "<group>"; };
 		52CB81751FC249F200AF32E7 /* UKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKErrors.swift; sourceTree = "<group>"; };
 		52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKOrganiserController.swift; sourceTree = "<group>"; };
+		52D727DC23F1399D00C0440F /* UKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UKWebView.swift; sourceTree = "<group>"; };
+		52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UKTroubleShootingController.swift; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
@@ -840,6 +848,7 @@
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -973,6 +982,7 @@
 				52BBED0E191B4C3900E48394 /* main.m */,
 				5253EC761C43928B003B7CC3 /* scripts.strings */,
 				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
+				526BD0F323EC394500C8FDD6 /* Troubleshooting.html */,
 				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
 				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
@@ -1086,6 +1096,7 @@
 				523B0079191C9CA900E06DF3 /* UkeleleView.m */,
 				52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */,
 				52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */,
+				52D727DC23F1399D00C0440F /* UKWebView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1210,6 +1221,7 @@
 				5280528A1D65B1B000356D36 /* WarningDialogController.m */,
 				523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */,
 				523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */,
+				52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1350,6 +1362,7 @@
 				52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */,
 				52EB2B271927397000712272 /* ToolboxController.xib in Resources */,
 				52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */,
+				526BD0F023EC34EC00C8FDD6 /* TroubleshootingWindow.xib in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
 				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
 				52BEADEC192484A6008A3314 /* AskText.xib in Resources */,
@@ -1390,6 +1403,7 @@
 				528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
+				526BD0F423EC394500C8FDD6 /* Troubleshooting.html in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
 				524EAE291B9FD16F00B77B43 /* Errors.strings in Resources */,
 				524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */,
@@ -1554,6 +1568,7 @@
 				523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */,
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
 				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
+				52D727DF23F14D1500C0440F /* UKTroubleShootingController.swift in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
 				52CB81721FC246F200AF32E7 /* UKKeyboardStorage.swift in Sources */,
 				529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */,
@@ -1565,6 +1580,7 @@
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,
 				523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */,
+				52D727DD23F1399D00C0440F /* UKWebView.swift in Sources */,
 				52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */,
 				523B01B5191CA18C00E06DF3 /* SwapKeysController.m in Sources */,
 				523B01A3191CA18C00E06DF3 /* EditKeyWindowController.m in Sources */,
@@ -1961,7 +1977,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.4.1.309;
+				CURRENT_PROJECT_VERSION = 3.4.1.310;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2010,7 +2026,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.4.1.309;
+				CURRENT_PROJECT_VERSION = 3.4.1.310;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -223,6 +223,11 @@ static NSDictionary *defaultValues() {
 	[[organiserController window] makeKeyAndOrderFront:sender];
 }
 
+- (IBAction)showTroubleshooting:(id)sender {
+	UKTroubleShootingController *controller = [[UKTroubleShootingController alloc] initWithWindowNibName:@"TroubleshootingWindow"];
+	[[controller window] makeKeyAndOrderFront:sender];
+}
+
 - (IBAction)toggleShowCodePoints:(id)sender {
 #pragma unused(sender)
 	ToolboxData *toolboxData = [ToolboxData sharedToolboxData];

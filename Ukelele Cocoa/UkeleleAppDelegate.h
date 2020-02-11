@@ -24,6 +24,7 @@
 - (IBAction)colourThemes:(id)sender;
 - (IBAction)chooseColourTheme:(id)sender;
 - (IBAction)install:(id)sender;
+- (IBAction)showTroubleshooting:(id)sender;
 
 @property (atomic, copy,   readwrite) NSData *authorization;
 @property (atomic, strong, readwrite) NSXPCConnection *helperToolConnection;
