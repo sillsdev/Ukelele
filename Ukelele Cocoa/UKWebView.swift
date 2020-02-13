@@ -21,22 +21,6 @@ class UKWebView: NSView {
 	func loadFileURL(url: URL) {
 		// Do nothing in default implementation
 	}
-    
-	func canGoBack() -> Bool {
-		return false
-	}
-	
-	func canGoForward() -> Bool {
-		return false
-	}
-	
-	func goBack() {
-		// Do nothing
-	}
-	
-	func goForward() {
-		// Do nothing
-	}
 }
 
 @available(OSX 10.10, *)
@@ -47,9 +31,12 @@ class UKWebViewWebKit: UKWebView {
 		super.init(frame: frameRect)
 		let configuration = WKWebViewConfiguration()
 		view = WKWebView(frame: frameRect, configuration: configuration)
-		guard let view = view else { return }
-		addSubview(view)
-		addConstraints([NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0)])
+		guard let webView = view else { return }
+		addSubview(webView)
+		webView.translatesAutoresizingMaskIntoConstraints = false
+		let variableBindings = ["webView": webView]
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[webView]-0-|", options: [], metrics: nil, views: variableBindings))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[webView]-0-|", options: [], metrics: nil, views: variableBindings))
 	}
 	
 	required init?(coder: NSCoder) {
@@ -63,29 +50,9 @@ class UKWebViewWebKit: UKWebView {
 		let htmlString = String(bytes: fileManager.contents(atPath: url.path) ?? Data(), encoding: .utf8) ?? ""
 		webView.loadHTMLString(htmlString, baseURL: nil)
 	}
-	
-	override func canGoBack() -> Bool {
-		guard let webView = view else { return false }
-		return webView.canGoBack
-	}
-	
-	override func canGoForward() -> Bool {
-		guard let webView = view else { return false }
-		return webView.canGoForward
-	}
-	
-	override func goBack() {
-		guard let webView = view else { return }
-		webView.goBack()
-	}
-	
-	override func goForward() {
-		guard let webView = view else { return }
-		webView.goForward()
-	}
 }
 
-//@available(OSX, introduced: 10.2, unavailable, deprecated: 10.10)
+//@available(OSX, introduced: 10.2, unavailable, deprecated: 10.14)
 class UKWebViewLegacy: UKWebView {
 	var view: WebView?
 	
@@ -94,7 +61,9 @@ class UKWebViewLegacy: UKWebView {
 		view = WebView(frame: frameRect)
 		guard let view = view else { return }
 		addSubview(view)
-		addConstraints([NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0)])
+		let variableBindings = ["webView": view]
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[webView]-5-|", options: [], metrics: nil, views: variableBindings))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[webView]-5-|", options: [], metrics: nil, views: variableBindings))
 	}
 	
 	required init?(coder: NSCoder) {
@@ -105,25 +74,5 @@ class UKWebViewLegacy: UKWebView {
 	override func loadFileURL(url: URL) {
 		guard let webView = view else { return }
 		webView.mainFrame.load(URLRequest(url: url))
-	}
-	
-	override func canGoBack() -> Bool {
-		guard let webView = view else { return false }
-		return webView.canGoBack
-	}
-	
-	override func canGoForward() -> Bool {
-		guard let webView = view else { return false }
-		return webView.canGoForward
-	}
-	
-	override func goBack() {
-		guard let webView = view else { return }
-		webView.goBack()
-	}
-	
-	override func goForward() {
-		guard let webView = view else { return }
-		webView.goForward()
 	}
 }

@@ -30,6 +30,7 @@
 @interface UkeleleAppDelegate () {
 	AuthorizationRef _authRef;
 	UKOrganiserController *organiserController;
+	UKTroubleShootingController *troubleshootingController;
 }
 
 @end
@@ -224,8 +225,10 @@ static NSDictionary *defaultValues() {
 }
 
 - (IBAction)showTroubleshooting:(id)sender {
-	UKTroubleShootingController *controller = [[UKTroubleShootingController alloc] initWithWindowNibName:@"TroubleshootingWindow"];
-	[[controller window] makeKeyAndOrderFront:sender];
+	if (troubleshootingController == nil) {
+		troubleshootingController = [[UKTroubleShootingController alloc] initWithWindowNibName:@"TroubleshootingWindow"];
+	}
+	[[troubleshootingController window] makeKeyAndOrderFront:sender];
 }
 
 - (IBAction)toggleShowCodePoints:(id)sender {

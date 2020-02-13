@@ -8,26 +8,14 @@
 
 import Cocoa
 
-class UKTroubleShootingController: NSWindowController, NSUserInterfaceValidations {
-	@IBOutlet var contentView: NSView!
-	@IBOutlet var goBackButton: NSButton!
-	@IBOutlet var goForwardButton: NSButton!
+class UKTroubleShootingController: NSWindowController {
+	@IBOutlet var webContentView: NSView!
 	
 	var webView: UKWebView?
-	var canGoBack: Bool { get {
-		guard let webView = webView else { return false }
-		return webView.canGoBack()
-		}
-	}
-	var canGoForward: Bool { get {
-		guard let webView = webView else { return false }
-		return webView.canGoForward()
-		}
-	}
 	
     override func windowDidLoad() {
         super.windowDidLoad()
-		let frame = contentView.frame
+		let frame = webContentView.frame
 		if #available(OSX 10.10, *) {
 			webView = UKWebViewWebKit(frame: frame)
 		}
@@ -35,29 +23,21 @@ class UKTroubleShootingController: NSWindowController, NSUserInterfaceValidation
 			webView = UKWebViewLegacy(frame: frame)
 		}
 		guard let webView = webView else { return }
-		contentView.addSubview(webView)
-		contentView.addConstraints([NSLayoutConstraint(item: webView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: webView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: webView, attribute: .trailing, relatedBy: .equal, toItem: contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0), NSLayoutConstraint(item: webView, attribute: .bottom, relatedBy: .equal, toItem: contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0)])
+		webContentView.addSubview(webView)
+		webContentView.translatesAutoresizingMaskIntoConstraints = false
+		webView.translatesAutoresizingMaskIntoConstraints = false
+		let variableBindings = ["webView": webView]
+		let constraints1 = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[webView]-0-|", options: [], metrics: nil, views: variableBindings)
+		let constraints2 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[webView]-0-|", options: [], metrics: nil, views: variableBindings)
+		if #available(OSX 10.10, *) {
+			NSLayoutConstraint.activate(constraints1)
+			NSLayoutConstraint.activate(constraints2)
+		} else {
+			// Fallback on earlier versions
+			webContentView.addConstraints(constraints1)
+			webContentView.addConstraints(constraints2)
+		}
 		guard let troubleShootingURL = Bundle.main.url(forResource: "Troubleshooting", withExtension: "html") else { return }
 		webView.loadFileURL(url: troubleShootingURL)
     }
-	
-	func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
-		if item.action == #selector(goBack(_:)) {
-			return canGoBack
-		}
-		if item.action == #selector(goForward(_:)) {
-			return canGoForward
-		}
-		return false
-	}
-	
-	@IBAction func goBack(_ sender: Any) {
-		guard let webView = webView else { return }
-		webView.goBack()
-	}
-	
-	@IBAction func goForward(_ sender: Any) {
-		guard let webView = webView else { return }
-		webView.goForward()
-	}
 }

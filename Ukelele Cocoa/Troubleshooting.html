@@ -5,6 +5,7 @@
   <title>Troubleshooting</title>
 </head>
 <body>
+	<h2><a name="Topics"></a>Topics</h2>
 <p><a href="#_Toc5ef33bfa">My keyboard layout doesn’t appear in the menu</a></p>
 <p><a href="#_Toc45e69615">The keyboard on screen doesn’t look like my keyboard</a></p>
 <p><a href="#_Toc10a496d4">Changes in the keyboard layout are not showing up</a></p>
@@ -13,7 +14,7 @@
 <p><a href="#_Toc146196cc">The emacs keys don’t work</a></p>
 <p><a href="#_Toc486e6b10">I can’t remove all the other keyboard layouts</a></p>
 <p><br></p>
-<h2><a name="_Toc5ef33bfa"></a></span><b>My keyboard layout doesn’t appear in the menu</b></h2>
+<h2><a name="_Toc5ef33bfa"></a><b>My keyboard layout doesn’t appear in the menu</b></h2>
 <p>There can be a few reasons for this.</p>
 <p><a href="#_Toc4b8e26e7">The keyboard layout parser finds an illegal character</a></p>
 <p><a href="#_Toc53f68d34">The keyboard layout is in the wrong place</a></p>
@@ -23,33 +24,33 @@
 <p><a href="#_Toc3b6cb6cb">Do you have the right name for the keyboard layout?</a></p>
 <p><a href="#_Toc6a2323a1">Numeric state names can be a problem</a></p>
 <p><a href="#_Toc36a0eba4">Other failures</a></p>
-<h3><a name="_Toc4b8e26e7"></a></span><b>The keyboard layout parser finds an illegal character</b></h3>
-<p>This is most common when the keyboard layout XML has a character outside the Basic Multilingual Plane, that is, with a Unicode code point of U+10000 or higher. The work-around for this is to go to Preferences, and select the option to save the file with code points rather than characters.</p>
-<h3><a name="_Toc53f68d34"></a></span><b>The keyboard layout is in the wrong place</b></h3>
-<p>If you use the Organiser to install the keyboard layout, this shouldn’t be a problem. But if you do it manually, make sure that you are in the right folder. The folder should be called “Keyboard Layouts” (note that it is plural), and it should be in a folder called “Library”. The Library folder name will be localised for your system, so look for the appropriate name with your system’s language. The Library folder in your home folder is normally hidden, so you have to jump through some hoops to get there. In Finder, hold down the option key and click on the Go menu, and you’ll find that Library appears there. The two Library folders are those at the top level of your startup disk, and in your home folder.</p>
-<h3><a name="_Toc2d0885b2"></a></span><b>The keyboard layout has been saved with an incorrect name</b></h3>
-<p>Again, if you are using Ukelele, this shouldn’t happen. A simple keyboard layout has the extension .keylayout, while a keyboard layout collection is a bundle, that is a folder with the extension .bundle and a specific layout.</p>
-<h3><a name="_Toc224a8168"></a></span><b>Have you logged out and logged in again?</b></h3>
-<p>In modern systems (Yosemite, macOS 10.10 and later), this shouldn’t be necessary, but it can help if you have been experimenting with a keyboard layout and changed it. Logging out and logging in again (or restarting the computer) should reset anything that may be pointing to an old version of the keyboard layout.</p>
-<h3><a name="_Toc7b126965"></a></span><b>Is the keyboard layout enabled in System Preferences?</b></h3>
-<p>Before a keyboard layout can appear in the menu, it has to be enabled in System Preferences. The procedure is slightly different in every version of macOS, but the general outline is that you need to go to the correct pane of System Preferences (usually Keyboard, but could be Language &amp; Text), and find the Input Sources tab. Then you need to add the keyboard layout using the + button. If you have a language associated with the keyboard layout, you may need to choose that language on the left.</p>
-<h3><a name="_Toc3b6cb6cb"></a></span><b>Do you have the right name for the keyboard layout?</b></h3>
-<p>The name that appears in the menu is not the name of the file that the keyboard layout is stored in. In Ukelele, go to the Keyboard menu and choose Keyboard Name… Then check that the name there is what you expect.</p>
-<h3><a name="_Toc6a2323a1"></a></span><b>Numeric state names can be a problem</b></h3>
-<p>The keyboard layout compiler, which turns the XML file into what the operating system uses, can fail if all of the names of dead key states are just numbers. To fix this, change one or more dead key state names to have a letter or other non-digit.</p>
-<h3><a name="_Toc36a0eba4"></a></span><b>Other failures</b></h3>
-<p>Sometimes there are other failures which are hard to diagnose. At this point, asking the community at the Ukelele Users forum is the best way to get help. You should attach your keyboard layout so that others can have a look and sort out the problem.</p>
-<h2><a name="_Toc45e69615"></a></span><b>The keyboard on screen doesn’t look like my keyboard</b></h2>
-<p>Don’t panic! This does not mean that your keyboard layout is in any way wrong. What you see on screen is how your keyboard layout looks on a particular type of hardware keyboard. Ukelele does its best to work out what kind of keyboard you are using, but it sometimes gets it wrong, and it doesn’t know about non-Apple keyboards at all. You need to go to the View menu and choose Keyboard Type…, which allows you to choose any of the different keyboards that Ukelele knows about. Note in particular the coding menu. If you have an extra key to the left of the Z key (on a QWERTY keyboard), you have an ISO keyboard, not ANSI. Try some of the keyboard types to see what works. If you want to use that all the time, you can make Ukelele do that in the Preferences dialog.</p>
-<h2><a name="_Toc10a496d4"></a></span><b>Changes in the keyboard layout are not showing up</b></h2>
-<p>Ukelele tries to prevent you from editing a keyboard layout that is installed, as doing so can cause system instability. So make sure that you reinstall the keyboard layout after editing it, and log out and log back in as a way to ensure that your newest version is loaded.</p>
-<h2><a name="_Toc298c51f3"></a></span><b>I can’t change the option key to make it produce a string</b></h2>
-<p>Ukelele works with keyboard layouts. Keyboard layouts are not the right level to make changes like this. The modifier keys: shift, option, command, control and caps lock, cannot be changed to do anything different in Ukelele. If you want to do this, use another application (see links in the manual).</p>
-<h2><a name="_Toc59d70e00"></a></span><b>Changing the arrow keys doesn’t work</b></h2>
-<p>Some keys are designated by Ukelele as “special”: return, tab, delete, escape, enter, help, home, end, page up, page down, arrow keys, the two Japanese conversion keys, and the contextual menu key (on Windows keyboards). Changing these can be done, but is not guaranteed to work, as individual applications differ in the way they handle them (whether respecting the output you assign or relying on the key code alone). It may be better to use a different solution to solve this issue, not creating a keyboard layout. See the manual for links to other software.</p>
-<h2><a name="_Toc146196cc"></a></span><b>The emacs keys don’t work</b></h2>
-<p>It appears that emacs uses its own system, separate from the standard key bindings. This means that, if you have edited your key bindings dictionary to reflect your keyboard layout, this won’t apply to emacs. You either have to change the emacs key bindings, or overhaul the way your keyboard layout is organised. For more details, see the manual.</p>
-<h2><a name="_Toc486e6b10"></a></span><b>I can’t remove all the other keyboard layouts</b></h2>
-<p>This is enforced by Apple. There must be at least one Apple-supplied keyboard layout available, so you have to have at least one available in the menu apart from your custom keyboard layout.</p>
+<h3><a name="_Toc4b8e26e7"></a><b>The keyboard layout parser finds an illegal character</b></h3>
+<p>This is most common when the keyboard layout XML has a character outside the Basic Multilingual Plane, that is, with a Unicode code point of U+10000 or higher. The work-around for this is to go to Preferences, and select the option to save the file with code points rather than characters. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc53f68d34"></a><b>The keyboard layout is in the wrong place</b></h3>
+<p>If you use the Organiser to install the keyboard layout, this shouldn’t be a problem. But if you do it manually, make sure that you are in the right folder. The folder should be called “Keyboard Layouts” (note that it is plural), and it should be in a folder called “Library”. The Library folder name will be localised for your system, so look for the appropriate name with your system’s language. The Library folder in your home folder is normally hidden, so you have to jump through some hoops to get there. In Finder, hold down the option key and click on the Go menu, and you’ll find that Library appears there. The two Library folders are those at the top level of your startup disk, and in your home folder. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc2d0885b2"></a><b>The keyboard layout has been saved with an incorrect name</b></h3>
+<p>Again, if you are using Ukelele, this shouldn’t happen. A simple keyboard layout has the extension .keylayout, while a keyboard layout collection is a bundle, that is a folder with the extension .bundle and a specific layout. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc224a8168"></a><b>Have you logged out and logged in again?</b></h3>
+<p>In modern systems (Yosemite, macOS 10.10 and later), this shouldn’t be necessary, but it can help if you have been experimenting with a keyboard layout and changed it. Logging out and logging in again (or restarting the computer) should reset anything that may be pointing to an old version of the keyboard layout. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc7b126965"></a><b>Is the keyboard layout enabled in System Preferences?</b></h3>
+<p>Before a keyboard layout can appear in the menu, it has to be enabled in System Preferences. The procedure is slightly different in every version of macOS, but the general outline is that you need to go to the correct pane of System Preferences (usually Keyboard, but could be Language &amp; Text), and find the Input Sources tab. Then you need to add the keyboard layout using the + button. If you have a language associated with the keyboard layout, you may need to choose that language on the left. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc3b6cb6cb"></a><b>Do you have the right name for the keyboard layout?</b></h3>
+<p>The name that appears in the menu is not the name of the file that the keyboard layout is stored in. In Ukelele, go to the Keyboard menu and choose Keyboard Name… Then check that the name there is what you expect. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc6a2323a1"></a><b>Numeric state names can be a problem</b></h3>
+<p>The keyboard layout compiler, which turns the XML file into what the operating system uses, can fail if all of the names of dead key states are just numbers. To fix this, change one or more dead key state names to have a letter or other non-digit. <a href="#Topics">Top</a></p>
+<h3><a name="_Toc36a0eba4"></a><b>Other failures</b></h3>
+<p>Sometimes there are other failures which are hard to diagnose. At this point, asking the community at the Ukelele Users forum is the best way to get help. You should attach your keyboard layout so that others can have a look and sort out the problem. <a href="#Topics">Top</a></p>
+<h2><a name="_Toc45e69615"></a><b>The keyboard on screen doesn’t look like my keyboard</b></h2>
+<p>Don’t panic! This does not mean that your keyboard layout is in any way wrong. What you see on screen is how your keyboard layout looks on a particular type of hardware keyboard. Ukelele does its best to work out what kind of keyboard you are using, but it sometimes gets it wrong, and it doesn’t know about non-Apple keyboards at all. You need to go to the View menu and choose Keyboard Type…, which allows you to choose any of the different keyboards that Ukelele knows about. Note in particular the coding menu. If you have an extra key to the left of the Z key (on a QWERTY keyboard), you have an ISO keyboard, not ANSI. Try some of the keyboard types to see what works. If you want to use that all the time, you can make Ukelele do that in the Preferences dialog. <a href="#Topics">Top</a></p>
+<h2><a name="_Toc10a496d4"></a><b>Changes in the keyboard layout are not showing up</b></h2>
+<p>Ukelele tries to prevent you from editing a keyboard layout that is installed, as doing so can cause system instability. So make sure that you reinstall the keyboard layout after editing it, and log out and log back in as a way to ensure that your newest version is loaded. <a href="#Topics">Top</a></p>
+<h2><a name="_Toc298c51f3"></a><b>I can’t change the option key to make it produce a string</b></h2>
+<p>Ukelele works with keyboard layouts. Keyboard layouts are not the right level to make changes like this. The modifier keys: shift, option, command, control and caps lock, cannot be changed to do anything different in Ukelele. If you want to do this, use another application (see links in the manual). <a href="#Topics">Top</a></p>
+<h2><a name="_Toc59d70e00"></a><b>Changing the arrow keys doesn’t work</b></h2>
+<p>Some keys are designated by Ukelele as “special”: return, tab, delete, escape, enter, help, home, end, page up, page down, arrow keys, the two Japanese conversion keys, and the contextual menu key (on Windows keyboards). Changing these can be done, but is not guaranteed to work, as individual applications differ in the way they handle them (whether respecting the output you assign or relying on the key code alone). It may be better to use a different solution to solve this issue, not creating a keyboard layout. See the manual for links to other software. <a href="#Topics">Top</a></p>
+<h2><a name="_Toc146196cc"></a><b>The emacs keys don’t work</b></h2>
+<p>It appears that emacs uses its own system, separate from the standard key bindings. This means that, if you have edited your key bindings dictionary to reflect your keyboard layout, this won’t apply to emacs. You either have to change the emacs key bindings, or overhaul the way your keyboard layout is organised. For more details, see the manual. <a href="#Topics">Top</a></p>
+<h2><a name="_Toc486e6b10"></a><b>I can’t remove all the other keyboard layouts</b></h2>
+<p>This is enforced by Apple. There must be at least one Apple-supplied keyboard layout available, so you have to have at least one available in the menu apart from your custom keyboard layout. <a href="#Topics">Top</a></p>
 </body>
 </html>
