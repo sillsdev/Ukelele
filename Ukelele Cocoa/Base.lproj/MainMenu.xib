@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -836,6 +836,12 @@
                                     <action selector="openManual:" target="-1" id="d26-vf-EFg"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Troubleshooting" id="OAr-1u-559">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showTroubleshooting:" target="-1" id="M6t-GH-Edi"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="8v0-jh-r3l"/>
                             <menuItem title="Ukelele Web Site" id="vHM-xD-hRO">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -853,6 +859,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="139" y="154"/>
         </menu>
         <customObject id="8PE-zw-N2v" customClass="SUUpdater"/>
         <customObject id="g79-zY-rS9" customClass="UkeleleAppDelegate"/>

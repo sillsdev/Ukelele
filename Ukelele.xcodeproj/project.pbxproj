@@ -135,6 +135,8 @@
 		525A4B6C191DE11E00A356F8 /* RemoveStateData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6B191DE11E00A356F8 /* RemoveStateData.mm */; };
 		525A4B6F191DE60700A356F8 /* ViewScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 525A4B6E191DE60700A356F8 /* ViewScale.m */; };
 		525CDB761927158F001DE616 /* UKKeyboardLayoutBundle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */; };
+		526BD0F023EC34EC00C8FDD6 /* TroubleshootingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */; };
+		526BD0F423EC394500C8FDD6 /* Troubleshooting.html in Resources */ = {isa = PBXBuildFile; fileRef = 526BD0F323EC394500C8FDD6 /* Troubleshooting.html */; };
 		526EFF8519F0838B001FB994 /* UKNewKeyboardLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */; };
 		52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52743F591BCA30B200C41310 /* ProgressWindow.xib */; };
 		52743F5D1BCA396900C41310 /* UKProgressWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52743F5C1BCA396900C41310 /* UKProgressWindow.m */; };
@@ -201,6 +203,8 @@
 		5291B62F192620C50076D9BC /* HandleDeadKeySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5291B62E192620C50076D9BC /* HandleDeadKeySheet.xib */; };
 		529344A11B86B20C00DF0659 /* AskTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529344A01B86B20C00DF0659 /* AskTextView.xib */; };
 		529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529344A31B86B2A200DF0659 /* AskTextViewController.m */; };
+		5293D5931FC6369D00422005 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293D5921FC6369D00422005 /* main.swift */; };
+		5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5293D5901FC6369D00422005 /* UKFileCopier */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		52947EC71CA8ABD800D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
 		52947EC81CA8BA8A00D6C632 /* UKXMLEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */; };
 		5294EB941A5A59C300765E94 /* ScriptIndexTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5294EB931A5A59C300765E94 /* ScriptIndexTransformer.m */; };
@@ -234,6 +238,8 @@
 		52CB81741FC2486B00AF32E7 /* UKFileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */; };
 		52CB81761FC249F200AF32E7 /* UKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB81751FC249F200AF32E7 /* UKErrors.swift */; };
 		52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */; };
+		52D727DD23F1399D00C0440F /* UKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D727DC23F1399D00C0440F /* UKWebView.swift */; };
+		52D727DF23F14D1500C0440F /* UKTroubleShootingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */; };
 		52DAF29519261CE300818186 /* EditKeyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DAF29419261CE300818186 /* EditKeyWindow.xib */; };
 		52DDD4521B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */; };
 		52E0AC5A19271EC7009B27C4 /* KeyboardTypeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52E0AC5919271EC7009B27C4 /* KeyboardTypeSheet.xib */; };
@@ -265,6 +271,7 @@
 			files = (
 				524F68AA230E5FEF00593EEA /* kluchrtoxml_32 in CopyFiles */,
 				524F68AB230E5FEF00593EEA /* kluchrtoxml_64 in CopyFiles */,
+				5293D5971FC636DF00422005 /* UKFileCopier in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +550,8 @@
 		525A4B6E191DE60700A356F8 /* ViewScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewScale.m; sourceTree = "<group>"; };
 		525A4B70191DE68400A356F8 /* AskCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskCommentController.h; sourceTree = "<group>"; };
 		525CDB751927158F001DE616 /* UKKeyboardLayoutBundle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UKKeyboardLayoutBundle.xib; path = "Interface Files/UKKeyboardLayoutBundle.xib"; sourceTree = "<group>"; };
+		526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TroubleshootingWindow.xib; path = "Interface Files/TroubleshootingWindow.xib"; sourceTree = "<group>"; };
+		526BD0F323EC394500C8FDD6 /* Troubleshooting.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Troubleshooting.html; sourceTree = "<group>"; };
 		526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKNewKeyboardLayoutController.h; sourceTree = "<group>"; };
 		526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKNewKeyboardLayoutController.m; sourceTree = "<group>"; };
 		52743F591BCA30B200C41310 /* ProgressWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressWindow.xib; path = "Interface Files/ProgressWindow.xib"; sourceTree = "<group>"; };
@@ -577,6 +586,8 @@
 		529344A01B86B20C00DF0659 /* AskTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AskTextView.xib; path = "Interface Files/AskTextView.xib"; sourceTree = "<group>"; };
 		529344A21B86B2A200DF0659 /* AskTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskTextViewController.h; sourceTree = "<group>"; };
 		529344A31B86B2A200DF0659 /* AskTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskTextViewController.m; sourceTree = "<group>"; };
+		5293D5901FC6369D00422005 /* UKFileCopier */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UKFileCopier; sourceTree = BUILT_PRODUCTS_DIR; };
+		5293D5921FC6369D00422005 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		52947EC51CA8ABD800D6C632 /* UKXMLEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UKXMLEncoder.cpp; sourceTree = "<group>"; };
 		52947EC61CA8ABD800D6C632 /* UKXMLEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKXMLEncoder.h; sourceTree = "<group>"; };
 		5294EB921A5A59C300765E94 /* ScriptIndexTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptIndexTransformer.h; sourceTree = "<group>"; };
@@ -626,6 +637,8 @@
 		52CB81731FC2486B00AF32E7 /* UKFileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKFileOperations.swift; sourceTree = "<group>"; };
 		52CB81751FC249F200AF32E7 /* UKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKErrors.swift; sourceTree = "<group>"; };
 		52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UKOrganiserController.swift; sourceTree = "<group>"; };
+		52D727DC23F1399D00C0440F /* UKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UKWebView.swift; sourceTree = "<group>"; };
+		52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UKTroubleShootingController.swift; sourceTree = "<group>"; };
 		52DAF29419261CE300818186 /* EditKeyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditKeyWindow.xib; path = "Interface Files/EditKeyWindow.xib"; sourceTree = "<group>"; };
 		52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKeyboardPasteboardItem.h; sourceTree = "<group>"; };
 		52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKeyboardPasteboardItem.m; sourceTree = "<group>"; };
@@ -661,6 +674,13 @@
 				52A105951B2A629A002C5255 /* SystemConfiguration.framework in Frameworks */,
 				5277EBA01AAF01A500C471C3 /* Carbon.framework in Frameworks */,
 				5277EC6D1AB66E1F00C471C3 /* libNano.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5293D58D1FC6369D00422005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,9 +837,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5293D5911FC6369D00422005 /* UKFileCopier */ = {
+			isa = PBXGroup;
+			children = (
+				5293D5921FC6369D00422005 /* main.swift */,
+			);
+			path = UKFileCopier;
+			sourceTree = "<group>";
+		};
 		52A481EF1923484B00D412D7 /* Interface Files */ = {
 			isa = PBXGroup;
 			children = (
+				526BD0EF23EC34EB00C8FDD6 /* TroubleshootingWindow.xib */,
 				52A481F0192348B300D412D7 /* AddModifiersDialog.xib */,
 				5209F18119236083001F9923 /* AskCommentSheet.xib */,
 				523A4C2C192454770019F062 /* AskFromList.xib */,
@@ -877,6 +906,7 @@
 				523B01C7191D7F9300E06DF3 /* Dependencies */,
 				52BBED29191B4C3900E48394 /* Ukelele CocoaTests */,
 				5277EB641AAE844600C471C3 /* Ukelele Quick Look Generator */,
+				5293D5911FC6369D00422005 /* UKFileCopier */,
 				52BBED01191B4C3900E48394 /* Frameworks */,
 				52BBED00191B4C3900E48394 /* Products */,
 			);
@@ -887,6 +917,7 @@
 			children = (
 				52BBECFF191B4C3900E48394 /* Ukelele.app */,
 				5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */,
+				5293D5901FC6369D00422005 /* UKFileCopier */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -951,6 +982,7 @@
 				52BBED0E191B4C3900E48394 /* main.m */,
 				5253EC761C43928B003B7CC3 /* scripts.strings */,
 				5280528C1D65D20F00356D36 /* SpecialKeyWarning.rtf */,
+				526BD0F323EC394500C8FDD6 /* Troubleshooting.html */,
 				524F76F61929D2C3004A8A72 /* UCDNamesList.txt */,
 				521B78F11B32BB0100946529 /* Ukelele Help.help */,
 				5224CD021B37DEA0004AB2B6 /* Ukelele Manual.pdf */,
@@ -1030,8 +1062,12 @@
 				523B00FA191CA0D100E06DF3 /* ToolboxData.m */,
 				528CE2FF1AF867DC00D1019E /* UKDiacriticDisplay.h */,
 				528CE3001AF867DC00D1019E /* UKDiacriticDisplay.m */,
+				5253C5671FE9C937004D7C66 /* UkeleleStatus.h */,
+				5253C5681FE9C937004D7C66 /* UkeleleStatus.m */,
+				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
 				52DDD4501B17D4BB004A38C8 /* UKKeyboardPasteboardItem.h */,
 				52DDD4511B17D4BB004A38C8 /* UKKeyboardPasteboardItem.m */,
+				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
 				522A481B1B75EF6B00DA40ED /* UKStyleInfo.h */,
 				522A481C1B75EF6B00DA40ED /* UKStyleInfo.m */,
 				523B00FD191CA0D100E06DF3 /* UnicodeTable.h */,
@@ -1039,10 +1075,6 @@
 				527D863E1A70C23F00EF1570 /* UninstallHelperTool.sh */,
 				525A4B6D191DE60700A356F8 /* ViewScale.h */,
 				525A4B6E191DE60700A356F8 /* ViewScale.m */,
-				52CB816F1FC23FBB00AF32E7 /* UKKeyboardCollection.swift */,
-				52CB81711FC246F200AF32E7 /* UKKeyboardStorage.swift */,
-				5253C5671FE9C937004D7C66 /* UkeleleStatus.h */,
-				5253C5681FE9C937004D7C66 /* UkeleleStatus.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1064,6 +1096,7 @@
 				523B0079191C9CA900E06DF3 /* UkeleleView.m */,
 				52ED0B7A1A9826BA00322FFE /* UKKeyboardPrintView.h */,
 				52ED0B7B1A9826BA00322FFE /* UKKeyboardPrintView.m */,
+				52D727DC23F1399D00C0440F /* UKWebView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1175,6 +1208,7 @@
 				52579AD11A771DCE00EEC77F /* UKKeyStrokeLookupInteractionHandler.m */,
 				526EFF8319F0838B001FB994 /* UKNewKeyboardLayoutController.h */,
 				526EFF8419F0838B001FB994 /* UKNewKeyboardLayoutController.m */,
+				52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */,
 				52743F5B1BCA396900C41310 /* UKProgressWindow.h */,
 				52743F5C1BCA396900C41310 /* UKProgressWindow.m */,
 				523B017D191CA18C00E06DF3 /* UnlinkKeyHandler.h */,
@@ -1187,7 +1221,7 @@
 				5280528A1D65B1B000356D36 /* WarningDialogController.m */,
 				523B0183191CA18C00E06DF3 /* WrongStateChosenSheet.h */,
 				523B0184191CA18C00E06DF3 /* WrongStateChosenSheet.m */,
-				52D122291FC3EA11004FB7CC /* UKOrganiserController.swift */,
+				52D727DE23F14D1500C0440F /* UKTroubleShootingController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1225,6 +1259,22 @@
 			productReference = 5277EB631AAE844600C471C3 /* Ukelele Quick Look Generator.qlgenerator */;
 			productType = "com.apple.product-type.bundle";
 		};
+		5293D58F1FC6369D00422005 /* UKFileCopier */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5293D5961FC6369D00422005 /* Build configuration list for PBXNativeTarget "UKFileCopier" */;
+			buildPhases = (
+				5293D58C1FC6369D00422005 /* Sources */,
+				5293D58D1FC6369D00422005 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UKFileCopier;
+			productName = UKFileCopier;
+			productReference = 5293D5901FC6369D00422005 /* UKFileCopier */;
+			productType = "com.apple.product-type.tool";
+		};
 		52BBECFE191B4C3900E48394 /* Ukelele */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52BBED33191B4C3900E48394 /* Build configuration list for PBXNativeTarget "Ukelele" */;
@@ -1260,6 +1310,11 @@
 					5277EB621AAE844600C471C3 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
+					5293D58F1FC6369D00422005 = {
+						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
+					};
 					52BBECFE191B4C3900E48394 = {
 						LastSwiftMigration = 1020;
 						SystemCapabilities = {
@@ -1285,6 +1340,7 @@
 			targets = (
 				52BBECFE191B4C3900E48394 /* Ukelele */,
 				5277EB621AAE844600C471C3 /* Ukelele Quick Look Generator */,
+				5293D58F1FC6369D00422005 /* UKFileCopier */,
 			);
 		};
 /* End PBXProject section */
@@ -1306,6 +1362,7 @@
 				52743F5A1BCA30B200C41310 /* ProgressWindow.xib in Resources */,
 				52EB2B271927397000712272 /* ToolboxController.xib in Resources */,
 				52E2F1A719258F9E007F4280 /* ChooseScale.xib in Resources */,
+				526BD0F023EC34EC00C8FDD6 /* TroubleshootingWindow.xib in Resources */,
 				52BBED0D191B4C3900E48394 /* InfoPlist.strings in Resources */,
 				52BBED1E191B4C3900E48394 /* Images.xcassets in Resources */,
 				52BEADEC192484A6008A3314 /* AskText.xib in Resources */,
@@ -1346,6 +1403,7 @@
 				528A278119276C44001DEAB9 /* WrongStateChosenSheet.xib in Resources */,
 				52BBED1C191B4C3900E48394 /* MainMenu.xib in Resources */,
 				52BEADF01924856F008A3314 /* AskYesNo.xib in Resources */,
+				526BD0F423EC394500C8FDD6 /* Troubleshooting.html in Resources */,
 				52BA90451924795200C7F138 /* AskStateAndTerminatorSheet.xib in Resources */,
 				524EAE291B9FD16F00B77B43 /* Errors.strings in Resources */,
 				524F76F71929D2C3004A8A72 /* UCDNamesList.txt in Resources */,
@@ -1442,6 +1500,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5293D58C1FC6369D00422005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5293D5931FC6369D00422005 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52BBECFB191B4C3900E48394 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1502,6 +1568,7 @@
 				523B0093191C9D2200E06DF3 /* XMLUtilities.mm in Sources */,
 				523B01AF191CA18C00E06DF3 /* ModifiersDataSource.mm in Sources */,
 				52AD7D95196139F800B3CD3F /* UKKeyboardController+Comments.m in Sources */,
+				52D727DF23F14D1500C0440F /* UKTroubleShootingController.swift in Sources */,
 				523B010F191CA0D100E06DF3 /* ScriptInfo.mm in Sources */,
 				52CB81721FC246F200AF32E7 /* UKKeyboardStorage.swift in Sources */,
 				529344A41B86B2A200DF0659 /* AskTextViewController.m in Sources */,
@@ -1513,6 +1580,7 @@
 				523B0191191CA18C00E06DF3 /* ChooseFrom3Sheet.m in Sources */,
 				523B019E191CA18C00E06DF3 /* EditKeyPopoverController.m in Sources */,
 				523B0111191CA0D100E06DF3 /* ToolboxData.m in Sources */,
+				52D727DD23F1399D00C0440F /* UKWebView.swift in Sources */,
 				52D1222A1FC3EA11004FB7CC /* UKOrganiserController.swift in Sources */,
 				523B01B5191CA18C00E06DF3 /* SwapKeysController.m in Sources */,
 				523B01A3191CA18C00E06DF3 /* EditKeyWindowController.m in Sources */,
@@ -1675,7 +1743,6 @@
 				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1712,7 +1779,6 @@
 				);
 				INFOPLIST_FILE = "Ukelele Quick Look Generator/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.Ukelele.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1720,6 +1786,68 @@
 				STRIP_STYLE = debugging;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Release;
+		};
+		5293D5941FC6369D00422005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3YE4W86L3G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5293D5951FC6369D00422005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 523B511A1B292ECA00E8982E /* NanoReleaseMac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"ARCHS[sdk=macosx*]" = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3YE4W86L3G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1770,7 +1898,7 @@
 					"$(inherited)",
 					/usr/local/boost_1_70_0,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--options=runtime";
@@ -1826,7 +1954,7 @@
 					"$(inherited)",
 					/usr/local/boost_1_70_0,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wcast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_CODE_SIGN_FLAGS = "--options=runtime";
 				SDKROOT = macosx;
@@ -1847,11 +1975,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_ENTITLEMENTS = Ukelele.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.5.0.6;
-				DEVELOPMENT_ASSET_PATHS = "";
+				CURRENT_PROJECT_VERSION = 3.4.1.313;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1872,8 +1998,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 3.5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 3.4.1;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
@@ -1897,12 +2023,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				CODE_SIGN_ENTITLEMENTS = Ukelele.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.5.0.6;
-				DEVELOPMENT_ASSET_PATHS = "";
+				CURRENT_PROJECT_VERSION = 3.4.1.313;
 				DEVELOPMENT_TEAM = 3YE4W86L3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1923,8 +2047,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 3.5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 3.4.1;
 				NANO_WARNING_CFLAGS = "$(NANO_DEBUG_WARNING_CFLAGS) $(NANO_RELEASE_WARNING_CFLAGS) -Wall -Wextra -Wno-cast-qual -Wdisabled-optimization -Wfloat-equal -Winit-self -Wno-long-long -Wpointer-arith -Wredundant-decls -Wundef -Wwrite-strings -Wstrict-prototypes -Wstrict-overflow -Wbad-function-cast -Wmissing-declarations -Wnested-externs -Wold-style-definition -Wdeclaration-after-statement -Wno-unused-local-typedefs";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sil.${PRODUCT_NAME:rfc1034identifier}";
@@ -1944,6 +2068,15 @@
 			buildConfigurations = (
 				5277EB6E1AAE844600C471C3 /* Debug */,
 				5277EB6F1AAE844600C471C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5293D5961FC6369D00422005 /* Build configuration list for PBXNativeTarget "UKFileCopier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5293D5941FC6369D00422005 /* Debug */,
+				5293D5951FC6369D00422005 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
