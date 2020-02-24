@@ -405,7 +405,7 @@ enum {
 		[existingOrNewIndexSimplified setEnabled:canBeSame];
 	}
 	callBack = theCallback;
-	[parentWindow beginSheet:[self window] completionHandler:^(NSModalResponse returnCode) {
+	[parentWindow beginSheet:[self simplifiedWindow] completionHandler:^(NSModalResponse returnCode) {
 #pragma unused(returnCode)
 		return;
 	}];
