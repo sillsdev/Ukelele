@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <registry>
-	<date>2019-04-30</date>
+	<date>2019-09-16</date>
 	<language>
 		<subtag>aa</subtag>
 		<description>Afar</description>
@@ -44084,6 +44084,11 @@
 		<added>2005-10-16</added>
 	</script>
 	<script>
+		<subtag>Chrs</subtag>
+		<description>Chorasmian</description>
+		<added>2019-09-11</added>
+	</script>
+	<script>
 		<subtag>Cirt</subtag>
 		<description>Cirth</description>
 		<added>2005-10-16</added>
@@ -44118,6 +44123,11 @@
 		<description>Devanagari</description>
 		<description>Nagari</description>
 		<added>2005-10-16</added>
+	</script>
+	<script>
+		<subtag>Diak</subtag>
+		<description>Dives Akuru</description>
+		<added>2019-09-11</added>
 	</script>
 	<script>
 		<subtag>Dogr</subtag>
@@ -44955,6 +44965,11 @@
 		<subtag>Xsux</subtag>
 		<description>Sumero-Akkadian cuneiform</description>
 		<added>2005-10-16</added>
+	</script>
+	<script>
+		<subtag>Yezi</subtag>
+		<description>Yezidi</description>
+		<added>2019-09-11</added>
 	</script>
 	<script>
 		<subtag>Yiii</subtag>
