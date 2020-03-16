@@ -44,11 +44,11 @@
 	actionCallback = theCallback;
 		// Set the modifier states
 	NSUInteger modifiers = [callerData[kKeyModifiers] unsignedIntegerValue];
-	[self.shiftState setState:modifiers & NSShiftKeyMask ? NSControlStateValueOn : NSControlStateValueOff];
-	[self.optionState setState:modifiers & NSAlternateKeyMask ? NSControlStateValueOn : NSControlStateValueOff];
-	[self.commandState setState:modifiers & NSCommandKeyMask ? NSControlStateValueOn : NSControlStateValueOff];
-	[self.controlState setState:modifiers & NSControlKeyMask ? NSControlStateValueOn : NSControlStateValueOff];
-	[self.capsLockState setState:modifiers & NSAlphaShiftKeyMask ? NSControlStateValueOn : NSControlStateValueOff];
+	[self.shiftState setState:modifiers & NSEventModifierFlagShift ? NSControlStateValueOn : NSControlStateValueOff];
+	[self.optionState setState:modifiers & NSEventModifierFlagOption ? NSControlStateValueOn : NSControlStateValueOff];
+	[self.commandState setState:modifiers & NSEventModifierFlagCommand ? NSControlStateValueOn : NSControlStateValueOff];
+	[self.controlState setState:modifiers & NSEventModifierFlagControl ? NSControlStateValueOn : NSControlStateValueOff];
+	[self.capsLockState setState:modifiers & NSEventModifierFlagCapsLock ? NSControlStateValueOn : NSControlStateValueOff];
 		// Set the selected key code, if any
 	NSInteger keyCode = [dataDict[kKeyKeyCode] integerValue];
 	if (keyCode != kNoKeyCode) {
@@ -108,19 +108,19 @@
 - (NSUInteger)currentModifiers {
 	NSUInteger modifiers = 0;
 	if ([self.shiftState state] == NSControlStateValueOn) {
-		modifiers |= NSShiftKeyMask;
+		modifiers |= NSEventModifierFlagShift;
 	}
 	if ([self.optionState state] == NSControlStateValueOn) {
-		modifiers |= NSAlternateKeyMask;
+		modifiers |= NSEventModifierFlagOption;
 	}
 	if ([self.commandState state] == NSControlStateValueOn) {
-		modifiers |= NSCommandKeyMask;
+		modifiers |= NSEventModifierFlagCommand;
 	}
 	if ([self.controlState state] == NSControlStateValueOn) {
-		modifiers |= NSControlKeyMask;
+		modifiers |= NSEventModifierFlagControl;
 	}
 	if ([self.capsLockState state] == NSControlStateValueOn) {
-		modifiers |= NSAlphaShiftKeyMask;
+		modifiers |= NSEventModifierFlagCapsLock;
 	}
 	return modifiers;
 }

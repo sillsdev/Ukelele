@@ -3,12 +3,13 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UKTroubleShootingController" customModule="Ukelele" customModuleProvider="target">
             <connections>
-                <outlet property="webContentView" destination="FOj-m2-xEM" id="R0q-we-uhy"/>
+                <outlet property="webContentView" destination="2me-o8-WkN" id="L1X-ie-ii5"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="C8f-2d-R4E"/>
             </connections>
         </customObject>
@@ -22,19 +23,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="FOj-m2-xEM">
+                    <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2me-o8-WkN">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="240" id="Yik-1k-wmF"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="gpX-CZ-GFM"/>
-                        </constraints>
-                    </customView>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="FOj-m2-xEM" secondAttribute="trailing" id="1RJ-I9-hcg"/>
-                    <constraint firstAttribute="bottom" secondItem="FOj-m2-xEM" secondAttribute="bottom" id="ByH-0P-eVT"/>
-                    <constraint firstItem="FOj-m2-xEM" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="Xrp-jm-BQp"/>
-                    <constraint firstItem="FOj-m2-xEM" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="cym-u0-xS0"/>
+                    <constraint firstItem="2me-o8-WkN" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="Kcu-jH-Rzb"/>
+                    <constraint firstItem="2me-o8-WkN" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="X5R-6Y-ZaW"/>
+                    <constraint firstAttribute="trailing" secondItem="2me-o8-WkN" secondAttribute="trailing" id="YjU-rw-3EN"/>
+                    <constraint firstAttribute="bottom" secondItem="2me-o8-WkN" secondAttribute="bottom" id="pZl-Fx-f0J"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="119" y="-11"/>
