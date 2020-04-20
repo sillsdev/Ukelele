@@ -305,7 +305,7 @@ typedef struct KeyEntryRec {
 	
 		// Get a list of heights of key rectangles we find
 	int maxHeight = (boundaryRect.bottom - boundaryRect.top);
-	unsigned int *heightList = malloc(maxHeight * sizeof(unsigned int));
+	unsigned int *heightList = malloc((maxHeight + 1) * sizeof(unsigned int));
 	for (unsigned int h = 0; h <= (unsigned int)maxHeight; h++) {
 		heightList[h] = 0;
 	}
