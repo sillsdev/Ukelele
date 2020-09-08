@@ -1365,9 +1365,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		}
 		return NO;
 	}
-<<<<<<< HEAD
-	if ([[pasteBoard types] containsObject:NSPasteboardTypeURL]) {
-=======
 	NSPasteboardType urlType;
 	if (@available(macOS 10.13, *)) {
 		urlType = NSPasteboardTypeFileURL;
@@ -1377,7 +1374,6 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		urlType = (NSPasteboardType)kUTTypeFileURL;
 	}
 	if ([[pasteBoard types] containsObject:urlType]) {
->>>>>>> master
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
 		NSString *fileExtension = [dragURL pathExtension];
 		BOOL isKeyboardLayout = [fileExtension compare:kStringKeyboardLayoutExtension options:NSCaseInsensitiveSearch] == NSEqualToComparison;
