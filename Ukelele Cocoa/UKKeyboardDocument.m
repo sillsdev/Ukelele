@@ -1373,11 +1373,11 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	}
 	NSPasteboardType urlType;
 	if (@available(macOS 10.13, *)) {
-		urlType = NSPasteboardTypeURL;
+		urlType = NSPasteboardTypeFileURL;
 	}
 	else {
 			// Fallback on earlier versions
-		urlType = NSURLPboardType;
+		urlType = (NSPasteboardType)kUTTypeFileURL;
 	}
 	if ([[pasteBoard types] containsObject:urlType]) {
 		NSURL *dragURL = [NSURL URLFromPasteboard:pasteBoard];
