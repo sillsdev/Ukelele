@@ -8,6 +8,8 @@
 
 import Cocoa
 
+let toolName = "UKFileCopier"
+
 struct UKFileOperations {
 	static func move(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
 		let fileManager = FileManager.default
@@ -43,22 +45,42 @@ struct UKFileOperations {
 	}
 	
 	static func authenticatedMove(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
-		let workspace = NSWorkspace.shared
-		workspace.requestAuthorization(to: .replaceFile) { (authorisation, error) in
-			if let authorisation = authorisation {
-				let fileManager = FileManager(authorization: authorisation)
-				do {
-					try fileManager.moveItem(at: source, to: destination)
-					handler(true, nil)
+		if #available(OSX 10.14, *) {
+			// The NSWorkspace authorizations are available
+			let workspace = NSWorkspace.shared
+			workspace.requestAuthorization(to: .replaceFile) { (auth, error) in
+				if let authorization = auth {
+					let fileManager = FileManager(authorization: authorization)
+					do {
+						try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+						if (try fileManager.replaceItemAt(destination, withItemAt: source)) != nil {
+							// Success
+							handler(true, nil)
+						}
+						else {
+							handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [:]))
+						}
+					} catch {
+						handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription]))
+					}
 				}
-				catch {
-					handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
+				else {
+					handler(false, error as NSError?)
 				}
 			}
-			else {
-				// Failure to get authorisation
-				handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
-			}
+			return
+		}
+		if let toolPath = Bundle.main.url(forAuxiliaryExecutable: toolName)?.path {
+			let sourcePath = source.path
+			let destPath = destination.path
+			let scriptString = "do shell script quoted form of \"\(toolPath)\" & \" \" & quoted form of \"\(sourcePath)\" & \" \" & quoted form of \"\(destPath)\" with administrator privileges"
+			let appleScript = NSAppleScript(source: scriptString)
+			var errorDict: NSDictionary? = NSDictionary()
+			_ = appleScript?.executeAndReturnError(&errorDict)
+			handler(true, nil)
+		}
+		else {
+			handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: errorFileOperationError.localizedDescription]))
 		}
 	}
 }
