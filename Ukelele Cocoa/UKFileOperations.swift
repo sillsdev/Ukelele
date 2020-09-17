@@ -6,12 +6,12 @@
 //  Copyright © 2017 John Brownie. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 let toolName = "UKFileCopier"
 
 struct UKFileOperations {
-	static func move(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
+	static func move(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
 		let fileManager = FileManager.default
 		do {
 			try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
@@ -44,7 +44,32 @@ struct UKFileOperations {
 		}
 	}
 	
-	static func authenticatedMove(from source: URL, to destination: URL, completion handler:((Bool, NSError?) -> Void)) {
+	static func authenticatedMove(from source: URL, to destination: URL, completion handler: @escaping ((Bool, NSError?) -> Void)) {
+		if #available(OSX 10.14, *) {
+			// The NSWorkspace authorizations are available
+			let workspace = NSWorkspace.shared
+			workspace.requestAuthorization(to: .replaceFile) { (auth, error) in
+				if let authorization = auth {
+					let fileManager = FileManager(authorization: authorization)
+					do {
+						try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+						if (try fileManager.replaceItemAt(destination, withItemAt: source)) != nil {
+							// Success
+							handler(true, nil)
+						}
+						else {
+							handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [:]))
+						}
+					} catch {
+						handler(false, NSError(domain: kUKDomain, code: errorFileOperationError.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription]))
+					}
+				}
+				else {
+					handler(false, error as NSError?)
+				}
+			}
+			return
+		}
 		if let toolPath = Bundle.main.url(forAuxiliaryExecutable: toolName)?.path {
 			let sourcePath = source.path
 			let destPath = destination.path
