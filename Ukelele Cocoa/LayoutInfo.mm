@@ -2383,7 +2383,7 @@ NSDictionary *sStandardKeyMapList;
 
 - (BOOL)hasSeparateRightKeys
 {
-	return self.flags & kHasSeparateRightKeys;
+	return (self.flags & kHasSeparateRightKeys) != 0;
 }
 
 - (unsigned int)getFnKeyCodeForKey:(unsigned int)keyCode

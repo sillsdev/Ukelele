@@ -53,6 +53,9 @@ struct UKFileOperations {
 					let fileManager = FileManager(authorization: authorization)
 					do {
 						try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+						if !fileManager.fileExists(atPath: destination.absoluteString) {
+							fileManager.createFile(atPath: destination.absoluteString, contents: nil, attributes: nil)
+						}
 						if (try fileManager.replaceItemAt(destination, withItemAt: source)) != nil {
 							// Success
 							handler(true, nil)

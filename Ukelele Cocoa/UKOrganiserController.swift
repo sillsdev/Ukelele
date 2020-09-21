@@ -339,7 +339,9 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 				}
 			}
 			else {
-				NSApp.presentError(error!)
+				DispatchQueue.main.async {
+					NSApp.presentError(error!)
+				}
 			}
 		}
 	}

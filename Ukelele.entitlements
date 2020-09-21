@@ -6,15 +6,19 @@
 	<true/>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.files.bookmarks.app-scope</key>
+	<true/>
 	<key>com.apple.security.files.user-selected.read-write</key>
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
-	<key>com.apple.security.files.bookmarks.app-scope</key>
-	<true/>
-	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<string>/Library/Keyboard Layouts</string>
 	<key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
 	<string>/Library/Keyboard Layouts</string>
+	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
+	<string>/Library/Keyboard Layouts</string>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)org.sil.ukelele</string>
+	</array>
 </dict>
 </plist>
