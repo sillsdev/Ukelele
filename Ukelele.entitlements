@@ -13,9 +13,9 @@
 	<key>com.apple.security.network.client</key>
 	<true/>
 	<key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
-	<string>/Library/Keyboard Layouts</string>
+	<string>/Library/Keyboard Layouts/</string>
 	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<string>/Library/Keyboard Layouts</string>
+	<string>/Library/Keyboard Layouts/</string>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)org.sil.ukelele</string>

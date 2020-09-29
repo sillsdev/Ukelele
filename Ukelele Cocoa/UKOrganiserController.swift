@@ -322,25 +322,27 @@ class UKOrganiserController: NSWindowController, NSTableViewDataSource, NSTableV
 			if FileManager.default.fileExists(atPath: iconSource.path) {
 				let iconDestination = destination.deletingLastPathComponent().appendingPathComponent(iconFileName)
 				moveFile(from: iconSource, to: iconDestination) { (success, theError) in
-					if success {
-						self.reloadTableData()
-					}
-					else {
-						NSApp.presentError(theError!)
+					DispatchQueue.main.async {
+						if success {
+							self.reloadTableData()
+						}
+						else {
+							NSApp.presentError(theError!)
+						}
 					}
 				}
 			}
 		}
 		moveFile(from: source, to: destination) { (success, error) in
-			if success {
-				self.reloadTableData()
-				if installing {
-					self.recommendLogout()
+			DispatchQueue.main.async {
+				if success {
+					self.reloadTableData()
+					if installing {
+						self.recommendLogout()
+					}
 				}
-			}
-			else {
-				DispatchQueue.main.async {
-					NSApp.presentError(error!)
+				else {
+						NSApp.presentError(error!)
 				}
 			}
 		}
