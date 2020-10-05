@@ -491,7 +491,7 @@ typedef struct KeyEntryRec {
 	if (resourceData == nil) {
 			// No such keyboard
 		NSLog(@"Failed to create a keyboard with id %d, using default", keyboardID);
-		actualID = gestaltUSBAndyANSIKbd;
+		actualID = gestaltUSBAndyISOKbd;
 		idString = [NSString stringWithFormat:@"%d", actualID];
 		resourceData = resourceDict[idString];
 		NSAssert(resourceData != nil, @"Must be able to create the default keyboard");

@@ -69,7 +69,7 @@ static NSDictionary *defaultValues() {
 				 UKTextSize:					@(kDefaultLargeFontSize),
 				 UKTextFont:					@"Lucida Grande",
 				 UKUsesSingleClickToEdit:		@NO,
-				 UKDefaultLayoutID:				@(gestaltUSBAndyANSIKbd),
+				 UKDefaultLayoutID:				@(gestaltUSBAndyISOKbd),
 				 UKAlwaysUsesDefaultLayout:		@NO,
 				 UKStateNameBase:				@"Dead Key State",
 				 UKDiacriticDisplayCharacter:	@(UKDiacriticSpace),

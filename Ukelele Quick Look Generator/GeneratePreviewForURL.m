@@ -5,7 +5,7 @@
 #import "UkeleleView.h"
 #import "UkeleleConstantStrings.h"
 
-#define kStandardKeyboard gestaltUSBAndyANSIKbd
+#define kStandardKeyboard gestaltUSBAndyISOKbd
 
 __attribute__((visibility("default"))) OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
 __attribute__((visibility("default"))) void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
