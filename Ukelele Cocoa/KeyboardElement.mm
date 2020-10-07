@@ -718,14 +718,14 @@ void KeyboardElement::ImportDeadKey(const NString inLocalState,
 									const KeyboardElement *inSource)
 {
 		// Handle the key map sets and the actions
-	LayoutElement *layoutElement = mLayouts->FindLayout(UKDefaultKeyboardType);
+	LayoutElement *layoutElement = mLayouts->FindLayout(gestaltUSBAndyISOKbd);
 	NString keyMapID = layoutElement->GetMapSet();
 	KeyMapSet *keyMapSet = mKeyMapSetList->FindKeyMapSet(keyMapID);
-	LayoutElement *sourceLayoutElement = inSource->mLayouts->FindLayout(UKDefaultKeyboardType);
+	LayoutElement *sourceLayoutElement = inSource->mLayouts->FindLayout(gestaltUSBAndyISOKbd);
 	NString sourceKeyMapID = sourceLayoutElement->GetMapSet();
 	KeyMapSet *sourceKeyMapSet = inSource->mKeyMapSetList->FindKeyMapSet(sourceKeyMapID);
 	keyMapSet->ImportDeadKey(inLocalState, inSourceState, sourceKeyMapSet, mActionList, inSource->mActionList);
-	if (mLayouts->FindLayout(UKDefaultJISKeyboardType) != layoutElement && inSource->mLayouts->FindLayout(UKDefaultJISKeyboardType) != sourceLayoutElement) {
+	if (mLayouts->FindLayout(gestaltUSBAndyJISKbd) != layoutElement && inSource->mLayouts->FindLayout(gestaltUSBAndyJISKbd) != sourceLayoutElement) {
 			// We have JIS overrides for both
 		layoutElement = mLayouts->FindLayout(gestaltUSBAndyJISKbd);
 		keyMapID = layoutElement->GetMapSet();

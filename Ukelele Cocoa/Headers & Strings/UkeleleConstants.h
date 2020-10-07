@@ -158,10 +158,4 @@ enum {
 	UKDiacriticSpace = 4
 };
 
-	// Default keyboard type for display
-enum {
-	UKDefaultKeyboardType = gestaltUSBAndyISOKbd,
-	UKDefaultJISKeyboardType = gestaltUSBAndyJISKbd
-};
-
 #endif
