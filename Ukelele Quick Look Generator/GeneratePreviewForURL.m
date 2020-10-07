@@ -4,8 +4,7 @@
 #import "UkeleleKeyboardObject.h"
 #import "UkeleleView.h"
 #import "UkeleleConstantStrings.h"
-
-#define kStandardKeyboard gestaltUSBAndyISOKbd
+#import "UkeleleConstants.h"
 
 __attribute__((visibility("default"))) OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
 __attribute__((visibility("default"))) void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
@@ -46,11 +45,11 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSBundle *theBundle = [NSBundle bundleWithIdentifier:@"org.sil.Ukelele.Ukelele-Quick-Look-Generator"];
 	NSURL *resourceURL = [theBundle URLForResource:@"UkeleleQLResources" withExtension:@"plist"];
 	NSDictionary *resourceDict = [NSDictionary dictionaryWithContentsOfURL:resourceURL];
-	NSString *idString = [NSString stringWithFormat:@"%d", kStandardKeyboard];
+	NSString *idString = [NSString stringWithFormat:@"%d", UKDefaultKeyboardType];
 	NSData *resourceData = resourceDict[idString];
 	char *resourceBuffer = malloc([resourceData length]);
 	[resourceData getBytes:resourceBuffer length:[resourceData length]];
-	[ukeleleView createViewWithStream:resourceBuffer forID:kStandardKeyboard withScale:1.25];
+	[ukeleleView createViewWithStream:resourceBuffer forID:UKDefaultKeyboardType withScale:1.25];
 	free(resourceBuffer);
 	[ukeleleView setFrameOrigin:NSZeroPoint];
 	if (QLPreviewRequestIsCancelled(preview)) {
@@ -59,7 +58,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		// Now populate the view
 	NSArray *subViews = [ukeleleView keyCapViews];
 	NSMutableDictionary *keyDataDict = [NSMutableDictionary dictionary];
-	keyDataDict[kKeyKeyboardID] = @(kStandardKeyboard);
+	keyDataDict[kKeyKeyboardID] = @(UKDefaultKeyboardType);
 	keyDataDict[kKeyKeyCode] = @0;
 	keyDataDict[kKeyModifiers] = @(0);
 	keyDataDict[kKeyState] = @"none";
