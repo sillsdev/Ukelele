@@ -443,7 +443,7 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 	[fileManager removeItemAtURL:tempFileURL error:nil];
 	[fileManager changeCurrentDirectoryPath:currentDirectory];
 		// Finally, read the resulting file
-	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.keylayout", tempDirectory, keyboardName]];
+	NSURL *outputFileURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@.%@", tempDirectory, keyboardName, kStringKeyboardLayoutExtension]];
 	NSError *theError = nil;
 	NSData *myData = [NSData dataWithContentsOfURL:outputFileURL options:0 error:&theError];
 	[fileManager removeItemAtURL:outputFileURL error:nil];
@@ -456,10 +456,10 @@ originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 		for (NSURL *fileURL in directoryContents) {
 			NSString *fileName = [fileURL lastPathComponent];
 			NSString *fileExtension = [fileURL pathExtension];
-			if ([fileExtension isEqualToString:@"keylayou"]) {
+			if ([fileExtension isEqualToString:kStringKeyboardLayoutExtension]) {
 				[candidateURLs addObject:fileURL];
 			}
-			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:@"keylayout"]) {
+			if ([fileName hasPrefix:(__bridge NSString * _Nonnull)(keyboardName)] && [fileExtension isEqualToString:kStringKeyboardLayoutExtension]) {
 				NSDate *modificationDate;
 				if ([fileURL getResourceValue:&modificationDate forKey:NSURLContentModificationDateKey error:nil]) {
 					if ([modificationDate compare:tempFileDate] != NSOrderedAscending) {
