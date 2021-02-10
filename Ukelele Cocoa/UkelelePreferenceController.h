@@ -30,7 +30,7 @@
 - (IBAction)returnToDefaults:(id)sender;
 - (IBAction)changeDefaultFont:(id)sender;
 - (IBAction)resetWarnings:(id)sender;
-- (IBAction)toggleCodePoints:(id)sender;
+- (IBAction)toggleCodeNonAscii:(id)sender;
 
 - (void)runPreferences;
 - (void)changeFont:(id)fontManager;		// Sent by font panel

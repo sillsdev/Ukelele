@@ -181,9 +181,9 @@ static NSString *nibWindow = @"Preferences";
 			[_defaultZoom addItemWithObjectValue:[scale scaleLabel]];
 		}
 		NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
-		BOOL showCodePoints = [sharedDefaults boolForKey:UKShowCodePoints];
-		[_xmlHasCharacters setState:showCodePoints ? NSControlStateValueOff : NSControlStateValueOn];
-		[_xmlHasCodePoints setState:showCodePoints ? NSControlStateValueOn : NSControlStateValueOff];
+		BOOL codeNonAscii = [sharedDefaults boolForKey:UKCodeNonAscii];
+		[_xmlHasCharacters setState:codeNonAscii ? NSControlStateValueOff : NSControlStateValueOn];
+		[_xmlHasCodePoints setState:codeNonAscii ? NSControlStateValueOn : NSControlStateValueOff];
     }
     
     return self;
@@ -260,13 +260,13 @@ static NSString *nibWindow = @"Preferences";
 	[sharedDefaults setBool:NO forKey:UKDontShowWarningDialog];
 }
 
-- (IBAction)toggleCodePoints:(id)sender {
+- (IBAction)toggleCodeNonAscii:(id)sender {
 	NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
 	if (sender == self.xmlHasCharacters) {
-		[sharedDefaults setBool:NO forKey:UKShowCodePoints];
+		[sharedDefaults setBool:NO forKey:UKCodeNonAscii];
 	}
 	else {
-		[sharedDefaults setBool:YES forKey:UKShowCodePoints];
+		[sharedDefaults setBool:YES forKey:UKCodeNonAscii];
 	}
 }
 
